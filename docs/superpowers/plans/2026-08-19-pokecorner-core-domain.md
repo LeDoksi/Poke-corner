@@ -521,7 +521,10 @@ public class CatchRollerTests
             if (result.ChainId == CommonUnowned.ChainId) unownedWins++;
         }
 
-        Assert.True(unownedWins > 900, $"Expected unowned chain to win >900/1000 rolls, got {unownedWins}");
+        // With CaptureRate 255 on both sides and the 0.15 duplicate-chain penalty, the
+        // true win rate is 255/(255+255*0.15) ≈ 87% (mean 870/1000, stddev ≈10.6) — 800
+        // leaves a ~6.5-stddev margin so this never flakes while still proving the bias.
+        Assert.True(unownedWins > 800, $"Expected unowned chain to win the large majority of rolls, got {unownedWins}/1000");
     }
 
     [Fact]
@@ -565,9 +568,11 @@ public class CatchRollerTests
             if (result.Nature == Nature.Jolly) jollyCount++;
         }
 
-        // Jolly is the only not-yet-owned nature for this species; the duplicate bias
-        // should make it come up far more often than the 1/25 uniform baseline (~20).
-        Assert.True(jollyCount > 100, $"Expected Jolly to dominate duplicate rolls, got {jollyCount}/500");
+        // Jolly is the only not-yet-owned nature for this species; with the 0.3 owned-
+        // nature weight against 24 owned natures, its true share is 1/(1+24*0.3) ≈ 12%
+        // (mean 61/500, stddev ≈7.3) — well above the 1/25 ≈ 4% uniform baseline. 35
+        // leaves a ~3.6-stddev margin so this never flakes while still proving the bias.
+        Assert.True(jollyCount > 35, $"Expected Jolly to come up far more than the uniform baseline, got {jollyCount}/500");
     }
 
     private static int CountShiny(IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlySet<int> ownedChainIds, int trials, int seed)
