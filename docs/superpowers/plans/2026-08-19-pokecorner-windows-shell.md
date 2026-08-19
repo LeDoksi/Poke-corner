@@ -1759,9 +1759,10 @@ public partial class App : Application
         // A single static frame for now — true Gen-V-style animated sprites come from
         // PokeAPI's separate animated-GIF sprite set, not the static front_default PNG
         // FetchSpriteAsync fetches; decoding multi-frame GIFs into FrameSequencer input
-        // is an explicit follow-up, not solved here. SpriteAnimator/FrameSequencer both
-        // already work correctly with a one-frame list (no visible cycling, just a
-        // static sprite) so nothing here is broken in the meantime.
+        // is Task 2 of docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md,
+        // deliberately sequenced after this plan ships and is verified. SpriteAnimator/
+        // FrameSequencer both already work correctly with a one-frame list (no visible
+        // cycling, just a static sprite) so nothing here is broken in the meantime.
         _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(spriteBytes) });
 
         if (_isFullscreenHiding)
@@ -1789,7 +1790,7 @@ public partial class App : Application
     private void OnCatchRollDue()
     {
         var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
-        var availableChains = _spriteCache.LoadOfflineStarters(); // Task 9 follow-up: merge with PokeApiClient-fetched full catalog once cached locally.
+        var availableChains = _spriteCache.LoadOfflineStarters(); // Widened to the full Gen 1-5 catalog by Task 1 of docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md, once this plan ships and is verified.
         var ownedNatures = _appState.Collection.Individuals
             .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
             .Select(i => i.Nature)
@@ -1854,7 +1855,7 @@ public partial class App : Application
 }
 ```
 
-`OnCatchRollDue` currently rolls only against `_spriteCache.LoadOfflineStarters()` (7 chains) rather than the full Gen 1-5 catalog — this is a deliberate, explicit scope boundary for this plan, not an oversight: fetching and caching the full ~150-chain catalog from PokeAPI is a separate, self-contained follow-up (a `SpeciesCatalog` that merges `PokeApiClient` fetches with an on-disk cache, refreshed lazily) that doesn't change any interface defined in this plan or the Core plan — `CatchRoller.RollCatch` already accepts `IReadOnlyList<SpeciesEvolutionChain>` from any source. Ship and manually verify with the 7-chain offline set first; widening the pool is a drop-in change to this one method once `SpeciesCatalog` exists.
+`OnCatchRollDue` currently rolls only against `_spriteCache.LoadOfflineStarters()` (7 chains) rather than the full Gen 1-5 catalog — this is a deliberate, explicit scope boundary for this plan, not an oversight: fetching and caching the full catalog from PokeAPI is Task 1 of `docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md` (a `SpeciesCatalog` that merges `PokeApiClient` fetches with an on-disk cache), which does not change any interface defined in this plan or the Core plan — `CatchRoller.RollCatch` already accepts `IReadOnlyList<SpeciesEvolutionChain>` from any source. Ship and manually verify with the 7-chain offline set first (per Task 9's smoke test below); the full-catalog and animated-sprite plan is intentionally sequenced to start only after that verification passes.
 
 - [ ] **Step 6: Run the full test suite**
 
