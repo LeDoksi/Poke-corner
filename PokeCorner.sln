@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2F4A06C4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeCorner.Core.Tests", "tests\PokeCorner.Core.Tests\PokeCorner.Core.Tests.csproj", "{28568213-4243-489B-87E0-A407663C33B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeCorner.App", "src\PokeCorner.App\PokeCorner.App.csproj", "{C5FEAD0E-E548-4FD4-A5AD-5F49E1D111FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeCorner.App.Tests", "tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj", "{92206859-3F6D-464F-BC79-F2F30F90F91B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,19 @@ Global
 		{28568213-4243-489B-87E0-A407663C33B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28568213-4243-489B-87E0-A407663C33B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28568213-4243-489B-87E0-A407663C33B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FEAD0E-E548-4FD4-A5AD-5F49E1D111FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FEAD0E-E548-4FD4-A5AD-5F49E1D111FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FEAD0E-E548-4FD4-A5AD-5F49E1D111FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FEAD0E-E548-4FD4-A5AD-5F49E1D111FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92206859-3F6D-464F-BC79-F2F30F90F91B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92206859-3F6D-464F-BC79-F2F30F90F91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92206859-3F6D-464F-BC79-F2F30F90F91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92206859-3F6D-464F-BC79-F2F30F90F91B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F4EE4A4F-D808-4428-AE79-AA10620E630A} = {8A03DDE4-F61B-490A-9239-3C70644991DC}
 		{28568213-4243-489B-87E0-A407663C33B7} = {2F4A06C4-7EA5-47BD-A9E5-64B8033684C2}
+		{C5FEAD0E-E548-4FD4-A5AD-5F49E1D111FF} = {8A03DDE4-F61B-490A-9239-3C70644991DC}
+		{92206859-3F6D-464F-BC79-F2F30F90F91B} = {2F4A06C4-7EA5-47BD-A9E5-64B8033684C2}
 	EndGlobalSection
 EndGlobal
