@@ -53,6 +53,7 @@ public class PokeApiClientTests
         Assert.Equal(1, chain.StarterSpeciesId);
         Assert.Equal(45, chain.CaptureRate);
         Assert.Equal(3, chain.ChainLength);
+        Assert.Equal(new[] { 1, 2, 3 }, chain.StageSpeciesIds);
     }
 
     [Fact]
@@ -73,5 +74,26 @@ public class PokeApiClientTests
         var chain = await client.FetchEvolutionChainAsync(chainId: 132);
 
         Assert.Equal(1, chain.ChainLength);
+        Assert.Equal(new[] { 132 }, chain.StageSpeciesIds);
+    }
+
+    [Fact]
+    public async Task FetchEvolutionChainAsync_SpeciesUrlWithoutNumericId_ThrowsClearInvalidOperationException()
+    {
+        const string json = """
+        {
+            "id": 1,
+            "chain": {
+                "species": { "name": "bulbasaur", "url": "https://pokeapi.co/api/v2/pokemon-species/not-a-number/" },
+                "evolves_to": []
+            },
+            "capture_rate": 45
+        }
+        """;
+        var client = new PokeApiClient(new StubHandler(json));
+
+        var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => client.FetchEvolutionChainAsync(chainId: 1));
+
+        Assert.Contains("not-a-number", ex.Message);
     }
 }

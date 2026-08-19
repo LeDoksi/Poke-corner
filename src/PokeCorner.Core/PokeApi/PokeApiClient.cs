@@ -24,13 +24,14 @@ public sealed class PokeApiClient
         // capture_rate lives on the species resource (pokemon-species/{id}/), not on the
         // evolution-chain resource, so it takes a second call.
         var captureRate = await FetchCaptureRateAsync(starterSpeciesId);
-        var chainLength = ComputeChainLength(chainNode);
+        var stageSpeciesIds = CollectStageSpeciesIds(chainNode);
 
         return new Domain.SpeciesEvolutionChain(
             ChainId: root.GetProperty("id").GetInt32(),
             StarterSpeciesId: starterSpeciesId,
             CaptureRate: captureRate,
-            ChainLength: chainLength);
+            ChainLength: stageSpeciesIds.Count,
+            StageSpeciesIds: stageSpeciesIds);
     }
 
     public async Task<int> FetchCaptureRateAsync(int speciesId)
@@ -46,21 +47,43 @@ public sealed class PokeApiClient
             $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{speciesId}.png");
     }
 
-    private static int ExtractIdFromUrl(string url) =>
-        int.Parse(url.TrimEnd('/').Split('/')[^1]);
-
-    private static int ComputeChainLength(JsonElement chainNode)
+    private static int ExtractIdFromUrl(string url)
     {
+        var lastSegment = url.TrimEnd('/').Split('/')[^1];
+        if (!int.TryParse(lastSegment, out var id))
+        {
+            throw new InvalidOperationException($"Could not extract a numeric id from URL: {url}");
+        }
+        return id;
+    }
+
+    /// <summary>
+    /// Walks the evolution chain tree and collects the species id at each stage along the
+    /// longest branch (mirroring the branch-picking behavior of the chain-length computation),
+    /// so the returned list's length always matches the resulting ChainLength.
+    /// </summary>
+    private static List<int> CollectStageSpeciesIds(JsonElement chainNode)
+    {
+        var speciesUrl = chainNode.GetProperty("species").GetProperty("url").GetString()!;
+        var speciesId = ExtractIdFromUrl(speciesUrl);
+
         if (!chainNode.TryGetProperty("evolves_to", out var evolvesTo) || evolvesTo.GetArrayLength() == 0)
         {
-            return 1;
+            return new List<int> { speciesId };
         }
 
-        var longestChildLength = 0;
+        List<int>? longestChildPath = null;
         foreach (var child in evolvesTo.EnumerateArray())
         {
-            longestChildLength = Math.Max(longestChildLength, ComputeChainLength(child));
+            var childPath = CollectStageSpeciesIds(child);
+            if (longestChildPath is null || childPath.Count > longestChildPath.Count)
+            {
+                longestChildPath = childPath;
+            }
         }
-        return 1 + longestChildLength;
+
+        var result = new List<int> { speciesId };
+        result.AddRange(longestChildPath!);
+        return result;
     }
 }
