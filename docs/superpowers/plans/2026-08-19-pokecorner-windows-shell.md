@@ -1709,6 +1709,7 @@ public partial class App : Application
         if (units > 0)
         {
             _appState.ApplyActivityUnits(units, DateTimeOffset.UtcNow);
+            _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
         }
 
         CheckHardcoreNeglect();
@@ -1870,7 +1871,8 @@ With everything wired, run through this checklist on the real machine:
 3. Go fullscreen in a video/game — overlay hides; exit fullscreen — overlay reappears.
 4. In Settings, temporarily lower `ActivityAccumulator.CatchCheckIntervalUnits` (Core) and `CareModeTuning.HardcoreNeglectThreshold`/`HardcoreRunAwayCooldown` (Core) to small test values, rebuild, and confirm: a second individual gets caught after crossing the lowered interval, and — with Care mode set to Hardcore — neglecting the active individual makes it leave the desktop with the "расстроен" notification and an unavailable row in Collection until the (shortened) cooldown passes. **Revert these constants to their real values before the next commit.**
 5. Toggle "Трекинг токенов" on with a Claude Code session actively running — confirm Care Points climb faster than clicks alone would explain.
-6. Close the app via the tray "Выход" — relaunch — confirm the collection, active pet, and all settings match what was there before closing (persistence round-trip).
+6. Switch Feeding mode to Economy — confirm ongoing activity also grows `_appState.Feeding.Treats` over time (visible via a breakpoint or temporary debug text, since Task 7/8's UI doesn't display the treat count directly), and that "Покормить / погладить" fails with zero treats but succeeds once at least one has accrued.
+7. Close the app via the tray "Выход" — relaunch — confirm the collection, active pet, and all settings match what was there before closing (persistence round-trip).
 
 - [ ] **Step 8: Commit**
 
