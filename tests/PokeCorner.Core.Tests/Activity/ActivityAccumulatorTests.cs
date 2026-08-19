@@ -51,4 +51,17 @@ public class ActivityAccumulatorTests
 
         Assert.Equal(3, raised);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-50)]
+    public void AddUnits_NonPositiveInput_IsIgnored(long units)
+    {
+        var accumulator = new ActivityAccumulator();
+        accumulator.AddUnits(100);
+
+        accumulator.AddUnits(units);
+
+        Assert.Equal(100, accumulator.TotalUnits);
+    }
 }

@@ -14,6 +14,8 @@ public sealed class ActivityAccumulator
 
     public void AddUnits(long units)
     {
+        if (units <= 0) return;
+
         TotalUnits += units;
         _unitsSinceLastCatchCheck += units;
 

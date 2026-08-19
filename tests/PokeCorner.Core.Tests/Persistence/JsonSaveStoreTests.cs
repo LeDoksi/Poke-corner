@@ -72,4 +72,42 @@ public class JsonSaveStoreTests : IDisposable
         Assert.True(File.Exists(nestedPath));
         Directory.Delete(Path.GetDirectoryName(nestedPath)!, recursive: true);
     }
+
+    [Fact]
+    public void Save_LeavesNoTempFileBehindAfterSuccess()
+    {
+        var store = new JsonSaveStore(_tempFile);
+
+        store.Save(new SaveData { Individuals = new(), Settings = new AppSettings(), FeedingTreats = 0 });
+
+        Assert.True(File.Exists(_tempFile));
+        Assert.False(File.Exists(_tempFile + ".tmp"));
+    }
+
+    [Fact]
+    public void Load_CorruptedJsonFile_ReturnsNullInsteadOfThrowing()
+    {
+        File.WriteAllText(_tempFile, "{not valid json");
+        var store = new JsonSaveStore(_tempFile);
+
+        var loaded = store.Load();
+
+        Assert.Null(loaded);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void Constructor_WhitespaceFilePath_Throws(string filePath)
+    {
+        Assert.Throws<ArgumentException>(() => new JsonSaveStore(filePath));
+    }
+
+    [Fact]
+    public void Constructor_NullFilePath_Throws()
+    {
+        // ArgumentException.ThrowIfNullOrWhiteSpace throws ArgumentNullException for null,
+        // which is itself an ArgumentException.
+        Assert.Throws<ArgumentNullException>(() => new JsonSaveStore(null!));
+    }
 }

@@ -7,7 +7,11 @@ public sealed class JsonSaveStore : ISaveStore
     private readonly string _filePath;
     private static readonly JsonSerializerOptions Options = new() { WriteIndented = true };
 
-    public JsonSaveStore(string filePath) => _filePath = filePath;
+    public JsonSaveStore(string filePath)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
+        _filePath = filePath;
+    }
 
     public void Save(SaveData data)
     {
@@ -16,13 +20,27 @@ public sealed class JsonSaveStore : ISaveStore
         {
             Directory.CreateDirectory(directory);
         }
-        File.WriteAllText(_filePath, JsonSerializer.Serialize(data, Options));
+
+        // Write to a temp file first, then atomically move it into place: a crash mid-write
+        // leaves either the old file intact or the new file complete, never a truncated one.
+        var tempPath = _filePath + ".tmp";
+        File.WriteAllText(tempPath, JsonSerializer.Serialize(data, Options));
+        File.Move(tempPath, _filePath, overwrite: true);
     }
 
     public SaveData? Load()
     {
         if (!File.Exists(_filePath)) return null;
         var json = File.ReadAllText(_filePath);
-        return JsonSerializer.Deserialize<SaveData>(json, Options);
+        try
+        {
+            return JsonSerializer.Deserialize<SaveData>(json, Options);
+        }
+        catch (JsonException)
+        {
+            // Treat a corrupted save file the same as a missing one — callers (e.g.
+            // FirstRunFlow.NeedsOnboarding) already handle null correctly.
+            return null;
+        }
     }
 }
