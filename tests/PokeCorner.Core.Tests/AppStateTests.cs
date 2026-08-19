@@ -1,6 +1,7 @@
 using PokeCorner.Core;
 using PokeCorner.Core.Activity;
 using PokeCorner.Core.Domain;
+using PokeCorner.Core.Persistence;
 using Xunit;
 
 namespace PokeCorner.Core.Tests;
@@ -42,6 +43,19 @@ public class AppStateTests
     }
 
     [Fact]
+    public void ApplyActivityUnits_RunningTotalNearIntMax_ClampsInsteadOfOverflowing()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.AccumulatedCarePoints = int.MaxValue - 10;
+        state.Collection.Add(individual);
+
+        state.ApplyActivityUnits(1000, DateTimeOffset.UtcNow);
+
+        Assert.Equal(int.MaxValue, individual.AccumulatedCarePoints);
+    }
+
+    [Fact]
     public void ApplyActivityUnits_NoActiveIndividual_DoesNotThrow()
     {
         var state = new AppState();
@@ -62,5 +76,87 @@ public class AppStateTests
         state.ApplyActivityUnits(ActivityAccumulator.CatchCheckIntervalUnits, DateTimeOffset.UtcNow);
 
         Assert.Equal(1, raised);
+    }
+
+    [Fact]
+    public void Hydrate_RoundTripsCareStateByIndividualId()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        var careState = new CareState
+        {
+            LastInteractionUtc = DateTimeOffset.UtcNow - TimeSpan.FromMinutes(30),
+            RanAwayUntilUtc = DateTimeOffset.UtcNow + TimeSpan.FromMinutes(15)
+        };
+        var data = new SaveData
+        {
+            Individuals = new List<PokemonIndividual> { individual },
+            ActiveIndividualId = individual.Id,
+            Settings = new AppSettings(),
+            FeedingTreats = 0,
+            CareStates = new Dictionary<Guid, CareState> { [individual.Id] = careState }
+        };
+
+        state.Hydrate(data);
+
+        Assert.True(state.CareStateByIndividualId.ContainsKey(individual.Id));
+        Assert.Equal(careState.LastInteractionUtc, state.CareStateByIndividualId[individual.Id].LastInteractionUtc);
+        Assert.Equal(careState.RanAwayUntilUtc, state.CareStateByIndividualId[individual.Id].RanAwayUntilUtc);
+    }
+
+    [Fact]
+    public void Hydrate_CopiesAllAppSettingsProperties()
+    {
+        var state = new AppState();
+        var settings = new AppSettings
+        {
+            CareMode = CareMode.Hardcore,
+            FeedingMode = FeedingMode.Economy,
+            TokenTrackingEnabled = true,
+            ActivityTrackingEnabled = false,
+            AutoHideInFullscreen = false,
+            StartWithWindows = true,
+            ScreenCorner = "TopLeft",
+            MonitorIndex = 2,
+            PetSizePixels = 64
+        };
+        var data = new SaveData
+        {
+            Individuals = new List<PokemonIndividual>(),
+            Settings = settings,
+            FeedingTreats = 0
+        };
+
+        state.Hydrate(data);
+
+        Assert.Equal(CareMode.Hardcore, state.Settings.CareMode);
+        Assert.Equal(FeedingMode.Economy, state.Settings.FeedingMode);
+        Assert.True(state.Settings.TokenTrackingEnabled);
+        Assert.False(state.Settings.ActivityTrackingEnabled);
+        Assert.False(state.Settings.AutoHideInFullscreen);
+        Assert.True(state.Settings.StartWithWindows);
+        Assert.Equal("TopLeft", state.Settings.ScreenCorner);
+        Assert.Equal(2, state.Settings.MonitorIndex);
+        Assert.Equal(64, state.Settings.PetSizePixels);
+    }
+
+    [Fact]
+    public void Hydrate_PopulatesCollectionFeedingAndActiveId()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        var data = new SaveData
+        {
+            Individuals = new List<PokemonIndividual> { individual },
+            ActiveIndividualId = individual.Id,
+            Settings = new AppSettings(),
+            FeedingTreats = 5
+        };
+
+        state.Hydrate(data);
+
+        Assert.Single(state.Collection.Individuals);
+        Assert.Equal(individual.Id, state.Collection.ActiveIndividualId);
+        Assert.Equal(5, state.Feeding.Treats);
     }
 }
