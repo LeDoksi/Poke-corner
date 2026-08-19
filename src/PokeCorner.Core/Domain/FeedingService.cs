@@ -20,6 +20,8 @@ public sealed class FeedingService
 
     public void EarnTreatsFromActivity(FeedingInventory inventory, long activityUnits)
     {
-        inventory.Treats += (int)(activityUnits / ActivityUnitsPerTreatEarned);
+        var totalUnits = inventory.RemainderUnits + activityUnits;
+        inventory.Treats += (int)(totalUnits / ActivityUnitsPerTreatEarned);
+        inventory.RemainderUnits = totalUnits % ActivityUnitsPerTreatEarned;
     }
 }
