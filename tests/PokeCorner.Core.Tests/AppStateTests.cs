@@ -159,4 +159,25 @@ public class AppStateTests
         Assert.Equal(individual.Id, state.Collection.ActiveIndividualId);
         Assert.Equal(5, state.Feeding.Treats);
     }
+
+    [Fact]
+    public void Hydrate_NullActiveIndividualIdWithNonEmptyCollection_LeavesNoActiveIndividual()
+    {
+        var state = new AppState();
+        var individual1 = MakeIndividual();
+        var individual2 = MakeIndividual();
+        var data = new SaveData
+        {
+            Individuals = new List<PokemonIndividual> { individual1, individual2 },
+            ActiveIndividualId = null,
+            Settings = new AppSettings(),
+            FeedingTreats = 0
+        };
+
+        state.Hydrate(data);
+
+        Assert.Equal(2, state.Collection.Individuals.Count);
+        Assert.Null(state.Collection.ActiveIndividualId);
+        Assert.Null(state.Collection.GetActive());
+    }
 }

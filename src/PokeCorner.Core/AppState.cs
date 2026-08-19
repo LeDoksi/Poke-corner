@@ -59,6 +59,10 @@ public sealed class AppState
         {
             Collection.SetActive(activeId);
         }
+        else if (data.ActiveIndividualId is null)
+        {
+            Collection.ClearActive();
+        }
 
         Settings.CareMode = data.Settings.CareMode;
         Settings.FeedingMode = data.Settings.FeedingMode;
