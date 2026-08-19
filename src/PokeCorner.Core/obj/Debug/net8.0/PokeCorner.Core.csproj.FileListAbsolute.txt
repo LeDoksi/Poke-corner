@@ -1,0 +1,11 @@
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.deps.json
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.pdb
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\PokeCorner.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\PokeCorner.Core.AssemblyInfoInputs.cache
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\PokeCorner.Core.AssemblyInfo.cs
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\PokeCorner.Core.csproj.CoreCompileInputs.cache
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\PokeCorner.Core.dll
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\refint\PokeCorner.Core.dll
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\PokeCorner.Core.pdb
+C:\Users\Georgy\OneDrive\Рабочий стол\нейронка\PokeTokenBar-Windows\.claude\worktrees\pokecorner-core-domain\src\PokeCorner.Core\obj\Debug\net8.0\ref\PokeCorner.Core.dll
