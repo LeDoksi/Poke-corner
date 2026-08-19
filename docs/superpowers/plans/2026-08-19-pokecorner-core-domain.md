@@ -29,7 +29,7 @@
 - Test: `tests/PokeCorner.Core.Tests/Domain/PokemonCollectionTests.cs`
 
 **Interfaces:**
-- Produces: `enum Nature` (25 values), `class PokemonIndividual { Guid Id; int SpeciesId; int EvolutionChainId; int ChainLength; Nature Nature; bool IsShiny; DateTimeOffset CaughtAtUtc; int AccumulatedCarePoints; EvolutionStage CurrentStage; }`, `class PokemonCollection { IReadOnlyList<PokemonIndividual> Individuals; Guid? ActiveIndividualId; void Add(PokemonIndividual); bool Release(Guid id); void SetActive(Guid id); PokemonIndividual? GetActive(); bool OwnsSpeciesChain(int evolutionChainId); }`
+- Produces: `enum Nature` (25 values), `class PokemonIndividual { Guid Id; int SpeciesId; int EvolutionChainId; int ChainLength; Nature Nature; bool IsShiny; DateTimeOffset CaughtAtUtc; int AccumulatedCarePoints; EvolutionStage CurrentStage; }`, `class PokemonCollection { IReadOnlyList<PokemonIndividual> Individuals; Guid? ActiveIndividualId; void Add(PokemonIndividual); bool Release(Guid id); void SetActive(Guid id); void ClearActive(); PokemonIndividual? GetActive(); bool OwnsSpeciesChain(int evolutionChainId); }`
 - Consumes: nothing (first task).
 
 - [ ] **Step 1: Scaffold the solution and projects**
@@ -152,6 +152,20 @@ public class PokemonCollectionTests
         Assert.True(collection.OwnsSpeciesChain(7));
         Assert.False(collection.OwnsSpeciesChain(8));
     }
+
+    [Fact]
+    public void ClearActive_LeavesDesktopEmptyWithoutRemovingAnyone()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual();
+        collection.Add(individual);
+
+        collection.ClearActive();
+
+        Assert.Null(collection.ActiveIndividualId);
+        Assert.Null(collection.GetActive());
+        Assert.Single(collection.Individuals);
+    }
 }
 ```
 
@@ -218,6 +232,12 @@ public sealed class PokemonCollection
         ActiveIndividualId = id;
     }
 
+    /// Leaves the desktop empty without removing anyone from the collection — used when
+    /// a Hardcore-mode individual runs away from neglect (spec: "никто не выходит
+    /// автоматически"; the App plan's composition root calls this, then the user
+    /// picks a replacement manually via the collection popup, or waits out the cooldown).
+    public void ClearActive() => ActiveIndividualId = null;
+
     public PokemonIndividual? GetActive() =>
         _individuals.FirstOrDefault(i => i.Id == ActiveIndividualId);
 
@@ -229,7 +249,7 @@ public sealed class PokemonCollection
 - [ ] **Step 7: Run tests to verify they pass**
 
 Run: `dotnet test tests/PokeCorner.Core.Tests`
-Expected: PASS, 6 tests green.
+Expected: PASS, 7 tests green.
 
 - [ ] **Step 8: Commit**
 
@@ -1900,7 +1920,7 @@ Expected: PASS, 3 tests green.
 - [ ] **Step 5: Run the full Core test suite**
 
 Run: `dotnet test tests/PokeCorner.Core.Tests`
-Expected: PASS, all tests across all 10 tasks green (≈51 tests).
+Expected: PASS, all tests across all 10 tasks green (≈52 tests).
 
 - [ ] **Step 6: Commit**
 
