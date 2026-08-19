@@ -1521,8 +1521,8 @@ public class FirstRunFlowTests
     {
         var offlineStarters = new List<SpeciesEvolutionChain>
         {
-            new(ChainId: 1, StarterSpeciesId: 1, CaptureRate: 45, ChainLength: 3),
-            new(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3)
+            new(ChainId: 1, StarterSpeciesId: 1, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 1, 2, 3 }),
+            new(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 })
         };
         var roller = new CatchRoller(new Random(Seed: 42));
 
@@ -1674,29 +1674,11 @@ public partial class App : Application
     private AppState BuildAppState(SaveData? loaded)
     {
         var state = new AppState();
-        if (loaded is null) return state;
-
-        foreach (var individual in loaded.Individuals) state.Collection.Add(individual);
-        if (loaded.ActiveIndividualId is { } activeId && state.Collection.Individuals.Any(i => i.Id == activeId))
+        if (loaded is not null)
         {
-            state.Collection.SetActive(activeId);
+            state.Hydrate(loaded);
         }
-        state.Feeding.Treats = loaded.FeedingTreats;
-        CopySettings(loaded.Settings, state.Settings);
         return state;
-    }
-
-    private static void CopySettings(AppSettings source, AppSettings target)
-    {
-        target.CareMode = source.CareMode;
-        target.FeedingMode = source.FeedingMode;
-        target.TokenTrackingEnabled = source.TokenTrackingEnabled;
-        target.ActivityTrackingEnabled = source.ActivityTrackingEnabled;
-        target.AutoHideInFullscreen = source.AutoHideInFullscreen;
-        target.StartWithWindows = source.StartWithWindows;
-        target.ScreenCorner = source.ScreenCorner;
-        target.MonitorIndex = source.MonitorIndex;
-        target.PetSizePixels = source.PetSizePixels;
     }
 
     private void OnGrowthTick()
@@ -1757,14 +1739,23 @@ public partial class App : Application
             .GetOrFetchAsync(active.SpeciesId, () => _pokeApiClient.FetchSpriteAsync(active.SpeciesId))
             .GetAwaiter().GetResult();
 
-        // A single static frame for now — true Gen-V-style animated sprites come from
-        // PokeAPI's separate animated-GIF sprite set, not the static front_default PNG
-        // FetchSpriteAsync fetches; decoding multi-frame GIFs into FrameSequencer input
-        // is Task 2 of docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md,
-        // deliberately sequenced after this plan ships and is verified. SpriteAnimator/
-        // FrameSequencer both already work correctly with a one-frame list (no visible
-        // cycling, just a static sprite) so nothing here is broken in the meantime.
-        _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(spriteBytes) });
+        // GetOrFetchAsync returns null on a network failure (e.g. offline first launch
+        // with nothing cached yet) rather than throwing — this is exactly the case the
+        // spec's "работает без сети с первого раза" requirement covers. Skip the frame
+        // update and leave whatever the overlay was already showing (or nothing, on a
+        // true cold start) rather than crashing; RefreshOverlayForActiveIndividual will
+        // be called again on the next state change or growth tick and can retry then.
+        if (spriteBytes is not null)
+        {
+            // A single static frame for now — true Gen-V-style animated sprites come from
+            // PokeAPI's separate animated-GIF sprite set, not the static front_default PNG
+            // FetchSpriteAsync fetches; decoding multi-frame GIFs into FrameSequencer input
+            // is Task 2 of docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md,
+            // deliberately sequenced after this plan ships and is verified. SpriteAnimator/
+            // FrameSequencer both already work correctly with a one-frame list (no visible
+            // cycling, just a static sprite) so nothing here is broken in the meantime.
+            _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(spriteBytes) });
+        }
 
         if (_isFullscreenHiding)
         {
@@ -1849,7 +1840,8 @@ public partial class App : Application
             Individuals = _appState.Collection.Individuals.ToList(),
             ActiveIndividualId = _appState.Collection.ActiveIndividualId,
             Settings = _appState.Settings,
-            FeedingTreats = _appState.Feeding.Treats
+            FeedingTreats = _appState.Feeding.Treats,
+            CareStates = new Dictionary<Guid, CareState>(_appState.CareStateByIndividualId)
         };
         _saveStore.Save(data);
     }
@@ -1861,7 +1853,7 @@ public partial class App : Application
 - [ ] **Step 6: Run the full test suite**
 
 Run: `dotnet test`
-Expected: PASS — every test from both the Core plan and this plan green (≈79 tests total: ≈52 in PokeCorner.Core.Tests, ≈27 in PokeCorner.App.Tests).
+Expected: PASS — every test from both the Core plan and this plan green (≈100 tests total: 73 in PokeCorner.Core.Tests — the Core plan's original ≈52 plus fixes and tests added during that plan's final whole-branch review — and ≈27 in PokeCorner.App.Tests).
 
 - [ ] **Step 7: End-to-end manual smoke test**
 
@@ -1872,7 +1864,8 @@ With everything wired, run through this checklist on the real machine:
 4. In Settings, temporarily lower `ActivityAccumulator.CatchCheckIntervalUnits` (Core) and `CareModeTuning.HardcoreNeglectThreshold`/`HardcoreRunAwayCooldown` (Core) to small test values, rebuild, and confirm: a second individual gets caught after crossing the lowered interval, and — with Care mode set to Hardcore — neglecting the active individual makes it leave the desktop with the "расстроен" notification and an unavailable row in Collection until the (shortened) cooldown passes. **Revert these constants to their real values before the next commit.**
 5. Toggle "Трекинг токенов" on with a Claude Code session actively running — confirm Care Points climb faster than clicks alone would explain.
 6. Switch Feeding mode to Economy — confirm ongoing activity also grows `_appState.Feeding.Treats` over time (visible via a breakpoint or temporary debug text, since Task 7/8's UI doesn't display the treat count directly), and that "Покормить / погладить" fails with zero treats but succeeds once at least one has accrued.
-7. Close the app via the tray "Выход" — relaunch — confirm the collection, active pet, and all settings match what was there before closing (persistence round-trip).
+7. With Care mode still Hardcore and the active individual having just run away (from step 4), close the app via the tray "Выход" **before** the shortened cooldown expires, then relaunch — confirm the desktop stays empty (no pet auto-appears) and the run-away individual's row in Collection is still marked unavailable, matching how long was left on the cooldown before closing. This exercises `AppState.Hydrate`'s null-active-individual restore and `SaveData.CareStates` round-trip together.
+8. Close the app via the tray "Выход" — relaunch — confirm the collection, active pet, and all settings match what was there before closing (persistence round-trip).
 
 - [ ] **Step 8: Commit**
 

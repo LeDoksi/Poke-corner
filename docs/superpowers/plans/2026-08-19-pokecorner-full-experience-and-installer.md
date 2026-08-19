@@ -383,8 +383,14 @@ if (animatedBytes is not null)
 else
 {
     // Fallback for the (small) set of species PokeAPI has no animated sprite for.
+    // GetOrFetchAsync returns null on a network failure rather than throwing (Core
+    // Domain plan's final review, finding E) — skip the frame update in that case,
+    // same as the static-only version this replaces.
     var staticBytes = _spriteCache.GetOrFetchAsync(active.SpeciesId, () => _pokeApiClient.FetchSpriteAsync(active.SpeciesId)).GetAwaiter().GetResult();
-    _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(staticBytes) });
+    if (staticBytes is not null)
+    {
+        _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(staticBytes) });
+    }
 }
 ```
 
