@@ -6,6 +6,7 @@ public sealed class ClaudeCodeUsageProvider : IActivitySource
 {
     private readonly string _projectsDirectory;
     private long _totalCountedSoFar;
+    private DateTime _totalCountedSoFarDate = DateTime.MinValue;
 
     public ClaudeCodeUsageProvider(string claudeHomeDirectory)
     {
@@ -14,6 +15,13 @@ public sealed class ClaudeCodeUsageProvider : IActivitySource
 
     public long ReadNewUnitsSinceLastCall()
     {
+        var today = DateTimeOffset.UtcNow.Date;
+        if (today != _totalCountedSoFarDate)
+        {
+            _totalCountedSoFar = 0;
+            _totalCountedSoFarDate = today;
+        }
+
         var todayTotal = SumTodaysTokens();
         var newUnits = Math.Max(0, todayTotal - _totalCountedSoFar);
         _totalCountedSoFar = todayTotal;

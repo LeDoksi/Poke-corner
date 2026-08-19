@@ -1,3 +1,4 @@
+using System.Reflection;
 using PokeCorner.Core.ActivitySources;
 using Xunit;
 
@@ -70,5 +71,24 @@ public class ClaudeCodeUsageProviderTests : IDisposable
         var secondCallUnits = provider.ReadNewUnitsSinceLastCall();
 
         Assert.Equal(50, secondCallUnits);
+    }
+
+    [Fact]
+    public void ReadNewUnitsSinceLastCall_DayRollover_ResetsCounterAndReturnsFullNewDayTotal()
+    {
+        var today = DateTimeOffset.UtcNow.ToString("O");
+        WriteSessionFile(
+            "{\"timestamp\":\"" + today + "\",\"message\":{\"usage\":{\"input_tokens\":100,\"output_tokens\":0,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0}}}");
+        var provider = new ClaudeCodeUsageProvider(_tempHome);
+        var firstCallUnits = provider.ReadNewUnitsSinceLastCall();
+        Assert.Equal(100, firstCallUnits);
+
+        // Simulate day rollover by setting _totalCountedSoFarDate to yesterday via reflection
+        var dateField = typeof(ClaudeCodeUsageProvider).GetField("_totalCountedSoFarDate", BindingFlags.NonPublic | BindingFlags.Instance);
+        dateField.SetValue(provider, DateTime.UtcNow.Date.AddDays(-1));
+
+        // Second call on "new day" with same data should return full 100 again, not 0
+        var secondCallUnits = provider.ReadNewUnitsSinceLastCall();
+        Assert.Equal(100, secondCallUnits);
     }
 }
