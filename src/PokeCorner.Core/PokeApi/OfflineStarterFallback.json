@@ -1,0 +1,9 @@
+[
+  { "ChainId": 1, "StarterSpeciesId": 1, "CaptureRate": 45, "ChainLength": 3 },
+  { "ChainId": 4, "StarterSpeciesId": 4, "CaptureRate": 45, "ChainLength": 3 },
+  { "ChainId": 7, "StarterSpeciesId": 7, "CaptureRate": 45, "ChainLength": 3 },
+  { "ChainId": 152, "StarterSpeciesId": 152, "CaptureRate": 45, "ChainLength": 3 },
+  { "ChainId": 155, "StarterSpeciesId": 155, "CaptureRate": 45, "ChainLength": 3 },
+  { "ChainId": 158, "StarterSpeciesId": 158, "CaptureRate": 45, "ChainLength": 3 },
+  { "ChainId": 10, "StarterSpeciesId": 25, "CaptureRate": 190, "ChainLength": 2 }
+]
