@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace PokeCorner.App.Tray;
@@ -6,8 +7,8 @@ namespace PokeCorner.App.Tray;
 public sealed class TrayIconService : IDisposable
 {
     private readonly NotifyIcon _notifyIcon;
-    private readonly Icon _activeIcon;
-    private readonly Icon _inactiveIcon;
+    private Icon _currentSpriteIcon;
+    private bool _isActivityTrackingIndicatorOn = true;
 
     public event Action? OpenCollectionRequested;
     public event Action? OpenSettingsRequested;
@@ -19,10 +20,7 @@ public sealed class TrayIconService : IDisposable
 
     public TrayIconService()
     {
-        _activeIcon = SystemIcons.Application;
-        _inactiveIcon = SystemIcons.Application;
-        // Task 9 replaces both icons with the app's real tray art (a plain sprite icon,
-        // and a dimmed/badged variant for when activity tracking is off) once assets exist.
+        _currentSpriteIcon = DrawPlaceholderPokeBallIcon();
 
         var menu = new ContextMenuStrip();
         menu.Items.Add("Коллекция", null, (_, _) => OpenCollectionRequested?.Invoke());
@@ -36,12 +34,62 @@ public sealed class TrayIconService : IDisposable
 
         _notifyIcon = new NotifyIcon
         {
-            Icon = _activeIcon,
+            Icon = _currentSpriteIcon,
             Visible = true,
             Text = "PokéCorner",
             ContextMenuStrip = menu
         };
         _notifyIcon.DoubleClick += (_, _) => OpenCollectionRequested?.Invoke();
+    }
+
+    /// Called from App.xaml.cs right where the overlay's sprite PNG bytes are already
+    /// decoded — the tray icon always matches whoever is currently on the desktop.
+    public void SetSpriteIcon(byte[] pngBytes)
+    {
+        using var stream = new MemoryStream(pngBytes);
+        using var bitmap = new Bitmap(stream);
+        var newIcon = Icon.FromHandle(bitmap.GetHicon());
+
+        _currentSpriteIcon.Dispose();
+        _currentSpriteIcon = newIcon;
+        _notifyIcon.Icon = _isActivityTrackingIndicatorOn ? _currentSpriteIcon : DesaturateIcon(_currentSpriteIcon);
+    }
+
+    private static Icon DrawPlaceholderPokeBallIcon()
+    {
+        using var bitmap = new Bitmap(32, 32);
+        using (var g = Graphics.FromImage(bitmap))
+        {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.FillPie(Brushes.Red, 1, 1, 30, 30, 180, 180);
+            g.FillPie(Brushes.White, 1, 1, 30, 30, 0, 180);
+            g.FillRectangle(Brushes.Black, 1, 14, 30, 4);
+            g.FillEllipse(Brushes.White, 12, 12, 8, 8);
+            g.DrawEllipse(Pens.Black, 12, 12, 8, 8);
+            g.DrawEllipse(Pens.Black, 1, 1, 30, 30);
+        }
+        return Icon.FromHandle(bitmap.GetHicon());
+    }
+
+    private static Icon DesaturateIcon(Icon source)
+    {
+        using var bitmap = source.ToBitmap();
+        var matrix = new System.Drawing.Imaging.ColorMatrix(new float[][]
+        {
+            new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
+            new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+            new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+            new float[] { 0, 0, 0, 1, 0 },
+            new float[] { 0, 0, 0, 0, 1 }
+        });
+        using var attributes = new System.Drawing.Imaging.ImageAttributes();
+        attributes.SetColorMatrix(matrix);
+        using var result = new Bitmap(bitmap.Width, bitmap.Height);
+        using (var g = Graphics.FromImage(result))
+        {
+            g.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, attributes);
+        }
+        return Icon.FromHandle(result.GetHicon());
     }
 
     /// Toggles the "Поймать!" menu item and tray tooltip so the player can see a catch
@@ -58,7 +106,8 @@ public sealed class TrayIconService : IDisposable
 
     public void SetActivityTrackingIndicator(bool isActive)
     {
-        _notifyIcon.Icon = isActive ? _activeIcon : _inactiveIcon;
+        _isActivityTrackingIndicatorOn = isActive;
+        _notifyIcon.Icon = isActive ? _currentSpriteIcon : DesaturateIcon(_currentSpriteIcon);
         _notifyIcon.Text = isActive ? "PokéCorner — трекинг активности включён" : "PokéCorner — трекинг активности выключен";
     }
 
@@ -69,5 +118,6 @@ public sealed class TrayIconService : IDisposable
     {
         _notifyIcon.Visible = false;
         _notifyIcon.Dispose();
+        _currentSpriteIcon.Dispose();
     }
 }

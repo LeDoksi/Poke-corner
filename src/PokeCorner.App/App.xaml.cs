@@ -317,6 +317,7 @@ public partial class App : System.Windows.Application
             // cycling, just a static sprite) so nothing here is broken in the meantime.
             _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(spriteBytes) });
             _activeSpriteBytes = spriteBytes;
+            _trayIconService.SetSpriteIcon(spriteBytes);
         }
 
         if (_isFullscreenHiding)
