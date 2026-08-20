@@ -1,0 +1,25 @@
+<UserControl x:Class="PokeCorner.App.Popup.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="8">
+        <TextBlock Text="Care mode" FontWeight="Bold" />
+        <ComboBox x:Name="CareModeCombo" SelectionChanged="CareModeCombo_SelectionChanged">
+            <ComboBoxItem Content="Chill" />
+            <ComboBoxItem Content="Hardcore" />
+        </ComboBox>
+
+        <TextBlock Text="Feeding mode" FontWeight="Bold" Margin="0,8,0,0" />
+        <ComboBox x:Name="FeedingModeCombo" SelectionChanged="FeedingModeCombo_SelectionChanged">
+            <ComboBoxItem Content="Simple" />
+            <ComboBoxItem Content="Economy" />
+        </ComboBox>
+
+        <CheckBox x:Name="TokenTrackingCheck" Content="Трекинг токенов Claude Code" Margin="0,8,0,0" Checked="TokenTrackingCheck_Changed" Unchecked="TokenTrackingCheck_Changed" />
+        <CheckBox x:Name="ActivityTrackingCheck" Content="Трекинг активности (клики/клавиши)" Margin="0,4,0,0" Checked="ActivityTrackingCheck_Changed" Unchecked="ActivityTrackingCheck_Changed" />
+        <CheckBox x:Name="FullscreenHideCheck" Content="Скрывать в полноэкранных приложениях" Margin="0,4,0,0" Checked="FullscreenHideCheck_Changed" Unchecked="FullscreenHideCheck_Changed" />
+        <CheckBox x:Name="AutostartCheck" Content="Запускать при входе в Windows" Margin="0,4,0,0" Checked="AutostartCheck_Changed" Unchecked="AutostartCheck_Changed" />
+
+        <TextBlock Text="Размер питомца" FontWeight="Bold" Margin="0,8,0,0" />
+        <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="192" ValueChanged="PetSizeSlider_ValueChanged" />
+    </StackPanel>
+</UserControl>
