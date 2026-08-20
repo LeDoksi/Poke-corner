@@ -1,0 +1,73 @@
+<!-- src/PokeCorner.App/Theme/PokedexTheme.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#1A1F3C" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#252B4A" />
+    <SolidColorBrush x:Key="AccentRedBrush" Color="#E63946" />
+    <SolidColorBrush x:Key="AccentYellowBrush" Color="#FFD166" />
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#F1F1F1" />
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#9AA0C3" />
+
+    <SolidColorBrush x:Key="RarityCommonBrush" Color="#9AA0C3" />
+    <SolidColorBrush x:Key="RarityUncommonBrush" Color="#52C97A" />
+    <SolidColorBrush x:Key="RarityRareBrush" Color="#4C8DF6" />
+    <SolidColorBrush x:Key="RarityLegendaryBrush" Color="#FFB020" />
+
+    <!-- Implicit (unkeyed) TargetType styles apply to every matching element in every
+         window that merges this dictionary — including AppMenuWindow, StarterSelectionWindow,
+         and OnboardingWindow, none of which need individual per-window styling code. This is
+         safe for OverlayWindow (Background="{x:Null}") and ProgressPanelWindow
+         (Background="#CC1A1F3C") because both already set a LOCAL Background value in their
+         own XAML, and a local value always wins over a style setter in WPF — so neither one's
+         carefully-tuned transparency is affected by this dictionary being merged app-wide. -->
+    <Style TargetType="Window">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentRedBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="Padding" Value="10,5" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="0.85" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.4" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="ProgressBar">
+        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource AccentYellowBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style TargetType="TabItem">
+        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
+        <Setter Property="Padding" Value="10,4" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource AccentRedBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+    </Style>
+</ResourceDictionary>

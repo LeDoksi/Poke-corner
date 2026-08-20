@@ -5,6 +5,7 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <local:BoolToYesNoConverter x:Key="BoolToYesNo" />
+        <local:RarityToBrushConverter x:Key="RarityToBrush" />
     </UserControl.Resources>
     <TabControl>
         <TabItem Header="Catch log">
@@ -109,7 +110,7 @@
                             <Border Width="100" Padding="6" Margin="4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
                                 <StackPanel>
                                     <TextBlock Text="{Binding SpeciesName}" FontWeight="Bold" TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding Rarity}" FontSize="10" Foreground="Gray" />
+                                    <TextBlock Text="{Binding Rarity}" FontSize="10" Foreground="{Binding Rarity, Converter={StaticResource RarityToBrush}}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
