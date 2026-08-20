@@ -30,6 +30,7 @@ public partial class App : System.Windows.Application
     private TrayIconService _trayIconService = null!;
     private ForegroundWindowMonitor _fullscreenMonitor = null!;
     private CatchRoller _catchRoller = null!;
+    private EggIncubationService _eggIncubationService = null!;
     private CareModeService _careModeService = null!;
     private FeedingService _feedingService = null!;
     private bool _isFullscreenHiding;
@@ -60,6 +61,7 @@ public partial class App : System.Windows.Application
         _spriteCache = new SpriteCache(AppPaths.GetSpriteCacheDirectory());
         _pokeApiClient = new PokeApiClient(new System.Net.Http.HttpClientHandler());
         _catchRoller = new CatchRoller();
+        _eggIncubationService = new EggIncubationService();
         _careModeService = new CareModeService();
         _feedingService = new FeedingService();
         _shopService = new ShopService();
@@ -413,14 +415,40 @@ public partial class App : System.Windows.Application
         }
     }
 
+    private bool HatchEgg(Guid eggId)
+    {
+        var egg = _appState.PendingEggs.FirstOrDefault(e => e.Id == eggId);
+        if (egg is null || !_eggIncubationService.IsReady(egg, DateTimeOffset.UtcNow)) return false;
+
+        var availableChains = _spriteCache.LoadOfflineStarters(); // Task 20 swaps this to _speciesCatalog.LoadCachedOrFallback()
+        var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
+        var ownedNatures = _appState.Collection.Individuals
+            .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
+            .Select(i => i.Nature)
+            .ToHashSet();
+
+        var result = _catchRoller.RollCatchFromTier(availableChains, egg.Tier, ownedChainIds, ownedNatures);
+        _appState.Collection.Add(new PokemonIndividual
+        {
+            SpeciesId = result.SpeciesId,
+            EvolutionChainId = result.ChainId,
+            ChainLength = result.ChainLength,
+            Nature = result.Nature,
+            IsShiny = result.IsShiny,
+            CaughtAtUtc = DateTimeOffset.UtcNow
+        });
+        _appState.PendingEggs.Remove(egg);
+        return true;
+    }
+
     private void OpenMenu(int tabIndex)
     {
         try
         {
             if (_menuWindow is null)
             {
-                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode);
-                var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes);
+                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _spriteCache.LoadOfflineStarters(), _appState.PendingEggs);
+                var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;

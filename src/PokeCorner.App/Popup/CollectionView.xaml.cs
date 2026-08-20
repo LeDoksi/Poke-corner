@@ -15,9 +15,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Action _onFeedRequested;
     private readonly Action _onStateChanged;
     private readonly Func<byte[]?> _getActiveSpriteBytes;
+    private readonly Func<Guid, bool> _onHatchRequested;
     private DispatcherTimer? _liveRefreshTimer;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<byte[]?> getActiveSpriteBytes)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<byte[]?> getActiveSpriteBytes, Func<Guid, bool> onHatchRequested)
     {
         InitializeComponent();
         _viewModel = viewModel;
@@ -26,6 +27,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _onFeedRequested = onFeedRequested;
         _onStateChanged = onStateChanged;
         _getActiveSpriteBytes = getActiveSpriteBytes;
+        _onHatchRequested = onHatchRequested;
         Loaded += (_, _) => StartLiveRefresh();
         Unloaded += (_, _) => StopLiveRefresh();
         Refresh();
@@ -74,6 +76,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         var spriteBytes = _getActiveSpriteBytes();
         ActiveSpriteImage.Source = spriteBytes is null ? null : DecodePng(spriteBytes);
+
+        PendingEggsList.ItemsSource = _viewModel.GetPendingEggEntries(DateTimeOffset.UtcNow);
+
+        var pokedex = _viewModel.GetPokedexEntries();
+        PokedexCountText.Text = $"Pokédex: {pokedex.Count} species";
+        PokedexGrid.ItemsSource = pokedex;
     }
 
     private static System.Windows.Media.ImageSource DecodePng(byte[] bytes)
@@ -107,6 +115,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var id = (Guid)((System.Windows.Controls.Button)sender).Tag;
         _viewModel.Release(id);
         _onStateChanged();
+        Refresh();
+    }
+
+    private void HatchButton_Click(object sender, RoutedEventArgs e)
+    {
+        var eggId = (Guid)((System.Windows.Controls.Button)sender).Tag;
+        if (_onHatchRequested(eggId))
+        {
+            _onStateChanged();
+        }
         Refresh();
     }
 }

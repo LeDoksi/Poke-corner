@@ -6,71 +6,116 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <local:BoolToYesNoConverter x:Key="BoolToYesNo" />
     </UserControl.Resources>
-    <StackPanel>
-        <DockPanel Margin="8">
-            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <Button x:Name="PetButton" Content="Погладить" Click="PetButton_Click" Margin="0,0,4,0"
-                        ToolTip="Бесплатно, всегда доступно. Тот же эффект, что и клик по питомцу на рабочем столе." />
-                <Button x:Name="FeedButton" Content="Покормить" Click="FeedButton_Click"
-                        ToolTip="Требует одно лакомство, даёт больше очков роста, чем поглаживание." />
-            </StackPanel>
-            <Image x:Name="ActiveSpriteImage" Width="48" Height="48" Margin="0,0,8,0"
-                   RenderOptions.BitmapScalingMode="NearestNeighbor" DockPanel.Dock="Left" />
+    <TabControl>
+        <TabItem Header="Catch log">
             <StackPanel>
-                <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
-                <TextBlock Text="Care Points — очки роста активного питомца, растут от активности за ПК" FontSize="10" Foreground="Gray" />
-                <TextBlock x:Name="TreatsText" FontSize="10" Foreground="Gray" />
+                <DockPanel Margin="8">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button x:Name="PetButton" Content="Погладить" Click="PetButton_Click" Margin="0,0,4,0"
+                                ToolTip="Бесплатно, всегда доступно. Тот же эффект, что и клик по питомцу на рабочем столе." />
+                        <Button x:Name="FeedButton" Content="Покормить" Click="FeedButton_Click"
+                                ToolTip="Требует одно лакомство, даёт больше очков роста, чем поглаживание." />
+                    </StackPanel>
+                    <Image x:Name="ActiveSpriteImage" Width="48" Height="48" Margin="0,0,8,0"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor" DockPanel.Dock="Left" />
+                    <StackPanel>
+                        <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
+                        <TextBlock Text="Care Points — очки роста активного питомца, растут от активности за ПК" FontSize="10" Foreground="Gray" />
+                        <TextBlock x:Name="TreatsText" FontSize="10" Foreground="Gray" />
+                    </StackPanel>
+                </DockPanel>
+
+                <StackPanel Margin="8,0,8,4">
+                    <TextBlock Text="До поимки" FontSize="10" Foreground="Gray" />
+                    <ProgressBar x:Name="CatchProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
+                    <TextBlock Text="До эволюции" FontSize="10" Foreground="Gray" />
+                    <ProgressBar x:Name="EvolutionProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
+                    <TextBlock Text="До лакомства" FontSize="10" Foreground="Gray" />
+                    <ProgressBar x:Name="TreatProgressBar" Minimum="0" Maximum="1" Height="8" />
+                </StackPanel>
+
+                <TextBlock Text="Яйца в инкубации" FontWeight="Bold" Margin="8,4,8,0" />
+                <ItemsControl x:Name="PendingEggsList" Margin="8,2,8,4">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="6" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Tier}" FontWeight="Bold" />
+                                    <ProgressBar Value="{Binding HatchFraction, Mode=OneWay}" Minimum="0" Maximum="1" Height="6" Margin="0,4,0,4" />
+                                    <Button Content="Вылупить!" Tag="{Binding EggId}" Click="HatchButton_Click" IsEnabled="{Binding IsReady}" HorizontalAlignment="Left" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Grid Margin="8,4,8,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Покемон" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" Text="На столе" FontWeight="Bold" />
+                    <TextBlock Grid.Column="2" Text="Доступен" FontWeight="Bold" ToolTip="В Hardcore-режиме питомец может временно &quot;обидеться&quot; и стать недоступным" />
+                </Grid>
+
+                <ItemsControl x:Name="EntriesList" Margin="8,2,8,8">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="6" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <TextBlock Text="{Binding SpeciesName}" />
+                                            <TextBlock Text=" ✨" Visibility="{Binding IsShiny, Converter={StaticResource BoolToVis}}" ToolTip="Шайни — редкая цветовая форма" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" Text="{Binding IsActive, Converter={StaticResource BoolToYesNo}}" />
+                                        <TextBlock Grid.Column="2" Text="{Binding IsAvailableToActivate, Converter={StaticResource BoolToYesNo}}" />
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click" Margin="4,0"
+                                                    ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
+                                            <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click"
+                                                    ToolTip="Насовсем удалить этого покемона из коллекции" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <ProgressBar Value="{Binding EvolutionFraction, Mode=OneWay}" Minimum="0" Maximum="1" Height="4" Margin="0,4,0,0"
+                                                 ToolTip="Прогресс до следующей эволюции" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
-        </DockPanel>
-
-        <StackPanel Margin="8,0,8,4">
-            <TextBlock Text="До поимки" FontSize="10" Foreground="Gray" />
-            <ProgressBar x:Name="CatchProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
-            <TextBlock Text="До эволюции" FontSize="10" Foreground="Gray" />
-            <ProgressBar x:Name="EvolutionProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
-            <TextBlock Text="До лакомства" FontSize="10" Foreground="Gray" />
-            <ProgressBar x:Name="TreatProgressBar" Minimum="0" Maximum="1" Height="8" />
-        </StackPanel>
-
-        <Grid Margin="8,4,8,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140" />
-                <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="90" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Покемон" FontWeight="Bold" />
-            <TextBlock Grid.Column="1" Text="На столе" FontWeight="Bold" />
-            <TextBlock Grid.Column="2" Text="Доступен" FontWeight="Bold" ToolTip="В Hardcore-режиме питомец может временно &quot;обидеться&quot; и стать недоступным" />
-        </Grid>
-
-        <ItemsControl x:Name="EntriesList" Margin="8,2,8,8">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border Padding="6" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="140" />
-                                <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="90" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <TextBlock Text="{Binding SpeciesName}" />
-                                <TextBlock Text=" ✨" Visibility="{Binding IsShiny, Converter={StaticResource BoolToVis}}" ToolTip="Шайни — редкая цветовая форма" />
-                            </StackPanel>
-                            <TextBlock Grid.Column="1" Text="{Binding IsActive, Converter={StaticResource BoolToYesNo}}" />
-                            <TextBlock Grid.Column="2" Text="{Binding IsAvailableToActivate, Converter={StaticResource BoolToYesNo}}" />
-                            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click" Margin="4,0"
-                                        ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
-                                <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click"
-                                        ToolTip="Насовсем удалить этого покемона из коллекции" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </StackPanel>
+        </TabItem>
+        <TabItem Header="Pokédex">
+            <StackPanel>
+                <TextBlock x:Name="PokedexCountText" FontWeight="Bold" Margin="8" />
+                <ItemsControl x:Name="PokedexGrid" Margin="4">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="100" Padding="6" Margin="4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SpeciesName}" FontWeight="Bold" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Rarity}" FontSize="10" Foreground="Gray" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>

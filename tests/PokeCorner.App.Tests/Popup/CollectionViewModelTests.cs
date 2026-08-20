@@ -6,10 +6,10 @@ namespace PokeCorner.App.Tests.Popup;
 
 public class CollectionViewModelTests
 {
-    private static PokemonIndividual MakeIndividual(int speciesId) => new()
+    private static PokemonIndividual MakeIndividual(int speciesId = 1, int? evolutionChainId = null) => new()
     {
         SpeciesId = speciesId,
-        EvolutionChainId = speciesId,
+        EvolutionChainId = evolutionChainId ?? speciesId,
         ChainLength = 3,
         Nature = Nature.Hardy,
         IsShiny = false,
@@ -24,7 +24,7 @@ public class CollectionViewModelTests
         var second = MakeIndividual(2);
         collection.Add(first);
         collection.Add(second);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
@@ -39,7 +39,7 @@ public class CollectionViewModelTests
         var individual = MakeIndividual(1);
         collection.Add(individual);
         var careStates = new Dictionary<Guid, CareState> { [individual.Id] = new CareState { LastInteractionUtc = DateTimeOffset.UtcNow - TimeSpan.FromDays(5) } };
-        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), CareMode.Chill);
+        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
 
@@ -57,7 +57,7 @@ public class CollectionViewModelTests
         var careModeService = new CareModeService();
         careModeService.TriggerRunAway(careState, now);
         var careStates = new Dictionary<Guid, CareState> { [individual.Id] = careState };
-        var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore);
+        var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entry = vm.GetEntries(now).Single();
 
@@ -78,7 +78,7 @@ public class CollectionViewModelTests
         var careModeService = new CareModeService();
         careModeService.TriggerRunAway(careState, now);
         var careStates = new Dictionary<Guid, CareState> { [second.Id] = careState };
-        var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore);
+        var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var result = vm.TrySetActive(second.Id, now);
 
@@ -94,7 +94,7 @@ public class CollectionViewModelTests
         var second = MakeIndividual(2);
         collection.Add(first);
         collection.Add(second);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var result = vm.TrySetActive(second.Id, DateTimeOffset.UtcNow);
 
@@ -111,7 +111,7 @@ public class CollectionViewModelTests
         var nowUtc = DateTimeOffset.UtcNow;
         var careState = new CareState { LastInteractionUtc = nowUtc - TimeSpan.FromDays(2) };
         var careStates = new Dictionary<Guid, CareState> { [individual.Id] = careState };
-        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), CareMode.Chill);
+        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var result = vm.TrySetActive(individual.Id, nowUtc);
 
@@ -125,11 +125,77 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         var individual = MakeIndividual(1);
         collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var released = vm.Release(individual.Id);
 
         Assert.True(released);
         Assert.Empty(collection.Individuals);
+    }
+
+    [Fact]
+    public void GetEntries_IncludesRarityFromChainCaptureRate()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(evolutionChainId: 1);
+        collection.Add(individual);
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 1, StarterSpeciesId: individual.SpeciesId, CaptureRate: 255, ChainLength: 3, StageSpeciesIds: new[] { individual.SpeciesId }) };
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+
+        var entries = vm.GetEntries(DateTimeOffset.UtcNow);
+
+        Assert.Equal(RarityTier.Common, entries.Single().Rarity);
+    }
+
+    [Fact]
+    public void GetPokedexEntries_DedupesBySpeciesIdAcrossIndividuals()
+    {
+        var collection = new PokemonCollection();
+        var chainId = 1;
+        var speciesId = 10;
+        collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
+        collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: chainId, StarterSpeciesId: speciesId, CaptureRate: 100, ChainLength: 3, StageSpeciesIds: new[] { speciesId }) };
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+
+        var pokedex = vm.GetPokedexEntries();
+
+        Assert.Single(pokedex);
+        Assert.Equal(speciesId, pokedex[0].SpeciesId);
+    }
+
+    [Fact]
+    public void GetPokedexEntries_NoIndividualsOwnAnySpecies_IsEmpty()
+    {
+        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        Assert.Empty(vm.GetPokedexEntries());
+    }
+
+    [Fact]
+    public void GetPendingEggEntries_NotYetReady_HatchFractionBetweenZeroAndOneAndNotReady()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var egg = new PendingEgg { Tier = RarityTier.Rare, ReadyAtUtc = now + TimeSpan.FromMinutes(30) }; // half-incubated
+        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg> { egg });
+
+        var entries = vm.GetPendingEggEntries(now);
+
+        Assert.Equal(egg.Id, entries.Single().EggId);
+        Assert.False(entries.Single().IsReady);
+        Assert.InRange(entries.Single().HatchFraction, 0.45, 0.55);
+    }
+
+    [Fact]
+    public void GetPendingEggEntries_PastReadyTime_IsReady()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var egg = new PendingEgg { Tier = RarityTier.Common, ReadyAtUtc = now - TimeSpan.FromMinutes(1) };
+        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg> { egg });
+
+        var entries = vm.GetPendingEggEntries(now);
+
+        Assert.True(entries.Single().IsReady);
+        Assert.Equal(1.0, entries.Single().HatchFraction);
     }
 }
