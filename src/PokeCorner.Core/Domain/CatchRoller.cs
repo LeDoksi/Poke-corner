@@ -51,6 +51,17 @@ public sealed class CatchRoller
         return RollCatch(tierChains, ownedChainIds, ownedNaturesForDuplicateChain, shinyChanceMultiplier);
     }
 
+    // Used for starter selection: the player has already picked the species, so this
+    // skips the weighted chain-picking logic entirely and just rolls nature/shiny for the
+    // one chain they chose. Always WasDuplicateSpecies: false — it's necessarily the very
+    // first individual of a brand-new collection.
+    public CatchResult RollFromChain(SpeciesEvolutionChain chain)
+    {
+        var isShiny = _random.NextDouble() < BaseShinyChance;
+        var nature = PickUniformNature();
+        return new CatchResult(chain.ChainId, chain.StarterSpeciesId, nature, isShiny, WasDuplicateSpecies: false, chain.ChainLength);
+    }
+
     private SpeciesEvolutionChain PickChain(IReadOnlyList<SpeciesEvolutionChain> allChains, IReadOnlySet<int> ownedChainIds)
     {
         var weights = allChains

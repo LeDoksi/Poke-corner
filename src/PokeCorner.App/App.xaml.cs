@@ -73,7 +73,24 @@ public partial class App : System.Windows.Application
 
         if (FirstRunFlow.NeedsOnboarding(loaded))
         {
-            var starter = FirstRunFlow.HatchStarter(_catchRoller, _spriteCache.LoadOfflineStarters(), DateTimeOffset.UtcNow);
+            var allChains = _spriteCache.LoadOfflineStarters();
+            var commonCandidates = allChains
+                .Where(c => RarityClassifier.Classify(c.CaptureRate) == RarityTier.Common)
+                .OrderBy(_ => Random.Shared.Next())
+                .Take(3)
+                .ToList();
+            if (commonCandidates.Count == 0)
+            {
+                // Defensive fallback — shouldn't happen given the offline catalog's known
+                // capture rates, but never leave the player with zero choices.
+                commonCandidates = allChains.Take(3).ToList();
+            }
+
+            var selectionWindow = new StarterSelectionWindow(commonCandidates, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
+            var dialogChoseOne = selectionWindow.ShowDialog() == true;
+            var chosenChain = dialogChoseOne ? selectionWindow.Chosen! : commonCandidates[0]; // window closed without a pick (e.g. Alt+F4) still needs a starter
+
+            var starter = FirstRunFlow.HatchChosen(chosenChain, _catchRoller, DateTimeOffset.UtcNow);
             _appState.Collection.Add(starter);
         }
 

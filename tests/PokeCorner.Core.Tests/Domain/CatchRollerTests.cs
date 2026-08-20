@@ -112,6 +112,18 @@ public class CatchRollerTests
             roller.RollCatchFromTier(chains, RarityTier.Legendary, new HashSet<int>(), new HashSet<Nature>()));
     }
 
+    [Fact]
+    public void RollFromChain_ReturnsResultForGivenChainAndIsNeverADuplicate()
+    {
+        var roller = new CatchRoller(new Random(Seed: 30));
+
+        var result = roller.RollFromChain(CommonUnowned);
+
+        Assert.Equal(CommonUnowned.ChainId, result.ChainId);
+        Assert.Equal(CommonUnowned.StarterSpeciesId, result.SpeciesId);
+        Assert.False(result.WasDuplicateSpecies);
+    }
+
     private static int CountShiny(IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlySet<int> ownedChainIds, int trials, int seed)
     {
         var roller = new CatchRoller(new Random(seed));

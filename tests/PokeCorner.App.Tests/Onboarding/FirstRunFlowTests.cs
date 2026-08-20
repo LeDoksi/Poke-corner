@@ -35,18 +35,16 @@ public class FirstRunFlowTests
     }
 
     [Fact]
-    public void HatchStarter_ProducesIndividualFromOfflineStarterChains()
+    public void HatchChosen_ProducesIndividualMatchingTheChosenChain()
     {
-        var offlineStarters = new List<SpeciesEvolutionChain>
-        {
-            new(ChainId: 1, StarterSpeciesId: 1, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 1, 2, 3 }),
-            new(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 })
-        };
+        var chosenChain = new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 });
         var roller = new CatchRoller(new Random(Seed: 42));
 
-        var starter = FirstRunFlow.HatchStarter(roller, offlineStarters, DateTimeOffset.UtcNow);
+        var starter = FirstRunFlow.HatchChosen(chosenChain, roller, DateTimeOffset.UtcNow);
 
-        Assert.Contains(starter.EvolutionChainId, offlineStarters.Select(c => c.ChainId));
+        Assert.Equal(chosenChain.StarterSpeciesId, starter.SpeciesId);
+        Assert.Equal(chosenChain.ChainId, starter.EvolutionChainId);
+        Assert.Equal(chosenChain.ChainLength, starter.ChainLength);
         Assert.Equal(0, starter.AccumulatedCarePoints);
         Assert.Equal(EvolutionStage.Stage1, starter.CurrentStage);
     }
