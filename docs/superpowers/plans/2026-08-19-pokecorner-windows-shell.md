@@ -1674,6 +1674,7 @@ public partial class App : System.Windows.Application
     private CareModeService _careModeService = null!;
     private FeedingService _feedingService = null!;
     private bool _isFullscreenHiding;
+    private bool _isFullscreenMonitorRunning;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -1698,16 +1699,6 @@ public partial class App : System.Windows.Application
         _appState.CatchRollDue += OnCatchRollDue;
 
         _inputCounter = new InputEventCounter();
-        if (_appState.Settings.ActivityTrackingEnabled)
-        {
-            _inputHook = new GlobalInputHook(_inputCounter);
-            _inputHook.Start();
-        }
-
-        if (_appState.Settings.TokenTrackingEnabled)
-        {
-            _tokenUsageProvider = new ClaudeCodeUsageProvider(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.claude");
-        }
 
         _growthTickTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
         _growthTickTimer.Tick += (_, _) => OnGrowthTick();
@@ -1721,13 +1712,22 @@ public partial class App : System.Windows.Application
         _fullscreenMonitor = new ForegroundWindowMonitor(
             onFullscreenEntered: () => { _isFullscreenHiding = true; RefreshOverlayForActiveIndividual(); },
             onFullscreenExited: () => { _isFullscreenHiding = false; RefreshOverlayForActiveIndividual(); });
-        if (_appState.Settings.AutoHideInFullscreen) _fullscreenMonitor.Start();
 
         _trayIconService = new TrayIconService();
-        _trayIconService.SetActivityTrackingIndicator(_appState.Settings.ActivityTrackingEnabled);
         _trayIconService.OpenCollectionRequested += OpenCollectionWindow;
         _trayIconService.OpenSettingsRequested += OpenSettingsWindow;
         _trayIconService.ExitRequested += () => Shutdown();
+
+        // Activity/token tracking and fullscreen auto-hide are all live-togglable from
+        // Settings (SettingsView mutates _appState.Settings directly, with no callback
+        // into App) — ReconcileSettingsState is what actually notices the change and
+        // starts/stops the underlying hook/provider/monitor, called once now for the
+        // initial state and then every growth tick (see OnGrowthTick) so a toggle takes
+        // effect within 5 seconds rather than requiring a restart. This matters most for
+        // ActivityTrackingEnabled specifically: it's presented to the user as a privacy
+        // switch, so turning it off must actually stop GlobalInputHook, not just freeze
+        // the tray indicator while the hook keeps running until the process exits.
+        ReconcileSettingsState();
 
         Exit += (_, _) => SaveState();
     }
@@ -1744,6 +1744,8 @@ public partial class App : System.Windows.Application
 
     private void OnGrowthTick()
     {
+        ReconcileSettingsState();
+
         var units = _inputCounter.DrainUnits();
         if (_tokenUsageProvider is not null)
         {
@@ -1776,6 +1778,54 @@ public partial class App : System.Windows.Application
         _appState.Collection.ClearActive();
         RefreshOverlayForActiveIndividual();
         _trayIconService.ShowNotification("PokéCorner", "Питомец расстроен и не хочет возвращаться на стол ещё час.");
+    }
+
+    /// Makes ActivityTrackingEnabled, TokenTrackingEnabled, and AutoHideInFullscreen take
+    /// effect live instead of only at the next launch — SettingsView mutates
+    /// _appState.Settings directly with no callback into App, so this is what actually
+    /// starts/stops GlobalInputHook, ClaudeCodeUsageProvider, and ForegroundWindowMonitor
+    /// in response. Each branch only acts on an actual state transition (compares the
+    /// setting against whether the corresponding field is currently null/running), so
+    /// calling this every 5-second tick never double-starts GlobalInputHook (which isn't
+    /// safe to start twice — see Task 2) or re-triggers ForegroundWindowMonitor.Start()
+    /// while it's already running.
+    private void ReconcileSettingsState()
+    {
+        if (_appState.Settings.ActivityTrackingEnabled && _inputHook is null)
+        {
+            _inputHook = new GlobalInputHook(_inputCounter);
+            _inputHook.Start();
+        }
+        else if (!_appState.Settings.ActivityTrackingEnabled && _inputHook is not null)
+        {
+            _inputHook.Dispose();
+            _inputHook = null;
+        }
+        _trayIconService.SetActivityTrackingIndicator(_appState.Settings.ActivityTrackingEnabled);
+
+        if (_appState.Settings.TokenTrackingEnabled && _tokenUsageProvider is null)
+        {
+            _tokenUsageProvider = new ClaudeCodeUsageProvider(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.claude");
+        }
+        else if (!_appState.Settings.TokenTrackingEnabled && _tokenUsageProvider is not null)
+        {
+            _tokenUsageProvider = null;
+        }
+
+        if (_appState.Settings.AutoHideInFullscreen && !_isFullscreenMonitorRunning)
+        {
+            _fullscreenMonitor.Start();
+            _isFullscreenMonitorRunning = true;
+        }
+        else if (!_appState.Settings.AutoHideInFullscreen && _isFullscreenMonitorRunning)
+        {
+            _fullscreenMonitor.Stop();
+            _isFullscreenMonitorRunning = false;
+            // The overlay may have been mid-hide from a fullscreen app when the user
+            // turned auto-hide off — force it back to reflecting the real active state.
+            _isFullscreenHiding = false;
+            RefreshOverlayForActiveIndividual();
+        }
     }
 
     /// Single entry point for "what should the overlay show right now" — called after
@@ -1923,7 +1973,7 @@ With everything wired, run through this checklist on the real machine:
 2. Move the mouse / type for a few minutes in another app — open the Collection popup, confirm `AccumulatedCarePoints` increased.
 3. Go fullscreen in a video/game — overlay hides; exit fullscreen — overlay reappears.
 4. In Settings, temporarily lower `ActivityAccumulator.CatchCheckIntervalUnits` (Core) and `CareModeTuning.HardcoreNeglectThreshold`/`HardcoreRunAwayCooldown` (Core) to small test values, rebuild, and confirm: a second individual gets caught after crossing the lowered interval, and — with Care mode set to Hardcore — neglecting the active individual makes it leave the desktop with the "расстроен" notification and an unavailable row in Collection until the (shortened) cooldown passes. **Revert these constants to their real values before the next commit.**
-5. Toggle "Трекинг токенов" on with a Claude Code session actively running — confirm Care Points climb faster than clicks alone would explain.
+5. Toggle "Трекинг токенов" on **without restarting the app**, with a Claude Code session actively running — confirm Care Points start climbing faster than clicks alone would explain within a few seconds (proves `ReconcileSettingsState` picked up the change live, not just at next launch). Also toggle "Трекинг активности" off mid-session and confirm the tray tooltip flips immediately and Care Points growth from clicking/typing actually stops (not just that the indicator changes).
 6. Switch Feeding mode to Economy — confirm ongoing activity also grows `_appState.Feeding.Treats` over time (visible via a breakpoint or temporary debug text, since Task 7/8's UI doesn't display the treat count directly), and that "Покормить / погладить" fails with zero treats but succeeds once at least one has accrued.
 7. With Care mode still Hardcore and the active individual having just run away (from step 4), close the app via the tray "Выход" **before** the shortened cooldown expires, then relaunch — confirm the desktop stays empty (no pet auto-appears) and the run-away individual's row in Collection is still marked unavailable, matching how long was left on the cooldown before closing. This exercises `AppState.Hydrate`'s null-active-individual restore and `SaveData.CareStates` round-trip together.
 8. Close the app via the tray "Выход" — relaunch — confirm the collection, active pet, and all settings match what was there before closing (persistence round-trip).
