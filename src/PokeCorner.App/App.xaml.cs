@@ -278,6 +278,44 @@ public partial class App : System.Windows.Application
 
         var displaySpeciesId = ResolveDisplaySpeciesId(active);
 
+        byte[]? animatedBytes = null;
+        try
+        {
+            animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(displaySpeciesId);
+        }
+        catch
+        {
+            // Same defense-in-depth as the static-sprite catch below — network errors already
+            // degrade to null inside PokeApiClient's normal paths; this guards unexpected ones.
+        }
+
+        if (animatedBytes is not null)
+        {
+            if (generation != _overlayRefreshGeneration)
+            {
+                // A newer refresh started (and possibly already finished) while we were
+                // awaiting the animated-sprite fetch above — applying our now-stale result
+                // would clobber it. Mirrors the staleness check below for the static path.
+                return;
+            }
+
+            var pngFrames = GifFrameDecoder.DecodeFramesAsPng(animatedBytes);
+            _overlayWindow.SetSpriteFrames(pngFrames.Select(DecodeSprite).ToList());
+            _activeSpriteBytes = pngFrames[0];
+            _trayIconService.SetSpriteIcon(pngFrames[0]);
+
+            if (_isFullscreenHiding)
+            {
+                _overlayWindow.Hide();
+            }
+            else
+            {
+                _overlayWindow.Show();
+            }
+
+            return;
+        }
+
         byte[]? spriteBytes = null;
         try
         {
