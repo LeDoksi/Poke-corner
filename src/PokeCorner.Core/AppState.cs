@@ -10,6 +10,7 @@ public sealed class AppState
     public AppSettings Settings { get; } = new();
     public ActivityAccumulator Activity { get; } = new();
     public FeedingInventory Feeding { get; } = new();
+    public ShopInventory Shop { get; } = new();
     public Dictionary<Guid, CareState> CareStateByIndividualId { get; } = new();
 
     public event Action? CatchRollDue;
@@ -84,6 +85,10 @@ public sealed class AppState
         Settings.ShowProgressPanel = data.Settings.ShowProgressPanel;
 
         Feeding.Treats = data.FeedingTreats;
+
+        Shop.Coins = data.ShopCoins;
+        Shop.RemainderUnits = data.ShopRemainderUnits;
+        Shop.CatchLuckyCharmActive = data.ShopCatchLuckyCharmActive;
 
         foreach (var (individualId, careState) in data.CareStates)
         {

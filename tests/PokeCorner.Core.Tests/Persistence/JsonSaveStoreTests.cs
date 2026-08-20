@@ -45,7 +45,10 @@ public class JsonSaveStoreTests : IDisposable
             Individuals = new List<PokemonIndividual> { individual },
             ActiveIndividualId = individual.Id,
             Settings = new AppSettings { CareMode = CareMode.Hardcore, PetSizePixels = 128 },
-            FeedingTreats = 7
+            FeedingTreats = 7,
+            ShopCoins = 15,
+            ShopRemainderUnits = 200,
+            ShopCatchLuckyCharmActive = true
         };
 
         store.Save(data);
@@ -59,6 +62,9 @@ public class JsonSaveStoreTests : IDisposable
         Assert.Equal(CareMode.Hardcore, loaded.Settings.CareMode);
         Assert.Equal(128, loaded.Settings.PetSizePixels);
         Assert.Equal(7, loaded.FeedingTreats);
+        Assert.Equal(15, loaded.ShopCoins);
+        Assert.Equal(200, loaded.ShopRemainderUnits);
+        Assert.True(loaded.ShopCatchLuckyCharmActive);
     }
 
     [Fact]

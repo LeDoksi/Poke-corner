@@ -192,4 +192,25 @@ public class AppStateTests
         Assert.Null(state.Collection.ActiveIndividualId);
         Assert.Null(state.Collection.GetActive());
     }
+
+    [Fact]
+    public void Hydrate_RoundTripsShopInventory()
+    {
+        var state = new AppState();
+        var data = new SaveData
+        {
+            Individuals = new List<PokemonIndividual>(),
+            Settings = new AppSettings(),
+            FeedingTreats = 0,
+            ShopCoins = 42,
+            ShopRemainderUnits = 300,
+            ShopCatchLuckyCharmActive = true
+        };
+
+        state.Hydrate(data);
+
+        Assert.Equal(42, state.Shop.Coins);
+        Assert.Equal(300, state.Shop.RemainderUnits);
+        Assert.True(state.Shop.CatchLuckyCharmActive);
+    }
 }
