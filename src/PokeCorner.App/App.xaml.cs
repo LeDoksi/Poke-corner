@@ -40,6 +40,7 @@ public partial class App : System.Windows.Application
     private ShopService _shopService = null!;
     private const int CollectionTabIndex = 0;
     private const int SettingsTabIndex = 1;
+    private const int ShopTabIndex = 2;
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
@@ -95,6 +96,7 @@ public partial class App : System.Windows.Application
         _trayIconService = new TrayIconService();
         _trayIconService.OpenCollectionRequested += () => OpenMenu(CollectionTabIndex);
         _trayIconService.OpenSettingsRequested += () => OpenMenu(SettingsTabIndex);
+        _trayIconService.OpenShopRequested += () => OpenMenu(ShopTabIndex);
         _trayIconService.CatchRequested += OnCatchRequested;
         _trayIconService.ExitRequested += () => Shutdown();
 
@@ -441,6 +443,13 @@ public partial class App : System.Windows.Application
         return true;
     }
 
+    private bool BuyEgg(RarityTier tier)
+    {
+        if (!_shopService.TrySpendForEgg(_appState.Shop, tier)) return false;
+        _appState.PendingEggs.Add(_eggIncubationService.StartIncubating(tier, DateTimeOffset.UtcNow));
+        return true;
+    }
+
     private void OpenMenu(int tabIndex)
     {
         try
@@ -450,7 +459,8 @@ public partial class App : System.Windows.Application
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _spriteCache.LoadOfflineStarters(), _appState.PendingEggs);
                 var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
-                _menuWindow = new AppMenuWindow(collectionView, settingsView);
+                var shopView = new ShopView(_appState, _shopService, BuyEgg, RefreshOverlayForActiveIndividual);
+                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.Show();
             }

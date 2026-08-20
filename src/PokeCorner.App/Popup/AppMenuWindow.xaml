@@ -6,5 +6,6 @@
     <TabControl x:Name="MenuTabControl">
         <TabItem x:Name="CollectionTab" Header="Коллекция" />
         <TabItem x:Name="SettingsTab" Header="Настройки" />
+        <TabItem x:Name="ShopTab" Header="Магазин" />
     </TabControl>
 </Window>

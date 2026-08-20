@@ -89,4 +89,14 @@ public class ProgressCalculatorTests
 
         Assert.Equal(0.25, result.TreatFraction, precision: 3);
     }
+
+    [Fact]
+    public void ComputeCoinFraction_ReflectsRemainderUnits()
+    {
+        var shop = new ShopInventory { RemainderUnits = ShopService.ActivityUnitsPerCoinEarned / 4 };
+
+        var result = ProgressCalculator.ComputeCoinFraction(shop);
+
+        Assert.Equal(0.25, result, precision: 3);
+    }
 }

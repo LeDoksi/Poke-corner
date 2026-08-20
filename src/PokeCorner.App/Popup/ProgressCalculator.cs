@@ -16,6 +16,9 @@ public static class ProgressCalculator
         return new ProgressInfo(catchFraction, evolutionFraction, treatFraction);
     }
 
+    public static double ComputeCoinFraction(ShopInventory shop) =>
+        Math.Clamp((double)shop.RemainderUnits / ShopService.ActivityUnitsPerCoinEarned, 0.0, 1.0);
+
     private static double ComputeEvolutionFraction(PokemonIndividual individual)
     {
         if (individual.CurrentStage == EvolutionStage.Stage1 && individual.ChainLength >= 2)

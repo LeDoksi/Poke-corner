@@ -11,6 +11,7 @@ public sealed class TrayIconService : IDisposable
 
     public event Action? OpenCollectionRequested;
     public event Action? OpenSettingsRequested;
+    public event Action? OpenShopRequested;
     public event Action? CatchRequested;
     public event Action? ExitRequested;
 
@@ -26,6 +27,7 @@ public sealed class TrayIconService : IDisposable
         var menu = new ContextMenuStrip();
         menu.Items.Add("Коллекция", null, (_, _) => OpenCollectionRequested?.Invoke());
         menu.Items.Add("Настройки", null, (_, _) => OpenSettingsRequested?.Invoke());
+        menu.Items.Add("Магазин", null, (_, _) => OpenShopRequested?.Invoke());
         menu.Items.Add(new ToolStripSeparator());
         _catchMenuItem = new ToolStripMenuItem("Поймать! 🎣", null, (_, _) => CatchRequested?.Invoke()) { Enabled = false };
         menu.Items.Add(_catchMenuItem);
