@@ -1521,7 +1521,8 @@ git commit -m "Add SettingsViewModel, SettingsView, and AutostartRegistry"
 
 **Files:**
 - Create: `src/PokeCorner.App/Onboarding/FirstRunFlow.cs`
-- Modify: `src/PokeCorner.App/App.xaml.cs`
+- Modify: `src/PokeCorner.App/App.xaml`, `src/PokeCorner.App/App.xaml.cs`
+- Delete: `src/PokeCorner.App/MainWindow.xaml`, `src/PokeCorner.App/MainWindow.xaml.cs`
 - Test: `tests/PokeCorner.App.Tests/Onboarding/FirstRunFlowTests.cs`
 
 **Interfaces:**
@@ -1627,7 +1628,15 @@ public static class FirstRunFlow
 Run: `dotnet test tests/PokeCorner.App.Tests --filter FirstRunFlowTests`
 Expected: PASS, 4 tests green.
 
-- [ ] **Step 5: Wire the composition root in `App.xaml.cs`**
+- [ ] **Step 5: Retire the template's `MainWindow` and stop `App.xaml` auto-showing it**
+
+Every earlier task has left `App.xaml`/`MainWindow.xaml`/`MainWindow.xaml.cs` as the untouched WPF template default (Task 1's instruction). The template's `App.xaml` has `StartupUri="MainWindow.xaml"`, which makes WPF automatically create and show `MainWindow` as part of the framework's own startup sequence — independent of, and in addition to, whatever `OnStartup` does. Since this task's `OnStartup` shows `OverlayWindow` instead, leaving `StartupUri` in place would show **both** an empty template window and the overlay sprite on every launch.
+
+1. Open `src/PokeCorner.App/App.xaml` and delete the `StartupUri="MainWindow.xaml"` attribute from the `<Application ...>` root element (leave every other attribute, e.g. `x:Class`, untouched).
+2. Delete `src/PokeCorner.App/MainWindow.xaml` and `src/PokeCorner.App/MainWindow.xaml.cs` — nothing else in the project references `MainWindow` by name (confirmed: no other task's code creates or navigates to it), so it's dead weight once `StartupUri` no longer points at it.
+3. Run `dotnet build src/PokeCorner.App/PokeCorner.App.csproj` to confirm the project still builds with `MainWindow` gone (it won't reference anything that was depending on it).
+
+- [ ] **Step 6: Wire the composition root in `App.xaml.cs`**
 
 ```csharp
 // src/PokeCorner.App/App.xaml.cs
@@ -1648,7 +1657,7 @@ using PokeCorner.Core.Persistence;
 
 namespace PokeCorner.App;
 
-public partial class App : Application
+public partial class App : System.Windows.Application
 {
     private AppState _appState = null!;
     private JsonSaveStore _saveStore = null!;
@@ -1902,15 +1911,15 @@ public partial class App : Application
 
 `OnCatchRollDue` currently rolls only against `_spriteCache.LoadOfflineStarters()` (7 chains) rather than the full Gen 1-5 catalog — this is a deliberate, explicit scope boundary for this plan, not an oversight: fetching and caching the full catalog from PokeAPI is Task 1 of `docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md` (a `SpeciesCatalog` that merges `PokeApiClient` fetches with an on-disk cache), which does not change any interface defined in this plan or the Core plan — `CatchRoller.RollCatch` already accepts `IReadOnlyList<SpeciesEvolutionChain>` from any source. Ship and manually verify with the 7-chain offline set first (per Task 9's smoke test below); the full-catalog and animated-sprite plan is intentionally sequenced to start only after that verification passes.
 
-- [ ] **Step 6: Run the full test suite**
+- [ ] **Step 7: Run the full test suite**
 
 Run: `dotnet test`
 Expected: PASS — every test from both the Core plan and this plan green (≈100 tests total: 73 in PokeCorner.Core.Tests — the Core plan's original ≈52 plus fixes and tests added during that plan's final whole-branch review — and ≈27 in PokeCorner.App.Tests).
 
-- [ ] **Step 7: End-to-end manual smoke test**
+- [ ] **Step 8: End-to-end manual smoke test**
 
 With everything wired, run through this checklist on the real machine:
-1. Delete any existing `%AppData%\PokeCorner` folder, launch the app fresh — a starter hatches immediately, the overlay sprite appears in the default corner, and the tray icon shows up.
+1. Delete any existing `%AppData%\PokeCorner` folder, launch the app fresh — a starter hatches immediately, the overlay sprite appears in the default corner, and the tray icon shows up. Confirm no other window (the old template `MainWindow`) appears anywhere — Step 5 removed its only trigger (`StartupUri`), so if one still shows up, that step wasn't applied correctly.
 2. Move the mouse / type for a few minutes in another app — open the Collection popup, confirm `AccumulatedCarePoints` increased.
 3. Go fullscreen in a video/game — overlay hides; exit fullscreen — overlay reappears.
 4. In Settings, temporarily lower `ActivityAccumulator.CatchCheckIntervalUnits` (Core) and `CareModeTuning.HardcoreNeglectThreshold`/`HardcoreRunAwayCooldown` (Core) to small test values, rebuild, and confirm: a second individual gets caught after crossing the lowered interval, and — with Care mode set to Hardcore — neglecting the active individual makes it leave the desktop with the "расстроен" notification and an unavailable row in Collection until the (shortened) cooldown passes. **Revert these constants to their real values before the next commit.**
@@ -1919,9 +1928,10 @@ With everything wired, run through this checklist on the real machine:
 7. With Care mode still Hardcore and the active individual having just run away (from step 4), close the app via the tray "Выход" **before** the shortened cooldown expires, then relaunch — confirm the desktop stays empty (no pet auto-appears) and the run-away individual's row in Collection is still marked unavailable, matching how long was left on the cooldown before closing. This exercises `AppState.Hydrate`'s null-active-individual restore and `SaveData.CareStates` round-trip together.
 8. Close the app via the tray "Выход" — relaunch — confirm the collection, active pet, and all settings match what was there before closing (persistence round-trip).
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
-git add src/PokeCorner.App/Onboarding src/PokeCorner.App/App.xaml.cs tests/PokeCorner.App.Tests/Onboarding
+git add src/PokeCorner.App/Onboarding src/PokeCorner.App/App.xaml src/PokeCorner.App/App.xaml.cs tests/PokeCorner.App.Tests/Onboarding
+git rm src/PokeCorner.App/MainWindow.xaml src/PokeCorner.App/MainWindow.xaml.cs
 git commit -m "Wire composition root: onboarding, growth loop, catch rolls, overlay, tray, persistence"
 ```
