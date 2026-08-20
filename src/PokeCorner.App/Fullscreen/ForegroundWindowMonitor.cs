@@ -46,7 +46,7 @@ public sealed class ForegroundWindowMonitor : IDisposable
         var monitorInfo = MONITORINFO.Create();
         if (!GetMonitorInfo(monitorHandle, ref monitorInfo)) return false;
 
-        var style = GetWindowLong(foreground, GWL_STYLE);
+        int style = GetWindowLong(foreground, GWL_STYLE);
         var hasBorder = (style & (WS_CAPTION | WS_THICKFRAME)) != 0;
 
         var windowScreenRect = new ScreenRect(windowRect.Left, windowRect.Top, windowRect.Right - windowRect.Left, windowRect.Bottom - windowRect.Top);
@@ -66,8 +66,8 @@ public sealed class ForegroundWindowMonitor : IDisposable
     }
 
     private const int GWL_STYLE = -16;
-    private const long WS_CAPTION = 0x00C00000L;
-    private const long WS_THICKFRAME = 0x00040000L;
+    private const int WS_CAPTION = 0x00C00000;
+    private const int WS_THICKFRAME = 0x00040000;
     private const uint MONITOR_DEFAULTTONEAREST = 2;
 
     [StructLayout(LayoutKind.Sequential)]
@@ -88,6 +88,6 @@ public sealed class ForegroundWindowMonitor : IDisposable
     [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
     [DllImport("user32.dll")] private static extern IntPtr MonitorFromWindow(IntPtr hWnd, uint dwFlags);
     [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
-    [DllImport("user32.dll")] private static extern long GetWindowLong(IntPtr hWnd, int nIndex);
+    [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern int GetClassName(IntPtr hWnd, System.Text.StringBuilder lpClassName, int nMaxCount);
 }

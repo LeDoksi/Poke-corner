@@ -9,13 +9,13 @@ public static class AutostartRegistry
 
     public static void Enable(string executablePath)
     {
-        using var key = Registry.CurrentUser.OpenSubKey(RunKeyPath, writable: true)!;
+        using var key = Registry.CurrentUser.CreateSubKey(RunKeyPath, writable: true);
         key.SetValue(ValueName, $"\"{executablePath}\"");
     }
 
     public static void Disable()
     {
-        using var key = Registry.CurrentUser.OpenSubKey(RunKeyPath, writable: true)!;
+        using var key = Registry.CurrentUser.CreateSubKey(RunKeyPath, writable: true);
         if (key.GetValue(ValueName) is not null) key.DeleteValue(ValueName);
     }
 
