@@ -5,6 +5,7 @@ namespace PokeCorner.App.Popup;
 public sealed record CollectionEntry(
     Guid IndividualId,
     int SpeciesId,
+    string SpeciesName,
     bool IsShiny,
     bool IsActive,
     bool IsAvailableToActivate,
@@ -33,6 +34,7 @@ public sealed class CollectionViewModel
             return new CollectionEntry(
                 individual.Id,
                 individual.SpeciesId,
+                SpeciesNames.GetName(individual.SpeciesId),
                 individual.IsShiny,
                 IsActive: individual.Id == _collection.ActiveIndividualId,
                 IsAvailableToActivate: isAvailable,

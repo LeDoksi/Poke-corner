@@ -2,24 +2,32 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Margin="8">
-        <TextBlock Text="Care mode" FontWeight="Bold" />
+        <TextBlock Text="Режим ухода" FontWeight="Bold" />
         <ComboBox x:Name="CareModeCombo" SelectionChanged="CareModeCombo_SelectionChanged">
             <ComboBoxItem Content="Chill" />
             <ComboBoxItem Content="Hardcore" />
         </ComboBox>
+        <TextBlock Text="Chill — без последствий, если забыл покормить. Hardcore — питомец может &quot;обидеться&quot; и уйти со стола." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
 
-        <TextBlock Text="Feeding mode" FontWeight="Bold" Margin="0,8,0,0" />
+        <TextBlock Text="Режим кормления" FontWeight="Bold" Margin="0,10,0,0" />
         <ComboBox x:Name="FeedingModeCombo" SelectionChanged="FeedingModeCombo_SelectionChanged">
             <ComboBoxItem Content="Simple" />
             <ComboBoxItem Content="Economy" />
         </ComboBox>
+        <TextBlock Text="Simple — кормить можно всегда бесплатно. Economy — сначала нужно накопить лакомства активностью." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
 
-        <CheckBox x:Name="TokenTrackingCheck" Content="Трекинг токенов Claude Code" Margin="0,8,0,0" Checked="TokenTrackingCheck_Changed" Unchecked="TokenTrackingCheck_Changed" />
-        <CheckBox x:Name="ActivityTrackingCheck" Content="Трекинг активности (клики/клавиши)" Margin="0,4,0,0" Checked="ActivityTrackingCheck_Changed" Unchecked="ActivityTrackingCheck_Changed" />
-        <CheckBox x:Name="FullscreenHideCheck" Content="Скрывать в полноэкранных приложениях" Margin="0,4,0,0" Checked="FullscreenHideCheck_Changed" Unchecked="FullscreenHideCheck_Changed" />
-        <CheckBox x:Name="AutostartCheck" Content="Запускать при входе в Windows" Margin="0,4,0,0" Checked="AutostartCheck_Changed" Unchecked="AutostartCheck_Changed" />
+        <CheckBox x:Name="TokenTrackingCheck" Content="Трекинг токенов Claude Code" Margin="0,10,0,0" Checked="TokenTrackingCheck_Changed" Unchecked="TokenTrackingCheck_Changed" />
+        <TextBlock Text="Токены Claude Code тоже растят питомца, в дополнение к активности мышью/клавиатурой." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
 
-        <TextBlock Text="Размер питомца" FontWeight="Bold" Margin="0,8,0,0" />
-        <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="192" ValueChanged="PetSizeSlider_ValueChanged" />
+        <CheckBox x:Name="ActivityTrackingCheck" Content="Трекинг активности (клики/клавиши)" Margin="0,10,0,0" Checked="ActivityTrackingCheck_Changed" Unchecked="ActivityTrackingCheck_Changed" />
+        <TextBlock Text="Считаются только количество кликов/нажатий — никогда не то, что именно нажато." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+
+        <CheckBox x:Name="FullscreenHideCheck" Content="Скрывать в полноэкранных приложениях" Margin="0,10,0,0" Checked="FullscreenHideCheck_Changed" Unchecked="FullscreenHideCheck_Changed" />
+        <TextBlock Text="Питомец автоматически прячется, пока открыта игра или видео на весь экран." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+
+        <CheckBox x:Name="AutostartCheck" Content="Запускать при входе в Windows" Margin="0,10,0,0" Checked="AutostartCheck_Changed" Unchecked="AutostartCheck_Changed" />
+
+        <TextBlock Text="Размер питомца" FontWeight="Bold" Margin="0,10,0,0" />
+        <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="384" ValueChanged="PetSizeSlider_ValueChanged" />
     </StackPanel>
 </UserControl>

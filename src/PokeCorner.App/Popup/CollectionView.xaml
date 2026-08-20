@@ -1,22 +1,58 @@
 <UserControl x:Class="PokeCorner.App.Popup.CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PokeCorner.App.Popup">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <local:BoolToYesNoConverter x:Key="BoolToYesNo" />
+    </UserControl.Resources>
     <StackPanel>
         <DockPanel Margin="8">
-            <Button x:Name="FeedButton" DockPanel.Dock="Right" Content="Покормить / погладить" Click="FeedButton_Click" />
-            <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
+            <Button x:Name="FeedButton" DockPanel.Dock="Right" Content="Покормить и погладить" Click="FeedButton_Click"
+                    ToolTip="Одно действие: и кормит, и гладит активного питомца сразу. То же самое, что кликнуть по нему на рабочем столе." />
+            <StackPanel>
+                <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
+                <TextBlock Text="Care Points — очки роста активного питомца, растут от активности за ПК" FontSize="10" Foreground="Gray" />
+                <TextBlock x:Name="TreatsText" FontSize="10" Foreground="Gray" />
+            </StackPanel>
         </DockPanel>
-        <ItemsControl x:Name="EntriesList" Margin="8">
+
+        <Grid Margin="8,4,8,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Покемон" FontWeight="Bold" />
+            <TextBlock Grid.Column="1" Text="На столе" FontWeight="Bold" />
+            <TextBlock Grid.Column="2" Text="Доступен" FontWeight="Bold" ToolTip="В Hardcore-режиме питомец может временно &quot;обидеться&quot; и стать недоступным" />
+        </Grid>
+
+        <ItemsControl x:Name="EntriesList" Margin="8,2,8,8">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Padding="4" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding SpeciesId}" Width="60" />
-                            <TextBlock Text="{Binding IsActive}" Width="60" />
-                            <TextBlock Text="{Binding IsAvailableToActivate}" Width="80" />
-                            <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click" Margin="4,0" />
-                            <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click" />
-                        </StackPanel>
+                    <Border Padding="6" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <TextBlock Text="{Binding SpeciesName}" />
+                                <TextBlock Text=" ✨" Visibility="{Binding IsShiny, Converter={StaticResource BoolToVis}}" ToolTip="Шайни — редкая цветовая форма" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="{Binding IsActive, Converter={StaticResource BoolToYesNo}}" />
+                            <TextBlock Grid.Column="2" Text="{Binding IsAvailableToActivate, Converter={StaticResource BoolToYesNo}}" />
+                            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click" Margin="4,0"
+                                        ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
+                                <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click"
+                                        ToolTip="Насовсем удалить этого покемона из коллекции" />
+                            </StackPanel>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

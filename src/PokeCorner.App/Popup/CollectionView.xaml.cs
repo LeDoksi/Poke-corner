@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using PokeCorner.Core;
+using PokeCorner.Core.Domain;
 
 namespace PokeCorner.App.Popup;
 
@@ -33,6 +34,17 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var active = _appState.Collection.GetActive();
         CarePointsText.Text = active is null ? "Нет активного питомца" : $"Care Points: {active.AccumulatedCarePoints}";
         EntriesList.ItemsSource = _viewModel.GetEntries(DateTimeOffset.UtcNow);
+
+        if (_appState.Settings.FeedingMode == FeedingMode.Economy)
+        {
+            var progressToNextTreat = _appState.Feeding.RemainderUnits;
+            TreatsText.Text = $"Лакомства: {_appState.Feeding.Treats} (ещё {FeedingService.ActivityUnitsPerTreatEarned - progressToNextTreat} активности до следующего)";
+            TreatsText.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            TreatsText.Visibility = Visibility.Collapsed;
+        }
     }
 
     // Fully qualified as System.Windows.Controls.Button, not bare Button — Task 5 turned
