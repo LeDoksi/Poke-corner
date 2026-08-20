@@ -5,55 +5,80 @@ namespace PokeCorner.Core.Tests.Domain;
 
 public class FeedingServiceTests
 {
+    private static PokemonIndividual MakeIndividual() => new()
+    {
+        SpeciesId = 1,
+        EvolutionChainId = 1,
+        ChainLength = 3,
+        Nature = Nature.Hardy,
+        IsShiny = false,
+        CaughtAtUtc = DateTimeOffset.UtcNow
+    };
+
     [Fact]
-    public void TryFeed_SimpleMode_AlwaysSucceedsAndDoesNotTouchInventory()
+    public void Pet_AddsCarePointsAndUpdatesInteractionTimer()
     {
         var service = new FeedingService();
-        var inventory = new FeedingInventory { Treats = 0 };
-        var state = new CareState { LastInteractionUtc = DateTimeOffset.UtcNow - TimeSpan.FromHours(1) };
+        var individual = MakeIndividual();
         var now = DateTimeOffset.UtcNow;
+        var state = new CareState { LastInteractionUtc = now - TimeSpan.FromHours(1) };
 
-        var fed = service.TryFeed(FeedingMode.Simple, inventory, state, now);
+        service.Pet(individual, state, now);
 
-        Assert.True(fed);
-        Assert.Equal(0, inventory.Treats);
+        Assert.Equal(FeedingService.PetCarePointsBonus, individual.AccumulatedCarePoints);
         Assert.Equal(now, state.LastInteractionUtc);
     }
 
     [Fact]
-    public void TryFeed_EconomyMode_WithoutTreats_Fails()
+    public void Pet_ClearsRunAwayCooldown()
     {
         var service = new FeedingService();
-        var inventory = new FeedingInventory { Treats = 0 };
-        var state = new CareState();
-
-        var fed = service.TryFeed(FeedingMode.Economy, inventory, state, DateTimeOffset.UtcNow);
-
-        Assert.False(fed);
-    }
-
-    [Fact]
-    public void TryFeed_EconomyMode_WithTreats_SpendsOneTreat()
-    {
-        var service = new FeedingService();
-        var inventory = new FeedingInventory { Treats = 3 };
-        var state = new CareState();
-
-        var fed = service.TryFeed(FeedingMode.Economy, inventory, state, DateTimeOffset.UtcNow);
-
-        Assert.True(fed);
-        Assert.Equal(2, inventory.Treats);
-    }
-
-    [Fact]
-    public void TryFeed_ClearsRunAwayCooldown()
-    {
-        var service = new FeedingService();
-        var inventory = new FeedingInventory();
+        var individual = MakeIndividual();
         var now = DateTimeOffset.UtcNow;
         var state = new CareState { RanAwayUntilUtc = now + TimeSpan.FromHours(1) };
 
-        service.TryFeed(FeedingMode.Simple, inventory, state, now);
+        service.Pet(individual, state, now);
+
+        Assert.Null(state.RanAwayUntilUtc);
+    }
+
+    [Fact]
+    public void Feed_WithoutTreats_FailsAndDoesNotAddCarePoints()
+    {
+        var service = new FeedingService();
+        var individual = MakeIndividual();
+        var inventory = new FeedingInventory { Treats = 0 };
+
+        var fed = service.Feed(individual, inventory, new CareState(), DateTimeOffset.UtcNow);
+
+        Assert.False(fed);
+        Assert.Equal(0, individual.AccumulatedCarePoints);
+    }
+
+    [Fact]
+    public void Feed_WithTreats_SpendsOneTreatAndAddsCarePoints()
+    {
+        var service = new FeedingService();
+        var individual = MakeIndividual();
+        var inventory = new FeedingInventory { Treats = 3 };
+
+        var fed = service.Feed(individual, inventory, new CareState(), DateTimeOffset.UtcNow);
+
+        Assert.True(fed);
+        Assert.Equal(2, inventory.Treats);
+        Assert.Equal(FeedingService.FeedCarePointsBonus, individual.AccumulatedCarePoints);
+    }
+
+    [Fact]
+    public void Feed_ClearsRunAwayCooldown()
+    {
+        var service = new FeedingService();
+        var individual = MakeIndividual();
+        var now = DateTimeOffset.UtcNow;
+        var inventory = new FeedingInventory { Treats = 1 };
+        var state = new CareState { RanAwayUntilUtc = now + TimeSpan.FromHours(1) };
+
+        service.Feed(individual, inventory, state, now);
 
         Assert.Null(state.RanAwayUntilUtc);
     }
@@ -75,13 +100,14 @@ public class FeedingServiceTests
         var service = new FeedingService();
         var inventory = new FeedingInventory();
 
-        // ActivityUnitsPerTreatEarned = 3750; five calls of 750 units should combine to 3750 = 1 treat,
-        // not truncate to 0 on each individual call.
+        // 5 calls of 800 = 4000 units total; crosses the 3750-unit threshold once, leaving
+        // a 250-unit remainder — proves partial progress isn't truncated away each call.
         for (var i = 0; i < 5; i++)
         {
-            service.EarnTreatsFromActivity(inventory, 750);
+            service.EarnTreatsFromActivity(inventory, 800);
         }
 
         Assert.Equal(1, inventory.Treats);
+        Assert.Equal(250, inventory.RemainderUnits);
     }
 }

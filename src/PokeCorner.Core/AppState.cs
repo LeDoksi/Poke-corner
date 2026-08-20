@@ -25,10 +25,19 @@ public sealed class AppState
         if (active is not null)
         {
             active.AccumulatedCarePoints = (int)Math.Min((long)active.AccumulatedCarePoints + units, int.MaxValue);
-            active.CurrentStage = EvolutionCalculator.StageForPoints(active.AccumulatedCarePoints, active.ChainLength);
+            RecomputeStage(active);
         }
 
         Activity.AddUnits(units);
+    }
+
+    /// Single place that turns AccumulatedCarePoints into CurrentStage — used by
+    /// ApplyActivityUnits and by every App-layer call site that mutates Care Points
+    /// directly (Pet/Feed clicks, shop's Care Points Booster), so none of them duplicate
+    /// this line.
+    public void RecomputeStage(PokemonIndividual individual)
+    {
+        individual.CurrentStage = EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength);
     }
 
     public CareState GetOrCreateCareState(Guid individualId)
@@ -65,7 +74,6 @@ public sealed class AppState
         }
 
         Settings.CareMode = data.Settings.CareMode;
-        Settings.FeedingMode = data.Settings.FeedingMode;
         Settings.TokenTrackingEnabled = data.Settings.TokenTrackingEnabled;
         Settings.ActivityTrackingEnabled = data.Settings.ActivityTrackingEnabled;
         Settings.AutoHideInFullscreen = data.Settings.AutoHideInFullscreen;
@@ -73,6 +81,7 @@ public sealed class AppState
         Settings.ScreenCorner = data.Settings.ScreenCorner;
         Settings.MonitorIndex = data.Settings.MonitorIndex;
         Settings.PetSizePixels = data.Settings.PetSizePixels;
+        Settings.ShowProgressPanel = data.Settings.ShowProgressPanel;
 
         Feeding.Treats = data.FeedingTreats;
 

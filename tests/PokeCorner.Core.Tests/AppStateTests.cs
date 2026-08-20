@@ -111,14 +111,14 @@ public class AppStateTests
         var settings = new AppSettings
         {
             CareMode = CareMode.Hardcore,
-            FeedingMode = FeedingMode.Economy,
             TokenTrackingEnabled = true,
             ActivityTrackingEnabled = false,
             AutoHideInFullscreen = false,
             StartWithWindows = true,
             ScreenCorner = "TopLeft",
             MonitorIndex = 2,
-            PetSizePixels = 64
+            PetSizePixels = 64,
+            ShowProgressPanel = true
         };
         var data = new SaveData
         {
@@ -130,7 +130,6 @@ public class AppStateTests
         state.Hydrate(data);
 
         Assert.Equal(CareMode.Hardcore, state.Settings.CareMode);
-        Assert.Equal(FeedingMode.Economy, state.Settings.FeedingMode);
         Assert.True(state.Settings.TokenTrackingEnabled);
         Assert.False(state.Settings.ActivityTrackingEnabled);
         Assert.False(state.Settings.AutoHideInFullscreen);
@@ -138,6 +137,19 @@ public class AppStateTests
         Assert.Equal("TopLeft", state.Settings.ScreenCorner);
         Assert.Equal(2, state.Settings.MonitorIndex);
         Assert.Equal(64, state.Settings.PetSizePixels);
+        Assert.True(state.Settings.ShowProgressPanel);
+    }
+
+    [Fact]
+    public void RecomputeStage_SetsCurrentStageFromAccumulatedCarePoints()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.AccumulatedCarePoints = EvolutionThresholds.Stage2Threshold;
+
+        state.RecomputeStage(individual);
+
+        Assert.Equal(EvolutionStage.Stage2, individual.CurrentStage);
     }
 
     [Fact]

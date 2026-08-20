@@ -2,20 +2,28 @@ namespace PokeCorner.Core.Domain;
 
 public sealed class FeedingService
 {
-    public const int TreatCostPerFeed = 1;
     // Recalibrated ×7.5 alongside ActivityAccumulator.CatchCheckIntervalUnits.
     public const long ActivityUnitsPerTreatEarned = 3_750;
+    public const int PetCarePointsBonus = 110;
+    public const int FeedCarePointsBonus = 2_250;
 
-    public bool TryFeed(FeedingMode mode, FeedingInventory inventory, CareState state, DateTimeOffset nowUtc)
+    /// Always available, free. Triggered by a left-click on the desktop sprite.
+    public void Pet(PokemonIndividual individual, CareState careState, DateTimeOffset nowUtc)
     {
-        if (mode == FeedingMode.Economy)
-        {
-            if (inventory.Treats < TreatCostPerFeed) return false;
-            inventory.Treats -= TreatCostPerFeed;
-        }
+        individual.AccumulatedCarePoints += PetCarePointsBonus;
+        careState.LastInteractionUtc = nowUtc;
+        careState.RanAwayUntilUtc = null;
+    }
 
-        state.LastInteractionUtc = nowUtc;
-        state.RanAwayUntilUtc = null;
+    /// Only available through the Collection popup, and only when a treat is in stock.
+    public bool Feed(PokemonIndividual individual, FeedingInventory inventory, CareState careState, DateTimeOffset nowUtc)
+    {
+        if (inventory.Treats < 1) return false;
+
+        inventory.Treats -= 1;
+        individual.AccumulatedCarePoints += FeedCarePointsBonus;
+        careState.LastInteractionUtc = nowUtc;
+        careState.RanAwayUntilUtc = null;
         return true;
     }
 

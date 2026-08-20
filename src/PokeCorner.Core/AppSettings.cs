@@ -5,7 +5,6 @@ namespace PokeCorner.Core;
 public sealed class AppSettings
 {
     public CareMode CareMode { get; set; } = CareMode.Chill;
-    public FeedingMode FeedingMode { get; set; } = FeedingMode.Simple;
     public bool TokenTrackingEnabled { get; set; } = false;
     public bool ActivityTrackingEnabled { get; set; } = true;
     public bool AutoHideInFullscreen { get; set; } = true;
@@ -13,4 +12,5 @@ public sealed class AppSettings
     public string ScreenCorner { get; set; } = "BottomRight";
     public int MonitorIndex { get; set; } = 0;
     public int PetSizePixels { get; set; } = 96;
+    public bool ShowProgressPanel { get; set; } = false;
 }
