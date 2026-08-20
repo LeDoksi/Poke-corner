@@ -1,0 +1,25 @@
+<UserControl x:Class="PokeCorner.App.Popup.CollectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <DockPanel Margin="8">
+            <Button x:Name="FeedButton" DockPanel.Dock="Right" Content="Покормить / погладить" Click="FeedButton_Click" />
+            <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
+        </DockPanel>
+        <ItemsControl x:Name="EntriesList" Margin="8">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="4" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding SpeciesId}" Width="60" />
+                            <TextBlock Text="{Binding IsActive}" Width="60" />
+                            <TextBlock Text="{Binding IsAvailableToActivate}" Width="80" />
+                            <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click" Margin="4,0" />
+                            <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>
