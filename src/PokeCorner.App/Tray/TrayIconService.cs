@@ -1,11 +1,15 @@
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace PokeCorner.App.Tray;
 
 public sealed class TrayIconService : IDisposable
 {
+    [DllImport("user32.dll")]
+    private static extern bool DestroyIcon(IntPtr handle);
+
     private readonly NotifyIcon _notifyIcon;
     private Icon _currentSpriteIcon;
     private bool _isActivityTrackingIndicatorOn = true;
@@ -48,11 +52,32 @@ public sealed class TrayIconService : IDisposable
     {
         using var stream = new MemoryStream(pngBytes);
         using var bitmap = new Bitmap(stream);
-        var newIcon = Icon.FromHandle(bitmap.GetHicon());
+        var newIcon = IconFromBitmap(bitmap);
 
         _currentSpriteIcon.Dispose();
         _currentSpriteIcon = newIcon;
         _notifyIcon.Icon = _isActivityTrackingIndicatorOn ? _currentSpriteIcon : DesaturateIcon(_currentSpriteIcon);
+    }
+
+    /// Converts a Bitmap to an Icon that fully owns its native resources.
+    /// Icon.FromHandle(bitmap.GetHicon()) alone does NOT take ownership of the HICON it
+    /// wraps (per Microsoft's own docs), so disposing that Icon never releases the native
+    /// handle — a slow GDI handle leak in a tray app that swaps its icon repeatedly over
+    /// hours/days. Cloning the FromHandle-wrapped icon produces a GDI+-owned copy whose
+    /// Dispose() genuinely releases its resources, and DestroyIcon frees the original
+    /// handle that FromHandle never took ownership of.
+    private static Icon IconFromBitmap(Bitmap bitmap)
+    {
+        var hIcon = bitmap.GetHicon();
+        try
+        {
+            using var temp = Icon.FromHandle(hIcon);
+            return (Icon)temp.Clone();
+        }
+        finally
+        {
+            DestroyIcon(hIcon);
+        }
     }
 
     private static Icon DrawPlaceholderPokeBallIcon()
@@ -68,7 +93,7 @@ public sealed class TrayIconService : IDisposable
             g.DrawEllipse(Pens.Black, 12, 12, 8, 8);
             g.DrawEllipse(Pens.Black, 1, 1, 30, 30);
         }
-        return Icon.FromHandle(bitmap.GetHicon());
+        return IconFromBitmap(bitmap);
     }
 
     private static Icon DesaturateIcon(Icon source)
@@ -89,7 +114,7 @@ public sealed class TrayIconService : IDisposable
         {
             g.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, attributes);
         }
-        return Icon.FromHandle(result.GetHicon());
+        return IconFromBitmap(result);
     }
 
     /// Toggles the "Поймать!" menu item and tray tooltip so the player can see a catch
