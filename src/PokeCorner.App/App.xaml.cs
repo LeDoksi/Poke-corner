@@ -35,8 +35,10 @@ public partial class App : System.Windows.Application
     private bool _isFullscreenHiding;
     private bool _isFullscreenMonitorRunning;
     private int _overlayRefreshGeneration;
-    private Window? _collectionWindow;
-    private Window? _settingsWindow;
+    private AppMenuWindow? _menuWindow;
+    private ShopService _shopService = null!;
+    private const int CollectionTabIndex = 0;
+    private const int SettingsTabIndex = 1;
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
@@ -58,6 +60,7 @@ public partial class App : System.Windows.Application
         _catchRoller = new CatchRoller();
         _careModeService = new CareModeService();
         _feedingService = new FeedingService();
+        _shopService = new ShopService();
 
         var loaded = _saveStore.Load();
         _appState = BuildAppState(loaded);
@@ -77,7 +80,8 @@ public partial class App : System.Windows.Application
         _growthTickTimer.Start();
 
         _overlayWindow = new OverlayWindow();
-        _overlayWindow.PetClicked += TryFeedActiveIndividual;
+        _overlayWindow.PetClicked += PetActiveIndividual;
+        _overlayWindow.MenuRequested += () => OpenMenu(CollectionTabIndex);
         RefreshOverlayForActiveIndividual();
 
         _fullscreenMonitor = new ForegroundWindowMonitor(
@@ -85,8 +89,8 @@ public partial class App : System.Windows.Application
             onFullscreenExited: () => { _isFullscreenHiding = false; RefreshOverlayForActiveIndividual(); });
 
         _trayIconService = new TrayIconService();
-        _trayIconService.OpenCollectionRequested += OpenCollectionWindow;
-        _trayIconService.OpenSettingsRequested += OpenSettingsWindow;
+        _trayIconService.OpenCollectionRequested += () => OpenMenu(CollectionTabIndex);
+        _trayIconService.OpenSettingsRequested += () => OpenMenu(SettingsTabIndex);
         _trayIconService.CatchRequested += OnCatchRequested;
         _trayIconService.ExitRequested += () => Shutdown();
 
@@ -118,6 +122,7 @@ public partial class App : System.Windows.Application
         {
             _appState.ApplyActivityUnits(units, DateTimeOffset.UtcNow);
             _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
+            _shopService.EarnCoinsFromActivity(_appState.Shop, units);
         }
 
         CheckHardcoreNeglect();
@@ -360,19 +365,28 @@ public partial class App : System.Windows.Application
         _trayIconService.ShowNotification("PokéCorner", "Поймал нового покемона! Загляни в коллекцию.");
     }
 
-    private void TryFeedActiveIndividual()
+    private void PetActiveIndividual()
     {
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
         var careState = _appState.GetOrCreateCareState(active.Id);
-        var fed = _feedingService.TryFeed(_appState.Settings.FeedingMode, _appState.Feeding, careState, DateTimeOffset.UtcNow);
+        _feedingService.Pet(active, careState, DateTimeOffset.UtcNow);
+        _appState.RecomputeStage(active);
+        _trayIconService.ShowNotification("PokéCorner", "Погладил!");
+    }
 
-        // Simple mode always succeeds silently otherwise — this is the only feedback
-        // a click currently gives, so without it there's no way to tell a click landed.
+    private void FeedActiveIndividual()
+    {
+        var active = _appState.Collection.GetActive();
+        if (active is null) return;
+
+        var careState = _appState.GetOrCreateCareState(active.Id);
+        var fed = _feedingService.Feed(active, _appState.Feeding, careState, DateTimeOffset.UtcNow);
         if (fed)
         {
-            _trayIconService.ShowNotification("PokéCorner", "Погладил!");
+            _appState.RecomputeStage(active);
+            _trayIconService.ShowNotification("PokéCorner", "Покормил!");
         }
         else
         {
@@ -380,48 +394,21 @@ public partial class App : System.Windows.Application
         }
     }
 
-    private void OpenCollectionWindow()
+    private void OpenMenu(int tabIndex)
     {
         try
         {
-            if (_collectionWindow is not null)
+            if (_menuWindow is null)
             {
-                _collectionWindow.Activate();
-                return;
+                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode);
+                var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual);
+                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
+                _menuWindow = new AppMenuWindow(collectionView, settingsView);
+                _menuWindow.Closed += (_, _) => _menuWindow = null;
+                _menuWindow.Show();
             }
-
-            var vm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode);
-            _collectionWindow = new Window { Content = new CollectionView(vm, _appState, TryFeedActiveIndividual, RefreshOverlayForActiveIndividual), Title = "Коллекция", Width = 480, Height = 480, WindowStartupLocation = WindowStartupLocation.CenterScreen };
-            _collectionWindow.Closed += (_, _) => _collectionWindow = null;
-            _collectionWindow.Show();
-            _collectionWindow.Activate();
-            ReassertOverlayTopmost();
-        }
-        catch (Exception ex)
-        {
-            // Temporary diagnostic: if opening the popup throws, surface it instead of
-            // failing silently — a WinForms tray context-menu click swallows unhandled
-            // exceptions on its own, so without this there'd be no visible sign anything
-            // went wrong at all.
-            _trayIconService.ShowNotification("PokéCorner — ошибка", ex.Message);
-        }
-    }
-
-    private void OpenSettingsWindow()
-    {
-        try
-        {
-            if (_settingsWindow is not null)
-            {
-                _settingsWindow.Activate();
-                return;
-            }
-
-            var vm = new SettingsViewModel(_appState.Settings);
-            _settingsWindow = new Window { Content = new SettingsView(vm), Title = "Настройки", Width = 360, Height = 480, WindowStartupLocation = WindowStartupLocation.CenterScreen };
-            _settingsWindow.Closed += (_, _) => _settingsWindow = null;
-            _settingsWindow.Show();
-            _settingsWindow.Activate();
+            _menuWindow.SelectTab(tabIndex);
+            _menuWindow.Activate();
             ReassertOverlayTopmost();
         }
         catch (Exception ex)
@@ -469,6 +456,10 @@ public partial class App : System.Windows.Application
             ActiveIndividualId = _appState.Collection.ActiveIndividualId,
             Settings = _appState.Settings,
             FeedingTreats = _appState.Feeding.Treats,
+            ShopCoins = _appState.Shop.Coins,
+            ShopRemainderUnits = _appState.Shop.RemainderUnits,
+            ShopCatchLuckyCharmActive = _appState.Shop.CatchLuckyCharmActive,
+            PendingEggs = _appState.PendingEggs,
             CareStates = new Dictionary<Guid, CareState>(_appState.CareStateByIndividualId)
         };
         _saveStore.Save(data);

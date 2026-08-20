@@ -8,8 +8,12 @@
     </UserControl.Resources>
     <StackPanel>
         <DockPanel Margin="8">
-            <Button x:Name="FeedButton" DockPanel.Dock="Right" Content="Покормить и погладить" Click="FeedButton_Click"
-                    ToolTip="Одно действие: и кормит, и гладит активного питомца сразу. То же самое, что кликнуть по нему на рабочем столе." />
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="PetButton" Content="Погладить" Click="PetButton_Click" Margin="0,0,4,0"
+                        ToolTip="Бесплатно, всегда доступно. Тот же эффект, что и клик по питомцу на рабочем столе." />
+                <Button x:Name="FeedButton" Content="Покормить" Click="FeedButton_Click"
+                        ToolTip="Требует одно лакомство, даёт больше очков роста, чем поглаживание." />
+            </StackPanel>
             <StackPanel>
                 <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
                 <TextBlock Text="Care Points — очки роста активного питомца, растут от активности за ПК" FontSize="10" Foreground="Gray" />

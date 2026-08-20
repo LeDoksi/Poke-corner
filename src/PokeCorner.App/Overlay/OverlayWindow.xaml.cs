@@ -19,6 +19,7 @@ public partial class OverlayWindow : Window
     private bool _isDragging;
 
     public event Action? PetClicked;
+    public event Action? MenuRequested;
 
     public OverlayWindow()
     {
@@ -76,6 +77,12 @@ public partial class OverlayWindow : Window
     // once we're already sure it's a genuine drag.
     private void SpriteImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
+        if (e.ClickCount == 2)
+        {
+            MenuRequested?.Invoke();
+            return;
+        }
+
         _mouseDownPosition = e.GetPosition(this);
         _isDragging = false;
         SpriteImage.CaptureMouse();

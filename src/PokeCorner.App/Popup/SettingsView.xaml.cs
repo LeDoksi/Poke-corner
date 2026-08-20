@@ -24,7 +24,6 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     {
         var settings = _viewModel.Settings;
         CareModeCombo.SelectedIndex = settings.CareMode == CareMode.Hardcore ? 1 : 0;
-        FeedingModeCombo.SelectedIndex = settings.FeedingMode == FeedingMode.Economy ? 1 : 0;
         TokenTrackingCheck.IsChecked = settings.TokenTrackingEnabled;
         ActivityTrackingCheck.IsChecked = settings.ActivityTrackingEnabled;
         FullscreenHideCheck.IsChecked = settings.AutoHideInFullscreen;
@@ -36,12 +35,6 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     {
         if (_isLoadingInitialState) return;
         _viewModel.Settings.CareMode = CareModeCombo.SelectedIndex == 1 ? CareMode.Hardcore : CareMode.Chill;
-    }
-
-    private void FeedingModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (_isLoadingInitialState) return;
-        _viewModel.Settings.FeedingMode = FeedingModeCombo.SelectedIndex == 1 ? FeedingMode.Economy : FeedingMode.Simple;
     }
 
     private void TokenTrackingCheck_Changed(object sender, System.Windows.RoutedEventArgs e)

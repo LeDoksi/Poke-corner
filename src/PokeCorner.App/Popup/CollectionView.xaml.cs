@@ -9,16 +9,25 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 {
     private readonly CollectionViewModel _viewModel;
     private readonly AppState _appState;
+    private readonly Action _onPetRequested;
     private readonly Action _onFeedRequested;
     private readonly Action _onStateChanged;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, Action onFeedRequested, Action onStateChanged)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, Action onPetRequested, Action onFeedRequested, Action onStateChanged)
     {
         InitializeComponent();
         _viewModel = viewModel;
         _appState = appState;
+        _onPetRequested = onPetRequested;
         _onFeedRequested = onFeedRequested;
         _onStateChanged = onStateChanged;
+        Refresh();
+    }
+
+    private void PetButton_Click(object sender, RoutedEventArgs e)
+    {
+        _onPetRequested();
+        _onStateChanged();
         Refresh();
     }
 
@@ -35,16 +44,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         CarePointsText.Text = active is null ? "Нет активного питомца" : $"Care Points: {active.AccumulatedCarePoints}";
         EntriesList.ItemsSource = _viewModel.GetEntries(DateTimeOffset.UtcNow);
 
-        if (_appState.Settings.FeedingMode == FeedingMode.Economy)
-        {
-            var progressToNextTreat = _appState.Feeding.RemainderUnits;
-            TreatsText.Text = $"Лакомства: {_appState.Feeding.Treats} (ещё {FeedingService.ActivityUnitsPerTreatEarned - progressToNextTreat} активности до следующего)";
-            TreatsText.Visibility = Visibility.Visible;
-        }
-        else
-        {
-            TreatsText.Visibility = Visibility.Collapsed;
-        }
+        var progressToNextTreat = _appState.Feeding.RemainderUnits;
+        TreatsText.Text = $"Лакомства: {_appState.Feeding.Treats} (ещё {FeedingService.ActivityUnitsPerTreatEarned - progressToNextTreat} активности до следующего)";
     }
 
     // Fully qualified as System.Windows.Controls.Button, not bare Button — Task 5 turned

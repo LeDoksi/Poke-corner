@@ -9,12 +9,6 @@
         </ComboBox>
         <TextBlock Text="Chill — без последствий, если забыл покормить. Hardcore — питомец может &quot;обидеться&quot; и уйти со стола." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
 
-        <TextBlock Text="Режим кормления" FontWeight="Bold" Margin="0,10,0,0" />
-        <ComboBox x:Name="FeedingModeCombo" SelectionChanged="FeedingModeCombo_SelectionChanged">
-            <ComboBoxItem Content="Simple" />
-            <ComboBoxItem Content="Economy" />
-        </ComboBox>
-        <TextBlock Text="Simple — кормить можно всегда бесплатно. Economy — сначала нужно накопить лакомства активностью." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
 
         <CheckBox x:Name="TokenTrackingCheck" Content="Трекинг токенов Claude Code" Margin="0,10,0,0" Checked="TokenTrackingCheck_Changed" Unchecked="TokenTrackingCheck_Changed" />
         <TextBlock Text="Токены Claude Code тоже растят питомца, в дополнение к активности мышью/клавиатурой." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />

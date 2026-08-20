@@ -1,0 +1,10 @@
+<Window x:Class="PokeCorner.App.Popup.AppMenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PokéCorner" Width="480" Height="540"
+        WindowStartupLocation="CenterScreen">
+    <TabControl x:Name="MenuTabControl">
+        <TabItem x:Name="CollectionTab" Header="Коллекция" />
+        <TabItem x:Name="SettingsTab" Header="Настройки" />
+    </TabControl>
+</Window>
