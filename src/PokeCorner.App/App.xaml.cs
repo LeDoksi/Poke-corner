@@ -22,6 +22,7 @@ public partial class App : System.Windows.Application
     private JsonSaveStore _saveStore = null!;
     private SpriteCache _spriteCache = null!;
     private PokeApiClient _pokeApiClient = null!;
+    private SpeciesCatalog _speciesCatalog = null!;
     private ClaudeCodeUsageProvider? _tokenUsageProvider;
     private GlobalInputHook? _inputHook;
     private InputEventCounter _inputCounter = null!;
@@ -62,6 +63,8 @@ public partial class App : System.Windows.Application
         _saveStore = new JsonSaveStore(AppPaths.GetSaveFilePath());
         _spriteCache = new SpriteCache(AppPaths.GetSpriteCacheDirectory());
         _pokeApiClient = new PokeApiClient(new System.Net.Http.HttpClientHandler());
+        _speciesCatalog = new SpeciesCatalog(_pokeApiClient, _spriteCache, Path.Combine(AppPaths.GetAppDataDirectory(), "catalog.json"));
+        _ = _speciesCatalog.RefreshFromNetworkAsync(); // fire-and-forget; today's rolls still use whatever LoadCachedOrFallback returns right now
         _catchRoller = new CatchRoller();
         _eggIncubationService = new EggIncubationService();
         _careModeService = new CareModeService();
@@ -379,7 +382,7 @@ public partial class App : System.Windows.Application
         // Hardcore run-away, and nobody should auto-appear on the desk after that.
         var hadNoActiveInNonEmptyCollection = _appState.Collection.ActiveIndividualId is null && _appState.Collection.Individuals.Count > 0;
 
-        var availableChains = _spriteCache.LoadOfflineStarters(); // Task 20 swaps this to _speciesCatalog.LoadCachedOrFallback()
+        var availableChains = _speciesCatalog.LoadCachedOrFallback();
         var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
         var ownedNatures = _appState.Collection.Individuals
             .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
@@ -448,7 +451,7 @@ public partial class App : System.Windows.Application
         var egg = _appState.PendingEggs.FirstOrDefault(e => e.Id == eggId);
         if (egg is null || !_eggIncubationService.IsReady(egg, DateTimeOffset.UtcNow)) return false;
 
-        var availableChains = _spriteCache.LoadOfflineStarters(); // Task 20 swaps this to _speciesCatalog.LoadCachedOrFallback()
+        var availableChains = _speciesCatalog.LoadCachedOrFallback();
         var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
         var ownedNatures = _appState.Collection.Individuals
             .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
@@ -484,7 +487,7 @@ public partial class App : System.Windows.Application
         {
             if (_menuWindow is null)
             {
-                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _spriteCache.LoadOfflineStarters(), _appState.PendingEggs);
+                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _speciesCatalog.LoadCachedOrFallback(), _appState.PendingEggs);
                 var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, RefreshOverlayForActiveIndividual);
