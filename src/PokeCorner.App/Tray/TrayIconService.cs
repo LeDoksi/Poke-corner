@@ -12,6 +12,7 @@ public sealed class TrayIconService : IDisposable
 
     private readonly NotifyIcon _notifyIcon;
     private Icon _currentSpriteIcon;
+    private Icon? _currentDesaturatedIcon;
     private bool _isActivityTrackingIndicatorOn = true;
 
     public event Action? OpenCollectionRequested;
@@ -56,7 +57,22 @@ public sealed class TrayIconService : IDisposable
 
         _currentSpriteIcon.Dispose();
         _currentSpriteIcon = newIcon;
-        _notifyIcon.Icon = _isActivityTrackingIndicatorOn ? _currentSpriteIcon : DesaturateIcon(_currentSpriteIcon);
+        _notifyIcon.Icon = _isActivityTrackingIndicatorOn ? _currentSpriteIcon : GetOrCreateDesaturatedIcon();
+    }
+
+    /// Returns the desaturated view of _currentSpriteIcon, regenerating and caching it in
+    /// _currentDesaturatedIcon. NotifyIcon.Icon's setter never disposes the icon it
+    /// replaces, so handing it a freshly-allocated Icon on every call (as DesaturateIcon
+    /// alone would) abandons the previous one with no explicit Dispose() — relying on the
+    /// CLR finalizer to eventually reclaim it, which this continuously-running tray app
+    /// can't rely on. Caching the one currently in play here, and disposing it before
+    /// replacing it, keeps this on the same explicit dispose-before-replace footing as
+    /// _currentSpriteIcon.
+    private Icon GetOrCreateDesaturatedIcon()
+    {
+        _currentDesaturatedIcon?.Dispose();
+        _currentDesaturatedIcon = DesaturateIcon(_currentSpriteIcon);
+        return _currentDesaturatedIcon;
     }
 
     /// Converts a Bitmap to an Icon that fully owns its native resources.
@@ -132,7 +148,7 @@ public sealed class TrayIconService : IDisposable
     public void SetActivityTrackingIndicator(bool isActive)
     {
         _isActivityTrackingIndicatorOn = isActive;
-        _notifyIcon.Icon = isActive ? _currentSpriteIcon : DesaturateIcon(_currentSpriteIcon);
+        _notifyIcon.Icon = isActive ? _currentSpriteIcon : GetOrCreateDesaturatedIcon();
         _notifyIcon.Text = isActive ? "PokéCorner — трекинг активности включён" : "PokéCorner — трекинг активности выключен";
     }
 
@@ -144,5 +160,6 @@ public sealed class TrayIconService : IDisposable
         _notifyIcon.Visible = false;
         _notifyIcon.Dispose();
         _currentSpriteIcon.Dispose();
+        _currentDesaturatedIcon?.Dispose();
     }
 }
