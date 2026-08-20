@@ -41,6 +41,7 @@ public partial class App : System.Windows.Application
     private const int CollectionTabIndex = 0;
     private const int SettingsTabIndex = 1;
     private const int ShopTabIndex = 2;
+    private const int CatchTabIndex = 3;
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
@@ -97,7 +98,7 @@ public partial class App : System.Windows.Application
         _trayIconService.OpenCollectionRequested += () => OpenMenu(CollectionTabIndex);
         _trayIconService.OpenSettingsRequested += () => OpenMenu(SettingsTabIndex);
         _trayIconService.OpenShopRequested += () => OpenMenu(ShopTabIndex);
-        _trayIconService.CatchRequested += OnCatchRequested;
+        _trayIconService.CatchRequested += () => OpenMenu(CatchTabIndex);
         _trayIconService.ExitRequested += () => Shutdown();
 
         ReconcileSettingsState();
@@ -336,7 +337,9 @@ public partial class App : System.Windows.Application
     /// Activity has crossed the threshold for a catch — per explicit feedback, this
     /// should NOT catch automatically (that took the moment away from the player).
     /// Instead it just flips "ready" so the player triggers the actual catch themselves
-    /// via the tray menu's "Поймать!" item — see OnCatchRequested.
+    /// from the Catch tab — the tray's "Поймать!" item now just opens the menu there
+    /// (see the CatchRequested subscription in OnStartup) and the tab's button calls
+    /// TryPerformCatch.
     private void OnCatchRollDue()
     {
         if (_catchReady) return; // already waiting on the player — don't re-notify
@@ -346,27 +349,27 @@ public partial class App : System.Windows.Application
         _trayIconService.ShowNotification("PokéCorner", "Готов новый покемон! Открой меню трея и нажми «Поймать!».");
     }
 
-    private void OnCatchRequested()
+    private CatchReveal? TryPerformCatch()
     {
-        if (!_catchReady) return;
+        if (!_catchReady) return null;
 
         // PokemonCollection.Add() auto-activates via ActiveIndividualId ??= individual.Id
-        // whenever nothing is currently active. That's correct for the very first
-        // individual ever added (onboarding), but the only way ActiveIndividualId is null
-        // with a non-empty collection here is that CheckHardcoreNeglect deliberately
-        // called ClearActive() — and the spec is explicit that nobody should auto-appear
-        // on the desk after a run-away ("никто не выходит автоматически"). Detect that
-        // case up front and undo the auto-activation below.
+        // whenever nothing is currently active — correct for onboarding, but the only way
+        // ActiveIndividualId is null with a non-empty collection here is a deliberate
+        // Hardcore run-away, and nobody should auto-appear on the desk after that.
         var hadNoActiveInNonEmptyCollection = _appState.Collection.ActiveIndividualId is null && _appState.Collection.Individuals.Count > 0;
 
+        var availableChains = _spriteCache.LoadOfflineStarters(); // Task 20 swaps this to _speciesCatalog.LoadCachedOrFallback()
         var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
-        var availableChains = _spriteCache.LoadOfflineStarters(); // Widened to the full Gen 1-5 catalog by Task 1 of docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md, once this plan ships and is verified.
         var ownedNatures = _appState.Collection.Individuals
             .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
             .Select(i => i.Nature)
             .ToHashSet();
 
-        var result = _catchRoller.RollCatch(availableChains, ownedChainIds, ownedNatures);
+        var shinyMultiplier = _appState.Shop.CatchLuckyCharmActive ? ShopService.CatchLuckyCharmShinyMultiplier : 1.0;
+        var result = _catchRoller.RollCatch(availableChains, ownedChainIds, ownedNatures, shinyMultiplier);
+        _appState.Shop.CatchLuckyCharmActive = false; // consumed regardless of outcome
+
         _appState.Collection.Add(new PokemonIndividual
         {
             SpeciesId = result.SpeciesId,
@@ -385,7 +388,10 @@ public partial class App : System.Windows.Application
         _catchReady = false;
         _trayIconService.SetCatchReady(false);
         RefreshOverlayForActiveIndividual();
-        _trayIconService.ShowNotification("PokéCorner", "Поймал нового покемона! Загляни в коллекцию.");
+
+        var chain = availableChains.FirstOrDefault(c => c.ChainId == result.ChainId);
+        var rarity = chain is null ? RarityTier.Common : RarityClassifier.Classify(chain.CaptureRate);
+        return new CatchReveal(result, rarity);
     }
 
     private void PetActiveIndividual()
@@ -440,6 +446,8 @@ public partial class App : System.Windows.Application
             CaughtAtUtc = DateTimeOffset.UtcNow
         });
         _appState.PendingEggs.Remove(egg);
+
+        _menuWindow?.ShowCatchReveal(new CatchReveal(result, egg.Tier));
         return true;
     }
 
@@ -460,7 +468,8 @@ public partial class App : System.Windows.Application
                 var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, RefreshOverlayForActiveIndividual);
-                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView);
+                var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual);
+                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.Show();
             }

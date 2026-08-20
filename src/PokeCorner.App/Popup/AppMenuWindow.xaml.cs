@@ -4,12 +4,16 @@ namespace PokeCorner.App.Popup;
 
 public partial class AppMenuWindow : Window
 {
-    public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView)
+    private readonly CatchView _catchView;
+
+    public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView)
     {
         InitializeComponent();
         CollectionTab.Content = collectionView;
         SettingsTab.Content = settingsView;
         ShopTab.Content = shopView;
+        CatchTab.Content = catchView;
+        _catchView = catchView;
     }
 
     public void SelectTab(int index)
@@ -18,5 +22,11 @@ public partial class AppMenuWindow : Window
         {
             MenuTabControl.SelectedIndex = index;
         }
+    }
+
+    public async void ShowCatchReveal(CatchReveal reveal)
+    {
+        MenuTabControl.SelectedItem = CatchTab;
+        await _catchView.PlayReveal(reveal);
     }
 }

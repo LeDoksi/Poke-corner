@@ -7,5 +7,6 @@
         <TabItem x:Name="CollectionTab" Header="Коллекция" />
         <TabItem x:Name="SettingsTab" Header="Настройки" />
         <TabItem x:Name="ShopTab" Header="Магазин" />
+        <TabItem x:Name="CatchTab" Header="Поймать" />
     </TabControl>
 </Window>
