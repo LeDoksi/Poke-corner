@@ -75,6 +75,43 @@ public class CatchRollerTests
         Assert.True(jollyCount > 35, $"Expected Jolly to come up far more than the uniform baseline, got {jollyCount}/500");
     }
 
+    [Fact]
+    public void RollCatch_ShinyChanceMultiplier_IncreasesShinyRate()
+    {
+        var chains = new[] { CommonUnowned };
+        var owned = new HashSet<int>();
+
+        var baselineShinyCount = CountShiny(chains, owned, trials: 20_000, seed: 10, shinyChanceMultiplier: 1.0);
+        var boostedShinyCount = CountShiny(chains, owned, trials: 20_000, seed: 11, shinyChanceMultiplier: 4.0);
+
+        Assert.True(boostedShinyCount > baselineShinyCount,
+            $"Expected boosted shiny rate ({boostedShinyCount}) > baseline shiny rate ({baselineShinyCount})");
+    }
+
+    [Fact]
+    public void RollCatchFromTier_OnlyPicksFromMatchingTier()
+    {
+        var legendary = CommonUnowned with { ChainId = 99, CaptureRate = 3 }; // RarityTier.Legendary
+        var chains = new[] { CommonUnowned, legendary }; // CommonUnowned is CaptureRate 255 -> RarityTier.Common
+        var roller = new CatchRoller(new Random(Seed: 20));
+
+        for (var i = 0; i < 100; i++)
+        {
+            var result = roller.RollCatchFromTier(chains, RarityTier.Legendary, new HashSet<int>(), new HashSet<Nature>());
+            Assert.Equal(legendary.ChainId, result.ChainId);
+        }
+    }
+
+    [Fact]
+    public void RollCatchFromTier_NoChainsInTier_Throws()
+    {
+        var chains = new[] { CommonUnowned }; // only RarityTier.Common available
+        var roller = new CatchRoller(new Random(Seed: 21));
+
+        Assert.Throws<InvalidOperationException>(() =>
+            roller.RollCatchFromTier(chains, RarityTier.Legendary, new HashSet<int>(), new HashSet<Nature>()));
+    }
+
     private static int CountShiny(IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlySet<int> ownedChainIds, int trials, int seed)
     {
         var roller = new CatchRoller(new Random(seed));
@@ -82,6 +119,18 @@ public class CatchRollerTests
         for (var i = 0; i < trials; i++)
         {
             var result = roller.RollCatch(chains, ownedChainIds, ownedNaturesForDuplicateChain: new HashSet<Nature>());
+            if (result.IsShiny) shinyCount++;
+        }
+        return shinyCount;
+    }
+
+    private static int CountShiny(IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlySet<int> ownedChainIds, int trials, int seed, double shinyChanceMultiplier)
+    {
+        var roller = new CatchRoller(new Random(seed));
+        var shinyCount = 0;
+        for (var i = 0; i < trials; i++)
+        {
+            var result = roller.RollCatch(chains, ownedChainIds, ownedNaturesForDuplicateChain: new HashSet<Nature>(), shinyChanceMultiplier);
             if (result.IsShiny) shinyCount++;
         }
         return shinyCount;

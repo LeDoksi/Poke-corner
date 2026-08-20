@@ -15,7 +15,8 @@ public sealed class CatchRoller
     public CatchResult RollCatch(
         IReadOnlyList<SpeciesEvolutionChain> allChains,
         IReadOnlySet<int> ownedChainIds,
-        IReadOnlySet<Nature> ownedNaturesForDuplicateChain)
+        IReadOnlySet<Nature> ownedNaturesForDuplicateChain,
+        double shinyChanceMultiplier = 1.0)
     {
         if (allChains.Count == 0)
         {
@@ -25,12 +26,29 @@ public sealed class CatchRoller
         var chain = PickChain(allChains, ownedChainIds);
         var isDuplicate = ownedChainIds.Contains(chain.ChainId);
 
-        var isShiny = _random.NextDouble() < (isDuplicate ? BaseShinyChance * DuplicateShinyChanceMultiplier : BaseShinyChance);
+        var isShiny = _random.NextDouble() < (isDuplicate ? BaseShinyChance * DuplicateShinyChanceMultiplier : BaseShinyChance) * shinyChanceMultiplier;
         var nature = isDuplicate
             ? PickNatureBiasedTowardUnowned(ownedNaturesForDuplicateChain)
             : PickUniformNature();
 
         return new CatchResult(chain.ChainId, chain.StarterSpeciesId, nature, isShiny, isDuplicate, chain.ChainLength);
+    }
+
+    // Guaranteed-tier catch for shop eggs — filters to the requested rarity first, then
+    // reuses the existing weighting/shiny/nature logic among just that subset.
+    public CatchResult RollCatchFromTier(
+        IReadOnlyList<SpeciesEvolutionChain> allChains,
+        RarityTier tier,
+        IReadOnlySet<int> ownedChainIds,
+        IReadOnlySet<Nature> ownedNaturesForDuplicateChain,
+        double shinyChanceMultiplier = 1.0)
+    {
+        var tierChains = allChains.Where(c => RarityClassifier.Classify(c.CaptureRate) == tier).ToList();
+        if (tierChains.Count == 0)
+        {
+            throw new InvalidOperationException($"No species available in rarity tier {tier} — caller must check availability before offering this purchase.");
+        }
+        return RollCatch(tierChains, ownedChainIds, ownedNaturesForDuplicateChain, shinyChanceMultiplier);
     }
 
     private SpeciesEvolutionChain PickChain(IReadOnlyList<SpeciesEvolutionChain> allChains, IReadOnlySet<int> ownedChainIds)
