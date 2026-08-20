@@ -109,7 +109,11 @@ public partial class OverlayWindow : Window
             SpriteImage.ReleaseMouseCapture();
         }
 
-        if (!_isDragging)
+        // e.ClickCount < 2 excludes the mouse-up half of a double-click (Down1/Up1 already
+        // fired PetClicked for the first click before WPF could know a second was coming;
+        // Down2 short-circuits into MenuRequested and never touches _isDragging/capture, so
+        // without this check Up2 would fall through here and fire PetClicked a second time).
+        if (!_isDragging && e.ClickCount < 2)
         {
             PetClicked?.Invoke();
         }
