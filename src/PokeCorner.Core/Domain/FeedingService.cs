@@ -3,7 +3,8 @@ namespace PokeCorner.Core.Domain;
 public sealed class FeedingService
 {
     public const int TreatCostPerFeed = 1;
-    public const long ActivityUnitsPerTreatEarned = 500;
+    // Recalibrated ×7.5 alongside ActivityAccumulator.CatchCheckIntervalUnits.
+    public const long ActivityUnitsPerTreatEarned = 3_750;
 
     public bool TryFeed(FeedingMode mode, FeedingInventory inventory, CareState state, DateTimeOffset nowUtc)
     {

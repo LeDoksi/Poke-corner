@@ -7,10 +7,10 @@ public class EvolutionCalculatorTests
 {
     [Theory]
     [InlineData(0, 3, EvolutionStage.Stage1)]
-    [InlineData(4999, 3, EvolutionStage.Stage1)]
-    [InlineData(5000, 3, EvolutionStage.Stage2)]
-    [InlineData(19999, 3, EvolutionStage.Stage2)]
-    [InlineData(20000, 3, EvolutionStage.Stage3)]
+    [InlineData(37499, 3, EvolutionStage.Stage1)]
+    [InlineData(37500, 3, EvolutionStage.Stage2)]
+    [InlineData(149999, 3, EvolutionStage.Stage2)]
+    [InlineData(150000, 3, EvolutionStage.Stage3)]
     [InlineData(999_999, 3, EvolutionStage.Stage3)]
     public void StageForPoints_ThreeStageChain_MatchesThresholds(int points, int chainLength, EvolutionStage expected)
     {

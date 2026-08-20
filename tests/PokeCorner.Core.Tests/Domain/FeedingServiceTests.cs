@@ -75,11 +75,11 @@ public class FeedingServiceTests
         var service = new FeedingService();
         var inventory = new FeedingInventory();
 
-        // ActivityUnitsPerTreatEarned = 500; five calls of 100 units should combine to 500 = 1 treat,
+        // ActivityUnitsPerTreatEarned = 3750; five calls of 750 units should combine to 3750 = 1 treat,
         // not truncate to 0 on each individual call.
         for (var i = 0; i < 5; i++)
         {
-            service.EarnTreatsFromActivity(inventory, 100);
+            service.EarnTreatsFromActivity(inventory, 750);
         }
 
         Assert.Equal(1, inventory.Treats);

@@ -2,9 +2,11 @@ namespace PokeCorner.Core.Activity;
 
 public sealed class ActivityAccumulator
 {
-    // Tuned so ~2-3 hours of medium-high activity yields roughly one catch-check
-    // (see spec: 2026-08-19-desktop-pokemon-pet-design.md, "Поимка новых покемонов").
-    public const long CatchCheckIntervalUnits = 3000;
+    // Recalibrated for realistic gamer click rates (150 APM / 9000 units/hour, based on
+    // real Dota 2 APM data — see docs/superpowers/specs/2026-08-20-shop-visuals-and-sprites-design.md
+    // §0) rather than the ~1200 units/hour this constant originally, silently, assumed.
+    // ~2.5 hours of active play still yields roughly one catch-check.
+    public const long CatchCheckIntervalUnits = 22_500;
 
     private long _unitsSinceLastCatchCheck;
 

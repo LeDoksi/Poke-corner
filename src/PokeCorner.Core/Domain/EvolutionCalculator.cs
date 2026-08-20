@@ -2,8 +2,9 @@ namespace PokeCorner.Core.Domain;
 
 public static class EvolutionThresholds
 {
-    public const int Stage2Threshold = 5_000;
-    public const int Stage3Threshold = 20_000;
+    // Recalibrated ×7.5 alongside CatchCheckIntervalUnits — see that constant's comment.
+    public const int Stage2Threshold = 37_500;
+    public const int Stage3Threshold = 150_000;
 }
 
 public static class EvolutionCalculator
