@@ -15,6 +15,8 @@ public partial class OverlayWindow : Window
     private static readonly TimeSpan IdleFrameDuration = TimeSpan.FromMilliseconds(150);
 
     private SpriteAnimator? _animator;
+    private System.Windows.Point _mouseDownPosition;
+    private bool _isDragging;
 
     public event Action? PetClicked;
 
@@ -64,23 +66,47 @@ public partial class OverlayWindow : Window
         };
     }
 
+    // Click-vs-drag detection via explicit mouse capture + MouseMove threshold, not a
+    // before/after position comparison around DragMove(). That approach turned out
+    // unreliable: DragMove() runs its own internal Win32 SC_MOVE modal loop that
+    // bypasses WPF's normal input pipeline, so WPF's Mouse.GetPosition() afterward
+    // isn't guaranteed to reflect what actually happened — in practice, clicks
+    // stopped registering at all. This is the standard, well-tested pattern instead:
+    // track real movement via WPF's own MouseMove stream, and only invoke DragMove()
+    // once we're already sure it's a genuine drag.
     private void SpriteImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        // DragMove() blocks until the mouse button is released, handling the OS-level
-        // drag loop itself — it moves the window only if the user actually drags. We
-        // can't tell in advance whether this press will turn into a drag or stay a
-        // click, so compare mouse position in *screen* coordinates (not window-relative
-        // — the window itself moves during a drag, which would make a relative-position
-        // comparison meaningless) before and after DragMove() returns: negligible
-        // movement means it was a click, not a drag.
-        var startScreenPosition = PointToScreen(e.GetPosition(this));
-        DragMove();
-        var endScreenPosition = PointToScreen(Mouse.GetPosition(this));
+        _mouseDownPosition = e.GetPosition(this);
+        _isDragging = false;
+        SpriteImage.CaptureMouse();
+    }
 
-        if ((startScreenPosition - endScreenPosition).Length < 4)
+    private void SpriteImage_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+    {
+        if (e.LeftButton != MouseButtonState.Pressed || _isDragging) return;
+
+        var current = e.GetPosition(this);
+        var delta = current - _mouseDownPosition;
+        if (Math.Abs(delta.X) > 4 || Math.Abs(delta.Y) > 4)
+        {
+            _isDragging = true;
+            SpriteImage.ReleaseMouseCapture();
+            DragMove(); // blocks until mouse-up; this call is now only reached for a real drag.
+        }
+    }
+
+    private void SpriteImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        if (SpriteImage.IsMouseCaptured)
+        {
+            SpriteImage.ReleaseMouseCapture();
+        }
+
+        if (!_isDragging)
         {
             PetClicked?.Invoke();
         }
+        _isDragging = false;
     }
 
     /// WS_EX_TRANSPARENT operates at the Win32 WM_NCHITTEST level — it makes Windows

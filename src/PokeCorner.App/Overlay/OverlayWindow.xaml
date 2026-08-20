@@ -9,6 +9,10 @@
         ResizeMode="NoResize"
         SizeToContent="Manual">
     <Grid>
-        <Image x:Name="SpriteImage" Stretch="Uniform" MouseLeftButtonDown="SpriteImage_MouseLeftButtonDown" />
+        <Image x:Name="SpriteImage" Stretch="Uniform"
+               RenderOptions.BitmapScalingMode="NearestNeighbor"
+               MouseLeftButtonDown="SpriteImage_MouseLeftButtonDown"
+               MouseMove="SpriteImage_MouseMove"
+               MouseLeftButtonUp="SpriteImage_MouseLeftButtonUp" />
     </Grid>
 </Window>
