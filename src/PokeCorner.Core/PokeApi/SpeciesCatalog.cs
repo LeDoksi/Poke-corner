@@ -20,8 +20,17 @@ public sealed class SpeciesCatalog
     {
         if (File.Exists(_catalogFilePath))
         {
-            var cached = JsonSerializer.Deserialize<List<SpeciesEvolutionChain>>(File.ReadAllText(_catalogFilePath));
-            if (cached is { Count: > 0 }) return cached;
+            try
+            {
+                var cached = JsonSerializer.Deserialize<List<SpeciesEvolutionChain>>(File.ReadAllText(_catalogFilePath));
+                if (cached is { Count: > 0 }) return cached;
+            }
+            catch (Exception ex) when (ex is JsonException or IOException or UnauthorizedAccessException)
+            {
+                // Corrupted or unreadable cache file (e.g. process killed mid-write during a
+                // previous RefreshFromNetworkAsync): degrade to the offline fallback instead of
+                // throwing, mirroring SpriteCache.GetOrFetchAsync's graceful degradation.
+            }
         }
         return _spriteCache.LoadOfflineStarters();
     }

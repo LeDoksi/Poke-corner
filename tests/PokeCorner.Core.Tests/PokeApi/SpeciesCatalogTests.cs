@@ -69,6 +69,18 @@ public class SpeciesCatalogTests : IDisposable
     }
 
     [Fact]
+    public void LoadCachedOrFallback_CorruptedCacheFile_ReturnsOfflineStartersInsteadOfThrowing()
+    {
+        Directory.CreateDirectory(_tempDir);
+        File.WriteAllText(_catalogFile, "{ this is not valid JSON at all !!!");
+        var catalog = new SpeciesCatalog(new PokeApiClient(new RoutingStubHandler(_ => "{}")), _spriteCache, _catalogFile);
+
+        var result = catalog.LoadCachedOrFallback();
+
+        Assert.Equal(_spriteCache.LoadOfflineStarters().Count, result.Count);
+    }
+
+    [Fact]
     public async Task LoadCachedOrFallback_AfterRefresh_ReturnsCachedChainsNotOfflineFallback()
     {
         string Respond(Uri uri)
