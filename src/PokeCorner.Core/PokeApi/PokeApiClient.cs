@@ -41,6 +41,14 @@ public sealed class PokeApiClient
         return doc.RootElement.GetProperty("capture_rate").GetInt32();
     }
 
+    public async Task<int> FetchEvolutionChainIdForSpeciesAsync(int speciesId)
+    {
+        var json = await _httpClient.GetStringAsync($"pokemon-species/{speciesId}/");
+        using var doc = JsonDocument.Parse(json);
+        var chainUrl = doc.RootElement.GetProperty("evolution_chain").GetProperty("url").GetString()!;
+        return ExtractIdFromUrl(chainUrl);
+    }
+
     public async Task<byte[]> FetchSpriteAsync(int speciesId)
     {
         return await _httpClient.GetByteArrayAsync(
