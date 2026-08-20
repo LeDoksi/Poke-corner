@@ -826,6 +826,9 @@ public partial class OverlayWindow : Window
     private const int GWL_EXSTYLE = -20;
     private const int WS_EX_TRANSPARENT = 0x00000020;
     private const int WS_EX_LAYERED = 0x00080000;
+    private static readonly TimeSpan IdleFrameDuration = TimeSpan.FromMilliseconds(150);
+
+    private SpriteAnimator? _animator;
 
     public event Action? PetClicked;
 
@@ -837,7 +840,22 @@ public partial class OverlayWindow : Window
 
     public void SetSpriteFrames(IReadOnlyList<ImageSource> frames)
     {
-        SpriteImage.Source = frames.Count > 0 ? frames[0] : null;
+        _animator?.Stop();
+        _animator = null;
+
+        if (frames.Count == 0)
+        {
+            SpriteImage.Source = null;
+            return;
+        }
+
+        // frameCount is always derived from frames.Count right here, so FrameSequencer
+        // and SpriteAnimator can never disagree about how many frames exist — a single
+        // frame (the common case until the animated-sprite follow-up plan lands) just
+        // means FrameIndexAt always returns 0, i.e. a static image with no visible cycling.
+        var sequencer = new FrameSequencer(frames.Count, IdleFrameDuration);
+        _animator = new SpriteAnimator(SpriteImage, sequencer, frames);
+        _animator.Start();
     }
 
     public void PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels)
