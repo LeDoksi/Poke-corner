@@ -103,6 +103,23 @@ public class CollectionViewModelTests
     }
 
     [Fact]
+    public void TrySetActive_Success_RegistersInteractionResettingNeglectTimer()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(1);
+        collection.Add(individual);
+        var nowUtc = DateTimeOffset.UtcNow;
+        var careState = new CareState { LastInteractionUtc = nowUtc - TimeSpan.FromDays(2) };
+        var careStates = new Dictionary<Guid, CareState> { [individual.Id] = careState };
+        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), CareMode.Chill);
+
+        var result = vm.TrySetActive(individual.Id, nowUtc);
+
+        Assert.True(result);
+        Assert.Equal(nowUtc, careState.LastInteractionUtc);
+    }
+
+    [Fact]
     public void Release_DelegatesToCollection()
     {
         var collection = new PokemonCollection();

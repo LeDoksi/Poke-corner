@@ -41,11 +41,16 @@ public sealed class CollectionViewModel
 
     public bool TrySetActive(Guid id, DateTimeOffset nowUtc)
     {
-        var careState = _careStates.TryGetValue(id, out var state) ? state : new CareState();
+        if (!_careStates.TryGetValue(id, out var careState))
+        {
+            careState = new CareState();
+            _careStates[id] = careState;
+        }
         var isAvailable = _careMode != CareMode.Hardcore || _careModeService.IsAvailableToPlaceOnDesktop(careState, nowUtc);
         if (!isAvailable) return false;
 
         _collection.SetActive(id);
+        _careModeService.RegisterInteraction(careState, nowUtc);
         return true;
     }
 
