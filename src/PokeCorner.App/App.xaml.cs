@@ -40,6 +40,7 @@ public partial class App : System.Windows.Application
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
+    private bool _catchReady;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -67,7 +68,7 @@ public partial class App : System.Windows.Application
             _appState.Collection.Add(starter);
         }
 
-        _appState.CatchRollDue += OnCatchRollDue;
+        _appState.CatchRollDue += OnCatchRollDue; // now just flips "ready" state — see OnCatchRollDue
 
         _inputCounter = new InputEventCounter();
 
@@ -86,6 +87,7 @@ public partial class App : System.Windows.Application
         _trayIconService = new TrayIconService();
         _trayIconService.OpenCollectionRequested += OpenCollectionWindow;
         _trayIconService.OpenSettingsRequested += OpenSettingsWindow;
+        _trayIconService.CatchRequested += OnCatchRequested;
         _trayIconService.ExitRequested += () => Shutdown();
 
         ReconcileSettingsState();
@@ -119,6 +121,12 @@ public partial class App : System.Windows.Application
         }
 
         CheckHardcoreNeglect();
+
+        // Any window on the system being activated (ours or someone else's — e.g. an
+        // Alt-Tab back to another app) can bump a WS_EX_TOPMOST window out of the
+        // topmost band on some Windows builds; re-asserting Topmost periodically is the
+        // standard workaround, cheap enough to just do on this existing 5-second tick.
+        ReassertOverlayTopmost();
 
         // Piggybacks on this existing 5-second timer so a crash or Task Manager kill
         // never loses more than a few seconds of session state. JsonSaveStore.Save
@@ -297,8 +305,23 @@ public partial class App : System.Windows.Application
         return bitmap;
     }
 
+    /// Activity has crossed the threshold for a catch — per explicit feedback, this
+    /// should NOT catch automatically (that took the moment away from the player).
+    /// Instead it just flips "ready" so the player triggers the actual catch themselves
+    /// via the tray menu's "Поймать!" item — see OnCatchRequested.
     private void OnCatchRollDue()
     {
+        if (_catchReady) return; // already waiting on the player — don't re-notify
+
+        _catchReady = true;
+        _trayIconService.SetCatchReady(true);
+        _trayIconService.ShowNotification("PokéCorner", "Готов новый покемон! Открой меню трея и нажми «Поймать!».");
+    }
+
+    private void OnCatchRequested()
+    {
+        if (!_catchReady) return;
+
         // PokemonCollection.Add() auto-activates via ActiveIndividualId ??= individual.Id
         // whenever nothing is currently active. That's correct for the very first
         // individual ever added (onboarding), but the only way ActiveIndividualId is null
@@ -331,6 +354,8 @@ public partial class App : System.Windows.Application
             _appState.Collection.ClearActive();
         }
 
+        _catchReady = false;
+        _trayIconService.SetCatchReady(false);
         RefreshOverlayForActiveIndividual();
         _trayIconService.ShowNotification("PokéCorner", "Поймал нового покемона! Загляни в коллекцию.");
     }
@@ -341,35 +366,77 @@ public partial class App : System.Windows.Application
         if (active is null) return;
 
         var careState = _appState.GetOrCreateCareState(active.Id);
-        _feedingService.TryFeed(_appState.Settings.FeedingMode, _appState.Feeding, careState, DateTimeOffset.UtcNow);
+        var fed = _feedingService.TryFeed(_appState.Settings.FeedingMode, _appState.Feeding, careState, DateTimeOffset.UtcNow);
+
+        // Simple mode always succeeds silently otherwise — this is the only feedback
+        // a click currently gives, so without it there's no way to tell a click landed.
+        if (fed)
+        {
+            _trayIconService.ShowNotification("PokéCorner", "Погладил!");
+        }
+        else
+        {
+            _trayIconService.ShowNotification("PokéCorner", "Не хватает лакомств — накопи ещё активности.");
+        }
     }
 
     private void OpenCollectionWindow()
     {
-        if (_collectionWindow is not null)
+        try
         {
-            _collectionWindow.Activate();
-            return;
-        }
+            if (_collectionWindow is not null)
+            {
+                _collectionWindow.Activate();
+                return;
+            }
 
-        var vm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode);
-        _collectionWindow = new Window { Content = new CollectionView(vm, _appState, TryFeedActiveIndividual, RefreshOverlayForActiveIndividual), Title = "Коллекция", Width = 420, Height = 480 };
-        _collectionWindow.Closed += (_, _) => _collectionWindow = null;
-        _collectionWindow.Show();
+            var vm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode);
+            _collectionWindow = new Window { Content = new CollectionView(vm, _appState, TryFeedActiveIndividual, RefreshOverlayForActiveIndividual), Title = "Коллекция", Width = 480, Height = 480, WindowStartupLocation = WindowStartupLocation.CenterScreen };
+            _collectionWindow.Closed += (_, _) => _collectionWindow = null;
+            _collectionWindow.Show();
+            _collectionWindow.Activate();
+            ReassertOverlayTopmost();
+        }
+        catch (Exception ex)
+        {
+            // Temporary diagnostic: if opening the popup throws, surface it instead of
+            // failing silently — a WinForms tray context-menu click swallows unhandled
+            // exceptions on its own, so without this there'd be no visible sign anything
+            // went wrong at all.
+            _trayIconService.ShowNotification("PokéCorner — ошибка", ex.Message);
+        }
     }
 
     private void OpenSettingsWindow()
     {
-        if (_settingsWindow is not null)
+        try
         {
-            _settingsWindow.Activate();
-            return;
-        }
+            if (_settingsWindow is not null)
+            {
+                _settingsWindow.Activate();
+                return;
+            }
 
-        var vm = new SettingsViewModel(_appState.Settings);
-        _settingsWindow = new Window { Content = new SettingsView(vm), Title = "Настройки", Width = 360, Height = 480 };
-        _settingsWindow.Closed += (_, _) => _settingsWindow = null;
-        _settingsWindow.Show();
+            var vm = new SettingsViewModel(_appState.Settings);
+            _settingsWindow = new Window { Content = new SettingsView(vm), Title = "Настройки", Width = 360, Height = 480, WindowStartupLocation = WindowStartupLocation.CenterScreen };
+            _settingsWindow.Closed += (_, _) => _settingsWindow = null;
+            _settingsWindow.Show();
+            _settingsWindow.Activate();
+            ReassertOverlayTopmost();
+        }
+        catch (Exception ex)
+        {
+            _trayIconService.ShowNotification("PokéCorner — ошибка", ex.Message);
+        }
+    }
+
+    /// Forces Windows to re-insert the overlay at the top of the topmost band. Toggling
+    /// Topmost off/on is the standard trick — just leaving it "true" the whole time
+    /// doesn't stop another window's activation from bumping it down.
+    private void ReassertOverlayTopmost()
+    {
+        _overlayWindow.Topmost = false;
+        _overlayWindow.Topmost = true;
     }
 
     private static ScreenCorner ParseCorner(string corner) => corner switch

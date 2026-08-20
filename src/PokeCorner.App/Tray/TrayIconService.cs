@@ -11,7 +11,10 @@ public sealed class TrayIconService : IDisposable
 
     public event Action? OpenCollectionRequested;
     public event Action? OpenSettingsRequested;
+    public event Action? CatchRequested;
     public event Action? ExitRequested;
+
+    private readonly ToolStripMenuItem _catchMenuItem;
 
     public TrayIconService()
     {
@@ -24,6 +27,9 @@ public sealed class TrayIconService : IDisposable
         menu.Items.Add("Коллекция", null, (_, _) => OpenCollectionRequested?.Invoke());
         menu.Items.Add("Настройки", null, (_, _) => OpenSettingsRequested?.Invoke());
         menu.Items.Add(new ToolStripSeparator());
+        _catchMenuItem = new ToolStripMenuItem("Поймать! 🎣", null, (_, _) => CatchRequested?.Invoke()) { Enabled = false };
+        menu.Items.Add(_catchMenuItem);
+        menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add("Выход", null, (_, _) => ExitRequested?.Invoke());
 
         _notifyIcon = new NotifyIcon
@@ -34,6 +40,18 @@ public sealed class TrayIconService : IDisposable
             ContextMenuStrip = menu
         };
         _notifyIcon.DoubleClick += (_, _) => OpenCollectionRequested?.Invoke();
+    }
+
+    /// Toggles the "Поймать!" menu item and tray tooltip so the player can see a catch
+    /// is ready and trigger it themselves, rather than it happening automatically —
+    /// per explicit feedback, auto-catching on threshold felt like it took the moment
+    /// away from the player.
+    public void SetCatchReady(bool isReady)
+    {
+        _catchMenuItem.Enabled = isReady;
+        _catchMenuItem.Font = isReady
+            ? new System.Drawing.Font(_catchMenuItem.Font, System.Drawing.FontStyle.Bold)
+            : new System.Drawing.Font(_catchMenuItem.Font, System.Drawing.FontStyle.Regular);
     }
 
     public void SetActivityTrackingIndicator(bool isActive)
