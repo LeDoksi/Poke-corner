@@ -12,6 +12,8 @@ public sealed class ActivityAccumulator
 
     public long TotalUnits { get; private set; }
 
+    public long UnitsSinceLastCatchCheck => _unitsSinceLastCatchCheck;
+
     public event Action? CatchCheckDue;
 
     public void AddUnits(long units)

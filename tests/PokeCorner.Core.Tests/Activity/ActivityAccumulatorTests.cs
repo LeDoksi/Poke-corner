@@ -64,4 +64,24 @@ public class ActivityAccumulatorTests
 
         Assert.Equal(100, accumulator.TotalUnits);
     }
+
+    [Fact]
+    public void UnitsSinceLastCatchCheck_ReflectsPartialProgressTowardNextInterval()
+    {
+        var accumulator = new ActivityAccumulator();
+
+        accumulator.AddUnits(100);
+
+        Assert.Equal(100, accumulator.UnitsSinceLastCatchCheck);
+    }
+
+    [Fact]
+    public void UnitsSinceLastCatchCheck_ResetsAfterCrossingInterval()
+    {
+        var accumulator = new ActivityAccumulator();
+
+        accumulator.AddUnits(ActivityAccumulator.CatchCheckIntervalUnits + 400);
+
+        Assert.Equal(400, accumulator.UnitsSinceLastCatchCheck);
+    }
 }
