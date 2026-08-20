@@ -11,7 +11,6 @@ public enum ScreenCorner { TopLeft, TopRight, BottomLeft, BottomRight }
 public partial class OverlayWindow : Window
 {
     private const int GWL_EXSTYLE = -20;
-    private const int WS_EX_TRANSPARENT = 0x00000020;
     private const int WS_EX_LAYERED = 0x00080000;
     private static readonly TimeSpan IdleFrameDuration = TimeSpan.FromMilliseconds(150);
 
@@ -84,15 +83,22 @@ public partial class OverlayWindow : Window
         }
     }
 
-    /// The window itself stays WS_EX_LAYERED | WS_EX_TRANSPARENT (click-through) at
-    /// all times; the sprite Image re-enables hit-testing locally via IsHitTestVisible,
-    /// so clicks land on the pet but pass through everywhere else in the window's bounds.
+    /// WS_EX_TRANSPARENT operates at the Win32 WM_NCHITTEST level — it makes Windows
+    /// route ALL mouse input past the entire HWND (including its children) to whatever
+    /// is behind it, before WPF's own hit-testing ever runs. So it is deliberately NOT
+    /// applied here: only WS_EX_LAYERED is set, which is still needed (alongside
+    /// AllowsTransparency="True") for proper alpha-blended transparency rendering.
+    /// Instead, the window's own background is {x:Null} (see OverlayWindow.xaml) — a
+    /// null background has no hit-test surface at all, so WPF's hit-testing only ever
+    /// finds the SpriteImage control itself (hit-testable by default), meaning clicks on
+    /// the pet land on it while clicks elsewhere in the window's bounding box fall through
+    /// to whatever's behind it, all through WPF's normal hit-testing rather than Win32
+    /// click-through.
     private void MakeClickThroughExceptSprite()
     {
         var hwnd = new WindowInteropHelper(this).Handle;
         var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-        SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_LAYERED | WS_EX_TRANSPARENT);
-        SpriteImage.IsHitTestVisible = true;
+        SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_LAYERED);
     }
 
     [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
