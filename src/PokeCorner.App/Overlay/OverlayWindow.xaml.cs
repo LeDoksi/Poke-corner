@@ -33,6 +33,17 @@ public partial class OverlayWindow : Window
         _animator?.Stop();
         _animator = null;
 
+        // A held (FillBehavior.HoldEnd) animation outranks any later plain property
+        // assignment in WPF's value precedence, so PlayRanAwayReaction's fade/slide would
+        // otherwise keep the sprite invisible and off-position forever — SetMoodTint's
+        // assignments and every subsequent reveal would silently do nothing. Clearing the
+        // clocks with BeginAnimation(property, null) restores local-value precedence, so
+        // every fresh reveal starts from a clean, fully visible, un-translated state.
+        SpriteImage.BeginAnimation(OpacityProperty, null);
+        SpriteTranslateTransform.BeginAnimation(TranslateTransform.YProperty, null);
+        SpriteImage.Opacity = 1.0;
+        SpriteTranslateTransform.Y = 0;
+
         if (frames.Count == 0)
         {
             SpriteImage.Source = null;
@@ -148,6 +159,11 @@ public partial class OverlayWindow : Window
 
     public void PlayEvolutionFlash()
     {
+        // Same held-animation precedence problem as in SetSpriteFrames: a still-holding
+        // bounce (or a previous flash) would make this one start from — and be fought by —
+        // a stale animated value. Clearing first means the newest animation always wins.
+        ClearScaleAnimations();
+
         var flash = new DoubleAnimation(1.0, 1.4, TimeSpan.FromMilliseconds(200)) { AutoReverse = true };
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, flash);
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, flash);
@@ -171,8 +187,20 @@ public partial class OverlayWindow : Window
         SpriteImage.Opacity = 0.5 + mood * 0.5;
     }
 
+    /// Removes any still-holding scale animation clock (and the glyph fade's) so a newly
+    /// started bounce/flash isn't silently outranked by the previous one's held end value.
+    private void ClearScaleAnimations()
+    {
+        SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, null);
+        SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, null);
+        SpriteScaleTransform.ScaleX = 1.0;
+        SpriteScaleTransform.ScaleY = 1.0;
+    }
+
     private void PlayBounce(double peakScale, int durationMs, string glyph)
     {
+        ClearScaleAnimations();
+
         var bounce = new DoubleAnimation(1.0, peakScale, TimeSpan.FromMilliseconds(durationMs / 2.0))
         {
             AutoReverse = true,
@@ -181,6 +209,9 @@ public partial class OverlayWindow : Window
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, bounce);
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, bounce);
 
+        // Same reason as above: the previous fade holds Opacity at 0, which would outrank
+        // this plain assignment and make the glyph invisible on every bounce after the first.
+        ReactionGlyphText.BeginAnimation(OpacityProperty, null);
         ReactionGlyphText.Text = glyph;
         ReactionGlyphText.Opacity = 1.0;
         var fadeUp = new DoubleAnimation(1.0, 0.0, TimeSpan.FromMilliseconds(durationMs * 2));

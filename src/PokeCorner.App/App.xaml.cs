@@ -50,6 +50,12 @@ public partial class App : System.Windows.Application
     private byte[]? _activeSpriteBytes;
     private ProgressPanelWindow? _progressPanelWindow;
 
+    /// Raw animated-GIF bytes per display species id. Deliberately in-memory only: unlike the
+    /// static PNG path there's no SpriteCache disk slot for GIFs (its filenames are always
+    /// "{speciesId}.png", so an animated entry would collide with the static one), and
+    /// widening SpriteCache's public API would break other tasks' tests.
+    private readonly Dictionary<int, byte[]> _animatedSpriteCache = new();
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -63,8 +69,19 @@ public partial class App : System.Windows.Application
         _saveStore = new JsonSaveStore(AppPaths.GetSaveFilePath());
         _spriteCache = new SpriteCache(AppPaths.GetSpriteCacheDirectory());
         _pokeApiClient = new PokeApiClient(new System.Net.Http.HttpClientHandler());
-        _speciesCatalog = new SpeciesCatalog(_pokeApiClient, _spriteCache, Path.Combine(AppPaths.GetAppDataDirectory(), "catalog.json"));
-        _ = _speciesCatalog.RefreshFromNetworkAsync(); // fire-and-forget; today's rolls still use whatever LoadCachedOrFallback returns right now
+        var catalogPath = Path.Combine(AppPaths.GetAppDataDirectory(), "catalog.json");
+        _speciesCatalog = new SpeciesCatalog(_pokeApiClient, _spriteCache, catalogPath);
+
+        // The refresh crawls ~650 species (1000+ sequential requests against the free public
+        // PokeAPI), so firing it on every launch of an autostart-with-Windows app is both
+        // wasteful and rude to that API. Species data changes rarely — a weekly refresh is
+        // plenty. Fire-and-forget when it does run; today's rolls still use whatever
+        // LoadCachedOrFallback returns right now.
+        var catalogIsStale = !File.Exists(catalogPath) || File.GetLastWriteTimeUtc(catalogPath) < DateTime.UtcNow.AddDays(-7);
+        if (catalogIsStale)
+        {
+            _ = _speciesCatalog.RefreshFromNetworkAsync();
+        }
         _catchRoller = new CatchRoller();
         _eggIncubationService = new EggIncubationService();
         _careModeService = new CareModeService();
@@ -281,15 +298,29 @@ public partial class App : System.Windows.Application
 
         var displaySpeciesId = ResolveDisplaySpeciesId(active);
 
+        // This method runs on app start, every fullscreen enter/exit, every Pet/Feed click,
+        // every Select/Release, every purchase, catch and hatch. Without this memo the
+        // animated path would re-issue two real HTTP requests (the PokeAPI JSON document
+        // plus the GIF download) plus a full decode every single time, and would lose
+        // animation entirely when offline even for an already-seen species. In-memory only
+        // is the deliberate trade-off: one legitimate fetch per active individual per launch.
         byte[]? animatedBytes = null;
-        try
+        if (!_animatedSpriteCache.TryGetValue(displaySpeciesId, out animatedBytes))
         {
-            animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(displaySpeciesId);
-        }
-        catch
-        {
-            // Same defense-in-depth as the static-sprite catch below — network errors already
-            // degrade to null inside PokeApiClient's normal paths; this guards unexpected ones.
+            try
+            {
+                animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(displaySpeciesId);
+            }
+            catch
+            {
+                // Same defense-in-depth as the static-sprite catch below — network errors already
+                // degrade to null inside PokeApiClient's normal paths; this guards unexpected ones.
+            }
+
+            if (animatedBytes is not null)
+            {
+                _animatedSpriteCache[displaySpeciesId] = animatedBytes;
+            }
         }
 
         if (animatedBytes is not null)
@@ -302,21 +333,40 @@ public partial class App : System.Windows.Application
                 return;
             }
 
-            var pngFrames = GifFrameDecoder.DecodeFramesAsPng(animatedBytes);
-            _overlayWindow.SetSpriteFrames(pngFrames.Select(DecodeSprite).ToList());
-            _activeSpriteBytes = pngFrames[0];
-            _trayIconService.SetSpriteIcon(pngFrames[0]);
-
-            if (_isFullscreenHiding)
+            // The decode is NOT covered by the fetch's try/catch above, and a non-GIF or
+            // truncated response body makes it throw — straight past all handling into
+            // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
+            IReadOnlyList<byte[]> pngFrames;
+            try
             {
-                _overlayWindow.Hide();
+                pngFrames = GifFrameDecoder.DecodeFramesAsPng(animatedBytes);
             }
-            else
+            catch
             {
-                _overlayWindow.Show();
+                pngFrames = Array.Empty<byte[]>();
             }
 
-            return;
+            // Guards pngFrames[0] below: a malformed-but-decodable GIF can yield zero frames.
+            if (pngFrames.Count > 0)
+            {
+                _overlayWindow.SetSpriteFrames(pngFrames.Select(DecodeSprite).ToList());
+                _activeSpriteBytes = pngFrames[0];
+                _trayIconService.SetSpriteIcon(pngFrames[0]);
+
+                if (_isFullscreenHiding)
+                {
+                    _overlayWindow.Hide();
+                }
+                else
+                {
+                    _overlayWindow.Show();
+                }
+
+                return;
+            }
+
+            // Zero frames (decode failed or malformed GIF) — fall through to the static
+            // path below, exactly as if animatedBytes had been null.
         }
 
         byte[]? spriteBytes = null;
@@ -374,13 +424,14 @@ public partial class App : System.Windows.Application
         }
     }
 
-    // This lookup is scoped to the current 7-chain offline catalog on purpose — when the
-    // full-catalog follow-up plan (docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md)
-    // lands, this will need to search that catalog instead.
+    // Reads from the same widened species catalog as every other catch-pool call site here
+    // (OpenMenu/TryPerformCatch/HatchEgg). It used to search only the 7-chain offline
+    // starter pool, so any individual caught from the network catalog fell through to the
+    // defensive fallback below and the sprite never advanced past its base form.
     private int ResolveDisplaySpeciesId(PokemonIndividual individual)
     {
-        var chain = _spriteCache.LoadOfflineStarters().FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
-        if (chain is null) return individual.SpeciesId; // defensive fallback, shouldn't happen given the current 7-chain catalog
+        var chain = _speciesCatalog.LoadCachedOrFallback().FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
+        if (chain is null) return individual.SpeciesId; // defensive fallback for an individual whose chain isn't in the catalog
 
         var stageIndex = (int)individual.CurrentStage;
         return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
@@ -499,6 +550,19 @@ public partial class App : System.Windows.Application
         if (egg is null || !_eggIncubationService.IsReady(egg, DateTimeOffset.UtcNow)) return false;
 
         var availableChains = _speciesCatalog.LoadCachedOrFallback();
+
+        // Defense in depth behind the shop's tier gating (see IsRarityTierAvailable): a save
+        // file written before that gating existed — or hand-edited — can still hold a pending
+        // egg of a tier the current catalog can't fill. RollCatchFromTier throws in that case,
+        // and DispatcherUnhandledException deliberately doesn't suppress crashes, so every
+        // launch would crash the moment that egg became hatchable. Bail out instead, keeping
+        // the egg pending so it can be retried once the catalog widens.
+        if (!availableChains.Any(c => RarityClassifier.Classify(c.CaptureRate) == egg.Tier))
+        {
+            _trayIconService.ShowNotification("PokéCorner", "Пока нет доступных покемонов этой редкости — попробуй позже, когда каталог обновится.");
+            return false;
+        }
+
         var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
         var ownedNatures = _appState.Collection.Individuals
             .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
@@ -521,6 +585,13 @@ public partial class App : System.Windows.Application
         return true;
     }
 
+    /// Whether the species catalog currently in use (same source as BuyEgg/HatchEgg) has at
+    /// least one chain in this rarity tier. The offline fallback catalog has no Uncommon and
+    /// no Legendary chains at all, so without this the shop would happily sell an egg that
+    /// can never hatch — spending the coins for good and crashing on the hatch attempt.
+    private bool IsRarityTierAvailable(RarityTier tier) =>
+        _speciesCatalog.LoadCachedOrFallback().Any(c => RarityClassifier.Classify(c.CaptureRate) == tier);
+
     private bool BuyEgg(RarityTier tier)
     {
         if (!_shopService.TrySpendForEgg(_appState.Shop, tier)) return false;
@@ -537,7 +608,7 @@ public partial class App : System.Windows.Application
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _speciesCatalog.LoadCachedOrFallback(), _appState.PendingEggs);
                 var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
-                var shopView = new ShopView(_appState, _shopService, BuyEgg, RefreshOverlayForActiveIndividual);
+                var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;

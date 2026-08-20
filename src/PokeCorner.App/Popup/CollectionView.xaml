@@ -9,6 +9,7 @@
     </UserControl.Resources>
     <TabControl>
         <TabItem Header="Catch log">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
                 <DockPanel Margin="8">
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
@@ -95,8 +96,10 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="Pokédex">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
                 <TextBlock x:Name="PokedexCountText" FontWeight="Bold" Margin="8" />
                 <ItemsControl x:Name="PokedexGrid" Margin="4">
@@ -117,6 +120,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>

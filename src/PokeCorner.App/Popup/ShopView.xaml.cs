@@ -11,15 +11,19 @@ public partial class ShopView : System.Windows.Controls.UserControl
     private readonly AppState _appState;
     private readonly ShopService _shopService;
     private readonly Func<RarityTier, bool> _tryBuyEgg;
+    private readonly Func<RarityTier, bool> _isTierAvailable;
     private readonly Action _onStateChanged;
     private DispatcherTimer? _liveRefreshTimer;
 
-    public ShopView(AppState appState, ShopService shopService, Func<RarityTier, bool> tryBuyEgg, Action onStateChanged)
+    private const string UnavailableTierToolTip = "Пока недоступно — нужен более широкий каталог видов";
+
+    public ShopView(AppState appState, ShopService shopService, Func<RarityTier, bool> tryBuyEgg, Func<RarityTier, bool> isTierAvailable, Action onStateChanged)
     {
         InitializeComponent();
         _appState = appState;
         _shopService = shopService;
         _tryBuyEgg = tryBuyEgg;
+        _isTierAvailable = isTierAvailable;
         _onStateChanged = onStateChanged;
         Loaded += (_, _) => StartLiveRefresh();
         Unloaded += (_, _) => StopLiveRefresh();
@@ -84,5 +88,20 @@ public partial class ShopView : System.Windows.Controls.UserControl
         EggUncommonButton.Content = $"Яйцо: Необычное — {ShopService.EggPriceUncommon}";
         EggRareButton.Content = $"Яйцо: Редкое — {ShopService.EggPriceRare}";
         EggLegendaryButton.Content = $"Яйцо: Легендарное — {ShopService.EggPriceLegendary}";
+
+        // Buying an egg of a tier the current species catalog can't fill would take the
+        // coins and then leave an unhatchable egg in the save file forever, so those
+        // buttons are disabled outright rather than merely failing on click.
+        ApplyTierAvailability(EggCommonButton, RarityTier.Common);
+        ApplyTierAvailability(EggUncommonButton, RarityTier.Uncommon);
+        ApplyTierAvailability(EggRareButton, RarityTier.Rare);
+        ApplyTierAvailability(EggLegendaryButton, RarityTier.Legendary);
+    }
+
+    private void ApplyTierAvailability(System.Windows.Controls.Button button, RarityTier tier)
+    {
+        var available = _isTierAvailable(tier);
+        button.IsEnabled = available;
+        button.ToolTip = available ? null : UnavailableTierToolTip;
     }
 }
