@@ -55,6 +55,20 @@ public sealed class PokeApiClient
             $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{speciesId}.png");
     }
 
+    public async Task<byte[]?> FetchAnimatedSpriteAsync(int speciesId)
+    {
+        var json = await _httpClient.GetStringAsync($"pokemon/{speciesId}/");
+        using var doc = JsonDocument.Parse(json);
+        var animatedUrl = doc.RootElement
+            .GetProperty("sprites").GetProperty("versions")
+            .GetProperty("generation-v").GetProperty("black-white")
+            .GetProperty("animated").GetProperty("front_default");
+
+        if (animatedUrl.ValueKind == JsonValueKind.Null) return null;
+
+        return await _httpClient.GetByteArrayAsync(animatedUrl.GetString());
+    }
+
     private static int ExtractIdFromUrl(string url)
     {
         var lastSegment = url.TrimEnd('/').Split('/')[^1];
