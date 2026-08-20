@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace PokeCorner.App.Overlay;
 
@@ -140,4 +141,49 @@ public partial class OverlayWindow : Window
 
     [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     [DllImport("user32.dll")] private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+    public void PlayPetReaction() => PlayBounce(peakScale: 1.15, durationMs: 300, glyph: "❤");
+
+    public void PlayFeedReaction() => PlayBounce(peakScale: 1.3, durationMs: 400, glyph: "+2250");
+
+    public void PlayEvolutionFlash()
+    {
+        var flash = new DoubleAnimation(1.0, 1.4, TimeSpan.FromMilliseconds(200)) { AutoReverse = true };
+        SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, flash);
+        SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, flash);
+    }
+
+    public void PlayRanAwayReaction()
+    {
+        var slide = new DoubleAnimation(0, Height, TimeSpan.FromMilliseconds(400));
+        var fade = new DoubleAnimation(1.0, 0.0, TimeSpan.FromMilliseconds(400));
+        SpriteTranslateTransform.BeginAnimation(TranslateTransform.YProperty, slide);
+        SpriteImage.BeginAnimation(OpacityProperty, fade);
+    }
+
+    /// mood: 0.0 (long-neglected) to 1.0 (just interacted with) — CareModeService.ComputeMood's
+    /// output, applied continuously so the sprite visibly droops/dims as Hardcore-mode
+    /// neglect approaches the run-away threshold, not just at the moment it triggers.
+    public void SetMoodTint(double mood)
+    {
+        var droopOffset = (1.0 - mood) * 10;
+        SpriteTranslateTransform.Y = droopOffset;
+        SpriteImage.Opacity = 0.5 + mood * 0.5;
+    }
+
+    private void PlayBounce(double peakScale, int durationMs, string glyph)
+    {
+        var bounce = new DoubleAnimation(1.0, peakScale, TimeSpan.FromMilliseconds(durationMs / 2.0))
+        {
+            AutoReverse = true,
+            EasingFunction = new QuadraticEase()
+        };
+        SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, bounce);
+        SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, bounce);
+
+        ReactionGlyphText.Text = glyph;
+        ReactionGlyphText.Opacity = 1.0;
+        var fadeUp = new DoubleAnimation(1.0, 0.0, TimeSpan.FromMilliseconds(durationMs * 2));
+        ReactionGlyphText.BeginAnimation(OpacityProperty, fadeUp);
+    }
 }

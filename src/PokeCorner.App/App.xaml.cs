@@ -185,9 +185,12 @@ public partial class App : System.Windows.Application
 
         var careState = _appState.GetOrCreateCareState(active.Id);
         var now = DateTimeOffset.UtcNow;
+        _overlayWindow.SetMoodTint(_careModeService.ComputeMood(careState, now));
+
         if (!_careModeService.ShouldRunAway(careState, now, _appState.Settings.CareMode)) return;
 
         _careModeService.TriggerRunAway(careState, now);
+        _overlayWindow.PlayRanAwayReaction();
         _appState.Collection.ClearActive();
         RefreshOverlayForActiveIndividual();
         _trayIconService.ShowNotification("PokéCorner", "Питомец расстроен и не хочет возвращаться на стол ещё час.");
@@ -460,10 +463,13 @@ public partial class App : System.Windows.Application
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
+        var stageBefore = active.CurrentStage;
         var careState = _appState.GetOrCreateCareState(active.Id);
         _feedingService.Pet(active, careState, DateTimeOffset.UtcNow);
         _appState.RecomputeStage(active);
         _trayIconService.ShowNotification("PokéCorner", "Погладил!");
+        _overlayWindow.PlayPetReaction();
+        if (active.CurrentStage != stageBefore) _overlayWindow.PlayEvolutionFlash();
     }
 
     private void FeedActiveIndividual()
@@ -471,12 +477,15 @@ public partial class App : System.Windows.Application
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
+        var stageBefore = active.CurrentStage;
         var careState = _appState.GetOrCreateCareState(active.Id);
         var fed = _feedingService.Feed(active, _appState.Feeding, careState, DateTimeOffset.UtcNow);
         if (fed)
         {
             _appState.RecomputeStage(active);
             _trayIconService.ShowNotification("PokéCorner", "Покормил!");
+            _overlayWindow.PlayFeedReaction();
+            if (active.CurrentStage != stageBefore) _overlayWindow.PlayEvolutionFlash();
         }
         else
         {
