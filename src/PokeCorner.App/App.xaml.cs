@@ -44,6 +44,7 @@ public partial class App : System.Windows.Application
     private int _appliedPetSizePixels;
     private bool _catchReady;
     private byte[]? _activeSpriteBytes;
+    private ProgressPanelWindow? _progressPanelWindow;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -125,6 +126,8 @@ public partial class App : System.Windows.Application
             _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
             _shopService.EarnCoinsFromActivity(_appState.Shop, units);
         }
+
+        _progressPanelWindow?.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
 
         CheckHardcoreNeglect();
 
@@ -209,6 +212,20 @@ public partial class App : System.Windows.Application
             _appliedMonitorIndex = _appState.Settings.MonitorIndex;
             _appliedPetSizePixels = _appState.Settings.PetSizePixels;
         }
+
+        if (_appState.Settings.ShowProgressPanel && _progressPanelWindow is null)
+        {
+            _progressPanelWindow = new ProgressPanelWindow();
+            _progressPanelWindow.PositionBelow(_overlayWindow);
+            _progressPanelWindow.Show();
+        }
+        else if (!_appState.Settings.ShowProgressPanel && _progressPanelWindow is not null)
+        {
+            _progressPanelWindow.Close();
+            _progressPanelWindow = null;
+        }
+
+        _progressPanelWindow?.PositionBelow(_overlayWindow);
     }
 
     /// Single entry point for "what should the overlay show right now" — called after

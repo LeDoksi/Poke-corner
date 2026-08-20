@@ -29,6 +29,7 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         FullscreenHideCheck.IsChecked = settings.AutoHideInFullscreen;
         AutostartCheck.IsChecked = AutostartRegistry.IsEnabled();
         PetSizeSlider.Value = settings.PetSizePixels;
+        ShowProgressPanelCheck.IsChecked = settings.ShowProgressPanel;
     }
 
     private void CareModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,5 +73,11 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     {
         if (_isLoadingInitialState) return;
         _viewModel.SetPetSizePixels((int)e.NewValue);
+    }
+
+    private void ShowProgressPanelCheck_Changed(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (_isLoadingInitialState) return;
+        _viewModel.Settings.ShowProgressPanel = ShowProgressPanelCheck.IsChecked == true;
     }
 }
