@@ -67,13 +67,20 @@ public partial class OverlayWindow : Window
 
     private void SpriteImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (e.ClickCount == 1)
+        // DragMove() blocks until the mouse button is released, handling the OS-level
+        // drag loop itself — it moves the window only if the user actually drags. We
+        // can't tell in advance whether this press will turn into a drag or stay a
+        // click, so compare mouse position in *screen* coordinates (not window-relative
+        // — the window itself moves during a drag, which would make a relative-position
+        // comparison meaningless) before and after DragMove() returns: negligible
+        // movement means it was a click, not a drag.
+        var startScreenPosition = PointToScreen(e.GetPosition(this));
+        DragMove();
+        var endScreenPosition = PointToScreen(Mouse.GetPosition(this));
+
+        if ((startScreenPosition - endScreenPosition).Length < 4)
         {
             PetClicked?.Invoke();
-        }
-        else if (e.ButtonState == MouseButtonState.Pressed)
-        {
-            DragMove();
         }
     }
 
