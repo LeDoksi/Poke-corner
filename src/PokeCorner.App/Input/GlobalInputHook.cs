@@ -7,6 +7,18 @@ public sealed class GlobalInputHook : IDisposable
     private const int WH_MOUSE_LL = 14;
     private const int WH_KEYBOARD_LL = 13;
 
+    // WM_* message identifiers, used only to tell a discrete click/scroll apart from
+    // continuous mouse-move noise — this is not a privacy-sensitive read: it reveals
+    // only "what kind of event this is" (down/up/wheel), never a position, a key, or
+    // any content. WH_MOUSE_LL fires on every pixel of movement, so counting it
+    // unfiltered inflates activity by orders of magnitude (a few centimeters of mouse
+    // travel would otherwise look like hours of "clicking").
+    private const int WM_LBUTTONDOWN = 0x0201;
+    private const int WM_RBUTTONDOWN = 0x0204;
+    private const int WM_MBUTTONDOWN = 0x0207;
+    private const int WM_XBUTTONDOWN = 0x020B;
+    private const int WM_MOUSEWHEEL = 0x020A;
+
     private readonly InputEventCounter _counter;
     private readonly LowLevelProc _mouseProc;
     private readonly LowLevelProc _keyboardProc;
@@ -46,7 +58,14 @@ public sealed class GlobalInputHook : IDisposable
 
     private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
-        if (nCode >= 0) _counter.RecordEvent(); // count only — never inspect wParam/lParam contents.
+        if (nCode >= 0)
+        {
+            var message = wParam.ToInt32();
+            if (message is WM_LBUTTONDOWN or WM_RBUTTONDOWN or WM_MBUTTONDOWN or WM_XBUTTONDOWN or WM_MOUSEWHEEL)
+            {
+                _counter.RecordEvent(); // count only — never inspect lParam (position/key content).
+            }
+        }
         return CallNextHookEx(_mouseHookHandle, nCode, wParam, lParam);
     }
 
