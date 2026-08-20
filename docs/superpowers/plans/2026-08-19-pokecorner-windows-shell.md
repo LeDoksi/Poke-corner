@@ -1177,7 +1177,10 @@ using PokeCorner.Core;
 
 namespace PokeCorner.App.Popup;
 
-public partial class CollectionView : UserControl
+// Qualified as System.Windows.Controls.UserControl, not bare UserControl —
+// System.Windows.Forms.UserControl also exists and this project has both WPF and
+// Windows Forms active since Task 5.
+public partial class CollectionView : System.Windows.Controls.UserControl
 {
     private readonly CollectionViewModel _viewModel;
     private readonly AppState _appState;
@@ -1420,7 +1423,10 @@ using PokeCorner.Core.Domain;
 
 namespace PokeCorner.App.Popup;
 
-public partial class SettingsView : UserControl
+// Qualified as System.Windows.Controls.UserControl, not bare UserControl — same
+// WPF/WinForms ambiguity Task 7's CollectionView hit (System.Windows.Forms.UserControl
+// also exists), just not caught here until now.
+public partial class SettingsView : System.Windows.Controls.UserControl
 {
     private readonly SettingsViewModel _viewModel;
     private bool _isLoadingInitialState = true;
