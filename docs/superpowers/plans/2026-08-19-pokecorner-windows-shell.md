@@ -1201,9 +1201,13 @@ public partial class CollectionView : UserControl
         EntriesList.ItemsSource = _viewModel.GetEntries(DateTimeOffset.UtcNow);
     }
 
+    // Fully qualified as System.Windows.Controls.Button, not bare Button — Task 5 turned
+    // on UseWindowsForms for TrayIconService's NotifyIcon, which makes Button ambiguous
+    // with System.Windows.Forms.Button project-wide from that task onward (the same
+    // Application-ambiguity issue Task 5 hit, just a different colliding type name).
     private void SelectButton_Click(object sender, RoutedEventArgs e)
     {
-        var id = (Guid)((Button)sender).Tag;
+        var id = (Guid)((System.Windows.Controls.Button)sender).Tag;
         if (_viewModel.TrySetActive(id, DateTimeOffset.UtcNow))
         {
             _onStateChanged();
@@ -1213,7 +1217,7 @@ public partial class CollectionView : UserControl
 
     private void ReleaseButton_Click(object sender, RoutedEventArgs e)
     {
-        var id = (Guid)((Button)sender).Tag;
+        var id = (Guid)((System.Windows.Controls.Button)sender).Tag;
         _viewModel.Release(id);
         _onStateChanged();
         Refresh();
