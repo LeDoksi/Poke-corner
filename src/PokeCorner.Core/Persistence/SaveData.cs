@@ -12,4 +12,5 @@ public sealed class SaveData
     public long ShopRemainderUnits { get; init; }
     public bool ShopCatchLuckyCharmActive { get; init; }
     public Dictionary<Guid, CareState> CareStates { get; init; } = new();
+    public List<PendingEgg> PendingEggs { get; init; } = new();
 }

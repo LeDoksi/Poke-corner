@@ -12,6 +12,7 @@ public sealed class AppState
     public FeedingInventory Feeding { get; } = new();
     public ShopInventory Shop { get; } = new();
     public Dictionary<Guid, CareState> CareStateByIndividualId { get; } = new();
+    public List<PendingEgg> PendingEggs { get; } = new();
 
     public event Action? CatchRollDue;
 
@@ -94,5 +95,7 @@ public sealed class AppState
         {
             CareStateByIndividualId[individualId] = careState;
         }
+
+        PendingEggs.AddRange(data.PendingEggs);
     }
 }

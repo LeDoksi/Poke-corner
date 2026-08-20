@@ -213,4 +213,24 @@ public class AppStateTests
         Assert.Equal(300, state.Shop.RemainderUnits);
         Assert.True(state.Shop.CatchLuckyCharmActive);
     }
+
+    [Fact]
+    public void Hydrate_RoundTripsPendingEggs()
+    {
+        var state = new AppState();
+        var egg = new PendingEgg { Tier = RarityTier.Rare, ReadyAtUtc = DateTimeOffset.UtcNow.AddMinutes(30) };
+        var data = new SaveData
+        {
+            Individuals = new List<PokemonIndividual>(),
+            Settings = new AppSettings(),
+            FeedingTreats = 0,
+            PendingEggs = new List<PendingEgg> { egg }
+        };
+
+        state.Hydrate(data);
+
+        Assert.Single(state.PendingEggs);
+        Assert.Equal(egg.Tier, state.PendingEggs[0].Tier);
+        Assert.Equal(egg.ReadyAtUtc, state.PendingEggs[0].ReadyAtUtc);
+    }
 }
