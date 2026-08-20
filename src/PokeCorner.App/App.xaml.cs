@@ -43,6 +43,7 @@ public partial class App : System.Windows.Application
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
     private bool _catchReady;
+    private byte[]? _activeSpriteBytes;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -274,6 +275,7 @@ public partial class App : System.Windows.Application
             // FrameSequencer both already work correctly with a one-frame list (no visible
             // cycling, just a static sprite) so nothing here is broken in the meantime.
             _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(spriteBytes) });
+            _activeSpriteBytes = spriteBytes;
         }
 
         if (_isFullscreenHiding)
@@ -401,7 +403,7 @@ public partial class App : System.Windows.Application
             if (_menuWindow is null)
             {
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode);
-                var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual);
+                var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;

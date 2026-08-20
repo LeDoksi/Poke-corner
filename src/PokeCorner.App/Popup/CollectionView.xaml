@@ -14,12 +14,23 @@
                 <Button x:Name="FeedButton" Content="Покормить" Click="FeedButton_Click"
                         ToolTip="Требует одно лакомство, даёт больше очков роста, чем поглаживание." />
             </StackPanel>
+            <Image x:Name="ActiveSpriteImage" Width="48" Height="48" Margin="0,0,8,0"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor" DockPanel.Dock="Left" />
             <StackPanel>
                 <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
                 <TextBlock Text="Care Points — очки роста активного питомца, растут от активности за ПК" FontSize="10" Foreground="Gray" />
                 <TextBlock x:Name="TreatsText" FontSize="10" Foreground="Gray" />
             </StackPanel>
         </DockPanel>
+
+        <StackPanel Margin="8,0,8,4">
+            <TextBlock Text="До поимки" FontSize="10" Foreground="Gray" />
+            <ProgressBar x:Name="CatchProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
+            <TextBlock Text="До эволюции" FontSize="10" Foreground="Gray" />
+            <ProgressBar x:Name="EvolutionProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
+            <TextBlock Text="До лакомства" FontSize="10" Foreground="Gray" />
+            <ProgressBar x:Name="TreatProgressBar" Minimum="0" Maximum="1" Height="8" />
+        </StackPanel>
 
         <Grid Margin="8,4,8,0">
             <Grid.ColumnDefinitions>

@@ -1,5 +1,7 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
 
@@ -12,8 +14,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Action _onPetRequested;
     private readonly Action _onFeedRequested;
     private readonly Action _onStateChanged;
+    private readonly Func<byte[]?> _getActiveSpriteBytes;
+    private DispatcherTimer? _liveRefreshTimer;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, Action onPetRequested, Action onFeedRequested, Action onStateChanged)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<byte[]?> getActiveSpriteBytes)
     {
         InitializeComponent();
         _viewModel = viewModel;
@@ -21,7 +25,23 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _onPetRequested = onPetRequested;
         _onFeedRequested = onFeedRequested;
         _onStateChanged = onStateChanged;
+        _getActiveSpriteBytes = getActiveSpriteBytes;
+        Loaded += (_, _) => StartLiveRefresh();
+        Unloaded += (_, _) => StopLiveRefresh();
         Refresh();
+    }
+
+    private void StartLiveRefresh()
+    {
+        _liveRefreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+        _liveRefreshTimer.Tick += (_, _) => Refresh();
+        _liveRefreshTimer.Start();
+    }
+
+    private void StopLiveRefresh()
+    {
+        _liveRefreshTimer?.Stop();
+        _liveRefreshTimer = null;
     }
 
     private void PetButton_Click(object sender, RoutedEventArgs e)
@@ -46,6 +66,26 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         var progressToNextTreat = _appState.Feeding.RemainderUnits;
         TreatsText.Text = $"Лакомства: {_appState.Feeding.Treats} (ещё {FeedingService.ActivityUnitsPerTreatEarned - progressToNextTreat} активности до следующего)";
+
+        var progress = ProgressCalculator.Compute(_appState.Activity, active, _appState.Feeding);
+        CatchProgressBar.Value = progress.CatchFraction;
+        EvolutionProgressBar.Value = progress.EvolutionFraction;
+        TreatProgressBar.Value = progress.TreatFraction;
+
+        var spriteBytes = _getActiveSpriteBytes();
+        ActiveSpriteImage.Source = spriteBytes is null ? null : DecodePng(spriteBytes);
+    }
+
+    private static System.Windows.Media.ImageSource DecodePng(byte[] bytes)
+    {
+        using var stream = new MemoryStream(bytes);
+        var bitmap = new System.Windows.Media.Imaging.BitmapImage();
+        bitmap.BeginInit();
+        bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+        bitmap.StreamSource = stream;
+        bitmap.EndInit();
+        bitmap.Freeze();
+        return bitmap;
     }
 
     // Fully qualified as System.Windows.Controls.Button, not bare Button — Task 5 turned
