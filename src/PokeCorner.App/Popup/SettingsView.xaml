@@ -26,5 +26,7 @@
 
         <CheckBox x:Name="ShowProgressPanelCheck" Content="Показывать прогресс рядом с питомцем" Margin="0,10,0,0" Checked="ShowProgressPanelCheck_Changed" Unchecked="ShowProgressPanelCheck_Changed" />
         <TextBlock Text="Компактная панель под питомцем на рабочем столе с теми же тремя барами, что и в коллекции." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+
+        <Button x:Name="ShowOnboardingButton" Content="Показать обучение" Click="ShowOnboardingButton_Click" Margin="0,16,0,0" HorizontalAlignment="Left" />
     </StackPanel>
 </UserControl>

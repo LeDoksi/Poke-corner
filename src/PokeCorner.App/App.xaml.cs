@@ -92,6 +92,8 @@ public partial class App : System.Windows.Application
 
             var starter = FirstRunFlow.HatchChosen(chosenChain, _catchRoller, DateTimeOffset.UtcNow);
             _appState.Collection.Add(starter);
+
+            new OnboardingWindow().ShowDialog();
         }
 
         _appState.CatchRollDue += OnCatchRollDue; // now just flips "ready" state — see OnCatchRollDue

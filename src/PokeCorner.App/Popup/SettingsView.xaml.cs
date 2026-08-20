@@ -80,4 +80,9 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         if (_isLoadingInitialState) return;
         _viewModel.Settings.ShowProgressPanel = ShowProgressPanelCheck.IsChecked == true;
     }
+
+    private void ShowOnboardingButton_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        new PokeCorner.App.Onboarding.OnboardingWindow().Show();
+    }
 }
