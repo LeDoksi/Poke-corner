@@ -33,6 +33,7 @@ public partial class App : System.Windows.Application
     private CareModeService _careModeService = null!;
     private FeedingService _feedingService = null!;
     private bool _isFullscreenHiding;
+    private bool _isFullscreenMonitorRunning;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -57,16 +58,6 @@ public partial class App : System.Windows.Application
         _appState.CatchRollDue += OnCatchRollDue;
 
         _inputCounter = new InputEventCounter();
-        if (_appState.Settings.ActivityTrackingEnabled)
-        {
-            _inputHook = new GlobalInputHook(_inputCounter);
-            _inputHook.Start();
-        }
-
-        if (_appState.Settings.TokenTrackingEnabled)
-        {
-            _tokenUsageProvider = new ClaudeCodeUsageProvider(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.claude");
-        }
 
         _growthTickTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
         _growthTickTimer.Tick += (_, _) => OnGrowthTick();
@@ -80,13 +71,13 @@ public partial class App : System.Windows.Application
         _fullscreenMonitor = new ForegroundWindowMonitor(
             onFullscreenEntered: () => { _isFullscreenHiding = true; RefreshOverlayForActiveIndividual(); },
             onFullscreenExited: () => { _isFullscreenHiding = false; RefreshOverlayForActiveIndividual(); });
-        if (_appState.Settings.AutoHideInFullscreen) _fullscreenMonitor.Start();
 
         _trayIconService = new TrayIconService();
-        _trayIconService.SetActivityTrackingIndicator(_appState.Settings.ActivityTrackingEnabled);
         _trayIconService.OpenCollectionRequested += OpenCollectionWindow;
         _trayIconService.OpenSettingsRequested += OpenSettingsWindow;
         _trayIconService.ExitRequested += () => Shutdown();
+
+        ReconcileSettingsState();
 
         Exit += (_, _) => SaveState();
     }
@@ -103,6 +94,8 @@ public partial class App : System.Windows.Application
 
     private void OnGrowthTick()
     {
+        ReconcileSettingsState();
+
         var units = _inputCounter.DrainUnits();
         if (_tokenUsageProvider is not null)
         {
@@ -135,6 +128,45 @@ public partial class App : System.Windows.Application
         _appState.Collection.ClearActive();
         RefreshOverlayForActiveIndividual();
         _trayIconService.ShowNotification("PokéCorner", "Питомец расстроен и не хочет возвращаться на стол ещё час.");
+    }
+
+    private void ReconcileSettingsState()
+    {
+        if (_appState.Settings.ActivityTrackingEnabled && _inputHook is null)
+        {
+            _inputHook = new GlobalInputHook(_inputCounter);
+            _inputHook.Start();
+        }
+        else if (!_appState.Settings.ActivityTrackingEnabled && _inputHook is not null)
+        {
+            _inputHook.Dispose();
+            _inputHook = null;
+        }
+        _trayIconService.SetActivityTrackingIndicator(_appState.Settings.ActivityTrackingEnabled);
+
+        if (_appState.Settings.TokenTrackingEnabled && _tokenUsageProvider is null)
+        {
+            _tokenUsageProvider = new ClaudeCodeUsageProvider(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.claude");
+        }
+        else if (!_appState.Settings.TokenTrackingEnabled && _tokenUsageProvider is not null)
+        {
+            _tokenUsageProvider = null;
+        }
+
+        if (_appState.Settings.AutoHideInFullscreen && !_isFullscreenMonitorRunning)
+        {
+            _fullscreenMonitor.Start();
+            _isFullscreenMonitorRunning = true;
+        }
+        else if (!_appState.Settings.AutoHideInFullscreen && _isFullscreenMonitorRunning)
+        {
+            _fullscreenMonitor.Stop();
+            _isFullscreenMonitorRunning = false;
+            // The overlay may have been mid-hide from a fullscreen app when the user
+            // turned auto-hide off — force it back to reflecting the real active state.
+            _isFullscreenHiding = false;
+            RefreshOverlayForActiveIndividual();
+        }
     }
 
     /// Single entry point for "what should the overlay show right now" — called after
