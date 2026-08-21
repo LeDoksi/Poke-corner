@@ -7,20 +7,37 @@
         ShowInTaskbar="False"
         Topmost="True"
         ResizeMode="NoResize"
-        SizeToContent="WidthAndHeight">
-    <!-- Background stays Transparent on the Window itself (AllowsTransparency needs it) and
+        Width="116"
+        SizeToContent="Height">
+    <!-- SizeToContent is Height ONLY, with an explicit Width above.
+         It used to be WidthAndHeight, which made the window measure its own width from
+         content — and these ProgressBars have no intrinsic width, so the whole panel
+         collapsed to roughly border+padding and rendered as a tiny dark pill under the pet
+         instead of three readable bars. PositionBelow()'s `Width = 100` could not rescue it:
+         with SizeToContent including Width, WPF overwrites Window.Width from the content
+         measure on the next layout pass, so the assignment did not survive.
+
+         Background stays Transparent on the Window itself (AllowsTransparency needs it) and
          the tinted plate is drawn by this Border instead, so the panel can have rounded
          corners matching the rest of the design language. -->
-    <Border Background="#D90D1120" BorderBrush="#2A3358" BorderThickness="1" CornerRadius="9" Padding="7,6">
-        <!-- No explicit Width: PositionBelow() forces Window.Width = 100, so the bars stretch
-             to whatever that leaves after the border and padding instead of overflowing it. -->
+    <Border Background="#D90D1120" BorderBrush="#2A3358" BorderThickness="1" CornerRadius="9" Padding="8,7">
         <StackPanel>
-            <ProgressBar x:Name="CatchBar" Minimum="0" Maximum="1" Height="6" Margin="0,0,0,3"
-                         Foreground="#E8384F" Background="#1B2340" BorderThickness="0" />
-            <ProgressBar x:Name="EvolutionBar" Minimum="0" Maximum="1" Height="6" Margin="0,0,0,3"
-                         Foreground="#5B9DFF" Background="#1B2340" BorderThickness="0" />
-            <ProgressBar x:Name="TreatBar" Minimum="0" Maximum="1" Height="6"
-                         Foreground="#4CD787" Background="#1B2340" BorderThickness="0" />
+            <!-- MiniProgressBarStyle rather than the shared default template at a squeezed
+                 Height: see the style's own comment in PokedexTheme.xaml. Each bar keeps its
+                 own Foreground so the three stay distinguishable at a glance. -->
+            <ProgressBar x:Name="CatchBar" Style="{StaticResource MiniProgressBarStyle}"
+                         Minimum="0" Maximum="1" Margin="0,0,0,4" Background="#2A3358"
+                         Foreground="#E8384F" ToolTip="Прогресс до следующей поимки" />
+            <ProgressBar x:Name="EvolutionBar" Style="{StaticResource MiniProgressBarStyle}"
+                         Minimum="0" Maximum="1" Margin="0,0,0,4" Background="#2A3358"
+                         Foreground="#5B9DFF" ToolTip="Прогресс до следующей эволюции" />
+            <!-- Track color is one step up the surface ladder from the panel's own plate
+                 (#0D1120): with the style's default track the unfilled remainder was the
+                 same color as the plate behind it, so a half-full bar looked like a short
+                 bar rather than a half-full one. -->
+            <ProgressBar x:Name="TreatBar" Style="{StaticResource MiniProgressBarStyle}"
+                         Minimum="0" Maximum="1" Background="#2A3358"
+                         Foreground="#4CD787" ToolTip="Прогресс до следующего лакомства" />
         </StackPanel>
     </Border>
 </Window>

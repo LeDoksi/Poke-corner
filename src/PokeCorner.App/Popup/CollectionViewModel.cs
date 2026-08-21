@@ -18,7 +18,8 @@ public sealed record CollectionEntry(
     RarityTier Rarity,
     double EvolutionFraction,
     DateTimeOffset CaughtAtUtc,
-    Nature Nature);
+    Nature Nature,
+    bool IsFavorite);
 
 public sealed record PokedexEntry(int SpeciesId, string SpeciesName, RarityTier Rarity);
 
@@ -43,8 +44,11 @@ public sealed class CollectionViewModel
         _pendingEggs = pendingEggs;
     }
 
+    /// Favorites float to the top. LINQ's OrderByDescending is a documented STABLE sort, so
+    /// this only lifts the pinned individuals above the rest — relative catch order is
+    /// preserved both among favorites and among everything else.
     public IReadOnlyList<CollectionEntry> GetEntries(DateTimeOffset nowUtc) =>
-        _collection.Individuals.Select(individual =>
+        _collection.Individuals.OrderByDescending(i => i.IsFavorite).Select(individual =>
         {
             var careState = _careStates.TryGetValue(individual.Id, out var state) ? state : new CareState();
             var isAvailable = _careMode != CareMode.Hardcore || _careModeService.IsAvailableToPlaceOnDesktop(careState, nowUtc);
@@ -61,7 +65,8 @@ public sealed class CollectionViewModel
                 Rarity: RarityForChain(individual.EvolutionChainId),
                 EvolutionFraction: ProgressCalculator.Compute(new Core.Activity.ActivityAccumulator(), individual, new FeedingInventory()).EvolutionFraction,
                 CaughtAtUtc: individual.CaughtAtUtc,
-                Nature: individual.Nature);
+                Nature: individual.Nature,
+                IsFavorite: individual.IsFavorite);
         }).ToList();
 
     /// Deduped by DISPLAY species, not by the individual's fixed starter species: a player
@@ -120,4 +125,15 @@ public sealed class CollectionViewModel
     }
 
     public bool Release(Guid id) => _collection.Release(id);
+
+    /// Flips the pin on one individual and reports its new state. Returns false when the id
+    /// isn't in the collection (e.g. a stale card clicked after a release).
+    public bool ToggleFavorite(Guid id)
+    {
+        var individual = _collection.Individuals.FirstOrDefault(i => i.Id == id);
+        if (individual is null) return false;
+
+        individual.IsFavorite = !individual.IsFavorite;
+        return true;
+    }
 }

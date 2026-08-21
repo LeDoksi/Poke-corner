@@ -244,6 +244,90 @@ public class CollectionViewModelTests
     }
 
     [Fact]
+    public void GetEntries_FavoriteCaughtLast_StillSortsFirst()
+    {
+        var collection = new PokemonCollection();
+        var first = MakeIndividual(1);
+        var second = MakeIndividual(2);
+        var third = MakeIndividual(3);
+        collection.Add(first);
+        collection.Add(second);
+        collection.Add(third);
+        third.IsFavorite = true; // caught last, pinned
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        var entries = vm.GetEntries(DateTimeOffset.UtcNow);
+
+        Assert.Equal(third.Id, entries[0].IndividualId);
+        Assert.True(entries[0].IsFavorite);
+    }
+
+    [Fact]
+    public void GetEntries_FavoritesFirstButOtherwiseStable()
+    {
+        var collection = new PokemonCollection();
+        var a = MakeIndividual(1);
+        var b = MakeIndividual(2);
+        var c = MakeIndividual(3);
+        var d = MakeIndividual(4);
+        collection.Add(a);
+        collection.Add(b);
+        collection.Add(c);
+        collection.Add(d);
+        b.IsFavorite = true;
+        d.IsFavorite = true;
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        var ids = vm.GetEntries(DateTimeOffset.UtcNow).Select(e => e.IndividualId).ToList();
+
+        // Favorites float up keeping their own relative order (b before d), and the
+        // non-favorites keep theirs too (a before c) — a stable sort, not a reshuffle.
+        Assert.Equal(new[] { b.Id, d.Id, a.Id, c.Id }, ids);
+    }
+
+    [Fact]
+    public void GetEntries_NoFavorites_PreservesOriginalOrder()
+    {
+        var collection = new PokemonCollection();
+        var first = MakeIndividual(1);
+        var second = MakeIndividual(2);
+        collection.Add(first);
+        collection.Add(second);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        var ids = vm.GetEntries(DateTimeOffset.UtcNow).Select(e => e.IndividualId).ToList();
+
+        Assert.Equal(new[] { first.Id, second.Id }, ids);
+    }
+
+    [Fact]
+    public void ToggleFavorite_FlipsFlagOnTheIndividualAndIsReflectedInEntries()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(1);
+        collection.Add(individual);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        Assert.True(vm.ToggleFavorite(individual.Id));
+        Assert.True(individual.IsFavorite);
+        Assert.True(vm.GetEntries(DateTimeOffset.UtcNow).Single().IsFavorite);
+
+        Assert.True(vm.ToggleFavorite(individual.Id));
+        Assert.False(individual.IsFavorite);
+        Assert.False(vm.GetEntries(DateTimeOffset.UtcNow).Single().IsFavorite);
+    }
+
+    [Fact]
+    public void ToggleFavorite_UnknownId_ReturnsFalse()
+    {
+        var collection = new PokemonCollection();
+        collection.Add(MakeIndividual(1));
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        Assert.False(vm.ToggleFavorite(Guid.NewGuid()));
+    }
+
+    [Fact]
     public void GetPendingEggEntries_NotYetReady_HatchFractionBetweenZeroAndOneAndNotReady()
     {
         var now = DateTimeOffset.UtcNow;

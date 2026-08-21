@@ -20,7 +20,9 @@ public partial class ProgressPanelWindow : System.Windows.Window
     /// called whenever the overlay itself is repositioned (corner/monitor/size settings change).
     public void PositionBelow(OverlayWindow overlay)
     {
-        Width = 100;
+        // Width comes from the XAML (SizeToContent is Height only now), so this no longer
+        // assigns it — the old `Width = 100` here was silently discarded by the content
+        // measure anyway, which is what collapsed the panel into an unreadable sliver.
         Left = overlay.Left + (overlay.Width - Width) / 2;
         Top = overlay.Top + overlay.Height + 4;
     }

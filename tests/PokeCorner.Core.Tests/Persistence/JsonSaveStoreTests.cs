@@ -68,6 +68,76 @@ public class JsonSaveStoreTests : IDisposable
     }
 
     [Fact]
+    public void Save_ThenLoad_RoundTripsIsFavorite()
+    {
+        var store = new JsonSaveStore(_tempFile);
+        var pinned = new PokemonIndividual
+        {
+            SpeciesId = 4,
+            EvolutionChainId = 4,
+            ChainLength = 3,
+            Nature = Nature.Hardy,
+            IsShiny = false,
+            CaughtAtUtc = DateTimeOffset.UtcNow,
+            IsFavorite = true
+        };
+        var plain = new PokemonIndividual
+        {
+            SpeciesId = 7,
+            EvolutionChainId = 7,
+            ChainLength = 3,
+            Nature = Nature.Jolly,
+            IsShiny = false,
+            CaughtAtUtc = DateTimeOffset.UtcNow
+        };
+        store.Save(new SaveData
+        {
+            Individuals = new List<PokemonIndividual> { pinned, plain },
+            Settings = new AppSettings()
+        });
+
+        var loaded = store.Load();
+
+        Assert.NotNull(loaded);
+        Assert.True(loaded!.Individuals.Single(i => i.Id == pinned.Id).IsFavorite);
+        Assert.False(loaded.Individuals.Single(i => i.Id == plain.Id).IsFavorite);
+    }
+
+    [Fact]
+    public void Load_SaveFileWrittenBeforeIsFavoriteExisted_DefaultsToNotFavorite()
+    {
+        // Older saves simply have no isFavorite member. System.Text.Json leaves the property
+        // at its default rather than failing, so no schema migration is needed.
+        var legacyJson = """
+        {
+          "Individuals": [
+            {
+              "Id": "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+              "SpeciesId": 25,
+              "EvolutionChainId": 10,
+              "ChainLength": 2,
+              "Nature": 0,
+              "IsShiny": false,
+              "CaughtAtUtc": "2026-01-01T00:00:00+00:00",
+              "AccumulatedCarePoints": 5,
+              "CurrentStage": 0
+            }
+          ],
+          "Settings": {}
+        }
+        """;
+        File.WriteAllText(_tempFile, legacyJson);
+        var store = new JsonSaveStore(_tempFile);
+
+        var loaded = store.Load();
+
+        Assert.NotNull(loaded);
+        var individual = Assert.Single(loaded!.Individuals);
+        Assert.False(individual.IsFavorite);
+        Assert.Equal(5, individual.AccumulatedCarePoints);
+    }
+
+    [Fact]
     public void Save_CreatesParentDirectoryIfMissing()
     {
         var nestedPath = Path.Combine(Path.GetTempPath(), "PokeCornerSaveTests_" + Guid.NewGuid(), "state.json");

@@ -47,7 +47,13 @@ public partial class App : System.Windows.Application
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
     private bool _catchReady;
-    private byte[]? _activeSpriteBytes;
+    /// Every decoded frame of the active individual's sprite, in order — the same list the
+    /// overlay animates from. This replaces the previous single-frame `_activeSpriteBytes`
+    /// field: the collection popup only ever received frame 0 through it, which is why its
+    /// hero sprite sat perfectly still while the desktop pet animated. A single-element list
+    /// means "this species has no animated sprite", which the hero renders statically; null
+    /// means "nothing cached yet".
+    private IReadOnlyList<byte[]>? _activeSpriteFrames;
     private ProgressPanelWindow? _progressPanelWindow;
 
     /// Raw animated-GIF bytes per display species id. Deliberately in-memory only: unlike the
@@ -251,19 +257,17 @@ public partial class App : System.Windows.Application
             RefreshOverlayForActiveIndividual();
         }
 
-        var desiredCorner = ParseCorner(_appState.Settings.ScreenCorner);
-        if (desiredCorner != _appliedCorner || _appState.Settings.MonitorIndex != _appliedMonitorIndex || _appState.Settings.PetSizePixels != _appliedPetSizePixels)
-        {
-            _overlayWindow.PositionAt(desiredCorner, _appState.Settings.MonitorIndex, _appState.Settings.PetSizePixels);
-            _appliedCorner = desiredCorner;
-            _appliedMonitorIndex = _appState.Settings.MonitorIndex;
-            _appliedPetSizePixels = _appState.Settings.PetSizePixels;
-        }
+        ApplyPetSizeAndPosition();
 
         if (_appState.Settings.ShowProgressPanel && _progressPanelWindow is null)
         {
             _progressPanelWindow = new ProgressPanelWindow();
             _progressPanelWindow.PositionBelow(_overlayWindow);
+            // Prime the bars immediately. Without this the panel spends its first seconds
+            // showing three empty tracks — OnGrowthTick only pushes values every 5 seconds,
+            // so a freshly enabled panel looked broken right at the moment the user turned
+            // it on to look at it.
+            _progressPanelWindow.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
             _progressPanelWindow.Show();
         }
         else if (!_appState.Settings.ShowProgressPanel && _progressPanelWindow is not null)
@@ -272,6 +276,33 @@ public partial class App : System.Windows.Application
             _progressPanelWindow = null;
         }
 
+        _progressPanelWindow?.PositionBelow(_overlayWindow);
+    }
+
+    /// Applies the corner/monitor/size settings to the overlay (and drags the progress panel
+    /// along with it), but only when something actually changed — repositioning on every call
+    /// would fight the user dragging the pet around.
+    ///
+    /// Extracted from ReconcileSettingsState so the settings screen can call it the instant
+    /// the size slider moves. It used to run only on the 5-second growth tick, which meant
+    /// dragging the slider changed the stored number immediately but the sprite on screen
+    /// only caught up seconds later — unusable as a live preview.
+    private void ApplyPetSizeAndPosition()
+    {
+        var desiredCorner = ParseCorner(_appState.Settings.ScreenCorner);
+        if (desiredCorner == _appliedCorner
+            && _appState.Settings.MonitorIndex == _appliedMonitorIndex
+            && _appState.Settings.PetSizePixels == _appliedPetSizePixels)
+        {
+            return;
+        }
+
+        _overlayWindow.PositionAt(desiredCorner, _appState.Settings.MonitorIndex, _appState.Settings.PetSizePixels);
+        _appliedCorner = desiredCorner;
+        _appliedMonitorIndex = _appState.Settings.MonitorIndex;
+        _appliedPetSizePixels = _appState.Settings.PetSizePixels;
+
+        // The panel is anchored to the overlay's bottom edge, which just moved.
         _progressPanelWindow?.PositionBelow(_overlayWindow);
     }
 
@@ -292,6 +323,9 @@ public partial class App : System.Windows.Application
         var active = _appState.Collection.GetActive();
         if (active is null)
         {
+            // Drop the cached sprite too, otherwise the collection popup's hero keeps
+            // rendering (and now animating) the pet that just ran away or was released.
+            _activeSpriteFrames = null;
             _overlayWindow.Hide();
             return;
         }
@@ -350,7 +384,7 @@ public partial class App : System.Windows.Application
             if (pngFrames.Count > 0)
             {
                 _overlayWindow.SetSpriteFrames(pngFrames.Select(DecodeSprite).ToList());
-                _activeSpriteBytes = pngFrames[0];
+                _activeSpriteFrames = pngFrames;
                 _trayIconService.SetSpriteIcon(pngFrames[0]);
 
                 if (_isFullscreenHiding)
@@ -410,7 +444,7 @@ public partial class App : System.Windows.Application
             // FrameSequencer both already work correctly with a one-frame list (no visible
             // cycling, just a static sprite) so nothing here is broken in the meantime.
             _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(spriteBytes) });
-            _activeSpriteBytes = spriteBytes;
+            _activeSpriteFrames = new[] { spriteBytes }; // one real frame: static, but not "unknown"
             _trayIconService.SetSpriteIcon(spriteBytes);
         }
 
@@ -606,8 +640,8 @@ public partial class App : System.Windows.Application
             if (_menuWindow is null)
             {
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _speciesCatalog.LoadCachedOrFallback(), _appState.PendingEggs);
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
-                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg);
+                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition);
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);

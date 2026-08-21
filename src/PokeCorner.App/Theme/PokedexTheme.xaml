@@ -80,14 +80,20 @@
         <GradientStop Color="#161D36" Offset="1" />
     </LinearGradientBrush>
 
-    <!-- Implicit (unkeyed) TargetType styles apply to every matching element in every
-         window that merges this dictionary — including AppMenuWindow, StarterSelectionWindow,
-         and OnboardingWindow, none of which need individual per-window styling code. This is
-         safe for OverlayWindow (Background="{x:Null}") and ProgressPanelWindow
-         (Background="#CC1A1F3C") because both already set a LOCAL Background value in their
-         own XAML, and a local value always wins over a style setter in WPF — so neither one's
-         carefully-tuned transparency is affected by this dictionary being merged app-wide. -->
-    <Style TargetType="Window">
+    <!-- KEYED, and every window must opt in with Style="{StaticResource AppWindowStyle}".
+         This used to be an unkeyed implicit style, which silently did nothing: WPF matches an
+         implicit style against an element's EXACT runtime type, and every window here is a
+         Window SUBCLASS (AppMenuWindow, OnboardingWindow, StarterSelectionWindow…), so none
+         of them ever resolved a `TargetType="Window"` style and all of them kept WPF's stock
+         white Window.Background. AppMenuWindow hid that because its content paints the entire
+         client area; StarterSelectionWindow did not, and rendered as a white window with
+         near-white title text on it — the bug the user reported.
+         (The implicit styles for Button/TabItem/ComboBox/etc. below are unaffected: those
+         elements ARE their exact target type, never a subclass.)
+
+         Not applied to OverlayWindow (Background="{x:Null}") or ProgressPanelWindow
+         (its own tinted Border): both depend on a transparent window surface. -->
+    <Style x:Key="AppWindowStyle" TargetType="Window">
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -381,6 +387,104 @@
         <Setter Property="Foreground" Value="{StaticResource ProgressBlueBrush}" />
         <Setter Property="Height" Value="6" />
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+    </Style>
+
+    <!-- Desktop progress panel bar. Deliberately NOT BasedOn the shared ProgressBar style and
+         NOT just the default template squeezed to a smaller Height: that template hardcodes a
+         1px track border and stacks a 3px-tall static gloss Border on top of the indicator,
+         which at desktop-panel scale eats nearly the whole bar and leaves three near-identical
+         dark slivers instead of three readable colored fills. This variant drops the gloss and
+         template-binds BorderThickness so a caller asking for a borderless bar actually gets
+         one; 8px is about the floor at which the fill color still reads at a glance. -->
+    <Style x:Key="MiniProgressBarStyle" TargetType="ProgressBar">
+        <Setter Property="Height" Value="8" />
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{StaticResource ProgressGoldBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Grid>
+                        <Border x:Name="PART_Track" CornerRadius="4"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                        <Border x:Name="PART_Indicator" CornerRadius="4" HorizontalAlignment="Left"
+                                Background="{TemplateBinding Foreground}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ===================== Filter pills ===================== -->
+    <!-- A RadioButton restyled as one of the app's rarity pills: RadioButton already gives
+         exactly-one-active-per-GroupName for free, so no mutual-exclusion bookkeeping in
+         code-behind. The per-tier color arrives through Tag (a Brush), which is what the dot
+         and the checked-state ring both render — one style serves all five pills.
+         Two stacked Borders rather than a trigger that rewrites BorderBrush: the accent ring
+         needs the Tag brush, and cross-fading opacity keeps the setters binding-free. -->
+    <Style x:Key="FilterPillStyle" TargetType="RadioButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontSize" Value="10.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
+        <Setter Property="Margin" Value="0,0,6,6" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid>
+                        <Border x:Name="BasePill" CornerRadius="9"
+                                Background="{StaticResource WindowBackgroundBrush}"
+                                BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
+                        <Border x:Name="AccentRing" CornerRadius="9" Opacity="0"
+                                Background="{StaticResource CardHoverBackgroundBrush}"
+                                BorderBrush="{TemplateBinding Tag}" BorderThickness="1.5" />
+                        <StackPanel Orientation="Horizontal" Margin="9,3">
+                            <Ellipse x:Name="Dot" Width="6" Height="6" Opacity="0.5" Margin="0,0,5,0"
+                                     VerticalAlignment="Center" Fill="{TemplateBinding Tag}" />
+                            <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BasePill" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="AccentRing" Property="Opacity" Value="1" />
+                            <Setter TargetName="Dot" Property="Opacity" Value="1" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Star pin on a roster card. Both Fill and Stroke come from the bound card so the same
+         single Path covers "pinned" (solid gold) and "not pinned" (hollow, muted outline). -->
+    <Style x:Key="FavoriteToggleStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Root" Background="{StaticResource WindowBackgroundBrush}"
+                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
+                            CornerRadius="9" Width="30" Height="30">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- ===================== Tabs ===================== -->
@@ -684,8 +788,16 @@
                         <ContentPresenter />
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- IsSelected before IsHighlighted: the later trigger wins when both
+                             are true, so hovering the already-selected row still shows the
+                             accent-red highlight rather than the quieter selected surface. -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource SurfaceHoverBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource AccentGoldBrush}" />
+                        </Trigger>
                         <Trigger Property="IsHighlighted" Value="True">
                             <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource AccentRedBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -700,7 +812,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
                     <Grid>
+                        <!-- Foreground and Padding are template-bound onto the ToggleButton on
+                             purpose. WPF's stock ButtonBase theme style carries its own
+                             Foreground setter (SystemColors.ControlText — i.e. BLACK), and a
+                             style setter on the element outranks an inherited value, so
+                             without this local binding the closed box rendered the current
+                             selection in near-black text on the dark navy card: legible in
+                             theory from the ComboBox's own Foreground, invisible in practice.
+                             The dropdown list items were never affected, which is why this
+                             only ever reproduced on the collapsed box. -->
                         <ToggleButton x:Name="Toggle" Focusable="False" ClickMode="Press"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Padding="{TemplateBinding Padding}"
                                       IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="ToggleButton">

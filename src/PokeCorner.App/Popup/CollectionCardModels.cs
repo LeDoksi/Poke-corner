@@ -32,6 +32,25 @@ public sealed class CollectionCard
     public required Visibility ShinyVisibility { get; init; }
     public required Visibility ActiveBadgeVisibility { get; init; }
     public required Visibility UnavailableBadgeVisibility { get; init; }
+
+    /// Pinned-to-the-top flag. The star glyph is a single Path drawn with both a Fill and a
+    /// Stroke, so one template covers both states: gold-on-gold when pinned, hollow with a
+    /// muted outline when not — no second glyph and no visibility swapping.
+    public required bool IsFavorite { get; init; }
+
+    public Visibility FavoriteBadgeVisibility => IsFavorite ? Visibility.Visible : Visibility.Collapsed;
+
+    public Brush FavoriteFill => IsFavorite
+        ? ThemeBrushes.Get("AccentGoldBrush")
+        : System.Windows.Media.Brushes.Transparent;
+
+    public Brush FavoriteStroke => IsFavorite
+        ? ThemeBrushes.Get("AccentGoldBrush")
+        : ThemeBrushes.Get("MutedTextBrush");
+
+    public string FavoriteToolTip => IsFavorite
+        ? "Убрать из избранного"
+        : "В избранное — закрепить в начале списка";
 }
 
 public sealed class PokedexCard
@@ -54,6 +73,16 @@ public sealed class PendingEggCard
     public required double HatchFraction { get; init; }
     public required bool IsReady { get; init; }
     public required string StatusText { get; init; }
+}
+
+/// Theme-dictionary brush lookup by resource key.
+///
+/// Fully qualified as System.Windows.Application, not a bare Application — the project has
+/// UseWindowsForms enabled for TrayIconService's NotifyIcon, which makes the unqualified name
+/// ambiguous with System.Windows.Forms.Application.
+internal static class ThemeBrushes
+{
+    public static Brush Get(string key) => (Brush)System.Windows.Application.Current.Resources[key];
 }
 
 /// Russian display names for the rarity tiers, plus their theme brush. Kept next to the

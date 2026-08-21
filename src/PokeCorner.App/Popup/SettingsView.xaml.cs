@@ -10,12 +10,18 @@ namespace PokeCorner.App.Popup;
 public partial class SettingsView : System.Windows.Controls.UserControl
 {
     private readonly SettingsViewModel _viewModel;
+
+    /// Applies the just-written pet size to the real desktop overlay. Without it the slider
+    /// only updated the stored setting and the sprite resized whenever the app's 5-second
+    /// reconcile tick next happened to run — so there was no live preview to size against.
+    private readonly Action _onPetSizeChanged;
     private bool _isLoadingInitialState = true;
 
-    public SettingsView(SettingsViewModel viewModel)
+    public SettingsView(SettingsViewModel viewModel, Action onPetSizeChanged)
     {
         InitializeComponent();
         _viewModel = viewModel;
+        _onPetSizeChanged = onPetSizeChanged;
         LoadFromSettings();
         _isLoadingInitialState = false;
     }
@@ -29,6 +35,7 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         FullscreenHideCheck.IsChecked = settings.AutoHideInFullscreen;
         AutostartCheck.IsChecked = AutostartRegistry.IsEnabled();
         PetSizeSlider.Value = settings.PetSizePixels;
+        PetSizeValueText.Text = $"{settings.PetSizePixels} px";
         ShowProgressPanelCheck.IsChecked = settings.ShowProgressPanel;
     }
 
@@ -73,6 +80,8 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     {
         if (_isLoadingInitialState) return;
         _viewModel.SetPetSizePixels((int)e.NewValue);
+        PetSizeValueText.Text = $"{_viewModel.Settings.PetSizePixels} px";
+        _onPetSizeChanged();
     }
 
     private void ShowProgressPanelCheck_Changed(object sender, System.Windows.RoutedEventArgs e)

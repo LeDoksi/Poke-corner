@@ -46,8 +46,14 @@
                     <TextBlock Text="Компактная панель под питомцем на рабочем столе с теми же тремя барами, что и в коллекции."
                                Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,14" />
 
-                    <TextBlock Text="Размер питомца" Style="{StaticResource StatLabelTextStyle}" />
-                    <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="384" ValueChanged="PetSizeSlider_ValueChanged" />
+                    <Grid>
+                        <TextBlock Text="Размер питомца" Style="{StaticResource StatLabelTextStyle}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock x:Name="PetSizeValueText" Style="{StaticResource MetaTextStyle}"
+                                   FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="384" ValueChanged="PetSizeSlider_ValueChanged"
+                            ToolTip="Питомец на рабочем столе меняет размер сразу, пока тянешь ползунок" />
                 </StackPanel>
             </Border>
 
