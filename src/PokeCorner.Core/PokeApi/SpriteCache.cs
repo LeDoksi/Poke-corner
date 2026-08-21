@@ -44,6 +44,18 @@ public sealed class SpriteCache
         return bytes;
     }
 
+    /// Synchronous, network-free peek at the on-disk sprite cache. Collection/Pokédex card
+    /// thumbnails use this so they can render on the UI thread without awaiting a fetch:
+    /// by the time a player opens the Collection screen, every species they own has already
+    /// been fetched-and-cached by the overlay refresh path. Returns null when the species
+    /// genuinely isn't cached yet, and callers are expected to show a placeholder rather
+    /// than block. Deliberately additive — GetOrFetchAsync's behavior is untouched.
+    public byte[]? TryGetCachedBytes(int speciesId)
+    {
+        var path = Path.Combine(_cacheDirectory, $"{speciesId}.png");
+        return File.Exists(path) ? File.ReadAllBytes(path) : null;
+    }
+
     public IReadOnlyList<Domain.SpeciesEvolutionChain> LoadOfflineStarters()
     {
         if (_cachedOfflineStarters is not null)

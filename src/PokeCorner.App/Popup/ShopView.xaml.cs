@@ -51,7 +51,7 @@ public partial class ShopView : System.Windows.Controls.UserControl
         var active = _appState.Collection.GetActive();
         if (active is null)
         {
-            MessageText.Text = "Нет активного питомца на рабочем столе.";
+            ShowMessage("Нет активного питомца на рабочем столе.");
             return;
         }
         var bought = _shopService.BuyCarePointsBooster(_appState.Shop, active);
@@ -72,36 +72,58 @@ public partial class ShopView : System.Windows.Controls.UserControl
 
     private void ReportResult(bool success, string successMessage, string failureMessage)
     {
-        MessageText.Text = success ? successMessage : failureMessage;
+        ShowMessage(success ? successMessage : failureMessage);
         if (success) _onStateChanged();
         Refresh();
     }
 
+    private void ShowMessage(string message)
+    {
+        MessageText.Text = message;
+        MessagePanel.Visibility = string.IsNullOrEmpty(message) ? Visibility.Collapsed : Visibility.Visible;
+    }
+
     public void Refresh()
     {
-        CoinsText.Text = $"Монеты: {_appState.Shop.Coins}";
+        CoinsText.Text = _appState.Shop.Coins.ToString(System.Globalization.CultureInfo.CurrentCulture);
         CoinProgressBar.Value = ProgressCalculator.ComputeCoinFraction(_appState.Shop);
-        TreatPackButton.Content = $"Пачка лакомств (5 шт) — {ShopService.TreatPackPrice}";
-        CarePointsBoosterButton.Content = $"Бустер роста (+{ShopService.CarePointsBoosterAmount} CP) — {ShopService.CarePointsBoosterPrice}";
-        CatchLuckyCharmButton.Content = $"Талисман удачи — {ShopService.CatchLuckyCharmPrice}";
-        EggCommonButton.Content = $"Яйцо: Обычное — {ShopService.EggPriceCommon}";
-        EggUncommonButton.Content = $"Яйцо: Необычное — {ShopService.EggPriceUncommon}";
-        EggRareButton.Content = $"Яйцо: Редкое — {ShopService.EggPriceRare}";
-        EggLegendaryButton.Content = $"Яйцо: Легендарное — {ShopService.EggPriceLegendary}";
+
+        // Each card carries its name and its price in separate elements now (the price sits
+        // in its own coin badge), so Refresh writes two TextBlocks per item instead of one
+        // combined Button.Content string.
+        TreatPackNameText.Text = "Пачка лакомств (5 шт)";
+        TreatPackPriceText.Text = ShopService.TreatPackPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
+        CarePointsBoosterNameText.Text = $"Бустер роста (+{ShopService.CarePointsBoosterAmount:N0} CP)";
+        CarePointsBoosterPriceText.Text = ShopService.CarePointsBoosterPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
+        CatchLuckyCharmNameText.Text = "Талисман удачи";
+        CatchLuckyCharmPriceText.Text = ShopService.CatchLuckyCharmPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
+
+        EggCommonNameText.Text = "Обычное яйцо";
+        EggCommonPriceText.Text = ShopService.EggPriceCommon.ToString(System.Globalization.CultureInfo.CurrentCulture);
+        EggUncommonNameText.Text = "Необычное яйцо";
+        EggUncommonPriceText.Text = ShopService.EggPriceUncommon.ToString(System.Globalization.CultureInfo.CurrentCulture);
+        EggRareNameText.Text = "Редкое яйцо";
+        EggRarePriceText.Text = ShopService.EggPriceRare.ToString(System.Globalization.CultureInfo.CurrentCulture);
+        EggLegendaryNameText.Text = "Легендарное яйцо";
+        EggLegendaryPriceText.Text = ShopService.EggPriceLegendary.ToString(System.Globalization.CultureInfo.CurrentCulture);
 
         // Buying an egg of a tier the current species catalog can't fill would take the
         // coins and then leave an unhatchable egg in the save file forever, so those
-        // buttons are disabled outright rather than merely failing on click.
-        ApplyTierAvailability(EggCommonButton, RarityTier.Common);
-        ApplyTierAvailability(EggUncommonButton, RarityTier.Uncommon);
-        ApplyTierAvailability(EggRareButton, RarityTier.Rare);
-        ApplyTierAvailability(EggLegendaryButton, RarityTier.Legendary);
+        // buttons are disabled outright rather than merely failing on click. The whole card
+        // dims with them, so an unavailable tier reads as unavailable at a glance rather
+        // than looking like a live card with one dead button.
+        ApplyTierAvailability(EggCommonButton, EggCommonCard, RarityTier.Common);
+        ApplyTierAvailability(EggUncommonButton, EggUncommonCard, RarityTier.Uncommon);
+        ApplyTierAvailability(EggRareButton, EggRareCard, RarityTier.Rare);
+        ApplyTierAvailability(EggLegendaryButton, EggLegendaryCard, RarityTier.Legendary);
     }
 
-    private void ApplyTierAvailability(System.Windows.Controls.Button button, RarityTier tier)
+    private void ApplyTierAvailability(System.Windows.Controls.Button button, Border card, RarityTier tier)
     {
         var available = _isTierAvailable(tier);
         button.IsEnabled = available;
         button.ToolTip = available ? null : UnavailableTierToolTip;
+        card.Opacity = available ? 1.0 : 0.45;
+        card.ToolTip = available ? null : UnavailableTierToolTip;
     }
 }

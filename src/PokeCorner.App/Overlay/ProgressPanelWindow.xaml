@@ -3,14 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#CC1A1F3C"
+        Background="Transparent"
         ShowInTaskbar="False"
         Topmost="True"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight">
-    <StackPanel Margin="6" Width="90">
-        <ProgressBar x:Name="CatchBar" Minimum="0" Maximum="1" Height="5" Margin="0,0,0,2" Foreground="#FFD166" Background="#252B4A" BorderThickness="0" />
-        <ProgressBar x:Name="EvolutionBar" Minimum="0" Maximum="1" Height="5" Margin="0,0,0,2" Foreground="#4C8DF6" Background="#252B4A" BorderThickness="0" />
-        <ProgressBar x:Name="TreatBar" Minimum="0" Maximum="1" Height="5" Foreground="#52C97A" Background="#252B4A" BorderThickness="0" />
-    </StackPanel>
+    <!-- Background stays Transparent on the Window itself (AllowsTransparency needs it) and
+         the tinted plate is drawn by this Border instead, so the panel can have rounded
+         corners matching the rest of the design language. -->
+    <Border Background="#D90D1120" BorderBrush="#2A3358" BorderThickness="1" CornerRadius="9" Padding="7,6">
+        <!-- No explicit Width: PositionBelow() forces Window.Width = 100, so the bars stretch
+             to whatever that leaves after the border and padding instead of overflowing it. -->
+        <StackPanel>
+            <ProgressBar x:Name="CatchBar" Minimum="0" Maximum="1" Height="6" Margin="0,0,0,3"
+                         Foreground="#E8384F" Background="#1B2340" BorderThickness="0" />
+            <ProgressBar x:Name="EvolutionBar" Minimum="0" Maximum="1" Height="6" Margin="0,0,0,3"
+                         Foreground="#5B9DFF" Background="#1B2340" BorderThickness="0" />
+            <ProgressBar x:Name="TreatBar" Minimum="0" Maximum="1" Height="6"
+                         Foreground="#4CD787" Background="#1B2340" BorderThickness="0" />
+        </StackPanel>
+    </Border>
 </Window>

@@ -606,7 +606,7 @@ public partial class App : System.Windows.Application
             if (_menuWindow is null)
             {
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _speciesCatalog.LoadCachedOrFallback(), _appState.PendingEggs);
-                var collectionView = new CollectionView(collectionVm, _appState, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteBytes, HatchEgg);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings));
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual);

@@ -2,16 +2,23 @@ using PokeCorner.Core.Domain;
 
 namespace PokeCorner.App.Popup;
 
+/// <param name="SpeciesId">The individual's permanently-fixed starter species.</param>
+/// <param name="DisplaySpeciesId">The species id of the individual's CURRENT evolution
+/// stage. This is what sprite thumbnails and Pokédex numbers must use, so an evolved
+/// Pokémon's card shows Charizard rather than its baby Charmander form.</param>
 public sealed record CollectionEntry(
     Guid IndividualId,
     int SpeciesId,
+    int DisplaySpeciesId,
     string SpeciesName,
     bool IsShiny,
     bool IsActive,
     bool IsAvailableToActivate,
     DateTimeOffset? AvailableAgainAtUtc,
     RarityTier Rarity,
-    double EvolutionFraction);
+    double EvolutionFraction,
+    DateTimeOffset CaughtAtUtc,
+    Nature Nature);
 
 public sealed record PokedexEntry(int SpeciesId, string SpeciesName, RarityTier Rarity);
 
@@ -41,28 +48,46 @@ public sealed class CollectionViewModel
         {
             var careState = _careStates.TryGetValue(individual.Id, out var state) ? state : new CareState();
             var isAvailable = _careMode != CareMode.Hardcore || _careModeService.IsAvailableToPlaceOnDesktop(careState, nowUtc);
+            var displaySpeciesId = ResolveDisplaySpeciesId(individual);
             return new CollectionEntry(
                 individual.Id,
                 individual.SpeciesId,
-                SpeciesNames.GetName(individual.SpeciesId),
+                displaySpeciesId,
+                SpeciesNames.GetName(displaySpeciesId),
                 individual.IsShiny,
                 IsActive: individual.Id == _collection.ActiveIndividualId,
                 IsAvailableToActivate: isAvailable,
                 AvailableAgainAtUtc: isAvailable ? null : careState.RanAwayUntilUtc,
                 Rarity: RarityForChain(individual.EvolutionChainId),
-                EvolutionFraction: ProgressCalculator.Compute(new Core.Activity.ActivityAccumulator(), individual, new FeedingInventory()).EvolutionFraction);
+                EvolutionFraction: ProgressCalculator.Compute(new Core.Activity.ActivityAccumulator(), individual, new FeedingInventory()).EvolutionFraction,
+                CaughtAtUtc: individual.CaughtAtUtc,
+                Nature: individual.Nature);
         }).ToList();
 
+    /// Deduped by DISPLAY species, not by the individual's fixed starter species: a player
+    /// who evolved Charmander into Charizard has genuinely "seen" both forms, and deduping
+    /// on the starter id would collapse them into a single Charmander entry forever.
     public IReadOnlyList<PokedexEntry> GetPokedexEntries() =>
         _collection.Individuals
-            .Select(i => i.SpeciesId)
-            .Distinct()
-            .Select(speciesId =>
-            {
-                var owningIndividual = _collection.Individuals.First(i => i.SpeciesId == speciesId);
-                return new PokedexEntry(speciesId, SpeciesNames.GetName(speciesId), RarityForChain(owningIndividual.EvolutionChainId));
-            })
+            .Select(individual => (SpeciesId: ResolveDisplaySpeciesId(individual), individual.EvolutionChainId))
+            .GroupBy(pair => pair.SpeciesId)
+            .Select(group => new PokedexEntry(
+                group.Key,
+                SpeciesNames.GetName(group.Key),
+                RarityForChain(group.First().EvolutionChainId)))
             .ToList();
+
+    /// Mirrors App.xaml.cs's ResolveDisplaySpeciesId: walk the individual's chain to the
+    /// species id of its current stage, falling back to the fixed starter species when the
+    /// chain isn't in the catalog or the stage index is out of range.
+    private int ResolveDisplaySpeciesId(PokemonIndividual individual)
+    {
+        var chain = _chains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
+        if (chain is null) return individual.SpeciesId;
+
+        var stageIndex = (int)individual.CurrentStage;
+        return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
+    }
 
     public IReadOnlyList<PendingEggEntry> GetPendingEggEntries(DateTimeOffset nowUtc) =>
         _pendingEggs.Select(egg =>

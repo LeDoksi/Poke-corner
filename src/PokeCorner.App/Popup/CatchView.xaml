@@ -1,31 +1,59 @@
 <UserControl x:Class="PokeCorner.App.Popup.CatchView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Margin="16">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="StatusText" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,12" TextWrapping="Wrap" TextAlignment="Center" Width="220" />
-            <TextBlock Text="До поимки" FontSize="10" Foreground="Gray" HorizontalAlignment="Center" />
-            <ProgressBar x:Name="CatchProgressBar" Minimum="0" Maximum="1" Width="160" Height="8" Margin="0,0,0,16" ToolTip="Прогресс до следующей поимки" />
-            <Canvas Width="80" Height="80" HorizontalAlignment="Center">
-                <Ellipse x:Name="PokeBallShape" Width="80" Height="80" RenderTransformOrigin="0.5,0.5">
-                    <Ellipse.Fill>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="#E63946" Offset="0" />
-                            <GradientStop Color="#E63946" Offset="0.5" />
-                            <GradientStop Color="White" Offset="0.5" />
-                            <GradientStop Color="White" Offset="1" />
-                        </LinearGradientBrush>
-                    </Ellipse.Fill>
-                    <Ellipse.RenderTransform>
-                        <RotateTransform x:Name="PokeBallRotate" Angle="0" />
-                    </Ellipse.RenderTransform>
-                </Ellipse>
-                <Ellipse Width="16" Height="16" Canvas.Left="32" Canvas.Top="32" Fill="White" Stroke="Black" StrokeThickness="2" />
-            </Canvas>
-            <Image x:Name="RevealSpriteImage" Width="96" Height="96" Opacity="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="0,12,0,0" />
-            <TextBlock x:Name="RevealNameText" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Opacity="0" />
-            <TextBlock x:Name="RevealRarityText" FontSize="12" HorizontalAlignment="Center" Opacity="0" />
-            <Button x:Name="CatchButton" Content="Поймать!" Click="CatchButton_Click" Margin="0,16,0,0" HorizontalAlignment="Center" />
-        </StackPanel>
+    <Grid Margin="14">
+        <Border Style="{StaticResource HeroCardStyle}" VerticalAlignment="Center" Padding="20">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock x:Name="StatusText" HorizontalAlignment="Center" Margin="0,0,0,16"
+                           TextWrapping="Wrap" TextAlignment="Center" MaxWidth="300"
+                           FontSize="13" Foreground="{StaticResource SecondaryTextBrush}" />
+
+                <StackPanel Width="260" Margin="0,0,0,22">
+                    <TextBlock Text="До поимки" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,4" />
+                    <ProgressBar x:Name="CatchProgressBar" Style="{StaticResource CatchProgressBarStyle}"
+                                 Minimum="0" Maximum="1" ToolTip="Прогресс до следующей поимки" />
+                </StackPanel>
+
+                <Grid Width="120" Height="120" HorizontalAlignment="Center">
+                    <Ellipse Width="150" Height="150" Fill="{StaticResource SpotlightBrush}" />
+                    <Canvas Width="96" Height="96" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Ellipse x:Name="PokeBallShape" Width="96" Height="96" RenderTransformOrigin="0.5,0.5"
+                                 Stroke="#0D1120" StrokeThickness="3">
+                            <Ellipse.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FF5D73" Offset="0" />
+                                    <GradientStop Color="#D42840" Offset="0.49" />
+                                    <GradientStop Color="#F2F4FF" Offset="0.51" />
+                                    <GradientStop Color="#C6CBE4" Offset="1" />
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>
+                            <Ellipse.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="18" ShadowDepth="5" Opacity="0.55" />
+                            </Ellipse.Effect>
+                            <Ellipse.RenderTransform>
+                                <RotateTransform x:Name="PokeBallRotate" Angle="0" />
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                        <Ellipse Width="26" Height="26" Canvas.Left="35" Canvas.Top="35" Fill="#F2F4FF"
+                                 Stroke="#0D1120" StrokeThickness="3" />
+                        <Ellipse Width="12" Height="12" Canvas.Left="42" Canvas.Top="42" Fill="#0D1120" />
+                    </Canvas>
+                </Grid>
+
+                <!-- Collapsed, not just Opacity=0: an invisible-but-laid-out reveal block left a
+                     dead ~140px gap between the pokéball and the catch button on the idle
+                     screen. PlayReveal flips these to Visible right before the fade-in. -->
+                <Image x:Name="RevealSpriteImage" Width="104" Height="104" Opacity="0" Visibility="Collapsed"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="0,14,0,0" />
+                <TextBlock x:Name="RevealNameText" FontWeight="Bold" FontSize="17" HorizontalAlignment="Center"
+                           Opacity="0" Visibility="Collapsed" />
+                <TextBlock x:Name="RevealRarityText" FontSize="12" HorizontalAlignment="Center" Opacity="0"
+                           Visibility="Collapsed"
+                           Foreground="{StaticResource SecondaryTextBrush}" Margin="0,2,0,0" />
+
+                <Button x:Name="CatchButton" Content="Поймать!" Click="CatchButton_Click" Margin="0,20,0,0"
+                        HorizontalAlignment="Center" Padding="34,10" FontSize="14" />
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

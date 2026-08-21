@@ -1,32 +1,66 @@
 <UserControl x:Class="PokeCorner.App.Popup.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <StackPanel Margin="8">
-        <TextBlock Text="Режим ухода" FontWeight="Bold" />
-        <ComboBox x:Name="CareModeCombo" SelectionChanged="CareModeCombo_SelectionChanged">
-            <ComboBoxItem Content="Chill" />
-            <ComboBoxItem Content="Hardcore" />
-        </ComboBox>
-        <TextBlock Text="Chill — без последствий, если забыл покормить. Hardcore — питомец может &quot;обидеться&quot; и уйти со стола." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="14">
 
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Text="Режим ухода" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <ComboBox x:Name="CareModeCombo" SelectionChanged="CareModeCombo_SelectionChanged">
+                        <ComboBoxItem Content="Chill" />
+                        <ComboBoxItem Content="Hardcore" />
+                    </ComboBox>
+                    <TextBlock Text="Chill — без последствий, если забыл покормить. Hardcore — питомец может &quot;обидеться&quot; и уйти со стола."
+                               Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,0" />
+                </StackPanel>
+            </Border>
 
-        <CheckBox x:Name="TokenTrackingCheck" Content="Трекинг токенов Claude Code" Margin="0,10,0,0" Checked="TokenTrackingCheck_Changed" Unchecked="TokenTrackingCheck_Changed" />
-        <TextBlock Text="Токены Claude Code тоже растят питомца, в дополнение к активности мышью/клавиатурой." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Text="Что растит питомца" Style="{StaticResource SectionHeaderTextStyle}" />
 
-        <CheckBox x:Name="ActivityTrackingCheck" Content="Трекинг активности (клики/клавиши)" Margin="0,10,0,0" Checked="ActivityTrackingCheck_Changed" Unchecked="ActivityTrackingCheck_Changed" />
-        <TextBlock Text="Считаются только количество кликов/нажатий — никогда не то, что именно нажато." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+                    <CheckBox x:Name="TokenTrackingCheck" Content="Трекинг токенов Claude Code"
+                              Checked="TokenTrackingCheck_Changed" Unchecked="TokenTrackingCheck_Changed" />
+                    <TextBlock Text="Токены Claude Code тоже растят питомца, в дополнение к активности мышью/клавиатурой."
+                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,12" />
 
-        <CheckBox x:Name="FullscreenHideCheck" Content="Скрывать в полноэкранных приложениях" Margin="0,10,0,0" Checked="FullscreenHideCheck_Changed" Unchecked="FullscreenHideCheck_Changed" />
-        <TextBlock Text="Питомец автоматически прячется, пока открыта игра или видео на весь экран." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+                    <CheckBox x:Name="ActivityTrackingCheck" Content="Трекинг активности (клики/клавиши)"
+                              Checked="ActivityTrackingCheck_Changed" Unchecked="ActivityTrackingCheck_Changed" />
+                    <TextBlock Text="Считаются только количество кликов/нажатий — никогда не то, что именно нажато."
+                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,0" />
+                </StackPanel>
+            </Border>
 
-        <CheckBox x:Name="AutostartCheck" Content="Запускать при входе в Windows" Margin="0,10,0,0" Checked="AutostartCheck_Changed" Unchecked="AutostartCheck_Changed" />
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Text="Питомец на рабочем столе" Style="{StaticResource SectionHeaderTextStyle}" />
 
-        <TextBlock Text="Размер питомца" FontWeight="Bold" Margin="0,10,0,0" />
-        <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="384" ValueChanged="PetSizeSlider_ValueChanged" />
+                    <CheckBox x:Name="FullscreenHideCheck" Content="Скрывать в полноэкранных приложениях"
+                              Checked="FullscreenHideCheck_Changed" Unchecked="FullscreenHideCheck_Changed" />
+                    <TextBlock Text="Питомец автоматически прячется, пока открыта игра или видео на весь экран."
+                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,12" />
 
-        <CheckBox x:Name="ShowProgressPanelCheck" Content="Показывать прогресс рядом с питомцем" Margin="0,10,0,0" Checked="ShowProgressPanelCheck_Changed" Unchecked="ShowProgressPanelCheck_Changed" />
-        <TextBlock Text="Компактная панель под питомцем на рабочем столе с теми же тремя барами, что и в коллекции." FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0" />
+                    <CheckBox x:Name="ShowProgressPanelCheck" Content="Показывать прогресс рядом с питомцем"
+                              Checked="ShowProgressPanelCheck_Changed" Unchecked="ShowProgressPanelCheck_Changed" />
+                    <TextBlock Text="Компактная панель под питомцем на рабочем столе с теми же тремя барами, что и в коллекции."
+                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,14" />
 
-        <Button x:Name="ShowOnboardingButton" Content="Показать обучение" Click="ShowOnboardingButton_Click" Margin="0,16,0,0" HorizontalAlignment="Left" />
-    </StackPanel>
+                    <TextBlock Text="Размер питомца" Style="{StaticResource StatLabelTextStyle}" />
+                    <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="384" ValueChanged="PetSizeSlider_ValueChanged" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="Система" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <CheckBox x:Name="AutostartCheck" Content="Запускать при входе в Windows"
+                              Checked="AutostartCheck_Changed" Unchecked="AutostartCheck_Changed" />
+                    <Button x:Name="ShowOnboardingButton" Content="Показать обучение" Click="ShowOnboardingButton_Click"
+                            Margin="0,16,0,0" HorizontalAlignment="Left"
+                            Style="{StaticResource SecondaryButtonStyle}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

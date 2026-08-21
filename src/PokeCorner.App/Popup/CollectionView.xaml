@@ -1,125 +1,345 @@
 <UserControl x:Class="PokeCorner.App.Popup.CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:PokeCorner.App.Popup">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        <local:BoolToYesNoConverter x:Key="BoolToYesNo" />
-        <local:RarityToBrushConverter x:Key="RarityToBrush" />
-    </UserControl.Resources>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <TabControl>
-        <TabItem Header="Catch log">
+        <!-- ============================== HOME / CATCH LOG ============================== -->
+        <TabItem Header="Мой покемон">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel>
-                <DockPanel Margin="8">
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                        <Button x:Name="PetButton" Content="Погладить" Click="PetButton_Click" Margin="0,0,4,0"
-                                ToolTip="Бесплатно, всегда доступно. Тот же эффект, что и клик по питомцу на рабочем столе." />
-                        <Button x:Name="FeedButton" Content="Покормить" Click="FeedButton_Click"
-                                ToolTip="Требует одно лакомство, даёт больше очков роста, чем поглаживание." />
-                    </StackPanel>
-                    <Image x:Name="ActiveSpriteImage" Width="48" Height="48" Margin="0,0,8,0"
-                           RenderOptions.BitmapScalingMode="NearestNeighbor" DockPanel.Dock="Left" />
-                    <StackPanel>
-                        <TextBlock x:Name="CarePointsText" FontWeight="Bold" VerticalAlignment="Center" />
-                        <TextBlock Text="Care Points — очки роста активного питомца, растут от активности за ПК" FontSize="10" Foreground="Gray" />
-                        <TextBlock x:Name="TreatsText" FontSize="10" Foreground="Gray" />
-                    </StackPanel>
-                </DockPanel>
+                <StackPanel Margin="14">
 
-                <StackPanel Margin="8,0,8,4">
-                    <TextBlock Text="До поимки" FontSize="10" Foreground="Gray" />
-                    <ProgressBar x:Name="CatchProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
-                    <TextBlock Text="До эволюции" FontSize="10" Foreground="Gray" />
-                    <ProgressBar x:Name="EvolutionProgressBar" Minimum="0" Maximum="1" Height="8" Margin="0,0,0,4" />
-                    <TextBlock Text="До лакомства" FontSize="10" Foreground="Gray" />
-                    <ProgressBar x:Name="TreatProgressBar" Minimum="0" Maximum="1" Height="8" />
-                </StackPanel>
+                    <!-- Hero spotlight: the active Pokémon is the reason the app exists, so it
+                         gets the largest element on the screen rather than a 48px corner thumb. -->
+                    <Border Style="{StaticResource HeroCardStyle}" Margin="0,0,0,12">
+                        <StackPanel>
+                            <Grid Height="170">
+                                <Ellipse Width="230" Height="160" Fill="{StaticResource SpotlightBrush}"
+                                         HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <Image x:Name="ActiveSpriteImage" Width="124" Height="124"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                <!-- Pokéball silhouette shown until the sprite is cached on disk. -->
+                                <Grid x:Name="ActiveSpritePlaceholder" Width="76" Height="76"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
+                                    <Ellipse Stroke="{StaticResource MutedTextBrush}" StrokeThickness="3" />
+                                    <Border Height="3" Background="{StaticResource MutedTextBrush}" VerticalAlignment="Center" />
+                                    <Ellipse Width="24" Height="24" Fill="{StaticResource WindowBackgroundBrush}"
+                                             Stroke="{StaticResource MutedTextBrush}" StrokeThickness="3"
+                                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                                <Border x:Name="ShinyBadge" Style="{StaticResource PillStyle}" Visibility="Collapsed"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        BorderBrush="{StaticResource AccentGoldBrush}"
+                                        ToolTip="Шайни — редкая цветовая форма">
+                                    <TextBlock Text="✨ Shiny" FontSize="10.5" FontWeight="SemiBold"
+                                               Foreground="{StaticResource AccentGoldBrush}" />
+                                </Border>
+                            </Grid>
 
-                <TextBlock Text="Яйца в инкубации" FontWeight="Bold" Margin="8,4,8,0" />
-                <ItemsControl x:Name="PendingEggsList" Margin="8,2,8,4">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Padding="6" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Tier}" FontWeight="Bold" />
-                                    <ProgressBar Value="{Binding HatchFraction, Mode=OneWay}" Minimum="0" Maximum="1" Height="6" Margin="0,4,0,4" />
-                                    <Button Content="Вылупить!" Tag="{Binding EggId}" Click="HatchButton_Click" IsEnabled="{Binding IsReady}" HorizontalAlignment="Left" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                            <TextBlock x:Name="ActivePetNameText" Style="{StaticResource ScreenTitleTextStyle}"
+                                       HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                            <TextBlock x:Name="ActivePetMetaText" Style="{StaticResource MetaTextStyle}"
+                                       HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
+                                       Margin="0,3,0,14" />
 
-                <Grid Margin="8,4,8,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="140" />
-                        <ColumnDefinition Width="70" />
-                        <ColumnDefinition Width="90" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Покемон" FontWeight="Bold" />
-                    <TextBlock Grid.Column="1" Text="На столе" FontWeight="Bold" />
-                    <TextBlock Grid.Column="2" Text="Доступен" FontWeight="Bold" ToolTip="В Hardcore-режиме питомец может временно &quot;обидеться&quot; и стать недоступным" />
-                </Grid>
+                            <Grid Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Style="{StaticResource WellStyle}" Padding="12,9"
+                                        ToolTip="Очки роста активного питомца — растут от активности за ПК">
+                                    <StackPanel>
+                                        <TextBlock Text="ОЧКИ РОСТА" Style="{StaticResource StatLabelTextStyle}" />
+                                        <TextBlock x:Name="CarePointsText" Style="{StaticResource StatValueTextStyle}" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Column="2" Style="{StaticResource WellStyle}" Padding="12,9"
+                                        ToolTip="Лакомства зарабатываются активностью и тратятся на кормление">
+                                    <StackPanel>
+                                        <TextBlock Text="ЛАКОМСТВА" Style="{StaticResource StatLabelTextStyle}" />
+                                        <TextBlock x:Name="TreatsText" Style="{StaticResource StatValueTextStyle}"
+                                                   Foreground="{StaticResource AccentGoldBrush}" />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
 
-                <ItemsControl x:Name="EntriesList" Margin="8,2,8,8">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Padding="6" Margin="0,0,0,4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
-                                <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="PetButton" Grid.Column="0" Click="PetButton_Click"
+                                        ToolTip="Бесплатно, всегда доступно. Тот же эффект, что и клик по питомцу на рабочем столе.">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Path Width="15" Height="14" Stretch="Uniform" Fill="{StaticResource PrimaryTextBrush}"
+                                              Margin="0,0,7,0" VerticalAlignment="Center"
+                                              Data="M8,14 C8,14 1,9.5 1,5.2 C1,2.8 2.9,1 5.1,1 C6.4,1 7.5,1.7 8,2.6 C8.5,1.7 9.6,1 10.9,1 C13.1,1 15,2.8 15,5.2 C15,9.5 8,14 8,14 Z" />
+                                        <TextBlock Text="Погладить" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="FeedButton" Grid.Column="2" Click="FeedButton_Click"
+                                        ToolTip="Требует одно лакомство, даёт больше очков роста, чем поглаживание.">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Path Width="15" Height="14" Stretch="Uniform" Fill="{StaticResource PrimaryTextBrush}"
+                                              Margin="0,0,7,0" VerticalAlignment="Center"
+                                              Data="M1,7 L15,7 C15,11.4 11.9,15 8,15 C4.1,15 1,11.4 1,7 Z M3,5 C3,3 5,1.5 8,1.5 C11,1.5 13,3 13,5 Z" />
+                                        <TextBlock Text="Покормить" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Progress -->
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Text="Прогресс" Style="{StaticResource SectionHeaderTextStyle}" />
+
+                            <Grid Margin="0,0,0,3">
+                                <TextBlock Text="До поимки" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <TextBlock x:Name="CatchPercentText" Style="{StaticResource MetaTextStyle}"
+                                           HorizontalAlignment="Right" FontWeight="SemiBold" />
+                            </Grid>
+                            <ProgressBar x:Name="CatchProgressBar" Style="{StaticResource CatchProgressBarStyle}"
+                                         Minimum="0" Maximum="1" Margin="0,0,0,12"
+                                         ToolTip="Прогресс до следующей поимки" />
+
+                            <Grid Margin="0,0,0,3">
+                                <TextBlock Text="До эволюции" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <TextBlock x:Name="EvolutionPercentText" Style="{StaticResource MetaTextStyle}"
+                                           HorizontalAlignment="Right" FontWeight="SemiBold" />
+                            </Grid>
+                            <ProgressBar x:Name="EvolutionProgressBar" Style="{StaticResource EvolutionProgressBarStyle}"
+                                         Minimum="0" Maximum="1" Margin="0,0,0,12"
+                                         ToolTip="Прогресс до следующей эволюции активного питомца" />
+
+                            <Grid Margin="0,0,0,3">
+                                <TextBlock Text="До лакомства" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <TextBlock x:Name="TreatPercentText" Style="{StaticResource MetaTextStyle}"
+                                           HorizontalAlignment="Right" FontWeight="SemiBold" />
+                            </Grid>
+                            <ProgressBar x:Name="TreatProgressBar" Style="{StaticResource TreatProgressBarStyle}"
+                                         Minimum="0" Maximum="1" />
+                            <TextBlock x:Name="TreatHintText" Style="{StaticResource CaptionTextStyle}" Margin="0,5,0,0" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Incubating eggs -->
+                    <TextBlock Text="Яйца в инкубации" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <TextBlock x:Name="EggsEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,12"
+                               Text="Пока пусто — яйца покупаются в Магазине и вылупляются через час." />
+                    <ItemsControl x:Name="PendingEggsList" Margin="0,0,0,4">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="140" />
-                                            <ColumnDefinition Width="70" />
-                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <TextBlock Text="{Binding SpeciesName}" />
-                                            <TextBlock Text=" ✨" Visibility="{Binding IsShiny, Converter={StaticResource BoolToVis}}" ToolTip="Шайни — редкая цветовая форма" />
+
+                                        <Border Grid.Column="0" Style="{StaticResource WellStyle}" Width="46" Height="46"
+                                                Margin="0,0,12,0" VerticalAlignment="Center">
+                                            <Path Width="24" Height="30" Stretch="Uniform" VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" Fill="{Binding TierBrush}"
+                                                  Data="M20,4 C28,4 34,16 34,25 C34,33 28,39 20,39 C12,39 6,33 6,25 C6,16 12,4 20,4 Z" />
+                                        </Border>
+
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Яйцо: " FontWeight="SemiBold" />
+                                                <TextBlock Text="{Binding TierName}" FontWeight="SemiBold"
+                                                           Foreground="{Binding TierBrush}" />
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding StatusText}" Style="{StaticResource MetaTextStyle}"
+                                                       Margin="0,1,0,6" />
+                                            <ProgressBar Style="{StaticResource GoldProgressBarStyle}" Height="8"
+                                                         Value="{Binding HatchFraction, Mode=OneWay}" Minimum="0" Maximum="1" />
                                         </StackPanel>
-                                        <TextBlock Grid.Column="1" Text="{Binding IsActive, Converter={StaticResource BoolToYesNo}}" />
-                                        <TextBlock Grid.Column="2" Text="{Binding IsAvailableToActivate, Converter={StaticResource BoolToYesNo}}" />
-                                        <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click" Margin="4,0"
-                                                    ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
-                                            <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click"
-                                                    ToolTip="Насовсем удалить этого покемона из коллекции" />
-                                        </StackPanel>
+
+                                        <Button Grid.Column="2" Content="Вылупить!" Margin="12,0,0,0" VerticalAlignment="Center"
+                                                Tag="{Binding EggId}" Click="HatchButton_Click" IsEnabled="{Binding IsReady}" />
                                     </Grid>
-                                    <ProgressBar Value="{Binding EvolutionFraction, Mode=OneWay}" Minimum="0" Maximum="1" Height="4" Margin="0,4,0,0"
-                                                 ToolTip="Прогресс до следующей эволюции" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Roster -->
+                    <Grid Margin="0,6,0,6">
+                        <TextBlock Text="Мои покемоны" Style="{StaticResource SectionHeaderTextStyle}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock x:Name="RosterCountText" Style="{StaticResource MetaTextStyle}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <ItemsControl x:Name="EntriesList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10">
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border Grid.Column="0" Style="{StaticResource WellStyle}" Width="54" Height="54"
+                                                    Margin="0,0,12,0" VerticalAlignment="Center">
+                                                <Grid>
+                                                    <Image Width="44" Height="44" Source="{Binding SpriteImage}"
+                                                           RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                                    <Grid Width="26" Height="26" Opacity="0.45"
+                                                          Visibility="{Binding PlaceholderVisibility}">
+                                                        <Ellipse Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2" />
+                                                        <Border Height="2" Background="{StaticResource MutedTextBrush}" VerticalAlignment="Center" />
+                                                        <Ellipse Width="9" Height="9" Fill="{StaticResource WindowBackgroundBrush}"
+                                                                 Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2"
+                                                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding DexNumber}" Style="{StaticResource MetaTextStyle}"
+                                                               Foreground="{StaticResource MutedTextBrush}" VerticalAlignment="Center"
+                                                               Margin="0,0,7,0" />
+                                                    <TextBlock Text="{Binding SpeciesName}" FontWeight="SemiBold" FontSize="14"
+                                                               VerticalAlignment="Center" />
+                                                    <TextBlock Text="✨" Margin="5,0,0,0" VerticalAlignment="Center"
+                                                               Visibility="{Binding ShinyVisibility}"
+                                                               ToolTip="Шайни — редкая цветовая форма" />
+                                                </StackPanel>
+
+                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                    <Border Style="{StaticResource PillStyle}" BorderBrush="{Binding RarityBrush}"
+                                                            Margin="0,0,6,0">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Ellipse Width="6" Height="6" Fill="{Binding RarityBrush}"
+                                                                     VerticalAlignment="Center" Margin="0,0,5,0" />
+                                                            <TextBlock Text="{Binding RarityName}" FontSize="10"
+                                                                       Foreground="{Binding RarityBrush}" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                    <Border Style="{StaticResource PillStyle}" Margin="0,0,6,0"
+                                                            BorderBrush="{StaticResource AccentGoldBrush}"
+                                                            Visibility="{Binding ActiveBadgeVisibility}"
+                                                            ToolTip="Сейчас на рабочем столе">
+                                                        <TextBlock Text="На столе" FontSize="10" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource AccentGoldBrush}" />
+                                                    </Border>
+                                                    <Border Style="{StaticResource PillStyle}"
+                                                            BorderBrush="{StaticResource AccentRedBrush}"
+                                                            Visibility="{Binding UnavailableBadgeVisibility}"
+                                                            ToolTip="{Binding AvailabilityToolTip}">
+                                                        <TextBlock Text="Обиделся" FontSize="10" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource AccentRedBrush}" />
+                                                    </Border>
+                                                </StackPanel>
+
+                                                <TextBlock Text="{Binding MetaLine}" Style="{StaticResource CaptionTextStyle}"
+                                                           Margin="0,5,0,0" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
+                                                        Margin="10,0,0,0">
+                                                <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click"
+                                                        Padding="12,6" Margin="0,0,6,0" IsEnabled="{Binding CanSelect}"
+                                                        ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
+                                                <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click"
+                                                        Padding="12,6" Style="{StaticResource SecondaryButtonStyle}"
+                                                        ToolTip="Насовсем удалить этого покемона из коллекции" />
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <ProgressBar Style="{StaticResource SlimProgressBarStyle}" Margin="0,10,0,0"
+                                                     Value="{Binding EvolutionFraction, Mode=OneWay}" Minimum="0" Maximum="1"
+                                                     ToolTip="Прогресс до следующей эволюции" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
             </ScrollViewer>
         </TabItem>
+
+        <!-- ================================= POKÉDEX ================================= -->
         <TabItem Header="Pokédex">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel>
-                <TextBlock x:Name="PokedexCountText" FontWeight="Bold" Margin="8" />
-                <ItemsControl x:Name="PokedexGrid" Margin="4">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Width="100" Padding="6" Margin="4" BorderBrush="Gray" BorderThickness="1" CornerRadius="3">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding SpeciesName}" FontWeight="Bold" TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding Rarity}" FontSize="10" Foreground="{Binding Rarity, Converter={StaticResource RarityToBrush}}" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                <StackPanel Margin="14">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Pokédex" Style="{StaticResource ScreenTitleTextStyle}" />
+                                <TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}" Margin="0,2,0,0" />
+                            </StackPanel>
+                            <Grid Width="46" Height="46" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Ellipse Stroke="{StaticResource AccentRedBrush}" StrokeThickness="3" />
+                                <Border Height="3" Background="{StaticResource AccentRedBrush}" VerticalAlignment="Center" />
+                                <Ellipse Width="15" Height="15" Fill="{StaticResource CardBackgroundBrush}"
+                                         Stroke="{StaticResource AccentRedBrush}" StrokeThickness="3"
+                                         HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <TextBlock x:Name="PokedexEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0"
+                               Text="Пока пусто — поймай первого покемона на вкладке «Поймать»." />
+
+                    <ItemsControl x:Name="PokedexGrid" Margin="-5,0,-5,0">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource CardStyle}" Width="112" Margin="5" Padding="9">
+                                    <StackPanel>
+                                        <Border Style="{StaticResource PillStyle}" Padding="6,1" Margin="0,0,0,6">
+                                            <TextBlock Text="{Binding DexNumber}" FontSize="9.5" FontWeight="SemiBold"
+                                                       Foreground="{StaticResource SecondaryTextBrush}" />
+                                        </Border>
+
+                                        <Border Style="{StaticResource WellStyle}" Height="66" Margin="0,0,0,7">
+                                            <Grid>
+                                                <Image Width="56" Height="56" Source="{Binding SpriteImage}"
+                                                       RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                                <Grid Width="30" Height="30" Opacity="0.45"
+                                                      Visibility="{Binding PlaceholderVisibility}">
+                                                    <Ellipse Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2" />
+                                                    <Border Height="2" Background="{StaticResource MutedTextBrush}" VerticalAlignment="Center" />
+                                                    <Ellipse Width="10" Height="10" Fill="{StaticResource WindowBackgroundBrush}"
+                                                             Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2"
+                                                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+
+                                        <TextBlock Text="{Binding SpeciesName}" FontWeight="SemiBold" FontSize="12"
+                                                   TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"
+                                                   Margin="0,0,0,7" />
+
+                                        <Border Style="{StaticResource PillStyle}" HorizontalAlignment="Center"
+                                                BorderBrush="{Binding RarityBrush}" Padding="7,2">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Ellipse Width="6" Height="6" Fill="{Binding RarityBrush}"
+                                                         VerticalAlignment="Center" Margin="0,0,5,0" />
+                                                <TextBlock Text="{Binding RarityName}" FontSize="9.5"
+                                                           Foreground="{Binding RarityBrush}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
             </ScrollViewer>
         </TabItem>
     </TabControl>

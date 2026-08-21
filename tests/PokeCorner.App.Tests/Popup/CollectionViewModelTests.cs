@@ -165,6 +165,77 @@ public class CollectionViewModelTests
     }
 
     [Fact]
+    public void GetPokedexEntries_EvolvedIndividual_ListsCurrentStageNotStarterSpecies()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(speciesId: 4, evolutionChainId: 4);
+        individual.CurrentStage = EvolutionStage.Stage3;
+        collection.Add(individual);
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }) };
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+
+        var pokedex = vm.GetPokedexEntries();
+
+        Assert.Equal(6, Assert.Single(pokedex).SpeciesId);
+    }
+
+    [Fact]
+    public void GetPokedexEntries_SameChainAtDifferentStages_ListsEachStageSeparately()
+    {
+        var collection = new PokemonCollection();
+        var baby = MakeIndividual(speciesId: 4, evolutionChainId: 4);
+        var evolved = MakeIndividual(speciesId: 4, evolutionChainId: 4);
+        evolved.CurrentStage = EvolutionStage.Stage2;
+        collection.Add(baby);
+        collection.Add(evolved);
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }) };
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+
+        var speciesIds = vm.GetPokedexEntries().Select(entry => entry.SpeciesId).OrderBy(id => id).ToList();
+
+        Assert.Equal(new[] { 4, 5 }, speciesIds);
+    }
+
+    [Fact]
+    public void GetEntries_EvolvedIndividual_ExposesCurrentStageAsDisplaySpeciesId()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(speciesId: 4, evolutionChainId: 4);
+        individual.CurrentStage = EvolutionStage.Stage2;
+        collection.Add(individual);
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }) };
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+
+        var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
+
+        Assert.Equal(4, entry.SpeciesId);
+        Assert.Equal(5, entry.DisplaySpeciesId);
+    }
+
+    [Fact]
+    public void GetEntries_ExposesCaughtAtAndNatureForCardMetadata()
+    {
+        var collection = new PokemonCollection();
+        var caughtAt = DateTimeOffset.UtcNow - TimeSpan.FromDays(3);
+        var individual = new PokemonIndividual
+        {
+            SpeciesId = 1,
+            EvolutionChainId = 1,
+            ChainLength = 3,
+            Nature = Nature.Jolly,
+            IsShiny = false,
+            CaughtAtUtc = caughtAt
+        };
+        collection.Add(individual);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
+
+        Assert.Equal(caughtAt, entry.CaughtAtUtc);
+        Assert.Equal(Nature.Jolly, entry.Nature);
+    }
+
+    [Fact]
     public void GetPokedexEntries_NoIndividualsOwnAnySpecies_IsEmpty()
     {
         var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());

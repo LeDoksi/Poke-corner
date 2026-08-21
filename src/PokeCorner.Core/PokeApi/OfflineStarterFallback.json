@@ -5,5 +5,7 @@
   { "ChainId": 152, "StarterSpeciesId": 152, "CaptureRate": 45, "ChainLength": 3, "StageSpeciesIds": [152, 153, 154] },
   { "ChainId": 155, "StarterSpeciesId": 155, "CaptureRate": 45, "ChainLength": 3, "StageSpeciesIds": [155, 156, 157] },
   { "ChainId": 158, "StarterSpeciesId": 158, "CaptureRate": 45, "ChainLength": 3, "StageSpeciesIds": [158, 159, 160] },
-  { "ChainId": 10, "StarterSpeciesId": 25, "CaptureRate": 190, "ChainLength": 2, "StageSpeciesIds": [25, 26] }
+  { "ChainId": 10, "StarterSpeciesId": 25, "CaptureRate": 190, "ChainLength": 2, "StageSpeciesIds": [25, 26] },
+  { "ChainId": 10001, "StarterSpeciesId": 10, "CaptureRate": 255, "ChainLength": 3, "StageSpeciesIds": [10, 11, 12] },
+  { "ChainId": 10002, "StarterSpeciesId": 16, "CaptureRate": 255, "ChainLength": 3, "StageSpeciesIds": [16, 17, 18] }
 ]

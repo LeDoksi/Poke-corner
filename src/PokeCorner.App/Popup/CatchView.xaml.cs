@@ -103,6 +103,13 @@ public partial class CatchView : System.Windows.Controls.UserControl
         RevealNameText.Text = SpeciesNames.GetName(reveal.Result.SpeciesId) + (reveal.Result.IsShiny ? " ✨" : "");
         RevealRarityText.Text = reveal.Rarity + (reveal.Result.WasDuplicateSpecies ? " · уже был в коллекции" : " · новый вид!");
 
+        // The reveal block starts Collapsed (not merely Opacity=0) so the idle screen has no
+        // ~140px hole between the pokéball and the catch button. It takes up layout space only
+        // from here on, which reads as the reveal "arriving" rather than as a permanent gap.
+        RevealSpriteImage.Visibility = Visibility.Visible;
+        RevealNameText.Visibility = Visibility.Visible;
+        RevealRarityText.Visibility = Visibility.Visible;
+
         var fadeIn = new System.Windows.Media.Animation.DoubleAnimation(0.0, 1.0, TimeSpan.FromMilliseconds(400));
         RevealSpriteImage.BeginAnimation(OpacityProperty, fadeIn);
         RevealNameText.BeginAnimation(OpacityProperty, fadeIn);
