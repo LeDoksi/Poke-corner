@@ -57,7 +57,7 @@ public sealed class CollectionViewModel
                 individual.Id,
                 individual.SpeciesId,
                 displaySpeciesId,
-                SpeciesNames.GetName(displaySpeciesId),
+                _chains.ResolveSpeciesName(displaySpeciesId),
                 individual.IsShiny,
                 IsActive: individual.Id == _collection.ActiveIndividualId,
                 IsAvailableToActivate: isAvailable,
@@ -78,7 +78,7 @@ public sealed class CollectionViewModel
             .GroupBy(pair => pair.SpeciesId)
             .Select(group => new PokedexEntry(
                 group.Key,
-                SpeciesNames.GetName(group.Key),
+                _chains.ResolveSpeciesName(group.Key),
                 RarityForChain(group.First().EvolutionChainId)))
             .ToList();
 

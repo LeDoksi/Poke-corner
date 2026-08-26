@@ -15,9 +15,14 @@ public partial class CatchView : System.Windows.Controls.UserControl
     private readonly Func<int, Task<byte[]?>> _fetchSprite;
     private readonly Func<bool> _isCatchReady;
     private readonly Action _onStateChanged;
+
+    /// Species id -> display name, resolved against the live species catalog by the caller.
+    /// Replaces the retired hand-translated SpeciesNames dictionary; this view has no catalog
+    /// of its own, so the lookup is injected rather than reached for.
+    private readonly Func<int, string> _resolveSpeciesName;
     private DispatcherTimer? _liveRefreshTimer;
 
-    public CatchView(AppState appState, Func<CatchReveal?> tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<bool> isCatchReady, Action onStateChanged)
+    public CatchView(AppState appState, Func<CatchReveal?> tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<bool> isCatchReady, Action onStateChanged, Func<int, string> resolveSpeciesName)
     {
         InitializeComponent();
         _appState = appState;
@@ -25,6 +30,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         _fetchSprite = fetchSprite;
         _isCatchReady = isCatchReady;
         _onStateChanged = onStateChanged;
+        _resolveSpeciesName = resolveSpeciesName;
         Loaded += (_, _) => StartLiveRefresh();
         Unloaded += (_, _) => StopLiveRefresh();
         Refresh();
@@ -100,7 +106,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
             RevealSpriteImage.Source = bitmap;
         }
 
-        RevealNameText.Text = SpeciesNames.GetName(reveal.Result.SpeciesId) + (reveal.Result.IsShiny ? " ✨" : "");
+        RevealNameText.Text = _resolveSpeciesName(reveal.Result.SpeciesId) + (reveal.Result.IsShiny ? " ✨" : "");
         RevealRarityText.Text = reveal.Rarity + (reveal.Result.WasDuplicateSpecies ? " · уже был в коллекции" : " · новый вид!");
 
         // The reveal block starts Collapsed (not merely Opacity=0) so the idle screen has no

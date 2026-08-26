@@ -27,19 +27,31 @@ public sealed class AppState
         if (active is not null)
         {
             active.AccumulatedCarePoints = (int)Math.Min((long)active.AccumulatedCarePoints + units, int.MaxValue);
-            RecomputeStage(active);
+            // Deliberately does NOT advance CurrentStage. Evolution used to fire the instant
+            // the threshold was crossed, which took the moment away from the player — it now
+            // waits for an explicit "Эволюционировать!" press, mirroring how a ready egg waits
+            // for "Вылупить!". See IsReadyToEvolve/TryEvolve.
         }
 
         Activity.AddUnits(units);
     }
 
-    /// Single place that turns AccumulatedCarePoints into CurrentStage — used by
-    /// ApplyActivityUnits and by every App-layer call site that mutates Care Points
-    /// directly (Pet/Feed clicks, shop's Care Points Booster), so none of them duplicate
-    /// this line.
-    public void RecomputeStage(PokemonIndividual individual)
+    /// Whether this individual has banked enough Care Points to advance a stage. Purely a
+    /// query — it never mutates the individual, so UI can poll it every refresh tick to decide
+    /// whether the evolve button is enabled.
+    public bool IsReadyToEvolve(PokemonIndividual individual) =>
+        EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength) > individual.CurrentStage;
+
+    /// Applies the pending evolution, if there is one. Returns false (and changes nothing)
+    /// when the individual isn't ready, so a stale button click can't skip a stage or
+    /// double-evolve.
+    public bool TryEvolve(PokemonIndividual individual)
     {
-        individual.CurrentStage = EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength);
+        var nextStage = EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength);
+        if (nextStage <= individual.CurrentStage) return false;
+
+        individual.CurrentStage = nextStage;
+        return true;
     }
 
     public CareState GetOrCreateCareState(Guid individualId)
@@ -62,6 +74,12 @@ public sealed class AppState
     {
         foreach (var individual in data.Individuals)
         {
+            // Rescue individuals caught under the old hand-authored offline starter pool,
+            // whose invented chain ids collide with unrelated REAL PokeAPI chains now that the
+            // bundled catalog is the real data. Safe to run unconditionally on every load: it
+            // only fires on an exact (SpeciesId, ChainLength, EvolutionChainId) match, and is
+            // idempotent because the replacement ids are outside the matched set.
+            LegacyOfflineChains.TryMigrate(individual);
             Collection.Add(individual);
         }
 

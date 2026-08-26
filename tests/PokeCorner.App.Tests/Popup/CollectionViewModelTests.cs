@@ -139,7 +139,7 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         var individual = MakeIndividual(evolutionChainId: 1);
         collection.Add(individual);
-        var chains = new[] { new SpeciesEvolutionChain(ChainId: 1, StarterSpeciesId: individual.SpeciesId, CaptureRate: 255, ChainLength: 3, StageSpeciesIds: new[] { individual.SpeciesId }) };
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 1, StarterSpeciesId: individual.SpeciesId, CaptureRate: 255, ChainLength: 3, StageSpeciesIds: new[] { individual.SpeciesId }, StageSpeciesNames: new[] { "Testmon" }) };
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
@@ -155,7 +155,7 @@ public class CollectionViewModelTests
         var speciesId = 10;
         collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
         collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
-        var chains = new[] { new SpeciesEvolutionChain(ChainId: chainId, StarterSpeciesId: speciesId, CaptureRate: 100, ChainLength: 3, StageSpeciesIds: new[] { speciesId }) };
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: chainId, StarterSpeciesId: speciesId, CaptureRate: 100, ChainLength: 3, StageSpeciesIds: new[] { speciesId }, StageSpeciesNames: new[] { "Caterpie" }) };
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
 
         var pokedex = vm.GetPokedexEntries();
@@ -171,7 +171,7 @@ public class CollectionViewModelTests
         var individual = MakeIndividual(speciesId: 4, evolutionChainId: 4);
         individual.CurrentStage = EvolutionStage.Stage3;
         collection.Add(individual);
-        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }) };
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" }) };
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
 
         var pokedex = vm.GetPokedexEntries();
@@ -188,7 +188,7 @@ public class CollectionViewModelTests
         evolved.CurrentStage = EvolutionStage.Stage2;
         collection.Add(baby);
         collection.Add(evolved);
-        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }) };
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" }) };
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
 
         var speciesIds = vm.GetPokedexEntries().Select(entry => entry.SpeciesId).OrderBy(id => id).ToList();
@@ -203,7 +203,7 @@ public class CollectionViewModelTests
         var individual = MakeIndividual(speciesId: 4, evolutionChainId: 4);
         individual.CurrentStage = EvolutionStage.Stage2;
         collection.Add(individual);
-        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }) };
+        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" }) };
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
 
         var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();

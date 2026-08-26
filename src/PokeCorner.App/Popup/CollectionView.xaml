@@ -115,8 +115,19 @@
                                            HorizontalAlignment="Right" FontWeight="SemiBold" />
                             </Grid>
                             <ProgressBar x:Name="EvolutionProgressBar" Style="{StaticResource EvolutionProgressBarStyle}"
-                                         Minimum="0" Maximum="1" Margin="0,0,0,12"
+                                         Minimum="0" Maximum="1" Margin="0,0,0,8"
                                          ToolTip="Прогресс до следующей эволюции активного питомца" />
+                            <!-- Evolution no longer fires by itself the moment the bar fills:
+                                 the player presses this, exactly like "Вылупить!" on a ready egg.
+                                 Collapsed (not merely disabled) while the bar is still filling, so
+                                 the card doesn't carry a permanently greyed-out control. -->
+                            <!-- No explicit Style: the implicit Button style is the primary
+                                 (gold gradient) one, same as the egg's "Вылупить!" button. -->
+                            <Button x:Name="EvolveButton" Click="EvolveButton_Click"
+                                    Visibility="Collapsed" Margin="0,0,0,12"
+                                    ToolTip="Питомец накопил достаточно очков роста — эволюционируй его!">
+                                <TextBlock Text="Эволюционировать!" VerticalAlignment="Center" />
+                            </Button>
 
                             <Grid Margin="0,0,0,3">
                                 <TextBlock Text="До лакомства" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />

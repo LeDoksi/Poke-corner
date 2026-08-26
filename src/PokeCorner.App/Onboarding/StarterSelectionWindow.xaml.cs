@@ -31,7 +31,7 @@ public partial class StarterSelectionWindow : Window
 
         for (var i = 0; i < _candidates.Count && i < 3; i++)
         {
-            names[i].Text = SpeciesNames.GetName(_candidates[i].StarterSpeciesId);
+            names[i].Text = _candidates.ResolveSpeciesName(_candidates[i].StarterSpeciesId);
             var bytes = await _fetchSprite(_candidates[i].StarterSpeciesId);
             if (bytes is not null) images[i].Source = DecodePng(bytes);
         }

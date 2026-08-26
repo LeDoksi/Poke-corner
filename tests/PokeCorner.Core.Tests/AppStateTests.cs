@@ -18,6 +18,88 @@ public class AppStateTests
         CaughtAtUtc = DateTimeOffset.UtcNow
     };
 
+    /// The app owner's real affected individual: a Pikachu caught from the OLD hand-authored
+    /// offline pool, whose invented chain id 10 is really the 3-stage Pichu/Pikachu/Raichu
+    /// chain in the real PokeAPI data the bundled catalog now carries. Left alone, it would
+    /// display as "Покемон #172" (Pichu) — the exact bug this migration exists to kill.
+    [Fact]
+    public void Hydrate_OldOfflinePoolPikachu_IsRemappedOntoALegacyChainIdAndOtherwiseUntouched()
+    {
+        var pikachu = new PokemonIndividual
+        {
+            SpeciesId = 25,
+            ChainLength = 2,
+            EvolutionChainId = 10,
+            Nature = Nature.Jolly,
+            IsShiny = true,
+            CaughtAtUtc = new DateTimeOffset(2026, 8, 1, 12, 0, 0, TimeSpan.Zero),
+            AccumulatedCarePoints = 4321,
+            CurrentStage = EvolutionStage.Stage2,
+            IsFavorite = true
+        };
+        var id = pikachu.Id;
+        var state = new AppState();
+
+        state.Hydrate(new SaveData { Individuals = new List<PokemonIndividual> { pikachu }, Settings = new AppSettings() });
+
+        var migrated = Assert.Single(state.Collection.Individuals);
+        Assert.Equal(900004, migrated.EvolutionChainId);
+
+        // Everything else about the individual must survive completely unchanged.
+        Assert.Equal(id, migrated.Id);
+        Assert.Equal(25, migrated.SpeciesId);
+        Assert.Equal(2, migrated.ChainLength);
+        Assert.Equal(4321, migrated.AccumulatedCarePoints);
+        Assert.Equal(EvolutionStage.Stage2, migrated.CurrentStage);
+        Assert.Equal(Nature.Jolly, migrated.Nature);
+        Assert.True(migrated.IsShiny);
+        Assert.True(migrated.IsFavorite);
+
+        // ...and the legacy chain it now points at reproduces its ORIGINAL 2-stage shape,
+        // rather than the real 3-stage chain that would have retconned it into a Pichu.
+        var legacy = Assert.Single(LegacyOfflineChains.All, c => c.ChainId == 900004);
+        Assert.Equal(2, legacy.ChainLength);
+        Assert.Equal(new[] { 25, 26 }, legacy.StageSpeciesIds);
+        Assert.Equal("Pikachu", legacy.StageSpeciesNames[0]);
+    }
+
+    [Fact]
+    public void Hydrate_MigrationIsIdempotent_ASecondPassDoesNotShiftTheChainIdAgain()
+    {
+        SaveData Save(PokemonIndividual individual) =>
+            new() { Individuals = new List<PokemonIndividual> { individual }, Settings = new AppSettings() };
+
+        var pikachu = new PokemonIndividual
+        {
+            SpeciesId = 25, ChainLength = 2, EvolutionChainId = 10,
+            Nature = Nature.Jolly, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow
+        };
+
+        new AppState().Hydrate(Save(pikachu));
+        Assert.Equal(900004, pikachu.EvolutionChainId);
+
+        new AppState().Hydrate(Save(pikachu));
+        Assert.Equal(900004, pikachu.EvolutionChainId);
+    }
+
+    /// The migration keys on the FULL (SpeciesId, ChainLength, EvolutionChainId) triple, so an
+    /// individual legitimately caught from the real catalog on chain 4 — which really is
+    /// Caterpie's line, species 10 — must not be touched.
+    [Fact]
+    public void Hydrate_RealCatalogIndividualOnAColldingChainId_IsLeftAlone()
+    {
+        var caterpie = new PokemonIndividual
+        {
+            SpeciesId = 10, ChainLength = 3, EvolutionChainId = 4,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow
+        };
+        var state = new AppState();
+
+        state.Hydrate(new SaveData { Individuals = new List<PokemonIndividual> { caterpie }, Settings = new AppSettings() });
+
+        Assert.Equal(4, Assert.Single(state.Collection.Individuals).EvolutionChainId);
+    }
+
     [Fact]
     public void ApplyActivityUnits_GrowsActiveIndividualCarePoints()
     {
@@ -28,18 +110,6 @@ public class AppStateTests
         state.ApplyActivityUnits(1234, DateTimeOffset.UtcNow);
 
         Assert.Equal(1234, individual.AccumulatedCarePoints);
-    }
-
-    [Fact]
-    public void ApplyActivityUnits_PastStage2Threshold_EvolvesActiveIndividual()
-    {
-        var state = new AppState();
-        var individual = MakeIndividual();
-        state.Collection.Add(individual);
-
-        state.ApplyActivityUnits(EvolutionThresholds.Stage2Threshold, DateTimeOffset.UtcNow);
-
-        Assert.Equal(EvolutionStage.Stage2, individual.CurrentStage);
     }
 
     [Fact]
@@ -141,14 +211,53 @@ public class AppStateTests
     }
 
     [Fact]
-    public void RecomputeStage_SetsCurrentStageFromAccumulatedCarePoints()
+    public void TryEvolve_WhenReady_AdvancesStageAndReturnsTrue()
     {
         var state = new AppState();
         var individual = MakeIndividual();
         individual.AccumulatedCarePoints = EvolutionThresholds.Stage2Threshold;
 
-        state.RecomputeStage(individual);
+        Assert.True(state.IsReadyToEvolve(individual));
+        Assert.True(state.TryEvolve(individual));
+        Assert.Equal(EvolutionStage.Stage2, individual.CurrentStage);
+    }
 
+    [Fact]
+    public void TryEvolve_WhenNotReady_IsANoOpAndReturnsFalse()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.AccumulatedCarePoints = EvolutionThresholds.Stage2Threshold - 1;
+
+        Assert.False(state.IsReadyToEvolve(individual));
+        Assert.False(state.TryEvolve(individual));
+        Assert.Equal(EvolutionStage.Stage1, individual.CurrentStage);
+    }
+
+    /// The behavior change this replaced RecomputeStage for: crossing the threshold used to
+    /// evolve the pet instantly, which took the moment away from the player.
+    [Fact]
+    public void ApplyActivityUnits_CrossingThreshold_DoesNotAutoEvolveButMarksReady()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        state.Collection.Add(individual);
+
+        state.ApplyActivityUnits(EvolutionThresholds.Stage2Threshold, DateTimeOffset.UtcNow);
+
+        Assert.Equal(EvolutionStage.Stage1, individual.CurrentStage);
+        Assert.True(state.IsReadyToEvolve(individual));
+    }
+
+    [Fact]
+    public void TryEvolve_CalledTwiceOnTheSameThreshold_OnlyAdvancesOneStage()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.AccumulatedCarePoints = EvolutionThresholds.Stage2Threshold;
+
+        Assert.True(state.TryEvolve(individual));
+        Assert.False(state.TryEvolve(individual));
         Assert.Equal(EvolutionStage.Stage2, individual.CurrentStage);
     }
 

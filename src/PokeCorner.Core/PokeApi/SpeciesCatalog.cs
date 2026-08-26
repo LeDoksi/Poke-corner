@@ -35,6 +35,20 @@ public sealed class SpeciesCatalog
         return _spriteCache.LoadOfflineStarters();
     }
 
+    /// <summary>
+    /// The catalog as a LOOKUP table — everything <see cref="LoadCachedOrFallback"/> returns,
+    /// plus the reserved legacy chains that already-caught individuals may have been migrated
+    /// onto (see <see cref="LegacyOfflineChains"/>). Use this anywhere a stored
+    /// EvolutionChainId is resolved to a species/name/rarity.
+    ///
+    /// Deliberately separate from <see cref="LoadCachedOrFallback"/> rather than folded into
+    /// it: that method is also the catch/hatch ROLL pool, and rolling from the legacy chains
+    /// would let a player catch a second, duplicate copy of a line that already exists in the
+    /// real catalog under its real id.
+    /// </summary>
+    public IReadOnlyList<SpeciesEvolutionChain> LoadForLookup() =>
+        LoadCachedOrFallback().Concat(LegacyOfflineChains.All).ToList();
+
     public async Task RefreshFromNetworkAsync(int maxSpeciesId = 649)
     {
         var seenChainIds = new HashSet<int>();

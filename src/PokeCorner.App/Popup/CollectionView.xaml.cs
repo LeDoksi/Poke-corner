@@ -21,6 +21,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Action _onStateChanged;
     private readonly Func<IReadOnlyList<byte[]>?> _getActiveSpriteFrames;
     private readonly Func<Guid, bool> _onHatchRequested;
+
+    /// Evolution is player-triggered now (it used to fire automatically the instant the bar
+    /// filled), so this view needs both "can they?" for the button's visibility and "do it".
+    private readonly Func<bool> _onEvolveRequested;
+    private readonly Func<bool> _isReadyToEvolve;
     private DispatcherTimer? _liveRefreshTimer;
 
     /// Same idle cadence the desktop overlay animates at, so the hero sprite and the pet on
@@ -59,9 +64,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private string _eggsSignature = string.Empty;
     private string _pokedexSignature = string.Empty;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<Guid, bool> onHatchRequested)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<Guid, bool> onHatchRequested, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve)
     {
         InitializeComponent();
+        _onEvolveRequested = onEvolveRequested;
+        _isReadyToEvolve = isReadyToEvolve;
         _viewModel = viewModel;
         _appState = appState;
         _spriteCache = spriteCache;
@@ -204,6 +211,19 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         var remainingUnits = FeedingService.ActivityUnitsPerTreatEarned - _appState.Feeding.RemainderUnits;
         TreatHintText.Text = $"Ещё {remainingUnits} единиц активности до следующего лакомства.";
+
+        // Appears only once the bar is actually full — a permanently-visible disabled button
+        // would read as broken on a card the player looks at constantly.
+        EvolveButton.Visibility = _isReadyToEvolve() ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    /// Deliberately does NOT call _onStateChanged: unlike Pet/Feed/Select, the evolve callback
+    /// already refreshes the overlay itself (it has to, to swap in the new stage's sprite), so
+    /// calling it again here would fire a second redundant sprite fetch per click.
+    private void EvolveButton_Click(object sender, RoutedEventArgs e)
+    {
+        _onEvolveRequested();
+        Refresh();
     }
 
     private void RefreshEggs(DateTimeOffset nowUtc)

@@ -99,7 +99,13 @@ public partial class App : System.Windows.Application
 
         if (FirstRunFlow.NeedsOnboarding(loaded))
         {
-            var allChains = _spriteCache.LoadOfflineStarters();
+            // Reads the SAME catalog as every other catch-pool call site here. It used to
+            // deliberately bypass SpeciesCatalog and read the narrow curated offline pool
+            // directly, because only that pool was guaranteed to work with zero network on a
+            // first launch. LoadCachedOrFallback's own fallback is now the complete bundled
+            // Gen 1-5 catalog, so it carries that same zero-network guarantee — and offers
+            // dozens of Common starters to choose between instead of two or three.
+            var allChains = _speciesCatalog.LoadCachedOrFallback();
             var commonCandidates = allChains
                 .Where(c => RarityClassifier.Classify(c.CaptureRate) == RarityTier.Common)
                 .OrderBy(_ => Random.Shared.Next())
@@ -107,7 +113,7 @@ public partial class App : System.Windows.Application
                 .ToList();
             if (commonCandidates.Count == 0)
             {
-                // Defensive fallback — shouldn't happen given the offline catalog's known
+                // Defensive fallback — shouldn't happen given the bundled catalog's real
                 // capture rates, but never leave the player with zero choices.
                 commonCandidates = allChains.Take(3).ToList();
             }
@@ -464,7 +470,9 @@ public partial class App : System.Windows.Application
     // defensive fallback below and the sprite never advanced past its base form.
     private int ResolveDisplaySpeciesId(PokemonIndividual individual)
     {
-        var chain = _speciesCatalog.LoadCachedOrFallback().FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
+        // LoadForLookup, not LoadCachedOrFallback: an individual migrated off the old colliding
+        // offline pool sits on a reserved legacy chain id that only the lookup view contains.
+        var chain = _speciesCatalog.LoadForLookup().FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
         if (chain is null) return individual.SpeciesId; // defensive fallback for an individual whose chain isn't in the catalog
 
         var stageIndex = (int)individual.CurrentStage;
@@ -543,18 +551,17 @@ public partial class App : System.Windows.Application
         return new CatchReveal(result, rarity);
     }
 
+    /// No tray toast here on purpose: PlayPetReaction is already a visible on-screen response
+    /// to every click, and pet/feed get clicked often enough that a notification per click was
+    /// pure noise. Evolution no longer happens inline either — see EvolveActiveIndividual.
     private void PetActiveIndividual()
     {
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
-        var stageBefore = active.CurrentStage;
         var careState = _appState.GetOrCreateCareState(active.Id);
         _feedingService.Pet(active, careState, DateTimeOffset.UtcNow);
-        _appState.RecomputeStage(active);
-        _trayIconService.ShowNotification("PokéCorner", "Погладил!");
         _overlayWindow.PlayPetReaction();
-        if (active.CurrentStage != stageBefore) _overlayWindow.PlayEvolutionFlash();
     }
 
     private void FeedActiveIndividual()
@@ -562,20 +569,37 @@ public partial class App : System.Windows.Application
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
-        var stageBefore = active.CurrentStage;
         var careState = _appState.GetOrCreateCareState(active.Id);
         var fed = _feedingService.Feed(active, _appState.Feeding, careState, DateTimeOffset.UtcNow);
         if (fed)
         {
-            _appState.RecomputeStage(active);
-            _trayIconService.ShowNotification("PokéCorner", "Покормил!");
             _overlayWindow.PlayFeedReaction();
-            if (active.CurrentStage != stageBefore) _overlayWindow.PlayEvolutionFlash();
         }
         else
         {
+            // This one stays: unlike a successful feed, "you're out of treats" has no on-screen
+            // animation of its own, so without the toast the click would look like it did nothing.
             _trayIconService.ShowNotification("PokéCorner", "Не хватает лакомств — накопи ещё активности.");
         }
+    }
+
+    /// Evolution is now an explicit player action rather than something that fires the instant
+    /// a threshold is crossed — same shape as hatching a ready egg. Returns false when the
+    /// active individual isn't actually ready (or there is none), so a stale click is inert.
+    private bool EvolveActiveIndividual()
+    {
+        var active = _appState.Collection.GetActive();
+        if (active is null || !_appState.TryEvolve(active)) return false;
+
+        _overlayWindow.PlayEvolutionFlash();
+        RefreshOverlayForActiveIndividual();
+        return true;
+    }
+
+    private bool IsActiveIndividualReadyToEvolve()
+    {
+        var active = _appState.Collection.GetActive();
+        return active is not null && _appState.IsReadyToEvolve(active);
     }
 
     private bool HatchEgg(Guid eggId)
@@ -620,9 +644,13 @@ public partial class App : System.Windows.Application
     }
 
     /// Whether the species catalog currently in use (same source as BuyEgg/HatchEgg) has at
-    /// least one chain in this rarity tier. The offline fallback catalog has no Uncommon and
-    /// no Legendary chains at all, so without this the shop would happily sell an egg that
-    /// can never hatch — spending the coins for good and crashing on the hatch attempt.
+    /// least one chain in this rarity tier, so the shop can't sell an egg that can never
+    /// hatch — spending the coins for good and crashing on the hatch attempt.
+    ///
+    /// The old 7-chain offline fallback had no Uncommon and no Legendary chains at all, which
+    /// is what made this guard load-bearing offline. The bundled full catalog covers all four
+    /// tiers, so it now only really fires against a hand-edited or partially-written cache —
+    /// still worth keeping as the cheap defense it always was.
     private bool IsRarityTierAvailable(RarityTier tier) =>
         _speciesCatalog.LoadCachedOrFallback().Any(c => RarityClassifier.Classify(c.CaptureRate) == tier);
 
@@ -639,11 +667,14 @@ public partial class App : System.Windows.Application
         {
             if (_menuWindow is null)
             {
-                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, _speciesCatalog.LoadCachedOrFallback(), _appState.PendingEggs);
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg);
+                // LoadForLookup so the collection/Pokédex can resolve names, sprites and rarity
+                // for individuals sitting on a migrated legacy chain id, not just real ones.
+                var lookupChains = _speciesCatalog.LoadForLookup();
+                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, lookupChains, _appState.PendingEggs);
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition);
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
-                var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual);
+                var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.Show();

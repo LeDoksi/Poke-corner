@@ -55,7 +55,9 @@ public partial class ShopView : System.Windows.Controls.UserControl
             return;
         }
         var bought = _shopService.BuyCarePointsBooster(_appState.Shop, active);
-        if (bought) _appState.RecomputeStage(active);
+        // No stage recompute here any more: the booster adds Care Points, and whether that
+        // crosses an evolution threshold is now the player's call via the Collection tab's
+        // "Эволюционировать!" button rather than something that happens behind their back.
         ReportResult(bought, "Бустер роста применён.", "Не хватает монет.");
     }
 

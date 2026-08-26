@@ -6,7 +6,22 @@ public sealed class PokemonIndividual
 {
     public Guid Id { get; init; } = Guid.NewGuid();
     public required int SpeciesId { get; init; }
-    public required int EvolutionChainId { get; init; }
+    private int _evolutionChainId;
+
+    /// The individual's evolution chain, fixed at catch time. Backed by a field purely so
+    /// <see cref="RemapEvolutionChainId"/> can exist — an init-only accessor cannot be called
+    /// from an instance method, and the legacy-offline-pool migration has to rewrite this
+    /// value in place on load (see <see cref="LegacyOfflineChains"/>).
+    public required int EvolutionChainId
+    {
+        get => _evolutionChainId;
+        init => _evolutionChainId = value;
+    }
+
+    /// The ONLY mutation path for <see cref="EvolutionChainId"/>, and deliberately internal:
+    /// nothing outside Core should be rewriting an individual's chain, and the one caller is
+    /// the save-load migration in <see cref="LegacyOfflineChains.TryMigrate"/>.
+    internal void RemapEvolutionChainId(int chainId) => _evolutionChainId = chainId;
     public required int ChainLength { get; init; }
     public required Nature Nature { get; init; }
     public required bool IsShiny { get; init; }

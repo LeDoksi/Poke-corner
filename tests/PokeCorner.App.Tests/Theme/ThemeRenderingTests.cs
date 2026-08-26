@@ -199,8 +199,8 @@ public class ThemeRenderingTests
             appState.Collection.Add(NewIndividual(speciesId: 16, chainId: 16));
             var chains = new[]
             {
-                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }),
-                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 })
+                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
+                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
             };
             var view = BuildCollectionView(appState, chains);
             WpfTestHost.Layout(view);
@@ -240,8 +240,8 @@ public class ThemeRenderingTests
             appState.Collection.Add(NewIndividual(speciesId: 16, chainId: 16));
             var chains = new[]
             {
-                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }),
-                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 })
+                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
+                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
             };
             var view = BuildCollectionView(appState, chains);
             WpfTestHost.Layout(view);
@@ -267,8 +267,8 @@ public class ThemeRenderingTests
 
             var view = BuildCollectionView(appState, new[]
             {
-                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }),
-                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 })
+                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
+                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
             });
             WpfTestHost.Layout(view);
 
@@ -433,9 +433,9 @@ public class ThemeRenderingTests
         {
             var chains = new[]
             {
-                new SpeciesEvolutionChain(10001, 10, 255, 3, new[] { 10, 11, 12 }),
-                new SpeciesEvolutionChain(10002, 20, 255, 3, new[] { 20, 21, 22 }),
-                new SpeciesEvolutionChain(10003, 30, 255, 3, new[] { 30, 31, 32 })
+                new SpeciesEvolutionChain(10001, 10, 255, 3, new[] { 10, 11, 12 }, new[] { "Caterpie", "Metapod", "Butterfree" }),
+                new SpeciesEvolutionChain(10002, 20, 255, 3, new[] { 20, 21, 22 }, new[] { "Raticate", "Spearow", "Fearow" }),
+                new SpeciesEvolutionChain(10003, 30, 255, 3, new[] { 30, 31, 32 }, new[] { "Nidorina", "Nidoqueen", "Nidoran M" })
             };
             var appState = new AppState();
 
@@ -447,7 +447,7 @@ public class ThemeRenderingTests
                     BuildCollectionView(),
                     new SettingsView(new SettingsViewModel(appState.Settings), () => { }),
                     new ShopView(appState, new ShopService(), _ => true, _ => true, () => { }),
-                    new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { }))
+                    new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { }, id => $"Pokemon #{id}"))
             };
 
             var expected = (SolidColorBrush)Application.Current.Resources["WindowBackgroundBrush"];
@@ -474,9 +474,9 @@ public class ThemeRenderingTests
         {
             var chains = new[]
             {
-                new SpeciesEvolutionChain(10001, 10, 255, 3, new[] { 10, 11, 12 }),
-                new SpeciesEvolutionChain(10002, 20, 255, 3, new[] { 20, 21, 22 }),
-                new SpeciesEvolutionChain(10003, 30, 255, 3, new[] { 30, 31, 32 })
+                new SpeciesEvolutionChain(10001, 10, 255, 3, new[] { 10, 11, 12 }, new[] { "Caterpie", "Metapod", "Butterfree" }),
+                new SpeciesEvolutionChain(10002, 20, 255, 3, new[] { 20, 21, 22 }, new[] { "Raticate", "Spearow", "Fearow" }),
+                new SpeciesEvolutionChain(10003, 30, 255, 3, new[] { 30, 31, 32 }, new[] { "Nidorina", "Nidoqueen", "Nidoran M" })
             };
             var window = new StarterSelectionWindow(chains, _ => Task.FromResult<byte[]?>(null));
             var root = (FrameworkElement)window.Content;
@@ -660,7 +660,10 @@ public class ThemeRenderingTests
             new CareModeService(), CareMode.Chill, chains, appState.PendingEggs);
         var spriteCacheDirectory = Path.Combine(Path.GetTempPath(), "pokecorner-theme-tests", Guid.NewGuid().ToString("N"));
         return new CollectionView(viewModel, appState, new SpriteCache(spriteCacheDirectory),
-            () => { }, () => { }, () => { }, getActiveSpriteFrames ?? (() => null), _ => true);
+            () => { }, () => { }, () => { }, getActiveSpriteFrames ?? (() => null), _ => true,
+            // Ready-to-evolve is true so the "Эволюционировать!" button is actually visible
+            // during these layout/theme assertions rather than collapsed out of the tree.
+            () => true, () => true);
     }
 
     [Fact]
@@ -697,7 +700,7 @@ public class ThemeRenderingTests
         WpfTestHost.Run(() =>
         {
             var appState = new AppState();
-            var catchView = new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { });
+            var catchView = new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { }, id => $"Pokemon #{id}");
             WpfTestHost.Layout(catchView);
 
             var settingsView = new SettingsView(new SettingsViewModel(appState.Settings), () => { });
@@ -713,12 +716,12 @@ public class ThemeRenderingTests
                 BuildCollectionView(),
                 new SettingsView(new SettingsViewModel(appState.Settings), () => { }),
                 new ShopView(appState, new ShopService(), _ => true, _ => true, () => { }),
-                new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { }));
+                new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { }, id => $"Pokemon #{id}"));
             menu.SelectTab(2);
 
             new OnboardingWindow();
 
-            var chains = new[] { new SpeciesEvolutionChain(10001, 10, 255, 3, new[] { 10, 11, 12 }) };
+            var chains = new[] { new SpeciesEvolutionChain(10001, 10, 255, 3, new[] { 10, 11, 12 }, new[] { "Caterpie", "Metapod", "Butterfree" }) };
             new StarterSelectionWindow(chains, _ => Task.FromResult<byte[]?>(null));
         });
 
@@ -737,12 +740,12 @@ public class ThemeRenderingTests
         appState.Collection.Add(individual);
         appState.PendingEggs.Add(new PendingEgg { Tier = RarityTier.Rare, ReadyAtUtc = DateTimeOffset.UtcNow.AddMinutes(30) });
 
-        var chains = new[] { new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }) };
+        var chains = new[] { new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }) };
         var viewModel = new CollectionViewModel(appState.Collection, appState.CareStateByIndividualId,
             new CareModeService(), CareMode.Chill, chains, appState.PendingEggs);
 
         var spriteCacheDirectory = Path.Combine(Path.GetTempPath(), "pokecorner-theme-tests", Guid.NewGuid().ToString("N"));
         return new CollectionView(viewModel, appState, new SpriteCache(spriteCacheDirectory),
-            () => { }, () => { }, () => { }, () => null, _ => true);
+            () => { }, () => { }, () => { }, () => null, _ => true, () => true, () => true);
     }
 }

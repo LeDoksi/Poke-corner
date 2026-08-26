@@ -5,8 +5,8 @@ namespace PokeCorner.Core.Tests.Domain;
 
 public class CatchRollerTests
 {
-    private static readonly SpeciesEvolutionChain CommonUnowned = new(ChainId: 1, StarterSpeciesId: 10, CaptureRate: 255, ChainLength: 3, StageSpeciesIds: new[] { 10 });
-    private static readonly SpeciesEvolutionChain RareOwned = new(ChainId: 2, StarterSpeciesId: 20, CaptureRate: 3, ChainLength: 3, StageSpeciesIds: new[] { 20 });
+    private static readonly SpeciesEvolutionChain CommonUnowned = new(ChainId: 1, StarterSpeciesId: 10, CaptureRate: 255, ChainLength: 3, StageSpeciesIds: new[] { 10 }, StageSpeciesNames: new[] { "Caterpie" });
+    private static readonly SpeciesEvolutionChain RareOwned = new(ChainId: 2, StarterSpeciesId: 20, CaptureRate: 3, ChainLength: 3, StageSpeciesIds: new[] { 20 }, StageSpeciesNames: new[] { "Raticate" });
 
     [Fact]
     public void RollCatch_UnownedChainWeighsMuchHigherThanOwnedChain()

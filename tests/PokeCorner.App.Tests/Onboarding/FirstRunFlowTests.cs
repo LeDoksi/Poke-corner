@@ -37,7 +37,7 @@ public class FirstRunFlowTests
     [Fact]
     public void HatchChosen_ProducesIndividualMatchingTheChosenChain()
     {
-        var chosenChain = new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 });
+        var chosenChain = new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" });
         var roller = new CatchRoller(new Random(Seed: 42));
 
         var starter = FirstRunFlow.HatchChosen(chosenChain, roller, DateTimeOffset.UtcNow);
