@@ -5,7 +5,6 @@
         AllowsTransparency="True"
         Background="{x:Null}"
         ShowInTaskbar="False"
-        Topmost="True"
         ResizeMode="NoResize"
         SizeToContent="Manual">
     <Grid>

@@ -5,39 +5,81 @@
         AllowsTransparency="True"
         Background="Transparent"
         ShowInTaskbar="False"
-        Topmost="True"
         ResizeMode="NoResize"
-        Width="116"
+        Width="134"
         SizeToContent="Height">
-    <!-- SizeToContent is Height ONLY, with an explicit Width above.
-         It used to be WidthAndHeight, which made the window measure its own width from
-         content — and these ProgressBars have no intrinsic width, so the whole panel
-         collapsed to roughly border+padding and rendered as a tiny dark pill under the pet
-         instead of three readable bars. PositionBelow()'s `Width = 100` could not rescue it:
-         with SizeToContent including Width, WPF overwrites Window.Width from the content
-         measure on the next layout pass, so the assignment did not survive.
+    <!-- Three radial mini-gauges in a row, not three stacked linear bars.
+         The linear trio is right for the in-app Collection card, which has the width to let
+         each bar breathe and room for a label beside it. Shrunk to a floating on-desktop HUD
+         it just read as a cramped miniature of that card: three anonymous 8px slivers, no way
+         to tell which was which, and a tall dark box hanging off the pet. Gauges are the
+         native shape for a small always-on widget — they fill the square footprint the pet
+         already occupies, each one carries its own glyph so the metric is identifiable, and
+         the panel is half as tall.
 
-         Background stays Transparent on the Window itself (AllowsTransparency needs it) and
-         the tinted plate is drawn by this Border instead, so the panel can have rounded
-         corners matching the rest of the design language. -->
-    <Border Background="#D90D1120" BorderBrush="#2A3358" BorderThickness="1" CornerRadius="9" Padding="8,7">
-        <StackPanel>
-            <!-- MiniProgressBarStyle rather than the shared default template at a squeezed
-                 Height: see the style's own comment in PokedexTheme.xaml. Each bar keeps its
-                 own Foreground so the three stay distinguishable at a glance. -->
-            <ProgressBar x:Name="CatchBar" Style="{StaticResource MiniProgressBarStyle}"
-                         Minimum="0" Maximum="1" Margin="0,0,0,4" Background="#2A3358"
-                         Foreground="#E8384F" ToolTip="Прогресс до следующей поимки" />
-            <ProgressBar x:Name="EvolutionBar" Style="{StaticResource MiniProgressBarStyle}"
-                         Minimum="0" Maximum="1" Margin="0,0,0,4" Background="#2A3358"
-                         Foreground="#5B9DFF" ToolTip="Прогресс до следующей эволюции" />
-            <!-- Track color is one step up the surface ladder from the panel's own plate
-                 (#0D1120): with the style's default track the unfilled remainder was the
-                 same color as the plate behind it, so a half-full bar looked like a short
-                 bar rather than a half-full one. -->
-            <ProgressBar x:Name="TreatBar" Style="{StaticResource MiniProgressBarStyle}"
-                         Minimum="0" Maximum="1" Background="#2A3358"
-                         Foreground="#4CD787" ToolTip="Прогресс до следующего лакомства" />
+         The arcs are plain Ellipses driven by StrokeDashArray (see the code-behind) rather
+         than Path/ArcSegment geometry rebuilt per update: same visual, no geometry math, and
+         nothing to keep in sync when a size changes.
+
+         SizeToContent stays Height-only with an explicit Width, as the prior fix established.
+         Unlike the old ProgressBars these gauges DO have an intrinsic width, so WidthAndHeight
+         would no longer collapse the panel — but there is nothing to gain from measuring a
+         fixed-size row, and the explicit number is what PositionBelow centres against. -->
+    <Border Background="#E60D1120" BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
+            CornerRadius="12" Padding="11,9">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2" Opacity="0.5" />
+        </Border.Effect>
+        <StackPanel Orientation="Horizontal">
+
+            <Grid Width="30" Height="30" Margin="0,0,10,0" ToolTip="Прогресс до следующей поимки">
+                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
+                <Ellipse x:Name="CatchArc" Stroke="{StaticResource AccentRedBrush}" StrokeThickness="4.5"
+                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#E8384F" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
+                    </Ellipse.Effect>
+                </Ellipse>
+                <TextBlock Text="&#x25C9;" FontFamily="Segoe UI Symbol" FontSize="10"
+                           Foreground="{StaticResource AccentRedBrush}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+
+            <Grid Width="30" Height="30" Margin="0,0,10,0" ToolTip="Прогресс до следующей эволюции">
+                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
+                <Ellipse x:Name="EvolutionArc" Stroke="{StaticResource RarityRareBrush}" StrokeThickness="4.5"
+                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#5B9DFF" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
+                    </Ellipse.Effect>
+                </Ellipse>
+                <TextBlock Text="&#x25B2;" FontFamily="Segoe UI Symbol" FontSize="9"
+                           Foreground="{StaticResource RarityRareBrush}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+
+            <Grid Width="30" Height="30" ToolTip="Прогресс до следующего лакомства">
+                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
+                <Ellipse x:Name="TreatArc" Stroke="{StaticResource RarityUncommonBrush}" StrokeThickness="4.5"
+                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#4CD787" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
+                    </Ellipse.Effect>
+                </Ellipse>
+                <TextBlock Text="&#x2764;" FontFamily="Segoe UI Symbol" FontSize="9"
+                           Foreground="{StaticResource RarityUncommonBrush}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+
         </StackPanel>
     </Border>
 </Window>

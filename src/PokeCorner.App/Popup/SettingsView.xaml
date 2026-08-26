@@ -14,10 +14,14 @@
                     <TextBlock Text="Chill — без последствий, если забыл покормить. Hardcore — питомец может &quot;обидеться&quot; и уйти со стола."
                                Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,14" />
 
-                    <!-- Shown unconditionally rather than bound to the Hardcore selection: the
-                         caption already says it only applies in Hardcore, and a checkbox that
-                         appears and disappears as the combo changes is more jarring than one
-                         that is simply inert in Chill. -->
+                    <!-- IsEnabled is driven from code-behind (LoadFromSettings and
+                         CareModeCombo_SelectionChanged) to track the Hardcore selection: the
+                         setting does nothing in Chill, and a checkbox that reads as live while
+                         being inert is worse than one that visibly says "not applicable".
+                         Still visible-but-disabled rather than collapsed, so it doesn't
+                         appear and disappear as the combo changes. The disabled look comes
+                         from the CheckBox style's own IsEnabled=False trigger in
+                         PokedexTheme.xaml — nothing extra needed here. -->
                     <CheckBox x:Name="SuperHardcoreCheck" Content="Супер Хардкор"
                               Checked="SuperHardcoreCheck_Changed" Unchecked="SuperHardcoreCheck_Changed" />
                     <TextBlock Text="Только для Hardcore. Если забыть про питомца надолго, он не уйдёт со стола на час, а покинет коллекцию навсегда."
@@ -52,7 +56,7 @@
 
                     <CheckBox x:Name="ShowProgressPanelCheck" Content="Показывать прогресс рядом с питомцем"
                               Checked="ShowProgressPanelCheck_Changed" Unchecked="ShowProgressPanelCheck_Changed" />
-                    <TextBlock Text="Компактная панель под питомцем на рабочем столе с теми же тремя барами, что и в коллекции."
+                    <TextBlock Text="Компактный виджет рядом с питомцем: три круговых индикатора — поимка, эволюция, лакомство."
                                Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,14" />
 
                     <Grid>
@@ -74,6 +78,19 @@
                     <Button x:Name="ShowOnboardingButton" Content="Показать обучение" Click="ShowOnboardingButton_Click"
                             Margin="0,16,0,0" HorizontalAlignment="Left"
                             Style="{StaticResource SecondaryButtonStyle}" />
+
+                    <!-- SecondaryButtonStyle with a red foreground/border rather than a whole
+                         new "danger" button system for one button: the ghost shape keeps it
+                         from competing with the real CTAs on other screens (it must not be
+                         the most clickable thing in Settings), while the accent colour stops
+                         it reading as just another routine action next to "Показать обучение".
+                         The double confirmation, not the styling, is the actual safety net. -->
+                    <Button x:Name="ResetDataButton" Content="Очистить сохранённые данные" Click="ResetDataButton_Click"
+                            Margin="0,10,0,0" HorizontalAlignment="Left"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Foreground="{StaticResource AccentRedBrush}" />
+                    <TextBlock Text="Удаляет коллекцию, прогресс и настройки, затем перезапускает приложение с самого начала — как после свежей установки."
+                               Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,0" />
                 </StackPanel>
             </Border>
         </StackPanel>

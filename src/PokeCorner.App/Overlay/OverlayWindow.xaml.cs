@@ -19,13 +19,81 @@ public partial class OverlayWindow : Window
     private System.Windows.Point _mouseDownPosition;
     private bool _isDragging;
 
+    /// Field, not a local: SetWinEventHook stores only the raw function pointer, so a
+    /// delegate that the GC is free to collect would leave Windows calling into freed
+    /// memory. Keeping the instance alive for the window's lifetime is the standard fix.
+    private readonly WinEventDelegate _foregroundChangedCallback;
+    private IntPtr _foregroundHook;
+
     public event Action? PetClicked;
     public event Action? MenuRequested;
+
+    /// Another process's window just became the foreground window. App subscribes to re-top
+    /// the overlay AND the progress panel together, so the pair never gets separated by a
+    /// newly activated app window.
+    public event Action? ForegroundWindowChanged;
 
     public OverlayWindow()
     {
         InitializeComponent();
-        SourceInitialized += (_, _) => MakeClickThroughExceptSprite();
+        _foregroundChangedCallback = (_, _, _, _, _, _, _) => ForegroundWindowChanged?.Invoke();
+        SourceInitialized += (_, _) =>
+        {
+            MakeClickThroughExceptSprite();
+            _foregroundHook = SetWinEventHook(
+                EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND,
+                IntPtr.Zero, _foregroundChangedCallback, 0, 0,
+                WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
+        };
+        Closed += (_, _) =>
+        {
+            if (_foregroundHook != IntPtr.Zero) UnhookWinEvent(_foregroundHook);
+            _foregroundHook = IntPtr.Zero;
+        };
+    }
+
+    /// Keeps `window` above ordinary application windows but permanently below the taskbar
+    /// and the shell surfaces that sit with it — tray flyouts, the Start menu, notification
+    /// centre. It does that by inserting the window into the topmost band DIRECTLY BEHIND
+    /// Shell_TrayWnd, which is the taskbar's own window.
+    ///
+    /// Two approaches were tried before this one, and it is worth recording why both fail,
+    /// because each looks obviously correct:
+    ///
+    ///   Topmost="True" — the original. The topmost band is flat: there is no "just below the
+    ///   shell" position inside it, so the pet could and did render over the taskbar and over
+    ///   tray flyouts.
+    ///
+    ///   SetWindowPos(HWND_TOP) with the window left non-topmost. This does keep the pet below
+    ///   every shell surface, but it does NOT put it above the window the user is working in:
+    ///   Windows refuses to raise a window above the foreground window on behalf of a process
+    ///   that does not own the foreground, so the call silently does nothing useful and the pet
+    ///   ends up buried under whatever was clicked last. Verified live — the pet sat below
+    ///   three ordinary app windows while this was in place.
+    ///
+    /// Passing a topmost window as hWndInsertAfter makes `window` topmost too and places it
+    /// immediately behind that window, which is exactly the "one rung below the shell" slot the
+    /// flat topmost band otherwise doesn't offer. The taskbar therefore always covers the pet,
+    /// and a flyout or the Start menu — which come up at the TOP of the topmost band when they
+    /// open, above Shell_TrayWnd — covers it as well.
+    ///
+    /// SWP_NOACTIVATE is essential: without it this would steal focus from whatever the user
+    /// just clicked on, which is the very thing that triggers this call.
+    ///
+    /// Static so ProgressPanelWindow — which needs the identical treatment for the identical
+    /// reason — can reuse it rather than carrying its own copy of the P/Invoke.
+    public static void KeepAboveAppsBelowShell(System.Windows.Window window)
+    {
+        var hwnd = new WindowInteropHelper(window).Handle;
+        if (hwnd == IntPtr.Zero) return; // not yet sourced; the SourceInitialized/Show path re-runs this
+
+        // HWND_TOP as the fallback, never HWND_TOPMOST: if the taskbar can't be found there is
+        // nothing to stay underneath, and defaulting to the topmost band would quietly restore
+        // the exact over-the-taskbar bug this method exists to prevent.
+        var taskbar = FindWindow("Shell_TrayWnd", null);
+        var insertAfter = taskbar == IntPtr.Zero ? HWND_TOP : taskbar;
+
+        SetWindowPos(hwnd, insertAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
     }
 
     public void SetSpriteFrames(IReadOnlyList<ImageSource> frames)
@@ -77,6 +145,11 @@ public partial class OverlayWindow : Window
             ScreenCorner.BottomRight => (bounds.Right - sizePixels - margin, bounds.Bottom - sizePixels - margin),
             _ => (bounds.Right - sizePixels - margin, bounds.Bottom - sizePixels - margin)
         };
+
+        // Moving/resizing a window can drop it behind others; without this the pet silently
+        // fell out of position in the z-order after a corner/monitor/size change and only
+        // recovered on the next foreground switch.
+        KeepAboveAppsBelowShell(this);
     }
 
     // Click-vs-drag detection via explicit mouse capture + MouseMove threshold, not a
@@ -152,6 +225,21 @@ public partial class OverlayWindow : Window
 
     [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     [DllImport("user32.dll")] private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+    private delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+
+    private const uint EVENT_SYSTEM_FOREGROUND = 0x0003;
+    private const uint WINEVENT_OUTOFCONTEXT = 0x0000;
+    private const uint WINEVENT_SKIPOWNPROCESS = 0x0002;
+    private static readonly IntPtr HWND_TOP = IntPtr.Zero;
+    private const uint SWP_NOSIZE = 0x0001;
+    private const uint SWP_NOMOVE = 0x0002;
+    private const uint SWP_NOACTIVATE = 0x0010;
+
+    [DllImport("user32.dll")] private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
+    [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern IntPtr FindWindow(string? lpClassName, string? lpWindowName);
+    [DllImport("user32.dll")] private static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+    [DllImport("user32.dll")] private static extern bool UnhookWinEvent(IntPtr hWinEventHook);
 
     public void PlayPetReaction() => PlayBounce(peakScale: 1.15, durationMs: 300, glyph: "❤");
 

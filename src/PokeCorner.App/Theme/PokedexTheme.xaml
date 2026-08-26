@@ -430,34 +430,9 @@
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
     </Style>
 
-    <!-- Desktop progress panel bar. Deliberately NOT BasedOn the shared ProgressBar style and
-         NOT just the default template squeezed to a smaller Height: that template hardcodes a
-         1px track border and stacks a 3px-tall static gloss Border on top of the indicator,
-         which at desktop-panel scale eats nearly the whole bar and leaves three near-identical
-         dark slivers instead of three readable colored fills. This variant drops the gloss and
-         template-binds BorderThickness so a caller asking for a borderless bar actually gets
-         one; 8px is about the floor at which the fill color still reads at a glance. -->
-    <Style x:Key="MiniProgressBarStyle" TargetType="ProgressBar">
-        <Setter Property="Height" Value="8" />
-        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="{StaticResource ProgressGoldBrush}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ProgressBar">
-                    <Grid>
-                        <Border x:Name="PART_Track" CornerRadius="4"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}" />
-                        <Border x:Name="PART_Indicator" CornerRadius="4" HorizontalAlignment="Left"
-                                Background="{TemplateBinding Foreground}" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <!-- (MiniProgressBarStyle lived here. It existed solely for the desktop progress panel's
+         three stacked bars; that panel is now three radial gauges built from Ellipses, so the
+         style had no remaining consumer.) -->
 
     <!-- ===================== Filter pills ===================== -->
     <!-- A RadioButton restyled as one of the app's rarity pills: RadioButton already gives

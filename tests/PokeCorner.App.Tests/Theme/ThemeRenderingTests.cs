@@ -3,6 +3,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
+// Aliased rather than `using System.Windows.Shapes`: that namespace also has a Path, which
+// collides with System.IO.Path (already used further down in this file for the sprite cache).
+using Ellipse = System.Windows.Shapes.Ellipse;
 using PokeCorner.App.Onboarding;
 using PokeCorner.App.Popup;
 using PokeCorner.Core;
@@ -57,7 +60,6 @@ public class ThemeRenderingTests
     [InlineData("TreatProgressBarStyle")]
     [InlineData("GoldProgressBarStyle")]
     [InlineData("SlimProgressBarStyle")]
-    [InlineData("MiniProgressBarStyle")]
     [InlineData("FilterPillStyle")]
     [InlineData("FavoriteToggleStyle")]
     [InlineData("ScreenTitleTextStyle")]
@@ -287,45 +289,60 @@ public class ThemeRenderingTests
             Assert.Same(Application.Current.Resources["MutedTextBrush"], cards[1].FavoriteStroke);
         });
 
-    /// Item 3: the compact bar must actually fill proportionally AND must not stack a gloss
-    /// overlay inside its indicator — at 8px that overlay is what made the three bars on the
-    /// desktop panel blur into one dark blob.
+    /// The desktop panel, redesigned from three stacked linear bars into three radial gauges.
+    /// The arcs are Ellipses whose StrokeDashArray is one dash covering `fraction` of the
+    /// circumference followed by a gap covering the rest, so "the gauge is filled correctly"
+    /// is exactly "dash / (dash + gap) == fraction" — this is the check that fails if the
+    /// dash-unit conversion (units are multiples of StrokeThickness, not pixels) is wrong.
     [Fact]
-    public void MiniProgressBarStyle_FillsProportionallyAndCarriesNoGlossOverlay() =>
-        WpfTestHost.Run(() =>
-        {
-            var bar = new ProgressBar
-            {
-                Style = (Style)Application.Current.Resources["MiniProgressBarStyle"],
-                Minimum = 0,
-                Maximum = 1,
-                Value = 0.5,
-                Width = 100
-            };
-            WpfTestHost.Layout(bar, 100, 20);
-
-            var indicator = (Border)bar.Template.FindName("PART_Indicator", bar);
-            Assert.Equal(50.0, indicator.ActualWidth, precision: 1);
-            Assert.Null(indicator.Child); // the shared template puts a 3px gloss Border here
-
-            var track = (Border)bar.Template.FindName("PART_Track", bar);
-            // BorderThickness is template-bound now, so a borderless bar really is borderless.
-            Assert.Equal(new Thickness(0), track.BorderThickness);
-            Assert.Equal(8.0, bar.ActualHeight, precision: 1);
-        });
-
-    /// Item 3: the panel itself. It used to size its width from content (which has no
-    /// intrinsic width), collapsing to a sliver; it now has a real width and three bars that
-    /// each render their own distinct color.
-    [Fact]
-    public void ProgressPanelWindow_HasRealWidthAndThreeDistinctlyColoredBars() =>
+    public void ProgressPanelWindow_GaugeArcsSpanTheirFractionOfTheCircumference() =>
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
             panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75));
 
-            // Measured at the window's real width, which is the whole point: the bars have no
-            // intrinsic width and only become readable because the window supplies one.
+            var expected = new Dictionary<string, double>
+            {
+                ["CatchArc"] = 0.5,
+                ["EvolutionArc"] = 0.25,
+                ["TreatArc"] = 0.75
+            };
+
+            foreach (var (name, fraction) in expected)
+            {
+                var arc = (Ellipse)panel.FindName(name)!;
+                Assert.Equal(Visibility.Visible, arc.Visibility);
+
+                var dash = arc.StrokeDashArray[0];
+                var gap = arc.StrokeDashArray[1];
+                Assert.Equal(fraction, dash / (dash + gap), precision: 2);
+            }
+        });
+
+    /// An empty gauge must render as nothing at all. StrokeDashCap="Round" paints a round dot
+    /// for a zero-length dash, so without the explicit hide a 0% gauge showed a stray pip at
+    /// 12 o'clock that looked like a tiny amount of progress.
+    [Fact]
+    public void ProgressPanelWindow_EmptyGaugeIsHiddenRatherThanADot() =>
+        WpfTestHost.Run(() =>
+        {
+            var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
+            panel.UpdateProgress(new ProgressInfo(0.0, 0.4, 0.0));
+
+            Assert.Equal(Visibility.Hidden, ((Ellipse)panel.FindName("CatchArc")!).Visibility);
+            Assert.Equal(Visibility.Visible, ((Ellipse)panel.FindName("EvolutionArc")!).Visibility);
+            Assert.Equal(Visibility.Hidden, ((Ellipse)panel.FindName("TreatArc")!).Visibility);
+        });
+
+    /// The panel keeps a real explicit width (the sizing-collapse fix) and three gauges that
+    /// each render their own distinct semantic color at a size that actually reads on screen.
+    [Fact]
+    public void ProgressPanelWindow_HasRealWidthAndThreeDistinctlyColoredGauges() =>
+        WpfTestHost.Run(() =>
+        {
+            var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
+            panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75));
+
             var root = (FrameworkElement)panel.Content;
             root.Measure(new Size(panel.Width, double.PositiveInfinity));
             root.Arrange(new Rect(0, 0, panel.Width, root.DesiredSize.Height));
@@ -334,20 +351,21 @@ public class ThemeRenderingTests
             Assert.True(panel.Width >= 100, $"panel is only {panel.Width}px wide");
             Assert.Equal(SizeToContent.Height, panel.SizeToContent);
 
-            var bars = new[] { "CatchBar", "EvolutionBar", "TreatBar" }
-                .Select(name => (ProgressBar)panel.FindName(name)!)
+            // Shorter than the three-stacked-bars version it replaces — the whole point of the
+            // redesign is that it stops being a tall box hanging off the pet.
+            Assert.True(root.DesiredSize.Height <= 60, $"panel is {root.DesiredSize.Height}px tall");
+
+            var arcs = new[] { "CatchArc", "EvolutionArc", "TreatArc" }
+                .Select(name => (Ellipse)panel.FindName(name)!)
                 .ToList();
 
-            Assert.Equal(new[] { 0.5, 0.25, 0.75 }, bars.Select(b => b.Value));
-
-            // Three different fill colors, each at least 8px tall and spanning most of
-            // the panel's width — i.e. three readable bars, not one dark pill.
-            var colors = bars.Select(b => ((SolidColorBrush)b.Foreground).Color).ToList();
+            var colors = arcs.Select(a => ((SolidColorBrush)a.Stroke).Color).ToList();
             Assert.Equal(3, colors.Distinct().Count());
-            foreach (var bar in bars)
+
+            foreach (var arc in arcs)
             {
-                Assert.True(bar.ActualHeight >= 8, $"bar is only {bar.ActualHeight}px tall");
-                Assert.True(bar.ActualWidth >= 80, $"bar is only {bar.ActualWidth}px wide");
+                Assert.True(arc.ActualWidth >= 24, $"gauge is only {arc.ActualWidth}px across");
+                Assert.True(arc.StrokeThickness >= 3, $"gauge ring is only {arc.StrokeThickness}px thick");
             }
         });
 
@@ -376,6 +394,52 @@ public class ThemeRenderingTests
             var background = Assert.IsType<SolidColorBrush>(closedBox.Background);
             Assert.True(RelativeLuminanceGap(actual.Color, background.Color) > 0.4,
                 "the selection text does not contrast with the closed box behind it");
+        });
+
+    /// "Супер Хардкор" only does anything in Hardcore (App.CheckHardcoreNeglect returns early
+    /// for Chill), so the checkbox must be greyed out otherwise — on the initial load as well
+    /// as on every later change of the combo, which is the half that is easy to forget.
+    [Theory]
+    [InlineData(CareMode.Chill, false)]
+    [InlineData(CareMode.Hardcore, true)]
+    public void SettingsView_SuperHardcoreCheckbox_IsEnabledOnlyInHardcore(CareMode mode, bool expectedEnabled) =>
+        WpfTestHost.Run(() =>
+        {
+            var settings = new AppState().Settings;
+            settings.CareMode = mode;
+
+            var view = new SettingsView(new SettingsViewModel(settings), () => { });
+            WpfTestHost.Layout(view);
+
+            var check = (CheckBox)view.FindName("SuperHardcoreCheck")!;
+            Assert.Equal(expectedEnabled, check.IsEnabled);
+        });
+
+    /// The other half: switching the combo re-gates the checkbox, and switching away from
+    /// Hardcore must NOT silently discard an already-made Super Hardcore choice — it is
+    /// merely inert while Chill is selected.
+    [Fact]
+    public void SettingsView_SwitchingCareMode_RegatesCheckboxButKeepsItsStoredValue() =>
+        WpfTestHost.Run(() =>
+        {
+            var settings = new AppState().Settings;
+            settings.CareMode = CareMode.Hardcore;
+            settings.SuperHardcoreEnabled = true;
+
+            var view = new SettingsView(new SettingsViewModel(settings), () => { });
+            WpfTestHost.Layout(view);
+
+            var combo = (ComboBox)view.FindName("CareModeCombo")!;
+            var check = (CheckBox)view.FindName("SuperHardcoreCheck")!;
+            Assert.True(check.IsEnabled);
+
+            combo.SelectedIndex = 0; // Chill
+            Assert.False(check.IsEnabled);
+            Assert.True(settings.SuperHardcoreEnabled, "switching to Chill must not clear the stored setting");
+
+            combo.SelectedIndex = 1; // back to Hardcore
+            Assert.True(check.IsEnabled);
+            Assert.True(check.IsChecked);
         });
 
     /// Item 5, dropdown half: an item that is selected but not hovered must stay readable.
@@ -447,7 +511,10 @@ public class ThemeRenderingTests
                     BuildCollectionView(),
                     new SettingsView(new SettingsViewModel(appState.Settings), () => { }),
                     new ShopView(appState, new ShopService(), _ => true, _ => true, () => { }),
-                    new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { }, id => $"Pokemon #{id}"))
+                    new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => false, () => { }, id => $"Pokemon #{id}")),
+                // The reset flow's confirm dialog exists specifically so the destructive
+                // prompt isn't a stock white MessageBox — so it belongs in this check.
+                new ConfirmDialog("Заголовок", "Тело", "Удалить")
             };
 
             var expected = (SolidColorBrush)Application.Current.Resources["WindowBackgroundBrush"];

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
@@ -59,6 +60,10 @@ public partial class App : System.Windows.Application
     private DateTimeOffset _lastAutosaveUtc = DateTimeOffset.MinValue;
     private Guid? _evolutionReadyNotifiedFor;
     private Guid? _neglectWarningNotifiedFor;
+
+    /// Set once by ResetSaveDataAndRestart; makes PersistState a no-op for the rest of this
+    /// process's life so nothing writes the save file back after it has been deleted.
+    private bool _isWipingSaveData;
 
     /// Raw animated-GIF bytes per display species id. Deliberately in-memory only: unlike the
     /// static PNG path there's no SpriteCache disk slot for GIFs (its filenames are always
@@ -147,6 +152,10 @@ public partial class App : System.Windows.Application
         _overlayWindow = new OverlayWindow();
         _overlayWindow.PetClicked += PetActiveIndividual;
         _overlayWindow.MenuRequested += () => OpenMenu(CollectionTabIndex);
+        // Re-top the pet the instant another app is brought to the front, rather than up to a
+        // second later on the growth tick — a visible lag now that HWND_TOP (not the topmost
+        // band) is what keeps it above ordinary windows.
+        _overlayWindow.ForegroundWindowChanged += ReassertOverlayTopmost;
         RefreshOverlayForActiveIndividual();
 
         _fullscreenMonitor = new ForegroundWindowMonitor(
@@ -196,10 +205,10 @@ public partial class App : System.Windows.Application
         CheckHardcoreNeglect();
         CheckEvolutionReady();
 
-        // Any window on the system being activated (ours or someone else's — e.g. an
-        // Alt-Tab back to another app) can bump a WS_EX_TOPMOST window out of the
-        // topmost band on some Windows builds; re-asserting Topmost periodically is the
-        // standard workaround, cheap enough to just do on this existing tick.
+        // Backstop for the ForegroundWindowChanged hook: plenty of things reorder the normal
+        // z-order band without a foreground change (a window being restored, shown, or moved
+        // by another app), and SetWindowPos on an already-top window is a no-op, so this is
+        // cheap enough to just keep doing on the existing tick.
         ReassertOverlayTopmost();
 
         // Piggybacks on this timer so a crash or Task Manager kill never loses more than a
@@ -753,7 +762,7 @@ public partial class App : System.Windows.Application
                 var lookupChains = _speciesCatalog.LoadForLookup();
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, lookupChains, _appState.PendingEggs);
                 var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve);
-                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition);
+                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart);
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
@@ -770,13 +779,18 @@ public partial class App : System.Windows.Application
         }
     }
 
-    /// Forces Windows to re-insert the overlay at the top of the topmost band. Toggling
-    /// Topmost off/on is the standard trick — just leaving it "true" the whole time
-    /// doesn't stop another window's activation from bumping it down.
+    /// Re-inserts the overlay (and the panel anchored to it) directly behind the taskbar, so
+    /// it stays above ordinary app windows but below every shell surface. Neither window sets
+    /// Topmost="True" any more — that put them in the flat topmost band, where they could and
+    /// did render over the taskbar and tray flyouts. See OverlayWindow.KeepAboveAppsBelowShell
+    /// for why the obvious non-topmost alternative does not work either.
     private void ReassertOverlayTopmost()
     {
-        _overlayWindow.Topmost = false;
-        _overlayWindow.Topmost = true;
+        OverlayWindow.KeepAboveAppsBelowShell(_overlayWindow);
+        if (_progressPanelWindow is not null)
+        {
+            OverlayWindow.KeepAboveAppsBelowShell(_progressPanelWindow);
+        }
     }
 
     private static ScreenCorner ParseCorner(string corner) => corner switch
@@ -786,6 +800,33 @@ public partial class App : System.Windows.Application
         "BottomLeft" => ScreenCorner.BottomLeft,
         _ => ScreenCorner.BottomRight
     };
+
+    /// Deletes the save file and relaunches, so the new process takes OnStartup's first-run
+    /// branch — FirstRunFlow.NeedsOnboarding gets a null SaveData when JsonSaveStore.Load
+    /// finds no file — and runs starter selection plus onboarding as if freshly installed.
+    ///
+    /// Only state.json goes. The sprite cache and catalog.json are deliberately kept: they
+    /// are asset caches, not player progress, and rebuilding the catalog means ~650 species
+    /// worth of PokeAPI requests, which would turn a reset into a multi-minute wait.
+    private void ResetSaveDataAndRestart()
+    {
+        _isWipingSaveData = true;
+
+        var savePath = AppPaths.GetSaveFilePath();
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
+
+        Process.Start(Environment.ProcessPath!);
+
+        // Shutdown(), matching the tray's "Выход" item, rather than Environment.Exit: it runs
+        // the Exit handler, so the global input hook, the fullscreen monitor and the tray icon
+        // are all disposed properly instead of being abandoned while the replacement process
+        // is already starting up. Its SaveState() call reaches a write that _isWipingSaveData
+        // now suppresses.
+        Shutdown();
+    }
 
     private void SaveState()
     {
@@ -803,6 +844,13 @@ public partial class App : System.Windows.Application
     // here for the actual write.
     private void PersistState()
     {
+        // The one case where not writing is correct: ResetSaveDataAndRestart has just deleted
+        // state.json, and every remaining write path leads back here — the autosave tick, the
+        // Exit handler's SaveState(), the crash handler. Without this the shutdown that
+        // follows the delete would immediately write the in-memory collection straight back
+        // out and the relaunched process would find a save file exactly where it left one.
+        if (_isWipingSaveData) return;
+
         var data = new SaveData
         {
             Individuals = _appState.Collection.Individuals.ToList(),
