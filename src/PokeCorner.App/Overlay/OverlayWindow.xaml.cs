@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
@@ -32,6 +33,10 @@ public partial class OverlayWindow : Window
     /// the overlay AND the progress panel together, so the pair never gets separated by a
     /// newly activated app window.
     public event Action? ForegroundWindowChanged;
+
+    /// Fired once a manual drag ends, so the new spot can be remembered and restored on the
+    /// next launch instead of always snapping back to the configured corner.
+    public event Action? PositionChanged;
 
     public OverlayWindow()
     {
@@ -127,12 +132,25 @@ public partial class OverlayWindow : Window
         _animator.Start();
     }
 
-    public void PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels)
+    public void PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels, int? rememberedX = null, int? rememberedY = null)
     {
         Width = sizePixels;
         Height = sizePixels;
 
         var screens = System.Windows.Forms.Screen.AllScreens;
+
+        // A remembered spot from a manual drag wins over the corner setting — but only if it's
+        // still somewhere on a currently-connected monitor (a disconnected second monitor
+        // would otherwise strand the pet off-screen forever).
+        if (rememberedX is { } x && rememberedY is { } y &&
+            screens.Any(s => x >= s.WorkingArea.Left - sizePixels && x <= s.WorkingArea.Right &&
+                              y >= s.WorkingArea.Top - sizePixels && y <= s.WorkingArea.Bottom))
+        {
+            (Left, Top) = (x, y);
+            KeepAboveAppsBelowShell(this);
+            return;
+        }
+
         var screen = monitorIndex >= 0 && monitorIndex < screens.Length ? screens[monitorIndex] : System.Windows.Forms.Screen.PrimaryScreen!;
         var bounds = screen.WorkingArea;
 
@@ -184,6 +202,7 @@ public partial class OverlayWindow : Window
             _isDragging = true;
             SpriteImage.ReleaseMouseCapture();
             DragMove(); // blocks until mouse-up; this call is now only reached for a real drag.
+            PositionChanged?.Invoke();
         }
     }
 

@@ -171,6 +171,14 @@ public partial class App : System.Windows.Application
         // second later on the growth tick — a visible lag now that HWND_TOP (not the topmost
         // band) is what keeps it above ordinary windows.
         _overlayWindow.ForegroundWindowChanged += ReassertOverlayTopmost;
+        // Remember where the player actually leaves the pet, so relaunch/reboot restores that
+        // spot instead of always snapping back to the configured corner.
+        _overlayWindow.PositionChanged += () =>
+        {
+            _appState.Settings.PetPositionX = (int)_overlayWindow.Left;
+            _appState.Settings.PetPositionY = (int)_overlayWindow.Top;
+            PersistState();
+        };
 
         // Keeps the progress panel glued to the pet while it is being dragged. WPF raises
         // LocationChanged continuously throughout DragMove()'s modal move loop, which is the
@@ -410,7 +418,8 @@ public partial class App : System.Windows.Application
             return;
         }
 
-        _overlayWindow.PositionAt(desiredCorner, _appState.Settings.MonitorIndex, _appState.Settings.PetSizePixels);
+        _overlayWindow.PositionAt(desiredCorner, _appState.Settings.MonitorIndex, _appState.Settings.PetSizePixels,
+            _appState.Settings.PetPositionX, _appState.Settings.PetPositionY);
         _appliedCorner = desiredCorner;
         _appliedMonitorIndex = _appState.Settings.MonitorIndex;
         _appliedPetSizePixels = _appState.Settings.PetSizePixels;
@@ -681,7 +690,8 @@ public partial class App : System.Windows.Application
         if (active is null) return;
 
         var careState = _appState.GetOrCreateCareState(active.Id);
-        _feedingService.Pet(active, careState, DateTimeOffset.UtcNow);
+        if (!_feedingService.Pet(active, careState, DateTimeOffset.UtcNow)) return; // on cooldown
+
         _overlayWindow.PlayPetReaction();
     }
 

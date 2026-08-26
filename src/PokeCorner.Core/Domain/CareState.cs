@@ -10,4 +10,8 @@ public sealed class CareState
     /// overnight, or the app was closed — which CareModeService.DiscountIdleGap uses to keep
     /// that unwatched time from counting as neglect.
     public DateTimeOffset? LastNeglectCheckUtc { get; set; }
+
+    /// Separate from LastInteractionUtc (which also covers Feed/Select and feeds the neglect
+    /// timer) so FeedingService.Pet's spam-click cooldown doesn't get reset by those.
+    public DateTimeOffset? LastPetUtc { get; set; }
 }

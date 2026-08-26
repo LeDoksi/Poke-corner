@@ -43,6 +43,34 @@ public class FeedingServiceTests
     }
 
     [Fact]
+    public void Pet_WithinCooldown_ReturnsFalseAndDoesNotAddCarePoints()
+    {
+        var service = new FeedingService();
+        var individual = MakeIndividual();
+        var now = DateTimeOffset.UtcNow;
+        var state = new CareState { LastPetUtc = now };
+
+        var petted = service.Pet(individual, state, now + FeedingService.PetCooldown - TimeSpan.FromMilliseconds(1));
+
+        Assert.False(petted);
+        Assert.Equal(0, individual.AccumulatedCarePoints);
+    }
+
+    [Fact]
+    public void Pet_AfterCooldownElapses_SucceedsAgain()
+    {
+        var service = new FeedingService();
+        var individual = MakeIndividual();
+        var now = DateTimeOffset.UtcNow;
+        var state = new CareState { LastPetUtc = now };
+
+        var petted = service.Pet(individual, state, now + FeedingService.PetCooldown);
+
+        Assert.True(petted);
+        Assert.Equal(FeedingService.PetCarePointsBonus, individual.AccumulatedCarePoints);
+    }
+
+    [Fact]
     public void Feed_WithoutTreats_FailsAndDoesNotAddCarePoints()
     {
         var service = new FeedingService();

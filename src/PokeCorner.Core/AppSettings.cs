@@ -18,6 +18,12 @@ public sealed class AppSettings
     public int PetSizePixels { get; set; } = 96;
     public bool ShowProgressPanel { get; set; } = false;
 
+    /// Null until the player drags the pet at least once — ScreenCorner/MonitorIndex still
+    /// govern initial placement and ScreenCorner-changes until then. Set together, so treat
+    /// them as a pair (one non-null implies the other is too).
+    public int? PetPositionX { get; set; }
+    public int? PetPositionY { get; set; }
+
     /// Only consulted in CareMode.Hardcore: neglect permanently releases the pet from the
     /// collection instead of benching it behind the usual one-hour RanAwayUntilUtc cooldown.
     public bool SuperHardcoreEnabled { get; set; } = false;

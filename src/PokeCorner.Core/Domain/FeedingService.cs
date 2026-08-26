@@ -7,12 +7,20 @@ public sealed class FeedingService
     public const int PetCarePointsBonus = 110;
     public const int FeedCarePointsBonus = 2_250;
 
-    /// Always available, free. Triggered by a left-click on the desktop sprite.
-    public void Pet(PokemonIndividual individual, CareState careState, DateTimeOffset nowUtc)
+    /// Free and always available, but rate-limited — otherwise it's just a spam-click exploit
+    /// for unlimited CP, bypassing the whole activity-based pacing the rest of the game rests on.
+    public static readonly TimeSpan PetCooldown = TimeSpan.FromSeconds(3);
+
+    /// Triggered by a left-click on the desktop sprite. Returns false (no-op) while on cooldown.
+    public bool Pet(PokemonIndividual individual, CareState careState, DateTimeOffset nowUtc)
     {
+        if (careState.LastPetUtc is { } lastPet && nowUtc - lastPet < PetCooldown) return false;
+
         individual.AccumulatedCarePoints += PetCarePointsBonus;
         careState.LastInteractionUtc = nowUtc;
         careState.RanAwayUntilUtc = null;
+        careState.LastPetUtc = nowUtc;
+        return true;
     }
 
     /// Only available through the Collection popup, and only when a treat is in stock.
