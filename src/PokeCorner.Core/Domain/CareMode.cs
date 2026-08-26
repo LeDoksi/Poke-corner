@@ -12,4 +12,7 @@ public static class CareModeTuning
     /// beyond this is treated as "nobody was at the machine" and discounted — see
     /// CareModeService.DiscountIdleGap.
     public static readonly TimeSpan NeglectIdleGrace = TimeSpan.FromHours(1);
+
+    /// How far ahead of HardcoreNeglectThreshold the one-shot warning notification fires.
+    public static readonly TimeSpan NeglectWarningLeadTime = TimeSpan.FromMinutes(5);
 }

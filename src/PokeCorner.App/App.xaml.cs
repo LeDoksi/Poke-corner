@@ -40,9 +40,9 @@ public partial class App : System.Windows.Application
     private AppMenuWindow? _menuWindow;
     private ShopService _shopService = null!;
     private const int CollectionTabIndex = 0;
-    private const int SettingsTabIndex = 1;
-    private const int ShopTabIndex = 2;
-    private const int CatchTabIndex = 3;
+    private const int ShopTabIndex = 1;
+    private const int CatchTabIndex = 2;
+    private const int SettingsTabIndex = 3;
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
@@ -58,6 +58,7 @@ public partial class App : System.Windows.Application
     private static readonly TimeSpan AutosaveInterval = TimeSpan.FromSeconds(5);
     private DateTimeOffset _lastAutosaveUtc = DateTimeOffset.MinValue;
     private Guid? _evolutionReadyNotifiedFor;
+    private Guid? _neglectWarningNotifiedFor;
 
     /// Raw animated-GIF bytes per display species id. Deliberately in-memory only: unlike the
     /// static PNG path there's no SpriteCache disk slot for GIFs (its filenames are always
@@ -235,6 +236,23 @@ public partial class App : System.Windows.Application
         _careModeService.DiscountIdleGap(careState, now);
 
         _overlayWindow.SetMoodTint(_careModeService.ComputeMood(careState, now));
+
+        // One-shot warning shortly before the pet actually runs away — same guard idiom as
+        // CheckEvolutionReady, re-armed whenever the condition isn't currently true (so
+        // petting/feeding before the deadline, or a later neglect cycle, can warn again).
+        var timeUntilRunAway = careState.LastInteractionUtc + CareModeTuning.HardcoreNeglectThreshold - now;
+        if (careState.RanAwayUntilUtc is null && timeUntilRunAway <= CareModeTuning.NeglectWarningLeadTime && timeUntilRunAway > TimeSpan.Zero)
+        {
+            if (_neglectWarningNotifiedFor != active.Id)
+            {
+                _neglectWarningNotifiedFor = active.Id;
+                _trayIconService.ShowNotification("PokéCorner", "Ещё немного — и питомец обидится. Загляни к нему!");
+            }
+        }
+        else
+        {
+            _neglectWarningNotifiedFor = null;
+        }
 
         if (!_careModeService.ShouldRunAway(careState, now, _appState.Settings.CareMode)) return;
 
