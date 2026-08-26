@@ -55,6 +55,9 @@ public partial class App : System.Windows.Application
     /// means "nothing cached yet".
     private IReadOnlyList<byte[]>? _activeSpriteFrames;
     private ProgressPanelWindow? _progressPanelWindow;
+    private static readonly TimeSpan AutosaveInterval = TimeSpan.FromSeconds(5);
+    private DateTimeOffset _lastAutosaveUtc = DateTimeOffset.MinValue;
+    private Guid? _evolutionReadyNotifiedFor;
 
     /// Raw animated-GIF bytes per display species id. Deliberately in-memory only: unlike the
     /// static PNG path there's no SpriteCache disk slot for GIFs (its filenames are always
@@ -132,7 +135,11 @@ public partial class App : System.Windows.Application
 
         _inputCounter = new InputEventCounter();
 
-        _growthTickTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
+        // One second, not five: this tick is what refreshes the progress bars, and at 5s they
+        // visibly lagged behind the activity the player had just generated. Everything else on
+        // the tick is cheap enough to run 5x more often — except the autosave, which is
+        // throttled back to its original cadence inside OnGrowthTick.
+        _growthTickTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _growthTickTimer.Tick += (_, _) => OnGrowthTick();
         _growthTickTimer.Start();
 
@@ -186,20 +193,27 @@ public partial class App : System.Windows.Application
         _progressPanelWindow?.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
 
         CheckHardcoreNeglect();
+        CheckEvolutionReady();
 
         // Any window on the system being activated (ours or someone else's — e.g. an
         // Alt-Tab back to another app) can bump a WS_EX_TOPMOST window out of the
         // topmost band on some Windows builds; re-asserting Topmost periodically is the
-        // standard workaround, cheap enough to just do on this existing 5-second tick.
+        // standard workaround, cheap enough to just do on this existing tick.
         ReassertOverlayTopmost();
 
-        // Piggybacks on this existing 5-second timer so a crash or Task Manager kill
-        // never loses more than a few seconds of session state. JsonSaveStore.Save
-        // already writes atomically (temp file + rename), so calling it repeatedly here
-        // is safe and cheap enough at this cadence for a single-user desktop app.
-        // Uses PersistState() (write-only), NOT SaveState() — SaveState() also disposes
-        // the input hook/fullscreen monitor/tray icon, which must stay alive between ticks.
-        PersistState();
+        // Piggybacks on this timer so a crash or Task Manager kill never loses more than a
+        // few seconds of session state. JsonSaveStore.Save already writes atomically (temp
+        // file + rename), so calling it repeatedly here is safe. Deliberately kept on its
+        // original ~5-second cadence rather than following the timer down to 1s: this writes
+        // the entire save file to disk, and the finer tick exists for the progress bars, not
+        // for the autosave. Uses PersistState() (write-only), NOT SaveState() — SaveState()
+        // also disposes the input hook/fullscreen monitor/tray icon, which must stay alive.
+        var nowUtc = DateTimeOffset.UtcNow;
+        if (nowUtc - _lastAutosaveUtc >= AutosaveInterval)
+        {
+            _lastAutosaveUtc = nowUtc;
+            PersistState();
+        }
     }
 
     /// Hardcore care mode's "убегает" mechanic (spec: "Уход за питомцем") only has a
@@ -214,15 +228,54 @@ public partial class App : System.Windows.Application
 
         var careState = _appState.GetOrCreateCareState(active.Id);
         var now = DateTimeOffset.UtcNow;
+
+        // Before anything reads the neglect clock: a PC left on overnight, or the app being
+        // closed for hours, must not cost the player their pet. Only the active individual is
+        // adjusted — the same scope everything else in this method works at.
+        _careModeService.DiscountIdleGap(careState, now);
+
         _overlayWindow.SetMoodTint(_careModeService.ComputeMood(careState, now));
 
         if (!_careModeService.ShouldRunAway(careState, now, _appState.Settings.CareMode)) return;
 
-        _careModeService.TriggerRunAway(careState, now);
         _overlayWindow.PlayRanAwayReaction();
+
+        if (_appState.Settings.SuperHardcoreEnabled)
+        {
+            // Супер Хардкор: neglect is permanent. Same path as the collection's "Отпустить"
+            // button — Release() also drops them out of the active slot (promoting whoever is
+            // next in the collection, exactly as a manual release does), so no ClearActive()
+            // and no run-away cooldown to set on a care state that no longer belongs to anyone.
+            _appState.Collection.Release(active.Id);
+            _appState.CareStateByIndividualId.Remove(active.Id);
+            RefreshOverlayForActiveIndividual();
+            _trayIconService.ShowNotification("PokéCorner", "Супер Хардкор: питомец ушёл навсегда.");
+            return;
+        }
+
+        _careModeService.TriggerRunAway(careState);
         _appState.Collection.ClearActive();
         RefreshOverlayForActiveIndividual();
         _trayIconService.ShowNotification("PokéCorner", "Питомец расстроен и не хочет возвращаться на стол ещё час.");
+    }
+
+    /// The evolution-ready counterpart to OnCatchRollDue's one-shot toast. AppState.IsReadyToEvolve
+    /// is a pure query with no "already told them" state of its own, so the same one-shot guard
+    /// _catchReady gives the catch path lives here instead — keyed by individual id, so evolving
+    /// (readiness drops) or switching pets both re-arm it for the next threshold crossing.
+    private void CheckEvolutionReady()
+    {
+        var active = _appState.Collection.GetActive();
+        if (active is null || !_appState.IsReadyToEvolve(active))
+        {
+            _evolutionReadyNotifiedFor = null;
+            return;
+        }
+
+        if (_evolutionReadyNotifiedFor == active.Id) return;
+
+        _evolutionReadyNotifiedFor = active.Id;
+        _trayIconService.ShowNotification("PokéCorner", "Покемон готов эволюционировать!");
     }
 
     private void ReconcileSettingsState()
@@ -274,7 +327,12 @@ public partial class App : System.Windows.Application
             // so a freshly enabled panel looked broken right at the moment the user turned
             // it on to look at it.
             _progressPanelWindow.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
-            _progressPanelWindow.Show();
+            // Same fullscreen gate the overlay itself honours — turning the panel on from the
+            // settings screen while a fullscreen app is in front must not pop it over that app.
+            if (!_isFullscreenHiding)
+            {
+                _progressPanelWindow.Show();
+            }
         }
         else if (!_appState.Settings.ShowProgressPanel && _progressPanelWindow is not null)
         {
@@ -333,6 +391,7 @@ public partial class App : System.Windows.Application
             // rendering (and now animating) the pet that just ran away or was released.
             _activeSpriteFrames = null;
             _overlayWindow.Hide();
+            _progressPanelWindow?.Hide(); // nothing on the desk to show progress for
             return;
         }
 
@@ -396,10 +455,12 @@ public partial class App : System.Windows.Application
                 if (_isFullscreenHiding)
                 {
                     _overlayWindow.Hide();
+                    _progressPanelWindow?.Hide();
                 }
                 else
                 {
                     _overlayWindow.Show();
+                    _progressPanelWindow?.Show();
                 }
 
                 return;
@@ -457,10 +518,12 @@ public partial class App : System.Windows.Application
         if (_isFullscreenHiding)
         {
             _overlayWindow.Hide();
+            _progressPanelWindow?.Hide();
         }
         else
         {
             _overlayWindow.Show();
+            _progressPanelWindow?.Show();
         }
     }
 

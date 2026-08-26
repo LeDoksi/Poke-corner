@@ -12,10 +12,10 @@
 
                     <!-- Hero spotlight: the active Pokémon is the reason the app exists, so it
                          gets the largest element on the screen rather than a 48px corner thumb. -->
-                    <Border Style="{StaticResource HeroCardStyle}" Margin="0,0,0,12">
+                    <Border Style="{StaticResource HeroCardStyle}" Margin="0,0,0,10">
                         <StackPanel>
-                            <Grid Height="170">
-                                <Ellipse Width="230" Height="160" Fill="{StaticResource SpotlightBrush}"
+                            <Grid Height="144">
+                                <Ellipse Width="210" Height="138" Fill="{StaticResource SpotlightBrush}"
                                          HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <Image x:Name="ActiveSpriteImage" Width="124" Height="124"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -42,9 +42,9 @@
                                        HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
                             <TextBlock x:Name="ActivePetMetaText" Style="{StaticResource MetaTextStyle}"
                                        HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
-                                       Margin="0,3,0,14" />
+                                       Margin="0,3,0,10" />
 
-                            <Grid Margin="0,0,0,14">
+                            <Grid Margin="0,0,0,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="10" />

@@ -14,6 +14,7 @@ public sealed class TrayIconService : IDisposable
     private Icon _currentSpriteIcon;
     private Icon? _currentDesaturatedIcon;
     private bool _isActivityTrackingIndicatorOn = true;
+    private bool? _appliedIndicatorState;
 
     public event Action? OpenCollectionRequested;
     public event Action? OpenSettingsRequested;
@@ -148,6 +149,14 @@ public sealed class TrayIconService : IDisposable
     public void SetActivityTrackingIndicator(bool isActive)
     {
         _isActivityTrackingIndicatorOn = isActive;
+
+        // Called from App's settings reconcile, which runs on every growth tick — now once a
+        // second rather than once every five. Redoing the work when nothing changed meant
+        // rebuilding (and re-leaking, before GetOrCreateDesaturatedIcon existed) a GDI icon
+        // every tick for no visible difference. Nullable so the very first call always applies.
+        if (_appliedIndicatorState == isActive) return;
+        _appliedIndicatorState = isActive;
+
         _notifyIcon.Icon = isActive ? _currentSpriteIcon : GetOrCreateDesaturatedIcon();
         _notifyIcon.Text = isActive ? "PokéCorner — трекинг активности включён" : "PokéCorner — трекинг активности выключен";
     }

@@ -9,6 +9,34 @@ public sealed class CareModeService
         return Math.Clamp(1.0 - fraction, 0.0, 1.0);
     }
 
+    /// Keeps time nobody was at the machine from counting as neglect, then records this poll.
+    /// Call once per neglect poll, before ShouldRunAway.
+    ///
+    /// The neglect clock is just "how long since LastInteraction", which can't tell an ignored
+    /// pet from a PC left on overnight or an app that was closed all weekend. Both show up the
+    /// same way: a long gap between consecutive polls. Everything past the first hour of such a
+    /// gap is pushed back out of the clock by nudging LastInteraction forward — the first hour
+    /// still counts, so an ordinary coffee break isn't special-cased.
+    ///
+    /// The app-was-closed case needs no separate handling: no ticks ran, so LastNeglectCheckUtc
+    /// stays stale and the first tick after relaunch sees (and discounts) the whole gap.
+    ///
+    /// This composes with TriggerRunAway's back-dating for free — that reads LastInteractionUtc,
+    /// which is exactly the value adjusted here.
+    public void DiscountIdleGap(CareState state, DateTimeOffset nowUtc)
+    {
+        if (state.LastNeglectCheckUtc is { } lastCheckUtc)
+        {
+            var gap = nowUtc - lastCheckUtc;
+            if (gap > CareModeTuning.NeglectIdleGrace)
+            {
+                state.LastInteractionUtc += gap - CareModeTuning.NeglectIdleGrace;
+            }
+        }
+
+        state.LastNeglectCheckUtc = nowUtc;
+    }
+
     public bool ShouldRunAway(CareState state, DateTimeOffset nowUtc, CareMode mode)
     {
         if (mode != CareMode.Hardcore) return false;
@@ -16,9 +44,15 @@ public sealed class CareModeService
         return nowUtc - state.LastInteractionUtc >= CareModeTuning.HardcoreNeglectThreshold;
     }
 
-    public void TriggerRunAway(CareState state, DateTimeOffset nowUtc)
+    /// The cooldown is anchored to the moment neglect actually began — LastInteraction plus
+    /// the neglect threshold — NOT to "now". Nothing polls for neglect while the app is
+    /// closed, so a threshold crossed hours ago only surfaces at the next launch; anchoring
+    /// to that launch handed the player a fresh full hour of cooldown for neglect they had
+    /// already long since served.
+    public void TriggerRunAway(CareState state)
     {
-        state.RanAwayUntilUtc = nowUtc + CareModeTuning.HardcoreRunAwayCooldown;
+        var neglectedSinceUtc = state.LastInteractionUtc + CareModeTuning.HardcoreNeglectThreshold;
+        state.RanAwayUntilUtc = neglectedSinceUtc + CareModeTuning.HardcoreRunAwayCooldown;
     }
 
     public bool IsAvailableToPlaceOnDesktop(CareState state, DateTimeOffset nowUtc) =>

@@ -2,9 +2,12 @@ namespace PokeCorner.Core.Domain;
 
 public static class EvolutionThresholds
 {
-    // Recalibrated ×7.5 alongside CatchCheckIntervalUnits — see that constant's comment.
-    public const int Stage2Threshold = 37_500;
-    public const int Stage3Threshold = 150_000;
+    // Expressed relative to ActivityAccumulator.CatchCheckIntervalUnits (22_500) on purpose:
+    // per live feedback the first evolution must cost noticeably MORE activity than a catch,
+    // and at the old 37_500 it landed at ~1.7 catches — evolutions outpaced catches. ~3.1 and
+    // ~12.4 catches keep the original 4x Stage2:Stage3 ratio.
+    public const int Stage2Threshold = 70_000;
+    public const int Stage3Threshold = 280_000;
 }
 
 public static class EvolutionCalculator

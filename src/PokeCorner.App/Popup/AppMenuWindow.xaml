@@ -3,7 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PokéCorner" Width="580" Height="660"
         Style="{StaticResource AppWindowStyle}"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <!-- WindowChrome, not WindowStyle="None" + AllowsTransparency: the transparency route
+         gives up hardware rendering, Aero Snap and correct maximized bounds, all of which
+         WindowChrome keeps. CaptionHeight="0" routes every click to the content (the brand
+         strip below does the dragging itself via DragMove); ResizeBorderThickness is what
+         still lets the window be resized by its edges, since ResizeMode is CanResize. -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="6"
+                      CornerRadius="0" GlassFrameThickness="0" UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -11,9 +22,17 @@
         </Grid.RowDefinitions>
 
         <!-- Brand strip: gives the window an identity above the tab rail instead of
-             starting straight into bare tab buttons. -->
-        <Border Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}" Padding="16,13,16,11">
-            <StackPanel Orientation="Horizontal">
+             starting straight into bare tab buttons. Doubles as the window's title bar now
+             that the OS one is gone — hence the drag handler and the three chrome buttons. -->
+        <Border Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}" Padding="16,10,8,10"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
                 <Grid Width="26" Height="26" Margin="0,0,10,0">
                     <Ellipse Stroke="{StaticResource AccentRedBrush}" StrokeThickness="2.5">
                         <Ellipse.Effect>
@@ -28,7 +47,17 @@
                 <TextBlock VerticalAlignment="Center" FontSize="17" FontWeight="SemiBold">
                     <Run Text="Poké" Foreground="{StaticResource AccentGoldBrush}" /><Run Text="Corner" Foreground="{StaticResource PrimaryTextBrush}" />
                 </TextBlock>
-            </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="MinimizeButton" Style="{StaticResource TitleBarButtonStyle}"
+                            Content="&#xE921;" Click="MinimizeButton_Click" ToolTip="Свернуть" />
+                    <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarButtonStyle}"
+                            Content="&#xE922;" Click="MaximizeButton_Click" ToolTip="Развернуть" />
+                    <Button x:Name="CloseButton" Style="{StaticResource TitleBarCloseButtonStyle}"
+                            Content="&#xE8BB;" Click="CloseButton_Click" ToolTip="Закрыть" />
+                </StackPanel>
+            </Grid>
         </Border>
 
         <TabControl x:Name="MenuTabControl" Grid.Row="1">

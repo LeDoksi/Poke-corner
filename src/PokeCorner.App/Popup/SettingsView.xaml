@@ -12,7 +12,16 @@
                         <ComboBoxItem Content="Hardcore" />
                     </ComboBox>
                     <TextBlock Text="Chill — без последствий, если забыл покормить. Hardcore — питомец может &quot;обидеться&quot; и уйти со стола."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,0" />
+                               Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,14" />
+
+                    <!-- Shown unconditionally rather than bound to the Hardcore selection: the
+                         caption already says it only applies in Hardcore, and a checkbox that
+                         appears and disappears as the combo changes is more jarring than one
+                         that is simply inert in Chill. -->
+                    <CheckBox x:Name="SuperHardcoreCheck" Content="Супер Хардкор"
+                              Checked="SuperHardcoreCheck_Changed" Unchecked="SuperHardcoreCheck_Changed" />
+                    <TextBlock Text="Только для Hardcore. Если забыть про питомца надолго, он не уйдёт со стола на час, а покинет коллекцию навсегда."
+                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,0" />
                 </StackPanel>
             </Border>
 

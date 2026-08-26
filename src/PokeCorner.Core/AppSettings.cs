@@ -13,4 +13,8 @@ public sealed class AppSettings
     public int MonitorIndex { get; set; } = 0;
     public int PetSizePixels { get; set; } = 96;
     public bool ShowProgressPanel { get; set; } = false;
+
+    /// Only consulted in CareMode.Hardcore: neglect permanently releases the pet from the
+    /// collection instead of benching it behind the usual one-hour RanAwayUntilUtc cooldown.
+    public bool SuperHardcoreEnabled { get; set; } = false;
 }

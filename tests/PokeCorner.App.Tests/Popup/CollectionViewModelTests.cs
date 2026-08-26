@@ -55,7 +55,7 @@ public class CollectionViewModelTests
         var now = DateTimeOffset.UtcNow;
         var careState = new CareState();
         var careModeService = new CareModeService();
-        careModeService.TriggerRunAway(careState, now);
+        careModeService.TriggerRunAway(careState);
         var careStates = new Dictionary<Guid, CareState> { [individual.Id] = careState };
         var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
@@ -76,7 +76,7 @@ public class CollectionViewModelTests
         var now = DateTimeOffset.UtcNow;
         var careState = new CareState();
         var careModeService = new CareModeService();
-        careModeService.TriggerRunAway(careState, now);
+        careModeService.TriggerRunAway(careState);
         var careStates = new Dictionary<Guid, CareState> { [second.Id] = careState };
         var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 

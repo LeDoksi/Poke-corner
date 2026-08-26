@@ -37,6 +37,7 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         PetSizeSlider.Value = settings.PetSizePixels;
         PetSizeValueText.Text = $"{settings.PetSizePixels} px";
         ShowProgressPanelCheck.IsChecked = settings.ShowProgressPanel;
+        SuperHardcoreCheck.IsChecked = settings.SuperHardcoreEnabled;
     }
 
     private void CareModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -88,6 +89,12 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     {
         if (_isLoadingInitialState) return;
         _viewModel.Settings.ShowProgressPanel = ShowProgressPanelCheck.IsChecked == true;
+    }
+
+    private void SuperHardcoreCheck_Changed(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (_isLoadingInitialState) return;
+        _viewModel.Settings.SuperHardcoreEnabled = SuperHardcoreCheck.IsChecked == true;
     }
 
     private void ShowOnboardingButton_Click(object sender, System.Windows.RoutedEventArgs e)

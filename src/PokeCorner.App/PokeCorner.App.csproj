@@ -11,6 +11,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <!-- Embeds the icon in the exe, which is where WPF takes a Window's default icon from —
+         so every window (taskbar button included) gets it without any per-window Icon="…".
+         The art is the same pokeball TrayIconService.DrawPlaceholderPokeBallIcon draws. -->
+    <ApplicationIcon>PokeCorner.ico</ApplicationIcon>
   </PropertyGroup>
 
 </Project>

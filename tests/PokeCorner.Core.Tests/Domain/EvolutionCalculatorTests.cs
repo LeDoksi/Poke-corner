@@ -1,3 +1,4 @@
+using PokeCorner.Core.Activity;
 using PokeCorner.Core.Domain;
 using Xunit;
 
@@ -5,16 +6,28 @@ namespace PokeCorner.Core.Tests.Domain;
 
 public class EvolutionCalculatorTests
 {
+    // Expressed against the constants rather than repeating their literal values: this Theory
+    // previously hardcoded 37500/150000 and had to be edited by hand when the thresholds were
+    // retuned, which is exactly the drift it is supposed to catch.
     [Theory]
     [InlineData(0, 3, EvolutionStage.Stage1)]
-    [InlineData(37499, 3, EvolutionStage.Stage1)]
-    [InlineData(37500, 3, EvolutionStage.Stage2)]
-    [InlineData(149999, 3, EvolutionStage.Stage2)]
-    [InlineData(150000, 3, EvolutionStage.Stage3)]
-    [InlineData(999_999, 3, EvolutionStage.Stage3)]
+    [InlineData(EvolutionThresholds.Stage2Threshold - 1, 3, EvolutionStage.Stage1)]
+    [InlineData(EvolutionThresholds.Stage2Threshold, 3, EvolutionStage.Stage2)]
+    [InlineData(EvolutionThresholds.Stage3Threshold - 1, 3, EvolutionStage.Stage2)]
+    [InlineData(EvolutionThresholds.Stage3Threshold, 3, EvolutionStage.Stage3)]
+    [InlineData(int.MaxValue, 3, EvolutionStage.Stage3)]
     public void StageForPoints_ThreeStageChain_MatchesThresholds(int points, int chainLength, EvolutionStage expected)
     {
         Assert.Equal(expected, EvolutionCalculator.StageForPoints(points, chainLength));
+    }
+
+    /// The tuning requirement behind the thresholds, per live feedback: reaching the first
+    /// evolution must cost more activity than catching three Pokémon. At the old 37_500 it was
+    /// worth ~1.7 catches, so evolutions arrived faster than catches did.
+    [Fact]
+    public void Stage2Threshold_CostsAtLeastThreeCatchesWorthOfActivity()
+    {
+        Assert.True(EvolutionThresholds.Stage2Threshold >= 3 * ActivityAccumulator.CatchCheckIntervalUnits);
     }
 
     [Fact]

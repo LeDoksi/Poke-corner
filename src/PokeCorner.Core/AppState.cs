@@ -102,6 +102,7 @@ public sealed class AppState
         Settings.MonitorIndex = data.Settings.MonitorIndex;
         Settings.PetSizePixels = data.Settings.PetSizePixels;
         Settings.ShowProgressPanel = data.Settings.ShowProgressPanel;
+        Settings.SuperHardcoreEnabled = data.Settings.SuperHardcoreEnabled;
 
         Feeding.Treats = data.FeedingTreats;
 

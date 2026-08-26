@@ -65,17 +65,88 @@ public class CareModeServiceTests
         Assert.True(service.ShouldRunAway(state, now, CareMode.Hardcore));
     }
 
+    /// A two-hour gap between polls means the PC was almost certainly idle (or the app closed).
+    /// One hour of that is ordinary neglect and still counts; the other hour is discounted, so
+    /// a pet that looked seven hours neglected is back at exactly the six-hour threshold.
     [Fact]
-    public void TriggerRunAway_SetsOneHourCooldown()
+    public void DiscountIdleGap_LongGapBetweenPolls_NudgesNeglectClockForward()
+    {
+        var service = new CareModeService();
+        var now = DateTimeOffset.UtcNow;
+        var state = new CareState
+        {
+            LastInteractionUtc = now - TimeSpan.FromHours(7),
+            LastNeglectCheckUtc = now - TimeSpan.FromHours(2)
+        };
+
+        service.DiscountIdleGap(state, now);
+
+        Assert.Equal(now - TimeSpan.FromHours(6), state.LastInteractionUtc);
+        Assert.Equal(now, state.LastNeglectCheckUtc);
+    }
+
+    [Fact]
+    public void DiscountIdleGap_ShortGapBetweenPolls_LeavesNeglectClockAlone()
+    {
+        var service = new CareModeService();
+        var now = DateTimeOffset.UtcNow;
+        var lastInteraction = now - TimeSpan.FromHours(5);
+        var state = new CareState
+        {
+            LastInteractionUtc = lastInteraction,
+            LastNeglectCheckUtc = now - TimeSpan.FromSeconds(1)
+        };
+
+        service.DiscountIdleGap(state, now);
+
+        Assert.Equal(lastInteraction, state.LastInteractionUtc);
+    }
+
+    [Fact]
+    public void DiscountIdleGap_FirstEverPoll_LeavesNeglectClockAloneAndRecordsPoll()
+    {
+        var service = new CareModeService();
+        var now = DateTimeOffset.UtcNow;
+        var lastInteraction = now - TimeSpan.FromHours(9);
+        var state = new CareState { LastInteractionUtc = lastInteraction, LastNeglectCheckUtc = null };
+
+        service.DiscountIdleGap(state, now);
+
+        Assert.Equal(lastInteraction, state.LastInteractionUtc);
+        Assert.Equal(now, state.LastNeglectCheckUtc);
+    }
+
+    [Fact]
+    public void TriggerRunAway_SetsCooldownAnchoredToWhenNeglectBegan()
     {
         var service = new CareModeService();
         var now = DateTimeOffset.UtcNow;
         var state = new CareState { LastInteractionUtc = now };
 
-        service.TriggerRunAway(state, now);
+        service.TriggerRunAway(state);
 
-        Assert.False(service.IsAvailableToPlaceOnDesktop(state, now));
-        Assert.True(service.IsAvailableToPlaceOnDesktop(state, now + CareModeTuning.HardcoreRunAwayCooldown));
+        var neglectBegins = now + CareModeTuning.HardcoreNeglectThreshold;
+        Assert.Equal(neglectBegins + CareModeTuning.HardcoreRunAwayCooldown, state.RanAwayUntilUtc);
+    }
+
+    /// The neglect poll only runs while the app is open, so a threshold crossed hours ago
+    /// first fires at the next launch. Back-dating the cooldown to the real neglect moment
+    /// means that already-served time counts — the pet is immediately available again
+    /// instead of being benched for a fresh hour from launch.
+    [Fact]
+    public void TriggerRunAway_NeglectStartedLongAgo_CooldownIsAlreadyExpired()
+    {
+        var service = new CareModeService();
+        var now = DateTimeOffset.UtcNow;
+        var state = new CareState
+        {
+            LastInteractionUtc = now - CareModeTuning.HardcoreNeglectThreshold - CareModeTuning.HardcoreRunAwayCooldown - TimeSpan.FromMinutes(1)
+        };
+
+        service.TriggerRunAway(state);
+
+        Assert.True(state.RanAwayUntilUtc < now);
+        Assert.True(service.IsAvailableToPlaceOnDesktop(state, now));
     }
 
     [Fact]
@@ -84,7 +155,7 @@ public class CareModeServiceTests
         var service = new CareModeService();
         var now = DateTimeOffset.UtcNow;
         var state = new CareState { LastInteractionUtc = now - TimeSpan.FromHours(10) };
-        service.TriggerRunAway(state, now);
+        service.TriggerRunAway(state);
 
         service.RegisterInteraction(state, now);
 
