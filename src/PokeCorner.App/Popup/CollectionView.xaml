@@ -4,8 +4,12 @@
     <TabControl>
         <!-- ============================== HOME ==============================
              Deliberately only "what is happening right now": the active pet and its three
-             progress bars. The full collection — incubating eggs and the owned roster — lives
-             one tab over in the Pokédex, which is the "everything I have" screen. -->
+             progress bars. The full collection — incubating eggs and every owned individual —
+             lives one tab over in the Pokédex, which is the "everything I have" screen.
+
+             The "Мои покемоны" roster list used to sit under the Pokédex tab alongside the
+             species grid. It is gone: the two showed the same name, rarity and sprite in two
+             parallel lists, and the grid now covers both jobs (see its own comment). -->
         <TabItem Header="Мой покемон">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
@@ -100,8 +104,18 @@
                         <StackPanel>
                             <TextBlock Text="Прогресс" Style="{StaticResource SectionHeaderTextStyle}" />
 
+                            <!-- Each row is led by its concept icon from the shared theme
+                                 dictionary — the SAME glyph the desktop progress panel draws,
+                                 so the compact indicator on the desktop is traceable to this
+                                 full card. Tinted to match the bar underneath it. -->
                             <Grid Margin="0,0,0,3">
-                                <TextBlock Text="До поимки" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <ContentControl Style="{StaticResource CatchIconStyle}"
+                                                    Foreground="{StaticResource AccentRedBrush}"
+                                                    VerticalAlignment="Center" Margin="0,0,6,0" />
+                                    <TextBlock Text="До поимки" Style="{StaticResource MetaTextStyle}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
                                 <TextBlock x:Name="CatchPercentText" Style="{StaticResource MetaTextStyle}"
                                            HorizontalAlignment="Right" FontWeight="SemiBold" />
                             </Grid>
@@ -110,7 +124,13 @@
                                          ToolTip="Прогресс до следующей поимки" />
 
                             <Grid Margin="0,0,0,3">
-                                <TextBlock Text="До эволюции" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <ContentControl Style="{StaticResource EvolutionIconStyle}"
+                                                    Foreground="{StaticResource RarityRareBrush}"
+                                                    VerticalAlignment="Center" Margin="0,0,6,0" />
+                                    <TextBlock Text="До эволюции" Style="{StaticResource MetaTextStyle}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
                                 <TextBlock x:Name="EvolutionPercentText" Style="{StaticResource MetaTextStyle}"
                                            HorizontalAlignment="Right" FontWeight="SemiBold" />
                             </Grid>
@@ -130,7 +150,13 @@
                             </Button>
 
                             <Grid Margin="0,0,0,3">
-                                <TextBlock Text="До лакомства" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <ContentControl Style="{StaticResource TreatIconStyle}"
+                                                    Foreground="{StaticResource RarityUncommonBrush}"
+                                                    VerticalAlignment="Center" Margin="0,0,6,0" />
+                                    <TextBlock Text="До лакомства" Style="{StaticResource MetaTextStyle}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
                                 <TextBlock x:Name="TreatPercentText" Style="{StaticResource MetaTextStyle}"
                                            HorizontalAlignment="Right" FontWeight="SemiBold" />
                             </Grid>
@@ -144,7 +170,9 @@
         </TabItem>
 
         <!-- ================================= POKÉDEX =================================
-             The "everything I own" screen: seen species, incubating eggs, and the full roster. -->
+             The "everything I own" screen, and now the ONLY list of owned Pokémon: one card
+             per owned individual (not per distinct species), plus the incubating eggs.
+             Clicking a card opens PokemonDetailWindow for the details and the actions. -->
         <TabItem Header="Pokédex">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
@@ -204,17 +232,57 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Style="{StaticResource CardStyle}" Width="112" Margin="5" Padding="9">
-                                    <StackPanel>
-                                        <Border Style="{StaticResource PillStyle}" Padding="6,1" Margin="0,0,0,6">
-                                            <TextBlock Text="{Binding DexNumber}" FontSize="9.5" FontWeight="SemiBold"
-                                                       Foreground="{StaticResource SecondaryTextBrush}" />
-                                        </Border>
+                                <!-- One card per OWNED INDIVIDUAL now, not per distinct species,
+                                     so two Pikachus are two cards. Clicking one opens
+                                     PokemonDetailWindow with the catch date, nature and the
+                                     Выбрать/Отпустить/star actions that used to sit inline on
+                                     the separate roster list this grid absorbed.
 
-                                        <Border Style="{StaticResource WellStyle}" Height="66" Margin="0,0,0,7">
+                                     MouseLeftButtonUp on the Border rather than wrapping the
+                                     card in a Button: the card is already a styled Border with
+                                     its own hover/shadow treatment, and a Button around it
+                                     would layer a second chrome and focus rect over that. The
+                                     Border has a Background from CardStyle, so it is hit-
+                                     testable across its whole face, not just on its glyphs. -->
+                                <Border Style="{StaticResource CardStyle}" Width="112" Margin="5" Padding="9"
+                                        Cursor="Hand" Tag="{Binding IndividualId}"
+                                        MouseLeftButtonUp="PokedexCard_Click"
+                                        ToolTip="Открыть карточку — характер, дата поимки и действия">
+                                    <StackPanel>
+                                        <Grid Margin="0,0,0,6">
+                                            <Border Style="{StaticResource PillStyle}" Padding="6,1"
+                                                    HorizontalAlignment="Left">
+                                                <TextBlock Text="{Binding DexNumber}" FontSize="9.5" FontWeight="SemiBold"
+                                                           Foreground="{StaticResource SecondaryTextBrush}" />
+                                            </Border>
+                                            <!-- Per-individual markers. Without them two cards of
+                                                 the same species would be indistinguishable now
+                                                 that the grid no longer dedupes. -->
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center">
+                                                <Path Width="11" Height="11" Stretch="Uniform" Margin="0,0,3,0"
+                                                      VerticalAlignment="Center"
+                                                      Visibility="{Binding FavoriteBadgeVisibility}"
+                                                      Fill="{StaticResource AccentGoldBrush}"
+                                                      ToolTip="Избранный — всегда в начале списка"
+                                                      Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
+                                                <TextBlock Text="✨" FontSize="10" VerticalAlignment="Center"
+                                                           Visibility="{Binding ShinyVisibility}"
+                                                           ToolTip="Шайни — редкая цветовая форма" />
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Border Style="{StaticResource WellStyle}" Height="80" Margin="0,0,0,7">
                                             <Grid>
-                                                <Image Width="56" Height="56" Source="{Binding SpriteImage}"
-                                                       RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                                <!-- ~21% larger than the 56px it was. The Loaded/
+                                                     Unloaded pair is what drives the animation:
+                                                     the code-behind attaches a SpriteAnimator per
+                                                     realized Image, which is how a DataTemplate
+                                                     gets the same treatment the named hero Image
+                                                     already had. -->
+                                                <Image Width="68" Height="68" Source="{Binding SpriteImage}"
+                                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                       Loaded="PokedexSprite_Loaded" Unloaded="PokedexSprite_Unloaded" />
                                                 <Grid Width="30" Height="30" Opacity="0.45"
                                                       Visibility="{Binding PlaceholderVisibility}">
                                                     <Ellipse Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2" />
@@ -223,6 +291,24 @@
                                                              Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2"
                                                              HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                 </Grid>
+                                                <Border Style="{StaticResource PillStyle}" Padding="5,1"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                                        Margin="0,0,0,2"
+                                                        BorderBrush="{StaticResource AccentGoldBrush}"
+                                                        Visibility="{Binding ActiveBadgeVisibility}"
+                                                        ToolTip="Сейчас на рабочем столе">
+                                                    <TextBlock Text="На столе" FontSize="8.5" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource AccentGoldBrush}" />
+                                                </Border>
+                                                <Border Style="{StaticResource PillStyle}" Padding="5,1"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                                        Margin="0,0,0,2"
+                                                        BorderBrush="{StaticResource AccentRedBrush}"
+                                                        Visibility="{Binding UnavailableBadgeVisibility}"
+                                                        ToolTip="{Binding AvailabilityToolTip}">
+                                                    <TextBlock Text="Обиделся" FontSize="8.5" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource AccentRedBrush}" />
+                                                </Border>
                                             </Grid>
                                         </Border>
 
@@ -287,119 +373,6 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <!-- Roster -->
-                    <Grid Margin="2,10,0,6">
-                        <TextBlock Text="Мои покемоны" Style="{StaticResource SectionHeaderTextStyle}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
-                        <TextBlock x:Name="RosterCountText" Style="{StaticResource MetaTextStyle}"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    </Grid>
-                    <ItemsControl x:Name="EntriesList">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10">
-                                    <StackPanel>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-
-                                            <Border Grid.Column="0" Style="{StaticResource WellStyle}" Width="54" Height="54"
-                                                    Margin="0,0,12,0" VerticalAlignment="Center">
-                                                <Grid>
-                                                    <Image Width="44" Height="44" Source="{Binding SpriteImage}"
-                                                           RenderOptions.BitmapScalingMode="NearestNeighbor" />
-                                                    <Grid Width="26" Height="26" Opacity="0.45"
-                                                          Visibility="{Binding PlaceholderVisibility}">
-                                                        <Ellipse Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2" />
-                                                        <Border Height="2" Background="{StaticResource MutedTextBrush}" VerticalAlignment="Center" />
-                                                        <Ellipse Width="9" Height="9" Fill="{StaticResource WindowBackgroundBrush}"
-                                                                 Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2"
-                                                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                    </Grid>
-                                                </Grid>
-                                            </Border>
-
-                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding DexNumber}" Style="{StaticResource MetaTextStyle}"
-                                                               Foreground="{StaticResource MutedTextBrush}" VerticalAlignment="Center"
-                                                               Margin="0,0,7,0" />
-                                                    <TextBlock Text="{Binding SpeciesName}" FontWeight="SemiBold" FontSize="14"
-                                                               VerticalAlignment="Center" />
-                                                    <TextBlock Text="✨" Margin="5,0,0,0" VerticalAlignment="Center"
-                                                               Visibility="{Binding ShinyVisibility}"
-                                                               ToolTip="Шайни — редкая цветовая форма" />
-                                                </StackPanel>
-
-                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                                                    <Border Style="{StaticResource PillStyle}" BorderBrush="{Binding RarityBrush}"
-                                                            Margin="0,0,6,0">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Ellipse Width="6" Height="6" Fill="{Binding RarityBrush}"
-                                                                     VerticalAlignment="Center" Margin="0,0,5,0" />
-                                                            <TextBlock Text="{Binding RarityName}" FontSize="10"
-                                                                       Foreground="{Binding RarityBrush}" />
-                                                        </StackPanel>
-                                                    </Border>
-                                                    <Border Style="{StaticResource PillStyle}" Margin="0,0,6,0"
-                                                            BorderBrush="{StaticResource AccentGoldBrush}"
-                                                            Visibility="{Binding FavoriteBadgeVisibility}"
-                                                            ToolTip="Избранный — всегда в начале списка">
-                                                        <TextBlock Text="Избранное" FontSize="10" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource AccentGoldBrush}" />
-                                                    </Border>
-                                                    <Border Style="{StaticResource PillStyle}" Margin="0,0,6,0"
-                                                            BorderBrush="{StaticResource AccentGoldBrush}"
-                                                            Visibility="{Binding ActiveBadgeVisibility}"
-                                                            ToolTip="Сейчас на рабочем столе">
-                                                        <TextBlock Text="На столе" FontSize="10" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource AccentGoldBrush}" />
-                                                    </Border>
-                                                    <Border Style="{StaticResource PillStyle}"
-                                                            BorderBrush="{StaticResource AccentRedBrush}"
-                                                            Visibility="{Binding UnavailableBadgeVisibility}"
-                                                            ToolTip="{Binding AvailabilityToolTip}">
-                                                        <TextBlock Text="Обиделся" FontSize="10" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource AccentRedBrush}" />
-                                                    </Border>
-                                                </StackPanel>
-
-                                                <TextBlock Text="{Binding MetaLine}" Style="{StaticResource CaptionTextStyle}"
-                                                           Margin="0,5,0,0" />
-                                            </StackPanel>
-
-                                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
-                                                        Margin="10,0,0,0">
-                                                <!-- Star pin. One Path with both Fill and Stroke bound: solid gold when
-                                                     pinned, hollow with a muted outline when not. -->
-                                                <Button Style="{StaticResource FavoriteToggleStyle}" Margin="0,0,6,0"
-                                                        Tag="{Binding IndividualId}" Click="FavoriteButton_Click"
-                                                        ToolTip="{Binding FavoriteToolTip}">
-                                                    <Path Width="16" Height="16" Stretch="Uniform" StrokeThickness="1.6"
-                                                          StrokeLineJoin="Round"
-                                                          Fill="{Binding FavoriteFill}" Stroke="{Binding FavoriteStroke}"
-                                                          Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
-                                                </Button>
-                                                <Button Content="Выбрать" Tag="{Binding IndividualId}" Click="SelectButton_Click"
-                                                        Padding="12,6" Margin="0,0,6,0" IsEnabled="{Binding CanSelect}"
-                                                        ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
-                                                <Button Content="Отпустить" Tag="{Binding IndividualId}" Click="ReleaseButton_Click"
-                                                        Padding="12,6" Style="{StaticResource SecondaryButtonStyle}"
-                                                        ToolTip="Насовсем удалить этого покемона из коллекции" />
-                                            </StackPanel>
-                                        </Grid>
-
-                                        <ProgressBar Style="{StaticResource SlimProgressBarStyle}" Margin="0,10,0,0"
-                                                     Value="{Binding EvolutionFraction, Mode=OneWay}" Minimum="0" Maximum="1"
-                                                     ToolTip="Прогресс до следующей эволюции" />
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
                 </StackPanel>
             </ScrollViewer>
         </TabItem>

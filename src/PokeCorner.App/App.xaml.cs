@@ -92,7 +92,15 @@ public partial class App : System.Windows.Application
         // wasteful and rude to that API. Species data changes rarely — a weekly refresh is
         // plenty. Fire-and-forget when it does run; today's rolls still use whatever
         // LoadCachedOrFallback returns right now.
-        var catalogIsStale = !File.Exists(catalogPath) || File.GetLastWriteTimeUtc(catalogPath) < DateTime.UtcNow.AddDays(-7);
+        //
+        // IsCacheSchemaCurrent is part of the staleness test, not just the age: a catalog.json
+        // written before the crawler captured display names is "fresh" by any clock but
+        // resolves every species to "Pokemon #{id}". LoadCachedOrFallback already refuses to
+        // SERVE such a file (it returns the fully-named bundled catalog instead); this is what
+        // makes the file on disk actually get rewritten, rather than being ignored forever.
+        var catalogIsStale = !File.Exists(catalogPath)
+            || File.GetLastWriteTimeUtc(catalogPath) < DateTime.UtcNow.AddDays(-7)
+            || !_speciesCatalog.IsCacheSchemaCurrent();
         if (catalogIsStale)
         {
             _ = _speciesCatalog.RefreshFromNetworkAsync();
@@ -127,7 +135,10 @@ public partial class App : System.Windows.Application
                 commonCandidates = allChains.Take(3).ToList();
             }
 
-            var selectionWindow = new StarterSelectionWindow(commonCandidates, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
+            var selectionWindow = new StarterSelectionWindow(
+                commonCandidates,
+                speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
+                GetAnimatedFramesAsync);
             var dialogChoseOne = selectionWindow.ShowDialog() == true;
             var chosenChain = dialogChoseOne ? selectionWindow.Chosen! : commonCandidates[0]; // window closed without a pick (e.g. Alt+F4) still needs a starter
 
@@ -348,7 +359,7 @@ public partial class App : System.Windows.Application
         if (_appState.Settings.ShowProgressPanel && _progressPanelWindow is null)
         {
             _progressPanelWindow = new ProgressPanelWindow();
-            _progressPanelWindow.PositionBelow(_overlayWindow);
+            _progressPanelWindow.PositionLeftOf(_overlayWindow);
             // Prime the bars immediately. Without this the panel spends its first seconds
             // showing three empty tracks — OnGrowthTick only pushes values every 5 seconds,
             // so a freshly enabled panel looked broken right at the moment the user turned
@@ -367,7 +378,7 @@ public partial class App : System.Windows.Application
             _progressPanelWindow = null;
         }
 
-        _progressPanelWindow?.PositionBelow(_overlayWindow);
+        _progressPanelWindow?.PositionLeftOf(_overlayWindow);
     }
 
     /// Applies the corner/monitor/size settings to the overlay (and drags the progress panel
@@ -393,8 +404,8 @@ public partial class App : System.Windows.Application
         _appliedMonitorIndex = _appState.Settings.MonitorIndex;
         _appliedPetSizePixels = _appState.Settings.PetSizePixels;
 
-        // The panel is anchored to the overlay's bottom edge, which just moved.
-        _progressPanelWindow?.PositionBelow(_overlayWindow);
+        // The panel is anchored to the overlay's left edge, which just moved.
+        _progressPanelWindow?.PositionLeftOf(_overlayWindow);
     }
 
     /// Single entry point for "what should the overlay show right now" — called after
@@ -424,78 +435,38 @@ public partial class App : System.Windows.Application
 
         var displaySpeciesId = ResolveDisplaySpeciesId(active);
 
-        // This method runs on app start, every fullscreen enter/exit, every Pet/Feed click,
-        // every Select/Release, every purchase, catch and hatch. Without this memo the
-        // animated path would re-issue two real HTTP requests (the PokeAPI JSON document
-        // plus the GIF download) plus a full decode every single time, and would lose
-        // animation entirely when offline even for an already-seen species. In-memory only
-        // is the deliberate trade-off: one legitimate fetch per active individual per launch.
-        byte[]? animatedBytes = null;
-        if (!_animatedSpriteCache.TryGetValue(displaySpeciesId, out animatedBytes))
-        {
-            try
-            {
-                animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(displaySpeciesId);
-            }
-            catch
-            {
-                // Same defense-in-depth as the static-sprite catch below — network errors already
-                // degrade to null inside PokeApiClient's normal paths; this guards unexpected ones.
-            }
+        var pngFrames = await GetAnimatedFramesAsync(displaySpeciesId);
 
-            if (animatedBytes is not null)
-            {
-                _animatedSpriteCache[displaySpeciesId] = animatedBytes;
-            }
+        if (generation != _overlayRefreshGeneration)
+        {
+            // A newer refresh started (and possibly already finished) while we were awaiting
+            // the animated-sprite fetch above — applying our now-stale result would clobber
+            // it. Mirrors the staleness check below for the static path.
+            return;
         }
 
-        if (animatedBytes is not null)
+        if (pngFrames is not null)
         {
-            if (generation != _overlayRefreshGeneration)
+            _overlayWindow.SetSpriteFrames(pngFrames.Select(DecodeSprite).ToList());
+            _activeSpriteFrames = pngFrames;
+            _trayIconService.SetSpriteIcon(pngFrames[0]);
+
+            if (_isFullscreenHiding)
             {
-                // A newer refresh started (and possibly already finished) while we were
-                // awaiting the animated-sprite fetch above — applying our now-stale result
-                // would clobber it. Mirrors the staleness check below for the static path.
-                return;
+                _overlayWindow.Hide();
+                _progressPanelWindow?.Hide();
+            }
+            else
+            {
+                _overlayWindow.Show();
+                _progressPanelWindow?.Show();
             }
 
-            // The decode is NOT covered by the fetch's try/catch above, and a non-GIF or
-            // truncated response body makes it throw — straight past all handling into
-            // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
-            IReadOnlyList<byte[]> pngFrames;
-            try
-            {
-                pngFrames = GifFrameDecoder.DecodeFramesAsPng(animatedBytes);
-            }
-            catch
-            {
-                pngFrames = Array.Empty<byte[]>();
-            }
-
-            // Guards pngFrames[0] below: a malformed-but-decodable GIF can yield zero frames.
-            if (pngFrames.Count > 0)
-            {
-                _overlayWindow.SetSpriteFrames(pngFrames.Select(DecodeSprite).ToList());
-                _activeSpriteFrames = pngFrames;
-                _trayIconService.SetSpriteIcon(pngFrames[0]);
-
-                if (_isFullscreenHiding)
-                {
-                    _overlayWindow.Hide();
-                    _progressPanelWindow?.Hide();
-                }
-                else
-                {
-                    _overlayWindow.Show();
-                    _progressPanelWindow?.Show();
-                }
-
-                return;
-            }
-
-            // Zero frames (decode failed or malformed GIF) — fall through to the static
-            // path below, exactly as if animatedBytes had been null.
+            return;
         }
+
+        // No animated sprite for this species (or the fetch/decode failed) — fall through to
+        // the static PNG path below.
 
         byte[]? spriteBytes = null;
         try
@@ -551,6 +522,55 @@ public partial class App : System.Windows.Application
         {
             _overlayWindow.Show();
             _progressPanelWindow?.Show();
+        }
+    }
+
+    /// Fetches and decodes one species' animated sprite into a list of PNG frames, or null
+    /// when the species has no animated sprite (plenty don't) or the fetch/decode failed —
+    /// every caller falls back to the static PNG in that case.
+    ///
+    /// Extracted from RefreshOverlayForActiveIndividual so the Pokédex cards and the starter
+    /// picker animate from exactly the same memoized source. Without the shared memo the
+    /// Pokédex would re-download a GIF per owned species every time the popup rebuilt its
+    /// grid, which is once a second.
+    ///
+    /// The memo holds the raw GIF, not the decoded frames: decoding is cheap next to the two
+    /// HTTP round trips, and caching bytes keeps this method's contract (fresh list per call)
+    /// free of aliasing concerns between the overlay and the popup.
+    private async Task<IReadOnlyList<byte[]>?> GetAnimatedFramesAsync(int speciesId)
+    {
+        if (!_animatedSpriteCache.TryGetValue(speciesId, out var animatedBytes))
+        {
+            try
+            {
+                animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(speciesId);
+            }
+            catch
+            {
+                // Network errors already degrade to null inside PokeApiClient's normal paths;
+                // this guards the unexpected ones rather than letting them reach
+                // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
+                animatedBytes = null;
+            }
+
+            if (animatedBytes is not null)
+            {
+                _animatedSpriteCache[speciesId] = animatedBytes;
+            }
+        }
+
+        if (animatedBytes is null) return null;
+
+        try
+        {
+            // A non-GIF or truncated response body makes the decode throw, and a
+            // malformed-but-decodable GIF can yield zero frames — both mean "no animation".
+            var frames = GifFrameDecoder.DecodeFramesAsPng(animatedBytes);
+            return frames.Count > 0 ? frames : null;
+        }
+        catch
+        {
+            return null;
         }
     }
 
@@ -761,7 +781,7 @@ public partial class App : System.Windows.Application
                 // for individuals sitting on a migrated legacy chain id, not just real ones.
                 var lookupChains = _speciesCatalog.LoadForLookup();
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, lookupChains, _appState.PendingEggs);
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve);
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart);
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));

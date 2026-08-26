@@ -56,15 +56,26 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         SyncSuperHardcoreEnabled();
 
         if (_isLoadingInitialState) return;
-        _viewModel.Settings.CareMode = CareModeCombo.SelectedIndex == 1 ? CareMode.Hardcore : CareMode.Chill;
+        var isHardcore = CareModeCombo.SelectedIndex == 1;
+        _viewModel.Settings.CareMode = isHardcore ? CareMode.Hardcore : CareMode.Chill;
+
+        // Leaving Hardcore clears Супер Хардкор outright. The previous behaviour kept the box
+        // ticked-but-greyed on the theory that it preserved the player's earlier choice — live
+        // testing showed it just reads as broken: a checked checkbox describing a permadeath
+        // rule that is not in force. The stored flag is written directly as well as through
+        // the checkbox: assigning IsChecked only raises SuperHardcoreCheck_Changed when the
+        // value actually changes, so an already-unchecked box would leave a stale true behind.
+        if (!isHardcore)
+        {
+            SuperHardcoreCheck.IsChecked = false;
+            _viewModel.Settings.SuperHardcoreEnabled = false;
+        }
     }
 
     /// Супер Хардкор only has any effect in Hardcore (see App.CheckHardcoreNeglect, which
-    /// returns early for Chill), so the checkbox is greyed out otherwise.
-    ///
-    /// It does NOT clear AppSettings.SuperHardcoreEnabled when switching to Chill: the value
-    /// is simply inert while Chill is selected, so switching back to Hardcore restores the
-    /// choice the player already made rather than silently discarding it.
+    /// returns early for Chill), so the checkbox is greyed out otherwise — and, since the
+    /// selection handler above also unchecks it on the way out of Hardcore, greyed out is
+    /// only ever the state of an already-unchecked box.
     private void SyncSuperHardcoreEnabled() =>
         SuperHardcoreCheck.IsEnabled = CareModeCombo.SelectedIndex == 1;
 

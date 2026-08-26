@@ -16,23 +16,40 @@ public sealed class SpeciesCatalog
         _catalogFilePath = catalogFilePath;
     }
 
-    public IReadOnlyList<SpeciesEvolutionChain> LoadCachedOrFallback()
+    public IReadOnlyList<SpeciesEvolutionChain> LoadCachedOrFallback() =>
+        IsCacheUsable(TryLoadCache(), out var cached) ? cached! : _spriteCache.LoadOfflineStarters();
+
+    /// Whether the on-disk cache is schema-current, i.e. worth serving. False also means a
+    /// re-crawl is due regardless of the file's age — App's startup staleness check reads
+    /// this so a pre-names catalog.json actually gets refreshed instead of being silently
+    /// ignored in favour of the bundled fallback on every launch, forever.
+    public bool IsCacheSchemaCurrent() => IsCacheUsable(TryLoadCache(), out _);
+
+    /// A cached catalog written before FetchEvolutionChainAsync captured display names
+    /// deserializes fine (SpeciesEvolutionChain normalizes the missing property to an empty
+    /// list) but resolves EVERY species to "Pokemon #{id}". Age alone can't tell those files
+    /// apart from good ones, so presence of name data is the real freshness signal: one chain
+    /// carrying names is enough evidence the file came from the current crawler.
+    private static bool IsCacheUsable(List<SpeciesEvolutionChain>? cached, out IReadOnlyList<SpeciesEvolutionChain>? usable)
     {
-        if (File.Exists(_catalogFilePath))
+        usable = cached is { Count: > 0 } && cached.Any(c => c.StageSpeciesNames.Count > 0) ? cached : null;
+        return usable is not null;
+    }
+
+    private List<SpeciesEvolutionChain>? TryLoadCache()
+    {
+        if (!File.Exists(_catalogFilePath)) return null;
+        try
         {
-            try
-            {
-                var cached = JsonSerializer.Deserialize<List<SpeciesEvolutionChain>>(File.ReadAllText(_catalogFilePath));
-                if (cached is { Count: > 0 }) return cached;
-            }
-            catch (Exception ex) when (ex is JsonException or IOException or UnauthorizedAccessException)
-            {
-                // Corrupted or unreadable cache file (e.g. process killed mid-write during a
-                // previous RefreshFromNetworkAsync): degrade to the offline fallback instead of
-                // throwing, mirroring SpriteCache.GetOrFetchAsync's graceful degradation.
-            }
+            return JsonSerializer.Deserialize<List<SpeciesEvolutionChain>>(File.ReadAllText(_catalogFilePath));
         }
-        return _spriteCache.LoadOfflineStarters();
+        catch (Exception ex) when (ex is JsonException or IOException or UnauthorizedAccessException)
+        {
+            // Corrupted or unreadable cache file (e.g. process killed mid-write during a
+            // previous RefreshFromNetworkAsync): degrade to the offline fallback instead of
+            // throwing, mirroring SpriteCache.GetOrFetchAsync's graceful degradation.
+            return null;
+        }
     }
 
     /// <summary>

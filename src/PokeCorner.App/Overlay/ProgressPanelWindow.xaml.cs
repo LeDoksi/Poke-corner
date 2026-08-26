@@ -1,20 +1,16 @@
-using System.Windows.Media;
-using System.Windows.Shapes;
 using PokeCorner.App.Popup;
 
 namespace PokeCorner.App.Overlay;
 
 public partial class ProgressPanelWindow : System.Windows.Window
 {
-    // Must match the Width/Height and StrokeThickness of the gauge Ellipses in the XAML.
-    private const double GaugeDiameter = 30;
-    private const double GaugeStrokeThickness = 4.5;
+    /// Must match the Height of the bar Grids in the XAML — the fill is a bottom-anchored
+    /// Border sized as a fraction of this, so the two numbers have to agree.
+    private const double BarHeight = 46;
 
-    /// The length of one full turn of the arc, expressed in StrokeDashArray's units — which
-    /// are multiples of StrokeThickness, not pixels. The stroke is centred on the ellipse's
-    /// path, so the drawn circle's radius is (diameter - thickness) / 2.
-    private static readonly double DashUnitsPerTurn =
-        Math.PI * (GaugeDiameter - GaugeStrokeThickness) / GaugeStrokeThickness;
+    /// Gap between the panel and the pet, and the margin kept from a screen edge when the
+    /// panel has to be clamped against one.
+    private const double Gap = 6;
 
     public ProgressPanelWindow()
     {
@@ -23,60 +19,70 @@ public partial class ProgressPanelWindow : System.Windows.Window
 
     public void UpdateProgress(ProgressInfo progress)
     {
-        SetGauge(CatchArc, progress.CatchFraction);
-        SetGauge(EvolutionArc, progress.EvolutionFraction);
-        SetGauge(TreatArc, progress.TreatFraction);
+        SetBar(CatchFill, progress.CatchFraction);
+        SetBar(EvolutionFill, progress.EvolutionFraction);
+        SetBar(TreatFill, progress.TreatFraction);
     }
 
-    /// Draws `fraction` of a ring by making the stroke a single dash that covers that much of
-    /// the circumference followed by a gap covering the rest — the standard donut-gauge trick,
-    /// and the reason these are plain Ellipses instead of a Path whose ArcSegment would have
-    /// to be recomputed (with its own sweep-direction and large-arc bookkeeping) every second.
-    private static void SetGauge(Ellipse arc, double fraction)
-    {
-        fraction = Math.Clamp(fraction, 0, 1);
+    /// Grows the fill upward from the floor of its track. Plain Height on a bottom-aligned
+    /// Border rather than a ScaleTransform: a scaled Border would squash its CornerRadius
+    /// along with it, so an almost-empty bar would end up with visibly flattened ends.
+    private static void SetBar(System.Windows.Controls.Border fill, double fraction) =>
+        fill.Height = BarHeight * Math.Clamp(fraction, 0, 1);
 
-        // A zero-length dash with StrokeDashCap="Round" still paints a round dot, so an empty
-        // gauge would show a stray pip at 12 o'clock instead of nothing. Hide the arc instead.
-        if (fraction <= 0)
+    /// Positions the panel immediately to the LEFT of the overlay sprite, vertically centered
+    /// on it — called whenever the overlay is repositioned (corner/monitor/size settings).
+    ///
+    /// Renamed from PositionBelow along with the layout change: the panel is a vertical strip
+    /// beside the pet now, and a method still called "below" would be actively misleading at
+    /// its three call sites in App.ReconcileSettingsState/ApplyPetSizeAndPosition.
+    public void PositionLeftOf(OverlayWindow overlay)
+    {
+        // Width comes from the XAML (SizeToContent is Height only), so this never assigns it.
+        Left = overlay.Left - Width - Gap;
+
+        // ActualHeight is 0 until the first layout pass, and the vertical centering below
+        // needs it. App's ReconcileSettingsState calls this again immediately after Show()
+        // — and on every growth tick after that — so the real value always lands shortly.
+        if (ActualHeight <= 0)
         {
-            arc.Visibility = System.Windows.Visibility.Hidden;
+            Top = overlay.Top;
+            OverlayWindow.KeepAboveAppsBelowShell(this);
             return;
         }
-        arc.Visibility = System.Windows.Visibility.Visible;
 
-        var filled = DashUnitsPerTurn * fraction;
-        // The trailing +0.001 keeps the gap strictly positive at fraction == 1; a zero-length
-        // gap makes WPF fall back to rendering the stroke as if undashed anyway, but an
-        // explicit small value keeps the collection well-formed rather than relying on that.
-        arc.StrokeDashArray = new DoubleCollection { filled, DashUnitsPerTurn - filled + 0.001 };
-    }
-
-    /// Positions the panel directly under the overlay sprite, horizontally centered on it —
-    /// called whenever the overlay itself is repositioned (corner/monitor/size settings change).
-    public void PositionBelow(OverlayWindow overlay)
-    {
-        // Width comes from the XAML (SizeToContent is Height only now), so this no longer
-        // assigns it — the old `Width = 100` here was silently discarded by the content
-        // measure anyway, which is what collapsed the panel into an unreadable sliver.
-        Left = overlay.Left + (overlay.Width - Width) / 2;
-        Top = overlay.Top + overlay.Height + 4;
+        Top = overlay.Top + (overlay.Height - ActualHeight) / 2;
 
         // Clamp to the taskbar-aware working area — the same region OverlayWindow.PositionAt
-        // anchors the sprite to. Without this, the pet's default bottom-right corner leaves no
-        // room below it and the panel rendered on top of (or behind) the taskbar. ActualHeight
-        // is 0 until the first layout pass; App's ReconcileSettingsState calls this again
-        // immediately after Show(), when it is real, so the flip below always gets applied.
-        if (ActualHeight <= 0) return;
-
+        // anchors the sprite to.
         var bounds = System.Windows.Forms.Screen
             .FromPoint(new System.Drawing.Point((int)overlay.Left, (int)overlay.Top))
             .WorkingArea;
 
+        // The left-edge case is this layout's counterpart to the old below/above flip: with
+        // the pet parked in a LEFT screen corner there is no room beside it on that side, so
+        // the panel goes to its right instead of running off-screen.
+        if (Left < bounds.Left)
+        {
+            Left = overlay.Left + overlay.Width + Gap;
+        }
+        // ...and if the pet is wide enough (a large pet size) that neither side fits, clamp
+        // rather than leaving it hanging off an edge. Left wins the tie-break: clamping to
+        // the right edge first and then to the left leaves it on-screen either way.
+        if (Left + Width > bounds.Right)
+        {
+            Left = bounds.Right - Width;
+        }
+        if (Left < bounds.Left)
+        {
+            Left = bounds.Left;
+        }
+
+        // Vertical centering can push the panel past the top or bottom of the working area
+        // when the pet sits in a corner and the panel is taller than the sprite.
         if (Top + ActualHeight > bounds.Bottom)
         {
-            // No room below — sit above the sprite instead of overlapping it.
-            Top = overlay.Top - ActualHeight - 4;
+            Top = bounds.Bottom - ActualHeight;
         }
         if (Top < bounds.Top)
         {

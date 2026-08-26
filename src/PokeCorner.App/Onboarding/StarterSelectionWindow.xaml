@@ -1,15 +1,21 @@
 <Window x:Class="PokeCorner.App.Onboarding.StarterSelectionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Выбери своего первого покемона!" Width="500" Height="330"
+        Title="Выбери своего первого покемона!" Width="500" SizeToContent="Height"
         Style="{StaticResource AppWindowStyle}"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <!-- SizeToContent="Height" rather than the old fixed Height="330": the cards grew a
+         rarity tag row, and a hardcoded height would have clipped the "Выбрать" buttons. -->
     <StackPanel Margin="18">
         <TextBlock Text="Выбери своего первого покемона!" Style="{StaticResource ScreenTitleTextStyle}"
                    HorizontalAlignment="Center" Margin="0,0,0,4" />
         <TextBlock Text="Он поселится в углу твоего рабочего стола и будет расти вместе с тобой."
                    Style="{StaticResource CaptionTextStyle}" HorizontalAlignment="Center" TextAlignment="Center"
                    Margin="0,0,0,16" />
+        <!-- Each card shows sprite + name + RARITY, and the sprite animates. The rarity tag
+             uses the same dot-plus-label pill the Pokédex and roster cards use, driven by the
+             candidate chain's CaptureRate — data that was already loaded here and thrown away,
+             which left the three cards looking interchangeable apart from the artwork. -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Border Style="{StaticResource CardStyle}" Width="136" Margin="6" Padding="10">
                 <StackPanel>
@@ -17,7 +23,15 @@
                         <Image x:Name="Candidate1Image" Width="80" Height="80" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                     </Border>
                     <TextBlock x:Name="Candidate1Name" HorizontalAlignment="Center" FontWeight="SemiBold"
-                               Margin="0,0,0,9" TextWrapping="Wrap" TextAlignment="Center" />
+                               Margin="0,0,0,7" TextWrapping="Wrap" TextAlignment="Center" />
+                    <Border x:Name="Candidate1RarityPill" Style="{StaticResource PillStyle}"
+                            HorizontalAlignment="Center" Padding="7,2" Margin="0,0,0,9">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse x:Name="Candidate1RarityDot" Width="6" Height="6"
+                                     VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock x:Name="Candidate1RarityText" FontSize="9.5" />
+                        </StackPanel>
+                    </Border>
                     <Button x:Name="Candidate1Button" Content="Выбрать" Click="Candidate1Button_Click" Padding="0,7" />
                 </StackPanel>
             </Border>
@@ -27,7 +41,15 @@
                         <Image x:Name="Candidate2Image" Width="80" Height="80" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                     </Border>
                     <TextBlock x:Name="Candidate2Name" HorizontalAlignment="Center" FontWeight="SemiBold"
-                               Margin="0,0,0,9" TextWrapping="Wrap" TextAlignment="Center" />
+                               Margin="0,0,0,7" TextWrapping="Wrap" TextAlignment="Center" />
+                    <Border x:Name="Candidate2RarityPill" Style="{StaticResource PillStyle}"
+                            HorizontalAlignment="Center" Padding="7,2" Margin="0,0,0,9">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse x:Name="Candidate2RarityDot" Width="6" Height="6"
+                                     VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock x:Name="Candidate2RarityText" FontSize="9.5" />
+                        </StackPanel>
+                    </Border>
                     <Button x:Name="Candidate2Button" Content="Выбрать" Click="Candidate2Button_Click" Padding="0,7" />
                 </StackPanel>
             </Border>
@@ -37,7 +59,15 @@
                         <Image x:Name="Candidate3Image" Width="80" Height="80" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                     </Border>
                     <TextBlock x:Name="Candidate3Name" HorizontalAlignment="Center" FontWeight="SemiBold"
-                               Margin="0,0,0,9" TextWrapping="Wrap" TextAlignment="Center" />
+                               Margin="0,0,0,7" TextWrapping="Wrap" TextAlignment="Center" />
+                    <Border x:Name="Candidate3RarityPill" Style="{StaticResource PillStyle}"
+                            HorizontalAlignment="Center" Padding="7,2" Margin="0,0,0,9">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse x:Name="Candidate3RarityDot" Width="6" Height="6"
+                                     VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock x:Name="Candidate3RarityText" FontSize="9.5" />
+                        </StackPanel>
+                    </Border>
                     <Button x:Name="Candidate3Button" Content="Выбрать" Click="Candidate3Button_Click" Padding="0,7" />
                 </StackPanel>
             </Border>

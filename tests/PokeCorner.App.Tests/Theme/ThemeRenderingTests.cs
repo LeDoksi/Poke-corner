@@ -142,29 +142,80 @@ public class ThemeRenderingTests
             WpfTestHost.Layout(view);
         });
 
+    /// The roster's per-individual detail (dex number, nature, catch date) survived the merge
+    /// into the single Pokédex grid — it moved onto the card model that feeds the detail
+    /// popup, which is where the merge would most plausibly have dropped it on the floor.
     [Fact]
-    public void CollectionView_RosterCards_ShowDexNumberNatureAndCatchDate() =>
+    public void CollectionView_PokedexCards_CarryDexNumberNatureAndCatchDate() =>
         WpfTestHost.Run(() =>
         {
             var view = BuildCollectionView();
             WpfTestHost.Layout(view);
 
-            var roster = (ItemsControl)view.FindName("EntriesList");
-            var card = Assert.IsType<CollectionCard>(Assert.Single(roster.ItemsSource.Cast<object>()));
+            var grid = (ItemsControl)view.FindName("PokedexGrid");
+            var card = Assert.IsType<PokedexCard>(Assert.Single(grid.ItemsSource.Cast<object>()));
 
             Assert.Equal("#004", card.DexNumber);
-            Assert.Contains("Hardy", card.MetaLine);
-            Assert.Contains(DateTimeOffset.UtcNow.ToLocalTime().ToString("dd.MM.yyyy"), card.MetaLine);
+            Assert.Equal("Hardy", card.NatureText);
+            Assert.Equal(DateTimeOffset.UtcNow.ToLocalTime().ToString("dd.MM.yyyy"), card.CaughtAtText);
             Assert.NotNull(card.RarityBrush);
+            Assert.NotEqual(Guid.Empty, card.IndividualId);
+        });
+
+    /// Item 4: the "Мои покемоны" roster is gone entirely — one browsable list, not two
+    /// parallel ones. Asserting on the named elements rather than a screenshot means
+    /// re-adding the second list fails loudly instead of quietly returning the duplication.
+    [Fact]
+    public void CollectionView_HasNoSeparateRosterList_OnlyThePokedexGrid() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildCollectionView();
+            WpfTestHost.Layout(view);
+
+            Assert.Null(view.FindName("EntriesList"));
+            Assert.Null(view.FindName("RosterCountText"));
+            Assert.NotNull(view.FindName("PokedexGrid"));
+        });
+
+    /// Item 4, the behaviour change underneath it: the grid is per-INDIVIDUAL now, so two
+    /// owned copies of one species are two cards — while the headline completion stat still
+    /// counts distinct species.
+    [Fact]
+    public void CollectionView_PokedexGrid_ShowsOneCardPerIndividualNotPerSpecies() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            appState.Collection.Add(NewIndividual(speciesId: 25, chainId: 25));
+            appState.Collection.Add(NewIndividual(speciesId: 25, chainId: 25));
+            var chains = new[]
+            {
+                new SpeciesEvolutionChain(25, 25, 190, 2, new[] { 25, 26 }, new[] { "Pikachu", "Raichu" })
+            };
+            var view = BuildCollectionView(appState, chains);
+            WpfTestHost.Layout(view);
+
+            var grid = (ItemsControl)view.FindName("PokedexGrid")!;
+            var cards = grid.ItemsSource.Cast<PokedexCard>().ToList();
+
+            Assert.Equal(2, cards.Count);
+            Assert.All(cards, card => Assert.Equal("Pikachu", card.SpeciesName));
+            Assert.Equal(2, cards.Select(card => card.IndividualId).Distinct().Count());
+
+            // One species opened, two Pokémon owned — both reported.
+            var countText = ((TextBlock)view.FindName("PokedexCountText")!).Text;
+            Assert.Contains("1 вид", countText);
+            Assert.Contains("2", countText);
         });
 
     // ---------------------------------------------------------------- user-feedback wave
 
-    /// Item 1: the home tab is "what's active right now" only. Eggs and the roster moved to
-    /// the Pokédex tab, and this asserts on the actual visual ancestry rather than trusting
-    /// that the XAML block was pasted under the right TabItem.
+    /// Item 1: the home tab is "what's active right now" only. Eggs and the owned-Pokémon
+    /// grid live on the Pokédex tab, and this asserts on the actual visual ancestry rather
+    /// than trusting that the XAML block was pasted under the right TabItem.
+    /// (The roster list this used to also check is gone — see
+    /// CollectionView_HasNoSeparateRosterList_OnlyThePokedexGrid.)
     [Fact]
-    public void CollectionView_EggsAndRosterLiveOnThePokedexTab_NotTheHomeTab() =>
+    public void CollectionView_EggsAndTheGridLiveOnThePokedexTab_NotTheHomeTab() =>
         WpfTestHost.Run(() =>
         {
             var view = BuildCollectionView();
@@ -174,7 +225,7 @@ public class ThemeRenderingTests
             var homeTab = (TabItem)tabs.Items[0];
             var pokedexTab = (TabItem)tabs.Items[1];
 
-            foreach (var name in new[] { "PendingEggsList", "EggsEmptyText", "EntriesList", "RosterCountText" })
+            foreach (var name in new[] { "PendingEggsList", "EggsEmptyText", "PokedexGrid", "PokedexCountText" })
             {
                 var element = (FrameworkElement)view.FindName(name)!;
                 Assert.True(IsLogicalDescendantOf(element, pokedexTab), $"{name} should sit under the Pokédex tab.");
@@ -255,7 +306,9 @@ public class ThemeRenderingTests
             Assert.Equal(4, Assert.Single(grid.ItemsSource.Cast<PokedexCard>()).SpeciesId);
         });
 
-    /// Item 2b: the pinned individual is first in the roster and its star renders filled gold.
+    /// Item 2b: the pinned individual is first in the grid and its star renders filled gold.
+    /// Still asserted on the card model after the roster/grid merge — the star moved into the
+    /// detail popup, but the pin still drives sort order and the card's gold marker.
     [Fact]
     public void CollectionView_FavoriteIndividual_SortsFirstAndRendersAGoldStar() =>
         WpfTestHost.Run(() =>
@@ -274,8 +327,8 @@ public class ThemeRenderingTests
             });
             WpfTestHost.Layout(view);
 
-            var roster = (ItemsControl)view.FindName("EntriesList")!;
-            var cards = roster.ItemsSource.Cast<CollectionCard>().ToList();
+            var grid = (ItemsControl)view.FindName("PokedexGrid")!;
+            var cards = grid.ItemsSource.Cast<PokedexCard>().ToList();
 
             Assert.Equal(pinned.Id, cards[0].IndividualId);
             Assert.True(cards[0].IsFavorite);
@@ -289,13 +342,13 @@ public class ThemeRenderingTests
             Assert.Same(Application.Current.Resources["MutedTextBrush"], cards[1].FavoriteStroke);
         });
 
-    /// The desktop panel, redesigned from three stacked linear bars into three radial gauges.
-    /// The arcs are Ellipses whose StrokeDashArray is one dash covering `fraction` of the
-    /// circumference followed by a gap covering the rest, so "the gauge is filled correctly"
-    /// is exactly "dash / (dash + gap) == fraction" — this is the check that fails if the
-    /// dash-unit conversion (units are multiples of StrokeThickness, not pixels) is wrong.
+    /// Item 7: the desktop panel, redesigned again — from three radial gauges below the pet
+    /// into three vertical bars beside it. Each fill is a bottom-anchored Border whose Height
+    /// is its fraction of the 46px track, so "the bar is filled correctly" is exactly
+    /// "Height == 46 * fraction". This is the check that fails if the fill is ever driven off
+    /// a different constant than the track's own height.
     [Fact]
-    public void ProgressPanelWindow_GaugeArcsSpanTheirFractionOfTheCircumference() =>
+    public void ProgressPanelWindow_VerticalBarsFillTheirFractionOfTheTrack() =>
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
@@ -303,41 +356,43 @@ public class ThemeRenderingTests
 
             var expected = new Dictionary<string, double>
             {
-                ["CatchArc"] = 0.5,
-                ["EvolutionArc"] = 0.25,
-                ["TreatArc"] = 0.75
+                ["Catch"] = 0.5,
+                ["Evolution"] = 0.25,
+                ["Treat"] = 0.75
             };
 
-            foreach (var (name, fraction) in expected)
+            foreach (var (concept, fraction) in expected)
             {
-                var arc = (Ellipse)panel.FindName(name)!;
-                Assert.Equal(Visibility.Visible, arc.Visibility);
+                var fill = (Border)panel.FindName($"{concept}Fill")!;
+                var track = (FrameworkElement)panel.FindName($"{concept}Track")!;
 
-                var dash = arc.StrokeDashArray[0];
-                var gap = arc.StrokeDashArray[1];
-                Assert.Equal(fraction, dash / (dash + gap), precision: 2);
+                Assert.Equal(track.Height * fraction, fill.Height, precision: 2);
+                Assert.Equal(VerticalAlignment.Bottom, fill.VerticalAlignment); // grows upward
             }
         });
 
-    /// An empty gauge must render as nothing at all. StrokeDashCap="Round" paints a round dot
-    /// for a zero-length dash, so without the explicit hide a 0% gauge showed a stray pip at
-    /// 12 o'clock that looked like a tiny amount of progress.
+    /// An empty bar must render as nothing at all — a zero Height, not a stub of rounded cap.
+    /// A full one must reach the top of its track rather than stopping a pixel short.
     [Fact]
-    public void ProgressPanelWindow_EmptyGaugeIsHiddenRatherThanADot() =>
+    public void ProgressPanelWindow_EmptyBarIsZeroHeightAndAFullBarFillsTheTrack() =>
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
-            panel.UpdateProgress(new ProgressInfo(0.0, 0.4, 0.0));
+            panel.UpdateProgress(new ProgressInfo(0.0, 1.0, 0.0));
 
-            Assert.Equal(Visibility.Hidden, ((Ellipse)panel.FindName("CatchArc")!).Visibility);
-            Assert.Equal(Visibility.Visible, ((Ellipse)panel.FindName("EvolutionArc")!).Visibility);
-            Assert.Equal(Visibility.Hidden, ((Ellipse)panel.FindName("TreatArc")!).Visibility);
+            Assert.Equal(0, ((Border)panel.FindName("CatchFill")!).Height);
+            Assert.Equal(0, ((Border)panel.FindName("TreatFill")!).Height);
+
+            var full = (Border)panel.FindName("EvolutionFill")!;
+            var track = (FrameworkElement)panel.FindName("EvolutionTrack")!;
+            Assert.Equal(track.Height, full.Height);
         });
 
-    /// The panel keeps a real explicit width (the sizing-collapse fix) and three gauges that
-    /// each render their own distinct semantic color at a size that actually reads on screen.
+    /// The panel keeps a real explicit width (the sizing-collapse fix), stays narrow now that
+    /// it stands beside the pet rather than under it, and gives each of the three concepts its
+    /// own semantic colour AND its own icon — the icon being the half a colour alone can't say.
     [Fact]
-    public void ProgressPanelWindow_HasRealWidthAndThreeDistinctlyColoredGauges() =>
+    public void ProgressPanelWindow_IsNarrowWithThreeDistinctlyColoredIconLabelledBars() =>
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
@@ -348,24 +403,55 @@ public class ThemeRenderingTests
             root.Arrange(new Rect(0, 0, panel.Width, root.DesiredSize.Height));
             root.UpdateLayout();
 
-            Assert.True(panel.Width >= 100, $"panel is only {panel.Width}px wide");
+            Assert.True(panel.Width > 0, "the panel collapsed to zero width");
             Assert.Equal(SizeToContent.Height, panel.SizeToContent);
 
-            // Shorter than the three-stacked-bars version it replaces — the whole point of the
-            // redesign is that it stops being a tall box hanging off the pet.
-            Assert.True(root.DesiredSize.Height <= 60, $"panel is {root.DesiredSize.Height}px tall");
+            // Narrow: it is a vertical strip beside the pet, not a wide row under it.
+            Assert.True(panel.Width <= 110, $"panel is {panel.Width}px wide");
 
-            var arcs = new[] { "CatchArc", "EvolutionArc", "TreatArc" }
-                .Select(name => (Ellipse)panel.FindName(name)!)
+            var fills = new[] { "CatchFill", "EvolutionFill", "TreatFill" }
+                .Select(name => (Border)panel.FindName(name)!)
                 .ToList();
 
-            var colors = arcs.Select(a => ((SolidColorBrush)a.Stroke).Color).ToList();
+            var colors = fills.Select(f => ((SolidColorBrush)f.Background).Color).ToList();
             Assert.Equal(3, colors.Distinct().Count());
 
-            foreach (var arc in arcs)
+            foreach (var concept in new[] { "Catch", "Evolution", "Treat" })
             {
-                Assert.True(arc.ActualWidth >= 24, $"gauge is only {arc.ActualWidth}px across");
-                Assert.True(arc.StrokeThickness >= 3, $"gauge ring is only {arc.StrokeThickness}px thick");
+                var track = (FrameworkElement)panel.FindName($"{concept}Track")!;
+                Assert.True(track.Height >= 30, $"bar track is only {track.Height}px tall");
+                Assert.True(track.Width >= 6, $"bar is only {track.Width}px wide");
+            }
+
+            // Item 6: one icon per concept, and they must be the SHARED theme styles so the
+            // in-app progress card renders the identical glyphs.
+            var icons = Descendants(root).OfType<ContentControl>().ToList();
+            var iconStyles = icons.Select(i => i.Style).ToList();
+            Assert.Equal(3, iconStyles.Distinct().Count());
+            foreach (var key in new[] { "CatchIconStyle", "EvolutionIconStyle", "TreatIconStyle" })
+            {
+                Assert.Contains(Application.Current.Resources[key], iconStyles);
+            }
+        });
+
+    /// Item 6, the other half of "the same icon in both places": the in-app "Прогресс" card
+    /// must render the identical shared styles the desktop panel does. Asserting on style
+    /// identity — not on shape — is what actually pins the two surfaces together, since a
+    /// duplicated inline Path would look the same today and drift tomorrow.
+    [Fact]
+    public void CollectionView_ProgressCard_UsesTheSameSharedConceptIconsAsTheDesktopPanel() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildCollectionView();
+            WpfTestHost.Layout(view);
+
+            var iconStyles = Descendants(view).OfType<ContentControl>()
+                .Select(control => control.Style)
+                .ToList();
+
+            foreach (var key in new[] { "CatchIconStyle", "EvolutionIconStyle", "TreatIconStyle" })
+            {
+                Assert.Contains(Application.Current.Resources[key], iconStyles);
             }
         });
 
@@ -415,11 +501,16 @@ public class ThemeRenderingTests
             Assert.Equal(expectedEnabled, check.IsEnabled);
         });
 
-    /// The other half: switching the combo re-gates the checkbox, and switching away from
-    /// Hardcore must NOT silently discard an already-made Super Hardcore choice — it is
-    /// merely inert while Chill is selected.
+    /// Item 5: switching the combo re-gates the checkbox AND clears it.
+    ///
+    /// This reverses what a prior wave asserted here. That wave deliberately kept the stored
+    /// Super Hardcore choice when leaving Hardcore, on the theory that it preserved the
+    /// player's earlier decision — the checkbox went disabled but stayed visibly ticked. Live
+    /// testing rejected it: a ticked checkbox describing a permadeath rule that is not in
+    /// force reads as broken, not as thoughtful. Leaving Hardcore now unchecks it and clears
+    /// the setting, so what the UI shows and what is stored can't disagree.
     [Fact]
-    public void SettingsView_SwitchingCareMode_RegatesCheckboxButKeepsItsStoredValue() =>
+    public void SettingsView_LeavingHardcore_UnchecksAndClearsSuperHardcore() =>
         WpfTestHost.Run(() =>
         {
             var settings = new AppState().Settings;
@@ -432,14 +523,19 @@ public class ThemeRenderingTests
             var combo = (ComboBox)view.FindName("CareModeCombo")!;
             var check = (CheckBox)view.FindName("SuperHardcoreCheck")!;
             Assert.True(check.IsEnabled);
+            Assert.True(check.IsChecked);
 
             combo.SelectedIndex = 0; // Chill
             Assert.False(check.IsEnabled);
-            Assert.True(settings.SuperHardcoreEnabled, "switching to Chill must not clear the stored setting");
+            Assert.False(check.IsChecked, "the box must not stay ticked once the mode can't use it");
+            Assert.False(settings.SuperHardcoreEnabled, "the stored setting must not linger past the UI");
 
-            combo.SelectedIndex = 1; // back to Hardcore
+            // Coming back to Hardcore re-enables it, unticked — the player opts in again
+            // deliberately rather than silently inheriting a permadeath rule.
+            combo.SelectedIndex = 1;
             Assert.True(check.IsEnabled);
-            Assert.True(check.IsChecked);
+            Assert.False(check.IsChecked);
+            Assert.False(settings.SuperHardcoreEnabled);
         });
 
     /// Item 5, dropdown half: an item that is selected but not hovered must stay readable.
@@ -547,10 +643,26 @@ public class ThemeRenderingTests
             };
             var window = new StarterSelectionWindow(chains, _ => Task.FromResult<byte[]?>(null));
             var root = (FrameworkElement)window.Content;
-            WpfTestHost.Layout(root, window.Width, window.Height);
+            // Explicit height, not window.Height: the picker is SizeToContent="Height" now
+            // that the cards carry a rarity tag, so window.Height is NaN.
+            WpfTestHost.Layout(root, window.Width, 600);
 
             Assert.Empty(Descendants(root).OfType<TabControl>());
             Assert.Empty(Descendants(root).OfType<ComboBox>());
+
+            // Item 2: every candidate card shows its rarity, sourced from the chain's own
+            // capture rate through the same classifier the Pokédex cards use. Capture rate
+            // 255 is Common for all three chains above.
+            var expected = RarityDisplay.GetName(RarityTier.Common);
+            foreach (var name in new[] { "Candidate1RarityText", "Candidate2RarityText", "Candidate3RarityText" })
+            {
+                Assert.Equal(expected, ((TextBlock)window.FindName(name)!).Text);
+            }
+
+            // And the tag is tinted with the tier's brush, not left on the default foreground.
+            var commonBrush = RarityDisplay.GetBrush(RarityTier.Common);
+            Assert.Same(commonBrush, ((Ellipse)window.FindName("Candidate1RarityDot")!).Fill);
+            Assert.Same(commonBrush, ((Border)window.FindName("Candidate1RarityPill")!).BorderBrush);
         });
 
     /// Item 4: the pet-size slider had no live preview — it wrote the setting and the sprite

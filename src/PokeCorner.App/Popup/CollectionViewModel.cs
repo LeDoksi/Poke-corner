@@ -21,8 +21,6 @@ public sealed record CollectionEntry(
     Nature Nature,
     bool IsFavorite);
 
-public sealed record PokedexEntry(int SpeciesId, string SpeciesName, RarityTier Rarity);
-
 public sealed record PendingEggEntry(Guid EggId, RarityTier Tier, double HatchFraction, bool IsReady);
 
 public sealed class CollectionViewModel
@@ -69,18 +67,12 @@ public sealed class CollectionViewModel
                 IsFavorite: individual.IsFavorite);
         }).ToList();
 
-    /// Deduped by DISPLAY species, not by the individual's fixed starter species: a player
-    /// who evolved Charmander into Charizard has genuinely "seen" both forms, and deduping
-    /// on the starter id would collapse them into a single Charmander entry forever.
-    public IReadOnlyList<PokedexEntry> GetPokedexEntries() =>
-        _collection.Individuals
-            .Select(individual => (SpeciesId: ResolveDisplaySpeciesId(individual), individual.EvolutionChainId))
-            .GroupBy(pair => pair.SpeciesId)
-            .Select(group => new PokedexEntry(
-                group.Key,
-                _chains.ResolveSpeciesName(group.Key),
-                RarityForChain(group.First().EvolutionChainId)))
-            .ToList();
+    // (GetPokedexEntries lived here: one deduped entry per distinct DISPLAY species, feeding
+    // a Pokédex grid that sat above a separate roster list of the same Pokémon. The two lists
+    // were merged into one per-individual grid, so GetEntries above is now the only source
+    // the collection screen reads and the deduped projection had no remaining caller. The
+    // "Открыто видов: N" completion stat is still distinct-species — the view derives it with
+    // a Distinct() over the same entries rather than a second pass over the collection.)
 
     /// Mirrors App.xaml.cs's ResolveDisplaySpeciesId: walk the individual's chain to the
     /// species id of its current stage, falling back to the fixed starter species when the

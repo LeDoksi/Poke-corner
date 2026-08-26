@@ -80,6 +80,28 @@ public class SpeciesCatalogTests : IDisposable
         Assert.Equal(_spriteCache.LoadOfflineStarters().Count, result.Count);
     }
 
+    /// The "Pokemon #543 everywhere" bug: a catalog.json written by an earlier build that did
+    /// not capture display names deserializes cleanly and passes the 7-day age check, so it
+    /// kept being served ahead of the fully-named bundled fallback — and every
+    /// ResolveSpeciesName call fell through to the numeric placeholder.
+    [Fact]
+    public void LoadCachedOrFallback_CacheFileWithoutSpeciesNames_ReturnsNamedOfflineFallback()
+    {
+        Directory.CreateDirectory(_tempDir);
+        File.WriteAllText(_catalogFile, JsonSerializer.Serialize(new List<SpeciesEvolutionChain>
+        {
+            new(ChainId: 1, StarterSpeciesId: 543, CaptureRate: 255, ChainLength: 1,
+                StageSpeciesIds: new[] { 543 }, StageSpeciesNames: Array.Empty<string>())
+        }));
+        var catalog = new SpeciesCatalog(new PokeApiClient(new RoutingStubHandler(_ => "{}")), _spriteCache, _catalogFile);
+
+        var result = catalog.LoadCachedOrFallback();
+
+        Assert.False(catalog.IsCacheSchemaCurrent());
+        Assert.Equal(_spriteCache.LoadOfflineStarters().Count, result.Count);
+        Assert.Equal("venipede", result.ResolveSpeciesName(543), ignoreCase: true);
+    }
+
     [Fact]
     public async Task LoadCachedOrFallback_AfterRefresh_ReturnsCachedChainsNotOfflineFallback()
     {

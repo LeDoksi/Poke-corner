@@ -42,8 +42,26 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// every overlay refresh, so reference identity would churn for no visible reason.
     private string _heroSpriteSignature = string.Empty;
 
-    /// null = "Все". Which rarity the Pokédex species grid is filtered to.
+    /// null = "Все". Which rarity the Pokédex grid is filtered to.
     private RarityTier? _rarityFilter;
+
+    /// Animated-GIF frames for one species, or null when it has none. Optional so the
+    /// theme/layout tests can construct this view without an App behind them; a null delegate
+    /// simply leaves every card on its static frame.
+    private readonly Func<int, Task<IReadOnlyList<byte[]>?>>? _getAnimatedFrames;
+
+    /// Decoded animated frames per species id, and the set of species a fetch has already
+    /// been kicked off for. Both are needed: Refresh() runs once a second over every visible
+    /// card, so without the "already started" set the grid would re-request the same GIFs
+    /// every tick, and without the decoded memo it would re-decode them every rebuild.
+    private readonly Dictionary<int, IReadOnlyList<ImageSource>> _animatedFrames = new();
+    private readonly HashSet<int> _animatedFetchStarted = new();
+
+    /// One SpriteAnimator per realized card Image. A DataTemplate gives no named element to
+    /// hand the animator at construction time the way the hero Image does, so each Image
+    /// registers itself on Loaded and is torn down on Unloaded (WrapPanel realizes eagerly,
+    /// but ItemsSource is still replaced wholesale on every rebuild).
+    private readonly Dictionary<System.Windows.Controls.Image, SpriteAnimator> _cardAnimators = new();
 
     /// The filter RadioButton declared IsChecked="True" in XAML raises Checked during
     /// InitializeComponent — before the readonly fields below are assigned. This flag keeps
@@ -60,11 +78,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     // every item container (each carrying a drop shadow). Doing that 60 times a minute for
     // data that rarely changes made the cards visibly flicker, so each list only rebuilds
     // when a cheap signature of its content actually changes.
-    private string _rosterSignature = string.Empty;
     private string _eggsSignature = string.Empty;
     private string _pokedexSignature = string.Empty;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<Guid, bool> onHatchRequested, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<Guid, bool> onHatchRequested, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -77,6 +94,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _onStateChanged = onStateChanged;
         _getActiveSpriteFrames = getActiveSpriteFrames;
         _onHatchRequested = onHatchRequested;
+        _getAnimatedFrames = getAnimatedFrames;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
         // rename there can never leave the filter pills saying something different.
@@ -109,6 +127,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _heroAnimator?.Stop();
         _heroAnimator = null;
         _heroSpriteSignature = string.Empty;
+
+        // Same reasoning for the per-card animators — one DispatcherTimer each, and there is
+        // one per visible Pokédex card.
+        foreach (var animator in _cardAnimators.Values) animator.Stop();
+        _cardAnimators.Clear();
     }
 
     private void PetButton_Click(object sender, RoutedEventArgs e)
@@ -134,8 +157,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshHero(active, entries);
         RefreshProgress(active);
         RefreshEggs(nowUtc);
-        RefreshRoster(entries);
-        RefreshPokedex();
+        RefreshPokedex(entries);
     }
 
     private void RefreshHero(PokemonIndividual? active, IReadOnlyList<CollectionEntry> entries)
@@ -248,39 +270,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         }).ToList();
     }
 
-    private void RefreshRoster(IReadOnlyList<CollectionEntry> entries)
-    {
-        RosterCountText.Text = $"Всего: {entries.Count}";
-
-        // The sprite's presence is part of the signature so a card that rendered its
-        // placeholder before the species was cached rebuilds itself once the sprite lands,
-        // instead of staying on the placeholder until some unrelated field changes.
-        var signature = string.Join("|", entries.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{Math.Round(e.EvolutionFraction, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}"));
-        if (signature == _rosterSignature) return;
-        _rosterSignature = signature;
-
-        EntriesList.ItemsSource = entries.Select(entry => new CollectionCard
-        {
-            IndividualId = entry.IndividualId,
-            SpeciesName = entry.SpeciesName,
-            DexNumber = entry.DexNumberText(),
-            MetaLine = $"Характер: {entry.Nature} · поймана {FormatCaughtDate(entry.CaughtAtUtc)}",
-            RarityName = RarityDisplay.GetName(entry.Rarity),
-            RarityBrush = RarityDisplay.GetBrush(entry.Rarity),
-            EvolutionFraction = entry.EvolutionFraction,
-            CanSelect = !entry.IsActive && entry.IsAvailableToActivate,
-            AvailabilityToolTip = entry.AvailableAgainAtUtc is { } until
-                ? $"Питомец обиделся и вернётся {until.ToLocalTime():dd.MM.yyyy HH:mm}"
-                : "Питомец временно недоступен",
-            SpriteImage = TryGetThumbnail(entry.DisplaySpeciesId),
-            ShinyVisibility = entry.IsShiny ? Visibility.Visible : Visibility.Collapsed,
-            ActiveBadgeVisibility = entry.IsActive ? Visibility.Visible : Visibility.Collapsed,
-            UnavailableBadgeVisibility = entry.IsAvailableToActivate ? Visibility.Collapsed : Visibility.Visible,
-            IsFavorite = entry.IsFavorite
-        }).ToList();
-    }
-
     /// One of the rarity filter pills was selected. RadioButton's GroupName already
     /// deselected the previous one, so this only has to record the new tier and force the
     /// grid to rebuild — going through Refresh() rather than touching ItemsSource directly
@@ -299,40 +288,170 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    private void RefreshPokedex()
+    /// The grid is fed by GetEntries — the SAME per-individual source the removed roster list
+    /// used — rendered in the Pokédex card's style. That is the whole of item 4: one browsable
+    /// list instead of a deduped species grid sitting above a parallel roster of the same
+    /// Pokémon. Two owned Pikachus are therefore two cards, and the order is GetEntries' own
+    /// (favourites pinned first, then catch order) rather than dex number.
+    private void RefreshPokedex(IReadOnlyList<CollectionEntry> entries)
     {
-        var pokedex = _viewModel.GetPokedexEntries();
-        // The headline count stays the UNFILTERED total: it reports Pokédex completion, not
-        // how many cards happen to be on screen.
-        PokedexCountText.Text = pokedex.Count == 1
-            ? "Открыт 1 вид"
-            : $"Открыто видов: {pokedex.Count}";
+        // Distinct SPECIES even though the cards are per-individual: this line reports Pokédex
+        // completion, which a second Pikachu does not advance. The owned total is reported
+        // alongside it because the cards no longer make it countable at a glance.
+        var speciesCount = entries.Select(e => e.DisplaySpeciesId).Distinct().Count();
+        PokedexCountText.Text = speciesCount == 1
+            ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
+            : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
 
         var visible = _rarityFilter is null
-            ? pokedex
-            : pokedex.Where(entry => entry.Rarity == _rarityFilter.Value).ToList();
+            ? entries
+            : entries.Where(entry => entry.Rarity == _rarityFilter.Value).ToList();
 
         PokedexEmptyText.Visibility = visible.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        PokedexEmptyText.Text = pokedex.Count == 0
+        PokedexEmptyText.Text = entries.Count == 0
             ? "Пока пусто — поймай первого покемона на вкладке «Поймать»."
             : "В этой редкости пока нет открытых видов — попробуй другой фильтр.";
 
-        var signature = $"{_rarityFilter}|" + string.Join("|", visible.Select(p => $"{p.SpeciesId}:{TryGetThumbnail(p.SpeciesId) is not null}"));
+        // Kick off the animated-sprite fetches for whatever is on screen. Cheap after the
+        // first pass: EnsureAnimatedFrames is a no-op for any species already requested.
+        foreach (var entry in visible) EnsureAnimatedFrames(entry.DisplaySpeciesId);
+
+        // The sprite's presence is part of the signature — both the static thumbnail and the
+        // animated frames — so a card that rendered its placeholder before the species was
+        // cached rebuilds itself once the artwork lands, instead of staying on the placeholder
+        // until some unrelated field changes.
+        var signature = $"{_rarityFilter}|" + string.Join("|", visible.Select(e =>
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{Math.Round(e.EvolutionFraction, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
-        PokedexGrid.ItemsSource = visible
-            .OrderBy(entry => entry.SpeciesId)
-            .Select(entry => new PokedexCard
+        PokedexGrid.ItemsSource = visible.Select(BuildCard).ToList();
+    }
+
+    private PokedexCard BuildCard(CollectionEntry entry) => new()
+    {
+        IndividualId = entry.IndividualId,
+        SpeciesId = entry.DisplaySpeciesId,
+        SpeciesName = entry.SpeciesName,
+        DexNumber = entry.DexNumberText(),
+        RarityName = RarityDisplay.GetName(entry.Rarity),
+        RarityBrush = RarityDisplay.GetBrush(entry.Rarity),
+        EvolutionFraction = entry.EvolutionFraction,
+        CaughtAtText = FormatCaughtDate(entry.CaughtAtUtc),
+        NatureText = entry.Nature.ToString(),
+        CanSelect = !entry.IsActive && entry.IsAvailableToActivate,
+        AvailabilityToolTip = entry.AvailableAgainAtUtc is { } until
+            ? $"Питомец обиделся и вернётся {until.ToLocalTime():dd.MM.yyyy HH:mm}"
+            : "Питомец временно недоступен",
+        IsShiny = entry.IsShiny,
+        IsActive = entry.IsActive,
+        IsAvailableToActivate = entry.IsAvailableToActivate,
+        IsFavorite = entry.IsFavorite,
+        SpriteImage = TryGetThumbnail(entry.DisplaySpeciesId),
+        SpriteFrames = _animatedFrames.GetValueOrDefault(entry.DisplaySpeciesId)
+    };
+
+    /// Fires the one-per-species animated-sprite fetch, at most once per species per session.
+    /// Fire-and-forget on purpose: the cards already show their static frame, so there is
+    /// nothing to wait for — when frames land, clearing the signature makes the next refresh
+    /// tick rebuild the grid and pick them up.
+    private void EnsureAnimatedFrames(int speciesId)
+    {
+        if (_getAnimatedFrames is null) return;
+        if (!_animatedFetchStarted.Add(speciesId)) return;
+
+        _ = LoadAsync();
+
+        async Task LoadAsync()
+        {
+            IReadOnlyList<byte[]>? frames;
+            try
             {
-                SpeciesId = entry.SpeciesId,
-                SpeciesName = entry.SpeciesName,
-                DexNumber = $"#{entry.SpeciesId:D3}",
-                RarityName = RarityDisplay.GetName(entry.Rarity),
-                RarityBrush = RarityDisplay.GetBrush(entry.Rarity),
-                SpriteImage = TryGetThumbnail(entry.SpeciesId)
-            })
-            .ToList();
+                frames = await _getAnimatedFrames(speciesId);
+            }
+            catch
+            {
+                // The App-side delegate already swallows fetch/decode failures; this is the
+                // same defense in depth the overlay path keeps, so one bad species can never
+                // reach DispatcherUnhandledException from a fire-and-forget continuation.
+                return;
+            }
+
+            // Fewer than two frames means nothing to cycle — leave the static image alone
+            // rather than spinning up a timer that repaints the same bitmap.
+            if (frames is null || frames.Count < 2) return;
+
+            _animatedFrames[speciesId] = frames.Select(DecodePng).ToList();
+            _pokedexSignature = string.Empty; // force the next tick to rebuild with the frames
+        }
+    }
+
+    /// Attaches an animator to one realized card Image. Mirrors the hero sprite's setup, just
+    /// resolved per container: the frames come from the card the Image is bound to.
+    private void PokedexSprite_Loaded(object sender, RoutedEventArgs e)
+    {
+        var image = (System.Windows.Controls.Image)sender;
+        StopCardAnimator(image);
+
+        if (image.DataContext is not PokedexCard card) return;
+        var frames = card.SpriteFrames;
+        if (frames is null || frames.Count < 2) return;
+
+        image.Source = frames[0];
+        var animator = new SpriteAnimator(image, new FrameSequencer(frames.Count, HeroFrameDuration), frames);
+        animator.Start();
+        _cardAnimators[image] = animator;
+    }
+
+    private void PokedexSprite_Unloaded(object sender, RoutedEventArgs e) =>
+        StopCardAnimator((System.Windows.Controls.Image)sender);
+
+    private void StopCardAnimator(System.Windows.Controls.Image image)
+    {
+        if (!_cardAnimators.Remove(image, out var animator)) return;
+        animator.Stop();
+    }
+
+    /// A Pokédex card was clicked: open the detail/actions popup for that individual. The
+    /// three actions call straight back into the same CollectionViewModel methods the removed
+    /// roster's inline buttons used, so behaviour (including the Hardcore availability gate on
+    /// Выбрать) is unchanged — only where the buttons live has moved.
+    private void PokedexCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (((FrameworkElement)sender).DataContext is not PokedexCard card) return;
+
+        var window = new PokemonDetailWindow(card, SelectIndividual, ReleaseIndividual, ToggleFavorite)
+        {
+            Owner = System.Windows.Window.GetWindow(this)
+        };
+        window.ShowDialog();
+        Refresh();
+    }
+
+    private void SelectIndividual(Guid id)
+    {
+        if (_viewModel.TrySetActive(id, DateTimeOffset.UtcNow))
+        {
+            _onStateChanged();
+        }
+        Refresh();
+    }
+
+    /// Pins/unpins one individual so it sorts to the top of the grid.
+    /// Deliberately does NOT call _onStateChanged: that re-runs the overlay's sprite fetch,
+    /// which is real network work for a change that only affects list ordering. The flag is
+    /// written straight onto the individual and the app's periodic autosave persists it.
+    private void ToggleFavorite(Guid id)
+    {
+        _viewModel.ToggleFavorite(id);
+        Refresh();
+    }
+
+    private void ReleaseIndividual(Guid id)
+    {
+        _viewModel.Release(id);
+        _onStateChanged();
+        Refresh();
     }
 
     /// Cache-only sprite lookup: never touches the network, so it's safe on the UI thread.
@@ -374,39 +493,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         return bitmap;
     }
 
+    // (SelectButton_Click / FavoriteButton_Click / ReleaseButton_Click lived here as handlers
+    // for the roster rows' inline action buttons. The roster is gone; the same three
+    // operations are now SelectIndividual/ToggleFavorite/ReleaseIndividual above, invoked by
+    // PokemonDetailWindow.)
+
     // Fully qualified as System.Windows.Controls.Button, not bare Button — Task 5 turned
     // on UseWindowsForms for TrayIconService's NotifyIcon, which makes Button ambiguous
     // with System.Windows.Forms.Button project-wide from that task onward (the same
     // Application-ambiguity issue Task 5 hit, just a different colliding type name).
-    private void SelectButton_Click(object sender, RoutedEventArgs e)
-    {
-        var id = (Guid)((System.Windows.Controls.Button)sender).Tag;
-        if (_viewModel.TrySetActive(id, DateTimeOffset.UtcNow))
-        {
-            _onStateChanged();
-        }
-        Refresh();
-    }
-
-    /// Pins/unpins one individual so it sorts to the top of the roster.
-    /// Deliberately does NOT call _onStateChanged: that re-runs the overlay's sprite fetch,
-    /// which is real network work for a change that only affects list ordering. The flag is
-    /// written straight onto the individual and the app's periodic autosave persists it.
-    private void FavoriteButton_Click(object sender, RoutedEventArgs e)
-    {
-        var id = (Guid)((System.Windows.Controls.Button)sender).Tag;
-        _viewModel.ToggleFavorite(id);
-        Refresh();
-    }
-
-    private void ReleaseButton_Click(object sender, RoutedEventArgs e)
-    {
-        var id = (Guid)((System.Windows.Controls.Button)sender).Tag;
-        _viewModel.Release(id);
-        _onStateChanged();
-        Refresh();
-    }
-
     private void HatchButton_Click(object sender, RoutedEventArgs e)
     {
         var eggId = (Guid)((System.Windows.Controls.Button)sender).Tag;

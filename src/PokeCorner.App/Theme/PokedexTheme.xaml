@@ -434,6 +434,93 @@
          three stacked bars; that panel is now three radial gauges built from Ellipses, so the
          style had no remaining consumer.) -->
 
+    <!-- ================= Progress concept icons ==================
+         catch / evolution / treat used to be distinguishable only by colour (rose/blue/green),
+         which says nothing to a player who hasn't memorised the mapping. Each concept now has
+         a glyph, and — the point of putting them HERE rather than inline — the desktop
+         ProgressPanelWindow and the in-app "Прогресс" card render the SAME one, so the compact
+         desktop indicator is visually traceable to its full counterpart in the app.
+
+         Hand-drawn from Path/Ellipse primitives in the style the Pokédex header pokéball and
+         the shop's item glyphs already established — no external image assets. A ContentControl
+         Style (not a UserControl) keeps this to markup only: no new file, no code-behind, and
+         it lives in the same dictionary both windows already merge. The Viewbox means a call
+         site picks its size with plain Width/Height, and Foreground carries the tint.
+
+         Every glyph is deliberately background-INDEPENDENT — nothing is knocked out with a
+         surface-coloured fill — because these render on two different surfaces (the card's
+         #1B2340 and the desktop panel's translucent #E60D1120) and a hardcoded knockout colour
+         would show as a wrong-coloured patch on one of them. -->
+
+    <Style x:Key="ProgressIconStyle" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Width" Value="14" />
+        <Setter Property="Height" Value="14" />
+    </Style>
+
+    <!-- Catch: a pokéball. The centre button is a solid dot and the equator is drawn as two
+         SEPARATE segments stopping short of it, rather than a full line plus a background-
+         coloured knockout circle — same silhouette, no dependency on what's behind it. -->
+    <Style x:Key="CatchIconStyle" TargetType="ContentControl" BasedOn="{StaticResource ProgressIconStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Viewbox Stretch="Uniform">
+                        <Grid Width="16" Height="16">
+                            <Ellipse Width="14.4" Height="14.4" StrokeThickness="1.7"
+                                     Stroke="{TemplateBinding Foreground}"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Path Fill="{TemplateBinding Foreground}"
+                                  Data="M1.4,7.15 L5.3,7.15 L5.3,8.85 L1.4,8.85 Z
+                                        M10.7,7.15 L14.6,7.15 L14.6,8.85 L10.7,8.85 Z
+                                        M5.6,8 A2.4,2.4 0 1 0 10.4,8 A2.4,2.4 0 1 0 5.6,8 Z" />
+                        </Grid>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Evolution: a blocky upward arrow — the universal "levelling up" glyph, and legible
+         down to the 11px the desktop panel draws it at, where a thin chevron would vanish. -->
+    <Style x:Key="EvolutionIconStyle" TargetType="ContentControl" BasedOn="{StaticResource ProgressIconStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Viewbox Stretch="Uniform">
+                        <Grid Width="16" Height="16">
+                            <Path Fill="{TemplateBinding Foreground}" StrokeLineJoin="Round"
+                                  Data="M8,1.2 L15,8.4 L11.3,8.4 L11.3,14.8 L4.7,14.8 L4.7,8.4 L1,8.4 Z" />
+                        </Grid>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Treat: a cookie. One EvenOdd Path — the chips are counter-wound holes punched out of
+         the disc, so they read as chips against whatever surface is behind, with no second
+         colour needed. -->
+    <Style x:Key="TreatIconStyle" TargetType="ContentControl" BasedOn="{StaticResource ProgressIconStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Viewbox Stretch="Uniform">
+                        <Grid Width="16" Height="16">
+                            <Path Fill="{TemplateBinding Foreground}"
+                                  Data="F0 M1,8 A7,7 0 1 0 15,8 A7,7 0 1 0 1,8 Z
+                                        M4.6,6.4 A1.35,1.35 0 1 0 7.3,6.4 A1.35,1.35 0 1 0 4.6,6.4 Z
+                                        M9.1,9.5 A1.35,1.35 0 1 0 11.8,9.5 A1.35,1.35 0 1 0 9.1,9.5 Z
+                                        M5.7,10.7 A1.1,1.1 0 1 0 7.9,10.7 A1.1,1.1 0 1 0 5.7,10.7 Z
+                                        M9.6,4.9 A1.05,1.05 0 1 0 11.7,4.9 A1.05,1.05 0 1 0 9.6,4.9 Z" />
+                        </Grid>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- ===================== Filter pills ===================== -->
     <!-- A RadioButton restyled as one of the app's rarity pills: RadioButton already gives
          exactly-one-active-per-GroupName for free, so no mutual-exclusion bookkeeping in

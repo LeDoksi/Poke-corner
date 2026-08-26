@@ -147,40 +147,36 @@ public class CollectionViewModelTests
         Assert.Equal(RarityTier.Common, entries.Single().Rarity);
     }
 
+    /// The Pokédex grid used to dedupe by species and sit above a separate per-individual
+    /// roster. Both lists are now one per-individual grid, so GetEntries — its only source —
+    /// must NOT collapse two owned copies of the same species into one card.
     [Fact]
-    public void GetPokedexEntries_DedupesBySpeciesIdAcrossIndividuals()
+    public void GetEntries_TwoIndividualsOfTheSameSpecies_AreTwoSeparateEntries()
     {
         var collection = new PokemonCollection();
-        var chainId = 1;
-        var speciesId = 10;
+        const int chainId = 1;
+        const int speciesId = 10;
         collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
         collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
         var chains = new[] { new SpeciesEvolutionChain(ChainId: chainId, StarterSpeciesId: speciesId, CaptureRate: 100, ChainLength: 3, StageSpeciesIds: new[] { speciesId }, StageSpeciesNames: new[] { "Caterpie" }) };
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
 
-        var pokedex = vm.GetPokedexEntries();
+        var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
-        Assert.Single(pokedex);
-        Assert.Equal(speciesId, pokedex[0].SpeciesId);
+        Assert.Equal(2, entries.Count);
+        Assert.All(entries, entry => Assert.Equal(speciesId, entry.DisplaySpeciesId));
+        // Two cards, two distinct identities — the detail popup is addressed by individual id.
+        Assert.Equal(2, entries.Select(entry => entry.IndividualId).Distinct().Count());
+
+        // ...but the "Открыто видов" completion stat the view derives from these entries still
+        // counts DISTINCT SPECIES, so a duplicate catch does not inflate it.
+        Assert.Equal(1, entries.Select(entry => entry.DisplaySpeciesId).Distinct().Count());
     }
 
+    /// Two individuals from the same chain at different stages are genuinely two different
+    /// species on screen, and the distinct-species stat counts them as two.
     [Fact]
-    public void GetPokedexEntries_EvolvedIndividual_ListsCurrentStageNotStarterSpecies()
-    {
-        var collection = new PokemonCollection();
-        var individual = MakeIndividual(speciesId: 4, evolutionChainId: 4);
-        individual.CurrentStage = EvolutionStage.Stage3;
-        collection.Add(individual);
-        var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" }) };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
-
-        var pokedex = vm.GetPokedexEntries();
-
-        Assert.Equal(6, Assert.Single(pokedex).SpeciesId);
-    }
-
-    [Fact]
-    public void GetPokedexEntries_SameChainAtDifferentStages_ListsEachStageSeparately()
+    public void GetEntries_SameChainAtDifferentStages_ExposesEachStageSeparately()
     {
         var collection = new PokemonCollection();
         var baby = MakeIndividual(speciesId: 4, evolutionChainId: 4);
@@ -191,9 +187,10 @@ public class CollectionViewModelTests
         var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" }) };
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
 
-        var speciesIds = vm.GetPokedexEntries().Select(entry => entry.SpeciesId).OrderBy(id => id).ToList();
+        var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
-        Assert.Equal(new[] { 4, 5 }, speciesIds);
+        Assert.Equal(new[] { 4, 5 }, entries.Select(entry => entry.DisplaySpeciesId).OrderBy(id => id));
+        Assert.Equal(new[] { "Charmander", "Charmeleon" }, entries.Select(entry => entry.SpeciesName).OrderBy(name => name));
     }
 
     [Fact]
@@ -236,11 +233,11 @@ public class CollectionViewModelTests
     }
 
     [Fact]
-    public void GetPokedexEntries_NoIndividualsOwnAnySpecies_IsEmpty()
+    public void GetEntries_NoIndividualsOwned_IsEmpty()
     {
         var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
-        Assert.Empty(vm.GetPokedexEntries());
+        Assert.Empty(vm.GetEntries(DateTimeOffset.UtcNow));
     }
 
     [Fact]
