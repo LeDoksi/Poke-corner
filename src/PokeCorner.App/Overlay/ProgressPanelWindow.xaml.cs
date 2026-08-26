@@ -1,12 +1,20 @@
+using System.Windows.Media;
+using System.Windows.Shapes;
 using PokeCorner.App.Popup;
 
 namespace PokeCorner.App.Overlay;
 
 public partial class ProgressPanelWindow : System.Windows.Window
 {
-    /// Must match the Height of the bar Grids in the XAML — the fill is a bottom-anchored
-    /// Border sized as a fraction of this, so the two numbers have to agree.
-    private const double BarHeight = 46;
+    // Must match the Width/Height and StrokeThickness of the gauge Ellipses in the XAML.
+    private const double GaugeDiameter = 36;
+    private const double GaugeStrokeThickness = 4.5;
+
+    /// The length of one full turn of the arc, expressed in StrokeDashArray's units — which
+    /// are multiples of StrokeThickness, not pixels. The stroke is centred on the ellipse's
+    /// path, so the drawn circle's radius is (diameter - thickness) / 2.
+    private static readonly double DashUnitsPerTurn =
+        Math.PI * (GaugeDiameter - GaugeStrokeThickness) / GaugeStrokeThickness;
 
     /// Gap between the panel and the pet, and the margin kept from a screen edge when the
     /// panel has to be clamped against one.
@@ -19,16 +27,34 @@ public partial class ProgressPanelWindow : System.Windows.Window
 
     public void UpdateProgress(ProgressInfo progress)
     {
-        SetBar(CatchFill, progress.CatchFraction);
-        SetBar(EvolutionFill, progress.EvolutionFraction);
-        SetBar(TreatFill, progress.TreatFraction);
+        SetGauge(CatchArc, progress.CatchFraction);
+        SetGauge(EvolutionArc, progress.EvolutionFraction);
+        SetGauge(TreatArc, progress.TreatFraction);
     }
 
-    /// Grows the fill upward from the floor of its track. Plain Height on a bottom-aligned
-    /// Border rather than a ScaleTransform: a scaled Border would squash its CornerRadius
-    /// along with it, so an almost-empty bar would end up with visibly flattened ends.
-    private static void SetBar(System.Windows.Controls.Border fill, double fraction) =>
-        fill.Height = BarHeight * Math.Clamp(fraction, 0, 1);
+    /// Draws `fraction` of a ring by making the stroke a single dash that covers that much of
+    /// the circumference followed by a gap covering the rest — the standard donut-gauge trick,
+    /// and the reason these are plain Ellipses instead of a Path whose ArcSegment would have
+    /// to be recomputed (with its own sweep-direction and large-arc bookkeeping) every second.
+    private static void SetGauge(Ellipse arc, double fraction)
+    {
+        fraction = Math.Clamp(fraction, 0, 1);
+
+        // A zero-length dash with StrokeDashCap="Round" still paints a round dot, so an empty
+        // gauge would show a stray pip at 12 o'clock instead of nothing. Hide the arc instead.
+        if (fraction <= 0)
+        {
+            arc.Visibility = System.Windows.Visibility.Hidden;
+            return;
+        }
+        arc.Visibility = System.Windows.Visibility.Visible;
+
+        var filled = DashUnitsPerTurn * fraction;
+        // The trailing +0.001 keeps the gap strictly positive at fraction == 1; a zero-length
+        // gap makes WPF fall back to rendering the stroke as if undashed anyway, but an
+        // explicit small value keeps the collection well-formed rather than relying on that.
+        arc.StrokeDashArray = new DoubleCollection { filled, DashUnitsPerTurn - filled + 0.001 };
+    }
 
     /// Positions the panel immediately to the LEFT of the overlay sprite, vertically centered
     /// on it — called whenever the overlay is repositioned (corner/monitor/size settings).

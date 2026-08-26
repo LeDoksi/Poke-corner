@@ -1,8 +1,8 @@
 <Window x:Class="PokeCorner.App.Onboarding.OnboardingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PokéCorner — обучение" Width="450" Height="342"
-        Style="{StaticResource AppWindowStyle}"
+        Title="PokéCorner — обучение" Width="450" Height="380"
+        Style="{StaticResource DialogWindowStyle}"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <!-- The window stays a fixed size on purpose, but the body text no longer does: it used
          to sit in a rigid Height="110" block, which left a short step floating in dead space

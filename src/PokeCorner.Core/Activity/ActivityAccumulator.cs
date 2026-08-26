@@ -8,11 +8,18 @@ public sealed class ActivityAccumulator
     // ~2.5 hours of active play still yields roughly one catch-check.
     public const long CatchCheckIntervalUnits = 22_500;
 
-    private long _unitsSinceLastCatchCheck;
-
     public long TotalUnits { get; private set; }
 
-    public long UnitsSinceLastCatchCheck => _unitsSinceLastCatchCheck;
+    /// <summary>
+    /// Progress toward the next catch check — the number behind the "До поимки" bar.
+    /// Settable so it can be restored from the save file at load: it used to be read-only,
+    /// which is why that bar started over at zero on every relaunch. Mirrors the public
+    /// setters <see cref="Domain.FeedingInventory.RemainderUnits"/> and
+    /// <see cref="Domain.ShopInventory.RemainderUnits"/> already use for the same purpose.
+    /// Assigning past the threshold does not raise <see cref="CatchCheckDue"/> — only
+    /// <see cref="AddUnits"/> does, which is what hydration wants.
+    /// </summary>
+    public long UnitsSinceLastCatchCheck { get; set; }
 
     public event Action? CatchCheckDue;
 
@@ -21,11 +28,11 @@ public sealed class ActivityAccumulator
         if (units <= 0) return;
 
         TotalUnits += units;
-        _unitsSinceLastCatchCheck += units;
+        UnitsSinceLastCatchCheck += units;
 
-        while (_unitsSinceLastCatchCheck >= CatchCheckIntervalUnits)
+        while (UnitsSinceLastCatchCheck >= CatchCheckIntervalUnits)
         {
-            _unitsSinceLastCatchCheck -= CatchCheckIntervalUnits;
+            UnitsSinceLastCatchCheck -= CatchCheckIntervalUnits;
             CatchCheckDue?.Invoke();
         }
     }

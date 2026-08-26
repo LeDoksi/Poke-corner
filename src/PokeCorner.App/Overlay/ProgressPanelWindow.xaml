@@ -6,81 +6,83 @@
         Background="Transparent"
         ShowInTaskbar="False"
         ResizeMode="NoResize"
-        Width="86"
+        Width="60"
         SizeToContent="Height">
-    <!-- Three short VERTICAL bars standing side by side, sitting to the LEFT of the pet.
-         This replaces the radial-gauge row that hung below it: the gauges read fine in
-         isolation but a horizontal strip under the sprite fought the taskbar for the one
-         piece of screen the pet's default bottom-right corner has least of, and an arc's
-         fill level is genuinely harder to eyeball at 30px than a bar's height. Standing the
-         bars up and moving the whole panel beside the pet uses the empty desktop the sprite
-         has plenty of, and keeps the panel's footprint tall-and-narrow instead of wide.
+    <!-- Three filling CIRCLES stacked one above another, standing to the LEFT of the pet.
 
-         Each bar carries its concept icon (CatchIconStyle / EvolutionIconStyle /
-         TreatIconStyle from PokedexTheme.xaml) ABOVE it rather than beside it: at this
-         width there is no room alongside an 8px bar, and stacking keeps each column a
-         self-contained icon-over-bar unit. They are the same glyphs the in-app "Прогресс"
-         card uses, which is the entire point of factoring them into the theme dictionary.
+         This is the shape the panel had two revisions ago, restored on the user's own
+         correction: an intervening redesign turned the gauges into three vertical bars in a
+         horizontal row, which is not what was asked for. What IS new here is the arrangement —
+         the gauges are a vertical COLUMN now, not a row, so the panel is a narrow strip beside
+         the sprite rather than a wide block. The narrow footprint is what makes "to the left of
+         the pet" work on a bottom-right-cornered pet without fighting the taskbar.
 
-         Fill is a bottom-anchored Border whose Height the code-behind sets — bars grow
-         upward from the floor, the direction the metric itself reads as "filling up".
+         Each ring carries its concept icon INSIDE it (CatchIconStyle / EvolutionIconStyle /
+         TreatIconStyle from PokedexTheme.xaml — the same glyphs the in-app "Прогресс" card
+         uses, which is the whole point of factoring them into the theme dictionary). A ring
+         has a hole; putting the icon in it costs no extra space and makes each gauge
+         self-identifying, which three anonymous rings would not be.
 
-         SizeToContent stays Height-only with an explicit Width, as the prior fix
-         established; the explicit number is what PositionLeftOf offsets against. -->
+         The arcs are plain Ellipses driven by StrokeDashArray (see the code-behind) rather
+         than Path/ArcSegment geometry rebuilt per update: same visual, no geometry math, and
+         nothing to keep in sync when a size changes.
+
+         SizeToContent stays Height-only with an explicit Width, as the prior fix established;
+         the explicit number is what PositionLeftOf offsets against. -->
     <Border Background="#E60D1120" BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
-            CornerRadius="12" Padding="12,10">
+            CornerRadius="12" Padding="10,10">
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2" Opacity="0.5" />
         </Border.Effect>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel>
 
-            <StackPanel Margin="0,0,10,0" ToolTip="Прогресс до следующей поимки">
-                <ContentControl Style="{StaticResource CatchIconStyle}" Width="13" Height="13"
+            <Grid Width="36" Height="36" Margin="0,0,0,9" ToolTip="Прогресс до следующей поимки">
+                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
+                <Ellipse x:Name="CatchArc" Stroke="{StaticResource AccentRedBrush}" StrokeThickness="4.5"
+                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#E8384F" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
+                    </Ellipse.Effect>
+                </Ellipse>
+                <ContentControl Style="{StaticResource CatchIconStyle}" Width="15" Height="15"
                                 Foreground="{StaticResource AccentRedBrush}"
-                                HorizontalAlignment="Center" Margin="0,0,0,5" />
-                <Grid x:Name="CatchTrack" Width="9" Height="46">
-                    <Border CornerRadius="4.5" Background="{StaticResource CardHoverBackgroundBrush}"
-                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                    <Border x:Name="CatchFill" CornerRadius="4.5" VerticalAlignment="Bottom" Height="0"
-                            Background="{StaticResource AccentRedBrush}">
-                        <Border.Effect>
-                            <DropShadowEffect Color="#E8384F" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
-                        </Border.Effect>
-                    </Border>
-                </Grid>
-            </StackPanel>
+                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
 
-            <StackPanel Margin="0,0,10,0" ToolTip="Прогресс до следующей эволюции">
-                <ContentControl Style="{StaticResource EvolutionIconStyle}" Width="13" Height="13"
+            <Grid Width="36" Height="36" Margin="0,0,0,9" ToolTip="Прогресс до следующей эволюции">
+                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
+                <Ellipse x:Name="EvolutionArc" Stroke="{StaticResource RarityRareBrush}" StrokeThickness="4.5"
+                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#5B9DFF" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
+                    </Ellipse.Effect>
+                </Ellipse>
+                <ContentControl Style="{StaticResource EvolutionIconStyle}" Width="14" Height="14"
                                 Foreground="{StaticResource RarityRareBrush}"
-                                HorizontalAlignment="Center" Margin="0,0,0,5" />
-                <Grid x:Name="EvolutionTrack" Width="9" Height="46">
-                    <Border CornerRadius="4.5" Background="{StaticResource CardHoverBackgroundBrush}"
-                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                    <Border x:Name="EvolutionFill" CornerRadius="4.5" VerticalAlignment="Bottom" Height="0"
-                            Background="{StaticResource RarityRareBrush}">
-                        <Border.Effect>
-                            <DropShadowEffect Color="#5B9DFF" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
-                        </Border.Effect>
-                    </Border>
-                </Grid>
-            </StackPanel>
+                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
 
-            <StackPanel ToolTip="Прогресс до следующего лакомства">
-                <ContentControl Style="{StaticResource TreatIconStyle}" Width="13" Height="13"
+            <Grid Width="36" Height="36" ToolTip="Прогресс до следующего лакомства">
+                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
+                <Ellipse x:Name="TreatArc" Stroke="{StaticResource RarityUncommonBrush}" StrokeThickness="4.5"
+                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#4CD787" BlurRadius="7" ShadowDepth="0" Opacity="0.6" />
+                    </Ellipse.Effect>
+                </Ellipse>
+                <ContentControl Style="{StaticResource TreatIconStyle}" Width="15" Height="15"
                                 Foreground="{StaticResource RarityUncommonBrush}"
-                                HorizontalAlignment="Center" Margin="0,0,0,5" />
-                <Grid x:Name="TreatTrack" Width="9" Height="46">
-                    <Border CornerRadius="4.5" Background="{StaticResource CardHoverBackgroundBrush}"
-                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                    <Border x:Name="TreatFill" CornerRadius="4.5" VerticalAlignment="Bottom" Height="0"
-                            Background="{StaticResource RarityUncommonBrush}">
-                        <Border.Effect>
-                            <DropShadowEffect Color="#4CD787" BlurRadius="7" ShadowDepth="0" Opacity="0.6" />
-                        </Border.Effect>
-                    </Border>
-                </Grid>
-            </StackPanel>
+                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
 
         </StackPanel>
     </Border>

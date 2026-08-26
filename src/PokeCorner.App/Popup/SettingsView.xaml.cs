@@ -37,8 +37,6 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     {
         var settings = _viewModel.Settings;
         CareModeCombo.SelectedIndex = settings.CareMode == CareMode.Hardcore ? 1 : 0;
-        TokenTrackingCheck.IsChecked = settings.TokenTrackingEnabled;
-        ActivityTrackingCheck.IsChecked = settings.ActivityTrackingEnabled;
         FullscreenHideCheck.IsChecked = settings.AutoHideInFullscreen;
         AutostartCheck.IsChecked = AutostartRegistry.IsEnabled();
         PetSizeSlider.Value = settings.PetSizePixels;
@@ -78,18 +76,6 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     /// only ever the state of an already-unchecked box.
     private void SyncSuperHardcoreEnabled() =>
         SuperHardcoreCheck.IsEnabled = CareModeCombo.SelectedIndex == 1;
-
-    private void TokenTrackingCheck_Changed(object sender, System.Windows.RoutedEventArgs e)
-    {
-        if (_isLoadingInitialState) return;
-        _viewModel.Settings.TokenTrackingEnabled = TokenTrackingCheck.IsChecked == true;
-    }
-
-    private void ActivityTrackingCheck_Changed(object sender, System.Windows.RoutedEventArgs e)
-    {
-        if (_isLoadingInitialState) return;
-        _viewModel.Settings.ActivityTrackingEnabled = ActivityTrackingCheck.IsChecked == true;
-    }
 
     private void FullscreenHideCheck_Changed(object sender, System.Windows.RoutedEventArgs e)
     {

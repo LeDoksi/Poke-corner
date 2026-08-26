@@ -1,6 +1,11 @@
 <UserControl x:Class="PokeCorner.App.Popup.CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Two layers: the tabs, and the Pokédex detail card that overlays them. The card used to
+         be a separate top-level Window (PokemonDetailWindow) opened with ShowDialog(); the user
+         found a second OS window spawning out of a card "foreign", so it is an in-view overlay
+         now. Same content, same callbacks — only the hosting changed. -->
+    <Grid>
     <TabControl>
         <!-- ============================== HOME ==============================
              Deliberately only "what is happening right now": the active pet and its three
@@ -55,9 +60,12 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Border Grid.Column="0" Style="{StaticResource WellStyle}" Padding="12,9"
-                                        ToolTip="Очки роста активного питомца — растут от активности за ПК">
+                                        ToolTip="CP активного питомца — растёт от активности за ПК">
                                     <StackPanel>
-                                        <TextBlock Text="ОЧКИ РОСТА" Style="{StaticResource StatLabelTextStyle}" />
+                                        <!-- "CP", not "очки роста": the shop's CP Booster already
+                                             called it CP, and two names for one number read as two
+                                             different stats. -->
+                                        <TextBlock Text="CP" Style="{StaticResource StatLabelTextStyle}" />
                                         <TextBlock x:Name="CarePointsText" Style="{StaticResource StatValueTextStyle}" />
                                     </StackPanel>
                                 </Border>
@@ -87,7 +95,7 @@
                                     </StackPanel>
                                 </Button>
                                 <Button x:Name="FeedButton" Grid.Column="2" Click="FeedButton_Click"
-                                        ToolTip="Требует одно лакомство, даёт больше очков роста, чем поглаживание.">
+                                        ToolTip="Требует одно лакомство, даёт больше CP, чем поглаживание.">
                                     <StackPanel Orientation="Horizontal">
                                         <Path Width="15" Height="14" Stretch="Uniform" Fill="{StaticResource PrimaryTextBrush}"
                                               Margin="0,0,7,0" VerticalAlignment="Center"
@@ -145,7 +153,7 @@
                                  (gold gradient) one, same as the egg's "Вылупить!" button. -->
                             <Button x:Name="EvolveButton" Click="EvolveButton_Click"
                                     Visibility="Collapsed" Margin="0,0,0,12"
-                                    ToolTip="Питомец накопил достаточно очков роста — эволюционируй его!">
+                                    ToolTip="Питомец накопил достаточно CP — эволюционируй его!">
                                 <TextBlock Text="Эволюционировать!" VerticalAlignment="Center" />
                             </Button>
 
@@ -377,4 +385,136 @@
             </ScrollViewer>
         </TabItem>
     </TabControl>
+
+        <!-- ===================== POKÉDEX DETAIL OVERLAY =====================
+             The dimmed backdrop is what closes the card: MouseLeftButtonDown on it hides the
+             layer, and the card itself marks the event Handled so a click INSIDE the card
+             never bubbles up here. ZIndex keeps it over the TabControl regardless of
+             declaration order.
+
+             Content is PokemonDetailWindow's, moved verbatim: sprite + dex number + rarity,
+             the catch date and nature the old roster rows carried, and the three actions that
+             used to sit inline on every card — Выбрать, Отпустить and the favourite star.
+             Names are Detail*-prefixed because several of them (SpriteImage, ShinyBadge)
+             collide with the home tab's own elements now that both live in one namescope. -->
+        <Border x:Name="DetailOverlay" Panel.ZIndex="10" Visibility="Collapsed"
+                Background="#B2000000" MouseLeftButtonDown="DetailOverlay_MouseLeftButtonDown">
+            <Border Style="{StaticResource CardStyle}" Padding="18,16" Width="360"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
+                <StackPanel>
+
+                    <Grid Height="120" Margin="0,0,0,10">
+                        <Ellipse Width="170" Height="112" Fill="{StaticResource SpotlightBrush}"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Image x:Name="DetailSpriteImage" Width="104" Height="104"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                        <Grid x:Name="DetailSpritePlaceholder" Width="64" Height="64"
+                              HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
+                            <Ellipse Stroke="{StaticResource MutedTextBrush}" StrokeThickness="3" />
+                            <Border Height="3" Background="{StaticResource MutedTextBrush}" VerticalAlignment="Center" />
+                            <Ellipse Width="20" Height="20" Fill="{StaticResource WindowBackgroundBrush}"
+                                     Stroke="{StaticResource MutedTextBrush}" StrokeThickness="3"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                        <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" Visibility="Collapsed"
+                                HorizontalAlignment="Right" VerticalAlignment="Top"
+                                BorderBrush="{StaticResource AccentGoldBrush}"
+                                ToolTip="Шайни — редкая цветовая форма">
+                            <TextBlock Text="✨ Shiny" FontSize="10.5" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentGoldBrush}" />
+                        </Border>
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">
+                        <TextBlock x:Name="DetailDexNumberText" Style="{StaticResource MetaTextStyle}"
+                                   Foreground="{StaticResource MutedTextBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,7,0" />
+                        <TextBlock x:Name="DetailSpeciesNameText" Style="{StaticResource ScreenTitleTextStyle}"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <WrapPanel HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <Border x:Name="DetailRarityPill" Style="{StaticResource PillStyle}" Margin="0,0,6,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse x:Name="DetailRarityDot" Width="6" Height="6"
+                                         VerticalAlignment="Center" Margin="0,0,5,0" />
+                                <TextBlock x:Name="DetailRarityText" FontSize="10" />
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="DetailFavoriteBadge" Style="{StaticResource PillStyle}" Margin="0,0,6,0"
+                                BorderBrush="{StaticResource AccentGoldBrush}" Visibility="Collapsed"
+                                ToolTip="Избранный — всегда в начале списка">
+                            <TextBlock Text="Избранное" FontSize="10" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentGoldBrush}" />
+                        </Border>
+                        <Border x:Name="DetailActiveBadge" Style="{StaticResource PillStyle}" Margin="0,0,6,0"
+                                BorderBrush="{StaticResource AccentGoldBrush}" Visibility="Collapsed"
+                                ToolTip="Сейчас на рабочем столе">
+                            <TextBlock Text="На столе" FontSize="10" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentGoldBrush}" />
+                        </Border>
+                        <Border x:Name="DetailUnavailableBadge" Style="{StaticResource PillStyle}"
+                                BorderBrush="{StaticResource AccentRedBrush}" Visibility="Collapsed">
+                            <TextBlock Text="Обиделся" FontSize="10" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentRedBrush}" />
+                        </Border>
+                    </WrapPanel>
+
+                    <Border Style="{StaticResource WellStyle}" Padding="13,10" Margin="0,0,0,12">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,5">
+                                <TextBlock Text="Характер" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <TextBlock x:Name="DetailNatureText" Style="{StaticResource MetaTextStyle}"
+                                           HorizontalAlignment="Right" FontWeight="SemiBold" />
+                            </Grid>
+                            <Grid Margin="0,0,0,8">
+                                <TextBlock Text="Пойман" Style="{StaticResource MetaTextStyle}" HorizontalAlignment="Left" />
+                                <TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource MetaTextStyle}"
+                                           HorizontalAlignment="Right" FontWeight="SemiBold" />
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <ContentControl Style="{StaticResource EvolutionIconStyle}" Width="12" Height="12"
+                                                Foreground="{StaticResource RarityRareBrush}"
+                                                VerticalAlignment="Center" Margin="0,0,6,0" />
+                                <TextBlock Text="До эволюции" Style="{StaticResource MetaTextStyle}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                            <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource SlimProgressBarStyle}"
+                                         Minimum="0" Maximum="1"
+                                         ToolTip="Прогресс до следующей эволюции этого покемона" />
+                        </StackPanel>
+                    </Border>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- The star pin, moved here off the roster rows. One Path with both Fill
+                             and Stroke bound covers both states: gold-on-gold when pinned, hollow
+                             with a muted outline when not. -->
+                        <Button x:Name="DetailFavoriteButton" Grid.Column="0" Style="{StaticResource FavoriteToggleStyle}"
+                                Click="DetailFavoriteButton_Click" VerticalAlignment="Center" Margin="0,0,8,0">
+                            <Path x:Name="DetailFavoriteStar" Width="17" Height="17" Stretch="Uniform"
+                                  StrokeThickness="1.6" StrokeLineJoin="Round"
+                                  Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
+                        </Button>
+
+                        <Button x:Name="DetailSelectButton" Grid.Column="1" Content="Выбрать" Click="DetailSelectButton_Click"
+                                Padding="12,7" Margin="0,0,8,0"
+                                ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
+
+                        <Button x:Name="DetailReleaseButton" Grid.Column="2" Content="Отпустить" Click="DetailReleaseButton_Click"
+                                Padding="12,7" Style="{StaticResource SecondaryButtonStyle}"
+                                ToolTip="Насовсем удалить этого покемона из коллекции" />
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
 </UserControl>

@@ -1,8 +1,8 @@
 <Window x:Class="PokeCorner.App.Onboarding.StarterSelectionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Выбери своего первого покемона!" Width="500" SizeToContent="Height"
-        Style="{StaticResource AppWindowStyle}"
+        Title="PokéCorner" Width="500" SizeToContent="Height"
+        Style="{StaticResource DialogWindowStyle}"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <!-- SizeToContent="Height" rather than the old fixed Height="330": the cards grew a
          rarity tag row, and a hardcoded height would have clipped the "Выбрать" buttons. -->

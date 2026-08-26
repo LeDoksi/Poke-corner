@@ -132,6 +132,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // one per visible Pokédex card.
         foreach (var animator in _cardAnimators.Values) animator.Stop();
         _cardAnimators.Clear();
+
+        // And the detail overlay's, which now lives in this view rather than in a window whose
+        // own Closed handler used to stop it.
+        _detailAnimator?.Stop();
+        _detailAnimator = null;
     }
 
     private void PetButton_Click(object sender, RoutedEventArgs e)
@@ -175,7 +180,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         {
             ActivePetNameText.Text = activeEntry.SpeciesName;
             ActivePetMetaText.Text =
-                $"{activeEntry.DexNumberText()} · {RarityDisplay.GetName(activeEntry.Rarity)} · характер {activeEntry.Nature} · поймана {FormatCaughtDate(activeEntry.CaughtAtUtc)}";
+                $"{activeEntry.DexNumberText()} · {RarityDisplay.GetName(activeEntry.Rarity)} · характер {activeEntry.Nature} · пойман {FormatCaughtDate(activeEntry.CaughtAtUtc)}";
             CarePointsText.Text = active.AccumulatedCarePoints.ToString("N0", CultureInfo.CurrentCulture);
             ShinyBadge.Visibility = activeEntry.IsShiny ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -412,20 +417,161 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         animator.Stop();
     }
 
-    /// A Pokédex card was clicked: open the detail/actions popup for that individual. The
-    /// three actions call straight back into the same CollectionViewModel methods the removed
+    /// A Pokédex card was clicked: show the detail/actions card for that individual. The three
+    /// actions call straight back into the same CollectionViewModel methods the removed
     /// roster's inline buttons used, so behaviour (including the Hardcore availability gate on
     /// Выбрать) is unchanged — only where the buttons live has moved.
+    ///
+    /// This used to construct a PokemonDetailWindow and ShowDialog() it. That window is gone:
+    /// a card in a grid spawning a second OS window read as foreign, so the same content is an
+    /// overlay layer inside this view now (see CollectionView.xaml's detail overlay).
     private void PokedexCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not PokedexCard card) return;
+        ShowDetail(card);
+    }
 
-        var window = new PokemonDetailWindow(card, SelectIndividual, ReleaseIndividual, ToggleFavorite)
-        {
-            Owner = System.Windows.Window.GetWindow(this)
-        };
-        window.ShowDialog();
-        Refresh();
+    // ======================= Pokédex detail overlay =======================
+    // Ported from PokemonDetailWindow's code-behind. Deliberately dumb: it renders the
+    // PokedexCard it is handed and routes every mutation through the same
+    // SelectIndividual/ReleaseIndividual/ToggleFavorite methods the rest of this view uses.
+
+    /// The card currently on show, or null when the overlay is hidden.
+    private PokedexCard? _detailCard;
+
+    /// Local mirror of the pin so the star can flip immediately on click. The grid rebuilds
+    /// from the model, but the overlay holds an immutable snapshot card — re-reading it would
+    /// show the stale value.
+    private bool _detailIsFavorite;
+
+    private SpriteAnimator? _detailAnimator;
+
+    private void ShowDetail(PokedexCard card)
+    {
+        _detailCard = card;
+        _detailIsFavorite = card.IsFavorite;
+
+        DetailDexNumberText.Text = card.DexNumber;
+        DetailSpeciesNameText.Text = card.SpeciesName;
+        DetailNatureText.Text = card.NatureText;
+        DetailCaughtAtText.Text = card.CaughtAtText;
+        DetailEvolutionBar.Value = card.EvolutionFraction;
+
+        DetailRarityPill.BorderBrush = card.RarityBrush;
+        DetailRarityDot.Fill = card.RarityBrush;
+        DetailRarityText.Text = card.RarityName;
+        DetailRarityText.Foreground = card.RarityBrush;
+
+        DetailShinyBadge.Visibility = card.ShinyVisibility;
+        DetailActiveBadge.Visibility = card.ActiveBadgeVisibility;
+        DetailUnavailableBadge.Visibility = card.UnavailableBadgeVisibility;
+        DetailUnavailableBadge.ToolTip = card.AvailabilityToolTip;
+
+        // Exactly the roster's rule: an already-active pet, or one that has run away in
+        // Hardcore, can't be selected.
+        DetailSelectButton.IsEnabled = card.CanSelect;
+        DetailSelectButton.ToolTip = card.CanSelect ? null
+            : card.IsActive ? "Этот покемон уже на рабочем столе"
+            : card.AvailabilityToolTip;
+
+        ApplyDetailFavoriteVisuals();
+        ShowDetailSprite(card);
+
+        DetailOverlay.Visibility = Visibility.Visible;
+    }
+
+    private void HideDetail()
+    {
+        DetailOverlay.Visibility = Visibility.Collapsed;
+        _detailCard = null;
+
+        // One DispatcherTimer per animator, so it must not outlive the card it was driving.
+        _detailAnimator?.Stop();
+        _detailAnimator = null;
+    }
+
+    /// Click-outside-to-close. The card itself marks its own mouse-down Handled (see
+    /// DetailCard_MouseLeftButtonDown), so this only ever runs for a click on the dimmed
+    /// backdrop around it.
+    private void DetailOverlay_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) =>
+        HideDetail();
+
+    /// Stops a click inside the card from bubbling to the backdrop and closing the thing the
+    /// player is trying to interact with.
+    private void DetailCard_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) =>
+        e.Handled = true;
+
+    private void ShowDetailSprite(PokedexCard card)
+    {
+        _detailAnimator?.Stop();
+        _detailAnimator = null;
+
+        var frames = card.SpriteFrames;
+        var hasStatic = card.SpriteImage is not null;
+
+        DetailSpritePlaceholder.Visibility = hasStatic || frames is { Count: > 0 }
+            ? Visibility.Collapsed
+            : Visibility.Visible;
+
+        // Assigned up front so the image is never blank for the animator's first tick, and so
+        // a species with no animated sprite needs no timer at all.
+        DetailSpriteImage.Source = frames is { Count: > 0 } ? frames[0] : card.SpriteImage;
+
+        if (frames is null || frames.Count < 2) return;
+
+        _detailAnimator = new SpriteAnimator(DetailSpriteImage, new FrameSequencer(frames.Count, HeroFrameDuration), frames);
+        _detailAnimator.Start();
+    }
+
+    private void ApplyDetailFavoriteVisuals()
+    {
+        DetailFavoriteStar.Fill = _detailIsFavorite
+            ? ThemeBrushes.Get("AccentGoldBrush")
+            : System.Windows.Media.Brushes.Transparent;
+        DetailFavoriteStar.Stroke = _detailIsFavorite
+            ? ThemeBrushes.Get("AccentGoldBrush")
+            : ThemeBrushes.Get("MutedTextBrush");
+        DetailFavoriteButton.ToolTip = _detailIsFavorite
+            ? "Убрать из избранного"
+            : "В избранное — закрепить в начале списка";
+        DetailFavoriteBadge.Visibility = _detailIsFavorite ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    /// Stays open, unlike the other two: pinning is a small reversible tweak, and closing the
+    /// card under the player after it would make a second thought cost another two clicks.
+    private void DetailFavoriteButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailCard is null) return;
+        ToggleFavorite(_detailCard.IndividualId);
+        _detailIsFavorite = !_detailIsFavorite;
+        ApplyDetailFavoriteVisuals();
+    }
+
+    /// Both of these close: they change which cards exist (release) or which one is marked
+    /// active (select), so the snapshot the overlay is rendering is stale the moment they run.
+    private void DetailSelectButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailCard is null) return;
+        var id = _detailCard.IndividualId;
+        HideDetail();
+        SelectIndividual(id);
+    }
+
+    private void DetailReleaseButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailCard is null) return;
+
+        // Releasing is permanent and the button sits one click from a card the player opened
+        // just to look at, so it gets the same themed confirmation the save-reset flow uses.
+        var confirmed = ConfirmDialog.Ask(
+            "Отпустить покемона?",
+            $"{_detailCard.SpeciesName} будет навсегда удалён из коллекции. Это нельзя отменить.",
+            "Отпустить", System.Windows.Window.GetWindow(this));
+        if (!confirmed) return;
+
+        var id = _detailCard.IndividualId;
+        HideDetail();
+        ReleaseIndividual(id);
     }
 
     private void SelectIndividual(Guid id)

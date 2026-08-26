@@ -56,6 +56,10 @@ public sealed class GlobalInputHook : IDisposable
 
     public void Dispose() => Stop();
 
+    /// Runs on the thread that called SetWindowsHookEx — the WPF dispatcher thread. Windows
+    /// dispatches low-level hooks serially through the whole hook chain and will not deliver
+    /// mouse input to ANY application while this thread is busy, so nothing on that thread may
+    /// block for a perceptible time. See App.OnGrowthTick's comment for the bug that taught us.
     private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
         if (nCode >= 0)

@@ -2,16 +2,17 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PokéCorner" Width="420" SizeToContent="Height"
-        Style="{StaticResource AppWindowStyle}"
+        Style="{StaticResource DialogWindowStyle}"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False">
     <!-- A themed stand-in for MessageBox. The stock dialog renders in the light Windows
          system chrome — a white box with black text — which is exactly the clash
          AppWindowStyle exists to avoid, and it would show up at the one moment the app is
          asking the player to confirm something irreversible.
 
-         Standard OS chrome (title bar with a close button) rather than the hand-drawn
-         TitleBar the main window uses: this is a short-lived modal, the close button is a
-         legitimate third "cancel", and Esc already maps to it via IsCancel below. -->
+         DialogWindowStyle now also replaces the stock OS title bar with the app's own dark
+         strip: the dark body under a light system caption was the remaining half of that same
+         clash. No close (X) in that strip on purpose — Отмена is right there, and it maps to
+         Esc via IsCancel below. -->
     <Grid Margin="16">
         <Border Style="{StaticResource CardStyle}" Padding="20,18">
             <StackPanel>

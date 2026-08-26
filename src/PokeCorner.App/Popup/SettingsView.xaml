@@ -31,17 +31,18 @@
 
             <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
                 <StackPanel>
+                    <!-- Informational, not a toggle. Claude Code token tracking is gone, and
+                         activity at the PC is the app's whole premise rather than an option, so
+                         there is nothing left here to switch on or off. The card stays because
+                         the privacy statement below is worth keeping visible: this app installs
+                         a global keyboard hook, and the user is entitled to read, in Settings,
+                         exactly what it does and does not record. -->
                     <TextBlock Text="Что растит питомца" Style="{StaticResource SectionHeaderTextStyle}" />
 
-                    <CheckBox x:Name="TokenTrackingCheck" Content="Трекинг токенов Claude Code"
-                              Checked="TokenTrackingCheck_Changed" Unchecked="TokenTrackingCheck_Changed" />
-                    <TextBlock Text="Токены Claude Code тоже растят питомца, в дополнение к активности мышью/клавиатурой."
-                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,12" />
-
-                    <CheckBox x:Name="ActivityTrackingCheck" Content="Трекинг активности (клики/клавиши)"
-                              Checked="ActivityTrackingCheck_Changed" Unchecked="ActivityTrackingCheck_Changed" />
-                    <TextBlock Text="Считаются только количество кликов/нажатий — никогда не то, что именно нажато."
-                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,0" />
+                    <TextBlock Text="Активность за компьютером — клики мышью и нажатия клавиш."
+                               Style="{StaticResource StatLabelTextStyle}" Margin="2,0,0,6" />
+                    <TextBlock Text="Считается только количество кликов и нажатий — никогда не то, что именно нажато."
+                               Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0" />
                 </StackPanel>
             </Border>
 
@@ -56,7 +57,7 @@
 
                     <CheckBox x:Name="ShowProgressPanelCheck" Content="Показывать прогресс рядом с питомцем"
                               Checked="ShowProgressPanelCheck_Changed" Unchecked="ShowProgressPanelCheck_Changed" />
-                    <TextBlock Text="Компактный виджет слева от питомца: три полоски — поимка, эволюция, лакомство."
+                    <TextBlock Text="Компактный виджет слева от питомца: три кружка — поимка, эволюция, лакомство."
                                Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,14" />
 
                     <Grid>

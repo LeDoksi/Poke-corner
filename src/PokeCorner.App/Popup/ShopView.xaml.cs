@@ -97,7 +97,13 @@ public partial class ShopView : System.Windows.Controls.UserControl
         TreatPackPriceText.Text = ShopService.TreatPackPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
         CarePointsBoosterNameText.Text = $"Бустер роста (+{ShopService.CarePointsBoosterAmount:N0} CP)";
         CarePointsBoosterPriceText.Text = ShopService.CarePointsBoosterPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        CatchLuckyCharmNameText.Text = "Талисман удачи";
+        // Self-describing name, same pattern the other two consumables already use ("Пачка
+        // лакомств (5 шт)", "Бустер роста (+N CP)"). This card said only "Талисман удачи",
+        // which left the one item whose effect isn't guessable as the one item with no
+        // explanation. The multiplier is read from ShopService rather than written out, so it
+        // can't drift from the number CatchRoller actually applies; the fuller wording lives
+        // in the card's ToolTip in ShopView.xaml.
+        CatchLuckyCharmNameText.Text = $"Талисман удачи (×{ShopService.CatchLuckyCharmShinyMultiplier:0} шанс шайни)";
         CatchLuckyCharmPriceText.Text = ShopService.CatchLuckyCharmPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
 
         EggCommonNameText.Text = "Обычное яйцо";

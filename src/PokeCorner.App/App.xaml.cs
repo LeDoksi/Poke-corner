@@ -10,7 +10,6 @@ using PokeCorner.App.Overlay;
 using PokeCorner.App.Popup;
 using PokeCorner.App.Tray;
 using PokeCorner.Core;
-using PokeCorner.Core.ActivitySources;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.PokeApi;
 using PokeCorner.Core.Persistence;
@@ -24,7 +23,6 @@ public partial class App : System.Windows.Application
     private SpriteCache _spriteCache = null!;
     private PokeApiClient _pokeApiClient = null!;
     private SpeciesCatalog _speciesCatalog = null!;
-    private ClaudeCodeUsageProvider? _tokenUsageProvider;
     private GlobalInputHook? _inputHook;
     private InputEventCounter _inputCounter = null!;
     private DispatcherTimer _growthTickTimer = null!;
@@ -152,6 +150,12 @@ public partial class App : System.Windows.Application
 
         _inputCounter = new InputEventCounter();
 
+        // Unconditional: "your pet grows from your PC usage" is the app's premise, not an
+        // option, so there is no setting gating this any more. Started here on the dispatcher
+        // thread — which is exactly why OnGrowthTick must stay cheap; see its comment.
+        _inputHook = new GlobalInputHook(_inputCounter);
+        _inputHook.Start();
+
         // One second, not five: this tick is what refreshes the progress bars, and at 5s they
         // visibly lagged behind the activity the player had just generated. Everything else on
         // the tick is cheap enough to run 5x more often — except the autosave, which is
@@ -167,6 +171,21 @@ public partial class App : System.Windows.Application
         // second later on the growth tick — a visible lag now that HWND_TOP (not the topmost
         // band) is what keeps it above ordinary windows.
         _overlayWindow.ForegroundWindowChanged += ReassertOverlayTopmost;
+
+        // Keeps the progress panel glued to the pet while it is being dragged. WPF raises
+        // LocationChanged continuously throughout DragMove()'s modal move loop, which is the
+        // only signal available during a drag: OverlayWindow.SpriteImage_MouseMove hands
+        // control to DragMove() and doesn't get it back until the mouse is released, so
+        // nothing in the App layer runs until then. Repositioning used to happen only on
+        // discrete events (settings changes, the growth tick), so the panel visibly trailed
+        // the sprite by up to a second and then snapped into place.
+        _overlayWindow.LocationChanged += (_, _) =>
+        {
+            if (_progressPanelWindow is null) return;
+            _progressPanelWindow.PositionLeftOf(_overlayWindow);
+            ReassertOverlayTopmost(); // PositionLeftOf re-tops the panel; put the pet back on top of it
+        };
+
         RefreshOverlayForActiveIndividual();
 
         _fullscreenMonitor = new ForegroundWindowMonitor(
@@ -195,15 +214,24 @@ public partial class App : System.Windows.Application
         return state;
     }
 
+    /// EVERYTHING ON THIS TICK MUST STAY CHEAP — this is not a style preference, it is a
+    /// system-wide correctness constraint. This runs on the WPF dispatcher thread, which is the
+    /// thread that called SetWindowsHookEx for WH_MOUSE_LL/WH_KEYBOARD_LL (see GlobalInputHook,
+    /// started in OnStartup). Windows cannot deliver low-level input to ANY application while
+    /// the hook's owning thread is busy, so N milliseconds spent here freezes the mouse cursor
+    /// for N milliseconds across the whole desktop, once per tick.
+    ///
+    /// That is not hypothetical: the Claude Code token-usage poll used to run inline here,
+    /// walking ~/.claude/projects and JSON-parsing every session log written today. Measured at
+    /// 176-196ms per tick on a real install, it froze the cursor system-wide once a second, in
+    /// every application. (That feature is gone now — but the constraint it violated is not.)
+    /// Anything that touches the disk, the network, or a large collection belongs on a
+    /// background thread with the result handed back here, not in this method.
     private void OnGrowthTick()
     {
         ReconcileSettingsState();
 
         var units = _inputCounter.DrainUnits();
-        if (_tokenUsageProvider is not null)
-        {
-            units += _tokenUsageProvider.ReadNewUnitsSinceLastCall();
-        }
         if (units > 0)
         {
             _appState.ApplyActivityUnits(units, DateTimeOffset.UtcNow);
@@ -318,27 +346,10 @@ public partial class App : System.Windows.Application
 
     private void ReconcileSettingsState()
     {
-        if (_appState.Settings.ActivityTrackingEnabled && _inputHook is null)
-        {
-            _inputHook = new GlobalInputHook(_inputCounter);
-            _inputHook.Start();
-        }
-        else if (!_appState.Settings.ActivityTrackingEnabled && _inputHook is not null)
-        {
-            _inputHook.Dispose();
-            _inputHook = null;
-        }
-        _trayIconService.SetActivityTrackingIndicator(_appState.Settings.ActivityTrackingEnabled);
-
-        if (_appState.Settings.TokenTrackingEnabled && _tokenUsageProvider is null)
-        {
-            _tokenUsageProvider = new ClaudeCodeUsageProvider(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.claude");
-        }
-        else if (!_appState.Settings.TokenTrackingEnabled && _tokenUsageProvider is not null)
-        {
-            _tokenUsageProvider = null;
-        }
-
+        // The input hook and the Claude Code token provider used to be started/stopped here from
+        // their settings toggles. Token tracking is gone entirely, and PC activity tracking is
+        // unconditional now — the hook is started once in OnStartup — so there is nothing left
+        // to reconcile for either.
         if (_appState.Settings.AutoHideInFullscreen && !_isFullscreenMonitorRunning)
         {
             _fullscreenMonitor.Start();
@@ -804,13 +815,20 @@ public partial class App : System.Windows.Application
     /// Topmost="True" any more — that put them in the flat topmost band, where they could and
     /// did render over the taskbar and tray flyouts. See OverlayWindow.KeepAboveAppsBelowShell
     /// for why the obvious non-topmost alternative does not work either.
+    ///
+    /// ORDER MATTERS, and it used to be the wrong way round. KeepAboveAppsBelowShell inserts
+    /// its window DIRECTLY behind the taskbar, so whichever window is re-topped LAST ends up
+    /// on top of the other. Doing the overlay first and the panel second put the panel above
+    /// the pet — which is why the pet's pet/feed bounce appeared clipped wherever it grew into
+    /// the panel's rectangle. The panel goes first now, so the sprite is always the upper of
+    /// the two and can scale up over it.
     private void ReassertOverlayTopmost()
     {
-        OverlayWindow.KeepAboveAppsBelowShell(_overlayWindow);
         if (_progressPanelWindow is not null)
         {
             OverlayWindow.KeepAboveAppsBelowShell(_progressPanelWindow);
         }
+        OverlayWindow.KeepAboveAppsBelowShell(_overlayWindow);
     }
 
     private static ScreenCorner ParseCorner(string corner) => corner switch
@@ -877,6 +895,8 @@ public partial class App : System.Windows.Application
             ActiveIndividualId = _appState.Collection.ActiveIndividualId,
             Settings = _appState.Settings,
             FeedingTreats = _appState.Feeding.Treats,
+            CatchAccumulatorUnits = _appState.Activity.UnitsSinceLastCatchCheck,
+            FeedingRemainderUnits = _appState.Feeding.RemainderUnits,
             ShopCoins = _appState.Shop.Coins,
             ShopRemainderUnits = _appState.Shop.RemainderUnits,
             ShopCatchLuckyCharmActive = _appState.Shop.CatchLuckyCharmActive,

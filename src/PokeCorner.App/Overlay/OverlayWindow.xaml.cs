@@ -247,6 +247,8 @@ public partial class OverlayWindow : Window
 
     public void PlayEvolutionFlash()
     {
+        KeepAboveAppsBelowShell(this); // scales to 1.4 — same clipping risk as PlayBounce
+
         // Same held-animation precedence problem as in SetSpriteFrames: a still-holding
         // bounce (or a previous flash) would make this one start from — and be fought by —
         // a stale animated value. Clearing first means the newest animation always wins.
@@ -287,6 +289,13 @@ public partial class OverlayWindow : Window
 
     private void PlayBounce(double peakScale, int durationMs, string glyph)
     {
+        // The sprite scales up past its normal footprint here, into the space the progress
+        // panel occupies. These are two independent top-level windows with independent
+        // z-order, so being merely "usually above" the panel is not enough — a bounce that
+        // starts while the panel happens to sit on top gets visibly clipped. App's periodic
+        // re-top already orders the pair correctly; this pins it at the one moment it shows.
+        KeepAboveAppsBelowShell(this);
+
         ClearScaleAnimations();
 
         var bounce = new DoubleAnimation(1.0, peakScale, TimeSpan.FromMilliseconds(durationMs / 2.0))

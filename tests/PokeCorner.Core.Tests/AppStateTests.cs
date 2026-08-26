@@ -174,6 +174,59 @@ public class AppStateTests
         Assert.Equal(careState.RanAwayUntilUtc, state.CareStateByIndividualId[individual.Id].RanAwayUntilUtc);
     }
 
+    /// Regression for the "прогресс сбрасывается при перезапуске" report: the catch and treat
+    /// accumulators had no SaveData field at all, so both bars restarted at zero on every
+    /// launch while evolution progress (a per-individual field) survived. Asserts all three
+    /// remainder counters — including the coin one, which already worked — so a future schema
+    /// change can't quietly drop one of them again.
+    [Fact]
+    public void Hydrate_RestoresCatchTreatAndCoinProgressCounters()
+    {
+        var state = new AppState();
+        var data = new SaveData
+        {
+            Individuals = new List<PokemonIndividual>(),
+            Settings = new AppSettings(),
+            CatchAccumulatorUnits = 12_345,
+            FeedingRemainderUnits = 678,
+            ShopRemainderUnits = 910
+        };
+
+        state.Hydrate(data);
+
+        Assert.Equal(12_345, state.Activity.UnitsSinceLastCatchCheck);
+        Assert.Equal(678, state.Feeding.RemainderUnits);
+        Assert.Equal(910, state.Shop.RemainderUnits);
+    }
+
+    /// The other half of the round trip: what PersistState writes must be what Hydrate reads.
+    /// App.PersistState builds the SaveData by hand, so this asserts the mapping's shape from
+    /// a live AppState rather than trusting the field names to line up.
+    [Fact]
+    public void ProgressCounters_SurviveASaveDataRoundTrip()
+    {
+        var original = new AppState();
+        original.Activity.AddUnits(4_321);
+        original.Feeding.RemainderUnits = 222;
+        original.Shop.RemainderUnits = 333;
+
+        var saved = new SaveData
+        {
+            Individuals = original.Collection.Individuals.ToList(),
+            Settings = original.Settings,
+            CatchAccumulatorUnits = original.Activity.UnitsSinceLastCatchCheck,
+            FeedingRemainderUnits = original.Feeding.RemainderUnits,
+            ShopRemainderUnits = original.Shop.RemainderUnits
+        };
+
+        var reloaded = new AppState();
+        reloaded.Hydrate(saved);
+
+        Assert.Equal(4_321, reloaded.Activity.UnitsSinceLastCatchCheck);
+        Assert.Equal(222, reloaded.Feeding.RemainderUnits);
+        Assert.Equal(333, reloaded.Shop.RemainderUnits);
+    }
+
     [Fact]
     public void Hydrate_CopiesAllAppSettingsProperties()
     {
@@ -181,8 +234,6 @@ public class AppStateTests
         var settings = new AppSettings
         {
             CareMode = CareMode.Hardcore,
-            TokenTrackingEnabled = true,
-            ActivityTrackingEnabled = false,
             AutoHideInFullscreen = false,
             StartWithWindows = true,
             ScreenCorner = "TopLeft",
@@ -200,8 +251,6 @@ public class AppStateTests
         state.Hydrate(data);
 
         Assert.Equal(CareMode.Hardcore, state.Settings.CareMode);
-        Assert.True(state.Settings.TokenTrackingEnabled);
-        Assert.False(state.Settings.ActivityTrackingEnabled);
         Assert.False(state.Settings.AutoHideInFullscreen);
         Assert.True(state.Settings.StartWithWindows);
         Assert.Equal("TopLeft", state.Settings.ScreenCorner);

@@ -126,6 +126,12 @@ public class ThemeRenderingTests
             }
         });
 
+    /// CollectionView's root is a Grid now, not the TabControl itself — the Pokédex detail card
+    /// became an overlay layer inside the view (it used to be a separate Window), and an
+    /// overlay needs a sibling to overlay. The tabs are still the first layer.
+    private static TabControl CollectionTabs(CollectionView view) =>
+        (TabControl)((Grid)view.Content).Children[0];
+
     [Fact]
     public void CollectionView_BothTabs_LayOutWithRealData() =>
         WpfTestHost.Run(() =>
@@ -133,7 +139,7 @@ public class ThemeRenderingTests
             var view = BuildCollectionView();
             WpfTestHost.Layout(view);
 
-            var tabs = (TabControl)view.Content;
+            var tabs = CollectionTabs(view);
             Assert.Equal(2, tabs.Items.Count);
 
             // Only the selected tab's content is realized, so the Pokédex card template is
@@ -221,7 +227,7 @@ public class ThemeRenderingTests
             var view = BuildCollectionView();
             WpfTestHost.Layout(view);
 
-            var tabs = (TabControl)view.Content;
+            var tabs = CollectionTabs(view);
             var homeTab = (TabItem)tabs.Items[0];
             var pokedexTab = (TabItem)tabs.Items[1];
 
@@ -239,6 +245,92 @@ public class ThemeRenderingTests
                     $"{name} should still sit under the home tab.");
             }
         });
+
+    /// Item 9: the three single-purpose dialogs no longer render inside the stock light OS
+    /// title bar. All three must resolve the SHARED DialogWindowStyle — asserting on style
+    /// identity rather than on each window's own markup is what keeps them from drifting apart
+    /// again — and that style must suppress the OS chrome and supply the app's own header.
+    ///
+    /// StarterSelectionWindow is the reason this is a test rather than three screenshots: it
+    /// only ever appears on a genuine first run, which is not reachable while a save file
+    /// exists.
+    [Fact]
+    public void DialogWindows_AllUseTheSharedThemedChromeInsteadOfTheOsTitleBar() =>
+        WpfTestHost.Run(() =>
+        {
+            var expected = (Style)Application.Current.Resources["DialogWindowStyle"];
+
+            var windows = new System.Windows.Window[]
+            {
+                new PokeCorner.App.Onboarding.OnboardingWindow(),
+                new PokeCorner.App.Onboarding.StarterSelectionWindow(
+                    new List<SpeciesEvolutionChain>(),
+                    _ => Task.FromResult<byte[]?>(null),
+                    _ => Task.FromResult<IReadOnlyList<byte[]>?>(null)),
+                new PokeCorner.App.Popup.ConfirmDialog("Заголовок", "Тело", "OK")
+            };
+
+            foreach (var window in windows)
+            {
+                Assert.Same(expected, window.Style);
+
+                // No OS caption: the header comes from the style's own template instead.
+                Assert.Equal(WindowStyle.None, window.WindowStyle);
+
+                var chrome = System.Windows.Shell.WindowChrome.GetWindowChrome(window);
+                Assert.NotNull(chrome);
+                // The strip's height, and what makes it draggable without a DragMove handler.
+                Assert.Equal(36, chrome.CaptionHeight);
+
+                window.Close();
+            }
+        });
+
+    /// Item 8: the Pokédex detail card is an in-view overlay, not a separate OS window, and a
+    /// click on the dimmed backdrop closes it while a click on the card itself does not.
+    /// Drives the real routed events the app uses rather than calling the handlers directly,
+    /// so the card's own e.Handled=true is genuinely what stops the backdrop from firing.
+    [Fact]
+    public void CollectionView_PokedexDetail_IsAnInViewOverlayThatClosesOnOutsideClick() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildCollectionView();
+            WpfTestHost.Layout(view);
+            CollectionTabs(view).SelectedIndex = 1; // the grid only realizes on its own tab
+            WpfTestHost.Layout(view);
+
+            var overlay = (Border)view.FindName("DetailOverlay")!;
+            Assert.Equal(Visibility.Collapsed, overlay.Visibility);
+            Assert.True(Panel.GetZIndex(overlay) > 0, "the detail overlay must sit above the tabs");
+
+            // No second Window anywhere: the whole point of the change.
+            Assert.DoesNotContain(
+                System.Windows.Application.Current.Windows.Cast<System.Windows.Window>(),
+                w => w.GetType().Name == "PokemonDetailWindow");
+
+            var card = Descendants(view).OfType<Border>()
+                .First(b => b.DataContext is PokedexCard && b.Tag is Guid);
+            card.RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+            Assert.Equal(Visibility.Visible, overlay.Visibility);
+            // The overlay renders the card that was clicked, not a blank shell.
+            Assert.Equal(((PokedexCard)card.DataContext).SpeciesName,
+                ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
+
+            // A click INSIDE the card must not close it.
+            var detailCard = (Border)overlay.Child;
+            detailCard.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
+            Assert.Equal(Visibility.Visible, overlay.Visibility);
+
+            // A click on the dimmed backdrop must.
+            overlay.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
+            Assert.Equal(Visibility.Collapsed, overlay.Visibility);
+        });
+
+    private static System.Windows.Input.MouseButtonEventArgs MouseDown(RoutedEvent routedEvent) =>
+        new(System.Windows.Input.Mouse.PrimaryDevice, 0, System.Windows.Input.MouseButton.Left)
+        {
+            RoutedEvent = routedEvent
+        };
 
     /// Item 2a: selecting a rarity pill narrows the species grid, and "Все" restores it.
     [Fact]
@@ -342,17 +434,36 @@ public class ThemeRenderingTests
             Assert.Same(Application.Current.Resources["MutedTextBrush"], cards[1].FavoriteStroke);
         });
 
-    /// Item 7: the desktop panel, redesigned again — from three radial gauges below the pet
-    /// into three vertical bars beside it. Each fill is a bottom-anchored Border whose Height
-    /// is its fraction of the 46px track, so "the bar is filled correctly" is exactly
-    /// "Height == 46 * fraction". This is the check that fails if the fill is ever driven off
-    /// a different constant than the track's own height.
+    /// Lays the panel out and returns its content root, so the assertions below can read real
+    /// ActualWidth/ActualHeight rather than the unarranged defaults.
+    private static FrameworkElement LayOutProgressPanel(PokeCorner.App.Overlay.ProgressPanelWindow panel)
+    {
+        var root = (FrameworkElement)panel.Content;
+        root.Measure(new Size(panel.Width, double.PositiveInfinity));
+        root.Arrange(new Rect(0, 0, panel.Width, root.DesiredSize.Height));
+        root.UpdateLayout();
+        return root;
+    }
+
+    /// The full circumference of one gauge ring in StrokeDashArray's units, derived from the
+    /// arc's OWN laid-out size rather than from a number copied out of the code-behind. That is
+    /// the point: if ProgressPanelWindow's GaugeDiameter/GaugeStrokeThickness constants ever
+    /// drift from the XAML that actually sizes the Ellipse, every fraction below goes wrong and
+    /// these tests say so.
+    private static double DashUnitsPerTurn(System.Windows.Shapes.Ellipse arc) =>
+        Math.PI * (arc.ActualWidth - arc.StrokeThickness) / arc.StrokeThickness;
+
+    /// Item 1: the desktop panel is three filling CIRCLES again (the intervening redesign's
+    /// vertical bars were not what was asked for), now stacked in a vertical column. Each ring
+    /// is an Ellipse whose StrokeDashArray makes one dash cover `fraction` of the circumference
+    /// — so "the gauge is filled correctly" is exactly "dash length == circumference * fraction".
     [Fact]
-    public void ProgressPanelWindow_VerticalBarsFillTheirFractionOfTheTrack() =>
+    public void ProgressPanelWindow_CircularGaugesFillTheirFractionOfTheRing() =>
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
             panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75));
+            LayOutProgressPanel(panel);
 
             var expected = new Dictionary<string, double>
             {
@@ -363,68 +474,76 @@ public class ThemeRenderingTests
 
             foreach (var (concept, fraction) in expected)
             {
-                var fill = (Border)panel.FindName($"{concept}Fill")!;
-                var track = (FrameworkElement)panel.FindName($"{concept}Track")!;
+                var arc = (System.Windows.Shapes.Ellipse)panel.FindName($"{concept}Arc")!;
 
-                Assert.Equal(track.Height * fraction, fill.Height, precision: 2);
-                Assert.Equal(VerticalAlignment.Bottom, fill.VerticalAlignment); // grows upward
+                Assert.Equal(DashUnitsPerTurn(arc) * fraction, arc.StrokeDashArray[0], precision: 2);
+
+                // Rotated so the ring starts filling at 12 o'clock, not 3 o'clock.
+                Assert.Equal(-90, ((RotateTransform)arc.RenderTransform).Angle);
             }
         });
 
-    /// An empty bar must render as nothing at all — a zero Height, not a stub of rounded cap.
-    /// A full one must reach the top of its track rather than stopping a pixel short.
+    /// An empty gauge must render as nothing at all. It cannot simply be a zero-length dash:
+    /// StrokeDashCap="Round" paints a zero-length dash as a round dot, which would leave a
+    /// stray pip at 12 o'clock on an empty ring — so the arc is hidden outright instead.
+    /// A full one must close the ring rather than stopping short.
     [Fact]
-    public void ProgressPanelWindow_EmptyBarIsZeroHeightAndAFullBarFillsTheTrack() =>
+    public void ProgressPanelWindow_EmptyGaugeIsHiddenAndAFullGaugeClosesTheRing() =>
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
             panel.UpdateProgress(new ProgressInfo(0.0, 1.0, 0.0));
+            LayOutProgressPanel(panel);
 
-            Assert.Equal(0, ((Border)panel.FindName("CatchFill")!).Height);
-            Assert.Equal(0, ((Border)panel.FindName("TreatFill")!).Height);
+            Assert.Equal(Visibility.Hidden, ((System.Windows.Shapes.Ellipse)panel.FindName("CatchArc")!).Visibility);
+            Assert.Equal(Visibility.Hidden, ((System.Windows.Shapes.Ellipse)panel.FindName("TreatArc")!).Visibility);
 
-            var full = (Border)panel.FindName("EvolutionFill")!;
-            var track = (FrameworkElement)panel.FindName("EvolutionTrack")!;
-            Assert.Equal(track.Height, full.Height);
+            var full = (System.Windows.Shapes.Ellipse)panel.FindName("EvolutionArc")!;
+            Assert.Equal(Visibility.Visible, full.Visibility);
+            Assert.Equal(DashUnitsPerTurn(full), full.StrokeDashArray[0], precision: 2);
         });
 
-    /// The panel keeps a real explicit width (the sizing-collapse fix), stays narrow now that
-    /// it stands beside the pet rather than under it, and gives each of the three concepts its
-    /// own semantic colour AND its own icon — the icon being the half a colour alone can't say.
+    /// The panel keeps a real explicit width (the sizing-collapse fix), and item 1's actual
+    /// ask: the three gauges stand one ABOVE another in a single narrow column to the pet's
+    /// left, each with its own semantic colour AND its own icon inside the ring — the icon
+    /// being the half a colour alone can't say.
     [Fact]
-    public void ProgressPanelWindow_IsNarrowWithThreeDistinctlyColoredIconLabelledBars() =>
+    public void ProgressPanelWindow_IsANarrowVerticalColumnOfIconLabelledGauges() =>
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
             panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75));
-
-            var root = (FrameworkElement)panel.Content;
-            root.Measure(new Size(panel.Width, double.PositiveInfinity));
-            root.Arrange(new Rect(0, 0, panel.Width, root.DesiredSize.Height));
-            root.UpdateLayout();
+            var root = LayOutProgressPanel(panel);
 
             Assert.True(panel.Width > 0, "the panel collapsed to zero width");
             Assert.Equal(SizeToContent.Height, panel.SizeToContent);
 
-            // Narrow: it is a vertical strip beside the pet, not a wide row under it.
-            Assert.True(panel.Width <= 110, $"panel is {panel.Width}px wide");
+            // Narrow: one gauge wide, so it fits beside the pet without fighting the taskbar.
+            Assert.True(panel.Width <= 80, $"panel is {panel.Width}px wide");
 
-            var fills = new[] { "CatchFill", "EvolutionFill", "TreatFill" }
-                .Select(name => (Border)panel.FindName(name)!)
+            var arcs = new[] { "CatchArc", "EvolutionArc", "TreatArc" }
+                .Select(name => (System.Windows.Shapes.Ellipse)panel.FindName(name)!)
                 .ToList();
 
-            var colors = fills.Select(f => ((SolidColorBrush)f.Background).Color).ToList();
+            var colors = arcs.Select(a => ((SolidColorBrush)a.Stroke).Color).ToList();
             Assert.Equal(3, colors.Distinct().Count());
 
-            foreach (var concept in new[] { "Catch", "Evolution", "Treat" })
+            // Stacked one under the other, NOT side by side: each gauge's top is strictly
+            // below the previous one's, and they all share the same left edge.
+            var tops = arcs.Select(a => a.TransformToAncestor(root).Transform(new Point(0, 0))).ToList();
+            Assert.True(tops[1].Y > tops[0].Y, "evolution gauge is not below the catch gauge");
+            Assert.True(tops[2].Y > tops[1].Y, "treat gauge is not below the evolution gauge");
+            Assert.Equal(tops[0].X, tops[1].X, precision: 2);
+            Assert.Equal(tops[0].X, tops[2].X, precision: 2);
+
+            // Big enough to read a fill level on at a glance.
+            foreach (var arc in arcs)
             {
-                var track = (FrameworkElement)panel.FindName($"{concept}Track")!;
-                Assert.True(track.Height >= 30, $"bar track is only {track.Height}px tall");
-                Assert.True(track.Width >= 6, $"bar is only {track.Width}px wide");
+                Assert.True(arc.ActualWidth >= 30, $"gauge is only {arc.ActualWidth}px across");
             }
 
-            // Item 6: one icon per concept, and they must be the SHARED theme styles so the
-            // in-app progress card renders the identical glyphs.
+            // One icon per concept, and they must be the SHARED theme styles so the in-app
+            // progress card renders the identical glyphs.
             var icons = Descendants(root).OfType<ContentControl>().ToList();
             var iconStyles = icons.Select(i => i.Style).ToList();
             Assert.Equal(3, iconStyles.Distinct().Count());

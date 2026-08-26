@@ -101,6 +101,69 @@
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
     </Style>
 
+    <!-- The single-purpose dialogs' chrome: onboarding, starter selection and ConfirmDialog.
+         They kept AppWindowStyle's dark palette but sat inside the stock light OS title bar,
+         which is what made them read as foreign next to AppMenuWindow's custom header.
+
+         A shared Style rather than a header strip copied into each of the three windows —
+         the strip is identical in all of them, and the only per-window difference is the
+         Title, which the template binds.
+
+         Simpler than AppMenuWindow's header on purpose: no minimize/maximize (all three are
+         ResizeMode="NoResize"), and no close button either — each of these is dismissed by
+         its own buttons (Пропустить / Выбрать / Отмена, plus Esc on ConfirmDialog), so an X
+         would be a fourth way to say the same thing.
+
+         WindowChrome, not WindowStyle="None" + AllowsTransparency, for the reason recorded in
+         AppMenuWindow.xaml: transparency gives up hardware rendering and correct window
+         behaviour. CaptionHeight="36" matches the strip's height and is what makes it draggable
+         — the OS treats that band as the caption, so no DragMove handler is needed anywhere.
+         ResizeBorderThickness="0" because none of these three resize. -->
+    <Style x:Key="DialogWindowStyle" TargetType="Window" BasedOn="{StaticResource AppWindowStyle}">
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="36" ResizeBorderThickness="0"
+                              CornerRadius="0" GlassFrameThickness="0" UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border Background="{StaticResource WindowBackgroundBrush}"
+                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Same pokéball-plus-wordmark vocabulary as AppMenuWindow's brand
+                                 strip, at dialog scale. -->
+                            <StackPanel Grid.Row="0" Height="36" Orientation="Horizontal"
+                                        Margin="14,0" VerticalAlignment="Center">
+                                <Grid Width="18" Height="18" Margin="0,0,9,0" VerticalAlignment="Center">
+                                    <Ellipse Stroke="{StaticResource AccentRedBrush}" StrokeThickness="2" />
+                                    <Border Height="2" Background="{StaticResource AccentRedBrush}" VerticalAlignment="Center" />
+                                    <Ellipse Width="6.5" Height="6.5" Fill="{StaticResource WindowBackgroundBrush}"
+                                             Stroke="{StaticResource AccentRedBrush}" StrokeThickness="2"
+                                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                                <TextBlock Text="{TemplateBinding Title}" VerticalAlignment="Center"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="{StaticResource SecondaryTextBrush}" />
+                            </StackPanel>
+
+                            <AdornerDecorator Grid.Row="1">
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Deliberately NO implicit `Style TargetType="TextBlock"` with a Foreground setter.
          Application-level implicit styles also hit the TextBlock that a ContentPresenter
          generates for string content, which would force button/checkbox captions to

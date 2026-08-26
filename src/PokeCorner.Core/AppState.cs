@@ -94,8 +94,6 @@ public sealed class AppState
         }
 
         Settings.CareMode = data.Settings.CareMode;
-        Settings.TokenTrackingEnabled = data.Settings.TokenTrackingEnabled;
-        Settings.ActivityTrackingEnabled = data.Settings.ActivityTrackingEnabled;
         Settings.AutoHideInFullscreen = data.Settings.AutoHideInFullscreen;
         Settings.StartWithWindows = data.Settings.StartWithWindows;
         Settings.ScreenCorner = data.Settings.ScreenCorner;
@@ -104,7 +102,10 @@ public sealed class AppState
         Settings.ShowProgressPanel = data.Settings.ShowProgressPanel;
         Settings.SuperHardcoreEnabled = data.Settings.SuperHardcoreEnabled;
 
+        Activity.UnitsSinceLastCatchCheck = data.CatchAccumulatorUnits;
+
         Feeding.Treats = data.FeedingTreats;
+        Feeding.RemainderUnits = data.FeedingRemainderUnits;
 
         Shop.Coins = data.ShopCoins;
         Shop.RemainderUnits = data.ShopRemainderUnits;
