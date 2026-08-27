@@ -40,27 +40,28 @@ The publish layout is pinned — `PokeCorner.exe`, five WPF native DLLs, and `Da
 
 ## Where the app keeps its data
 
-Everything except the executable lives in `<InstallDir>\Data\`:
+Shared assets — identical for every account on the machine — ship with the install in
+`<InstallDir>\Data\`. Personal save progress does not; it stays per-user in `%APPDATA%`:
 
 | File | Origin |
 |---|---|
 | `Data\sprites\{id}.png` | shipped pre-seeded (643 files) |
 | `Data\animated\{id}.gif` | shipped pre-seeded (638 files) |
 | `Data\catalog.json` | shipped pre-seeded, linked from `OfflineStarterFallback.json` |
-| `Data\state.json` | created by the app at runtime; **not** an MSI component |
+| `%APPDATA%\PokeCorner\state.json` | created by the app at runtime; **not** an MSI component |
 
-Nothing is stored in `%APPDATA%`. Because the seeded sprites and catalog are already on
-disk, a fresh install makes **zero network calls** on first launch.
+Because the seeded sprites and catalog are already on disk, a fresh install makes **zero
+network calls** on first launch.
 
-`state.json` is written by the app, not installed by MSI, so MSI never deletes it: it
-survives upgrades *and* uninstalls. After an uninstall, `<InstallDir>\Data\state.json` is
-deliberately left behind — that is the save file being protected, not a bug. Delete the
-folder by hand if you want it gone.
+`state.json` lives outside the package entirely, and an MSI never manages a user profile,
+so it survives upgrades *and* uninstalls while `<InstallDir>` is removed completely. Each
+Windows account keeps its own save rather than sharing one.
 
 ### Write permissions
 
 `Product.wxs` grants the `Users` group full control on `Data\` via `util:PermissionEx`,
-because the app runs unelevated but must write `state.json` there. The grant is scoped to
+because the app runs unelevated but must cache newly fetched sprites and refresh the
+catalog there. The grant is scoped to
 `Data\` only — `PokeCorner.exe` and the runtime DLLs stay read-only for standard users, so
 this is not a "swap the binary" escalation path. The ACEs are inheritable, so `sprites\`
 and `animated\` are writable too (needed: a species missing from the seed is still fetched

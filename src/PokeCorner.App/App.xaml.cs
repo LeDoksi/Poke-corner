@@ -194,8 +194,6 @@ public partial class App : System.Windows.Application
             ReassertOverlayTopmost(); // PositionLeftOf re-tops the panel; put the pet back on top of it
         };
 
-        RefreshOverlayForActiveIndividual();
-
         _fullscreenMonitor = new ForegroundWindowMonitor(
             onFullscreenEntered: () => { _isFullscreenHiding = true; RefreshOverlayForActiveIndividual(); },
             onFullscreenExited: () => { _isFullscreenHiding = false; RefreshOverlayForActiveIndividual(); });
@@ -206,6 +204,16 @@ public partial class App : System.Windows.Application
         _trayIconService.OpenShopRequested += () => OpenMenu(ShopTabIndex);
         _trayIconService.CatchRequested += () => OpenMenu(CatchTabIndex);
         _trayIconService.ExitRequested += () => Shutdown();
+
+        // MUST come after _trayIconService exists, not before it. This is async void, and its
+        // first await only suspends when the sprite actually has to be read from disk — after
+        // onboarding the starter's GIF is already in _animatedSpriteCache (the starter picker
+        // put it there), so the await completes synchronously and the method runs straight
+        // through to _trayIconService.SetSpriteIcon in the same call. Sited above the tray
+        // service's construction, that dereferenced null and crashed the app on first run
+        // right after the tutorial — intermittently, since a species whose sprite does have to
+        // be read from disk suspends instead and resumes safely after OnStartup returns.
+        RefreshOverlayForActiveIndividual();
 
         ReconcileSettingsState();
 
