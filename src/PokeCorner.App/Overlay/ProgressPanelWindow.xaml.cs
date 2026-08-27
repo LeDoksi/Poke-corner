@@ -28,8 +28,14 @@ public partial class ProgressPanelWindow : System.Windows.Window
     public void UpdateProgress(ProgressInfo progress)
     {
         SetGauge(CatchArc, progress.CatchFraction);
-        SetGauge(EvolutionArc, progress.EvolutionFraction);
         SetGauge(TreatArc, progress.TreatFraction);
+
+        // The evolution ring is the one gauge whose "full" is ambiguous, so it renders through
+        // the shared display helper: empty and dimmed for a species that never evolves, full
+        // for one that reached its final form, and the tooltip says which.
+        SetGauge(EvolutionArc, EvolutionProgressDisplay.BarValue(progress.EvolutionFraction, progress.EvolutionState));
+        EvolutionGauge.Opacity = EvolutionProgressDisplay.BarOpacity(progress.EvolutionState);
+        EvolutionGauge.ToolTip = EvolutionProgressDisplay.ToolTip(progress.EvolutionFraction, progress.EvolutionState);
     }
 
     /// Draws `fraction` of a ring by making the stroke a single dash that covers that much of

@@ -96,4 +96,48 @@ public class PokeApiClientTests
 
         Assert.Contains("not-a-number", ex.Message);
     }
+
+    /// Types come off the SAME pokemon/{id}/ body FetchAnimatedSpriteAsync already reads.
+    /// Slots are returned out of order here on purpose: PokeAPI's ordering is not guaranteed
+    /// and a Butterfree must read "Bug, Flying", never "Flying, Bug".
+    [Fact]
+    public async Task FetchTypesAsync_ReturnsTypeNamesInSlotOrder()
+    {
+        const string json = """
+        {
+            "types": [
+                { "slot": 2, "type": { "name": "flying", "url": "https://pokeapi.co/api/v2/type/3/" } },
+                { "slot": 1, "type": { "name": "bug", "url": "https://pokeapi.co/api/v2/type/7/" } }
+            ]
+        }
+        """;
+        var client = new PokeApiClient(new StubHandler(json));
+
+        var types = await client.FetchTypesAsync(speciesId: 12);
+
+        Assert.Equal(new[] { "bug", "flying" }, types);
+    }
+
+    [Fact]
+    public async Task FetchTypesAsync_SingleType_ReturnsOneEntry()
+    {
+        const string json = """{ "types": [ { "slot": 1, "type": { "name": "electric" } } ] }""";
+        var client = new PokeApiClient(new StubHandler(json));
+
+        Assert.Equal(new[] { "electric" }, await client.FetchTypesAsync(speciesId: 25));
+    }
+
+    /// A species whose types are missing or malformed must degrade to "no badges" rather than
+    /// throwing — one odd entry cannot be allowed to abort a 649-species catalog crawl.
+    [Theory]
+    [InlineData("{}")]
+    [InlineData("""{ "types": [] }""")]
+    [InlineData("""{ "types": "not-an-array" }""")]
+    [InlineData("""{ "types": [ { "slot": 1 } ] }""")]
+    public async Task FetchTypesAsync_MissingOrMalformedTypes_ReturnsEmptyInsteadOfThrowing(string json)
+    {
+        var client = new PokeApiClient(new StubHandler(json));
+
+        Assert.Empty(await client.FetchTypesAsync(speciesId: 1));
+    }
 }

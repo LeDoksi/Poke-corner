@@ -350,4 +350,129 @@ public class CollectionViewModelTests
         Assert.True(entries.Single().IsReady);
         Assert.Equal(1.0, entries.Single().HatchFraction);
     }
+
+    // ============ Type badges (Part B) and the spoiler-safe chain preview (Part C) ============
+
+    private static readonly SpeciesEvolutionChain CaterpieLine = new(
+        ChainId: 3, StarterSpeciesId: 10, CaptureRate: 255, ChainLength: 3,
+        StageSpeciesIds: new[] { 10, 11, 12 },
+        StageSpeciesNames: new[] { "Caterpie", "Metapod", "Butterfree" },
+        StageTypes: new[] { new[] { "bug" }, new[] { "bug" }, new[] { "bug", "flying" } });
+
+    private static CollectionViewModel MakeVm(PokemonIndividual individual, params SpeciesEvolutionChain[] chains)
+    {
+        var collection = new PokemonCollection();
+        collection.Add(individual);
+        return new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(),
+            CareMode.Chill, chains, new List<PendingEgg>());
+    }
+
+    /// Types follow the CURRENT stage, not the starter species — an evolved Butterfree is
+    /// Bug/Flying even though its individual is permanently SpeciesId 10.
+    [Fact]
+    public void GetEntries_TypesFollowTheCurrentEvolutionStage()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3);
+        var vm = MakeVm(individual, CaterpieLine);
+
+        Assert.Equal(new[] { "bug" }, vm.GetEntries(DateTimeOffset.UtcNow).Single().Types);
+
+        individual.CurrentStage = EvolutionStage.Stage3;
+
+        Assert.Equal(new[] { "bug", "flying" }, vm.GetEntries(DateTimeOffset.UtcNow).Single().Types);
+    }
+
+    /// THE spoiler rule: an unreached stage must carry no id, no name and no types. Asserted on
+    /// the MODEL rather than on the rendered card, because that is where the guarantee lives —
+    /// if the identity never enters the model, no template can leak it.
+    [Fact]
+    public void GetEntries_EvolutionPreview_HidesTheIdentityOfUnreachedStages()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3); // fresh catch => Stage1
+        var stages = MakeVm(individual, CaterpieLine).GetEntries(DateTimeOffset.UtcNow).Single().EvolutionStages;
+
+        Assert.Equal(3, stages.Count);
+
+        Assert.True(stages[0].IsRevealed);
+        Assert.Equal("Caterpie", stages[0].SpeciesName);
+        Assert.True(stages[0].IsCurrent);
+
+        foreach (var hidden in stages.Skip(1))
+        {
+            Assert.False(hidden.IsRevealed);
+            Assert.Null(hidden.SpeciesId);
+            Assert.Null(hidden.SpeciesName);
+            Assert.Empty(hidden.Types);
+            Assert.False(hidden.IsCurrent);
+        }
+    }
+
+    /// Evolving reveals exactly one more stage — and no further.
+    [Fact]
+    public void GetEntries_EvolutionPreview_RevealsStagesUpToTheOneReached()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3);
+        individual.CurrentStage = EvolutionStage.Stage2;
+
+        var stages = MakeVm(individual, CaterpieLine).GetEntries(DateTimeOffset.UtcNow).Single().EvolutionStages;
+
+        Assert.True(stages[0].IsRevealed);
+        Assert.Equal("Metapod", stages[1].SpeciesName);
+        Assert.True(stages[1].IsCurrent);
+
+        // The final form is still a mystery until it is actually reached.
+        Assert.False(stages[2].IsRevealed);
+        Assert.Null(stages[2].SpeciesName);
+    }
+
+    [Fact]
+    public void GetEntries_EvolutionPreview_FullyEvolved_RevealsTheWholeLine()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3);
+        individual.CurrentStage = EvolutionStage.Stage3;
+
+        var stages = MakeVm(individual, CaterpieLine).GetEntries(DateTimeOffset.UtcNow).Single().EvolutionStages;
+
+        Assert.All(stages, stage => Assert.True(stage.IsRevealed));
+        Assert.Equal("Butterfree", stages[2].SpeciesName);
+        Assert.True(stages[2].IsCurrent);
+    }
+
+    /// A single-stage species has no line to preview, so the section renders nothing at all
+    /// rather than a confusing one-node "chain".
+    [Fact]
+    public void GetEntries_EvolutionPreview_SingleStageSpecies_IsEmpty()
+    {
+        var emolga = new PokemonIndividual
+        {
+            SpeciesId = 587, EvolutionChainId = 298, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow
+        };
+        var chain = new SpeciesEvolutionChain(
+            ChainId: 298, StarterSpeciesId: 587, CaptureRate: 200, ChainLength: 1,
+            StageSpeciesIds: new[] { 587 }, StageSpeciesNames: new[] { "Emolga" },
+            StageTypes: new[] { new[] { "electric", "flying" } });
+
+        var entry = MakeVm(emolga, chain).GetEntries(DateTimeOffset.UtcNow).Single();
+
+        Assert.Empty(entry.EvolutionStages);
+        // ...but it still shows its types, and still reads as "never evolves".
+        Assert.Equal(new[] { "electric", "flying" }, entry.Types);
+        Assert.Equal(EvolutionProgressState.NeverEvolves, entry.EvolutionState);
+    }
+
+    /// An old catalog with no type data must degrade to "no badges", never to a crash.
+    [Fact]
+    public void GetEntries_ChainWithoutTypeData_YieldsNoTypesInsteadOfThrowing()
+    {
+        var untyped = new SpeciesEvolutionChain(
+            ChainId: 3, StarterSpeciesId: 10, CaptureRate: 255, ChainLength: 3,
+            StageSpeciesIds: new[] { 10, 11, 12 },
+            StageSpeciesNames: new[] { "Caterpie", "Metapod", "Butterfree" });
+
+        var entry = MakeVm(MakeIndividual(10, evolutionChainId: 3), untyped).GetEntries(DateTimeOffset.UtcNow).Single();
+
+        Assert.Empty(entry.Types);
+        Assert.Equal(3, entry.EvolutionStages.Count);
+    }
 }

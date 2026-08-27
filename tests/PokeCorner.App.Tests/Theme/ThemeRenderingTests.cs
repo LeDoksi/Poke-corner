@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -462,7 +462,7 @@ public class ThemeRenderingTests
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
-            panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75));
+            panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75, EvolutionProgressState.InProgress));
             LayOutProgressPanel(panel);
 
             var expected = new Dictionary<string, double>
@@ -492,7 +492,7 @@ public class ThemeRenderingTests
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
-            panel.UpdateProgress(new ProgressInfo(0.0, 1.0, 0.0));
+            panel.UpdateProgress(new ProgressInfo(0.0, 1.0, 0.0, EvolutionProgressState.InProgress));
             LayOutProgressPanel(panel);
 
             Assert.Equal(Visibility.Hidden, ((System.Windows.Shapes.Ellipse)panel.FindName("CatchArc")!).Visibility);
@@ -512,7 +512,7 @@ public class ThemeRenderingTests
         WpfTestHost.Run(() =>
         {
             var panel = new PokeCorner.App.Overlay.ProgressPanelWindow();
-            panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75));
+            panel.UpdateProgress(new ProgressInfo(0.5, 0.25, 0.75, EvolutionProgressState.InProgress));
             var root = LayOutProgressPanel(panel);
 
             Assert.True(panel.Width > 0, "the panel collapsed to zero width");
@@ -962,6 +962,98 @@ public class ThemeRenderingTests
             // Ready-to-evolve is true so the "Эволюционировать!" button is actually visible
             // during these layout/theme assertions rather than collapsed out of the tree.
             () => true, () => true);
+    }
+
+    /// The badge must carry the type's NAME as rendered text, not just a colour. Asserted by
+    /// walking the realized visual tree for a TextBlock actually reading "Fire" — a colour-only
+    /// swatch, or a badge whose text got dropped for space, fails here.
+    [Fact]
+    public void CollectionView_TypeBadges_RenderTheTypeNameAsVisibleText() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            appState.Collection.Add(NewIndividual(speciesId: 4, chainId: 4));
+            var chains = new[]
+            {
+                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 },
+                    new[] { "Charmander", "Charmeleon", "Charizard" },
+                    new[] { new[] { "fire" }, new[] { "fire" }, new[] { "fire", "flying" } })
+            };
+            var view = BuildCollectionView(appState, chains);
+            WpfTestHost.Layout(view);
+
+            var badges = (System.Windows.Controls.ItemsControl)view.FindName("ActiveTypeBadges")!;
+            var labels = Descendants<TextBlock>(badges).Select(t => t.Text).ToList();
+
+            Assert.Contains("Fire", labels);
+            Assert.All(Descendants<TextBlock>(badges), t => Assert.False(string.IsNullOrWhiteSpace(t.Text)));
+        });
+
+    /// Part A, at the pixel level: a single-stage individual must NOT show "100%" anywhere on
+    /// the progress card — it must say it does not evolve, with an empty bar.
+    [Fact]
+    public void CollectionView_SingleStageIndividual_ShowsNeverEvolvesInsteadOf100Percent() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            appState.Collection.Add(new PokemonIndividual
+            {
+                SpeciesId = 587, EvolutionChainId = 298, ChainLength = 1,
+                Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow
+            });
+            var chains = new[]
+            {
+                new SpeciesEvolutionChain(298, 587, 200, 1, new[] { 587 }, new[] { "Emolga" },
+                    new[] { new[] { "electric", "flying" } })
+            };
+            var view = BuildCollectionView(appState, chains);
+            WpfTestHost.Layout(view);
+
+            var label = (TextBlock)view.FindName("EvolutionPercentText")!;
+            var bar = (System.Windows.Controls.ProgressBar)view.FindName("EvolutionProgressBar")!;
+
+            Assert.Equal(EvolutionProgressDisplay.NeverEvolvesLabel, label.Text);
+            Assert.DoesNotContain("%", label.Text);
+            Assert.Equal(0.0, bar.Value);
+            Assert.True(bar.Opacity < 1.0, "a bar that can never fill should be dimmed");
+        });
+
+    /// The other terminal state: a fully-evolved individual keeps its FULL bar (it earned it)
+    /// but is labelled as a final form rather than as a countdown sitting at 100%.
+    [Fact]
+    public void CollectionView_FullyEvolvedIndividual_ShowsFinalFormWithAFullBar() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            var individual = NewIndividual(speciesId: 4, chainId: 4);
+            individual.CurrentStage = EvolutionStage.Stage3;
+            appState.Collection.Add(individual);
+            var chains = new[]
+            {
+                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 },
+                    new[] { "Charmander", "Charmeleon", "Charizard" },
+                    new[] { new[] { "fire" }, new[] { "fire" }, new[] { "fire", "flying" } })
+            };
+            var view = BuildCollectionView(appState, chains);
+            WpfTestHost.Layout(view);
+
+            var label = (TextBlock)view.FindName("EvolutionPercentText")!;
+            var bar = (System.Windows.Controls.ProgressBar)view.FindName("EvolutionProgressBar")!;
+
+            Assert.Equal(EvolutionProgressDisplay.FinalFormLabel, label.Text);
+            Assert.Equal(1.0, bar.Value);
+            Assert.Equal(1.0, bar.Opacity);
+        });
+
+    private static IEnumerable<T> Descendants<T>(DependencyObject root) where T : DependencyObject
+    {
+        var count = VisualTreeHelper.GetChildrenCount(root);
+        for (var i = 0; i < count; i++)
+        {
+            var child = VisualTreeHelper.GetChild(root, i);
+            if (child is T match) yield return match;
+            foreach (var nested in Descendants<T>(child)) yield return nested;
+        }
     }
 
     [Fact]

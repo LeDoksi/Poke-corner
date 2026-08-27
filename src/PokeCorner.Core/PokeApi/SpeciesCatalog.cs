@@ -30,9 +30,19 @@ public sealed class SpeciesCatalog
     /// list) but resolves EVERY species to "Pokemon #{id}". Age alone can't tell those files
     /// apart from good ones, so presence of name data is the real freshness signal: one chain
     /// carrying names is enough evidence the file came from the current crawler.
+    ///
+    /// Types are now held to the same standard, for the identical reason: a catalog crawled
+    /// before types were captured would otherwise be served forever, leaving every type badge
+    /// permanently blank while the bundled fallback right next to it has the data. Failing the
+    /// check sends the file back through RefreshFromNetworkAsync and serves the (complete)
+    /// bundled catalog meanwhile — the same degradation path the names change established.
     private static bool IsCacheUsable(List<SpeciesEvolutionChain>? cached, out IReadOnlyList<SpeciesEvolutionChain>? usable)
     {
-        usable = cached is { Count: > 0 } && cached.Any(c => c.StageSpeciesNames.Count > 0) ? cached : null;
+        usable = cached is { Count: > 0 }
+            && cached.Any(c => c.StageSpeciesNames.Count > 0)
+            && cached.Any(c => c.StageTypes.Any(types => types.Count > 0))
+            ? cached
+            : null;
         return usable is not null;
     }
 

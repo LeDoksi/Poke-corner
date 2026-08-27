@@ -245,6 +245,35 @@
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
 
+    <!-- ===================== Type badges =====================
+         One pill per PokeAPI type, ALWAYS carrying the type's name as text. A colour-only
+         swatch was explicitly rejected: rarity gets away with a bare dot because there are
+         four tiers, but there are 18 types and nobody reads "Rock" out of a shade of tan.
+
+         Deliberately shaped UNLIKE the rarity pill even though both are PillStyle borders:
+         rarity is [dot + label], a type is [label only] in a squarer, thicker-bordered pill.
+         Two badge systems sitting on the same card need to differ by more than hue, or the
+         type palette and the rarity-tier palette read as one vocabulary at a glance.
+
+         Colours come from TypeDisplay (18 frozen brushes, one per PokeAPI type name) rather
+         than from tokens here — see that class for why the external vocabulary lives in code.
+         Bound as Foreground AND BorderBrush against the dark surface, which keeps all 18
+         legible; a filled pill would need per-type light/dark text to stay readable. -->
+    <DataTemplate x:Key="TypeBadgeTemplate">
+        <Border Style="{StaticResource PillStyle}" BorderThickness="1.4" CornerRadius="5"
+                Padding="6,1.5" Margin="0,0,4,3"
+                BorderBrush="{Binding Brush}"
+                ToolTip="Тип покемона">
+            <TextBlock Text="{Binding Label}" FontSize="9.5" FontWeight="SemiBold"
+                       Foreground="{Binding Brush}" />
+        </Border>
+    </DataTemplate>
+
+    <!-- Horizontal, wrapping: a two-type species must never clip its second badge. -->
+    <ItemsPanelTemplate x:Key="TypeBadgePanelTemplate">
+        <WrapPanel Orientation="Horizontal" />
+    </ItemsPanelTemplate>
+
     <!-- ===================== Buttons ===================== -->
     <!-- Unkeyed = the primary/CTA look, so every existing bare <Button Content="…"/> in the
          app keeps reading as the commit action. Ghost/secondary actions opt in explicitly

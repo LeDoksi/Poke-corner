@@ -35,15 +35,27 @@ public static class LegacyOfflineChains
 
     public static IReadOnlyList<SpeciesEvolutionChain> All { get; } = new List<SpeciesEvolutionChain>
     {
-        new(900001, 1, 45, 3, new[] { 1, 2, 3 }, new[] { "Bulbasaur", "Ivysaur", "Venusaur" }),
-        new(900002, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
-        new(900003, 7, 45, 3, new[] { 7, 8, 9 }, new[] { "Squirtle", "Wartortle", "Blastoise" }),
-        new(900004, 25, 190, 2, new[] { 25, 26 }, new[] { "Pikachu", "Raichu" }),
-        new(900005, 152, 45, 3, new[] { 152, 153, 154 }, new[] { "Chikorita", "Bayleef", "Meganium" }),
-        new(900006, 155, 45, 3, new[] { 155, 156, 157 }, new[] { "Cyndaquil", "Quilava", "Typhlosion" }),
-        new(900007, 158, 45, 3, new[] { 158, 159, 160 }, new[] { "Totodile", "Croconaw", "Feraligatr" }),
-        new(900008, 10, 255, 3, new[] { 10, 11, 12 }, new[] { "Caterpie", "Metapod", "Butterfree" }),
-        new(900009, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
+        // StageTypes carry the same live PokeAPI values the bundled catalog was crawled with,
+        // so an individual rescued onto a legacy id still shows its type badges instead of a
+        // blank row next to identical species caught from the real catalog.
+        new(900001, 1, 45, 3, new[] { 1, 2, 3 }, new[] { "Bulbasaur", "Ivysaur", "Venusaur" },
+            new[] { new[] { "grass", "poison" }, new[] { "grass", "poison" }, new[] { "grass", "poison" } }),
+        new(900002, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" },
+            new[] { new[] { "fire" }, new[] { "fire" }, new[] { "fire", "flying" } }),
+        new(900003, 7, 45, 3, new[] { 7, 8, 9 }, new[] { "Squirtle", "Wartortle", "Blastoise" },
+            new[] { new[] { "water" }, new[] { "water" }, new[] { "water" } }),
+        new(900004, 25, 190, 2, new[] { 25, 26 }, new[] { "Pikachu", "Raichu" },
+            new[] { new[] { "electric" }, new[] { "electric" } }),
+        new(900005, 152, 45, 3, new[] { 152, 153, 154 }, new[] { "Chikorita", "Bayleef", "Meganium" },
+            new[] { new[] { "grass" }, new[] { "grass" }, new[] { "grass" } }),
+        new(900006, 155, 45, 3, new[] { 155, 156, 157 }, new[] { "Cyndaquil", "Quilava", "Typhlosion" },
+            new[] { new[] { "fire" }, new[] { "fire" }, new[] { "fire" } }),
+        new(900007, 158, 45, 3, new[] { 158, 159, 160 }, new[] { "Totodile", "Croconaw", "Feraligatr" },
+            new[] { new[] { "water" }, new[] { "water" }, new[] { "water" } }),
+        new(900008, 10, 255, 3, new[] { 10, 11, 12 }, new[] { "Caterpie", "Metapod", "Butterfree" },
+            new[] { new[] { "bug" }, new[] { "bug" }, new[] { "bug", "flying" } }),
+        new(900009, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" },
+            new[] { new[] { "normal", "flying" }, new[] { "normal", "flying" }, new[] { "normal", "flying" } })
     };
 
     /// <summary>

@@ -16,10 +16,36 @@ public sealed record CollectionEntry(
     bool IsAvailableToActivate,
     DateTimeOffset? AvailableAgainAtUtc,
     RarityTier Rarity,
-    double EvolutionFraction,
+    double? EvolutionFraction,
+    EvolutionProgressState EvolutionState,
     DateTimeOffset CaughtAtUtc,
     Nature Nature,
-    bool IsFavorite);
+    bool IsFavorite,
+    /// PokeAPI type names for the CURRENT stage's species — one for most, two for some.
+    /// Empty when the catalog in use predates type capture.
+    IReadOnlyList<string> Types,
+    /// The individual's whole evolution line, spoiler-masked (see EvolutionStagePreview).
+    /// Empty for a single-stage species: there is no line to preview.
+    IReadOnlyList<EvolutionStagePreview> EvolutionStages);
+
+/// One node of the evolution-chain strip in the detail view.
+///
+/// SPOILER-SAFE BY CONSTRUCTION: for a stage the player's individual has not reached,
+/// <see cref="SpeciesId"/> and <see cref="SpeciesName"/> are null and <see cref="Types"/> is
+/// empty — the identity is not merely hidden by the template, it is never put into the model
+/// at all, so there is nothing to leak through a tooltip, a binding or the visual tree.
+public sealed record EvolutionStagePreview(
+    int StageIndex,
+    int? SpeciesId,
+    string? SpeciesName,
+    IReadOnlyList<string> Types,
+    bool IsCurrent)
+{
+    /// Reached stages are revealed; everything past the individual's current stage is a
+    /// silhouette. Derived from the presence of the identity rather than stored separately, so
+    /// the two can never contradict each other.
+    public bool IsRevealed => SpeciesId is not null;
+}
 
 public sealed record PendingEggEntry(Guid EggId, RarityTier Tier, double HatchFraction, bool IsReady);
 
@@ -51,6 +77,7 @@ public sealed class CollectionViewModel
             var careState = _careStates.TryGetValue(individual.Id, out var state) ? state : new CareState();
             var isAvailable = _careMode != CareMode.Hardcore || _careModeService.IsAvailableToPlaceOnDesktop(careState, nowUtc);
             var displaySpeciesId = ResolveDisplaySpeciesId(individual);
+            var progress = ProgressCalculator.Compute(new Core.Activity.ActivityAccumulator(), individual, new FeedingInventory());
             return new CollectionEntry(
                 individual.Id,
                 individual.SpeciesId,
@@ -61,11 +88,46 @@ public sealed class CollectionViewModel
                 IsAvailableToActivate: isAvailable,
                 AvailableAgainAtUtc: isAvailable ? null : careState.RanAwayUntilUtc,
                 Rarity: RarityForChain(individual.EvolutionChainId),
-                EvolutionFraction: ProgressCalculator.Compute(new Core.Activity.ActivityAccumulator(), individual, new FeedingInventory()).EvolutionFraction,
+                EvolutionFraction: progress.EvolutionFraction,
+                EvolutionState: progress.EvolutionState,
                 CaughtAtUtc: individual.CaughtAtUtc,
                 Nature: individual.Nature,
-                IsFavorite: individual.IsFavorite);
+                IsFavorite: individual.IsFavorite,
+                Types: _chains.ResolveSpeciesTypes(displaySpeciesId),
+                EvolutionStages: BuildEvolutionPreview(individual));
         }).ToList();
+
+    /// Builds the spoiler-masked evolution strip for one individual: every stage its chain
+    /// has, with the identity filled in only up to the stage this individual has reached.
+    ///
+    /// Returns EMPTY for a single-stage species (and for a chain missing from the catalog) —
+    /// a one-node "chain" with no arrows would be a confusing thing to draw, so the section
+    /// simply doesn't render.
+    private IReadOnlyList<EvolutionStagePreview> BuildEvolutionPreview(PokemonIndividual individual)
+    {
+        var chain = _chains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
+        if (chain is null || chain.ChainLength <= 1) return Array.Empty<EvolutionStagePreview>();
+
+        var reachedIndex = (int)individual.CurrentStage;
+        var stages = new List<EvolutionStagePreview>(chain.ChainLength);
+
+        for (var index = 0; index < chain.ChainLength; index++)
+        {
+            // Revealed only up to and including the stage actually reached. The bounds check
+            // also covers a legacy chain whose ChainLength outruns its stage id list.
+            var isRevealed = index <= reachedIndex && index < chain.StageSpeciesIds.Count;
+            int? speciesId = isRevealed ? chain.StageSpeciesIds[index] : null;
+
+            stages.Add(new EvolutionStagePreview(
+                StageIndex: index,
+                SpeciesId: speciesId,
+                SpeciesName: speciesId is null ? null : _chains.ResolveSpeciesName(speciesId.Value),
+                Types: speciesId is null ? Array.Empty<string>() : _chains.ResolveSpeciesTypes(speciesId.Value),
+                IsCurrent: index == reachedIndex));
+        }
+
+        return stages;
+    }
 
     // (GetPokedexEntries lived here: one deduped entry per distinct DISPLAY species, feeding
     // a Pokédex grid that sat above a separate roster list of the same Pokémon. The two lists

@@ -48,4 +48,53 @@ public class FirstRunFlowTests
         Assert.Equal(0, starter.AccumulatedCarePoints);
         Assert.Equal(EvolutionStage.Stage1, starter.CurrentStage);
     }
+
+    // ===================== Part D: "wild catches always start at stage 1" =====================
+    // Verified by reading the code as well as by these tests: PokemonIndividual.CurrentStage
+    // defaults to Stage1, the three creation sites (wild catch and egg hatch in App.xaml.cs,
+    // the starter in FirstRunFlow.HatchChosen) all use an object initializer that never
+    // assigns it, and the ONLY post-construction mutation in the whole tree is
+    // AppState.TryEvolve's explicit bump. These lock that in so it can't regress silently.
+
+    /// Every creation path relies on the property default rather than setting the stage, so
+    /// the default IS the invariant. If someone changes it, every catch/hatch/starter starts
+    /// mid-chain at once — and this test fails first.
+    [Fact]
+    public void NewIndividual_DefaultsToStage1_WhateverTheChainLength()
+    {
+        foreach (var chainLength in new[] { 1, 2, 3 })
+        {
+            var individual = new PokemonIndividual
+            {
+                SpeciesId = 1, EvolutionChainId = 1, ChainLength = chainLength,
+                Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow
+            };
+
+            Assert.Equal(EvolutionStage.Stage1, individual.CurrentStage);
+        }
+    }
+
+    /// The rolled chain must never influence the starting stage — a 1-, 2- or 3-stage line all
+    /// begin at Stage1. Rolled over many seeds so this covers whatever the roller picks
+    /// (shiny/nature vary; the stage must not).
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    public void HatchChosen_AlwaysStartsAtStage1_RegardlessOfChainRolled(int chainLength)
+    {
+        var stageIds = Enumerable.Range(1, chainLength).ToArray();
+        var stageNames = stageIds.Select(id => $"Species{id}").ToArray();
+        var chain = new SpeciesEvolutionChain(
+            ChainId: 1, StarterSpeciesId: 1, CaptureRate: 45, ChainLength: chainLength,
+            StageSpeciesIds: stageIds, StageSpeciesNames: stageNames);
+
+        for (var seed = 0; seed < 50; seed++)
+        {
+            var starter = FirstRunFlow.HatchChosen(chain, new CatchRoller(new Random(seed)), DateTimeOffset.UtcNow);
+
+            Assert.Equal(EvolutionStage.Stage1, starter.CurrentStage);
+            Assert.Equal(0, starter.AccumulatedCarePoints);
+        }
+    }
 }

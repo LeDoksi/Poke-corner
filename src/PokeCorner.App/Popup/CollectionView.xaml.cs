@@ -175,6 +175,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ActivePetMetaText.Text = "Выбери покемона в списке ниже — он появится на рабочем столе.";
             CarePointsText.Text = "—";
             ShinyBadge.Visibility = Visibility.Collapsed;
+            ActiveTypeBadges.ItemsSource = null;
         }
         else
         {
@@ -183,6 +184,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
                 $"{activeEntry.DexNumberText()} · {RarityDisplay.GetName(activeEntry.Rarity)} · характер {activeEntry.Nature} · пойман {FormatCaughtDate(activeEntry.CaughtAtUtc)}";
             CarePointsText.Text = active.AccumulatedCarePoints.ToString("N0", CultureInfo.CurrentCulture);
             ShinyBadge.Visibility = activeEntry.IsShiny ? Visibility.Visible : Visibility.Collapsed;
+            ActiveTypeBadges.ItemsSource = TypeDisplay.ToBadges(activeEntry.Types);
         }
 
         TreatsText.Text = _appState.Feeding.Treats.ToString(CultureInfo.CurrentCulture);
@@ -229,12 +231,22 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         var progress = ProgressCalculator.Compute(_appState.Activity, active, _appState.Feeding);
         CatchProgressBar.Value = progress.CatchFraction;
-        EvolutionProgressBar.Value = progress.EvolutionFraction;
         TreatProgressBar.Value = progress.TreatFraction;
 
         CatchPercentText.Text = FormatPercent(progress.CatchFraction);
-        EvolutionPercentText.Text = FormatPercent(progress.EvolutionFraction);
         TreatPercentText.Text = FormatPercent(progress.TreatFraction);
+
+        // Evolution is the one bar with three possible readings rather than a percentage:
+        // a real 0-99%, "this species never evolves" (empty + dimmed), or "final form reached"
+        // (legitimately full). All three come from the shared display helper so this card, the
+        // detail overlay and the desktop gauge always word them identically.
+        EvolutionProgressBar.Value = EvolutionProgressDisplay.BarValue(progress.EvolutionFraction, progress.EvolutionState);
+        EvolutionProgressBar.Opacity = EvolutionProgressDisplay.BarOpacity(progress.EvolutionState);
+        EvolutionProgressBar.ToolTip = EvolutionProgressDisplay.ToolTip(progress.EvolutionFraction, progress.EvolutionState);
+        EvolutionPercentText.Text = EvolutionProgressDisplay.Label(progress.EvolutionFraction, progress.EvolutionState);
+        EvolutionPercentText.Foreground = progress.EvolutionState == EvolutionProgressState.InProgress
+            ? ThemeBrushes.Get("SecondaryTextBrush")
+            : ThemeBrushes.Get("MutedTextBrush");
 
         var remainingUnits = FeedingService.ActivityUnitsPerTreatEarned - _appState.Feeding.RemainderUnits;
         TreatHintText.Text = $"Ещё {remainingUnits} единиц активности до следующего лакомства.";
@@ -326,7 +338,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // cached rebuilds itself once the artwork lands, instead of staying on the placeholder
         // until some unrelated field changes.
         var signature = $"{_rarityFilter}|" + string.Join("|", visible.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{Math.Round(e.EvolutionFraction, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
@@ -342,6 +354,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RarityName = RarityDisplay.GetName(entry.Rarity),
         RarityBrush = RarityDisplay.GetBrush(entry.Rarity),
         EvolutionFraction = entry.EvolutionFraction,
+        EvolutionState = entry.EvolutionState,
         CaughtAtText = FormatCaughtDate(entry.CaughtAtUtc),
         NatureText = entry.Nature.ToString(),
         CanSelect = !entry.IsActive && entry.IsAvailableToActivate,
@@ -352,9 +365,25 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         IsActive = entry.IsActive,
         IsAvailableToActivate = entry.IsAvailableToActivate,
         IsFavorite = entry.IsFavorite,
+        TypeBadges = TypeDisplay.ToBadges(entry.Types),
+        EvolutionStages = BuildEvolutionStageCards(entry),
         SpriteImage = TryGetThumbnail(entry.DisplaySpeciesId),
         SpriteFrames = _animatedFrames.GetValueOrDefault(entry.DisplaySpeciesId)
     };
+
+    /// Turns the view-model's spoiler-masked chain into renderable cards. The sprite lookup is
+    /// guarded by IsRevealed so an unreached stage's artwork is never even fetched from the
+    /// cache — the mask is enforced here as well as in the view model, not just in the template.
+    private IReadOnlyList<EvolutionStageCard> BuildEvolutionStageCards(CollectionEntry entry) =>
+        entry.EvolutionStages.Select(stage => new EvolutionStageCard
+        {
+            IsRevealed = stage.IsRevealed,
+            NameText = stage.IsRevealed ? stage.SpeciesName ?? "???" : "???",
+            SpriteImage = stage.IsRevealed && stage.SpeciesId is { } id ? TryGetThumbnail(id) : null,
+            TypeBadges = TypeDisplay.ToBadges(stage.Types),
+            IsCurrent = stage.IsCurrent,
+            ShowArrow = stage.StageIndex < entry.EvolutionStages.Count - 1
+        }).ToList();
 
     /// Fires the one-per-species animated-sprite fetch, at most once per species per session.
     /// Fire-and-forget on purpose: the cards already show their static frame, so there is
@@ -455,12 +484,28 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailSpeciesNameText.Text = card.SpeciesName;
         DetailNatureText.Text = card.NatureText;
         DetailCaughtAtText.Text = card.CaughtAtText;
-        DetailEvolutionBar.Value = card.EvolutionFraction;
+        DetailEvolutionBar.Value = card.EvolutionBarValue;
+        DetailEvolutionBar.Opacity = card.EvolutionBarOpacity;
+        DetailEvolutionBar.ToolTip = card.EvolutionToolTip;
+        DetailEvolutionText.Text = card.EvolutionLabel;
+        DetailEvolutionText.Foreground = card.EvolutionState == EvolutionProgressState.InProgress
+            ? ThemeBrushes.Get("SecondaryTextBrush")
+            : ThemeBrushes.Get("MutedTextBrush");
 
         DetailRarityPill.BorderBrush = card.RarityBrush;
         DetailRarityDot.Fill = card.RarityBrush;
         DetailRarityText.Text = card.RarityName;
         DetailRarityText.Foreground = card.RarityBrush;
+
+        DetailTypeBadges.ItemsSource = card.TypeBadges;
+        DetailTypeBadges.Visibility = card.TypeBadgesVisibility;
+
+        // The evolution-chain strip. Collapsed outright for a single-stage species — a lone
+        // node with no arrows would read as a broken chain rather than as "no chain".
+        DetailEvolutionChainSection.Visibility = card.EvolutionStages.Count > 0
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+        DetailEvolutionChainStrip.ItemsSource = card.EvolutionStages;
 
         DetailShinyBadge.Visibility = card.ShinyVisibility;
         DetailActiveBadge.Visibility = card.ActiveBadgeVisibility;

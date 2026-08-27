@@ -26,13 +26,52 @@ public sealed class PokeApiClient
         var captureRate = await FetchCaptureRateAsync(starterSpeciesId);
         var stages = CollectStages(chainNode);
 
+        // Types are NOT on the evolution-chain resource (nor on pokemon-species), so unlike the
+        // names above they cost one pokemon/{id}/ call per stage. That is ~1 extra request per
+        // species in a full catalog refresh; the alternative — shipping chains without types —
+        // would leave every badge blank for anyone whose catalog re-crawls.
+        var stageTypes = new List<IReadOnlyList<string>>();
+        foreach (var stage in stages)
+        {
+            stageTypes.Add(await FetchTypesAsync(stage.Id));
+        }
+
         return new Domain.SpeciesEvolutionChain(
             ChainId: root.GetProperty("id").GetInt32(),
             StarterSpeciesId: starterSpeciesId,
             CaptureRate: captureRate,
             ChainLength: stages.Count,
             StageSpeciesIds: stages.Select(stage => stage.Id).ToList(),
-            StageSpeciesNames: stages.Select(stage => stage.Name).ToList());
+            StageSpeciesNames: stages.Select(stage => stage.Name).ToList(),
+            StageTypes: stageTypes);
+    }
+
+    /// PokeAPI type names for one species, in slot order ("bug" then "flying" for Butterfree).
+    /// Reads the SAME pokemon/{id}/ resource <see cref="FetchAnimatedSpriteAsync"/> already
+    /// uses — the types array sits alongside the sprites node in that one response body.
+    ///
+    /// Returns an empty list rather than throwing when the property is missing or malformed:
+    /// a species with no readable types must degrade to "no badges", not fail a whole crawl.
+    public async Task<IReadOnlyList<string>> FetchTypesAsync(int speciesId)
+    {
+        var json = await _httpClient.GetStringAsync($"pokemon/{speciesId}/");
+        using var doc = JsonDocument.Parse(json);
+
+        if (!doc.RootElement.TryGetProperty("types", out var types) || types.ValueKind != JsonValueKind.Array)
+        {
+            return Array.Empty<string>();
+        }
+
+        return types.EnumerateArray()
+            .Select(entry => (
+                Slot: entry.TryGetProperty("slot", out var slot) && slot.ValueKind == JsonValueKind.Number ? slot.GetInt32() : 0,
+                Name: entry.TryGetProperty("type", out var type) && type.TryGetProperty("name", out var name)
+                    ? name.GetString()
+                    : null))
+            .Where(entry => !string.IsNullOrWhiteSpace(entry.Name))
+            .OrderBy(entry => entry.Slot)
+            .Select(entry => entry.Name!)
+            .ToList();
     }
 
     public async Task<int> FetchCaptureRateAsync(int speciesId)

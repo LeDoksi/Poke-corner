@@ -13,6 +13,20 @@
       1,
       2,
       3
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
     ]
   },
   {
@@ -29,6 +43,18 @@
       4,
       5,
       6
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "flying"
+      ]
     ]
   },
   {
@@ -45,6 +71,17 @@
       7,
       8,
       9
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -61,6 +98,18 @@
       10,
       11,
       12
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
     ]
   },
   {
@@ -77,6 +126,20 @@
       13,
       14,
       15
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
     ]
   },
   {
@@ -93,6 +156,20 @@
       16,
       17,
       18
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -107,6 +184,14 @@
     "StageSpeciesIds": [
       19,
       20
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -121,6 +206,16 @@
     "StageSpeciesIds": [
       21,
       22
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -135,6 +230,14 @@
     "StageSpeciesIds": [
       23,
       24
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
     ]
   },
   {
@@ -151,6 +254,17 @@
       172,
       25,
       26
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -165,6 +279,14 @@
     "StageSpeciesIds": [
       27,
       28
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
     ]
   },
   {
@@ -181,6 +303,18 @@
       29,
       30,
       31
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ],
+      [
+        "poison",
+        "ground"
+      ]
     ]
   },
   {
@@ -197,6 +331,18 @@
       32,
       33,
       34
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ],
+      [
+        "poison",
+        "ground"
+      ]
     ]
   },
   {
@@ -213,6 +359,17 @@
       173,
       35,
       36
+    ],
+    "StageTypes": [
+      [
+        "fairy"
+      ],
+      [
+        "fairy"
+      ],
+      [
+        "fairy"
+      ]
     ]
   },
   {
@@ -227,6 +384,14 @@
     "StageSpeciesIds": [
       37,
       38
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -243,6 +408,20 @@
       174,
       39,
       40
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "fairy"
+      ],
+      [
+        "normal",
+        "fairy"
+      ],
+      [
+        "normal",
+        "fairy"
+      ]
     ]
   },
   {
@@ -259,6 +438,20 @@
       41,
       42,
       169
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "flying"
+      ],
+      [
+        "poison",
+        "flying"
+      ],
+      [
+        "poison",
+        "flying"
+      ]
     ]
   },
   {
@@ -275,6 +468,20 @@
       43,
       44,
       45
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
     ]
   },
   {
@@ -289,6 +496,16 @@
     "StageSpeciesIds": [
       46,
       47
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "grass"
+      ],
+      [
+        "bug",
+        "grass"
+      ]
     ]
   },
   {
@@ -303,6 +520,16 @@
     "StageSpeciesIds": [
       48,
       49
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
     ]
   },
   {
@@ -317,6 +544,14 @@
     "StageSpeciesIds": [
       50,
       51
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
     ]
   },
   {
@@ -331,6 +566,14 @@
     "StageSpeciesIds": [
       52,
       53
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -345,6 +588,14 @@
     "StageSpeciesIds": [
       54,
       55
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -361,6 +612,18 @@
       56,
       57,
       979
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ],
+      [
+        "fighting",
+        "ghost"
+      ]
     ]
   },
   {
@@ -375,6 +638,14 @@
     "StageSpeciesIds": [
       58,
       59
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -391,6 +662,18 @@
       60,
       61,
       62
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water",
+        "fighting"
+      ]
     ]
   },
   {
@@ -407,6 +690,17 @@
       63,
       64,
       65
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -423,6 +717,17 @@
       66,
       67,
       68
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -439,6 +744,20 @@
       69,
       70,
       71
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
     ]
   },
   {
@@ -453,6 +772,16 @@
     "StageSpeciesIds": [
       72,
       73
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "poison"
+      ],
+      [
+        "water",
+        "poison"
+      ]
     ]
   },
   {
@@ -469,6 +798,20 @@
       74,
       75,
       76
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "ground"
+      ]
     ]
   },
   {
@@ -483,6 +826,14 @@
     "StageSpeciesIds": [
       77,
       78
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -497,6 +848,16 @@
     "StageSpeciesIds": [
       79,
       80
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "psychic"
+      ],
+      [
+        "water",
+        "psychic"
+      ]
     ]
   },
   {
@@ -513,6 +874,20 @@
       81,
       82,
       462
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "steel"
+      ],
+      [
+        "electric",
+        "steel"
+      ],
+      [
+        "electric",
+        "steel"
+      ]
     ]
   },
   {
@@ -527,6 +902,15 @@
     "StageSpeciesIds": [
       83,
       865
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -541,6 +925,16 @@
     "StageSpeciesIds": [
       84,
       85
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -555,6 +949,15 @@
     "StageSpeciesIds": [
       86,
       87
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ice"
+      ]
     ]
   },
   {
@@ -569,6 +972,14 @@
     "StageSpeciesIds": [
       88,
       89
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
     ]
   },
   {
@@ -583,6 +994,15 @@
     "StageSpeciesIds": [
       90,
       91
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ice"
+      ]
     ]
   },
   {
@@ -599,6 +1019,20 @@
       92,
       93,
       94
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "poison"
+      ],
+      [
+        "ghost",
+        "poison"
+      ],
+      [
+        "ghost",
+        "poison"
+      ]
     ]
   },
   {
@@ -613,6 +1047,16 @@
     "StageSpeciesIds": [
       95,
       208
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "steel",
+        "ground"
+      ]
     ]
   },
   {
@@ -627,6 +1071,14 @@
     "StageSpeciesIds": [
       96,
       97
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -641,6 +1093,14 @@
     "StageSpeciesIds": [
       98,
       99
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -655,6 +1115,14 @@
     "StageSpeciesIds": [
       100,
       101
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -669,6 +1137,16 @@
     "StageSpeciesIds": [
       102,
       103
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "psychic"
+      ],
+      [
+        "grass",
+        "psychic"
+      ]
     ]
   },
   {
@@ -683,6 +1161,14 @@
     "StageSpeciesIds": [
       104,
       105
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
     ]
   },
   {
@@ -697,6 +1183,14 @@
     "StageSpeciesIds": [
       236,
       106
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -711,6 +1205,14 @@
     "StageSpeciesIds": [
       108,
       463
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -725,6 +1227,14 @@
     "StageSpeciesIds": [
       109,
       110
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
     ]
   },
   {
@@ -741,6 +1251,20 @@
       111,
       112,
       464
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "rock"
+      ],
+      [
+        "ground",
+        "rock"
+      ],
+      [
+        "ground",
+        "rock"
+      ]
     ]
   },
   {
@@ -757,6 +1281,17 @@
       440,
       113,
       242
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -771,6 +1306,14 @@
     "StageSpeciesIds": [
       114,
       465
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -783,6 +1326,11 @@
     ],
     "StageSpeciesIds": [
       115
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -799,6 +1347,18 @@
       116,
       117,
       230
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water",
+        "dragon"
+      ]
     ]
   },
   {
@@ -813,6 +1373,14 @@
     "StageSpeciesIds": [
       118,
       119
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -827,6 +1395,15 @@
     "StageSpeciesIds": [
       120,
       121
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "psychic"
+      ]
     ]
   },
   {
@@ -843,6 +1420,20 @@
       439,
       122,
       866
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "ice",
+        "psychic"
+      ]
     ]
   },
   {
@@ -857,6 +1448,16 @@
     "StageSpeciesIds": [
       123,
       212
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "steel"
+      ]
     ]
   },
   {
@@ -871,6 +1472,16 @@
     "StageSpeciesIds": [
       238,
       124
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "psychic"
+      ],
+      [
+        "ice",
+        "psychic"
+      ]
     ]
   },
   {
@@ -887,6 +1498,17 @@
       239,
       125,
       466
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -903,6 +1525,17 @@
       240,
       126,
       467
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -915,6 +1548,11 @@
     ],
     "StageSpeciesIds": [
       127
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ]
     ]
   },
   {
@@ -927,6 +1565,11 @@
     ],
     "StageSpeciesIds": [
       128
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -941,6 +1584,15 @@
     "StageSpeciesIds": [
       129,
       130
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "flying"
+      ]
     ]
   },
   {
@@ -953,6 +1605,12 @@
     ],
     "StageSpeciesIds": [
       131
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ice"
+      ]
     ]
   },
   {
@@ -965,6 +1623,11 @@
     ],
     "StageSpeciesIds": [
       132
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -979,6 +1642,14 @@
     "StageSpeciesIds": [
       133,
       134
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -995,6 +1666,17 @@
       137,
       233,
       474
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -1009,6 +1691,16 @@
     "StageSpeciesIds": [
       138,
       139
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "water"
+      ],
+      [
+        "rock",
+        "water"
+      ]
     ]
   },
   {
@@ -1023,6 +1715,16 @@
     "StageSpeciesIds": [
       140,
       141
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "water"
+      ],
+      [
+        "rock",
+        "water"
+      ]
     ]
   },
   {
@@ -1035,6 +1737,12 @@
     ],
     "StageSpeciesIds": [
       142
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "flying"
+      ]
     ]
   },
   {
@@ -1049,6 +1757,14 @@
     "StageSpeciesIds": [
       446,
       143
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -1061,6 +1777,12 @@
     ],
     "StageSpeciesIds": [
       144
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "flying"
+      ]
     ]
   },
   {
@@ -1073,6 +1795,12 @@
     ],
     "StageSpeciesIds": [
       145
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "flying"
+      ]
     ]
   },
   {
@@ -1085,6 +1813,12 @@
     ],
     "StageSpeciesIds": [
       146
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "flying"
+      ]
     ]
   },
   {
@@ -1101,6 +1835,18 @@
       147,
       148,
       149
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ],
+      [
+        "dragon",
+        "flying"
+      ]
     ]
   },
   {
@@ -1113,6 +1859,11 @@
     ],
     "StageSpeciesIds": [
       150
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -1125,6 +1876,11 @@
     ],
     "StageSpeciesIds": [
       151
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -1141,6 +1897,17 @@
       152,
       153,
       154
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -1157,6 +1924,17 @@
       155,
       156,
       157
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -1173,6 +1951,17 @@
       158,
       159,
       160
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -1187,6 +1976,14 @@
     "StageSpeciesIds": [
       161,
       162
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -1201,6 +1998,16 @@
     "StageSpeciesIds": [
       163,
       164
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -1215,6 +2022,16 @@
     "StageSpeciesIds": [
       165,
       166
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
     ]
   },
   {
@@ -1229,6 +2046,16 @@
     "StageSpeciesIds": [
       167,
       168
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
     ]
   },
   {
@@ -1243,6 +2070,16 @@
     "StageSpeciesIds": [
       170,
       171
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "electric"
+      ],
+      [
+        "water",
+        "electric"
+      ]
     ]
   },
   {
@@ -1259,6 +2096,19 @@
       175,
       176,
       468
+    ],
+    "StageTypes": [
+      [
+        "fairy"
+      ],
+      [
+        "fairy",
+        "flying"
+      ],
+      [
+        "fairy",
+        "flying"
+      ]
     ]
   },
   {
@@ -1273,6 +2123,16 @@
     "StageSpeciesIds": [
       177,
       178
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ],
+      [
+        "psychic",
+        "flying"
+      ]
     ]
   },
   {
@@ -1289,6 +2149,17 @@
       179,
       180,
       181
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -1305,6 +2176,20 @@
       298,
       183,
       184
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "fairy"
+      ],
+      [
+        "water",
+        "fairy"
+      ],
+      [
+        "water",
+        "fairy"
+      ]
     ]
   },
   {
@@ -1319,6 +2204,14 @@
     "StageSpeciesIds": [
       438,
       185
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ]
     ]
   },
   {
@@ -1335,6 +2228,20 @@
       187,
       188,
       189
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "flying"
+      ],
+      [
+        "grass",
+        "flying"
+      ],
+      [
+        "grass",
+        "flying"
+      ]
     ]
   },
   {
@@ -1349,6 +2256,14 @@
     "StageSpeciesIds": [
       190,
       424
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -1363,6 +2278,14 @@
     "StageSpeciesIds": [
       191,
       192
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -1377,6 +2300,16 @@
     "StageSpeciesIds": [
       193,
       469
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
     ]
   },
   {
@@ -1391,6 +2324,16 @@
     "StageSpeciesIds": [
       194,
       195
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
     ]
   },
   {
@@ -1405,6 +2348,16 @@
     "StageSpeciesIds": [
       198,
       430
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "flying"
+      ],
+      [
+        "dark",
+        "flying"
+      ]
     ]
   },
   {
@@ -1419,6 +2372,14 @@
     "StageSpeciesIds": [
       200,
       429
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
     ]
   },
   {
@@ -1431,6 +2392,11 @@
     ],
     "StageSpeciesIds": [
       201
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -1445,6 +2411,14 @@
     "StageSpeciesIds": [
       360,
       202
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -1459,6 +2433,16 @@
     "StageSpeciesIds": [
       203,
       981
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "psychic"
+      ],
+      [
+        "normal",
+        "psychic"
+      ]
     ]
   },
   {
@@ -1473,6 +2457,15 @@
     "StageSpeciesIds": [
       204,
       205
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "steel"
+      ]
     ]
   },
   {
@@ -1487,6 +2480,14 @@
     "StageSpeciesIds": [
       206,
       982
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -1501,6 +2502,16 @@
     "StageSpeciesIds": [
       207,
       472
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "flying"
+      ],
+      [
+        "ground",
+        "flying"
+      ]
     ]
   },
   {
@@ -1515,6 +2526,14 @@
     "StageSpeciesIds": [
       209,
       210
+    ],
+    "StageTypes": [
+      [
+        "fairy"
+      ],
+      [
+        "fairy"
+      ]
     ]
   },
   {
@@ -1529,6 +2548,16 @@
     "StageSpeciesIds": [
       211,
       904
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "poison"
+      ],
+      [
+        "dark",
+        "poison"
+      ]
     ]
   },
   {
@@ -1541,6 +2570,12 @@
     ],
     "StageSpeciesIds": [
       213
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "rock"
+      ]
     ]
   },
   {
@@ -1553,6 +2588,12 @@
     ],
     "StageSpeciesIds": [
       214
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "fighting"
+      ]
     ]
   },
   {
@@ -1567,6 +2608,16 @@
     "StageSpeciesIds": [
       215,
       461
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "ice"
+      ],
+      [
+        "dark",
+        "ice"
+      ]
     ]
   },
   {
@@ -1583,6 +2634,18 @@
       216,
       217,
       901
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "ground",
+        "normal"
+      ]
     ]
   },
   {
@@ -1597,6 +2660,15 @@
     "StageSpeciesIds": [
       218,
       219
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "rock"
+      ]
     ]
   },
   {
@@ -1613,6 +2685,20 @@
       220,
       221,
       473
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "ground"
+      ],
+      [
+        "ice",
+        "ground"
+      ],
+      [
+        "ice",
+        "ground"
+      ]
     ]
   },
   {
@@ -1627,6 +2713,15 @@
     "StageSpeciesIds": [
       222,
       864
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "rock"
+      ],
+      [
+        "ghost"
+      ]
     ]
   },
   {
@@ -1641,6 +2736,14 @@
     "StageSpeciesIds": [
       223,
       224
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -1653,6 +2756,12 @@
     ],
     "StageSpeciesIds": [
       225
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "flying"
+      ]
     ]
   },
   {
@@ -1667,6 +2776,16 @@
     "StageSpeciesIds": [
       458,
       226
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "flying"
+      ],
+      [
+        "water",
+        "flying"
+      ]
     ]
   },
   {
@@ -1679,6 +2798,12 @@
     ],
     "StageSpeciesIds": [
       227
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "flying"
+      ]
     ]
   },
   {
@@ -1693,6 +2818,16 @@
     "StageSpeciesIds": [
       228,
       229
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "fire"
+      ],
+      [
+        "dark",
+        "fire"
+      ]
     ]
   },
   {
@@ -1707,6 +2842,14 @@
     "StageSpeciesIds": [
       231,
       232
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
     ]
   },
   {
@@ -1721,6 +2864,15 @@
     "StageSpeciesIds": [
       234,
       899
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal",
+        "psychic"
+      ]
     ]
   },
   {
@@ -1733,6 +2885,11 @@
     ],
     "StageSpeciesIds": [
       235
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -1745,6 +2902,11 @@
     ],
     "StageSpeciesIds": [
       241
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -1757,6 +2919,11 @@
     ],
     "StageSpeciesIds": [
       243
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -1769,6 +2936,11 @@
     ],
     "StageSpeciesIds": [
       244
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -1781,6 +2953,11 @@
     ],
     "StageSpeciesIds": [
       245
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -1797,6 +2974,20 @@
       246,
       247,
       248
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "dark"
+      ]
     ]
   },
   {
@@ -1809,6 +3000,12 @@
     ],
     "StageSpeciesIds": [
       249
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ]
     ]
   },
   {
@@ -1821,6 +3018,12 @@
     ],
     "StageSpeciesIds": [
       250
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "flying"
+      ]
     ]
   },
   {
@@ -1833,6 +3036,12 @@
     ],
     "StageSpeciesIds": [
       251
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "grass"
+      ]
     ]
   },
   {
@@ -1849,6 +3058,17 @@
       252,
       253,
       254
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -1865,6 +3085,19 @@
       255,
       256,
       257
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "fighting"
+      ],
+      [
+        "fire",
+        "fighting"
+      ]
     ]
   },
   {
@@ -1881,6 +3114,19 @@
       258,
       259,
       260
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
     ]
   },
   {
@@ -1895,6 +3141,14 @@
     "StageSpeciesIds": [
       261,
       262
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ],
+      [
+        "dark"
+      ]
     ]
   },
   {
@@ -1911,6 +3165,18 @@
       263,
       264,
       862
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "dark",
+        "normal"
+      ]
     ]
   },
   {
@@ -1927,6 +3193,18 @@
       265,
       266,
       267
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
     ]
   },
   {
@@ -1943,6 +3221,20 @@
       270,
       271,
       272
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "grass"
+      ],
+      [
+        "water",
+        "grass"
+      ],
+      [
+        "water",
+        "grass"
+      ]
     ]
   },
   {
@@ -1959,6 +3251,19 @@
       273,
       274,
       275
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "dark"
+      ],
+      [
+        "grass",
+        "dark"
+      ]
     ]
   },
   {
@@ -1973,6 +3278,16 @@
     "StageSpeciesIds": [
       276,
       277
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -1987,6 +3302,16 @@
     "StageSpeciesIds": [
       278,
       279
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "flying"
+      ],
+      [
+        "water",
+        "flying"
+      ]
     ]
   },
   {
@@ -2003,6 +3328,20 @@
       280,
       281,
       282
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "psychic",
+        "fairy"
+      ]
     ]
   },
   {
@@ -2017,6 +3356,16 @@
     "StageSpeciesIds": [
       283,
       284
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "water"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
     ]
   },
   {
@@ -2031,6 +3380,15 @@
     "StageSpeciesIds": [
       285,
       286
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "fighting"
+      ]
     ]
   },
   {
@@ -2047,6 +3405,17 @@
       287,
       288,
       289
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -2061,6 +3430,16 @@
     "StageSpeciesIds": [
       290,
       291
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "ground"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
     ]
   },
   {
@@ -2077,6 +3456,17 @@
       293,
       294,
       295
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -2091,6 +3481,14 @@
     "StageSpeciesIds": [
       296,
       297
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -2105,6 +3503,15 @@
     "StageSpeciesIds": [
       299,
       476
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock",
+        "steel"
+      ]
     ]
   },
   {
@@ -2119,6 +3526,14 @@
     "StageSpeciesIds": [
       300,
       301
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -2131,6 +3546,12 @@
     ],
     "StageSpeciesIds": [
       302
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "ghost"
+      ]
     ]
   },
   {
@@ -2143,6 +3564,12 @@
     ],
     "StageSpeciesIds": [
       303
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "fairy"
+      ]
     ]
   },
   {
@@ -2159,6 +3586,20 @@
       304,
       305,
       306
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "rock"
+      ],
+      [
+        "steel",
+        "rock"
+      ],
+      [
+        "steel",
+        "rock"
+      ]
     ]
   },
   {
@@ -2173,6 +3614,16 @@
     "StageSpeciesIds": [
       307,
       308
+    ],
+    "StageTypes": [
+      [
+        "fighting",
+        "psychic"
+      ],
+      [
+        "fighting",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2187,6 +3638,14 @@
     "StageSpeciesIds": [
       309,
       310
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -2199,6 +3658,11 @@
     ],
     "StageSpeciesIds": [
       311
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -2211,6 +3675,11 @@
     ],
     "StageSpeciesIds": [
       312
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -2223,6 +3692,11 @@
     ],
     "StageSpeciesIds": [
       313
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ]
     ]
   },
   {
@@ -2235,6 +3709,11 @@
     ],
     "StageSpeciesIds": [
       314
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ]
     ]
   },
   {
@@ -2251,6 +3730,20 @@
       406,
       315,
       407
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
     ]
   },
   {
@@ -2265,6 +3758,14 @@
     "StageSpeciesIds": [
       316,
       317
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
     ]
   },
   {
@@ -2279,6 +3780,16 @@
     "StageSpeciesIds": [
       318,
       319
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "dark"
+      ],
+      [
+        "water",
+        "dark"
+      ]
     ]
   },
   {
@@ -2293,6 +3804,14 @@
     "StageSpeciesIds": [
       320,
       321
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -2307,6 +3826,16 @@
     "StageSpeciesIds": [
       322,
       323
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "ground"
+      ],
+      [
+        "fire",
+        "ground"
+      ]
     ]
   },
   {
@@ -2319,6 +3848,11 @@
     ],
     "StageSpeciesIds": [
       324
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -2333,6 +3867,14 @@
     "StageSpeciesIds": [
       325,
       326
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -2345,6 +3887,11 @@
     ],
     "StageSpeciesIds": [
       327
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -2361,6 +3908,19 @@
       328,
       329,
       330
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground",
+        "dragon"
+      ],
+      [
+        "ground",
+        "dragon"
+      ]
     ]
   },
   {
@@ -2375,6 +3935,15 @@
     "StageSpeciesIds": [
       331,
       332
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "dark"
+      ]
     ]
   },
   {
@@ -2389,6 +3958,16 @@
     "StageSpeciesIds": [
       333,
       334
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "dragon",
+        "flying"
+      ]
     ]
   },
   {
@@ -2401,6 +3980,11 @@
     ],
     "StageSpeciesIds": [
       335
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -2413,6 +3997,11 @@
     ],
     "StageSpeciesIds": [
       336
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ]
     ]
   },
   {
@@ -2425,6 +4014,12 @@
     ],
     "StageSpeciesIds": [
       337
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2437,6 +4032,12 @@
     ],
     "StageSpeciesIds": [
       338
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2451,6 +4052,16 @@
     "StageSpeciesIds": [
       339,
       340
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
     ]
   },
   {
@@ -2465,6 +4076,15 @@
     "StageSpeciesIds": [
       341,
       342
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "dark"
+      ]
     ]
   },
   {
@@ -2479,6 +4099,16 @@
     "StageSpeciesIds": [
       343,
       344
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "psychic"
+      ],
+      [
+        "ground",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2493,6 +4123,16 @@
     "StageSpeciesIds": [
       345,
       346
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "grass"
+      ],
+      [
+        "rock",
+        "grass"
+      ]
     ]
   },
   {
@@ -2507,6 +4147,16 @@
     "StageSpeciesIds": [
       347,
       348
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "bug"
+      ],
+      [
+        "rock",
+        "bug"
+      ]
     ]
   },
   {
@@ -2521,6 +4171,14 @@
     "StageSpeciesIds": [
       349,
       350
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -2533,6 +4191,11 @@
     ],
     "StageSpeciesIds": [
       351
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -2545,6 +4208,11 @@
     ],
     "StageSpeciesIds": [
       352
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -2559,6 +4227,14 @@
     "StageSpeciesIds": [
       353,
       354
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
     ]
   },
   {
@@ -2575,6 +4251,17 @@
       355,
       356,
       477
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
     ]
   },
   {
@@ -2587,6 +4274,12 @@
     ],
     "StageSpeciesIds": [
       357
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "flying"
+      ]
     ]
   },
   {
@@ -2601,6 +4294,14 @@
     "StageSpeciesIds": [
       433,
       358
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -2613,6 +4314,11 @@
     ],
     "StageSpeciesIds": [
       359
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ]
     ]
   },
   {
@@ -2627,6 +4333,14 @@
     "StageSpeciesIds": [
       361,
       362
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ]
     ]
   },
   {
@@ -2643,6 +4357,20 @@
       363,
       364,
       365
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "water"
+      ],
+      [
+        "ice",
+        "water"
+      ],
+      [
+        "ice",
+        "water"
+      ]
     ]
   },
   {
@@ -2657,6 +4385,14 @@
     "StageSpeciesIds": [
       366,
       367
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -2669,6 +4405,12 @@
     ],
     "StageSpeciesIds": [
       369
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "rock"
+      ]
     ]
   },
   {
@@ -2681,6 +4423,11 @@
     ],
     "StageSpeciesIds": [
       370
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -2697,6 +4444,18 @@
       371,
       372,
       373
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ],
+      [
+        "dragon",
+        "flying"
+      ]
     ]
   },
   {
@@ -2713,6 +4472,20 @@
       374,
       375,
       376
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "psychic"
+      ],
+      [
+        "steel",
+        "psychic"
+      ],
+      [
+        "steel",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2725,6 +4498,11 @@
     ],
     "StageSpeciesIds": [
       377
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ]
     ]
   },
   {
@@ -2737,6 +4515,11 @@
     ],
     "StageSpeciesIds": [
       378
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ]
     ]
   },
   {
@@ -2749,6 +4532,11 @@
     ],
     "StageSpeciesIds": [
       379
+    ],
+    "StageTypes": [
+      [
+        "steel"
+      ]
     ]
   },
   {
@@ -2761,6 +4549,12 @@
     ],
     "StageSpeciesIds": [
       380
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2773,6 +4567,12 @@
     ],
     "StageSpeciesIds": [
       381
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2785,6 +4585,11 @@
     ],
     "StageSpeciesIds": [
       382
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -2797,6 +4602,11 @@
     ],
     "StageSpeciesIds": [
       383
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ]
     ]
   },
   {
@@ -2809,6 +4619,12 @@
     ],
     "StageSpeciesIds": [
       384
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "flying"
+      ]
     ]
   },
   {
@@ -2821,6 +4637,12 @@
     ],
     "StageSpeciesIds": [
       385
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "psychic"
+      ]
     ]
   },
   {
@@ -2833,6 +4655,11 @@
     ],
     "StageSpeciesIds": [
       386
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -2849,6 +4676,18 @@
       387,
       388,
       389
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "ground"
+      ]
     ]
   },
   {
@@ -2865,6 +4704,19 @@
       390,
       391,
       392
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "fighting"
+      ],
+      [
+        "fire",
+        "fighting"
+      ]
     ]
   },
   {
@@ -2881,6 +4733,18 @@
       393,
       394,
       395
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water",
+        "steel"
+      ]
     ]
   },
   {
@@ -2897,6 +4761,20 @@
       396,
       397,
       398
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -2911,6 +4789,15 @@
     "StageSpeciesIds": [
       399,
       400
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal",
+        "water"
+      ]
     ]
   },
   {
@@ -2925,6 +4812,14 @@
     "StageSpeciesIds": [
       401,
       402
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ]
     ]
   },
   {
@@ -2941,6 +4836,17 @@
       403,
       404,
       405
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -2955,6 +4861,14 @@
     "StageSpeciesIds": [
       408,
       409
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ]
     ]
   },
   {
@@ -2969,6 +4883,16 @@
     "StageSpeciesIds": [
       410,
       411
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "steel"
+      ],
+      [
+        "rock",
+        "steel"
+      ]
     ]
   },
   {
@@ -2983,6 +4907,15 @@
     "StageSpeciesIds": [
       412,
       413
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "grass"
+      ]
     ]
   },
   {
@@ -2997,6 +4930,16 @@
     "StageSpeciesIds": [
       415,
       416
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
     ]
   },
   {
@@ -3009,6 +4952,11 @@
     ],
     "StageSpeciesIds": [
       417
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -3023,6 +4971,14 @@
     "StageSpeciesIds": [
       418,
       419
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -3037,6 +4993,14 @@
     "StageSpeciesIds": [
       420,
       421
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -3051,6 +5015,15 @@
     "StageSpeciesIds": [
       422,
       423
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ground"
+      ]
     ]
   },
   {
@@ -3065,6 +5038,16 @@
     "StageSpeciesIds": [
       425,
       426
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "flying"
+      ],
+      [
+        "ghost",
+        "flying"
+      ]
     ]
   },
   {
@@ -3079,6 +5062,14 @@
     "StageSpeciesIds": [
       427,
       428
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3093,6 +5084,14 @@
     "StageSpeciesIds": [
       431,
       432
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3107,6 +5106,16 @@
     "StageSpeciesIds": [
       434,
       435
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "dark"
+      ],
+      [
+        "poison",
+        "dark"
+      ]
     ]
   },
   {
@@ -3121,6 +5130,16 @@
     "StageSpeciesIds": [
       436,
       437
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "psychic"
+      ],
+      [
+        "steel",
+        "psychic"
+      ]
     ]
   },
   {
@@ -3133,6 +5152,12 @@
     ],
     "StageSpeciesIds": [
       441
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -3145,6 +5170,12 @@
     ],
     "StageSpeciesIds": [
       442
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "dark"
+      ]
     ]
   },
   {
@@ -3161,6 +5192,20 @@
       443,
       444,
       445
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "ground"
+      ],
+      [
+        "dragon",
+        "ground"
+      ],
+      [
+        "dragon",
+        "ground"
+      ]
     ]
   },
   {
@@ -3175,6 +5220,15 @@
     "StageSpeciesIds": [
       447,
       448
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting",
+        "steel"
+      ]
     ]
   },
   {
@@ -3189,6 +5243,14 @@
     "StageSpeciesIds": [
       449,
       450
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
     ]
   },
   {
@@ -3203,6 +5265,16 @@
     "StageSpeciesIds": [
       451,
       452
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "bug"
+      ],
+      [
+        "poison",
+        "dark"
+      ]
     ]
   },
   {
@@ -3217,6 +5289,16 @@
     "StageSpeciesIds": [
       453,
       454
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "fighting"
+      ],
+      [
+        "poison",
+        "fighting"
+      ]
     ]
   },
   {
@@ -3229,6 +5311,11 @@
     ],
     "StageSpeciesIds": [
       455
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -3243,6 +5330,14 @@
     "StageSpeciesIds": [
       456,
       457
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -3257,6 +5352,16 @@
     "StageSpeciesIds": [
       459,
       460
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "ice"
+      ],
+      [
+        "grass",
+        "ice"
+      ]
     ]
   },
   {
@@ -3269,6 +5374,12 @@
     ],
     "StageSpeciesIds": [
       479
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "ghost"
+      ]
     ]
   },
   {
@@ -3281,6 +5392,11 @@
     ],
     "StageSpeciesIds": [
       480
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -3293,6 +5409,11 @@
     ],
     "StageSpeciesIds": [
       481
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -3305,6 +5426,11 @@
     ],
     "StageSpeciesIds": [
       482
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -3317,6 +5443,12 @@
     ],
     "StageSpeciesIds": [
       483
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "dragon"
+      ]
     ]
   },
   {
@@ -3329,6 +5461,12 @@
     ],
     "StageSpeciesIds": [
       484
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "dragon"
+      ]
     ]
   },
   {
@@ -3341,6 +5479,12 @@
     ],
     "StageSpeciesIds": [
       485
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "steel"
+      ]
     ]
   },
   {
@@ -3353,6 +5497,11 @@
     ],
     "StageSpeciesIds": [
       486
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3365,6 +5514,12 @@
     ],
     "StageSpeciesIds": [
       487
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "dragon"
+      ]
     ]
   },
   {
@@ -3377,6 +5532,11 @@
     ],
     "StageSpeciesIds": [
       488
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -3391,6 +5551,14 @@
     "StageSpeciesIds": [
       489,
       490
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -3403,6 +5571,11 @@
     ],
     "StageSpeciesIds": [
       491
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ]
     ]
   },
   {
@@ -3415,6 +5588,11 @@
     ],
     "StageSpeciesIds": [
       492
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -3427,6 +5605,11 @@
     ],
     "StageSpeciesIds": [
       493
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3439,6 +5622,12 @@
     ],
     "StageSpeciesIds": [
       494
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "fire"
+      ]
     ]
   },
   {
@@ -3455,6 +5644,17 @@
       495,
       496,
       497
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -3471,6 +5671,19 @@
       498,
       499,
       500
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "fighting"
+      ],
+      [
+        "fire",
+        "fighting"
+      ]
     ]
   },
   {
@@ -3487,6 +5700,17 @@
       501,
       502,
       503
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -3501,6 +5725,14 @@
     "StageSpeciesIds": [
       504,
       505
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3517,6 +5749,17 @@
       506,
       507,
       508
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3531,6 +5774,14 @@
     "StageSpeciesIds": [
       509,
       510
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ],
+      [
+        "dark"
+      ]
     ]
   },
   {
@@ -3545,6 +5796,14 @@
     "StageSpeciesIds": [
       511,
       512
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -3559,6 +5818,14 @@
     "StageSpeciesIds": [
       513,
       514
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -3573,6 +5840,14 @@
     "StageSpeciesIds": [
       515,
       516
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -3587,6 +5862,14 @@
     "StageSpeciesIds": [
       517,
       518
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -3603,6 +5886,20 @@
       519,
       520,
       521
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -3617,6 +5914,14 @@
     "StageSpeciesIds": [
       522,
       523
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -3633,6 +5938,17 @@
       524,
       525,
       526
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ]
     ]
   },
   {
@@ -3647,6 +5963,16 @@
     "StageSpeciesIds": [
       527,
       528
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ],
+      [
+        "psychic",
+        "flying"
+      ]
     ]
   },
   {
@@ -3661,6 +5987,15 @@
     "StageSpeciesIds": [
       529,
       530
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground",
+        "steel"
+      ]
     ]
   },
   {
@@ -3673,6 +6008,11 @@
     ],
     "StageSpeciesIds": [
       531
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3689,6 +6029,17 @@
       532,
       533,
       534
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -3705,6 +6056,19 @@
       535,
       536,
       537
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
     ]
   },
   {
@@ -3717,6 +6081,11 @@
     ],
     "StageSpeciesIds": [
       538
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -3729,6 +6098,11 @@
     ],
     "StageSpeciesIds": [
       539
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -3745,6 +6119,20 @@
       540,
       541,
       542
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "grass"
+      ],
+      [
+        "bug",
+        "grass"
+      ],
+      [
+        "bug",
+        "grass"
+      ]
     ]
   },
   {
@@ -3761,6 +6149,20 @@
       543,
       544,
       545
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
     ]
   },
   {
@@ -3775,6 +6177,16 @@
     "StageSpeciesIds": [
       546,
       547
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "fairy"
+      ],
+      [
+        "grass",
+        "fairy"
+      ]
     ]
   },
   {
@@ -3789,6 +6201,14 @@
     "StageSpeciesIds": [
       548,
       549
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -3803,6 +6223,15 @@
     "StageSpeciesIds": [
       550,
       902
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ghost"
+      ]
     ]
   },
   {
@@ -3819,6 +6248,20 @@
       551,
       552,
       553
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "dark"
+      ],
+      [
+        "ground",
+        "dark"
+      ],
+      [
+        "ground",
+        "dark"
+      ]
     ]
   },
   {
@@ -3833,6 +6276,14 @@
     "StageSpeciesIds": [
       554,
       555
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -3845,6 +6296,11 @@
     ],
     "StageSpeciesIds": [
       556
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ]
     ]
   },
   {
@@ -3859,6 +6315,16 @@
     "StageSpeciesIds": [
       557,
       558
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "rock"
+      ],
+      [
+        "bug",
+        "rock"
+      ]
     ]
   },
   {
@@ -3873,6 +6339,16 @@
     "StageSpeciesIds": [
       559,
       560
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "fighting"
+      ],
+      [
+        "dark",
+        "fighting"
+      ]
     ]
   },
   {
@@ -3885,6 +6361,12 @@
     ],
     "StageSpeciesIds": [
       561
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ]
     ]
   },
   {
@@ -3899,6 +6381,14 @@
     "StageSpeciesIds": [
       562,
       563
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
     ]
   },
   {
@@ -3913,6 +6403,16 @@
     "StageSpeciesIds": [
       564,
       565
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "rock"
+      ],
+      [
+        "water",
+        "rock"
+      ]
     ]
   },
   {
@@ -3927,6 +6427,16 @@
     "StageSpeciesIds": [
       566,
       567
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "flying"
+      ],
+      [
+        "rock",
+        "flying"
+      ]
     ]
   },
   {
@@ -3941,6 +6451,14 @@
     "StageSpeciesIds": [
       568,
       569
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
     ]
   },
   {
@@ -3955,6 +6473,14 @@
     "StageSpeciesIds": [
       570,
       571
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ],
+      [
+        "dark"
+      ]
     ]
   },
   {
@@ -3969,6 +6495,14 @@
     "StageSpeciesIds": [
       572,
       573
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -3985,6 +6519,17 @@
       574,
       575,
       576
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -4001,6 +6546,17 @@
       577,
       578,
       579
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -4015,6 +6571,16 @@
     "StageSpeciesIds": [
       580,
       581
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "flying"
+      ],
+      [
+        "water",
+        "flying"
+      ]
     ]
   },
   {
@@ -4031,6 +6597,17 @@
       582,
       583,
       584
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ]
     ]
   },
   {
@@ -4045,6 +6622,16 @@
     "StageSpeciesIds": [
       585,
       586
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "grass"
+      ],
+      [
+        "normal",
+        "grass"
+      ]
     ]
   },
   {
@@ -4057,6 +6644,12 @@
     ],
     "StageSpeciesIds": [
       587
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "flying"
+      ]
     ]
   },
   {
@@ -4071,6 +6664,15 @@
     "StageSpeciesIds": [
       588,
       589
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "steel"
+      ]
     ]
   },
   {
@@ -4085,6 +6687,16 @@
     "StageSpeciesIds": [
       590,
       591
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
     ]
   },
   {
@@ -4099,6 +6711,16 @@
     "StageSpeciesIds": [
       592,
       593
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ghost"
+      ],
+      [
+        "water",
+        "ghost"
+      ]
     ]
   },
   {
@@ -4111,6 +6733,11 @@
     ],
     "StageSpeciesIds": [
       594
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
     ]
   },
   {
@@ -4125,6 +6752,16 @@
     "StageSpeciesIds": [
       595,
       596
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "electric"
+      ],
+      [
+        "bug",
+        "electric"
+      ]
     ]
   },
   {
@@ -4139,6 +6776,16 @@
     "StageSpeciesIds": [
       597,
       598
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "steel"
+      ],
+      [
+        "grass",
+        "steel"
+      ]
     ]
   },
   {
@@ -4155,6 +6802,17 @@
       599,
       600,
       601
+    ],
+    "StageTypes": [
+      [
+        "steel"
+      ],
+      [
+        "steel"
+      ],
+      [
+        "steel"
+      ]
     ]
   },
   {
@@ -4171,6 +6829,17 @@
       602,
       603,
       604
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
     ]
   },
   {
@@ -4185,6 +6854,14 @@
     "StageSpeciesIds": [
       605,
       606
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
     ]
   },
   {
@@ -4201,6 +6878,20 @@
       607,
       608,
       609
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "fire"
+      ],
+      [
+        "ghost",
+        "fire"
+      ],
+      [
+        "ghost",
+        "fire"
+      ]
     ]
   },
   {
@@ -4217,6 +6908,17 @@
       610,
       611,
       612
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ]
     ]
   },
   {
@@ -4231,6 +6933,14 @@
     "StageSpeciesIds": [
       613,
       614
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ]
     ]
   },
   {
@@ -4243,6 +6953,11 @@
     ],
     "StageSpeciesIds": [
       615
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ]
     ]
   },
   {
@@ -4257,6 +6972,14 @@
     "StageSpeciesIds": [
       616,
       617
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ]
     ]
   },
   {
@@ -4269,6 +6992,12 @@
     ],
     "StageSpeciesIds": [
       618
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "electric"
+      ]
     ]
   },
   {
@@ -4283,6 +7012,14 @@
     "StageSpeciesIds": [
       619,
       620
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
     ]
   },
   {
@@ -4295,6 +7032,11 @@
     ],
     "StageSpeciesIds": [
       621
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ]
     ]
   },
   {
@@ -4309,6 +7051,16 @@
     "StageSpeciesIds": [
       622,
       623
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "ghost"
+      ],
+      [
+        "ground",
+        "ghost"
+      ]
     ]
   },
   {
@@ -4325,6 +7077,20 @@
       624,
       625,
       983
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "steel"
+      ],
+      [
+        "dark",
+        "steel"
+      ],
+      [
+        "dark",
+        "steel"
+      ]
     ]
   },
   {
@@ -4337,6 +7103,11 @@
     ],
     "StageSpeciesIds": [
       626
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
     ]
   },
   {
@@ -4351,6 +7122,16 @@
     "StageSpeciesIds": [
       627,
       628
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
     ]
   },
   {
@@ -4365,6 +7146,16 @@
     "StageSpeciesIds": [
       629,
       630
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "flying"
+      ],
+      [
+        "dark",
+        "flying"
+      ]
     ]
   },
   {
@@ -4377,6 +7168,11 @@
     ],
     "StageSpeciesIds": [
       631
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ]
     ]
   },
   {
@@ -4389,6 +7185,12 @@
     ],
     "StageSpeciesIds": [
       632
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "steel"
+      ]
     ]
   },
   {
@@ -4405,6 +7207,20 @@
       633,
       634,
       635
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "dragon"
+      ],
+      [
+        "dark",
+        "dragon"
+      ],
+      [
+        "dark",
+        "dragon"
+      ]
     ]
   },
   {
@@ -4419,6 +7235,16 @@
     "StageSpeciesIds": [
       636,
       637
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "fire"
+      ],
+      [
+        "bug",
+        "fire"
+      ]
     ]
   },
   {
@@ -4431,6 +7257,12 @@
     ],
     "StageSpeciesIds": [
       638
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "fighting"
+      ]
     ]
   },
   {
@@ -4443,6 +7275,12 @@
     ],
     "StageSpeciesIds": [
       639
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "fighting"
+      ]
     ]
   },
   {
@@ -4455,6 +7293,12 @@
     ],
     "StageSpeciesIds": [
       640
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "fighting"
+      ]
     ]
   },
   {
@@ -4467,6 +7311,11 @@
     ],
     "StageSpeciesIds": [
       641
+    ],
+    "StageTypes": [
+      [
+        "flying"
+      ]
     ]
   },
   {
@@ -4479,6 +7328,12 @@
     ],
     "StageSpeciesIds": [
       642
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "flying"
+      ]
     ]
   },
   {
@@ -4491,6 +7346,12 @@
     ],
     "StageSpeciesIds": [
       643
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "fire"
+      ]
     ]
   },
   {
@@ -4503,6 +7364,12 @@
     ],
     "StageSpeciesIds": [
       644
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "electric"
+      ]
     ]
   },
   {
@@ -4515,6 +7382,12 @@
     ],
     "StageSpeciesIds": [
       645
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "flying"
+      ]
     ]
   },
   {
@@ -4527,6 +7400,12 @@
     ],
     "StageSpeciesIds": [
       646
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "ice"
+      ]
     ]
   },
   {
@@ -4539,6 +7418,12 @@
     ],
     "StageSpeciesIds": [
       647
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "fighting"
+      ]
     ]
   },
   {
@@ -4551,6 +7436,12 @@
     ],
     "StageSpeciesIds": [
       648
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "psychic"
+      ]
     ]
   },
   {
@@ -4563,6 +7454,12 @@
     ],
     "StageSpeciesIds": [
       649
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "steel"
+      ]
     ]
   }
 ]

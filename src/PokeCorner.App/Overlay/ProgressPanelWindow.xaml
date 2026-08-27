@@ -52,7 +52,11 @@
                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
 
-            <Grid Width="36" Height="36" Margin="0,0,0,9" ToolTip="Прогресс до следующей эволюции">
+            <!-- Named + tooltip assigned from code-behind: this gauge has three readings, not
+                 one (in-progress / never evolves / final form), and a ring has no room for the
+                 words. The tooltip is where the distinction is spelled out on the desktop. -->
+            <Grid x:Name="EvolutionGauge" Width="36" Height="36" Margin="0,0,0,9"
+                  ToolTip="Прогресс до следующей эволюции">
                 <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
                 <Ellipse x:Name="EvolutionArc" Stroke="{StaticResource RarityRareBrush}" StrokeThickness="4.5"
                          StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">

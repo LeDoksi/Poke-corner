@@ -51,7 +51,14 @@
                                        HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
                             <TextBlock x:Name="ActivePetMetaText" Style="{StaticResource MetaTextStyle}"
                                        HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
-                                       Margin="0,3,0,10" />
+                                       Margin="0,3,0,7" />
+
+                            <!-- Type badges for the active pet. Centered under the meta line so
+                                 the hero reads name -> stats -> types top to bottom. -->
+                            <ItemsControl x:Name="ActiveTypeBadges"
+                                          HorizontalAlignment="Center" Margin="0,0,0,7"
+                                          ItemsPanel="{StaticResource TypeBadgePanelTemplate}"
+                                          ItemTemplate="{StaticResource TypeBadgeTemplate}" />
 
                             <Grid Margin="0,0,0,10">
                                 <Grid.ColumnDefinitions>
@@ -333,6 +340,17 @@
                                                            Foreground="{Binding RarityBrush}" />
                                             </StackPanel>
                                         </Border>
+
+                                        <!-- Types, under the rarity tag. Centred and wrapping:
+                                             a two-type species stacks its second badge on a
+                                             second row rather than clipping it at the 112px
+                                             card edge. Collapses when the catalog in use has
+                                             no type data, so the card doesn't grow a gap. -->
+                                        <ItemsControl Margin="0,5,0,0" HorizontalAlignment="Center"
+                                                      Visibility="{Binding TypeBadgesVisibility}"
+                                                      ItemsSource="{Binding TypeBadges}"
+                                                      ItemsPanel="{StaticResource TypeBadgePanelTemplate}"
+                                                      ItemTemplate="{StaticResource TypeBadgeTemplate}" />
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -462,6 +480,13 @@
                         </Border>
                     </WrapPanel>
 
+                    <!-- Types on their own row rather than mixed into the badge row above: those
+                         badges are per-INDIVIDUAL state (shiny, pinned, on the desktop), these
+                         are per-SPECIES facts, and interleaving them made both harder to scan. -->
+                    <ItemsControl x:Name="DetailTypeBadges" HorizontalAlignment="Center" Margin="0,0,0,10"
+                                  ItemsPanel="{StaticResource TypeBadgePanelTemplate}"
+                                  ItemTemplate="{StaticResource TypeBadgeTemplate}" />
+
                     <Border Style="{StaticResource WellStyle}" Padding="13,10" Margin="0,0,0,12">
                         <StackPanel>
                             <Grid Margin="0,0,0,5">
@@ -474,16 +499,117 @@
                                 <TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource MetaTextStyle}"
                                            HorizontalAlignment="Right" FontWeight="SemiBold" />
                             </Grid>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                <ContentControl Style="{StaticResource EvolutionIconStyle}" Width="12" Height="12"
-                                                Foreground="{StaticResource RarityRareBrush}"
-                                                VerticalAlignment="Center" Margin="0,0,6,0" />
-                                <TextBlock Text="До эволюции" Style="{StaticResource MetaTextStyle}"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
+                            <!-- The right-hand TextBlock is new: this row used to be a bare bar
+                                 with no readout at all, which made a full bar indistinguishable
+                                 between "99% there" and "has no further evolution". It carries
+                                 the percentage OR "Не эволюционирует" / "Финальная форма". -->
+                            <Grid Margin="0,0,0,4">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <ContentControl Style="{StaticResource EvolutionIconStyle}" Width="12" Height="12"
+                                                    Foreground="{StaticResource RarityRareBrush}"
+                                                    VerticalAlignment="Center" Margin="0,0,6,0" />
+                                    <TextBlock Text="До эволюции" Style="{StaticResource MetaTextStyle}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock x:Name="DetailEvolutionText" Style="{StaticResource MetaTextStyle}"
+                                           HorizontalAlignment="Right" FontWeight="SemiBold" />
+                            </Grid>
                             <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource SlimProgressBarStyle}"
                                          Minimum="0" Maximum="1"
                                          ToolTip="Прогресс до следующей эволюции этого покемона" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ============== EVOLUTION CHAIN PREVIEW (spoiler-safe) ==============
+                         The individual's whole line, left to right, joined by arrows. Stages
+                         this individual has REACHED show their sprite and name; everything
+                         beyond its current stage is a silhouette + "?" — enough to say "there
+                         is more to this line" without spoiling what it becomes.
+
+                         The mask is enforced in the MODEL, not here: CollectionViewModel never
+                         puts an unreached stage's id or name into the card, so there is nothing
+                         for this template to accidentally bind. The silhouette itself is the
+                         same outline-pokéball the grid cards use for "sprite not cached yet".
+
+                         Collapsed entirely for a single-stage species — see ShowDetail. -->
+                    <Border x:Name="DetailEvolutionChainSection" Style="{StaticResource WellStyle}"
+                            Padding="10,10" Margin="0,0,0,12" Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBlock Text="Цепочка эволюции" Style="{StaticResource MetaTextStyle}"
+                                       Margin="0,0,0,8" />
+                            <ItemsControl x:Name="DetailEvolutionChainStrip" HorizontalAlignment="Center">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+
+                                            <Border Width="92" Padding="4,6" CornerRadius="10"
+                                                    BorderThickness="1.5"
+                                                    BorderBrush="{Binding BorderBrush}"
+                                                    Opacity="{Binding Opacity}"
+                                                    Background="{StaticResource CardBackgroundBrush}"
+                                                    ToolTip="{Binding ToolTip}">
+                                                <StackPanel>
+                                                    <Grid Height="52">
+                                                        <Image Width="46" Height="46" Source="{Binding SpriteImage}"
+                                                               RenderOptions.BitmapScalingMode="NearestNeighbor" />
+
+                                                        <!-- Same pokéball silhouette the grid
+                                                             cards use for an uncached sprite. -->
+                                                        <Grid Width="26" Height="26" Opacity="0.45"
+                                                              Visibility="{Binding PlaceholderVisibility}">
+                                                            <Ellipse Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2" />
+                                                            <Border Height="2" Background="{StaticResource MutedTextBrush}"
+                                                                    VerticalAlignment="Center" />
+                                                            <Ellipse Width="9" Height="9" Fill="{StaticResource WindowBackgroundBrush}"
+                                                                     Stroke="{StaticResource MutedTextBrush}" StrokeThickness="2"
+                                                                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        </Grid>
+
+                                                        <!-- The "?" marks a MYSTERY specifically,
+                                                             which an uncached-but-known sprite is
+                                                             not — that one keeps its real name
+                                                             under the silhouette. -->
+                                                        <TextBlock Text="?" FontSize="20" FontWeight="Bold"
+                                                                   Foreground="{StaticResource MutedTextBrush}"
+                                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                   Visibility="{Binding MysteryVisibility}" />
+                                                    </Grid>
+
+                                                    <TextBlock Text="{Binding NameText}" FontSize="10" FontWeight="SemiBold"
+                                                               TextAlignment="Center" TextWrapping="Wrap"
+                                                               Margin="0,3,0,0" />
+
+                                                    <!-- "You are here". -->
+                                                    <Border Style="{StaticResource PillStyle}" Padding="5,1" CornerRadius="5"
+                                                            HorizontalAlignment="Center" Margin="0,4,0,0"
+                                                            BorderBrush="{StaticResource AccentGoldBrush}"
+                                                            Visibility="{Binding CurrentBadgeVisibility}"
+                                                            ToolTip="Текущая форма этого покемона">
+                                                        <TextBlock Text="Сейчас" FontSize="8.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource AccentGoldBrush}" />
+                                                    </Border>
+
+                                                    <ItemsControl Margin="0,4,0,0" HorizontalAlignment="Center"
+                                                                  Visibility="{Binding TypeBadgesVisibility}"
+                                                                  ItemsSource="{Binding TypeBadges}"
+                                                                  ItemsPanel="{StaticResource TypeBadgePanelTemplate}"
+                                                                  ItemTemplate="{StaticResource TypeBadgeTemplate}" />
+                                                </StackPanel>
+                                            </Border>
+
+                                            <TextBlock Text="→" FontSize="15" Margin="3,0,3,0"
+                                                       Foreground="{StaticResource MutedTextBrush}"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding ArrowVisibility}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </Border>
 

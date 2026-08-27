@@ -36,7 +36,26 @@ public sealed class PokedexCard
     public required string DexNumber { get; init; }
     public required string RarityName { get; init; }
     public required Brush RarityBrush { get; init; }
-    public required double EvolutionFraction { get; init; }
+
+    /// The current stage's PokeAPI types, as coloured pills WITH their name text. Empty when
+    /// the catalog in use predates type capture, in which case the row collapses entirely
+    /// rather than leaving a gap.
+    public required IReadOnlyList<TypeBadge> TypeBadges { get; init; }
+    public Visibility TypeBadgesVisibility => TypeBadges.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+    /// The spoiler-masked evolution line for the detail overlay's chain strip. Empty for a
+    /// single-stage species, which collapses the whole section.
+    public required IReadOnlyList<EvolutionStageCard> EvolutionStages { get; init; }
+    /// null in both terminal states — see EvolutionProgressState. The card never renders this
+    /// raw; EvolutionBarValue/EvolutionLabel below are what the template binds to, so a
+    /// "no further evolution" individual can't leak a bare "100%".
+    public required double? EvolutionFraction { get; init; }
+    public required EvolutionProgressState EvolutionState { get; init; }
+
+    public double EvolutionBarValue => EvolutionProgressDisplay.BarValue(EvolutionFraction, EvolutionState);
+    public string EvolutionLabel => EvolutionProgressDisplay.Label(EvolutionFraction, EvolutionState);
+    public string EvolutionToolTip => EvolutionProgressDisplay.ToolTip(EvolutionFraction, EvolutionState);
+    public double EvolutionBarOpacity => EvolutionProgressDisplay.BarOpacity(EvolutionState);
 
     /// Popup-only detail: the roster rows used to show these inline and the species grid
     /// dropped them entirely, which is half of why the two lists felt redundant-yet-incomplete.
@@ -81,6 +100,56 @@ public sealed class PokedexCard
     public string FavoriteToolTip => IsFavorite
         ? "Убрать из избранного"
         : "В избранное — закрепить в начале списка";
+}
+
+/// One node of the evolution-chain strip in the detail overlay.
+///
+/// A stage the player has not reached arrives here already stripped of its identity by
+/// CollectionViewModel — this class only decides how the mystery LOOKS. It reuses the same
+/// outline-pokéball silhouette the grid cards show for "sprite not cached yet", because the
+/// two mean the same thing to the eye: something is there, you just can't see it yet.
+public sealed class EvolutionStageCard
+{
+    public required bool IsRevealed { get; init; }
+
+    /// The species name for a reached stage; "???" for one that is still a mystery.
+    public required string NameText { get; init; }
+
+    /// Always null for an unreached stage — the sprite is never even looked up, so there is
+    /// nothing in the visual tree to peek at.
+    public ImageSource? SpriteImage { get; init; }
+
+    public required IReadOnlyList<TypeBadge> TypeBadges { get; init; }
+
+    /// "You are here" — the stage this individual is currently on.
+    public required bool IsCurrent { get; init; }
+
+    /// Every node but the last draws a "→" to its right.
+    public required bool ShowArrow { get; init; }
+
+    /// Shown when there is no artwork to draw: either the stage is a mystery, or it is a
+    /// revealed stage whose sprite simply isn't in the on-disk cache yet. The name row
+    /// underneath is what tells those two apart ("???" vs. the real name).
+    public Visibility PlaceholderVisibility => SpriteImage is null ? Visibility.Visible : Visibility.Collapsed;
+
+    /// The "?" glyph, which marks a mystery specifically — not merely an uncached sprite.
+    public Visibility MysteryVisibility => IsRevealed ? Visibility.Collapsed : Visibility.Visible;
+
+    public Visibility ArrowVisibility => ShowArrow ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility CurrentBadgeVisibility => IsCurrent ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility TypeBadgesVisibility => TypeBadges.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+    /// The current stage gets the gold ring the rest of the app already uses for "this is the
+    /// active one"; unreached stages fade back so the strip reads left-to-right as progress.
+    public Brush BorderBrush => IsCurrent
+        ? ThemeBrushes.Get("AccentGoldBrush")
+        : ThemeBrushes.Get("CardBorderBrush");
+
+    public double Opacity => IsRevealed ? 1.0 : 0.55;
+
+    public string ToolTip => IsRevealed
+        ? (IsCurrent ? $"{NameText} — текущая форма этого покемона" : NameText)
+        : "Ещё не открыто — продолжай растить питомца";
 }
 
 public sealed class PendingEggCard
