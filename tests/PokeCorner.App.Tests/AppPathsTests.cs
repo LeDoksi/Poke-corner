@@ -29,23 +29,24 @@ public class AppPathsTests
         Assert.Equal(Path.Combine(@"C:\FakeRoot", "animated"), path);
     }
 
-    /// The app keeps ALL of its state next to its own executable rather than in %APPDATA%,
-    /// so that an install directory is the entire app. This is the test that fails if anyone
-    /// reintroduces a per-user location.
+    /// Save progress is personal to the Windows account playing, unlike the shared sprite/
+    /// catalog assets beside the executable — it lives in the standard per-user %APPDATA%
+    /// location so two accounts on one machine never share or overwrite each other's
+    /// collection, and an app update/reinstall never touches it.
     [Fact]
-    public void GetSaveFilePath_WithoutOverride_LivesInDataFolderBesideTheExecutable()
-    {
-        var path = AppPaths.GetSaveFilePath();
-
-        Assert.StartsWith(AppContext.BaseDirectory, path);
-        Assert.EndsWith(Path.Combine("Data", "state.json"), path);
-    }
-
-    [Fact]
-    public void GetSaveFilePath_WithoutOverride_IsNotUnderApplicationData()
+    public void GetSaveFilePath_WithoutOverride_LivesUnderApplicationData()
     {
         var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        Assert.DoesNotContain(appData, AppPaths.GetSaveFilePath());
+        var path = AppPaths.GetSaveFilePath();
+
+        Assert.StartsWith(appData, path);
+        Assert.EndsWith(Path.Combine("PokeCorner", "state.json"), path);
+    }
+
+    [Fact]
+    public void GetSaveFilePath_WithoutOverride_IsNotBesideTheExecutable()
+    {
+        Assert.DoesNotContain(AppContext.BaseDirectory.TrimEnd('\\'), AppPaths.GetSaveFilePath());
     }
 }
