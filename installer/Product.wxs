@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+
+  <!--
+    ============================================================================
+      !!  UpgradeCode  ABEC4F80-F721-4D76-85F5-BCFF1CCBD9B4  MUST NEVER CHANGE  !!
+    ============================================================================
+    This GUID is the ONLY thing that makes a newly built PokeCorner.msi recognized
+    by Windows as an upgrade of the already-installed PokeCorner, rather than a
+    second, parallel product. Change it and every future installer will install
+    side-by-side with the old one, leaving two entries in Add/Remove Programs and
+    two copies in Program Files, with no way to clean that up automatically.
+
+    It is fixed for the lifetime of the product. Do not "regenerate the GUIDs".
+
+    What DOES change every release: the Version attribute on <Package> below.
+    MajorUpgrade compares versions, so a new build MUST have a higher Version than
+    the installed one or it will refuse to install. See installer/README.md.
+  -->
+
+  <Package
+      Name="PokeCorner"
+      Manufacturer="PokeCorner"
+      Version="1.0.0.0"
+      UpgradeCode="ABEC4F80-F721-4D76-85F5-BCFF1CCBD9B4"
+      Scope="perMachine"
+      Compressed="yes"
+      InstallerVersion="500">
+
+    <!-- Uninstalls the older version before laying down the new files, so a rebuilt
+         installer upgrades in place instead of duplicating the product.
+
+         Note on save data: state.json lives in Data\ INSIDE the install folder, and is
+         created by the app at runtime rather than by any component here. MSI only removes
+         files it installed, so a file it never authored survives both the upgrade's
+         uninstall pass and a real uninstall. The seeded Data files (sprites, animated,
+         catalog.json) ARE owned components and are correctly replaced/removed. -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of PokeCorner is already installed. Uninstall it first if you really want to go back." />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Add/Remove Programs metadata. ARPPRODUCTICON is what Settings > Installed apps
+         shows next to the entry; it reuses the app's own embedded icon. -->
+    <Icon Id="PokeCornerIcon.ico" SourceFile="..\src\PokeCorner.App\PokeCorner.ico" />
+    <Property Id="ARPPRODUCTICON" Value="PokeCornerIcon.ico" />
+    <!-- ARPNOMODIFY is already set for us by the WixUI_InstallDir dialog set. -->
+
+    <!-- Populates the "Installed from" / InstallLocation field in Add/Remove Programs.
+         ARPINSTALLLOCATION has to be set after CostFinalize, because that is the action
+         that resolves INSTALLFOLDER to a real path (it is still unresolved before then). -->
+    <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLFOLDER]" After="CostFinalize" Sequence="execute" />
+
+
+    <!-- Set from the checkbox on ShortcutDlg. Secure="yes" is required, not cosmetic:
+         the value is chosen in the (unelevated) UI sequence but consumed by the
+         DesktopShortcut component's condition in the elevated execute sequence, and
+         Windows Installer silently drops non-secure properties across that boundary. -->
+    <Property Id="INSTALLDESKTOPSHORTCUT" Value="1" Secure="yes" />
+
+    <!-- ProgramFiles64Folder, not ProgramFilesFolder: the payload is a self-contained
+         win-x64 build, so it belongs in C:\Program Files, not C:\Program Files (x86). -->
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="PokeCorner">
+        <!-- The app's whole runtime state: state.json, sprites\, animated\, catalog.json.
+             Shipped pre-populated so a fresh install is fully offline on first launch. -->
+        <Directory Id="DATAFOLDER" Name="Data" />
+      </Directory>
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder" />
+    <StandardDirectory Id="DesktopFolder" />
+
+    <Feature Id="Main" Title="PokeCorner" Level="1">
+      <ComponentGroupRef Id="AppPayload" />
+      <ComponentGroupRef Id="SeedData" />
+      <ComponentRef Id="DataFolderPermissions" />
+      <ComponentRef Id="StartMenuShortcut" />
+      <ComponentRef Id="DesktopShortcut" />
+      <ComponentRef Id="ArpDisplayIcon" />
+    </Feature>
+
+    <!-- The app stores its state next to its own exe, but it RUNS unelevated while
+         Program Files is read-only for standard users. Without this the very first launch
+         fails to write Data\state.json with access denied. Granting on the Data folder only
+         (not the whole install tree) keeps PokeCorner.exe and the runtime DLLs
+         non-writable, so this does not become a "replace the binary" escalation path.
+         The ACEs are inheritable, so sprites\ and animated\ underneath are writable too —
+         which they must be, since a species missing from the seed is still fetched and
+         cached at runtime. -->
+    <Component Id="DataFolderPermissions" Directory="DATAFOLDER" Guid="49424B12-E8ED-4D22-BC63-A4D32094A1FD">
+      <CreateFolder>
+        <util:PermissionEx User="Users" GenericAll="yes" />
+      </CreateFolder>
+    </Component>
+
+    <!-- WixUI_InstallDir always shows a license page; without this it shows WiX's own
+         placeholder RTF, which reads like an unfinished installer. License.rtf is a short
+         personal-use / no-warranty notice plus the Nintendo and PokeAPI attributions.
+         REVIEW IT before distributing publicly - it is deliberately minimal, not legal advice. -->
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+
+    <UI>
+      <Dialog Id="ShortcutDlg" Width="370" Height="270" Title="[ProductName] Setup">
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="{\WixUI_Font_Title}Shortcuts" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Choose where [ProductName] should appear." />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+
+        <Control Id="StartMenuText" Type="Text" X="20" Y="60" Width="330" Height="24" NoPrefix="yes"
+                 Text="A shortcut is always added to the Start Menu. You can optionally add one to your Desktop as well." />
+        <Control Id="DesktopCheckBox" Type="CheckBox" X="20" Y="95" Width="330" Height="18"
+                 Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1"
+                 Text="Create a shortcut on the &amp;Desktop" />
+
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)">
+          <Publish Event="NewDialog" Value="InstallDirDlg" />
+        </Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+          <Publish Event="NewDialog" Value="VerifyReadyDlg" />
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg" />
+        </Control>
+      </Dialog>
+
+      <!-- Splice ShortcutDlg into WixUI_InstallDir between the folder page and the
+           confirmation page. WixUI_InstallDir's own InstallDirDlg/Next -> VerifyReadyDlg
+           row sits at Order 4; this one runs after it under the same path-is-valid
+           condition, and Windows Installer honours the last NewDialog it processes.
+           VerifyReadyDlg's Back is repointed to match, so the wizard walks both ways. -->
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="ShortcutDlg" Order="5"
+               Condition="WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID=&quot;1&quot;" />
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="ShortcutDlg" Order="5"
+               Condition="NOT Installed" />
+    </UI>
+
+    <!-- Shortcuts. Both components live in INSTALLFOLDER (Program Files) and merely *point*
+         their Shortcut rows at ProgramMenuFolder / DesktopFolder. Putting the component
+         itself in one of those profile folders is what trips ICE38/43/57 on a perMachine
+         package, since Windows Installer then sees per-user data hanging off a per-machine
+         key path. Anchoring the components in the install directory keeps everything
+         per-machine and still puts the .lnk files exactly where a user expects them. -->
+    <Component Id="StartMenuShortcut" Directory="INSTALLFOLDER" Guid="70084B5A-6C97-444C-A95A-31E00EB11480">
+      <Shortcut Id="StartMenuPokeCorner"
+                Directory="ProgramMenuFolder"
+                Name="PokeCorner"
+                Description="Your desktop Pokemon companion"
+                Target="[INSTALLFOLDER]PokeCorner.exe"
+                WorkingDirectory="INSTALLFOLDER"
+                Icon="PokeCornerIcon.ico" />
+      <RegistryValue Root="HKLM" Key="Software\PokeCorner" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+
+    <!-- Optional: gated on the ShortcutDlg checkbox. A component Condition is the standard
+         way to make a single file/shortcut opt-in without splitting out a whole Feature. -->
+    <Component Id="DesktopShortcut" Directory="INSTALLFOLDER" Guid="072F34CC-24BE-4B20-987D-1A5590F1E21A"
+               Condition="INSTALLDESKTOPSHORTCUT = &quot;1&quot;">
+      <Shortcut Id="DesktopPokeCorner"
+                Directory="DesktopFolder"
+                Name="PokeCorner"
+                Description="Your desktop Pokemon companion"
+                Target="[INSTALLFOLDER]PokeCorner.exe"
+                WorkingDirectory="INSTALLFOLDER"
+                Icon="PokeCornerIcon.ico" />
+      <RegistryValue Root="HKLM" Key="Software\PokeCorner" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+
+    <!-- ARPPRODUCTICON alone did NOT produce a DisplayIcon value in the uninstall key on
+         Windows 11 (verified: the value was absent entirely after a clean install), which
+         leaves Settings > Installed apps showing a blank generic icon. Writing DisplayIcon
+         ourselves, pointed at the installed exe whose icon is already embedded, is explicit
+         and always resolves. MSI removes the whole uninstall key on uninstall, so this
+         leaves nothing behind. -->
+    <Component Id="ArpDisplayIcon" Directory="INSTALLFOLDER" Guid="C6D6CA15-BE0F-4DB3-A2BE-34601A63ED58">
+      <RegistryValue Root="HKLM"
+                     Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]"
+                     Name="DisplayIcon" Type="string"
+                     Value="[INSTALLFOLDER]PokeCorner.exe" KeyPath="yes" />
+    </Component>
+  </Package>
+
+  <Fragment>
+    <!-- Single-star glob (publish root only, not recursive): picks up PokeCorner.exe and the
+         WPF native DLLs that single-file publish deliberately leaves loose, while leaving the
+         Data tree to the SeedData group below. WiX 5's <Files> has no Exclude attribute, so
+         splitting by glob depth is how the two trees are kept apart. A new SUBFOLDER appearing
+         in the publish output would be silently missed here — the publish layout is pinned and
+         listed in installer/README.md, so that would be a deliberate change, not an accident. -->
+    <ComponentGroup Id="AppPayload" Directory="INSTALLFOLDER">
+      <Files Include="$(var.PublishDir)\*" />
+    </ComponentGroup>
+
+    <!-- Harvested separately from AppPayload purely so the Data tree lands under the
+         DATAFOLDER id that DataFolderPermissions grants write access to. A single
+         whole-publish harvest would auto-generate an unreferenceable directory id. -->
+    <ComponentGroup Id="SeedData" Directory="DATAFOLDER">
+      <Files Include="$(var.PublishDir)\Data\**" />
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

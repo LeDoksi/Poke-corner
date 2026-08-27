@@ -63,10 +63,10 @@ public partial class App : System.Windows.Application
     /// process's life so nothing writes the save file back after it has been deleted.
     private bool _isWipingSaveData;
 
-    /// Raw animated-GIF bytes per display species id. Deliberately in-memory only: unlike the
-    /// static PNG path there's no SpriteCache disk slot for GIFs (its filenames are always
-    /// "{speciesId}.png", so an animated entry would collide with the static one), and
-    /// widening SpriteCache's public API would break other tasks' tests.
+    /// Raw animated-GIF bytes per display species id — the in-memory tier in front of the
+    /// on-disk cache at AppPaths.GetAnimatedSpriteCacheDirectory(). GIFs get their own folder
+    /// rather than a SpriteCache slot because SpriteCache's filenames are always
+    /// "{speciesId}.png", so an animated entry would collide with the static one.
     private readonly Dictionary<int, byte[]> _animatedSpriteCache = new();
 
     protected override void OnStartup(StartupEventArgs e)
@@ -561,16 +561,48 @@ public partial class App : System.Windows.Application
     {
         if (!_animatedSpriteCache.TryGetValue(speciesId, out var animatedBytes))
         {
+            // Disk before network, mirroring SpriteCache's static-PNG contract. This is what
+            // lets the GIFs the installer ships into Data\animated render on a fresh machine
+            // with no network at all, and it stops a re-download on every app launch.
+            var gifPath = Path.Combine(AppPaths.GetAnimatedSpriteCacheDirectory(), $"{speciesId}.gif");
             try
             {
-                animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(speciesId);
+                if (File.Exists(gifPath))
+                {
+                    animatedBytes = await File.ReadAllBytesAsync(gifPath);
+                }
             }
-            catch
+            catch (IOException)
             {
-                // Network errors already degrade to null inside PokeApiClient's normal paths;
-                // this guards the unexpected ones rather than letting them reach
-                // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
                 animatedBytes = null;
+            }
+
+            if (animatedBytes is null)
+            {
+                try
+                {
+                    animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(speciesId);
+                }
+                catch
+                {
+                    // Network errors already degrade to null inside PokeApiClient's normal paths;
+                    // this guards the unexpected ones rather than letting them reach
+                    // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
+                    animatedBytes = null;
+                }
+
+                // Persist a freshly fetched GIF so the next launch reads it off disk. Best-effort:
+                // a failed write only costs a re-fetch later, so it must never break rendering.
+                if (animatedBytes is { Length: > 0 })
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(AppPaths.GetAnimatedSpriteCacheDirectory());
+                        await File.WriteAllBytesAsync(gifPath, animatedBytes);
+                    }
+                    catch (IOException) { }
+                    catch (UnauthorizedAccessException) { }
+                }
             }
 
             if (animatedBytes is not null)

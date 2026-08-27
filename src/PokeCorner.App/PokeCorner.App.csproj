@@ -4,8 +4,31 @@
     <ProjectReference Include="..\PokeCorner.Core\PokeCorner.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- The app's entire runtime state directory, shipped pre-populated: static sprite PNGs
+         and animated GIFs for every species in the bundled catalog. It lands at
+         <output>\Data\{sprites,animated} — exactly where AppPaths points SpriteCache and the
+         animated cache — so a fresh install is fully offline on first launch with no copy
+         step at all. Loose files on purpose: PublishSingleFile bundles managed assemblies,
+         not Content, so this stays a plain folder the MSI can install and grant write
+         access to. -->
+    <Content Include="Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+
+    <!-- Seeds Data\catalog.json from the same bundled catalog SpriteCache embeds as its
+         offline fallback. The two files are the identical shape (a serialized
+         List<SpeciesEvolutionChain>), so linking rather than copying keeps one source of
+         truth. Having it on disk at first launch is what stops OnStartup's staleness check
+         from firing a network crawl on a brand new install. -->
+    <Content Include="..\PokeCorner.Core\PokeApi\OfflineStarterFallback.json"
+             Link="Data\catalog.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <!-- Ships as <InstallDir>\PokeCorner.exe. Nothing hardcodes the file name (restart and
+         autostart both use Environment.ProcessPath), so this is purely cosmetic-but-required
+         packaging: the shortcut target the user sees should not say "PokeCorner.App". -->
+    <AssemblyName>PokeCorner</AssemblyName>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>

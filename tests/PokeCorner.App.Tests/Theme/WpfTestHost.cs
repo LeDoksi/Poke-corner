@@ -60,9 +60,14 @@ internal static class WpfTestHost
             var thread = new Thread(() =>
             {
                 var application = new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
+                // Assembly name read off the app assembly rather than written out literally:
+                // it ships as PokeCorner.exe but the project/namespace is still PokeCorner.App,
+                // and a hardcoded pack URI silently breaks the whole WPF test host the next
+                // time those two drift apart.
+                var appAssembly = typeof(global::PokeCorner.App.App).Assembly.GetName().Name;
                 application.Resources.MergedDictionaries.Add(new ResourceDictionary
                 {
-                    Source = new Uri("pack://application:,,,/PokeCorner.App;component/Theme/PokedexTheme.xaml", UriKind.Absolute)
+                    Source = new Uri($"pack://application:,,,/{appAssembly};component/Theme/PokedexTheme.xaml", UriKind.Absolute)
                 });
 
                 _dispatcher = Dispatcher.CurrentDispatcher;
