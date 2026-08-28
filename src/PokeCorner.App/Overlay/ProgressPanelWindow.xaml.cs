@@ -86,10 +86,19 @@ public partial class ProgressPanelWindow : System.Windows.Window
         Top = overlay.Top + (overlay.Height - ActualHeight) / 2;
 
         // Clamp to the taskbar-aware working area — the same region OverlayWindow.PositionAt
-        // anchors the sprite to.
-        var bounds = System.Windows.Forms.Screen
-            .FromPoint(new System.Drawing.Point((int)overlay.Left, (int)overlay.Top))
-            .WorkingArea;
+        // anchors the sprite to, and with the same physical-pixels-vs-DIPs care.
+        //
+        // Both directions matter here. Screen.FromPoint takes PHYSICAL pixels, so the overlay's
+        // DIP Left/Top has to be scaled UP to pick the right monitor (at 150% the raw DIPs
+        // named a point two-thirds of the way in, which lands on the wrong monitor in a
+        // multi-monitor setup and, worse, silently succeeds on a single one). And WorkingArea
+        // comes back in physical pixels, so it has to come back DOWN to DIPs before it is
+        // compared against Left/Top/Width below — otherwise every clamp here would shove the
+        // panel to a coordinate 1.5x past the edge it was supposed to be held inside.
+        var dpi = OverlayWindow.DpiFor(this);
+        var bounds = OverlayWindow.ToDips(System.Windows.Forms.Screen
+            .FromPoint(new System.Drawing.Point((int)(overlay.Left * dpi.DpiScaleX), (int)(overlay.Top * dpi.DpiScaleY)))
+            .WorkingArea, dpi);
 
         // The left-edge case is this layout's counterpart to the old below/above flip: with
         // the pet parked in a LEFT screen corner there is no room beside it on that side, so

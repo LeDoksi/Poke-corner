@@ -132,19 +132,79 @@ public partial class OverlayWindow : Window
         _animator.Start();
     }
 
+    /// The gap kept between the pet and the working-area edge it is anchored to. DIPs, like
+    /// every other number that reaches Left/Top/Width/Height.
+    private const double CornerMargin = 12;
+
+    /// THE UNIT BOUNDARY. Everything System.Windows.Forms.Screen reports — WorkingArea,
+    /// Bounds — is in PHYSICAL pixels. Everything WPF's Window.Left/Top/Width/Height accepts
+    /// is in DIPs (1/96"), i.e. physical = DIP * scale. At 100% scaling the two are
+    /// numerically identical, so feeding one straight into the other is invisibly correct —
+    /// and that is exactly how a shipped build put the pet completely off-screen on a 150%
+    /// laptop: BottomRight on a 1920x1080 panel wants DIP 1280x844, but the raw physical
+    /// 1908x1032 was assigned instead, which the OS then re-multiplied by 1.5 to 2862x1548 —
+    /// far past the physical screen. Every value crossing that boundary goes through here.
+    public static Rect ToDips(System.Drawing.Rectangle physical, DpiScale dpi) =>
+        new(physical.Left / dpi.DpiScaleX, physical.Top / dpi.DpiScaleY,
+            physical.Width / dpi.DpiScaleX, physical.Height / dpi.DpiScaleY);
+
+    /// The scale factor WPF is actually applying to `window`'s Left/Top right now.
+    ///
+    /// Read from the window's own composition target when it has one, because that matrix IS
+    /// the conversion WPF performs — no assumption about awareness mode can disagree with it.
+    /// Before the window is sourced (PositionAt runs once during startup, ahead of Show())
+    /// there is no such matrix, so it falls back to the process's system DPI: WPF on .NET is
+    /// System-DPI-aware unless an app.manifest opts into PerMonitorV2, and this app ships no
+    /// manifest, so a single process-wide scale is the whole truth and the two agree.
+    ///
+    /// Static and window-taking so ProgressPanelWindow can reuse it, same as
+    /// KeepAboveAppsBelowShell.
+    public static DpiScale DpiFor(System.Windows.Window window)
+    {
+        var transform = PresentationSource.FromVisual(window)?.CompositionTarget?.TransformToDevice;
+        if (transform is { } t && t.M11 > 0 && t.M22 > 0) return new DpiScale(t.M11, t.M22);
+
+        var systemScale = GetDpiForSystem() / 96.0;
+        return new DpiScale(systemScale, systemScale);
+    }
+
+    /// Where a `sizeDips`-square pet sits in `corner` of an already-converted working area.
+    /// Pure, so the DIP arithmetic that broke on the 150% machine is directly testable
+    /// without a live window or a live monitor.
+    public static System.Windows.Point CornerPosition(ScreenCorner corner, Rect workAreaDips, double sizeDips) =>
+        corner switch
+        {
+            ScreenCorner.TopLeft => new(workAreaDips.Left + CornerMargin, workAreaDips.Top + CornerMargin),
+            ScreenCorner.TopRight => new(workAreaDips.Right - sizeDips - CornerMargin, workAreaDips.Top + CornerMargin),
+            ScreenCorner.BottomLeft => new(workAreaDips.Left + CornerMargin, workAreaDips.Bottom - sizeDips - CornerMargin),
+            _ => new(workAreaDips.Right - sizeDips - CornerMargin, workAreaDips.Bottom - sizeDips - CornerMargin)
+        };
+
+    /// Whether a remembered drag position still lands on `workAreaDips`. Both sides must be
+    /// DIPs: the remembered values come from Window.Left/Top (DIPs), so comparing them
+    /// against a raw physical WorkingArea silently misjudges the "is it still on a connected
+    /// monitor" question at any scaling other than 100% — at 150% it would accept positions
+    /// half a screen off the right edge and reject legitimate ones near it.
+    public static bool IsOnWorkArea(double xDips, double yDips, double sizeDips, Rect workAreaDips) =>
+        xDips >= workAreaDips.Left - sizeDips && xDips <= workAreaDips.Right &&
+        yDips >= workAreaDips.Top - sizeDips && yDips <= workAreaDips.Bottom;
+
+    /// sizePixels is treated as DIPs on purpose: the setting is a perceived size, so the pet
+    /// should look the same next to everything else on a 150% display rather than shrinking
+    /// to two-thirds of it.
     public void PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels, int? rememberedX = null, int? rememberedY = null)
     {
         Width = sizePixels;
         Height = sizePixels;
 
+        var dpi = DpiFor(this);
         var screens = System.Windows.Forms.Screen.AllScreens;
 
         // A remembered spot from a manual drag wins over the corner setting — but only if it's
         // still somewhere on a currently-connected monitor (a disconnected second monitor
         // would otherwise strand the pet off-screen forever).
         if (rememberedX is { } x && rememberedY is { } y &&
-            screens.Any(s => x >= s.WorkingArea.Left - sizePixels && x <= s.WorkingArea.Right &&
-                              y >= s.WorkingArea.Top - sizePixels && y <= s.WorkingArea.Bottom))
+            screens.Any(s => IsOnWorkArea(x, y, sizePixels, ToDips(s.WorkingArea, dpi))))
         {
             (Left, Top) = (x, y);
             KeepAboveAppsBelowShell(this);
@@ -152,17 +212,8 @@ public partial class OverlayWindow : Window
         }
 
         var screen = monitorIndex >= 0 && monitorIndex < screens.Length ? screens[monitorIndex] : System.Windows.Forms.Screen.PrimaryScreen!;
-        var bounds = screen.WorkingArea;
-
-        const int margin = 12;
-        (Left, Top) = corner switch
-        {
-            ScreenCorner.TopLeft => (bounds.Left + margin, bounds.Top + margin),
-            ScreenCorner.TopRight => (bounds.Right - sizePixels - margin, bounds.Top + margin),
-            ScreenCorner.BottomLeft => (bounds.Left + margin, bounds.Bottom - sizePixels - margin),
-            ScreenCorner.BottomRight => (bounds.Right - sizePixels - margin, bounds.Bottom - sizePixels - margin),
-            _ => (bounds.Right - sizePixels - margin, bounds.Bottom - sizePixels - margin)
-        };
+        var position = CornerPosition(corner, ToDips(screen.WorkingArea, dpi), sizePixels);
+        (Left, Top) = (position.X, position.Y);
 
         // Moving/resizing a window can drop it behind others; without this the pet silently
         // fell out of position in the z-order after a corner/monitor/size change and only
@@ -259,6 +310,10 @@ public partial class OverlayWindow : Window
     [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern IntPtr FindWindow(string? lpClassName, string? lpWindowName);
     [DllImport("user32.dll")] private static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
     [DllImport("user32.dll")] private static extern bool UnhookWinEvent(IntPtr hWinEventHook);
+
+    /// The process's system DPI, honouring its declared awareness. Win10 1607+, which the
+    /// installer already requires. Used only as DpiFor's pre-Show fallback.
+    [DllImport("user32.dll")] private static extern uint GetDpiForSystem();
 
     public void PlayPetReaction() => PlayBounce(peakScale: 1.15, durationMs: 300, glyph: "❤");
 
