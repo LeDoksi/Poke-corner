@@ -194,9 +194,14 @@ public partial class App : System.Windows.Application
             ReassertOverlayTopmost(); // PositionLeftOf re-tops the panel; put the pet back on top of it
         };
 
+        // The callbacks now mean "a fullscreen app is covering the pet's OWN monitor", not
+        // "something, somewhere, went fullscreen" — a fullscreen window on another screen no
+        // longer hides a pet it cannot possibly overlap. The handle is resolved per poll, not
+        // captured, so a pet dragged between monitors is judged against where it actually is.
         _fullscreenMonitor = new ForegroundWindowMonitor(
             onFullscreenEntered: () => { _isFullscreenHiding = true; RefreshOverlayForActiveIndividual(); },
-            onFullscreenExited: () => { _isFullscreenHiding = false; RefreshOverlayForActiveIndividual(); });
+            onFullscreenExited: () => { _isFullscreenHiding = false; RefreshOverlayForActiveIndividual(); },
+            petWindowHandle: () => new System.Windows.Interop.WindowInteropHelper(_overlayWindow).Handle);
 
         _trayIconService = new TrayIconService();
         _trayIconService.OpenCollectionRequested += () => OpenMenu(CollectionTabIndex);

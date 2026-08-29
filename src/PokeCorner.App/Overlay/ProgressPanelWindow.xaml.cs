@@ -70,20 +70,26 @@ public partial class ProgressPanelWindow : System.Windows.Window
     /// its three call sites in App.ReconcileSettingsState/ApplyPetSizeAndPosition.
     public void PositionLeftOf(OverlayWindow overlay)
     {
+        // SpriteBounds, not the overlay's own Left/Top/Width/Height: the overlay window is
+        // deliberately larger than the pet (headroom so a scale-up reaction isn't clipped),
+        // and anchoring to the window rect would leave a visible gap of exactly that padding
+        // between the panel and the sprite it is supposed to sit against.
+        var pet = overlay.SpriteBounds;
+
         // Width comes from the XAML (SizeToContent is Height only), so this never assigns it.
-        Left = overlay.Left - Width - Gap;
+        Left = pet.Left - Width - Gap;
 
         // ActualHeight is 0 until the first layout pass, and the vertical centering below
         // needs it. App's ReconcileSettingsState calls this again immediately after Show()
         // — and on every growth tick after that — so the real value always lands shortly.
         if (ActualHeight <= 0)
         {
-            Top = overlay.Top;
+            Top = pet.Top;
             OverlayWindow.KeepAboveAppsBelowShell(this);
             return;
         }
 
-        Top = overlay.Top + (overlay.Height - ActualHeight) / 2;
+        Top = pet.Top + (pet.Height - ActualHeight) / 2;
 
         // Clamp to the taskbar-aware working area — the same region OverlayWindow.PositionAt
         // anchors the sprite to, and with the same physical-pixels-vs-DIPs care.
@@ -97,7 +103,7 @@ public partial class ProgressPanelWindow : System.Windows.Window
         // panel to a coordinate 1.5x past the edge it was supposed to be held inside.
         var dpi = OverlayWindow.DpiFor(this);
         var bounds = OverlayWindow.ToDips(System.Windows.Forms.Screen
-            .FromPoint(new System.Drawing.Point((int)(overlay.Left * dpi.DpiScaleX), (int)(overlay.Top * dpi.DpiScaleY)))
+            .FromPoint(new System.Drawing.Point((int)(pet.Left * dpi.DpiScaleX), (int)(pet.Top * dpi.DpiScaleY)))
             .WorkingArea, dpi);
 
         // The left-edge case is this layout's counterpart to the old below/above flip: with
@@ -105,7 +111,7 @@ public partial class ProgressPanelWindow : System.Windows.Window
         // the panel goes to its right instead of running off-screen.
         if (Left < bounds.Left)
         {
-            Left = overlay.Left + overlay.Width + Gap;
+            Left = pet.Right + Gap;
         }
         // ...and if the pet is wide enough (a large pet size) that neither side fits, clamp
         // rather than leaving it hanging off an edge. Left wins the tie-break: clamping to

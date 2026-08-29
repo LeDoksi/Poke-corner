@@ -7,8 +7,15 @@
         ShowInTaskbar="False"
         ResizeMode="NoResize"
         SizeToContent="Manual">
+    <!-- The window is deliberately LARGER than the configured pet size (see
+         OverlayWindow.SpriteScaleHeadroom) and the sprite is centred inside it. A WPF window
+         clips its content to its own client area, so with the sprite filling the window
+         exactly, every scale-up reaction — the pet bounce, the feed bounce, the evolution
+         flash — was shaved off at the window edge. The surrounding headroom is transparent
+         and has no hit-test surface, so it costs nothing but room to grow into. -->
     <Grid>
         <Image x:Name="SpriteImage" Stretch="Uniform"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
                RenderOptions.BitmapScalingMode="NearestNeighbor"
                MouseLeftButtonDown="SpriteImage_MouseLeftButtonDown"
                MouseMove="SpriteImage_MouseMove"

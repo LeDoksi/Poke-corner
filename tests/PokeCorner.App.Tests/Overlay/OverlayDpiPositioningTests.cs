@@ -133,13 +133,21 @@ public class OverlayDpiPositioningTests
     /// re-multiplies it by the scale factor, land the pet inside that monitor's physical
     /// working area. Correct pure helpers that PositionAt forgot to call would still fail it.
     ///
-    /// Honest limitation, stated here because it is the whole reason this bug shipped: on a
-    /// 100%-scaled machine the scale factor is 1.0, so this passes with or without the
-    /// conversion and proves only that nothing regressed. It is written against the live DPI
+    /// It asserts on SpriteBounds, not on the window rect, and the difference matters: the
+    /// window is deliberately SpriteScaleHeadroom times the pet size so a scale-up reaction
+    /// has room to grow into, and its origin therefore sits one headroom-pad OUTSIDE the
+    /// corner the pet is anchored to. The window rect being slightly off the working area is
+    /// correct and invisible (that band is transparent and click-through); the sprite inside
+    /// it being off would be the actual bug. Asserting on the sprite also pins the headroom
+    /// offset itself — drop the `- headroomPad` from PositionAt and this fails.
+    ///
+    /// Honest limitation, stated here because it is the whole reason the DPI bug shipped: on a
+    /// 100%-scaled machine the scale factor is 1.0, so the DIP conversion passes with or
+    /// without it and proves only that nothing regressed. It is written against the live DPI
     /// on purpose — run the suite on the 150% laptop and this is the gold-standard proof,
     /// failing hard on the pre-fix code.
     [Fact]
-    public void PositionAt_OnTheRealPrimaryMonitor_PutsThePetInsideItsPhysicalWorkArea()
+    public void PositionAt_OnTheRealPrimaryMonitor_PutsTheVisibleSpriteInsideItsPhysicalWorkArea()
     {
         var workArea = System.Windows.Forms.Screen.PrimaryScreen!.WorkingArea;
 
@@ -153,9 +161,13 @@ public class OverlayDpiPositioningTests
                     const int size = 96;
                     window.PositionAt(corner, monitorIndex: -1, sizePixels: size); // -1 => PrimaryScreen
 
+                    var sprite = window.SpriteBounds;
+                    Assert.Equal(size, sprite.Width, 3);
+                    Assert.Equal(size, sprite.Height, 3);
+
                     var dpi = OverlayWindow.DpiFor(window);
-                    var physicalLeft = window.Left * dpi.DpiScaleX;
-                    var physicalTop = window.Top * dpi.DpiScaleY;
+                    var physicalLeft = sprite.Left * dpi.DpiScaleX;
+                    var physicalTop = sprite.Top * dpi.DpiScaleY;
 
                     Assert.InRange(physicalLeft, workArea.Left, workArea.Right - size * dpi.DpiScaleX);
                     Assert.InRange(physicalTop, workArea.Top, workArea.Bottom - size * dpi.DpiScaleY);
@@ -166,5 +178,38 @@ public class OverlayDpiPositioningTests
                 }
             });
         }
+    }
+
+    /// The clipping fix's own guard: the window must be strictly bigger than the sprite by
+    /// enough for the LARGEST reaction scale, or a bounce gets shaved off at the window edge
+    /// again. PlayEvolutionFlash peaks at 1.4 and the sprite scales about its own centre, so
+    /// the clearance on each side has to cover (peak - 1) / 2 of the sprite.
+    [Fact]
+    public void PositionAt_LeavesEnoughHeadroomForTheLargestReactionScale()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var window = new OverlayWindow();
+            try
+            {
+                const int size = 96;
+                window.PositionAt(ScreenCorner.BottomRight, monitorIndex: -1, sizePixels: size);
+
+                const double largestReactionPeakScale = 1.4; // PlayEvolutionFlash
+                var clearancePerSide = (window.Width - size) / 2;
+                var neededPerSide = size * (largestReactionPeakScale - 1) / 2;
+
+                // Epsilon because both sides are the same quantity reached by different
+                // multiplications (1.4x then halve, vs 0.4x then halve), which land a few
+                // ulps apart — 19.19999999999999 against 19.199999999999996.
+                Assert.True(clearancePerSide >= neededPerSide - 1e-9,
+                    $"a {largestReactionPeakScale}x scale needs {neededPerSide} DIPs of clearance per side, window leaves {clearancePerSide}");
+                Assert.Equal(window.Width, window.Height, 3);
+            }
+            finally
+            {
+                window.Close();
+            }
+        });
     }
 }

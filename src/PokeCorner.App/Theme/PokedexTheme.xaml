@@ -957,7 +957,14 @@
                         <Border.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
                         </Border.Effect>
-                        <ContentPresenter />
+                        <!-- A TextBlock, not a bare ContentPresenter: every tooltip in this app
+                             is a plain string, and ContentPresenter renders a string into a
+                             TextBlock that does NOT wrap. Against the MaxWidth above, that meant
+                             any tooltip longer than ~40 Cyrillic characters was hard-clipped
+                             mid-word instead of wrapping — the reported case was the ЛАКОМСТВА
+                             stat's, which stopped dead at "…активностью и тр". Wrapping here
+                             fixes every tooltip in the app at once rather than one stat well. -->
+                        <TextBlock Text="{TemplateBinding Content}" TextWrapping="Wrap" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

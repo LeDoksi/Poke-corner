@@ -547,7 +547,17 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
 
-                                            <Border Width="92" Padding="4,6" CornerRadius="10"
+                                            <!-- 84, not the 92 this shipped with. The detail card
+                                                 is 360 wide with 18px padding and sits inside a
+                                                 well with 10px more, leaving 300 for the strip;
+                                                 three 92px stages plus two arrows measured 316,
+                                                 so a real 3-stage line (Shinx -> Luxio -> ???)
+                                                 had its outer two cards cut off at both edges.
+                                                 84 + tighter arrows measures 282. Three is the
+                                                 hard maximum — PokeApiClient.CollectStages keeps
+                                                 only the longest branch — so this is the widest
+                                                 case, not a lucky one. -->
+                                            <Border Width="84" Padding="4,6" CornerRadius="10"
                                                     BorderThickness="1.5"
                                                     BorderBrush="{Binding BorderBrush}"
                                                     Opacity="{Binding Opacity}"
@@ -602,7 +612,7 @@
                                                 </StackPanel>
                                             </Border>
 
-                                            <TextBlock Text="→" FontSize="15" Margin="3,0,3,0"
+                                            <TextBlock Text="→" FontSize="13" Margin="2,0,2,0"
                                                        Foreground="{StaticResource MutedTextBrush}"
                                                        VerticalAlignment="Center"
                                                        Visibility="{Binding ArrowVisibility}" />

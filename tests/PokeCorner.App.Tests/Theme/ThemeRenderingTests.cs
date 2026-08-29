@@ -1115,6 +1115,110 @@ public class ThemeRenderingTests
             new StarterSelectionWindow(chains, _ => Task.FromResult<byte[]?>(null));
         });
 
+    /// The reported bug, measured: on a REAL 3-stage line the strip's outer two stage cards
+    /// were cut off at both edges of the detail card. Three 92px cards plus two arrows needed
+    /// 316 DIPs inside a well that offers 300, so the row simply did not fit.
+    ///
+    /// Measured by SUMMING the row's children, which is the only figure here that is not
+    /// already clamped to what fits. Neither of the two obvious measurements works: WPF clamps
+    /// every element's DesiredSize to the constraint it was measured with, and arrange clamps
+    /// ActualWidth the same way — so both the ItemsControl's and the row panel's own numbers
+    /// report "fits" at exactly the moment the content is being clipped. (Checked: against the
+    /// pre-fix 92px cards, a row-panel DesiredSize assertion passes and proves nothing.) A
+    /// horizontal StackPanel measures each child with infinite width, so the CHILDREN's
+    /// desired widths are unclamped and their sum is the width the row genuinely wants.
+    ///
+    /// Three stages is the widest case that can ever occur — PokeApiClient.CollectStages keeps
+    /// only the longest branch of the chain tree — so this is the bound, not a sample.
+    [Fact]
+    public void CollectionView_EvolutionChainStrip_ThreeStages_FitsInsideTheDetailCard() =>
+        WpfTestHost.Run(() =>
+        {
+            // The user's own case: a Luxio, mid-line, so the third stage renders as the masked
+            // "?" mystery card and all three stage cards are present at once.
+            var appState = new AppState();
+            appState.Collection.Add(new PokemonIndividual
+            {
+                SpeciesId = 403,
+                EvolutionChainId = 213,
+                ChainLength = 3,
+                CurrentStage = EvolutionStage.Stage2,
+                Nature = Nature.Hardy,
+                IsShiny = false,
+                CaughtAtUtc = DateTimeOffset.UtcNow
+            });
+            var chains = new[]
+            {
+                new SpeciesEvolutionChain(213, 403, 235, 3, new[] { 403, 404, 405 },
+                    new[] { "Shinx", "Luxio", "Luxray" },
+                    new[] { new[] { "electric" }, new[] { "electric" }, new[] { "electric" } })
+            };
+
+            var view = BuildCollectionView(appState, chains);
+            WpfTestHost.Layout(view);
+            CollectionTabs(view).SelectedIndex = 1; // the grid only realizes on its own tab
+            WpfTestHost.Layout(view);
+
+            var card = Descendants(view).OfType<Border>()
+                .First(b => b.DataContext is PokedexCard && b.Tag is Guid);
+            card.RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+            WpfTestHost.Layout(view);
+
+            var section = (Border)view.FindName("DetailEvolutionChainSection")!;
+            var strip = (ItemsControl)view.FindName("DetailEvolutionChainStrip")!;
+            Assert.Equal(Visibility.Visible, section.Visibility);
+            Assert.Equal(3, strip.Items.Count);
+
+            var row = Descendants<StackPanel>(strip).First(); // the ItemsPanel
+            var needed = row.Children.Cast<UIElement>().Sum(child => child.DesiredSize.Width);
+            var available = section.ActualWidth
+                - section.Padding.Left - section.Padding.Right
+                - section.BorderThickness.Left - section.BorderThickness.Right;
+
+            Assert.True(needed <= available,
+                $"the 3-stage chain row wants {needed} DIPs but the well only offers {available} — the outer cards are clipped");
+        });
+
+    /// The reported tooltip bug, measured. The theme caps every tooltip at MaxWidth 280 and
+    /// its template used to render the string through a bare ContentPresenter, which produces
+    /// a TextBlock that does NOT wrap — so the ЛАКОМСТВА tooltip was hard-clipped at roughly
+    /// 40 characters, on screen as "…активностью и тр".
+    ///
+    /// The proof is the laid-out height: one line means the tail of the string was cut off,
+    /// two or more means the whole string is actually being rendered.
+    [Fact]
+    public void ToolTip_TextLongerThanItsMaxWidth_WrapsInsteadOfBeingClipped() =>
+        WpfTestHost.Run(() =>
+        {
+            // Verbatim from CollectionView.xaml's ЛАКОМСТВА stat well — the reported instance.
+            const string treatsToolTip = "Лакомства зарабатываются активностью и тратятся на кормление";
+
+            var tip = new ToolTip { Content = treatsToolTip };
+            tip.IsOpen = true; // a ToolTip only builds its template once hosted in its popup
+            try
+            {
+                tip.UpdateLayout();
+
+                var text = Descendants<TextBlock>(tip).Single();
+                Assert.Equal(treatsToolTip, text.Text);
+                Assert.Equal(TextWrapping.Wrap, text.TextWrapping);
+
+                // Fits the cap horizontally...
+                Assert.True(text.ActualWidth <= tip.MaxWidth,
+                    $"the tooltip text measured {text.ActualWidth} DIPs against a {tip.MaxWidth} cap");
+
+                // ...and, because it fits by WRAPPING rather than by being cut, occupies more
+                // than the single line the clipped version was squeezed onto.
+                var singleLineHeight = text.FontSize * text.FontFamily.LineSpacing;
+                Assert.True(text.ActualHeight > singleLineHeight * 1.5,
+                    $"the tooltip rendered {text.ActualHeight} DIPs tall — one line of {singleLineHeight}, i.e. still clipped rather than wrapped");
+            }
+            finally
+            {
+                tip.IsOpen = false;
+            }
+        });
+
     private static CollectionView BuildCollectionView()
     {
         var appState = new AppState();

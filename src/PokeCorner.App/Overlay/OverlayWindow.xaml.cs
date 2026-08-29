@@ -189,13 +189,53 @@ public partial class OverlayWindow : Window
         xDips >= workAreaDips.Left - sizeDips && xDips <= workAreaDips.Right &&
         yDips >= workAreaDips.Top - sizeDips && yDips <= workAreaDips.Bottom;
 
+    /// How much bigger than the configured pet size the WINDOW is made, so a reaction that
+    /// scales the sprite up has somewhere to grow into instead of being shaved off at the
+    /// window's own edge (a WPF window clips its content to its client area).
+    ///
+    /// 1.4 is not a round number picked for comfort: it is exactly PlayEvolutionFlash's peak
+    /// scale, the largest of the three reactions (pet 1.15, feed 1.3, flash 1.4). The sprite
+    /// is centred in the window and scales about its own centre, so a peak of 1.4 needs
+    /// 0.2 * size of clearance on every side — which is precisely what a 1.4x window gives.
+    /// Raising any animation's peak scale past this constant re-introduces the clipping.
+    public const double SpriteScaleHeadroom = 1.4;
+
+    /// The size the sprite itself is drawn at, in DIPs — the configured pet size, not the
+    /// padded window. Zero until the first PositionAt.
+    private double _spriteSizeDips;
+
+    /// The rect the user actually SEES, i.e. the window rect minus the invisible headroom.
+    /// Everything that anchors to the pet — the progress panel beside it — must use this
+    /// rather than Left/Top/Width/Height, or it anchors to transparent air.
+    public Rect SpriteBounds
+    {
+        get
+        {
+            if (_spriteSizeDips <= 0) return new Rect(Left, Top, Width, Height);
+            var pad = (Width - _spriteSizeDips) / 2;
+            return new Rect(Left + pad, Top + pad, _spriteSizeDips, _spriteSizeDips);
+        }
+    }
+
     /// sizePixels is treated as DIPs on purpose: the setting is a perceived size, so the pet
     /// should look the same next to everything else on a 150% display rather than shrinking
     /// to two-thirds of it.
     public void PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels, int? rememberedX = null, int? rememberedY = null)
     {
-        Width = sizePixels;
-        Height = sizePixels;
+        // The sprite keeps the configured size; only the window around it grows, so the pet
+        // looks identical to before — it simply is no longer clipped when it scales up.
+        _spriteSizeDips = sizePixels;
+        SpriteImage.Width = sizePixels;
+        SpriteImage.Height = sizePixels;
+
+        var windowSize = sizePixels * SpriteScaleHeadroom;
+        Width = windowSize;
+        Height = windowSize;
+
+        // Corner anchoring must place the VISIBLE sprite in the corner, so the window origin
+        // sits one headroom-pad up and to the left of where the sprite is wanted. Without this
+        // the pet would drift inward from every corner by that pad.
+        var headroomPad = (windowSize - sizePixels) / 2;
 
         var dpi = DpiFor(this);
         var screens = System.Windows.Forms.Screen.AllScreens;
@@ -203,8 +243,11 @@ public partial class OverlayWindow : Window
         // A remembered spot from a manual drag wins over the corner setting — but only if it's
         // still somewhere on a currently-connected monitor (a disconnected second monitor
         // would otherwise strand the pet off-screen forever).
+        // The remembered pair is a WINDOW origin on both sides of the round trip — App stores
+        // Left/Top and hands the same numbers back — so it is restored verbatim and only the
+        // on-a-connected-monitor test needs the window's (padded) size.
         if (rememberedX is { } x && rememberedY is { } y &&
-            screens.Any(s => IsOnWorkArea(x, y, sizePixels, ToDips(s.WorkingArea, dpi))))
+            screens.Any(s => IsOnWorkArea(x, y, windowSize, ToDips(s.WorkingArea, dpi))))
         {
             (Left, Top) = (x, y);
             KeepAboveAppsBelowShell(this);
@@ -213,7 +256,7 @@ public partial class OverlayWindow : Window
 
         var screen = monitorIndex >= 0 && monitorIndex < screens.Length ? screens[monitorIndex] : System.Windows.Forms.Screen.PrimaryScreen!;
         var position = CornerPosition(corner, ToDips(screen.WorkingArea, dpi), sizePixels);
-        (Left, Top) = (position.X, position.Y);
+        (Left, Top) = (position.X - headroomPad, position.Y - headroomPad);
 
         // Moving/resizing a window can drop it behind others; without this the pet silently
         // fell out of position in the z-order after a corner/monitor/size change and only
