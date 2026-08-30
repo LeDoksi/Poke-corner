@@ -99,13 +99,15 @@ id reachable from `OfflineStarterFallback.json`.
 
 `cries\` is by far the largest slice (~41 MB of the 69 MB) and it is the one that does **not**
 shrink in the cab — 16-bit PCM compresses only about 4%, unlike the PNGs and GIFs. It is
-uncompressed on purpose: `System.Media.SoundPlayer` is the only way to play a sound with no
-codec installed on the target machine, and it accepts plain PCM WAV and nothing else, so the
-Ogg Vorbis originals are decoded once by the seed crawl rather than on the player's PC. If the
-payload ever has to shrink, the levers in order of least audible damage are: drop to a 16 kHz
-sample rate (halves it), then to 8-bit samples (halves it again, audibly gritty). Both are
-changes to the seed crawl only — nothing in the app parses these files, it hands the path
-straight to `SoundPlayer`.
+uncompressed on purpose: PCM WAV is the one sound format that plays with no codec installed on
+the target machine, and the upstream cries are Ogg Vorbis, which needs one — so they are decoded
+once by the seed crawl rather than on the player's PC. If the payload ever has to shrink, the
+levers in order of least audible damage are: drop to a 16 kHz sample rate (halves it), then to
+8-bit samples (halves it again, audibly gritty). Both are changes to the seed crawl only —
+nothing in the app parses these files, it hands the path straight to the player. (That player is
+WPF's `System.Windows.Media.MediaPlayer` since the cry-volume setting; it was
+`System.Media.SoundPlayer` before, which had no volume control. Both take a local PCM WAV with
+no codec dependency, so the format decision here is unaffected.)
 
 ## Signing
 
