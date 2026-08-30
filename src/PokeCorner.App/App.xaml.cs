@@ -25,6 +25,7 @@ public partial class App : System.Windows.Application
     private PokeApiClient _pokeApiClient = null!;
     private SpeciesCatalog _speciesCatalog = null!;
     private GlobalInputHook? _inputHook;
+    private GamepadInputHook? _gamepadHook;
     private InputEventCounter _inputCounter = null!;
     private DispatcherTimer _growthTickTimer = null!;
     private OverlayWindow _overlayWindow = null!;
@@ -156,6 +157,12 @@ public partial class App : System.Windows.Application
         // thread — which is exactly why OnGrowthTick must stay cheap; see its comment.
         _inputHook = new GlobalInputHook(_inputCounter);
         _inputHook.Start();
+
+        // Same counter, same "unconditional" rule — a controller is just another way of using
+        // the PC. Unlike the hook above this one polls on a thread-pool timer, deliberately
+        // nowhere near the dispatcher thread. No-ops if the machine has no XInput DLL.
+        _gamepadHook = new GamepadInputHook(_inputCounter);
+        _gamepadHook.Start();
 
         // One second, not five: this tick is what refreshes the progress bars, and at 5s they
         // visibly lagged behind the activity the player had just generated. Everything else on
@@ -981,6 +988,7 @@ public partial class App : System.Windows.Application
     private void SaveState()
     {
         _inputHook?.Dispose();
+        _gamepadHook?.Dispose();
         _fullscreenMonitor?.Dispose();
         _trayIconService?.Dispose();
 

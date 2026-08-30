@@ -39,7 +39,7 @@
                          exactly what it does and does not record. -->
                     <TextBlock Text="Что растит питомца" Style="{StaticResource SectionHeaderTextStyle}" />
 
-                    <TextBlock Text="Активность за компьютером — клики мышью и нажатия клавиш."
+                    <TextBlock Text="Активность за компьютером — клики мышью, нажатия клавиш и кнопки геймпада."
                                Style="{StaticResource StatLabelTextStyle}" Margin="2,0,0,6" />
                     <TextBlock Text="Считается только количество кликов и нажатий — никогда не то, что именно нажато."
                                Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0" />
