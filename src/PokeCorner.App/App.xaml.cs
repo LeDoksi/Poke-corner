@@ -10,6 +10,7 @@ using PokeCorner.App.Overlay;
 using PokeCorner.App.Popup;
 using PokeCorner.App.Tray;
 using PokeCorner.Core;
+using PokeCorner.Core.Audio;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.PokeApi;
 using PokeCorner.Core.Persistence;
@@ -741,22 +742,54 @@ public partial class App : System.Windows.Application
         PlayCry(ResolveDisplaySpeciesId(active));
     }
 
+    /// The one player every cry goes through, created lazily on first use and then reused.
+    ///
+    /// This used to be `new System.Media.SoundPlayer(path).Play()` per click. SoundPlayer has
+    /// no volume of its own — it always plays at full system volume — so the "Громкость крика
+    /// питомца" setting could not exist while it was in charge. MediaPlayer is WPF's own player,
+    /// takes a 0.0-1.0 Volume, and plays a local PCM WAV through Media Foundation with no codec
+    /// to install (which is the whole reason the crawl transcodes the upstream Ogg cries to WAV
+    /// — see PcmWavWriter). Play() is still non-blocking, so the pet animation is untouched.
+    ///
+    /// One instance rather than one per click: each MediaPlayer holds an unmanaged audio
+    /// session, and there is no Dispose to release it deterministically, so constructing one
+    /// per pet click would leak sessions for as long as the app runs.
+    private System.Windows.Media.MediaPlayer? _cryPlayer;
+
     /// Fire-and-forget cry for a species, from the WAV bundled at Data\cries\{id}.wav.
     ///
     /// Gated on a successful pet only, so a cooldown-rejected spam click stays silent rather
-    /// than machine-gunning the sound. Play() (not PlaySync()) hands off to the OS and returns
-    /// immediately — this runs on the UI thread and must not block the pet animation.
+    /// than machine-gunning the sound.
     ///
     /// Every failure is swallowed on purpose: a species with no upstream cry, a gap in the
     /// crawl, or a machine with no audio device at all should be a click that makes no sound,
-    /// never a crash or a toast. Cosmetic sound is not worth a single user-visible error.
-    private static void PlayCry(int speciesId)
+    /// never a crash or a toast. Cosmetic sound is not worth a single user-visible error. The
+    /// MediaFailed subscription is part of that: MediaPlayer reports a broken file through that
+    /// event rather than by throwing out of Open/Play, and an unhandled one surfaces on the
+    /// dispatcher instead of staying silent.
+    private void PlayCry(int speciesId)
     {
         try
         {
             var path = Path.Combine(AppPaths.GetCryDirectory(), $"{speciesId}.wav");
             if (!File.Exists(path)) return;
-            new System.Media.SoundPlayer(path).Play();
+
+            if (_cryPlayer is null)
+            {
+                _cryPlayer = new System.Windows.Media.MediaPlayer();
+                _cryPlayer.MediaFailed += (_, _) => { /* no sound this click; see above */ };
+            }
+
+            // Read fresh every play, so dragging the settings slider mid-session is heard on
+            // the very next click with no restart. 0 maps to 0.0, which is real silence.
+            _cryPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.CrySoundVolume);
+
+            // Re-Open every time. Unlike SoundPlayer, whose Play() re-reads its SoundLocation
+            // per call, MediaPlayer holds an open media and would otherwise replay the PREVIOUS
+            // species (or sit at the end of it) when the active pet changes. Opening also
+            // rewinds, which is what makes two pets of the same species in a row both audible.
+            _cryPlayer.Open(new Uri(path));
+            _cryPlayer.Play();
         }
         catch
         {

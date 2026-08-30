@@ -24,6 +24,13 @@ public sealed class AppSettings
     public int? PetPositionX { get; set; }
     public int? PetPositionY { get; set; }
 
+    /// Loudness of the species cry played when the player pets the active Pokémon, as a
+    /// PERCENT (0-100) rather than the 0.0-1.0 the player itself takes — a percent is what the
+    /// settings slider and its readout want, and CryVolume.ToPlayerVolume does the conversion
+    /// at the one point of use. 0 is genuine silence; the default is deliberately below full,
+    /// since a cry that fires on every pet click at 100% wears out its welcome fast.
+    public int CrySoundVolume { get; set; } = 70;
+
     /// Only consulted in CareMode.Hardcore: neglect permanently releases the pet from the
     /// collection instead of benching it behind the usual one-hour RanAwayUntilUtc cooldown.
     public bool SuperHardcoreEnabled { get; set; } = false;

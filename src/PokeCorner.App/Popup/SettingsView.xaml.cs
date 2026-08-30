@@ -41,6 +41,8 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         AutostartCheck.IsChecked = AutostartRegistry.IsEnabled();
         PetSizeSlider.Value = settings.PetSizePixels;
         PetSizeValueText.Text = $"{settings.PetSizePixels} px";
+        CrySoundVolumeSlider.Value = settings.CrySoundVolume;
+        CrySoundVolumeValueText.Text = $"{settings.CrySoundVolume}%";
         ShowProgressPanelCheck.IsChecked = settings.ShowProgressPanel;
         SuperHardcoreCheck.IsChecked = settings.SuperHardcoreEnabled;
         SyncSuperHardcoreEnabled();
@@ -102,6 +104,17 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         _viewModel.SetPetSizePixels((int)e.NewValue);
         PetSizeValueText.Text = $"{_viewModel.Settings.PetSizePixels} px";
         _onPetSizeChanged();
+    }
+
+    /// Writes the stored volume on every tick of the drag, exactly like the pet-size slider
+    /// above. Nothing is played back here — the point is only that the NEXT pet click reads the
+    /// new value (App.PlayCry re-reads the setting per play), so a mid-session change takes
+    /// effect immediately and without a restart.
+    private void CrySoundVolumeSlider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isLoadingInitialState) return;
+        _viewModel.SetCrySoundVolume((int)e.NewValue);
+        CrySoundVolumeValueText.Text = $"{_viewModel.Settings.CrySoundVolume}%";
     }
 
     private void ShowProgressPanelCheck_Changed(object sender, System.Windows.RoutedEventArgs e)

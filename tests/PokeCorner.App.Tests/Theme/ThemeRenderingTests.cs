@@ -9,6 +9,7 @@ using Ellipse = System.Windows.Shapes.Ellipse;
 using PokeCorner.App.Onboarding;
 using PokeCorner.App.Popup;
 using PokeCorner.Core;
+using PokeCorner.Core.Audio;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.PokeApi;
 using Xunit;
@@ -311,20 +312,164 @@ public class ThemeRenderingTests
 
             var card = Descendants(view).OfType<Border>()
                 .First(b => b.DataContext is PokedexCard && b.Tag is Guid);
-            card.RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+            card.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
             Assert.Equal(Visibility.Visible, overlay.Visibility);
             // The overlay renders the card that was clicked, not a blank shell.
             Assert.Equal(((PokedexCard)card.DataContext).SpeciesName,
                 ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
 
             // A click INSIDE the card must not close it.
-            var detailCard = (Border)overlay.Child;
+            var detailCard = (Border)view.FindName("DetailCard")!;
             detailCard.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
             Assert.Equal(Visibility.Visible, overlay.Visibility);
 
             // A click on the dimmed backdrop must.
             overlay.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
             Assert.Equal(Visibility.Collapsed, overlay.Visibility);
+        });
+
+    /// The reported reopen bug, reproduced as the two halves of ONE physical click.
+    ///
+    /// The grid cards opened on mouse-UP while the backdrop dismissed on mouse-DOWN, so a click
+    /// on the backdrop that happened to land over another card in the grid behind hid the
+    /// overlay on the down-stroke and then — the overlay now Collapsed, and so no longer
+    /// hit-testable — delivered the up-stroke straight to that card, which opened ITS detail
+    /// card. One click, dismiss plus reopen of something else.
+    ///
+    /// Reproduced here by replaying exactly that pair against two different cards. Against the
+    /// pre-fix build the final assertion fails with the overlay Visible and showing the SECOND
+    /// individual; both events now being down-events is what makes the up-stroke inert.
+    [Fact]
+    public void CollectionView_DismissingTheOverlay_DoesNotOpenTheCardUnderTheSameClick() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            appState.Collection.Add(NewIndividual(speciesId: 4, chainId: 4));
+            appState.Collection.Add(NewIndividual(speciesId: 16, chainId: 16));
+            var chains = new[]
+            {
+                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
+                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
+            };
+            var view = BuildCollectionView(appState, chains);
+            WpfTestHost.Layout(view);
+            CollectionTabs(view).SelectedIndex = 1;
+            WpfTestHost.Layout(view);
+
+            var overlay = (Border)view.FindName("DetailOverlay")!;
+            var cards = Descendants(view).OfType<Border>()
+                .Where(b => b.DataContext is PokedexCard && b.Tag is Guid)
+                .ToList();
+            Assert.Equal(2, cards.Count);
+
+            // Open the first card — the positive half, so this test cannot pass merely because
+            // cards stopped opening altogether.
+            cards[0].RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
+            Assert.Equal(Visibility.Visible, overlay.Visibility);
+
+            // One physical click on the dimmed backdrop, over the SECOND card's position: the
+            // press lands on the backdrop (which is what covers the grid while the card is up)...
+            overlay.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
+            Assert.Equal(Visibility.Collapsed, overlay.Visibility);
+
+            // ...and the release, by then over an uncovered grid card, must do nothing at all.
+            cards[1].RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+
+            Assert.Equal(Visibility.Collapsed, overlay.Visibility);
+        });
+
+    /// The reported overflow bug, measured at the app's real window size.
+    ///
+    /// A maximally-badged individual — shiny AND pinned AND on the desktop AND a two-type
+    /// species AND mid-way through a 3-stage line, so every badge pill, both type badges and
+    /// the whole evolution strip render at once — makes the card's content taller than the
+    /// window. The card had no MaxHeight and no scroller, so it was arranged CENTRED at that
+    /// full height and Выбрать/Отпустить rendered past the bottom edge, unreachable without
+    /// resizing the whole app.
+    ///
+    /// Measured by where the BUTTONS land, in view coordinates, after scrolling the card to its
+    /// end — deliberately not by the card's own ActualHeight, which proves nothing here for the
+    /// same reason the chain-strip test above spells out: arrange clamps ActualHeight to the
+    /// constraint, so the pre-fix card reported a comfortable 544 DIPs in a 580 DIP window
+    /// while its content ran to ~735 and simply overflowed. (Checked against the pre-fix build:
+    /// an ActualHeight assertion passes there. The Отпустить button measured 701.8 to 734.8 —
+    /// a good 155 DIPs below the bottom edge, which is exactly the reported "the buttons are
+    /// off screen and I cannot scroll to them".)
+    ///
+    /// The scrollable-height assertion is the other half: it pins that this individual really
+    /// does overflow the cap, so the button assertion is measuring the reported case and not a
+    /// card that happened to fit.
+    [Fact]
+    public void CollectionView_DetailCard_MaximallyBadgedIndividual_KeepsTheActionButtonsOnScreen() =>
+        WpfTestHost.Run(() =>
+        {
+            const double windowWidth = 560;
+            // The content area of the real 660-tall AppMenuWindow, minus its header strip and
+            // the tab band — i.e. the height this view actually gets on screen.
+            const double windowHeight = 580;
+
+            var appState = new AppState();
+            var individual = new PokemonIndividual
+            {
+                SpeciesId = 403,
+                EvolutionChainId = 213,
+                ChainLength = 3,
+                CurrentStage = EvolutionStage.Stage2,
+                Nature = Nature.Hardy,
+                IsShiny = true,
+                IsFavorite = true,
+                Nickname = "Электрокотик",
+                CaughtAtUtc = DateTimeOffset.UtcNow
+            };
+            appState.Collection.Add(individual);
+            appState.Collection.SetActive(individual.Id); // the "На столе" badge too
+            var chains = new[]
+            {
+                new SpeciesEvolutionChain(213, 403, 235, 3, new[] { 403, 404, 405 },
+                    new[] { "Shinx", "Luxio", "Luxray" },
+                    new[] { new[] { "electric", "dark" }, new[] { "electric", "dark" }, new[] { "electric", "dark" } })
+            };
+
+            var view = BuildCollectionView(appState, chains);
+            WpfTestHost.Layout(view, windowWidth, windowHeight);
+            CollectionTabs(view).SelectedIndex = 1;
+            WpfTestHost.Layout(view, windowWidth, windowHeight);
+
+            var gridCard = Descendants(view).OfType<Border>()
+                .First(b => b.DataContext is PokedexCard && b.Tag is Guid);
+            gridCard.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
+            WpfTestHost.Layout(view, windowWidth, windowHeight);
+
+            // Every badge really is on show — otherwise this would be measuring a short card
+            // and proving nothing about the reported one.
+            foreach (var badge in new[] { "DetailShinyBadge", "DetailFavoriteBadge", "DetailActiveBadge" })
+            {
+                Assert.Equal(Visibility.Visible, ((Border)view.FindName(badge)!).Visibility);
+            }
+            Assert.Equal(Visibility.Visible, ((Border)view.FindName("DetailEvolutionChainSection")!).Visibility);
+            Assert.Equal(3, ((ItemsControl)view.FindName("DetailEvolutionChainStrip")!).Items.Count);
+
+            var detailCard = (Border)view.FindName("DetailCard")!;
+            var scroller = Descendants<ScrollViewer>(detailCard).First();
+
+            // This individual's card genuinely does not fit — so the actions below are only
+            // reachable because the overflow can be scrolled to.
+            Assert.True(scroller.ScrollableHeight > 0,
+                "the maximally-badged card is expected to overflow its height cap; if it no longer does, this test is measuring the wrong case");
+
+            scroller.ScrollToBottom();
+            WpfTestHost.Layout(view, windowWidth, windowHeight);
+
+            foreach (var name in new[] { "DetailSelectButton", "DetailReleaseButton" })
+            {
+                var button = (System.Windows.Controls.Button)view.FindName(name)!;
+                var transform = button.TransformToAncestor(view);
+                var top = transform.Transform(new Point(0, 0)).Y;
+                var bottom = transform.Transform(new Point(0, button.ActualHeight)).Y;
+
+                Assert.True(top >= 0 && bottom <= windowHeight,
+                    $"{name} rendered from {top} to {bottom} DIPs in a {windowHeight} DIP window — it is off screen and unreachable");
+            }
         });
 
     private static System.Windows.Input.MouseButtonEventArgs MouseDown(RoutedEvent routedEvent) =>
@@ -641,7 +786,7 @@ public class ThemeRenderingTests
             CollectionTabs(view).SelectedIndex = 1;
             WpfTestHost.Layout(view);
             var cardBorder = Descendants(view).OfType<Border>().First(b => b.DataContext is PokedexCard && b.Tag is Guid);
-            cardBorder.RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+            cardBorder.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
 
             Assert.Equal("Sparky", ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
             var subtitle = (TextBlock)view.FindName("DetailSpeciesSubtitleText")!;
@@ -682,7 +827,7 @@ public class ThemeRenderingTests
             WpfTestHost.Layout(view);
 
             Descendants(view).OfType<Border>().First(b => b.DataContext is PokedexCard && b.Tag is Guid)
-                .RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+                .RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
 
             var box = (TextBox)view.FindName("DetailNicknameBox")!;
             var subtitle = (TextBlock)view.FindName("DetailSpeciesSubtitleText")!;
@@ -707,7 +852,7 @@ public class ThemeRenderingTests
             view.Refresh();
             WpfTestHost.Layout(view); // the rebuilt ItemsSource needs a pass to realize its containers
             Descendants(view).OfType<Border>().First(b => b.DataContext is PokedexCard && b.Tag is Guid)
-                .RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+                .RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
             Assert.Null(individual.Nickname);
         });
 
@@ -1090,6 +1235,38 @@ public class ThemeRenderingTests
             Assert.Equal("340 px", ((TextBlock)view.FindName("PetSizeValueText")!).Text);
         });
 
+    /// The cry-volume slider follows the pet-size slider's precedent: it writes the stored
+    /// setting on every tick of the drag, so the very next pet click is heard at the new
+    /// loudness with no restart and no waiting for a reconcile tick. App.PlayCry re-reads
+    /// Settings.CrySoundVolume per play, which is the other half of that guarantee.
+    [Fact]
+    public void SettingsView_CrySoundVolumeSlider_UpdatesTheStoredVolumeOnEveryTick() =>
+        WpfTestHost.Run(() =>
+        {
+            var settings = new AppState().Settings;
+            var view = new SettingsView(new SettingsViewModel(settings), () => { });
+            WpfTestHost.Layout(view);
+
+            var slider = (Slider)view.FindName("CrySoundVolumeSlider")!;
+            Assert.Equal(CryVolume.MinPercent, slider.Minimum);
+            Assert.Equal(CryVolume.MaxPercent, slider.Maximum);
+
+            // Loaded from the setting, not left at the control's own default.
+            Assert.Equal(70, slider.Value);
+            Assert.Equal("70%", ((TextBlock)view.FindName("CrySoundVolumeValueText")!).Text);
+
+            slider.Value = 40;
+            Assert.Equal(40, settings.CrySoundVolume);
+            slider.Value = 15;
+            Assert.Equal(15, settings.CrySoundVolume);
+            Assert.Equal("15%", ((TextBlock)view.FindName("CrySoundVolumeValueText")!).Text);
+
+            // Bottoming out the slider is genuine silence at the player, not just "quiet".
+            slider.Value = 0;
+            Assert.Equal(0, settings.CrySoundVolume);
+            Assert.Equal(0.0, CryVolume.ToPlayerVolume(settings.CrySoundVolume));
+        });
+
     [Fact]
     public void SettingsView_PetSizeSlider_ClampsToTheSupportedRange() =>
         WpfTestHost.Run(() =>
@@ -1438,7 +1615,7 @@ public class ThemeRenderingTests
 
             var card = Descendants(view).OfType<Border>()
                 .First(b => b.DataContext is PokedexCard && b.Tag is Guid);
-            card.RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+            card.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
             WpfTestHost.Layout(view);
 
             var section = (Border)view.FindName("DetailEvolutionChainSection")!;

@@ -263,15 +263,27 @@
                                      Выбрать/Отпустить/star actions that used to sit inline on
                                      the separate roster list this grid absorbed.
 
-                                     MouseLeftButtonUp on the Border rather than wrapping the
-                                     card in a Button: the card is already a styled Border with
-                                     its own hover/shadow treatment, and a Button around it
-                                     would layer a second chrome and focus rect over that. The
-                                     Border has a Background from CardStyle, so it is hit-
-                                     testable across its whole face, not just on its glyphs. -->
+                                     A mouse handler on the Border rather than wrapping the card
+                                     in a Button: the card is already a styled Border with its
+                                     own hover/shadow treatment, and a Button around it would
+                                     layer a second chrome and focus rect over that. The Border
+                                     has a Background from CardStyle, so it is hit-testable
+                                     across its whole face, not just on its glyphs.
+
+                                     MouseLeftButtonDOWN, not Up, and that is load-bearing: the
+                                     detail overlay dismisses on mouse-DOWN, so a card that
+                                     opened on Up got the two halves of one physical click split
+                                     across two different visual trees. Clicking the backdrop to
+                                     dismiss hid the overlay on the down-stroke, and the up-
+                                     stroke then hit-tested straight through to whatever grid
+                                     card happened to sit under the pointer — dismissing the
+                                     card and instantly opening a DIFFERENT one in a single
+                                     click. Open and dismiss must fire on the same event, so
+                                     that the overlay (which is on top while it is open) eats
+                                     the whole click. -->
                                 <Border Style="{StaticResource CardStyle}" Width="112" Margin="5" Padding="9"
                                         Cursor="Hand" Tag="{Binding IndividualId}"
-                                        MouseLeftButtonUp="PokedexCard_Click"
+                                        MouseLeftButtonDown="PokedexCard_Click"
                                         ToolTip="Открыть карточку — характер, дата поимки и действия">
                                     <StackPanel>
                                         <Grid Margin="0,0,0,6">
@@ -453,9 +465,28 @@
              collide with the home tab's own elements now that both live in one namescope. -->
         <Border x:Name="DetailOverlay" Panel.ZIndex="10" Visibility="Collapsed"
                 Background="#B2000000" MouseLeftButtonDown="DetailOverlay_MouseLeftButtonDown">
-            <Border Style="{StaticResource CardStyle}" Padding="18,16" Width="360"
+            <!-- This Grid exists purely to be a MEASURING STICK for the card's MaxHeight below.
+                 It stretches, so its ActualHeight is always the overlay's height minus the 18px
+                 margin at each end — the tallest the card may grow while still leaving a strip
+                 of dimmed backdrop visible above and below it (which is what reads as "this is
+                 a popup" rather than "the screen changed"). Binding the card straight to the
+                 overlay's own ActualHeight instead would leave no room for that margin: the
+                 card would be capped at the FULL overlay height and then pushed 18px past both
+                 edges by its own margin, clipping the very buttons this is here to protect. -->
+            <Grid x:Name="DetailOverlayArea" Margin="0,18">
+            <Border x:Name="DetailCard" Style="{StaticResource CardStyle}" Padding="18,16" Width="360"
+                    MaxHeight="{Binding ActualHeight, ElementName=DetailOverlayArea}"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
+                <!-- The card's content is as tall as the individual makes it: a shiny, pinned,
+                     currently-active two-type Pokémon mid-way through a 3-stage line carries
+                     four badge pills, two type badges AND the whole evolution strip, which
+                     measured taller than the app window. With no scroller and no height cap the
+                     StackPanel simply grew, the card was arranged centred at that full height,
+                     and Выбрать/Отпустить rendered BELOW the bottom edge of the window with no
+                     way to reach them short of resizing the whole app. MaxHeight above bounds
+                     the card; this ScrollViewer is what makes the overflow reachable. -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
 
                     <Grid Height="120" Margin="0,0,0,10">
@@ -540,8 +571,8 @@
                             <TextBlock Text="Прозвище" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,5" />
                             <TextBox x:Name="DetailNicknameBox" Style="{StaticResource ThemedTextBoxStyle}"
                                      MaxLength="20" TextChanged="DetailNicknameBox_TextChanged"
-                                     ToolTip="Своё имя для этого покемона — до 20 символов. Имя вида остаётся видно." />
-                            <TextBlock Text="Оставь поле пустым, чтобы вернуть только имя вида."
+                                     ToolTip="Придумай своё имя — до 20 символов. Имя вида никуда не денется." />
+                            <TextBlock Text="Необязательно. Оставишь пустым — покажем просто имя вида."
                                        Style="{StaticResource CaptionTextStyle}" Margin="0,5,0,0" />
                         </StackPanel>
                     </Border>
@@ -709,7 +740,9 @@
                     </Grid>
 
                 </StackPanel>
+                </ScrollViewer>
             </Border>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

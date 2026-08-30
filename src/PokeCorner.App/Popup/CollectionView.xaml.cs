@@ -519,6 +519,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// This used to construct a PokemonDetailWindow and ShowDialog() it. That window is gone:
     /// a card in a grid spawning a second OS window read as foreign, so the same content is an
     /// overlay layer inside this view now (see CollectionView.xaml's detail overlay).
+    ///
+    /// Bound to MouseLeftButtonDOWN, deliberately paired with the backdrop's dismiss below —
+    /// see the XAML comment on the card Border. When this ran on Up instead, one physical click
+    /// on the backdrop dismissed the overlay on its down-stroke and then opened whatever card
+    /// lay under the pointer on its up-stroke.
     private void PokedexCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not PokedexCard card) return;
@@ -615,8 +620,17 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// Click-outside-to-close. The card itself marks its own mouse-down Handled (see
     /// DetailCard_MouseLeftButtonDown), so this only ever runs for a click on the dimmed
     /// backdrop around it.
-    private void DetailOverlay_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) =>
+    ///
+    /// Marks the event Handled as well: the grid cards open on mouse-down now
+    /// (PokedexCard_Click), and a dismiss must never also count as a press on anything else.
+    /// Handled alone was NOT what fixed the reopen bug — the two halves of that click were
+    /// separate routed events, which Handled cannot span — but it keeps this click from
+    /// travelling any further now that both are down-events.
+    private void DetailOverlay_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
         HideDetail();
+        e.Handled = true;
+    }
 
     /// Stops a click inside the card from bubbling to the backdrop and closing the thing the
     /// player is trying to interact with.

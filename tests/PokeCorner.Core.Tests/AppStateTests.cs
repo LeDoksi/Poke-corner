@@ -239,7 +239,8 @@ public class AppStateTests
             ScreenCorner = "TopLeft",
             MonitorIndex = 2,
             PetSizePixels = 64,
-            ShowProgressPanel = true
+            ShowProgressPanel = true,
+            CrySoundVolume = 25
         };
         var data = new SaveData
         {
@@ -257,6 +258,24 @@ public class AppStateTests
         Assert.Equal(2, state.Settings.MonitorIndex);
         Assert.Equal(64, state.Settings.PetSizePixels);
         Assert.True(state.Settings.ShowProgressPanel);
+        Assert.Equal(25, state.Settings.CrySoundVolume);
+    }
+
+    /// A save file written before the cry-volume setting existed carries no such member, so
+    /// Hydrate copies the default across rather than a zero — which would silently mute the
+    /// cries of every player who upgrades.
+    [Fact]
+    public void Hydrate_SettingsWithoutAnExplicitCryVolume_KeepsTheAudibleDefault()
+    {
+        var state = new AppState();
+
+        state.Hydrate(new SaveData
+        {
+            Individuals = new List<PokemonIndividual>(),
+            Settings = new AppSettings()
+        });
+
+        Assert.Equal(70, state.Settings.CrySoundVolume);
     }
 
     [Fact]

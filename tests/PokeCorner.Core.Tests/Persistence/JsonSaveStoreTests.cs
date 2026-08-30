@@ -67,6 +67,47 @@ public class JsonSaveStoreTests : IDisposable
         Assert.True(loaded.ShopCatchLuckyCharmActive);
     }
 
+    /// The full trip for the cry-volume setting: through the JSON file AND through Hydrate,
+    /// which is where a newly added AppSettings property is most easily forgotten (SaveData
+    /// persists the whole settings object, so serialization picks it up for free — the
+    /// field-by-field copy in Hydrate does not).
+    [Fact]
+    public void Save_ThenLoad_ThenHydrate_RoundTripsCrySoundVolume()
+    {
+        var store = new JsonSaveStore(_tempFile);
+        store.Save(new SaveData
+        {
+            Individuals = new List<PokemonIndividual>(),
+            Settings = new AppSettings { CrySoundVolume = 35 }
+        });
+
+        var loaded = store.Load();
+        Assert.NotNull(loaded);
+        Assert.Equal(35, loaded!.Settings.CrySoundVolume);
+
+        var state = new AppState();
+        state.Hydrate(loaded);
+        Assert.Equal(35, state.Settings.CrySoundVolume);
+    }
+
+    /// Silence must survive a restart too — 0 is a real choice, and a "0 means unset, fall back
+    /// to the default" bug anywhere on this path would turn the sound back on by itself.
+    [Fact]
+    public void Save_ThenLoad_ThenHydrate_ZeroCrySoundVolumeStaysSilent()
+    {
+        var store = new JsonSaveStore(_tempFile);
+        store.Save(new SaveData
+        {
+            Individuals = new List<PokemonIndividual>(),
+            Settings = new AppSettings { CrySoundVolume = 0 }
+        });
+
+        var state = new AppState();
+        state.Hydrate(store.Load()!);
+
+        Assert.Equal(0, state.Settings.CrySoundVolume);
+    }
+
     [Fact]
     public void Save_ThenLoad_RoundTripsIsFavorite()
     {

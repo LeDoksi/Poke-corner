@@ -44,12 +44,14 @@ public static class AppPaths
     public static string GetAnimatedSpriteCacheDirectory(string? overrideRoot = null) =>
         Path.Combine(GetAppDataDirectory(overrideRoot), "animated");
 
-    /// Species cry sounds, "{speciesId}.wav". WAV rather than the upstream Ogg, because
-    /// System.Media.SoundPlayer is the only way to play a sound with no codec installed on the
-    /// target machine, and it plays WAV only — so the conversion happens once, in the offline
-    /// crawl that seeds this folder, exactly like sprites and GIFs are pre-fetched rather than
-    /// decoded on the player's PC. Unlike sprites there is no runtime fetch fallback: a species
-    /// with no file here simply makes no sound.
+    /// Species cry sounds, "{speciesId}.wav". WAV rather than the upstream Ogg, because PCM WAV
+    /// is the one format that needs no codec installed on the target machine — Ogg does — so the
+    /// conversion happens once, in the offline crawl that seeds this folder, exactly like sprites
+    /// and GIFs are pre-fetched rather than decoded on the player's PC. (The playback API has
+    /// since moved from System.Media.SoundPlayer to WPF's MediaPlayer, which is what made the
+    /// volume setting possible; both play a local PCM WAV with no codec dependency, so the
+    /// format decision is unchanged.) Unlike sprites there is no runtime fetch fallback: a
+    /// species with no file here simply makes no sound.
     public static string GetCryDirectory(string? overrideRoot = null) =>
         Path.Combine(GetAppDataDirectory(overrideRoot), "cries");
 }

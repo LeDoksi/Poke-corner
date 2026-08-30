@@ -101,6 +101,7 @@ public sealed class AppState
         Settings.PetSizePixels = data.Settings.PetSizePixels;
         Settings.ShowProgressPanel = data.Settings.ShowProgressPanel;
         Settings.SuperHardcoreEnabled = data.Settings.SuperHardcoreEnabled;
+        Settings.CrySoundVolume = data.Settings.CrySoundVolume;
         Settings.PetPositionX = data.Settings.PetPositionX;
         Settings.PetPositionY = data.Settings.PetPositionY;
 

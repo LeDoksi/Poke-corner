@@ -5,9 +5,11 @@ namespace PokeCorner.Core.Audio;
 /// <summary>
 /// Writes a canonical 44-byte-header RIFF/WAVE file holding 16-bit PCM.
 ///
-/// This exists because System.Media.SoundPlayer — the only zero-dependency way to play a
-/// sound on a stock Windows install — plays WAV and nothing else, while the upstream
-/// species cries are Ogg Vorbis. The conversion happens ONCE, in the offline catalog crawl
+/// This exists because PCM WAV is the one sound format that plays on a stock Windows install
+/// with no codec to install, while the upstream species cries are Ogg Vorbis, which needs one.
+/// (The app played these through System.Media.SoundPlayer originally and through WPF's
+/// MediaPlayer since the cry-volume setting; WAV is the zero-dependency format for both.)
+/// The conversion happens ONCE, in the offline catalog crawl
 /// that seeds Data\cries, so the shipped app never decodes anything and never depends on an
 /// OS codec being present (the same reason sprites, animated GIFs and the catalog are all
 /// pre-fetched and bundled rather than fetched or decoded on the target machine).

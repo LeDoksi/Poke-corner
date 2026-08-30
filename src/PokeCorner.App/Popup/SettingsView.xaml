@@ -68,6 +68,23 @@
                     </Grid>
                     <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="384" ValueChanged="PetSizeSlider_ValueChanged"
                             ToolTip="Питомец на рабочем столе меняет размер сразу, пока тянешь ползунок" />
+
+                    <!-- Lives in this card rather than in a "Звук" card of its own: the cry is
+                         played by petting the pet on the desktop, so it belongs with the rest of
+                         the desktop-pet settings, and one control does not fill a card. Same
+                         markup shape as the pet-size slider above (implicit themed Slider style,
+                         label/value header Grid), and applied live for the same reason — the
+                         next pet click uses it, with no restart and no delayed tick. -->
+                    <Grid Margin="0,14,0,0">
+                        <TextBlock Text="Громкость крика питомца" Style="{StaticResource StatLabelTextStyle}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock x:Name="CrySoundVolumeValueText" Style="{StaticResource MetaTextStyle}"
+                                   FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <Slider x:Name="CrySoundVolumeSlider" Minimum="0" Maximum="100" ValueChanged="CrySoundVolumeSlider_ValueChanged"
+                            ToolTip="Громкость звука, который издаёт питомец, когда его гладишь. 0 — совсем без звука." />
+                    <TextBlock Text="Питомец подаёт голос, когда его гладишь. Поставь 0, если хочешь тишины."
+                               Style="{StaticResource CaptionTextStyle}" Margin="2,5,0,0" />
                 </StackPanel>
             </Border>
 
