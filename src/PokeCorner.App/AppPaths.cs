@@ -43,4 +43,13 @@ public static class AppPaths
     /// would collide with the static sprite for the same species.
     public static string GetAnimatedSpriteCacheDirectory(string? overrideRoot = null) =>
         Path.Combine(GetAppDataDirectory(overrideRoot), "animated");
+
+    /// Species cry sounds, "{speciesId}.wav". WAV rather than the upstream Ogg, because
+    /// System.Media.SoundPlayer is the only way to play a sound with no codec installed on the
+    /// target machine, and it plays WAV only — so the conversion happens once, in the offline
+    /// crawl that seeds this folder, exactly like sprites and GIFs are pre-fetched rather than
+    /// decoded on the player's PC. Unlike sprites there is no runtime fetch fallback: a species
+    /// with no file here simply makes no sound.
+    public static string GetCryDirectory(string? overrideRoot = null) =>
+        Path.Combine(GetAppDataDirectory(overrideRoot), "cries");
 }

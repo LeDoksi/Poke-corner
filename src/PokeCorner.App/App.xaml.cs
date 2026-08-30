@@ -738,6 +738,30 @@ public partial class App : System.Windows.Application
         if (!_feedingService.Pet(active, careState, DateTimeOffset.UtcNow)) return; // on cooldown
 
         _overlayWindow.PlayPetReaction();
+        PlayCry(ResolveDisplaySpeciesId(active));
+    }
+
+    /// Fire-and-forget cry for a species, from the WAV bundled at Data\cries\{id}.wav.
+    ///
+    /// Gated on a successful pet only, so a cooldown-rejected spam click stays silent rather
+    /// than machine-gunning the sound. Play() (not PlaySync()) hands off to the OS and returns
+    /// immediately — this runs on the UI thread and must not block the pet animation.
+    ///
+    /// Every failure is swallowed on purpose: a species with no upstream cry, a gap in the
+    /// crawl, or a machine with no audio device at all should be a click that makes no sound,
+    /// never a crash or a toast. Cosmetic sound is not worth a single user-visible error.
+    private static void PlayCry(int speciesId)
+    {
+        try
+        {
+            var path = Path.Combine(AppPaths.GetCryDirectory(), $"{speciesId}.wav");
+            if (!File.Exists(path)) return;
+            new System.Media.SoundPlayer(path).Play();
+        }
+        catch
+        {
+            // no sound this click; see above
+        }
     }
 
     private void FeedActiveIndividual()

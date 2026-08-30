@@ -35,7 +35,7 @@
          Note on save data: state.json lives in %APPDATA%\PokeCorner, NOT in this package.
          An MSI never manages a user profile, so save progress is untouched by upgrade and
          uninstall alike, and each Windows account keeps its own. Only the shared assets
-         (sprites, animated, catalog.json) are owned components here, and they are correctly
+         (sprites, animated, cries, catalog.json) are owned components here, and they are correctly
          replaced on upgrade and removed on uninstall. -->
     <MajorUpgrade DowngradeErrorMessage="A newer version of PokeCorner is already installed. Uninstall it first if you really want to go back." />
 
@@ -63,7 +63,7 @@
          win-x64 build, so it belongs in C:\Program Files, not C:\Program Files (x86). -->
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="PokeCorner">
-        <!-- The app's whole runtime state: state.json, sprites\, animated\, catalog.json.
+        <!-- The app's whole runtime state: sprites\, animated\, cries\, catalog.json.
              Shipped pre-populated so a fresh install is fully offline on first launch. -->
         <Directory Id="DATAFOLDER" Name="Data" />
       </Directory>
@@ -85,7 +85,7 @@
          fails to write Data\state.json with access denied. Granting on the Data folder only
          (not the whole install tree) keeps PokeCorner.exe and the runtime DLLs
          non-writable, so this does not become a "replace the binary" escalation path.
-         The ACEs are inheritable, so sprites\ and animated\ underneath are writable too —
+         The ACEs are inheritable, so sprites\, animated\ and cries\ underneath are writable too —
          which they must be, since a species missing from the seed is still fetched and
          cached at runtime. -->
     <Component Id="DataFolderPermissions" Directory="DATAFOLDER" Guid="49424B12-E8ED-4D22-BC63-A4D32094A1FD">

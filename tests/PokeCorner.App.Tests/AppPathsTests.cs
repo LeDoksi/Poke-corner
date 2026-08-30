@@ -29,6 +29,14 @@ public class AppPathsTests
         Assert.Equal(Path.Combine(@"C:\FakeRoot", "animated"), path);
     }
 
+    [Fact]
+    public void GetCryDirectory_WithOverrideRoot_ReturnsCriesDirectlyUnderIt()
+    {
+        var path = AppPaths.GetCryDirectory(overrideRoot: @"C:\FakeRoot");
+
+        Assert.Equal(Path.Combine(@"C:\FakeRoot", "cries"), path);
+    }
+
     /// Save progress is personal to the Windows account playing, unlike the shared sprite/
     /// catalog assets beside the executable — it lives in the standard per-user %APPDATA%
     /// location so two accounts on one machine never share or overwrite each other's

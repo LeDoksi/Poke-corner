@@ -47,6 +47,7 @@ Shared assets — identical for every account on the machine — ship with the i
 |---|---|
 | `Data\sprites\{id}.png` | shipped pre-seeded (643 files) |
 | `Data\animated\{id}.gif` | shipped pre-seeded (638 files) |
+| `Data\cries\{id}.wav` | shipped pre-seeded (643 files, ~41 MB) |
 | `Data\catalog.json` | shipped pre-seeded, linked from `OfflineStarterFallback.json` |
 | `%APPDATA%\PokeCorner\state.json` | created by the app at runtime; **not** an MSI component |
 
@@ -92,9 +93,19 @@ fixed for the life of the product.
 
 ## Regenerating the seed cache
 
-`src/PokeCorner.App/Data/{sprites,animated}` is committed (~28 MB). Regenerate it only if
-the bundled species catalog changes; it was produced by crawling PokeAPI for every species
+`src/PokeCorner.App/Data/{sprites,animated,cries}` is committed (~69 MB). Regenerate it only
+if the bundled species catalog changes; it was produced by crawling PokeAPI for every species
 id reachable from `OfflineStarterFallback.json`.
+
+`cries\` is by far the largest slice (~41 MB of the 69 MB) and it is the one that does **not**
+shrink in the cab — 16-bit PCM compresses only about 4%, unlike the PNGs and GIFs. It is
+uncompressed on purpose: `System.Media.SoundPlayer` is the only way to play a sound with no
+codec installed on the target machine, and it accepts plain PCM WAV and nothing else, so the
+Ogg Vorbis originals are decoded once by the seed crawl rather than on the player's PC. If the
+payload ever has to shrink, the levers in order of least audible damage are: drop to a 16 kHz
+sample rate (halves it), then to 8-bit samples (halves it again, audibly gritty). Both are
+changes to the seed crawl only — nothing in the app parses these files, it hands the path
+straight to `SoundPlayer`.
 
 ## Signing
 
