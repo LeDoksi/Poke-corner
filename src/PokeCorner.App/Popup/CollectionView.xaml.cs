@@ -45,6 +45,20 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// null = "Все". Which rarity the Pokédex grid is filtered to.
     private RarityTier? _rarityFilter;
 
+    /// The search box's current text. ANDs with the rarity filter above.
+    private string _searchQuery = string.Empty;
+
+    /// Zero-based page of the filtered grid. Deliberately view STATE, not derived: Refresh()
+    /// runs once a second, so recomputing it from scratch every tick would drop the player back
+    /// on page 1 while they were still reading page 3. Only a filter or search change resets it
+    /// (and RefreshPokedex clamps it when a release shrinks the list past the current page).
+    private int _pageIndex;
+
+    /// 4 cards fit per row (the card is 112px wide with 5px margins each side, inside a 580px
+    /// window), so 4 rows fill the visible grid area without turning the tab into an endless
+    /// scroll.
+    private const int PageSize = 16;
+
     /// Animated-GIF frames for one species, or null when it has none. Optional so the
     /// theme/layout tests can construct this view without an App behind them; a null delegate
     /// simply leaves every card on its static frame.
@@ -179,9 +193,13 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         }
         else
         {
-            ActivePetNameText.Text = activeEntry.SpeciesName;
+            // Nickname as the headline, species name folded into the meta line beneath it, so
+            // BOTH stay visible — the hero card never shows a nickname alone.
+            var hasNickname = !string.IsNullOrWhiteSpace(activeEntry.Nickname);
+            ActivePetNameText.Text = hasNickname ? activeEntry.Nickname! : activeEntry.SpeciesName;
+            var speciesPrefix = hasNickname ? $"{activeEntry.SpeciesName} · " : string.Empty;
             ActivePetMetaText.Text =
-                $"{activeEntry.DexNumberText()} · {RarityDisplay.GetName(activeEntry.Rarity)} · характер {activeEntry.Nature} · пойман {FormatCaughtDate(activeEntry.CaughtAtUtc)}";
+                $"{speciesPrefix}{activeEntry.DexNumberText()} · {RarityDisplay.GetName(activeEntry.Rarity)} · характер {activeEntry.Nature} · пойман {FormatCaughtDate(activeEntry.CaughtAtUtc)}";
             CarePointsText.Text = active.AccumulatedCarePoints.ToString("N0", CultureInfo.CurrentCulture);
             ShinyBadge.Visibility = activeEntry.IsShiny ? Visibility.Visible : Visibility.Collapsed;
             ActiveTypeBadges.ItemsSource = TypeDisplay.ToBadges(activeEntry.Types);
@@ -302,6 +320,34 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ReferenceEquals(sender, RarityFilterLegendary) ? RarityTier.Legendary :
             null;
 
+        _pageIndex = 0; // a narrower list makes the old page number meaningless
+        Refresh();
+    }
+
+    /// Search is applied on top of the rarity pills (AND, not OR) and matches the species name
+    /// OR the player's nickname — see CollectionViewModel.MatchesSearch. Like the pills, it
+    /// goes through Refresh() so it survives the once-a-second tick.
+    private void PokedexSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (!_isReady) return;
+
+        _searchQuery = PokedexSearchBox.Text;
+        _pageIndex = 0;
+        Refresh();
+    }
+
+    private void PokedexPrevPage_Click(object sender, RoutedEventArgs e)
+    {
+        if (_pageIndex == 0) return;
+        _pageIndex--;
+        Refresh();
+    }
+
+    /// The upper bound is enforced in RefreshPokedex (which clamps against the live page count)
+    /// rather than duplicated here, so there is one place that knows how long the list is.
+    private void PokedexNextPage_Click(object sender, RoutedEventArgs e)
+    {
+        _pageIndex++;
         Refresh();
     }
 
@@ -320,29 +366,47 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
 
-        var visible = _rarityFilter is null
-            ? entries
-            : entries.Where(entry => entry.Rarity == _rarityFilter.Value).ToList();
+        // Both filters narrow the SAME list GetEntries already ordered — neither reorders it,
+        // so the active/favorites/dex banding survives any combination of the two.
+        var visible = entries
+            .Where(entry => _rarityFilter is null || entry.Rarity == _rarityFilter.Value)
+            .Where(entry => CollectionViewModel.MatchesSearch(entry, _searchQuery))
+            .ToList();
+
+        // Clamped rather than reset: releasing a Pokémon (or narrowing a filter) can shrink the
+        // list past the page being read, and dumping the player back to page 1 for that would
+        // be as jarring as doing it on every refresh tick.
+        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)PageSize));
+        _pageIndex = Math.Clamp(_pageIndex, 0, pageCount - 1);
+        var page = visible.Skip(_pageIndex * PageSize).Take(PageSize).ToList();
+
+        PokedexPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
+        PokedexPageText.Text = $"Страница {_pageIndex + 1} из {pageCount}";
+        PokedexPrevPageButton.IsEnabled = _pageIndex > 0;
+        PokedexNextPageButton.IsEnabled = _pageIndex < pageCount - 1;
 
         PokedexEmptyText.Visibility = visible.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         PokedexEmptyText.Text = entries.Count == 0
             ? "Пока пусто — поймай первого покемона на вкладке «Поймать»."
-            : "В этой редкости пока нет открытых видов — попробуй другой фильтр.";
+            : !string.IsNullOrWhiteSpace(_searchQuery)
+                ? "Ничего не найдено — проверь имя вида или прозвище."
+                : "В этой редкости пока нет открытых видов — попробуй другой фильтр.";
 
         // Kick off the animated-sprite fetches for whatever is on screen. Cheap after the
         // first pass: EnsureAnimatedFrames is a no-op for any species already requested.
-        foreach (var entry in visible) EnsureAnimatedFrames(entry.DisplaySpeciesId);
+        foreach (var entry in page) EnsureAnimatedFrames(entry.DisplaySpeciesId);
 
         // The sprite's presence is part of the signature — both the static thumbnail and the
         // animated frames — so a card that rendered its placeholder before the species was
         // cached rebuilds itself once the artwork lands, instead of staying on the placeholder
-        // until some unrelated field changes.
-        var signature = $"{_rarityFilter}|" + string.Join("|", visible.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
+        // until some unrelated field changes. The nickname is in there for the same reason:
+        // renaming from the detail overlay must repaint the card behind it.
+        var signature = $"{_rarityFilter}|{_searchQuery}|{_pageIndex}|" + string.Join("|", page.Select(e =>
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
-        PokedexGrid.ItemsSource = visible.Select(BuildCard).ToList();
+        PokedexGrid.ItemsSource = page.Select(BuildCard).ToList();
     }
 
     private PokedexCard BuildCard(CollectionEntry entry) => new()
@@ -350,6 +414,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         IndividualId = entry.IndividualId,
         SpeciesId = entry.DisplaySpeciesId,
         SpeciesName = entry.SpeciesName,
+        Nickname = entry.Nickname,
         DexNumber = entry.DexNumberText(),
         RarityName = RarityDisplay.GetName(entry.Rarity),
         RarityBrush = RarityDisplay.GetBrush(entry.Rarity),
@@ -475,13 +540,25 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private SpriteAnimator? _detailAnimator;
 
+    /// Guards the nickname TextBox's TextChanged while ShowDetail populates it — see there.
+    private bool _isLoadingDetailNickname;
+
     private void ShowDetail(PokedexCard card)
     {
         _detailCard = card;
         _detailIsFavorite = card.IsFavorite;
 
         DetailDexNumberText.Text = card.DexNumber;
-        DetailSpeciesNameText.Text = card.SpeciesName;
+        DetailSpeciesNameText.Text = card.DisplayName;
+        DetailSpeciesSubtitleText.Text = card.SpeciesSubtitle;
+        DetailSpeciesSubtitleText.Visibility = card.SpeciesSubtitleVisibility;
+
+        // Suppressed so filling the box from the model doesn't read as the player typing —
+        // that would write the nickname straight back and, worse, do it on every card open.
+        _isLoadingDetailNickname = true;
+        DetailNicknameBox.Text = card.Nickname ?? string.Empty;
+        _isLoadingDetailNickname = false;
+
         DetailNatureText.Text = card.NatureText;
         DetailCaughtAtText.Text = card.CaughtAtText;
         DetailEvolutionBar.Value = card.EvolutionBarValue;
@@ -592,6 +669,35 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         ApplyDetailFavoriteVisuals();
     }
 
+    /// Live rename. Like the star it deliberately does NOT call _onStateChanged — a name change
+    /// is not something the desktop overlay needs to re-fetch sprites for; the app's periodic
+    /// autosave persists it (Nickname is a plain settable property, so System.Text.Json
+    /// round-trips it with the rest of the individual).
+    ///
+    /// The headline and the species line are updated in place rather than by reopening the
+    /// card, and the grid behind picks the new name up on the next refresh tick because
+    /// Nickname is part of the grid's rebuild signature.
+    private void DetailNicknameBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (_isLoadingDetailNickname || _detailCard is null) return;
+
+        _viewModel.SetNickname(_detailCard.IndividualId, DetailNicknameBox.Text);
+
+        // Re-read from the model rather than from the box: the setter trims and clamps, so a
+        // whitespace-only entry must show as "back to the species name", not as a blank title.
+        var nickname = LiveNickname(_detailCard.IndividualId);
+        var hasNickname = nickname is not null;
+
+        DetailSpeciesNameText.Text = hasNickname ? nickname! : _detailCard.SpeciesName;
+        DetailSpeciesSubtitleText.Text = hasNickname ? _detailCard.SpeciesName : string.Empty;
+        DetailSpeciesSubtitleText.Visibility = hasNickname ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    /// This individual's nickname straight from the model, or null. Read live rather than off
+    /// the overlay's snapshot card, which predates any rename made while the card is open.
+    private string? LiveNickname(Guid individualId) =>
+        _appState.Collection.Individuals.FirstOrDefault(i => i.Id == individualId)?.Nickname;
+
     /// Both of these close: they change which cards exist (release) or which one is marked
     /// active (select), so the snapshot the overlay is rendering is stale the moment they run.
     private void DetailSelectButton_Click(object sender, RoutedEventArgs e)
@@ -608,9 +714,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         // Releasing is permanent and the button sits one click from a card the player opened
         // just to look at, so it gets the same themed confirmation the save-reset flow uses.
+        // Both names in the prompt when the pet has a nickname: "Sparky" alone would leave the
+        // player unsure WHICH Pikachu is about to be released permanently.
+        var nickname = LiveNickname(_detailCard.IndividualId);
+        var name = nickname is null ? _detailCard.SpeciesName : $"{nickname} ({_detailCard.SpeciesName})";
+
         var confirmed = ConfirmDialog.Ask(
             "Отпустить покемона?",
-            $"{_detailCard.SpeciesName} будет навсегда удалён из коллекции. Это нельзя отменить.",
+            $"{name} будет навсегда удалён из коллекции. Это нельзя отменить.",
             "Отпустить", System.Windows.Window.GetWindow(this));
         if (!confirmed) return;
 

@@ -33,6 +33,24 @@ public sealed class PokedexCard
     /// show, so an evolved Charmander's card reads Charizard.
     public required int SpeciesId { get; init; }
     public required string SpeciesName { get; init; }
+
+    /// The player's own name for this individual, or null. A NEW field, never a replacement for
+    /// the species name: the two are rendered together everywhere (see DisplayName /
+    /// SpeciesSubtitle below), the way the games show "Sparky the Pikachu".
+    public string? Nickname { get; init; }
+
+    /// The headline: the nickname when there is one, the species otherwise. Never leaves the
+    /// species name unshown on its own — SpeciesSubtitle picks it up in the nicknamed case.
+    public string DisplayName => string.IsNullOrWhiteSpace(Nickname) ? SpeciesName : Nickname!;
+
+    /// The second, smaller line under the headline. Empty (and collapsed) when there is no
+    /// nickname, because the headline is already the species name then and repeating it twice
+    /// would read as a rendering bug.
+    public string SpeciesSubtitle => string.IsNullOrWhiteSpace(Nickname) ? string.Empty : SpeciesName;
+
+    public Visibility SpeciesSubtitleVisibility =>
+        string.IsNullOrWhiteSpace(Nickname) ? Visibility.Collapsed : Visibility.Visible;
+
     public required string DexNumber { get; init; }
     public required string RarityName { get; init; }
     public required Brush RarityBrush { get; init; }

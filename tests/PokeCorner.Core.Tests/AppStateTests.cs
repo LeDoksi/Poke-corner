@@ -372,6 +372,28 @@ public class AppStateTests
         Assert.True(state.Shop.CatchLuckyCharmActive);
     }
 
+    /// Hydrate copies individuals across whole (it does not rebuild them field by field), so a
+    /// newly added mutable property like Nickname needs no Hydrate change — asserted here so a
+    /// future switch to field-by-field copying can't silently drop it.
+    [Fact]
+    public void Hydrate_RoundTripsNickname()
+    {
+        var state = new AppState();
+        var named = MakeIndividual();
+        named.Nickname = "Sparky";
+        var unnamed = MakeIndividual();
+
+        state.Hydrate(new SaveData
+        {
+            Individuals = new List<PokemonIndividual> { named, unnamed },
+            ActiveIndividualId = named.Id,
+            Settings = new AppSettings()
+        });
+
+        Assert.Equal("Sparky", state.Collection.Individuals.Single(i => i.Id == named.Id).Nickname);
+        Assert.Null(state.Collection.Individuals.Single(i => i.Id == unnamed.Id).Nickname);
+    }
+
     [Fact]
     public void Hydrate_RoundTripsPendingEggs()
     {

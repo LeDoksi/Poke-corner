@@ -207,6 +207,16 @@
                         </Grid>
                     </Border>
 
+                    <!-- Search. Filters on the SPECIES name and the player's own nickname, so
+                         "sparky" finds a nicknamed Pikachu and "pika" finds it too. ANDs with
+                         the rarity pills below, and resets the page to 1 on every keystroke —
+                         staying on page 4 of a two-page result would look like an empty grid. -->
+                    <TextBlock Text="Поиск" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <TextBox x:Name="PokedexSearchBox" Style="{StaticResource ThemedTextBoxStyle}"
+                             Margin="2,0,2,10" MaxLength="30"
+                             TextChanged="PokedexSearchBox_TextChanged"
+                             ToolTip="Фильтр по имени вида или по прозвищу" />
+
                     <!-- Rarity filter. RadioButtons sharing a GroupName give exactly-one-active
                          for free; each carries its tier's theme brush in Tag, which FilterPillStyle
                          renders as the dot and the checked-state ring. Tag on the buttons is also
@@ -327,9 +337,19 @@
                                             </Grid>
                                         </Border>
 
-                                        <TextBlock Text="{Binding SpeciesName}" FontWeight="SemiBold" FontSize="12"
-                                                   TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"
-                                                   Margin="0,0,0,7" />
+                                        <!-- Nickname as the headline, species name as the line
+                                             under it — BOTH always on the card. With no
+                                             nickname DisplayName IS the species name and the
+                                             subtitle collapses, so an un-nicknamed card looks
+                                             exactly as it did before. -->
+                                        <StackPanel Margin="0,0,0,7">
+                                            <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold" FontSize="12"
+                                                       TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" />
+                                            <TextBlock Text="{Binding SpeciesSubtitle}" Style="{StaticResource CaptionTextStyle}"
+                                                       Visibility="{Binding SpeciesSubtitleVisibility}"
+                                                       TextAlignment="Center" HorizontalAlignment="Center"
+                                                       Margin="0,1,0,0" />
+                                        </StackPanel>
 
                                         <Border Style="{StaticResource PillStyle}" HorizontalAlignment="Center"
                                                 BorderBrush="{Binding RarityBrush}" Padding="7,2">
@@ -356,6 +376,22 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+
+                    <!-- Pagination. Collapsed outright while everything fits on one page — a
+                         permanently-disabled Назад/Вперёд pair under a 3-card grid would read
+                         as broken chrome. The page survives the once-a-second refresh tick and
+                         resets only when the rarity filter or the search query changes. -->
+                    <StackPanel x:Name="PokedexPagination" Orientation="Horizontal" Visibility="Collapsed"
+                                HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button x:Name="PokedexPrevPageButton" Content="Назад" Padding="12,5"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="PokedexPrevPage_Click" />
+                        <TextBlock x:Name="PokedexPageText" Style="{StaticResource MetaTextStyle}"
+                                   VerticalAlignment="Center" Margin="12,0" FontWeight="SemiBold" />
+                        <Button x:Name="PokedexNextPageButton" Content="Вперёд" Padding="12,5"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="PokedexNextPage_Click" />
+                    </StackPanel>
 
                     <!-- Incubating eggs -->
                     <TextBlock Text="Яйца в инкубации" Style="{StaticResource SectionHeaderTextStyle}" Margin="2,14,0,6" />
@@ -445,13 +481,19 @@
                         </Border>
                     </Grid>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">
+                    <!-- Headline = the nickname when there is one. The species line right below
+                         is what keeps the dex identity visible in that case; it collapses when
+                         the headline already IS the species name. -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,2">
                         <TextBlock x:Name="DetailDexNumberText" Style="{StaticResource MetaTextStyle}"
                                    Foreground="{StaticResource MutedTextBrush}"
                                    VerticalAlignment="Center" Margin="0,0,7,0" />
                         <TextBlock x:Name="DetailSpeciesNameText" Style="{StaticResource ScreenTitleTextStyle}"
                                    VerticalAlignment="Center" TextWrapping="Wrap" />
                     </StackPanel>
+                    <TextBlock x:Name="DetailSpeciesSubtitleText" Style="{StaticResource MetaTextStyle}"
+                               HorizontalAlignment="Center" TextAlignment="Center" Visibility="Collapsed"
+                               Margin="0,0,0,4" />
 
                     <WrapPanel HorizontalAlignment="Center" Margin="0,0,0,10">
                         <Border x:Name="DetailRarityPill" Style="{StaticResource PillStyle}" Margin="0,0,6,0">
@@ -486,6 +528,23 @@
                     <ItemsControl x:Name="DetailTypeBadges" HorizontalAlignment="Center" Margin="0,0,0,10"
                                   ItemsPanel="{StaticResource TypeBadgePanelTemplate}"
                                   ItemTemplate="{StaticResource TypeBadgeTemplate}" />
+
+                    <!-- Nickname editor. Commits on every keystroke rather than behind a
+                         Save/Cancel pair: the headline above and the grid card behind both
+                         update live, which is its own confirmation, and there is nothing
+                         destructive to undo. Clearing the box clears the nickname (the
+                         sanitizing setter on PokemonIndividual turns "" and "   " into null),
+                         which is why no separate "reset" button is needed either. -->
+                    <Border Style="{StaticResource WellStyle}" Padding="13,10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Прозвище" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,5" />
+                            <TextBox x:Name="DetailNicknameBox" Style="{StaticResource ThemedTextBoxStyle}"
+                                     MaxLength="20" TextChanged="DetailNicknameBox_TextChanged"
+                                     ToolTip="Своё имя для этого покемона — до 20 символов. Имя вида остаётся видно." />
+                            <TextBlock Text="Оставь поле пустым, чтобы вернуть только имя вида."
+                                       Style="{StaticResource CaptionTextStyle}" Margin="0,5,0,0" />
+                        </StackPanel>
+                    </Border>
 
                     <Border Style="{StaticResource WellStyle}" Padding="13,10" Margin="0,0,0,12">
                         <StackPanel>

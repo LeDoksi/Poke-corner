@@ -103,6 +103,68 @@ public class JsonSaveStoreTests : IDisposable
         Assert.False(loaded.Individuals.Single(i => i.Id == plain.Id).IsFavorite);
     }
 
+    /// Nicknames ride the same path IsFavorite does — a plain settable property on the
+    /// individual, which System.Text.Json round-trips with no schema-migration code — so this
+    /// asserts the whole save/load trip rather than trusting that.
+    [Fact]
+    public void Save_ThenLoad_RoundTripsNickname()
+    {
+        var store = new JsonSaveStore(_tempFile);
+        var named = new PokemonIndividual
+        {
+            SpeciesId = 25,
+            EvolutionChainId = 25,
+            ChainLength = 2,
+            Nature = Nature.Hardy,
+            IsShiny = false,
+            CaughtAtUtc = DateTimeOffset.UtcNow,
+            Nickname = "Sparky"
+        };
+        var unnamed = new PokemonIndividual
+        {
+            SpeciesId = 7,
+            EvolutionChainId = 7,
+            ChainLength = 3,
+            Nature = Nature.Jolly,
+            IsShiny = false,
+            CaughtAtUtc = DateTimeOffset.UtcNow
+        };
+        store.Save(new SaveData
+        {
+            Individuals = new List<PokemonIndividual> { named, unnamed },
+            Settings = new AppSettings()
+        });
+
+        var loaded = store.Load();
+
+        Assert.NotNull(loaded);
+        Assert.Equal("Sparky", loaded!.Individuals.Single(i => i.Id == named.Id).Nickname);
+        Assert.Null(loaded.Individuals.Single(i => i.Id == unnamed.Id).Nickname);
+    }
+
+    /// A blank nickname must never reach the save file as a real one: the sanitizing setter
+    /// normalizes it to null on the way in, so it deserializes back as "no nickname" too.
+    [Fact]
+    public void Save_ThenLoad_WhitespaceOnlyNickname_ComesBackAsNoNickname()
+    {
+        var store = new JsonSaveStore(_tempFile);
+        var individual = new PokemonIndividual
+        {
+            SpeciesId = 25,
+            EvolutionChainId = 25,
+            ChainLength = 2,
+            Nature = Nature.Hardy,
+            IsShiny = false,
+            CaughtAtUtc = DateTimeOffset.UtcNow,
+            Nickname = "   "
+        };
+        Assert.Null(individual.Nickname);
+
+        store.Save(new SaveData { Individuals = new List<PokemonIndividual> { individual }, Settings = new AppSettings() });
+
+        Assert.Null(store.Load()!.Individuals.Single().Nickname);
+    }
+
     [Fact]
     public void Load_SaveFileWrittenBeforeIsFavoriteExisted_DefaultsToNotFavorite()
     {

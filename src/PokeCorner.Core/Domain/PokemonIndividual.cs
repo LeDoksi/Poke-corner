@@ -34,4 +34,30 @@ public sealed class PokemonIndividual
     /// System.Text.Json's reflection-based (de)serializer needs to round-trip it through the
     /// save file — no schema-migration code required, older saves simply deserialize to false.
     public bool IsFavorite { get; set; }
+
+    /// Longest nickname accepted. The detail-overlay TextBox carries the same limit as a
+    /// MaxLength, but the clamp below is what actually enforces it — a hand-edited save file
+    /// is a trust boundary too, and a 5000-character "nickname" would wreck every card layout.
+    public const int MaxNicknameLength = 20;
+
+    private string? _nickname;
+
+    /// Player-given name, shown ALONGSIDE the species name — never instead of it. Mutable for
+    /// the same reason <see cref="IsFavorite"/> is: it is set long after the catch, and a plain
+    /// public setter is all System.Text.Json needs to round-trip it through the save file.
+    ///
+    /// Normalized IN THE SETTER rather than at the call sites, so "  " and "" can never be
+    /// stored as if they were a real nickname regardless of where the value came from — the
+    /// detail overlay, a future rename flow, or a deserialized save. null is the one and only
+    /// representation of "no nickname", which keeps every display site to a single null check.
+    public string? Nickname
+    {
+        get => _nickname;
+        set
+        {
+            var trimmed = value?.Trim();
+            if (string.IsNullOrEmpty(trimmed)) { _nickname = null; return; }
+            _nickname = trimmed.Length > MaxNicknameLength ? trimmed[..MaxNicknameLength] : trimmed;
+        }
+    }
 }

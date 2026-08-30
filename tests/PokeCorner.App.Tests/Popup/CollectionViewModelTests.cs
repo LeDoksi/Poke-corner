@@ -240,62 +240,220 @@ public class CollectionViewModelTests
         Assert.Empty(vm.GetEntries(DateTimeOffset.UtcNow));
     }
 
+    // ===================== Default grid order =====================
+    // Three bands — the individual on the desktop, then the favorites, then the rest — with
+    // dex number ordering inside each band. Catch order used to be the tie-breaker, which
+    // scattered a large collection.
+
     [Fact]
-    public void GetEntries_FavoriteCaughtLast_StillSortsFirst()
+    public void GetEntries_FavoriteCaughtLast_SortsAboveThePlainOnes()
     {
         var collection = new PokemonCollection();
-        var first = MakeIndividual(1);
-        var second = MakeIndividual(2);
-        var third = MakeIndividual(3);
-        collection.Add(first);
-        collection.Add(second);
-        collection.Add(third);
-        third.IsFavorite = true; // caught last, pinned
+        var active = MakeIndividual(1);   // first added => the active pet
+        var plain = MakeIndividual(2);
+        var pinned = MakeIndividual(3);
+        collection.Add(active);
+        collection.Add(plain);
+        collection.Add(pinned);
+        pinned.IsFavorite = true; // caught last, pinned
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
-        Assert.Equal(third.Id, entries[0].IndividualId);
-        Assert.True(entries[0].IsFavorite);
+        // The active pet leads regardless; the pin lifts its individual past the plain one it
+        // was caught after, even though the plain one has the lower dex number.
+        Assert.Equal(new[] { active.Id, pinned.Id, plain.Id }, entries.Select(e => e.IndividualId));
+        Assert.True(entries[1].IsFavorite);
     }
 
     [Fact]
-    public void GetEntries_FavoritesFirstButOtherwiseStable()
+    public void GetEntries_ActiveFirstThenFavoritesThenTheRest_EachBandByDexNumber()
     {
         var collection = new PokemonCollection();
-        var a = MakeIndividual(1);
-        var b = MakeIndividual(2);
-        var c = MakeIndividual(3);
-        var d = MakeIndividual(4);
-        collection.Add(a);
-        collection.Add(b);
-        collection.Add(c);
-        collection.Add(d);
-        b.IsFavorite = true;
-        d.IsFavorite = true;
+        // Caught in an order that deliberately DISAGREES with dex order, so passing this test
+        // requires the dex sort rather than the old catch-order fallback.
+        var active = MakeIndividual(50);
+        var plainHigh = MakeIndividual(40);
+        var pinnedHigh = MakeIndividual(30);
+        var plainLow = MakeIndividual(10);
+        var pinnedLow = MakeIndividual(20);
+        collection.Add(active);
+        collection.Add(plainHigh);
+        collection.Add(pinnedHigh);
+        collection.Add(plainLow);
+        collection.Add(pinnedLow);
+        pinnedHigh.IsFavorite = true;
+        pinnedLow.IsFavorite = true;
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var ids = vm.GetEntries(DateTimeOffset.UtcNow).Select(e => e.IndividualId).ToList();
 
-        // Favorites float up keeping their own relative order (b before d), and the
-        // non-favorites keep theirs too (a before c) — a stable sort, not a reshuffle.
-        Assert.Equal(new[] { b.Id, d.Id, a.Id, c.Id }, ids);
+        Assert.Equal(new[] { active.Id, pinnedLow.Id, pinnedHigh.Id, plainLow.Id, plainHigh.Id }, ids);
+    }
+
+    /// The dex number that sorts is the CURRENT stage's, not the fixed starter species — the
+    /// same number the card actually prints — so an evolved Charmander sorts as Charmeleon.
+    [Fact]
+    public void GetEntries_SortsByTheCurrentStagesDexNumberNotTheStarterSpecies()
+    {
+        var collection = new PokemonCollection();
+        var evolved = MakeIndividual(speciesId: 4, evolutionChainId: 4); // Charmander -> #5
+        var pidgey = MakeIndividual(speciesId: 16, evolutionChainId: 16);
+        var caterpie = MakeIndividual(speciesId: 10, evolutionChainId: 10);
+        collection.Add(evolved);
+        collection.Add(pidgey);
+        collection.Add(caterpie);
+        evolved.CurrentStage = EvolutionStage.Stage2;
+        var chains = new[]
+        {
+            new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
+            new SpeciesEvolutionChain(10, 10, 255, 3, new[] { 10, 11, 12 }, new[] { "Caterpie", "Metapod", "Butterfree" }),
+            new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
+        };
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+
+        // The evolved one is the active pet (added first), so the assertion that matters is the
+        // pair behind it: #10 before #16.
+        var entries = vm.GetEntries(DateTimeOffset.UtcNow);
+
+        Assert.Equal(new[] { 5, 10, 16 }, entries.Select(e => e.DisplaySpeciesId));
     }
 
     [Fact]
-    public void GetEntries_NoFavorites_PreservesOriginalOrder()
+    public void GetEntries_NoFavorites_OrdersByDexNumberBehindTheActivePet()
     {
         var collection = new PokemonCollection();
-        var first = MakeIndividual(1);
-        var second = MakeIndividual(2);
-        collection.Add(first);
-        collection.Add(second);
+        var active = MakeIndividual(1);
+        var high = MakeIndividual(90);
+        var low = MakeIndividual(20);
+        collection.Add(active);
+        collection.Add(high);
+        collection.Add(low);
         var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var ids = vm.GetEntries(DateTimeOffset.UtcNow).Select(e => e.IndividualId).ToList();
 
-        Assert.Equal(new[] { first.Id, second.Id }, ids);
+        Assert.Equal(new[] { active.Id, low.Id, high.Id }, ids);
     }
+
+    /// The active pet outranks even a pinned one — it is the Pokémon the player is looking at
+    /// on their desktop, so it must be the first card on the grid.
+    [Fact]
+    public void GetEntries_ActiveIndividual_LeadsEvenWhenItIsNotAFavorite()
+    {
+        var collection = new PokemonCollection();
+        var pinned = MakeIndividual(2);
+        var active = MakeIndividual(99);
+        collection.Add(pinned);
+        collection.Add(active);
+        pinned.IsFavorite = true;
+        collection.SetActive(active.Id);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        var entries = vm.GetEntries(DateTimeOffset.UtcNow);
+
+        Assert.Equal(active.Id, entries[0].IndividualId);
+        Assert.True(entries[0].IsActive);
+        Assert.Equal(pinned.Id, entries[1].IndividualId);
+    }
+
+    // ===================== Nicknames =====================
+
+    [Fact]
+    public void SetNickname_ShowsUpOnTheEntryAlongsideTheSpeciesName()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(speciesId: 25, evolutionChainId: 25);
+        collection.Add(individual);
+        var chains = new[] { new SpeciesEvolutionChain(25, 25, 190, 2, new[] { 25, 26 }, new[] { "Pikachu", "Raichu" }) };
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+
+        Assert.True(vm.SetNickname(individual.Id, "Sparky"));
+
+        var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
+        Assert.Equal("Sparky", entry.Nickname);
+        // The species name is still there — the nickname is additive, never a replacement.
+        Assert.Equal("Pikachu", entry.SpeciesName);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData("\t\n ")]
+    [InlineData(null)]
+    public void SetNickname_EmptyOrWhitespace_IsTreatedAsNoNickname(string? blank)
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(1);
+        collection.Add(individual);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        vm.SetNickname(individual.Id, "Sparky");
+
+        vm.SetNickname(individual.Id, blank);
+
+        Assert.Null(individual.Nickname);
+        Assert.Null(vm.GetEntries(DateTimeOffset.UtcNow).Single().Nickname);
+    }
+
+    [Fact]
+    public void SetNickname_TrimsSurroundingWhitespaceAndClampsToTheLengthLimit()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(1);
+        collection.Add(individual);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        vm.SetNickname(individual.Id, "  Sparky  ");
+        Assert.Equal("Sparky", individual.Nickname);
+
+        vm.SetNickname(individual.Id, new string('x', PokemonIndividual.MaxNicknameLength + 10));
+        Assert.Equal(PokemonIndividual.MaxNicknameLength, individual.Nickname!.Length);
+    }
+
+    [Fact]
+    public void SetNickname_UnknownId_ReturnsFalse()
+    {
+        var collection = new PokemonCollection();
+        collection.Add(MakeIndividual(1));
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        Assert.False(vm.SetNickname(Guid.NewGuid(), "Sparky"));
+    }
+
+    // ===================== Search =====================
+
+    private static CollectionEntry EntryFor(string speciesName, string? nickname) => new(
+        IndividualId: Guid.NewGuid(), SpeciesId: 25, DisplaySpeciesId: 25, SpeciesName: speciesName,
+        Nickname: nickname, IsShiny: false, IsActive: false, IsAvailableToActivate: true,
+        AvailableAgainAtUtc: null, Rarity: RarityTier.Common, EvolutionFraction: null,
+        EvolutionState: EvolutionProgressState.NeverEvolves, CaughtAtUtc: DateTimeOffset.UtcNow,
+        Nature: Nature.Hardy, IsFavorite: false, Types: Array.Empty<string>(),
+        EvolutionStages: Array.Empty<EvolutionStagePreview>());
+
+    [Theory]
+    [InlineData("pika", true)]   // substring of the species name
+    [InlineData("PIKA", true)]   // case-insensitive
+    [InlineData("chu", true)]    // matches mid-word, not just a prefix
+    [InlineData("charm", false)]
+    public void MatchesSearch_MatchesTheSpeciesNameCaseInsensitively(string query, bool expected) =>
+        Assert.Equal(expected, CollectionViewModel.MatchesSearch(EntryFor("Pikachu", null), query));
+
+    /// The whole point of item 4's last clause: a player who renamed their Pikachu must be able
+    /// to find it by the name THEY gave it.
+    [Theory]
+    [InlineData("sparky", true)]
+    [InlineData("SPARK", true)]
+    [InlineData("pikachu", true)]  // ...and the species name still matches too
+    [InlineData("zzz", false)]
+    public void MatchesSearch_MatchesTheNicknameAsWellAsTheSpeciesName(string query, bool expected) =>
+        Assert.Equal(expected, CollectionViewModel.MatchesSearch(EntryFor("Pikachu", "Sparky"), query));
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData(null)]
+    public void MatchesSearch_EmptyQuery_MatchesEverything(string? query) =>
+        Assert.True(CollectionViewModel.MatchesSearch(EntryFor("Pikachu", null), query));
 
     [Fact]
     public void ToggleFavorite_FlipsFlagOnTheIndividualAndIsReflectedInEntries()

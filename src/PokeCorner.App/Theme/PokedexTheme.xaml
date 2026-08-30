@@ -658,6 +658,49 @@
         </Setter>
     </Style>
 
+    <!-- ===================== Text input =====================
+         The app had no TextBox anywhere until the Pokédex search box and the nickname field,
+         so an unstyled one would have rendered as a stock WHITE Win32 box in the middle of a
+         dark screen. Deliberately shaped like FilterPillStyle's BasePill (same recessed
+         background, same border brush, same 9px radius) so the search field reads as part of
+         the same filter row it sits above, and takes the accent ring on focus the way a
+         checked pill does. -->
+    <Style x:Key="ThemedTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource AccentGoldBrush}" />
+        <Setter Property="SelectionBrush" Value="{StaticResource AccentGoldBrush}" />
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="Padding" Value="9,5" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="Root" CornerRadius="9"
+                            Background="{StaticResource WindowBackgroundBrush}"
+                            BorderBrush="{StaticResource CardBorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                        <!-- PART_ContentHost is TextBox's TemplatePart contract: the control
+                             hosts its own text rendering inside whatever element carries this
+                             name, so a template without it renders permanently blank. -->
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
+                            <Setter TargetName="Root" Property="BorderThickness" Value="1.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Star pin on a roster card. Both Fill and Stroke come from the bound card so the same
          single Path covers "pinned" (solid gold) and "not pinned" (hollow, muted outline). -->
     <Style x:Key="FavoriteToggleStyle" TargetType="Button">

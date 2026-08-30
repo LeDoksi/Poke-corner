@@ -11,6 +11,9 @@ public sealed record CollectionEntry(
     int SpeciesId,
     int DisplaySpeciesId,
     string SpeciesName,
+    /// Player-given name, or null. ALWAYS additive: every display site shows this next to
+    /// <see cref="SpeciesName"/>, never in place of it.
+    string? Nickname,
     bool IsShiny,
     bool IsActive,
     bool IsAvailableToActivate,
@@ -68,11 +71,20 @@ public sealed class CollectionViewModel
         _pendingEggs = pendingEggs;
     }
 
-    /// Favorites float to the top. LINQ's OrderByDescending is a documented STABLE sort, so
-    /// this only lifts the pinned individuals above the rest — relative catch order is
-    /// preserved both among favorites and among everything else.
+    /// The grid's default order, in three bands: the individual currently on the desktop, then
+    /// the favorites, then everything else — with dex number ordering WITHIN each band. Catch
+    /// order used to be the tie-breaker, which made a large collection unbrowsable: the same
+    /// species caught twice sat at opposite ends of the list.
+    ///
+    /// Dex number here is the CURRENT stage's species id (what the card actually shows), not
+    /// the fixed starter species, so an evolved Charmander sorts where Charmeleon does.
+    /// Filtering (rarity pills, the search box) only narrows this list; it never reorders it.
     public IReadOnlyList<CollectionEntry> GetEntries(DateTimeOffset nowUtc) =>
-        _collection.Individuals.OrderByDescending(i => i.IsFavorite).Select(individual =>
+        _collection.Individuals
+            .OrderByDescending(i => i.Id == _collection.ActiveIndividualId)
+            .ThenByDescending(i => i.IsFavorite)
+            .ThenBy(ResolveDisplaySpeciesId)
+            .Select(individual =>
         {
             var careState = _careStates.TryGetValue(individual.Id, out var state) ? state : new CareState();
             var isAvailable = _careMode != CareMode.Hardcore || _careModeService.IsAvailableToPlaceOnDesktop(careState, nowUtc);
@@ -83,6 +95,7 @@ public sealed class CollectionViewModel
                 individual.SpeciesId,
                 displaySpeciesId,
                 _chains.ResolveSpeciesName(displaySpeciesId),
+                individual.Nickname,
                 individual.IsShiny,
                 IsActive: individual.Id == _collection.ActiveIndividualId,
                 IsAvailableToActivate: isAvailable,
@@ -189,5 +202,31 @@ public sealed class CollectionViewModel
 
         individual.IsFavorite = !individual.IsFavorite;
         return true;
+    }
+
+    /// Renames one individual. Sanitization (trim, empty => "no nickname", length clamp) lives
+    /// in <see cref="PokemonIndividual.Nickname"/>'s setter, so passing "" or "   " here clears
+    /// the nickname rather than storing a blank one. Returns false for an unknown id, matching
+    /// <see cref="ToggleFavorite"/>.
+    public bool SetNickname(Guid id, string? nickname)
+    {
+        var individual = _collection.Individuals.FirstOrDefault(i => i.Id == id);
+        if (individual is null) return false;
+
+        individual.Nickname = nickname;
+        return true;
+    }
+
+    /// The Pokédex search box's rule, kept next to the entries it filters rather than in the
+    /// view's code-behind so it can be tested without a WPF host. Case-insensitive substring
+    /// against BOTH names — a player who nicknamed their Pikachu "Sparky" must be able to find
+    /// it by either word — and an empty/whitespace query matches everything.
+    public static bool MatchesSearch(CollectionEntry entry, string? query)
+    {
+        if (string.IsNullOrWhiteSpace(query)) return true;
+        var needle = query.Trim();
+
+        return entry.SpeciesName.Contains(needle, StringComparison.OrdinalIgnoreCase)
+            || (entry.Nickname?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false);
     }
 }

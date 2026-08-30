@@ -61,6 +61,7 @@ public class ThemeRenderingTests
     [InlineData("GoldProgressBarStyle")]
     [InlineData("SlimProgressBarStyle")]
     [InlineData("FilterPillStyle")]
+    [InlineData("ThemedTextBoxStyle")]
     [InlineData("FavoriteToggleStyle")]
     [InlineData("ScreenTitleTextStyle")]
     [InlineData("SectionHeaderTextStyle")]
@@ -398,22 +399,30 @@ public class ThemeRenderingTests
             Assert.Equal(4, Assert.Single(grid.ItemsSource.Cast<PokedexCard>()).SpeciesId);
         });
 
-    /// Item 2b: the pinned individual is first in the grid and its star renders filled gold.
-    /// Still asserted on the card model after the roster/grid merge — the star moved into the
-    /// detail popup, but the pin still drives sort order and the card's gold marker.
+    /// Item 2b: the pinned individual sorts above the plain ones and its star renders filled
+    /// gold. Still asserted on the card model after the roster/grid merge — the star moved into
+    /// the detail popup, but the pin still drives sort order and the card's gold marker.
+    ///
+    /// The ACTIVE pet now leads the grid ahead of the favorites (the default-sort change), so
+    /// this arranges a separate active individual and asserts the pin's effect on the two
+    /// behind it — where the pin is the only thing that can explain the order, since the
+    /// pinned one has the HIGHER dex number.
     [Fact]
-    public void CollectionView_FavoriteIndividual_SortsFirstAndRendersAGoldStar() =>
+    public void CollectionView_FavoriteIndividual_SortsAboveThePlainOnesAndRendersAGoldStar() =>
         WpfTestHost.Run(() =>
         {
             var appState = new AppState();
+            var active = NewIndividual(speciesId: 1, chainId: 1);
             var plain = NewIndividual(speciesId: 4, chainId: 4);
             var pinned = NewIndividual(speciesId: 16, chainId: 16);
+            appState.Collection.Add(active);
             appState.Collection.Add(plain);
             appState.Collection.Add(pinned);
             pinned.IsFavorite = true;
 
             var view = BuildCollectionView(appState, new[]
             {
+                new SpeciesEvolutionChain(1, 1, 45, 3, new[] { 1, 2, 3 }, new[] { "Bulbasaur", "Ivysaur", "Venusaur" }),
                 new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
                 new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
             });
@@ -422,16 +431,284 @@ public class ThemeRenderingTests
             var grid = (ItemsControl)view.FindName("PokedexGrid")!;
             var cards = grid.ItemsSource.Cast<PokedexCard>().ToList();
 
-            Assert.Equal(pinned.Id, cards[0].IndividualId);
-            Assert.True(cards[0].IsFavorite);
-            Assert.Equal(Visibility.Visible, cards[0].FavoriteBadgeVisibility);
-            Assert.Same(Application.Current.Resources["AccentGoldBrush"], cards[0].FavoriteFill);
+            Assert.Equal(active.Id, cards[0].IndividualId);
+            Assert.True(cards[0].IsActive);
+
+            Assert.Equal(pinned.Id, cards[1].IndividualId);
+            Assert.True(cards[1].IsFavorite);
+            Assert.Equal(Visibility.Visible, cards[1].FavoriteBadgeVisibility);
+            Assert.Same(Application.Current.Resources["AccentGoldBrush"], cards[1].FavoriteFill);
 
             // The unpinned card's star is hollow with a muted outline, not gold.
-            Assert.False(cards[1].IsFavorite);
-            Assert.Equal(Visibility.Collapsed, cards[1].FavoriteBadgeVisibility);
-            Assert.Same(System.Windows.Media.Brushes.Transparent, cards[1].FavoriteFill);
-            Assert.Same(Application.Current.Resources["MutedTextBrush"], cards[1].FavoriteStroke);
+            Assert.Equal(plain.Id, cards[2].IndividualId);
+            Assert.False(cards[2].IsFavorite);
+            Assert.Equal(Visibility.Collapsed, cards[2].FavoriteBadgeVisibility);
+            Assert.Same(System.Windows.Media.Brushes.Transparent, cards[2].FavoriteFill);
+            Assert.Same(Application.Current.Resources["MutedTextBrush"], cards[2].FavoriteStroke);
+        });
+
+    // ================= search / pagination / nicknames (this wave) =================
+
+    /// Builds `count` individuals across `count` distinct species/chains, so the grid has
+    /// enough cards to actually paginate.
+    private static CollectionView BuildGridWith(int count, Action<PokemonIndividual, int>? customize = null)
+    {
+        var appState = new AppState();
+        var chains = new List<SpeciesEvolutionChain>();
+        for (var i = 0; i < count; i++)
+        {
+            var speciesId = i + 1;
+            var individual = NewIndividual(speciesId, chainId: speciesId);
+            customize?.Invoke(individual, i);
+            appState.Collection.Add(individual);
+            chains.Add(new SpeciesEvolutionChain(speciesId, speciesId, 255, 1,
+                new[] { speciesId }, new[] { $"Species{speciesId:D2}" }));
+        }
+        return BuildCollectionView(appState, chains);
+    }
+
+    private static IReadOnlyList<PokedexCard> Cards(CollectionView view) =>
+        ((ItemsControl)view.FindName("PokedexGrid")!).ItemsSource.Cast<PokedexCard>().ToList();
+
+    /// Item 2: typing narrows the grid on the RESOLVED species name, case-insensitively, and
+    /// clearing the box restores everything.
+    [Fact]
+    public void CollectionView_Search_NarrowsTheGridByName() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildGridWith(5);
+            WpfTestHost.Layout(view);
+            var box = (TextBox)view.FindName("PokedexSearchBox")!;
+
+            box.Text = "species03";
+            Assert.Equal("Species03", Assert.Single(Cards(view)).SpeciesName);
+
+            box.Text = "";
+            Assert.Equal(5, Cards(view).Count);
+        });
+
+    /// Item 4, last clause: a nicknamed Pokémon is findable by the name the player gave it —
+    /// and the species name still finds it too.
+    [Fact]
+    public void CollectionView_Search_AlsoMatchesTheNickname() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildGridWith(4, (individual, index) =>
+            {
+                if (index == 2) individual.Nickname = "Sparky";
+            });
+            WpfTestHost.Layout(view);
+            var box = (TextBox)view.FindName("PokedexSearchBox")!;
+
+            box.Text = "sparky";
+            var found = Assert.Single(Cards(view));
+            Assert.Equal("Species03", found.SpeciesName);
+            Assert.Equal("Sparky", found.Nickname);
+
+            // The species name is not shadowed by the nickname — both are searchable.
+            box.Text = "Species03";
+            Assert.Equal("Sparky", Assert.Single(Cards(view)).Nickname);
+        });
+
+    /// Items 2 + 3 together: search ANDs with the rarity pills, and a query with no hits says
+    /// so rather than reusing the rarity-filter wording.
+    [Fact]
+    public void CollectionView_Search_CombinesWithTheRarityFilterAndExplainsAnEmptyResult() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            appState.Collection.Add(NewIndividual(speciesId: 4, chainId: 4));   // capture 45  => Rare
+            appState.Collection.Add(NewIndividual(speciesId: 16, chainId: 16)); // capture 255 => Common
+            var view = BuildCollectionView(appState, new[]
+            {
+                new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }),
+                new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
+            });
+            WpfTestHost.Layout(view);
+
+            ((RadioButton)view.FindName("RarityFilterRare")!).IsChecked = true;
+            ((TextBox)view.FindName("PokedexSearchBox")!).Text = "charm";
+            Assert.Equal(4, Assert.Single(Cards(view)).SpeciesId);
+
+            // AND, not OR: a Common-tier name under the Rare pill matches nothing.
+            ((TextBox)view.FindName("PokedexSearchBox")!).Text = "pidgey";
+            Assert.Empty(Cards(view));
+
+            var emptyText = (TextBlock)view.FindName("PokedexEmptyText")!;
+            Assert.Equal(Visibility.Visible, emptyText.Visibility);
+            Assert.Contains("Ничего не найдено", emptyText.Text);
+        });
+
+    /// Item 3: Назад/Вперёд page through the grid, the indicator counts correctly, and the
+    /// buttons disable at the ends. 20 individuals over a 16-per-page grid = two pages.
+    [Fact]
+    public void CollectionView_Pagination_PagesThroughTheGridAndDisablesAtTheEnds() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildGridWith(20);
+            WpfTestHost.Layout(view);
+
+            var pagination = (FrameworkElement)view.FindName("PokedexPagination")!;
+            var pageText = (TextBlock)view.FindName("PokedexPageText")!;
+            var prev = (System.Windows.Controls.Button)view.FindName("PokedexPrevPageButton")!;
+            var next = (System.Windows.Controls.Button)view.FindName("PokedexNextPageButton")!;
+
+            Assert.Equal(Visibility.Visible, pagination.Visibility);
+            Assert.Equal("Страница 1 из 2", pageText.Text);
+            Assert.Equal(16, Cards(view).Count);
+            Assert.False(prev.IsEnabled);
+            Assert.True(next.IsEnabled);
+
+            next.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+
+            Assert.Equal("Страница 2 из 2", pageText.Text);
+            Assert.Equal(4, Cards(view).Count);
+            Assert.True(prev.IsEnabled);
+            Assert.False(next.IsEnabled);
+
+            prev.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+            Assert.Equal("Страница 1 из 2", pageText.Text);
+            Assert.Equal(16, Cards(view).Count);
+        });
+
+    /// Item 3's real trap: Refresh() runs once a SECOND. Paging to 2 and then ticking must not
+    /// dump the player back on page 1 — but changing a filter or the query must.
+    [Fact]
+    public void CollectionView_Pagination_SurvivesARefreshTickButResetsOnAFilterOrSearchChange() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildGridWith(20);
+            WpfTestHost.Layout(view);
+            var pageText = (TextBlock)view.FindName("PokedexPageText")!;
+
+            ((System.Windows.Controls.Button)view.FindName("PokedexNextPageButton")!)
+                .RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+            Assert.Equal("Страница 2 из 2", pageText.Text);
+
+            view.Refresh();
+            view.Refresh();
+            Assert.Equal("Страница 2 из 2", pageText.Text);
+
+            // A new query is a new list, so page 2 of the old one is meaningless.
+            ((TextBox)view.FindName("PokedexSearchBox")!).Text = "species";
+            Assert.Equal("Страница 1 из 2", pageText.Text);
+
+            ((System.Windows.Controls.Button)view.FindName("PokedexNextPageButton")!)
+                .RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+            ((RadioButton)view.FindName("RarityFilterCommon")!).IsChecked = true;
+            Assert.StartsWith("Страница 1", pageText.Text);
+        });
+
+    /// One page's worth of Pokémon needs no paging chrome at all.
+    [Fact]
+    public void CollectionView_Pagination_IsHiddenWhenEverythingFitsOnOnePage() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildGridWith(3);
+            WpfTestHost.Layout(view);
+
+            Assert.Equal(Visibility.Collapsed, ((FrameworkElement)view.FindName("PokedexPagination")!).Visibility);
+            Assert.Equal(3, Cards(view).Count);
+        });
+
+    /// Item 4's core rule: the nickname is shown ALONGSIDE the species name, never instead of
+    /// it — on the grid card, on the hero card and in the detail overlay.
+    [Fact]
+    public void CollectionView_Nickname_IsShownAlongsideTheSpeciesNameEverywhere() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            var individual = NewIndividual(speciesId: 25, chainId: 25);
+            individual.Nickname = "Sparky";
+            appState.Collection.Add(individual);
+            var view = BuildCollectionView(appState, new[]
+            {
+                new SpeciesEvolutionChain(25, 25, 190, 2, new[] { 25, 26 }, new[] { "Pikachu", "Raichu" })
+            });
+            WpfTestHost.Layout(view);
+
+            // Grid card: nickname is the headline, species name the visible subtitle.
+            var card = Assert.Single(Cards(view));
+            Assert.Equal("Sparky", card.DisplayName);
+            Assert.Equal("Pikachu", card.SpeciesSubtitle);
+            Assert.Equal(Visibility.Visible, card.SpeciesSubtitleVisibility);
+
+            // Hero card: species name folded into the meta line under the nickname headline.
+            Assert.Equal("Sparky", ((TextBlock)view.FindName("ActivePetNameText")!).Text);
+            Assert.Contains("Pikachu", ((TextBlock)view.FindName("ActivePetMetaText")!).Text);
+
+            // Detail overlay: headline + its own species line.
+            CollectionTabs(view).SelectedIndex = 1;
+            WpfTestHost.Layout(view);
+            var cardBorder = Descendants(view).OfType<Border>().First(b => b.DataContext is PokedexCard && b.Tag is Guid);
+            cardBorder.RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+
+            Assert.Equal("Sparky", ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
+            var subtitle = (TextBlock)view.FindName("DetailSpeciesSubtitleText")!;
+            Assert.Equal("Pikachu", subtitle.Text);
+            Assert.Equal(Visibility.Visible, subtitle.Visibility);
+        });
+
+    /// With no nickname the species name IS the headline and the subtitle collapses — an
+    /// un-nicknamed card must look exactly as it did before this feature.
+    [Fact]
+    public void CollectionView_NoNickname_ShowsTheSpeciesNameAloneWithNoEmptySubtitle() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = BuildCollectionView();
+            WpfTestHost.Layout(view);
+
+            var card = Assert.Single(Cards(view));
+            Assert.Equal(card.SpeciesName, card.DisplayName);
+            Assert.Equal(string.Empty, card.SpeciesSubtitle);
+            Assert.Equal(Visibility.Collapsed, card.SpeciesSubtitleVisibility);
+        });
+
+    /// Typing in the detail overlay's nickname box renames the individual live, and clearing it
+    /// reverts to species-name-only rather than storing a blank nickname.
+    [Fact]
+    public void CollectionView_NicknameBox_RenamesLiveAndAnEmptyValueClearsIt() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            var individual = NewIndividual(speciesId: 25, chainId: 25);
+            appState.Collection.Add(individual);
+            var view = BuildCollectionView(appState, new[]
+            {
+                new SpeciesEvolutionChain(25, 25, 190, 2, new[] { 25, 26 }, new[] { "Pikachu", "Raichu" })
+            });
+            WpfTestHost.Layout(view);
+            CollectionTabs(view).SelectedIndex = 1;
+            WpfTestHost.Layout(view);
+
+            Descendants(view).OfType<Border>().First(b => b.DataContext is PokedexCard && b.Tag is Guid)
+                .RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+
+            var box = (TextBox)view.FindName("DetailNicknameBox")!;
+            var subtitle = (TextBlock)view.FindName("DetailSpeciesSubtitleText")!;
+            Assert.Equal(string.Empty, box.Text);
+
+            box.Text = "  Sparky  ";
+            Assert.Equal("Sparky", individual.Nickname); // trimmed by the domain setter
+            Assert.Equal("Sparky", ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
+            Assert.Equal("Pikachu", subtitle.Text);
+            Assert.Equal(Visibility.Visible, subtitle.Visibility);
+
+            // ...and the grid card behind picks the new name up on the next refresh tick.
+            view.Refresh();
+            Assert.Equal("Sparky", Assert.Single(Cards(view)).DisplayName);
+
+            box.Text = "   ";
+            Assert.Null(individual.Nickname);
+            Assert.Equal("Pikachu", ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
+            Assert.Equal(Visibility.Collapsed, subtitle.Visibility);
+
+            // Reopening a card must not write the loaded value back as if it were typed.
+            view.Refresh();
+            WpfTestHost.Layout(view); // the rebuilt ItemsSource needs a pass to realize its containers
+            Descendants(view).OfType<Border>().First(b => b.DataContext is PokedexCard && b.Tag is Guid)
+                .RaiseEvent(MouseDown(UIElement.MouseLeftButtonUpEvent));
+            Assert.Null(individual.Nickname);
         });
 
     /// Lays the panel out and returns its content root, so the assertions below can read real
