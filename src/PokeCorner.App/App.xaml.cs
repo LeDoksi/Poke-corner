@@ -260,6 +260,16 @@ public partial class App : System.Windows.Application
     {
         ReconcileSettingsState();
 
+        // See FallbackActivityMonitor for why this exists: some anti-cheat drivers (Genshin
+        // Impact's mhyprot2.sys is the reported case) silently stop GlobalInputHook's low-level
+        // hook callbacks from firing at all, system-wide, while loaded. GetTimeSinceLastInput
+        // is a single syscall reading a value the OS already maintains — cheap enough for this
+        // tick's hard "no disk/network" budget, same as everything else here.
+        if (FallbackActivityMonitor.ShouldCreditFallbackUnit(DateTimeOffset.UtcNow, _inputCounter.LastHookRecordedUtc, SystemIdleTime.GetTimeSinceLastInput()))
+        {
+            _inputCounter.RecordFallbackUnit();
+        }
+
         var units = _inputCounter.DrainUnits();
         if (units > 0)
         {
@@ -501,6 +511,9 @@ public partial class App : System.Windows.Application
             {
                 _overlayWindow.Show();
                 _progressPanelWindow?.Show();
+                // Show() doesn't guarantee topmost placement — without this the pet could sit
+                // freshly-shown but buried until the next growth tick (up to 1s later).
+                ReassertOverlayTopmost();
             }
 
             return;
@@ -563,6 +576,8 @@ public partial class App : System.Windows.Application
         {
             _overlayWindow.Show();
             _progressPanelWindow?.Show();
+            // Same reason as the animated-sprite branch above: Show() alone doesn't re-top.
+            ReassertOverlayTopmost();
         }
     }
 
@@ -920,6 +935,12 @@ public partial class App : System.Windows.Application
                 _menuWindow.Show();
             }
             _menuWindow.SelectTab(tabIndex);
+            // Activate() alone does not un-minimize a window — only guard against Minimized,
+            // not stomp a Maximized state the player may have set via MaximizeButton_Click.
+            if (_menuWindow.WindowState == WindowState.Minimized)
+            {
+                _menuWindow.WindowState = WindowState.Normal;
+            }
             _menuWindow.Activate();
             ReassertOverlayTopmost();
         }

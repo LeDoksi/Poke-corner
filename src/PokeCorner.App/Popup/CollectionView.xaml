@@ -485,7 +485,42 @@
                      StackPanel simply grew, the card was arranged centred at that full height,
                      and Выбрать/Отпустить rendered BELOW the bottom edge of the window with no
                      way to reach them short of resizing the whole app. MaxHeight above bounds
-                     the card; this ScrollViewer is what makes the overflow reachable. -->
+                     the card; the ScrollViewer below is what makes the overflow reachable.
+
+                     The action row is docked to the BOTTOM of this DockPanel instead of living
+                     inside the ScrollViewer's own content — added first, ahead of the
+                     ScrollViewer, so LastChildFill gives the scroller the rest. That keeps
+                     Отпустить's on-screen position immune to anything that reflows the
+                     scrollable content above it (evolution-chain length, badge count, the
+                     MaxHeight binding above settling across a layout pass or two — all of
+                     which visibly shook the row when it sat inside the same StackPanel), and
+                     as a bonus the buttons are reachable without scrolling in the common case. -->
+                <DockPanel LastChildFill="True">
+                    <Grid DockPanel.Dock="Bottom" Margin="0,12,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- The star pin, moved here off the roster rows. One Path with both Fill
+                             and Stroke bound covers both states: gold-on-gold when pinned, hollow
+                             with a muted outline when not. -->
+                        <Button x:Name="DetailFavoriteButton" Grid.Column="0" Style="{StaticResource FavoriteToggleStyle}"
+                                Click="DetailFavoriteButton_Click" VerticalAlignment="Center" Margin="0,0,8,0">
+                            <Path x:Name="DetailFavoriteStar" Width="17" Height="17" Stretch="Uniform"
+                                  StrokeThickness="1.6" StrokeLineJoin="Round"
+                                  Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
+                        </Button>
+
+                        <Button x:Name="DetailSelectButton" Grid.Column="1" Content="Выбрать" Click="DetailSelectButton_Click"
+                                Padding="12,7" Margin="0,0,8,0"
+                                ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
+
+                        <Button x:Name="DetailReleaseButton" Grid.Column="2" Content="Отпустить" Click="DetailReleaseButton_Click"
+                                Padding="12,7" Style="{StaticResource SecondaryButtonStyle}"
+                                ToolTip="Насовсем удалить этого покемона из коллекции" />
+                    </Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
 
@@ -713,34 +748,9 @@
                         </StackPanel>
                     </Border>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <!-- The star pin, moved here off the roster rows. One Path with both Fill
-                             and Stroke bound covers both states: gold-on-gold when pinned, hollow
-                             with a muted outline when not. -->
-                        <Button x:Name="DetailFavoriteButton" Grid.Column="0" Style="{StaticResource FavoriteToggleStyle}"
-                                Click="DetailFavoriteButton_Click" VerticalAlignment="Center" Margin="0,0,8,0">
-                            <Path x:Name="DetailFavoriteStar" Width="17" Height="17" Stretch="Uniform"
-                                  StrokeThickness="1.6" StrokeLineJoin="Round"
-                                  Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
-                        </Button>
-
-                        <Button x:Name="DetailSelectButton" Grid.Column="1" Content="Выбрать" Click="DetailSelectButton_Click"
-                                Padding="12,7" Margin="0,0,8,0"
-                                ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
-
-                        <Button x:Name="DetailReleaseButton" Grid.Column="2" Content="Отпустить" Click="DetailReleaseButton_Click"
-                                Padding="12,7" Style="{StaticResource SecondaryButtonStyle}"
-                                ToolTip="Насовсем удалить этого покемона из коллекции" />
-                    </Grid>
-
                 </StackPanel>
                 </ScrollViewer>
+                </DockPanel>
             </Border>
             </Grid>
         </Border>

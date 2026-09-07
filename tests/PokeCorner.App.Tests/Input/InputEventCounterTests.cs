@@ -41,4 +41,31 @@ public class InputEventCounterTests
 
         Assert.Equal(8000, counter.DrainUnits());
     }
+
+    [Fact]
+    public void RecordEvent_UpdatesLastHookRecordedUtc()
+    {
+        var counter = new InputEventCounter();
+        var before = DateTimeOffset.UtcNow;
+
+        counter.RecordEvent();
+
+        Assert.True(counter.LastHookRecordedUtc >= before);
+    }
+
+    [Fact]
+    public void RecordFallbackUnit_IncrementsPendingUnits_ButNotLastHookRecordedUtc()
+    {
+        var counter = new InputEventCounter();
+        counter.RecordEvent(); // establish a real hook timestamp
+        var hookTimestamp = counter.LastHookRecordedUtc;
+
+        counter.RecordFallbackUnit();
+        counter.RecordFallbackUnit();
+
+        Assert.Equal(3, counter.DrainUnits()); // 1 from RecordEvent above + the 2 fallback credits
+        // Unchanged: the fallback must not look like a real hook event, or the staleness
+        // check it exists to satisfy would immediately reset and stop re-firing.
+        Assert.Equal(hookTimestamp, counter.LastHookRecordedUtc);
+    }
 }
