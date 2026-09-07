@@ -696,7 +696,12 @@ public partial class App : System.Windows.Application
         var chain = _speciesCatalog.LoadForLookup().FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
         if (chain is null) return individual.SpeciesId; // defensive fallback for an individual whose chain isn't in the catalog
 
-        var stageIndex = (int)individual.CurrentStage;
+        // A DisplayStageOverride only ever applies within [0, CurrentStage] — see
+        // AppState.SetDisplayStage — but the bound is re-checked here too, since a hand-edited
+        // save file is a trust boundary the same way Nickname's length clamp is.
+        var stageIndex = individual.DisplayStageOverride is { } overrideIndex && overrideIndex >= 0 && overrideIndex <= (int)individual.CurrentStage
+            ? overrideIndex
+            : (int)individual.CurrentStage;
         return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
     }
 

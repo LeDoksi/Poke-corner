@@ -35,6 +35,14 @@ public sealed class PokemonIndividual
     /// save file — no schema-migration code required, older saves simply deserialize to false.
     public bool IsFavorite { get; set; }
 
+    /// Cosmetic-only override of which reached evolution stage is DISPLAYED (sprite, card
+    /// thumbnail) — 0-based, same indexing as <see cref="CurrentStage"/>. Never touches actual
+    /// progress. null means "show CurrentStage", the default for every existing save. Must
+    /// never exceed CurrentStage — enforced at the write site (AppState.SetDisplayStage); read
+    /// sites still clamp/ignore an out-of-range value defensively, the same trust-boundary
+    /// reasoning as Nickname's length clamp, since a hand-edited save file could set anything.
+    public int? DisplayStageOverride { get; set; }
+
     /// Longest nickname accepted. The detail-overlay TextBox carries the same limit as a
     /// MaxLength, but the clamp below is what actually enforces it — a hand-edited save file
     /// is a trust boundary too, and a 5000-character "nickname" would wreck every card layout.

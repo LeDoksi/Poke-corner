@@ -54,6 +54,19 @@ public sealed class AppState
         return true;
     }
 
+    /// Sets (or clears) which already-reached stage's sprite is cosmetically shown for this
+    /// individual. No-op for an out-of-range index — negative, or past CurrentStage — since
+    /// displaying a stage never reached would leak an evolution the player hasn't earned yet.
+    /// Passing CurrentStage's own index normalizes to null; the two mean the same thing and
+    /// null is the cheaper one to check at every read site.
+    public void SetDisplayStage(PokemonIndividual individual, int? stageIndex)
+    {
+        if (stageIndex is not { } index) { individual.DisplayStageOverride = null; return; }
+        if (index < 0 || index > (int)individual.CurrentStage) return;
+
+        individual.DisplayStageOverride = index == (int)individual.CurrentStage ? null : index;
+    }
+
     public CareState GetOrCreateCareState(Guid individualId)
     {
         if (!CareStateByIndividualId.TryGetValue(individualId, out var state))

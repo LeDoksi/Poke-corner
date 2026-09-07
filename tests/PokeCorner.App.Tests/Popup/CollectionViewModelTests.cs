@@ -691,4 +691,61 @@ public class CollectionViewModelTests
         Assert.Empty(entry.Types);
         Assert.Equal(3, entry.EvolutionStages.Count);
     }
+
+    // ===================== DisplayStageOverride =====================
+
+    [Fact]
+    public void GetEntries_NoDisplayOverride_DisplaySpeciesIdReflectsCurrentStage()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3);
+        individual.CurrentStage = EvolutionStage.Stage3;
+
+        var entry = MakeVm(individual, CaterpieLine).GetEntries(DateTimeOffset.UtcNow).Single();
+
+        Assert.Equal(12, entry.DisplaySpeciesId);
+    }
+
+    [Fact]
+    public void GetEntries_DisplayOverrideSet_DisplaySpeciesIdReflectsTheOverriddenStage()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3);
+        individual.CurrentStage = EvolutionStage.Stage3;
+        individual.DisplayStageOverride = 0;
+
+        var entry = MakeVm(individual, CaterpieLine).GetEntries(DateTimeOffset.UtcNow).Single();
+
+        Assert.Equal(10, entry.DisplaySpeciesId);
+    }
+
+    /// IsDisplayed follows the override; IsCurrent stays on the real stage regardless — the two
+    /// diverge exactly when an override is set, which is what lets the strip show both badges.
+    [Fact]
+    public void GetEntries_DisplayOverrideSet_IsDisplayedMovesButIsCurrentStaysOnTheRealStage()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3);
+        individual.CurrentStage = EvolutionStage.Stage3;
+        individual.DisplayStageOverride = 0;
+
+        var stages = MakeVm(individual, CaterpieLine).GetEntries(DateTimeOffset.UtcNow).Single().EvolutionStages;
+
+        Assert.True(stages[0].IsDisplayed);
+        Assert.False(stages[0].IsCurrent);
+        Assert.True(stages[2].IsCurrent);
+        Assert.False(stages[2].IsDisplayed);
+    }
+
+    /// With no override, IsDisplayed and IsCurrent land on the same stage.
+    [Fact]
+    public void GetEntries_NoDisplayOverride_IsDisplayedCoincidesWithIsCurrent()
+    {
+        var individual = MakeIndividual(10, evolutionChainId: 3);
+        individual.CurrentStage = EvolutionStage.Stage2;
+
+        var stages = MakeVm(individual, CaterpieLine).GetEntries(DateTimeOffset.UtcNow).Single().EvolutionStages;
+
+        Assert.True(stages[1].IsCurrent);
+        Assert.True(stages[1].IsDisplayed);
+        Assert.False(stages[0].IsDisplayed);
+        Assert.False(stages[2].IsDisplayed);
+    }
 }

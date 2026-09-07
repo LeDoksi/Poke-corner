@@ -476,11 +476,13 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private IReadOnlyList<EvolutionStageCard> BuildEvolutionStageCards(CollectionEntry entry) =>
         entry.EvolutionStages.Select(stage => new EvolutionStageCard
         {
+            StageIndex = stage.StageIndex,
             IsRevealed = stage.IsRevealed,
             NameText = stage.IsRevealed ? stage.SpeciesName ?? "???" : "???",
             SpriteImage = stage.IsRevealed && stage.SpeciesId is { } id ? TryGetThumbnail(id) : null,
             TypeBadges = TypeDisplay.ToBadges(stage.Types),
             IsCurrent = stage.IsCurrent,
+            IsDisplayed = stage.IsDisplayed,
             ShowArrow = stage.StageIndex < entry.EvolutionStages.Count - 1
         }).ToList();
 
@@ -715,6 +717,40 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         ToggleFavorite(_detailCard.IndividualId);
         _detailIsFavorite = !_detailIsFavorite;
         ApplyDetailFavoriteVisuals();
+    }
+
+    /// A stage in the evolution-chain strip was clicked: toggle it as the cosmetic display
+    /// override for the open individual. Only meaningful for a REVEALED stage — never a
+    /// masked/future one, which is the spoiler boundary the model already enforces (an
+    /// unrevealed EvolutionStageCard carries no identity to act on anyway, but the guard below
+    /// also stops the mutation itself from ever touching a stage not yet reached).
+    ///
+    /// e.Handled mirrors DetailCard_MouseLeftButtonDown: a click inside the card must never
+    /// bubble to the backdrop and dismiss the overlay it's interacting with.
+    private void DetailEvolutionStage_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        e.Handled = true;
+        if (_detailCard is null) return;
+        if (((FrameworkElement)sender).DataContext is not EvolutionStageCard stage || !stage.IsRevealed) return;
+
+        var individual = _appState.Collection.Individuals.FirstOrDefault(i => i.Id == _detailCard.IndividualId);
+        if (individual is null) return;
+
+        // Clicking the already-displayed stage resets to the real current stage instead of
+        // re-picking the same one — the click is a toggle, not a one-way pin.
+        _appState.SetDisplayStage(individual, stage.IsDisplayed ? null : stage.StageIndex);
+
+        // Nudges the desktop pet's sprite immediately when this is the active individual — the
+        // same RefreshOverlayForActiveIndividual delegate every other mutation that can affect
+        // the active sprite already goes through (see PetActiveIndividual, DetailSelectButton).
+        if (individual.Id == _appState.Collection.ActiveIndividualId) _onStateChanged();
+
+        // Card stays open (like the favorite star): rebuild just the strip in place from fresh
+        // model data rather than closing/reopening the whole detail overlay.
+        var entry = _viewModel.GetEntries(DateTimeOffset.UtcNow).FirstOrDefault(x => x.IndividualId == individual.Id);
+        if (entry is not null) DetailEvolutionChainStrip.ItemsSource = BuildEvolutionStageCards(entry);
+
+        Refresh();
     }
 
     /// Live rename. Like the star it deliberately does NOT call _onStateChanged — a name change

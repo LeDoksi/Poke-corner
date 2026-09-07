@@ -47,7 +47,11 @@ public sealed record EvolutionStagePreview(
     int? SpeciesId,
     string? SpeciesName,
     IReadOnlyList<string> Types,
-    bool IsCurrent)
+    bool IsCurrent,
+    /// True for the stage cosmetically shown on the sprite/thumbnail right now — CurrentStage
+    /// unless DisplayStageOverride points somewhere earlier. Coexists with IsCurrent (real
+    /// progress) rather than replacing it: the two differ exactly when an override is set.
+    bool IsDisplayed)
 {
     /// Reached stages are revealed; everything past the individual's current stage is a
     /// silhouette. Derived from the presence of the identity rather than stored separately, so
@@ -128,6 +132,11 @@ public sealed class CollectionViewModel
         if (chain is null || chain.ChainLength <= 1) return Array.Empty<EvolutionStagePreview>();
 
         var reachedIndex = (int)individual.CurrentStage;
+        // Same clamp as ResolveDisplaySpeciesId: an out-of-range override (e.g. a hand-edited
+        // save) falls back to the real current stage rather than trusting the stored value.
+        var displayedIndex = individual.DisplayStageOverride is { } overrideIndex && overrideIndex >= 0 && overrideIndex <= reachedIndex
+            ? overrideIndex
+            : reachedIndex;
         var stages = new List<EvolutionStagePreview>(chain.ChainLength);
 
         for (var index = 0; index < chain.ChainLength; index++)
@@ -142,7 +151,8 @@ public sealed class CollectionViewModel
                 SpeciesId: speciesId,
                 SpeciesName: speciesId is null ? null : _chains.ResolveSpeciesName(speciesId.Value),
                 Types: speciesId is null ? Array.Empty<string>() : _chains.ResolveSpeciesTypes(speciesId.Value),
-                IsCurrent: index == reachedIndex));
+                IsCurrent: index == reachedIndex,
+                IsDisplayed: index == displayedIndex));
         }
 
         return stages;
@@ -163,7 +173,12 @@ public sealed class CollectionViewModel
         var chain = _chains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
         if (chain is null) return individual.SpeciesId;
 
-        var stageIndex = (int)individual.CurrentStage;
+        // A DisplayStageOverride only ever applies within [0, CurrentStage] — see
+        // AppState.SetDisplayStage — but the bound is re-checked here too, since a hand-edited
+        // save file is a trust boundary the same way Nickname's length clamp is.
+        var stageIndex = individual.DisplayStageOverride is { } overrideIndex && overrideIndex >= 0 && overrideIndex <= (int)individual.CurrentStage
+            ? overrideIndex
+            : (int)individual.CurrentStage;
         return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
     }
 

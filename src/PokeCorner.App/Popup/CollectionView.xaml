@@ -704,12 +704,20 @@
                                                  hard maximum — PokeApiClient.CollectStages keeps
                                                  only the longest branch — so this is the widest
                                                  case, not a lucky one. -->
+                                            <!-- MouseLeftButtonDown, not Up — same reasoning as
+                                                 PokedexCard_Click. Clicking a stage picks it as
+                                                 the cosmetic display override (or resets it, if
+                                                 it's already the one shown); a masked stage is
+                                                 harmless to click since the handler no-ops on an
+                                                 unrevealed one (see DetailEvolutionStage_Click). -->
                                             <Border Width="84" Padding="4,6" CornerRadius="10"
                                                     BorderThickness="1.5"
                                                     BorderBrush="{Binding BorderBrush}"
                                                     Opacity="{Binding Opacity}"
                                                     Background="{StaticResource CardBackgroundBrush}"
-                                                    ToolTip="{Binding ToolTip}">
+                                                    ToolTip="{Binding ToolTip}"
+                                                    Cursor="Hand"
+                                                    MouseLeftButtonDown="DetailEvolutionStage_Click">
                                                 <StackPanel>
                                                     <Grid Height="52">
                                                         <Image Width="46" Height="46" Source="{Binding SpriteImage}"
@@ -749,6 +757,19 @@
                                                             ToolTip="Текущая форма этого покемона">
                                                         <TextBlock Text="Сейчас" FontSize="8.5" FontWeight="SemiBold"
                                                                    Foreground="{StaticResource AccentGoldBrush}" />
+                                                    </Border>
+
+                                                    <!-- Only shown when it differs from "Сейчас"
+                                                         (see DisplayedBadgeVisibility) — this is
+                                                         the stage cosmetically shown on the
+                                                         sprite/card instead of the real one. -->
+                                                    <Border Style="{StaticResource PillStyle}" Padding="5,1" CornerRadius="5"
+                                                            HorizontalAlignment="Center" Margin="0,4,0,0"
+                                                            BorderBrush="{StaticResource RarityRareBrush}"
+                                                            Visibility="{Binding DisplayedBadgeVisibility}"
+                                                            ToolTip="Отображается вместо текущей формы">
+                                                        <TextBlock Text="Показано" FontSize="8.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource RarityRareBrush}" />
                                                     </Border>
 
                                                     <ItemsControl Margin="0,4,0,0" HorizontalAlignment="Center"

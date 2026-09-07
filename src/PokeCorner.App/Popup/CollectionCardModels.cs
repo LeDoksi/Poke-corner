@@ -128,6 +128,10 @@ public sealed class PokedexCard
 /// two mean the same thing to the eye: something is there, you just can't see it yet.
 public sealed class EvolutionStageCard
 {
+    /// Which stage of the chain this card is, 0-based — needed so the click handler knows
+    /// which stage was picked without re-deriving it from position in the ItemsControl.
+    public required int StageIndex { get; init; }
+
     public required bool IsRevealed { get; init; }
 
     /// The species name for a reached stage; "???" for one that is still a mystery.
@@ -139,8 +143,13 @@ public sealed class EvolutionStageCard
 
     public required IReadOnlyList<TypeBadge> TypeBadges { get; init; }
 
-    /// "You are here" — the stage this individual is currently on.
+    /// "You are here" — the stage this individual is currently on (real progress, never
+    /// affected by the display override).
     public required bool IsCurrent { get; init; }
+
+    /// The stage cosmetically shown on the sprite/card right now. Equal to IsCurrent unless a
+    /// DisplayStageOverride is set to an earlier reached stage.
+    public required bool IsDisplayed { get; init; }
 
     /// Every node but the last draws a "→" to its right.
     public required bool ShowArrow { get; init; }
@@ -155,18 +164,30 @@ public sealed class EvolutionStageCard
 
     public Visibility ArrowVisibility => ShowArrow ? Visibility.Visible : Visibility.Collapsed;
     public Visibility CurrentBadgeVisibility => IsCurrent ? Visibility.Visible : Visibility.Collapsed;
+
+    /// Only shown when it says something the "Сейчас" badge doesn't — i.e. this stage is the
+    /// cosmetic display but NOT the individual's real current stage. When the two coincide
+    /// (the default, no override set), showing both would just repeat the same badge twice.
+    public Visibility DisplayedBadgeVisibility => IsDisplayed && !IsCurrent ? Visibility.Visible : Visibility.Collapsed;
+
     public Visibility TypeBadgesVisibility => TypeBadges.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
     /// The current stage gets the gold ring the rest of the app already uses for "this is the
-    /// active one"; unreached stages fade back so the strip reads left-to-right as progress.
+    /// active one". A stage picked as the cosmetic display (but not the real current one) gets
+    /// a distinct blue ring — reusing RarityRareBrush rather than inventing a new theme color.
+    /// Unreached stages fade back so the strip reads left-to-right as progress.
     public Brush BorderBrush => IsCurrent
         ? ThemeBrushes.Get("AccentGoldBrush")
-        : ThemeBrushes.Get("CardBorderBrush");
+        : IsDisplayed
+            ? ThemeBrushes.Get("RarityRareBrush")
+            : ThemeBrushes.Get("CardBorderBrush");
 
     public double Opacity => IsRevealed ? 1.0 : 0.55;
 
     public string ToolTip => IsRevealed
-        ? (IsCurrent ? $"{NameText} — текущая форма этого покемона" : NameText)
+        ? (IsCurrent ? $"{NameText} — текущая форма этого покемона"
+            : IsDisplayed ? $"{NameText} — сейчас отображается вместо текущей формы. Нажми, чтобы вернуть текущую форму"
+            : $"{NameText} — нажми, чтобы отображать именно эту форму")
         : "Ещё не открыто — продолжай растить питомца";
 }
 

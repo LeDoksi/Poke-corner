@@ -413,6 +413,73 @@ public class AppStateTests
         Assert.Null(state.Collection.Individuals.Single(i => i.Id == unnamed.Id).Nickname);
     }
 
+    // ===================== SetDisplayStage =====================
+
+    [Fact]
+    public void SetDisplayStage_ValidEarlierStage_SetsTheOverride()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.CurrentStage = EvolutionStage.Stage3;
+
+        state.SetDisplayStage(individual, 1);
+
+        Assert.Equal(1, individual.DisplayStageOverride);
+    }
+
+    [Fact]
+    public void SetDisplayStage_Null_ResetsToRealCurrentStage()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.CurrentStage = EvolutionStage.Stage3;
+        individual.DisplayStageOverride = 0;
+
+        state.SetDisplayStage(individual, null);
+
+        Assert.Null(individual.DisplayStageOverride);
+    }
+
+    [Fact]
+    public void SetDisplayStage_NegativeIndex_IsANoOp()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.CurrentStage = EvolutionStage.Stage2;
+        individual.DisplayStageOverride = 0;
+
+        state.SetDisplayStage(individual, -1);
+
+        Assert.Equal(0, individual.DisplayStageOverride);
+    }
+
+    [Fact]
+    public void SetDisplayStage_IndexBeyondCurrentStage_IsANoOp()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.CurrentStage = EvolutionStage.Stage2;
+        individual.DisplayStageOverride = 0;
+
+        state.SetDisplayStage(individual, 2);
+
+        Assert.Equal(0, individual.DisplayStageOverride);
+    }
+
+    /// Passing CurrentStage's own index means the same thing as null — displaying the real
+    /// stage — so it normalizes to null rather than storing the redundant int.
+    [Fact]
+    public void SetDisplayStage_CurrentStagesOwnIndex_NormalizesToNull()
+    {
+        var state = new AppState();
+        var individual = MakeIndividual();
+        individual.CurrentStage = EvolutionStage.Stage2;
+
+        state.SetDisplayStage(individual, (int)EvolutionStage.Stage2);
+
+        Assert.Null(individual.DisplayStageOverride);
+    }
+
     [Fact]
     public void Hydrate_RoundTripsPendingEggs()
     {
