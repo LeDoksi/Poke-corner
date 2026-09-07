@@ -1,4 +1,4 @@
-using System.Windows;
+Ôªøusing System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -128,7 +128,7 @@ public class ThemeRenderingTests
             }
         });
 
-    /// CollectionView's root is a Grid now, not the TabControl itself ó the Pokedex detail card
+    /// CollectionView's root is a Grid now, not the TabControl itself ‚Äî the Pok√©dex detail card
     /// became an overlay layer inside the view (it used to be a separate Window), and an
     /// overlay needs a sibling to overlay. The tabs are still the first layer.
     private static TabControl CollectionTabs(CollectionView view) =>
@@ -144,14 +144,14 @@ public class ThemeRenderingTests
             var tabs = CollectionTabs(view);
             Assert.Equal(2, tabs.Items.Count);
 
-            // Only the selected tab's content is realized, so the Pokedex card template is
+            // Only the selected tab's content is realized, so the Pok√©dex card template is
             // exercised by switching tabs and laying out again.
             tabs.SelectedIndex = 1;
             WpfTestHost.Layout(view);
         });
 
     /// The roster's per-individual detail (dex number, nature, catch date) survived the merge
-    /// into the single Pokedex grid ó it moved onto the card model that feeds the detail
+    /// into the single Pok√©dex grid ‚Äî it moved onto the card model that feeds the detail
     /// popup, which is where the merge would most plausibly have dropped it on the floor.
     [Fact]
     public void CollectionView_PokedexCards_CarryDexNumberNatureAndCatchDate() =>
@@ -170,7 +170,7 @@ public class ThemeRenderingTests
             Assert.NotEqual(Guid.Empty, card.IndividualId);
         });
 
-    /// Item 4: the "ÃÓË ÔÓÍÂÏÓÌ˚" roster is gone entirely ó one browsable list, not two
+    /// Item 4: the "–ú–æ–∏ –ø–æ–∫–µ–º–æ–Ω—ã" roster is gone entirely ‚Äî one browsable list, not two
     /// parallel ones. Asserting on the named elements rather than a screenshot means
     /// re-adding the second list fails loudly instead of quietly returning the duplication.
     [Fact]
@@ -186,7 +186,7 @@ public class ThemeRenderingTests
         });
 
     /// Item 4, the behaviour change underneath it: the grid is per-INDIVIDUAL now, so two
-    /// owned copies of one species are two cards ó while the headline completion stat still
+    /// owned copies of one species are two cards ‚Äî while the headline completion stat still
     /// counts distinct species.
     [Fact]
     public void CollectionView_PokedexGrid_ShowsOneCardPerIndividualNotPerSpecies() =>
@@ -209,18 +209,18 @@ public class ThemeRenderingTests
             Assert.All(cards, card => Assert.Equal("Pikachu", card.SpeciesName));
             Assert.Equal(2, cards.Select(card => card.IndividualId).Distinct().Count());
 
-            // One species opened, two Pokemon owned ó both reported.
+            // One species opened, two Pok√©mon owned ‚Äî both reported.
             var countText = ((TextBlock)view.FindName("PokedexCountText")!).Text;
-            Assert.Contains("1 ‚Ë‰", countText);
+            Assert.Contains("1 –≤–∏–¥", countText);
             Assert.Contains("2", countText);
         });
 
     // ---------------------------------------------------------------- user-feedback wave
 
-    /// Item 1: the home tab is "what's active right now" only. Eggs and the owned-Pokemon
-    /// grid live on the Pokedex tab, and this asserts on the actual visual ancestry rather
+    /// Item 1: the home tab is "what's active right now" only. Eggs and the owned-Pok√©mon
+    /// grid live on the Pok√©dex tab, and this asserts on the actual visual ancestry rather
     /// than trusting that the XAML block was pasted under the right TabItem.
-    /// (The roster list this used to also check is gone ó see
+    /// (The roster list this used to also check is gone ‚Äî see
     /// CollectionView_HasNoSeparateRosterList_OnlyThePokedexGrid.)
     [Fact]
     public void CollectionView_EggsAndTheGridLiveOnThePokedexTab_NotTheHomeTab() =>
@@ -236,7 +236,7 @@ public class ThemeRenderingTests
             foreach (var name in new[] { "PendingEggsList", "EggsEmptyText", "PokedexGrid", "PokedexCountText" })
             {
                 var element = (FrameworkElement)view.FindName(name)!;
-                Assert.True(IsLogicalDescendantOf(element, pokedexTab), $"{name} should sit under the Pokedex tab.");
+                Assert.True(IsLogicalDescendantOf(element, pokedexTab), $"{name} should sit under the Pok√©dex tab.");
                 Assert.False(IsLogicalDescendantOf(element, homeTab), $"{name} should no longer sit under the home tab.");
             }
 
@@ -249,9 +249,9 @@ public class ThemeRenderingTests
         });
 
     /// Item 9: the three single-purpose dialogs no longer render inside the stock light OS
-    /// title bar. All three must resolve the SHARED DialogWindowStyle ó asserting on style
+    /// title bar. All three must resolve the SHARED DialogWindowStyle ‚Äî asserting on style
     /// identity rather than on each window's own markup is what keeps them from drifting apart
-    /// again ó and that style must suppress the OS chrome and supply the app's own header.
+    /// again ‚Äî and that style must suppress the OS chrome and supply the app's own header.
     ///
     /// StarterSelectionWindow is the reason this is a test rather than three screenshots: it
     /// only ever appears on a genuine first run, which is not reachable while a save file
@@ -269,7 +269,7 @@ public class ThemeRenderingTests
                     new List<SpeciesEvolutionChain>(),
                     _ => Task.FromResult<byte[]?>(null),
                     _ => Task.FromResult<IReadOnlyList<byte[]>?>(null)),
-                new PokeCorner.App.Popup.ConfirmDialog("«‡„ÓÎÓ‚ÓÍ", "“ÂÎÓ", "OK")
+                new PokeCorner.App.Popup.ConfirmDialog("–ó–∞–≥–æ–ª–æ–≤–æ–∫", "–¢–µ–ª–æ", "OK")
             };
 
             foreach (var window in windows)
@@ -288,7 +288,7 @@ public class ThemeRenderingTests
             }
         });
 
-    /// Item 8: the Pokedex detail card is an in-view overlay, not a separate OS window, and a
+    /// Item 8: the Pok√©dex detail card is an in-view overlay, not a separate OS window, and a
     /// click on the dimmed backdrop closes it while a click on the card itself does not.
     /// Drives the real routed events the app uses rather than calling the handlers directly,
     /// so the card's own e.Handled=true is genuinely what stops the backdrop from firing.
@@ -332,8 +332,8 @@ public class ThemeRenderingTests
     ///
     /// The grid cards opened on mouse-UP while the backdrop dismissed on mouse-DOWN, so a click
     /// on the backdrop that happened to land over another card in the grid behind hid the
-    /// overlay on the down-stroke and then ó the overlay now Collapsed, and so no longer
-    /// hit-testable ó delivered the up-stroke straight to that card, which opened ITS detail
+    /// overlay on the down-stroke and then ‚Äî the overlay now Collapsed, and so no longer
+    /// hit-testable ‚Äî delivered the up-stroke straight to that card, which opened ITS detail
     /// card. One click, dismiss plus reopen of something else.
     ///
     /// Reproduced here by replaying exactly that pair against two different cards. Against the
@@ -362,7 +362,7 @@ public class ThemeRenderingTests
                 .ToList();
             Assert.Equal(2, cards.Count);
 
-            // Open the first card ó the positive half, so this test cannot pass merely because
+            // Open the first card ‚Äî the positive half, so this test cannot pass merely because
             // cards stopped opening altogether.
             cards[0].RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
             Assert.Equal(Visibility.Visible, overlay.Visibility);
@@ -380,19 +380,19 @@ public class ThemeRenderingTests
 
     /// The reported overflow bug, measured at the app's real window size.
     ///
-    /// A maximally-badged individual ó shiny AND pinned AND on the desktop AND a two-type
+    /// A maximally-badged individual ‚Äî shiny AND pinned AND on the desktop AND a two-type
     /// species AND mid-way through a 3-stage line, so every badge pill, both type badges and
-    /// the whole evolution strip render at once ó makes the card's content taller than the
+    /// the whole evolution strip render at once ‚Äî makes the card's content taller than the
     /// window. The card had no MaxHeight and no scroller, so it was arranged CENTRED at that
-    /// full height and ¬˚·‡Ú¸/ŒÚÔÛÒÚËÚ¸ rendered past the bottom edge, unreachable without
+    /// full height and –í—ã–±—Ä–∞—Ç—å/–û—Ç–ø—É—Å—Ç–∏—Ç—å rendered past the bottom edge, unreachable without
     /// resizing the whole app.
     ///
     /// Measured by where the BUTTONS land, in view coordinates, after scrolling the card to its
-    /// end ó deliberately not by the card's own ActualHeight, which proves nothing here for the
+    /// end ‚Äî deliberately not by the card's own ActualHeight, which proves nothing here for the
     /// same reason the chain-strip test above spells out: arrange clamps ActualHeight to the
     /// constraint, so the pre-fix card reported a comfortable 544 DIPs in a 580 DIP window
     /// while its content ran to ~735 and simply overflowed. (Checked against the pre-fix build:
-    /// an ActualHeight assertion passes there. The ŒÚÔÛÒÚËÚ¸ button measured 701.8 to 734.8 ó
+    /// an ActualHeight assertion passes there. The –û—Ç–ø—É—Å—Ç–∏—Ç—å button measured 701.8 to 734.8 ‚Äî
     /// a good 155 DIPs below the bottom edge, which is exactly the reported "the buttons are
     /// off screen and I cannot scroll to them".)
     ///
@@ -405,7 +405,7 @@ public class ThemeRenderingTests
         {
             const double windowWidth = 560;
             // The content area of the real 660-tall AppMenuWindow, minus its header strip and
-            // the tab band ó i.e. the height this view actually gets on screen.
+            // the tab band ‚Äî i.e. the height this view actually gets on screen.
             const double windowHeight = 580;
 
             var appState = new AppState();
@@ -418,11 +418,11 @@ public class ThemeRenderingTests
                 Nature = Nature.Hardy,
                 IsShiny = true,
                 IsFavorite = true,
-                Nickname = "›ÎÂÍÚÓÍÓÚËÍ",
+                Nickname = "–≠–ª–µ–∫—Ç—Ä–æ–∫–æ—Ç–∏–∫",
                 CaughtAtUtc = DateTimeOffset.UtcNow
             };
             appState.Collection.Add(individual);
-            appState.Collection.SetActive(individual.Id); // the "Õ‡ ÒÚÓÎÂ" badge too
+            appState.Collection.SetActive(individual.Id); // the "–ù–∞ —Å—Ç–æ–ª–µ" badge too
             var chains = new[]
             {
                 new SpeciesEvolutionChain(213, 403, 235, 3, new[] { 403, 404, 405 },
@@ -440,7 +440,7 @@ public class ThemeRenderingTests
             gridCard.RaiseEvent(MouseDown(UIElement.MouseLeftButtonDownEvent));
             WpfTestHost.Layout(view, windowWidth, windowHeight);
 
-            // Every badge really is on show ó otherwise this would be measuring a short card
+            // Every badge really is on show ‚Äî otherwise this would be measuring a short card
             // and proving nothing about the reported one.
             foreach (var badge in new[] { "DetailShinyBadge", "DetailFavoriteBadge", "DetailActiveBadge" })
             {
@@ -452,7 +452,7 @@ public class ThemeRenderingTests
             var detailCard = (Border)view.FindName("DetailCard")!;
             var scroller = Descendants<ScrollViewer>(detailCard).First();
 
-            // This individual's card genuinely does not fit ó so the actions below are only
+            // This individual's card genuinely does not fit ‚Äî so the actions below are only
             // reachable because the overflow can be scrolled to.
             Assert.True(scroller.ScrollableHeight > 0,
                 "the maximally-badged card is expected to overflow its height cap; if it no longer does, this test is measuring the wrong case");
@@ -468,7 +468,7 @@ public class ThemeRenderingTests
                 var bottom = transform.Transform(new Point(0, button.ActualHeight)).Y;
 
                 Assert.True(top >= 0 && bottom <= windowHeight,
-                    $"{name} rendered from {top} to {bottom} DIPs in a {windowHeight} DIP window ó it is off screen and unreachable");
+                    $"{name} rendered from {top} to {bottom} DIPs in a {windowHeight} DIP window ‚Äî it is off screen and unreachable");
             }
         });
 
@@ -478,7 +478,7 @@ public class ThemeRenderingTests
             RoutedEvent = routedEvent
         };
 
-    /// Item 2a: selecting a rarity pill narrows the species grid, and "¬ÒÂ" restores it.
+    /// Item 2a: selecting a rarity pill narrows the species grid, and "–í—Å–µ" restores it.
     [Fact]
     public void CollectionView_RarityFilter_NarrowsThePokedexGridAndAllRestoresIt() =>
         WpfTestHost.Run(() =>
@@ -511,7 +511,7 @@ public class ThemeRenderingTests
             Assert.Empty(grid.ItemsSource.Cast<PokedexCard>());
             var emptyText = (TextBlock)view.FindName("PokedexEmptyText")!;
             Assert.Equal(Visibility.Visible, emptyText.Visibility);
-            Assert.Contains("Â‰ÍÓÒÚË", emptyText.Text);
+            Assert.Contains("—Ä–µ–¥–∫–æ—Å—Ç–∏", emptyText.Text);
 
             ((RadioButton)view.FindName("RarityFilterAll")!).IsChecked = true;
             Assert.Equal(2, grid.ItemsSource.Cast<object>().Count());
@@ -545,12 +545,12 @@ public class ThemeRenderingTests
         });
 
     /// Item 2b: the pinned individual sorts above the plain ones and its star renders filled
-    /// gold. Still asserted on the card model after the roster/grid merge ó the star moved into
+    /// gold. Still asserted on the card model after the roster/grid merge ‚Äî the star moved into
     /// the detail popup, but the pin still drives sort order and the card's gold marker.
     ///
     /// The ACTIVE pet now leads the grid ahead of the favorites (the default-sort change), so
     /// this arranges a separate active individual and asserts the pin's effect on the two
-    /// behind it ó where the pin is the only thing that can explain the order, since the
+    /// behind it ‚Äî where the pin is the only thing that can explain the order, since the
     /// pinned one has the HIGHER dex number.
     [Fact]
     public void CollectionView_FavoriteIndividual_SortsAboveThePlainOnesAndRendersAGoldStar() =>
@@ -632,7 +632,7 @@ public class ThemeRenderingTests
             Assert.Equal(5, Cards(view).Count);
         });
 
-    /// Item 4, last clause: a nicknamed Pokemon is findable by the name the player gave it ó
+    /// Item 4, last clause: a nicknamed Pok√©mon is findable by the name the player gave it ‚Äî
     /// and the species name still finds it too.
     [Fact]
     public void CollectionView_Search_AlsoMatchesTheNickname() =>
@@ -650,7 +650,7 @@ public class ThemeRenderingTests
             Assert.Equal("Species03", found.SpeciesName);
             Assert.Equal("Sparky", found.Nickname);
 
-            // The species name is not shadowed by the nickname ó both are searchable.
+            // The species name is not shadowed by the nickname ‚Äî both are searchable.
             box.Text = "Species03";
             Assert.Equal("Sparky", Assert.Single(Cards(view)).Nickname);
         });
@@ -681,10 +681,10 @@ public class ThemeRenderingTests
 
             var emptyText = (TextBlock)view.FindName("PokedexEmptyText")!;
             Assert.Equal(Visibility.Visible, emptyText.Visibility);
-            Assert.Contains("ÕË˜Â„Ó ÌÂ Ì‡È‰ÂÌÓ", emptyText.Text);
+            Assert.Contains("–ù–∏—á–µ–≥–æ –Ω–µ –Ω–∞–π–¥–µ–Ω–æ", emptyText.Text);
         });
 
-    /// Item 3: Õ‡Á‡‰/¬ÔÂ∏‰ page through the grid, the indicator counts correctly, and the
+    /// Item 3: –ù–∞–∑–∞–¥/–í–ø–µ—Ä—ë–¥ page through the grid, the indicator counts correctly, and the
     /// buttons disable at the ends. 20 individuals over a 16-per-page grid = two pages.
     [Fact]
     public void CollectionView_Pagination_PagesThroughTheGridAndDisablesAtTheEnds() =>
@@ -699,25 +699,25 @@ public class ThemeRenderingTests
             var next = (System.Windows.Controls.Button)view.FindName("PokedexNextPageButton")!;
 
             Assert.Equal(Visibility.Visible, pagination.Visibility);
-            Assert.Equal("—Ú‡ÌËˆ‡ 1 ËÁ 2", pageText.Text);
+            Assert.Equal("–°—Ç—Ä–∞–Ω–∏—Ü–∞ 1 –∏–∑ 2", pageText.Text);
             Assert.Equal(16, Cards(view).Count);
             Assert.False(prev.IsEnabled);
             Assert.True(next.IsEnabled);
 
             next.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
 
-            Assert.Equal("—Ú‡ÌËˆ‡ 2 ËÁ 2", pageText.Text);
+            Assert.Equal("–°—Ç—Ä–∞–Ω–∏—Ü–∞ 2 –∏–∑ 2", pageText.Text);
             Assert.Equal(4, Cards(view).Count);
             Assert.True(prev.IsEnabled);
             Assert.False(next.IsEnabled);
 
             prev.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
-            Assert.Equal("—Ú‡ÌËˆ‡ 1 ËÁ 2", pageText.Text);
+            Assert.Equal("–°—Ç—Ä–∞–Ω–∏—Ü–∞ 1 –∏–∑ 2", pageText.Text);
             Assert.Equal(16, Cards(view).Count);
         });
 
     /// Item 3's real trap: Refresh() runs once a SECOND. Paging to 2 and then ticking must not
-    /// dump the player back on page 1 ó but changing a filter or the query must.
+    /// dump the player back on page 1 ‚Äî but changing a filter or the query must.
     [Fact]
     public void CollectionView_Pagination_SurvivesARefreshTickButResetsOnAFilterOrSearchChange() =>
         WpfTestHost.Run(() =>
@@ -728,23 +728,23 @@ public class ThemeRenderingTests
 
             ((System.Windows.Controls.Button)view.FindName("PokedexNextPageButton")!)
                 .RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
-            Assert.Equal("—Ú‡ÌËˆ‡ 2 ËÁ 2", pageText.Text);
+            Assert.Equal("–°—Ç—Ä–∞–Ω–∏—Ü–∞ 2 –∏–∑ 2", pageText.Text);
 
             view.Refresh();
             view.Refresh();
-            Assert.Equal("—Ú‡ÌËˆ‡ 2 ËÁ 2", pageText.Text);
+            Assert.Equal("–°—Ç—Ä–∞–Ω–∏—Ü–∞ 2 –∏–∑ 2", pageText.Text);
 
             // A new query is a new list, so page 2 of the old one is meaningless.
             ((TextBox)view.FindName("PokedexSearchBox")!).Text = "species";
-            Assert.Equal("—Ú‡ÌËˆ‡ 1 ËÁ 2", pageText.Text);
+            Assert.Equal("–°—Ç—Ä–∞–Ω–∏—Ü–∞ 1 –∏–∑ 2", pageText.Text);
 
             ((System.Windows.Controls.Button)view.FindName("PokedexNextPageButton")!)
                 .RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
             ((RadioButton)view.FindName("RarityFilterCommon")!).IsChecked = true;
-            Assert.StartsWith("—Ú‡ÌËˆ‡ 1", pageText.Text);
+            Assert.StartsWith("–°—Ç—Ä–∞–Ω–∏—Ü–∞ 1", pageText.Text);
         });
 
-    /// One page's worth of Pokemon needs no paging chrome at all.
+    /// One page's worth of Pok√©mon needs no paging chrome at all.
     [Fact]
     public void CollectionView_Pagination_IsHiddenWhenEverythingFitsOnOnePage() =>
         WpfTestHost.Run(() =>
@@ -757,7 +757,7 @@ public class ThemeRenderingTests
         });
 
     /// Item 4's core rule: the nickname is shown ALONGSIDE the species name, never instead of
-    /// it ó on the grid card, on the hero card and in the detail overlay.
+    /// it ‚Äî on the grid card, on the hero card and in the detail overlay.
     [Fact]
     public void CollectionView_Nickname_IsShownAlongsideTheSpeciesNameEverywhere() =>
         WpfTestHost.Run(() =>
@@ -794,7 +794,7 @@ public class ThemeRenderingTests
             Assert.Equal(Visibility.Visible, subtitle.Visibility);
         });
 
-    /// With no nickname the species name IS the headline and the subtitle collapses ó an
+    /// With no nickname the species name IS the headline and the subtitle collapses ‚Äî an
     /// un-nicknamed card must look exactly as it did before this feature.
     [Fact]
     public void CollectionView_NoNickname_ShowsTheSpeciesNameAloneWithNoEmptySubtitle() =>
@@ -878,7 +878,7 @@ public class ThemeRenderingTests
     /// Item 1: the desktop panel is three filling CIRCLES again (the intervening redesign's
     /// vertical bars were not what was asked for), now stacked in a vertical column. Each ring
     /// is an Ellipse whose StrokeDashArray makes one dash cover `fraction` of the circumference
-    /// ó so "the gauge is filled correctly" is exactly "dash length == circumference * fraction".
+    /// ‚Äî so "the gauge is filled correctly" is exactly "dash length == circumference * fraction".
     [Fact]
     public void ProgressPanelWindow_CircularGaugesFillTheirFractionOfTheRing() =>
         WpfTestHost.Run(() =>
@@ -907,7 +907,7 @@ public class ThemeRenderingTests
 
     /// An empty gauge must render as nothing at all. It cannot simply be a zero-length dash:
     /// StrokeDashCap="Round" paints a zero-length dash as a round dot, which would leave a
-    /// stray pip at 12 o'clock on an empty ring ó so the arc is hidden outright instead.
+    /// stray pip at 12 o'clock on an empty ring ‚Äî so the arc is hidden outright instead.
     /// A full one must close the ring rather than stopping short.
     [Fact]
     public void ProgressPanelWindow_EmptyGaugeIsHiddenAndAFullGaugeClosesTheRing() =>
@@ -927,7 +927,7 @@ public class ThemeRenderingTests
 
     /// The panel keeps a real explicit width (the sizing-collapse fix), and item 1's actual
     /// ask: the three gauges stand one ABOVE another in a single narrow column to the pet's
-    /// left, each with its own semantic colour AND its own icon inside the ring ó the icon
+    /// left, each with its own semantic colour AND its own icon inside the ring ‚Äî the icon
     /// being the half a colour alone can't say.
     [Fact]
     public void ProgressPanelWindow_IsANarrowVerticalColumnOfIconLabelledGauges() =>
@@ -975,9 +975,9 @@ public class ThemeRenderingTests
             }
         });
 
-    /// Item 6, the other half of "the same icon in both places": the in-app "œÓ„ÂÒÒ" card
+    /// Item 6, the other half of "the same icon in both places": the in-app "–ü—Ä–æ–≥—Ä–µ—Å—Å" card
     /// must render the identical shared styles the desktop panel does. Asserting on style
-    /// identity ó not on shape ó is what actually pins the two surfaces together, since a
+    /// identity ‚Äî not on shape ‚Äî is what actually pins the two surfaces together, since a
     /// duplicated inline Path would look the same today and drift tomorrow.
     [Fact]
     public void CollectionView_ProgressCard_UsesTheSameSharedConceptIconsAsTheDesktopPanel() =>
@@ -998,7 +998,7 @@ public class ThemeRenderingTests
 
     /// Item 5: the closed ComboBox display. WPF's stock ButtonBase style sets a BLACK
     /// Foreground on the ToggleButton that renders the current selection, and a style setter
-    /// outranks the inherited value from the ComboBox ó so the selected mode was drawn in
+    /// outranks the inherited value from the ComboBox ‚Äî so the selected mode was drawn in
     /// near-black on the dark navy card. This asserts the light foreground reaches it.
     [Fact]
     public void SettingsView_CareModeCombo_ClosedBoxTextIsLegibleNotSystemBlack() =>
@@ -1023,8 +1023,8 @@ public class ThemeRenderingTests
                 "the selection text does not contrast with the closed box behind it");
         });
 
-    /// "—ÛÔÂ ’‡‰ÍÓ" only does anything in Hardcore (App.CheckHardcoreNeglect returns early
-    /// for Chill), so the checkbox must be greyed out otherwise ó on the initial load as well
+    /// "–°—É–ø–µ—Ä –•–∞—Ä–¥–∫–æ—Ä" only does anything in Hardcore (App.CheckHardcoreNeglect returns early
+    /// for Chill), so the checkbox must be greyed out otherwise ‚Äî on the initial load as well
     /// as on every later change of the combo, which is the half that is easy to forget.
     [Theory]
     [InlineData(CareMode.Chill, false)]
@@ -1046,7 +1046,7 @@ public class ThemeRenderingTests
     ///
     /// This reverses what a prior wave asserted here. That wave deliberately kept the stored
     /// Super Hardcore choice when leaving Hardcore, on the theory that it preserved the
-    /// player's earlier decision ó the checkbox went disabled but stayed visibly ticked. Live
+    /// player's earlier decision ‚Äî the checkbox went disabled but stayed visibly ticked. Live
     /// testing rejected it: a ticked checkbox describing a permadeath rule that is not in
     /// force reads as broken, not as thoughtful. Leaving Hardcore now unchecks it and clears
     /// the setting, so what the UI shows and what is stored can't disagree.
@@ -1071,7 +1071,7 @@ public class ThemeRenderingTests
             Assert.False(check.IsChecked, "the box must not stay ticked once the mode can't use it");
             Assert.False(settings.SuperHardcoreEnabled, "the stored setting must not linger past the UI");
 
-            // Coming back to Hardcore re-enables it, unticked ó the player opts in again
+            // Coming back to Hardcore re-enables it, unticked ‚Äî the player opts in again
             // deliberately rather than silently inheriting a permadeath rule.
             combo.SelectedIndex = 1;
             Assert.True(check.IsEnabled);
@@ -1121,7 +1121,7 @@ public class ThemeRenderingTests
         });
 
     /// Item 7: the first-run starter picker rendered as a WHITE window with near-white title
-    /// text on it. Root cause was not this window at all ó the theme's window chrome was an
+    /// text on it. Root cause was not this window at all ‚Äî the theme's window chrome was an
     /// unkeyed `Style TargetType="Window"`, and WPF only matches implicit styles against an
     /// element's EXACT runtime type, so no Window SUBCLASS in the app ever picked it up.
     /// AppMenuWindow merely hid it by painting its whole client area.
@@ -1150,8 +1150,8 @@ public class ThemeRenderingTests
                     new ShopView(appState, new ShopService(), _ => true, _ => true, () => { }),
                     new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}")),
                 // The reset flow's confirm dialog exists specifically so the destructive
-                // prompt isn't a stock white MessageBox ó so it belongs in this check.
-                new ConfirmDialog("«‡„ÓÎÓ‚ÓÍ", "“ÂÎÓ", "”‰‡ÎËÚ¸")
+                // prompt isn't a stock white MessageBox ‚Äî so it belongs in this check.
+                new ConfirmDialog("–ó–∞–≥–æ–ª–æ–≤–æ–∫", "–¢–µ–ª–æ", "–£–¥–∞–ª–∏—Ç—å")
             };
 
             var expected = (SolidColorBrush)Application.Current.Resources["WindowBackgroundBrush"];
@@ -1192,7 +1192,7 @@ public class ThemeRenderingTests
             Assert.Empty(Descendants(root).OfType<ComboBox>());
 
             // Item 2: every candidate card shows its rarity, sourced from the chain's own
-            // capture rate through the same classifier the Pokedex cards use. Capture rate
+            // capture rate through the same classifier the Pok√©dex cards use. Capture rate
             // 255 is Common for all three chains above.
             var expected = RarityDisplay.GetName(RarityTier.Common);
             foreach (var name in new[] { "Candidate1RarityText", "Candidate2RarityText", "Candidate3RarityText" })
@@ -1206,7 +1206,7 @@ public class ThemeRenderingTests
             Assert.Same(commonBrush, ((Border)window.FindName("Candidate1RarityPill")!).BorderBrush);
         });
 
-    /// Item 4: the pet-size slider had no live preview ó it wrote the setting and the sprite
+    /// Item 4: the pet-size slider had no live preview ‚Äî it wrote the setting and the sprite
     /// only resized whenever the app's next 5-second reconcile tick happened to run. The view
     /// now invokes an apply-callback synchronously on EVERY value change, which is what makes
     /// dragging the slider resize the real desktop sprite as you drag.
@@ -1307,11 +1307,11 @@ public class ThemeRenderingTests
 
             Assert.True(seen.Count >= 2, $"the hero sprite never changed frame (saw {seen.Count} distinct frames)");
 
-            // The placeholder pokeball must be out of the way once real frames exist.
+            // The placeholder pok√©ball must be out of the way once real frames exist.
             Assert.Equal(Visibility.Collapsed, ((FrameworkElement)view.FindName("ActiveSpritePlaceholder")!).Visibility);
         });
 
-    /// A species with no animated sprite is still shown ó just statically, with no timer.
+    /// A species with no animated sprite is still shown ‚Äî just statically, with no timer.
     [Fact]
     public void CollectionView_HeroSprite_SingleFrameSpecies_RendersStaticallyWithoutBlanking() =>
         WpfTestHost.Run(() =>
@@ -1380,7 +1380,7 @@ public class ThemeRenderingTests
         return false;
     }
 
-    /// Crude perceptual gap between two colors ó enough to catch "text is the same shade as
+    /// Crude perceptual gap between two colors ‚Äî enough to catch "text is the same shade as
     /// the panel behind it" without pulling in a full WCAG contrast implementation.
     private static double RelativeLuminanceGap(Color a, Color b)
     {
@@ -1413,13 +1413,13 @@ public class ThemeRenderingTests
         var spriteCacheDirectory = Path.Combine(Path.GetTempPath(), "pokecorner-theme-tests", Guid.NewGuid().ToString("N"));
         return new CollectionView(viewModel, appState, new SpriteCache(spriteCacheDirectory),
             () => { }, () => { }, () => { }, getActiveSpriteFrames ?? (() => null), _ => true,
-            // Ready-to-evolve is true so the "›‚ÓÎ˛ˆËÓÌËÓ‚‡Ú¸!" button is actually visible
+            // Ready-to-evolve is true so the "–≠–≤–æ–ª—é—Ü–∏–æ–Ω–∏—Ä–æ–≤–∞—Ç—å!" button is actually visible
             // during these layout/theme assertions rather than collapsed out of the tree.
             () => true, () => true);
     }
 
     /// The badge must carry the type's NAME as rendered text, not just a colour. Asserted by
-    /// walking the realized visual tree for a TextBlock actually reading "Fire" ó a colour-only
+    /// walking the realized visual tree for a TextBlock actually reading "Fire" ‚Äî a colour-only
     /// swatch, or a badge whose text got dropped for space, fails here.
     [Fact]
     public void CollectionView_TypeBadges_RenderTheTypeNameAsVisibleText() =>
@@ -1444,7 +1444,7 @@ public class ThemeRenderingTests
         });
 
     /// Part A, at the pixel level: a single-stage individual must NOT show "100%" anywhere on
-    /// the progress card ó it must say it does not evolve, with an empty bar.
+    /// the progress card ‚Äî it must say it does not evolve, with an empty bar.
     [Fact]
     public void CollectionView_SingleStageIndividual_ShowsNeverEvolvesInsteadOf100Percent() =>
         WpfTestHost.Run(() =>
@@ -1576,14 +1576,14 @@ public class ThemeRenderingTests
     /// Measured by SUMMING the row's children, which is the only figure here that is not
     /// already clamped to what fits. Neither of the two obvious measurements works: WPF clamps
     /// every element's DesiredSize to the constraint it was measured with, and arrange clamps
-    /// ActualWidth the same way ó so both the ItemsControl's and the row panel's own numbers
+    /// ActualWidth the same way ‚Äî so both the ItemsControl's and the row panel's own numbers
     /// report "fits" at exactly the moment the content is being clipped. (Checked: against the
     /// pre-fix 92px cards, a row-panel DesiredSize assertion passes and proves nothing.) A
     /// horizontal StackPanel measures each child with infinite width, so the CHILDREN's
     /// desired widths are unclamped and their sum is the width the row genuinely wants.
     ///
-    /// Three stages is the widest case that can ever occur ó PokeApiClient.CollectStages keeps
-    /// only the longest branch of the chain tree ó so this is the bound, not a sample.
+    /// Three stages is the widest case that can ever occur ‚Äî PokeApiClient.CollectStages keeps
+    /// only the longest branch of the chain tree ‚Äî so this is the bound, not a sample.
     [Fact]
     public void CollectionView_EvolutionChainStrip_ThreeStages_FitsInsideTheDetailCard() =>
         WpfTestHost.Run(() =>
@@ -1630,13 +1630,13 @@ public class ThemeRenderingTests
                 - section.BorderThickness.Left - section.BorderThickness.Right;
 
             Assert.True(needed <= available,
-                $"the 3-stage chain row wants {needed} DIPs but the well only offers {available} ó the outer cards are clipped");
+                $"the 3-stage chain row wants {needed} DIPs but the well only offers {available} ‚Äî the outer cards are clipped");
         });
 
     /// The reported tooltip bug, measured. The theme caps every tooltip at MaxWidth 280 and
     /// its template used to render the string through a bare ContentPresenter, which produces
-    /// a TextBlock that does NOT wrap ó so the À¿ ŒÃ—“¬¿ tooltip was hard-clipped at roughly
-    /// 40 characters, on screen as "Ö‡ÍÚË‚ÌÓÒÚ¸˛ Ë Ú".
+    /// a TextBlock that does NOT wrap ‚Äî so the –õ–ê–ö–û–ú–°–¢–í–ê tooltip was hard-clipped at roughly
+    /// 40 characters, on screen as "‚Ä¶–∞–∫—Ç–∏–≤–Ω–æ—Å—Ç—å—é –∏ —Ç—Ä".
     ///
     /// The proof is the laid-out height: one line means the tail of the string was cut off,
     /// two or more means the whole string is actually being rendered.
@@ -1644,8 +1644,8 @@ public class ThemeRenderingTests
     public void ToolTip_TextLongerThanItsMaxWidth_WrapsInsteadOfBeingClipped() =>
         WpfTestHost.Run(() =>
         {
-            // Verbatim from CollectionView.xaml's À¿ ŒÃ—“¬¿ stat well ó the reported instance.
-            const string treatsToolTip = "À‡ÍÓÏÒÚ‚‡ Á‡‡·‡Ú˚‚‡˛ÚÒˇ ‡ÍÚË‚ÌÓÒÚ¸˛ Ë Ú‡ÚˇÚÒˇ Ì‡ ÍÓÏÎÂÌËÂ";
+            // Verbatim from CollectionView.xaml's –õ–ê–ö–û–ú–°–¢–í–ê stat well ‚Äî the reported instance.
+            const string treatsToolTip = "–õ–∞–∫–æ–º—Å—Ç–≤–∞ –∑–∞—Ä–∞–±–∞—Ç—ã–≤–∞—é—Ç—Å—è –∞–∫—Ç–∏–≤–Ω–æ—Å—Ç—å—é –∏ —Ç—Ä–∞—Ç—è—Ç—Å—è –Ω–∞ –∫–æ—Ä–º–ª–µ–Ω–∏–µ";
 
             var tip = new ToolTip { Content = treatsToolTip };
             tip.IsOpen = true; // a ToolTip only builds its template once hosted in its popup
@@ -1665,7 +1665,7 @@ public class ThemeRenderingTests
                 // than the single line the clipped version was squeezed onto.
                 var singleLineHeight = text.FontSize * text.FontFamily.LineSpacing;
                 Assert.True(text.ActualHeight > singleLineHeight * 1.5,
-                    $"the tooltip rendered {text.ActualHeight} DIPs tall ó one line of {singleLineHeight}, i.e. still clipped rather than wrapped");
+                    $"the tooltip rendered {text.ActualHeight} DIPs tall ‚Äî one line of {singleLineHeight}, i.e. still clipped rather than wrapped");
             }
             finally
             {
