@@ -48,6 +48,13 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// The search box's current text. ANDs with the rarity filter above.
     private string _searchQuery = string.Empty;
 
+    /// "Не завершившие эволюцию" pill — ANDs with rarity and search, same as they AND with
+    /// each other.
+    private bool _hideFullyEvolved;
+
+    /// Current Pokédex sort choice — see CollectionViewModel.ApplySort.
+    private PokedexSortOrder _sortOrder = PokedexSortOrder.Default;
+
     /// Zero-based page of the filtered grid. Deliberately view STATE, not derived: Refresh()
     /// runs once a second, so recomputing it from scratch every tick would drop the player back
     /// on page 1 while they were still reading page 3. Only a filter or search change resets it
@@ -336,6 +343,31 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
+    /// The "Не завершившие эволюцию" pill. Independent CheckBox rather than a RadioButton group
+    /// (see FilterPillCheckBoxStyle), so it fires on both Checked and Unchecked.
+    private void EvolutionFilter_Changed(object sender, RoutedEventArgs e)
+    {
+        if (!_isReady) return;
+
+        _hideFullyEvolved = EvolutionFilterToggle.IsChecked == true;
+        _pageIndex = 0;
+        Refresh();
+    }
+
+    private void PokedexSortCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!_isReady) return;
+
+        _sortOrder = PokedexSortCombo.SelectedIndex switch
+        {
+            1 => PokedexSortOrder.Alphabetical,
+            2 => PokedexSortOrder.CatchDate,
+            _ => PokedexSortOrder.Default
+        };
+        _pageIndex = 0;
+        Refresh();
+    }
+
     private void PokedexPrevPage_Click(object sender, RoutedEventArgs e)
     {
         if (_pageIndex == 0) return;
@@ -366,12 +398,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
 
-        // Both filters narrow the SAME list GetEntries already ordered — neither reorders it,
-        // so the active/favorites/dex banding survives any combination of the two.
-        var visible = entries
+        // All three filters narrow the SAME list GetEntries already ordered (AND, same as
+        // rarity+search already composed) before ApplySort decides whether to keep that
+        // active/favorites/dex banding or replace it with an alphabetical/catch-date order.
+        var visible = CollectionViewModel.ApplySort(entries
             .Where(entry => _rarityFilter is null || entry.Rarity == _rarityFilter.Value)
+            .Where(entry => !_hideFullyEvolved || entry.HasEvolutionsRemaining)
             .Where(entry => CollectionViewModel.MatchesSearch(entry, _searchQuery))
-            .ToList();
+            .ToList(), _sortOrder);
 
         // Clamped rather than reset: releasing a Pokémon (or narrowing a filter) can shrink the
         // list past the page being read, and dumping the player back to page 1 for that would
@@ -401,7 +435,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // cached rebuilds itself once the artwork lands, instead of staying on the placeholder
         // until some unrelated field changes. The nickname is in there for the same reason:
         // renaming from the detail overlay must repaint the card behind it.
-        var signature = $"{_rarityFilter}|{_searchQuery}|{_pageIndex}|" + string.Join("|", page.Select(e =>
+        var signature = $"{_rarityFilter}|{_searchQuery}|{_hideFullyEvolved}|{_sortOrder}|{_pageIndex}|" + string.Join("|", page.Select(e =>
             $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;

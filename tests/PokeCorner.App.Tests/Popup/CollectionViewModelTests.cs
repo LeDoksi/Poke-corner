@@ -428,7 +428,7 @@ public class CollectionViewModelTests
         AvailableAgainAtUtc: null, Rarity: RarityTier.Common, EvolutionFraction: null,
         EvolutionState: EvolutionProgressState.NeverEvolves, CaughtAtUtc: DateTimeOffset.UtcNow,
         Nature: Nature.Hardy, IsFavorite: false, Types: Array.Empty<string>(),
-        EvolutionStages: Array.Empty<EvolutionStagePreview>());
+        EvolutionStages: Array.Empty<EvolutionStagePreview>(), HasEvolutionsRemaining: false);
 
     [Theory]
     [InlineData("pika", true)]   // substring of the species name
@@ -454,6 +454,64 @@ public class CollectionViewModelTests
     [InlineData(null)]
     public void MatchesSearch_EmptyQuery_MatchesEverything(string? query) =>
         Assert.True(CollectionViewModel.MatchesSearch(EntryFor("Pikachu", null), query));
+
+    // ===================== Task 5: evolution filter + sort =====================
+
+    [Fact]
+    public void GetEntries_NotAtFinalStage_HasEvolutionsRemainingIsTrue()
+    {
+        var collection = new PokemonCollection();
+        // MakeIndividual defaults to ChainLength 3, CurrentStage Stage1 (0) — two stages left.
+        collection.Add(MakeIndividual(1));
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        Assert.True(vm.GetEntries(DateTimeOffset.UtcNow).Single().HasEvolutionsRemaining);
+    }
+
+    [Fact]
+    public void GetEntries_AtFinalStage_HasEvolutionsRemainingIsFalse()
+    {
+        var collection = new PokemonCollection();
+        var individual = MakeIndividual(1);
+        individual.CurrentStage = EvolutionStage.Stage3; // ChainLength 3 -> stage index 2 is final
+        collection.Add(individual);
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+
+        Assert.False(vm.GetEntries(DateTimeOffset.UtcNow).Single().HasEvolutionsRemaining);
+    }
+
+    [Fact]
+    public void ApplySort_Default_LeavesOrderUnchanged()
+    {
+        var entries = new List<CollectionEntry> { EntryFor("Zubat", null), EntryFor("Abra", null) };
+
+        var sorted = CollectionViewModel.ApplySort(entries, PokedexSortOrder.Default);
+
+        Assert.Equal(entries, sorted);
+    }
+
+    [Fact]
+    public void ApplySort_Alphabetical_SortsBySpeciesNameCaseInsensitively()
+    {
+        var entries = new List<CollectionEntry> { EntryFor("Zubat", null), EntryFor("abra", null), EntryFor("Machop", null) };
+
+        var sorted = CollectionViewModel.ApplySort(entries, PokedexSortOrder.Alphabetical);
+
+        Assert.Equal(new[] { "abra", "Machop", "Zubat" }, sorted.Select(e => e.SpeciesName));
+    }
+
+    [Fact]
+    public void ApplySort_CatchDate_NewestFirst()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var oldest = EntryFor("Oldest", null) with { CaughtAtUtc = now - TimeSpan.FromDays(2) };
+        var newest = EntryFor("Newest", null) with { CaughtAtUtc = now };
+        var middle = EntryFor("Middle", null) with { CaughtAtUtc = now - TimeSpan.FromDays(1) };
+
+        var sorted = CollectionViewModel.ApplySort(new List<CollectionEntry> { oldest, newest, middle }, PokedexSortOrder.CatchDate);
+
+        Assert.Equal(new[] { "Newest", "Middle", "Oldest" }, sorted.Select(e => e.SpeciesName));
+    }
 
     [Fact]
     public void ToggleFavorite_FlipsFlagOnTheIndividualAndIsReflectedInEntries()

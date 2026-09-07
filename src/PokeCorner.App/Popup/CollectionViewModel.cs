@@ -29,7 +29,12 @@ public sealed record CollectionEntry(
     IReadOnlyList<string> Types,
     /// The individual's whole evolution line, spoiler-masked (see EvolutionStagePreview).
     /// Empty for a single-stage species: there is no line to preview.
-    IReadOnlyList<EvolutionStagePreview> EvolutionStages);
+    IReadOnlyList<EvolutionStagePreview> EvolutionStages,
+    /// True when this individual has not yet reached the final stage of its evolution chain
+    /// (CurrentStage is 0-based, so the final stage is ChainLength - 1). Drives the Pokédex's
+    /// "Не завершившие эволюцию" filter — a single-stage species (ChainLength == 1) is always
+    /// already at its final stage, so it never matches.
+    bool HasEvolutionsRemaining);
 
 /// One node of the evolution-chain strip in the detail view.
 ///
@@ -107,7 +112,8 @@ public sealed class CollectionViewModel
                 Nature: individual.Nature,
                 IsFavorite: individual.IsFavorite,
                 Types: _chains.ResolveSpeciesTypes(displaySpeciesId),
-                EvolutionStages: BuildEvolutionPreview(individual));
+                EvolutionStages: BuildEvolutionPreview(individual),
+                HasEvolutionsRemaining: (int)individual.CurrentStage < individual.ChainLength - 1);
         }).ToList();
 
     /// Builds the spoiler-masked evolution strip for one individual: every stage its chain
@@ -229,4 +235,18 @@ public sealed class CollectionViewModel
         return entry.SpeciesName.Contains(needle, StringComparison.OrdinalIgnoreCase)
             || (entry.Nickname?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false);
     }
+
+    /// Re-orders an already-filtered entry list. Default leaves GetEntries' own banded order
+    /// (active -> favorites -> rest, each by dex number) alone. Alphabetical sorts by species
+    /// name (not the optional nickname — the one every entry always has). CatchDate is
+    /// newest-first, matching "what did I just get" being the more common reason to sort by it.
+    public static IReadOnlyList<CollectionEntry> ApplySort(IReadOnlyList<CollectionEntry> entries, PokedexSortOrder order) => order switch
+    {
+        PokedexSortOrder.Alphabetical => entries.OrderBy(e => e.SpeciesName, StringComparer.OrdinalIgnoreCase).ToList(),
+        PokedexSortOrder.CatchDate => entries.OrderByDescending(e => e.CaughtAtUtc).ToList(),
+        _ => entries
+    };
 }
+
+/// The Pokédex grid's sort choice — see CollectionViewModel.ApplySort.
+public enum PokedexSortOrder { Default, Alphabetical, CatchDate }

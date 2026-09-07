@@ -246,6 +246,28 @@
                                      Checked="RarityFilter_Checked" />
                     </WrapPanel>
 
+                    <!-- Independent (non-exclusive) filter pill, ANDed with rarity + search
+                         exactly like they AND with each other — a CheckBox rather than the
+                         rarity RadioButtons since it toggles on/off instead of picking one of a
+                         set. FilterPillCheckBoxStyle mirrors FilterPillStyle's look. -->
+                    <WrapPanel Margin="2,0,0,4">
+                        <CheckBox x:Name="EvolutionFilterToggle" Style="{StaticResource FilterPillCheckBoxStyle}"
+                                  Content="Не завершившие эволюцию" Tag="{StaticResource PrimaryTextBrush}"
+                                  Checked="EvolutionFilter_Changed" Unchecked="EvolutionFilter_Changed"
+                                  ToolTip="Показать только тех, кто ещё не достиг финальной стадии" />
+                    </WrapPanel>
+
+                    <!-- Sort choice. Default leaves GetEntries' own active/favorites/dex banding
+                         alone; the other two options re-order the (already filtered) list — see
+                         CollectionViewModel.ApplySort. -->
+                    <TextBlock Text="Сортировка" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <ComboBox x:Name="PokedexSortCombo" Margin="2,0,2,10" HorizontalAlignment="Left" MinWidth="170"
+                              SelectionChanged="PokedexSortCombo_SelectionChanged">
+                        <ComboBoxItem Content="По умолчанию" IsSelected="True" />
+                        <ComboBoxItem Content="По алфавиту" />
+                        <ComboBoxItem Content="По дате поимки" />
+                    </ComboBox>
+
                     <TextBlock x:Name="PokedexEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0"
                                Text="Пока пусто — поймай первого покемона на вкладке «Поймать»." />
 
