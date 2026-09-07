@@ -47,7 +47,12 @@ public partial class App : System.Windows.Application
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
-    private bool _catchReady;
+
+    /// Replaces the old one-shot `_catchReady` bool: activity kept accumulating past the
+    /// catch-check threshold while a catch was already pending used to silently discard those
+    /// extra rolls. Now they queue, up to MaxPendingCatches.
+    private int _catchReadyCount;
+    private const int MaxPendingCatches = 3;
     /// Every decoded frame of the active individual's sprite, in order — the same list the
     /// overlay animates from. This replaces the previous single-frame `_activeSpriteBytes`
     /// field: the collection popup only ever received frame 0 through it, which is why its
@@ -113,6 +118,7 @@ public partial class App : System.Windows.Application
 
         var loaded = _saveStore.Load();
         _appState = BuildAppState(loaded);
+        _catchReadyCount = Math.Clamp(loaded?.PendingCatchCount ?? 0, 0, MaxPendingCatches);
 
         if (FirstRunFlow.NeedsOnboarding(loaded))
         {
@@ -217,6 +223,10 @@ public partial class App : System.Windows.Application
         _trayIconService.OpenShopRequested += () => OpenMenu(ShopTabIndex);
         _trayIconService.CatchRequested += () => OpenMenu(CatchTabIndex);
         _trayIconService.ExitRequested += () => Shutdown();
+        // Restore the tray's ready glyph if a catch was already queued when the app last closed
+        // (see _catchReadyCount's hydration above) — the AppMenuWindow badge doesn't need the
+        // same treatment since it's created lazily and reads the live count when it is.
+        _trayIconService.SetCatchReady(_catchReadyCount > 0);
 
         // MUST come after _trayIconService exists, not before it. This is async void, and its
         // first await only suspends when the sprite actually has to be read from disk — after
@@ -304,12 +314,23 @@ public partial class App : System.Windows.Application
         }
     }
 
+    /// Opacity floor at mood=0.0 for Hardcore/Super Hardcore's mood tint — dropped well below
+    /// Chill's implicit 0.5 default so a pet at the run-away deadline genuinely reads as
+    /// "fading away" rather than just slightly dimmed. See OverlayWindow.SetMoodTint.
+    private const double HardcoreMoodOpacityFloor = 0.18;
+
     /// Hardcore care mode's "убегает" mechanic (spec: "Уход за питомцем") only has a
     /// visible effect if something polls for it — this is that poll, riding the same
     /// 5-second timer as growth so it doesn't need a timer of its own.
     private void CheckHardcoreNeglect()
     {
-        if (_appState.Settings.CareMode != CareMode.Hardcore) return;
+        if (_appState.Settings.CareMode != CareMode.Hardcore)
+        {
+            // No neglect consequence outside Hardcore — clear any droop/dim/mood-cloud left
+            // over from a mode switch, since nothing else will call SetMoodTint to reset it.
+            _overlayWindow.ResetMoodTint();
+            return;
+        }
 
         var active = _appState.Collection.GetActive();
         if (active is null) return;
@@ -322,7 +343,9 @@ public partial class App : System.Windows.Application
         // adjusted — the same scope everything else in this method works at.
         _careModeService.DiscountIdleGap(careState, now);
 
-        _overlayWindow.SetMoodTint(_careModeService.ComputeMood(careState, now));
+        // SuperHardcoreEnabled is a flag layered on top of Hardcore (see the check below), not
+        // a separate CareMode value — both share the same recalibrated 6h mood/run-away clock.
+        _overlayWindow.SetMoodTint(_careModeService.ComputeMood(careState, now, CareMode.Hardcore), HardcoreMoodOpacityFloor);
 
         // One-shot warning shortly before the pet actually runs away — same guard idiom as
         // CheckEvolutionReady, re-armed whenever the condition isn't currently true (so
@@ -691,22 +714,30 @@ public partial class App : System.Windows.Application
 
     /// Activity has crossed the threshold for a catch — per explicit feedback, this
     /// should NOT catch automatically (that took the moment away from the player).
-    /// Instead it just flips "ready" so the player triggers the actual catch themselves
-    /// from the Catch tab — the tray's "Поймать!" item now just opens the menu there
-    /// (see the CatchRequested subscription in OnStartup) and the tab's button calls
-    /// TryPerformCatch.
+    /// Instead it queues one up (capped at MaxPendingCatches — extra rolls past the cap are
+    /// still discarded, a hard cap rather than unbounded banking) so the player triggers the
+    /// actual catch themselves from the Catch tab — the tray's "Поймать!" item now just opens
+    /// the menu there (see the CatchRequested subscription in OnStartup) and the tab's button
+    /// calls TryPerformCatch.
     private void OnCatchRollDue()
     {
-        if (_catchReady) return; // already waiting on the player — don't re-notify
+        if (_catchReadyCount >= MaxPendingCatches) return; // hard cap — extra rolls are discarded
 
-        _catchReady = true;
+        var wasIdle = _catchReadyCount == 0;
+        _catchReadyCount++;
         _trayIconService.SetCatchReady(true);
-        _trayIconService.ShowNotification("PokéCorner", "Готов новый покемон! Открой меню трея и нажми «Поймать!».");
+        _menuWindow?.SetCatchReady(_catchReadyCount);
+
+        // Only toast on the 0->1 transition — don't spam a toast per extra queued catch.
+        if (wasIdle)
+        {
+            _trayIconService.ShowNotification("PokéCorner", "Встретили нового покемона, скорее поймай его!");
+        }
     }
 
     private CatchReveal? TryPerformCatch()
     {
-        if (!_catchReady) return null;
+        if (_catchReadyCount <= 0) return null;
 
         // PokemonCollection.Add() auto-activates via ActiveIndividualId ??= individual.Id
         // whenever nothing is currently active — correct for onboarding, but the only way
@@ -740,8 +771,9 @@ public partial class App : System.Windows.Application
             _appState.Collection.ClearActive();
         }
 
-        _catchReady = false;
-        _trayIconService.SetCatchReady(false);
+        _catchReadyCount--;
+        _trayIconService.SetCatchReady(_catchReadyCount > 0);
+        _menuWindow?.SetCatchReady(_catchReadyCount);
         RefreshOverlayForActiveIndividual();
 
         var chain = availableChains.FirstOrDefault(c => c.ChainId == result.ChainId);
@@ -929,9 +961,10 @@ public partial class App : System.Windows.Application
                 var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart);
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
-                var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReady, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
+                var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
+                _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened
                 _menuWindow.Show();
             }
             _menuWindow.SelectTab(tabIndex);
@@ -1042,7 +1075,8 @@ public partial class App : System.Windows.Application
             ShopRemainderUnits = _appState.Shop.RemainderUnits,
             ShopCatchLuckyCharmActive = _appState.Shop.CatchLuckyCharmActive,
             PendingEggs = _appState.PendingEggs,
-            CareStates = new Dictionary<Guid, CareState>(_appState.CareStateByIndividualId)
+            CareStates = new Dictionary<Guid, CareState>(_appState.CareStateByIndividualId),
+            PendingCatchCount = _catchReadyCount
         };
         _saveStore.Save(data);
     }

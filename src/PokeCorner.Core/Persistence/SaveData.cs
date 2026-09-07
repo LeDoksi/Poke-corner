@@ -22,4 +22,10 @@ public sealed class SaveData
     public bool ShopCatchLuckyCharmActive { get; init; }
     public Dictionary<Guid, CareState> CareStates { get; init; } = new();
     public List<PendingEgg> PendingEggs { get; init; } = new();
+
+    /// How many catches are queued waiting for the player to claim them (App.MaxPendingCatches
+    /// caps this at 3). Previously a bare bool that was never persisted at all — an app restart
+    /// while a catch was pending silently lost it. Persisting the count keeps parity with every
+    /// other progress field here rather than reintroducing that same gap for the new queue.
+    public int PendingCatchCount { get; init; }
 }

@@ -63,7 +63,19 @@
         <TabControl x:Name="MenuTabControl" Grid.Row="1">
             <TabItem x:Name="CollectionTab" Header="Коллекция" />
             <TabItem x:Name="ShopTab" Header="Магазин" />
-            <TabItem x:Name="CatchTab" Header="Поймать" />
+            <!-- Header retemplated (text + badge) instead of a bare string, so a queued catch
+                 (Task 3) can surface a visual cue on the tab itself, not just the tray icon.
+                 CatchBadge starts hidden; SetCatchReady toggles it and its pulse together. -->
+            <TabItem x:Name="CatchTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Поймать" VerticalAlignment="Center" />
+                        <Ellipse x:Name="CatchBadge" Width="7" Height="7" Margin="6,0,0,0"
+                                 VerticalAlignment="Center" Fill="{StaticResource AccentRedBrush}"
+                                 Visibility="Collapsed" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
             <TabItem x:Name="SettingsTab" Header="Настройки" />
         </TabControl>
     </Grid>

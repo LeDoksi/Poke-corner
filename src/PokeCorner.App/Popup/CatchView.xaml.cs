@@ -13,7 +13,10 @@ public partial class CatchView : System.Windows.Controls.UserControl
     private readonly AppState _appState;
     private readonly Func<CatchReveal?> _tryPerformCatch;
     private readonly Func<int, Task<byte[]?>> _fetchSprite;
-    private readonly Func<bool> _isCatchReady;
+    /// Count of queued catches waiting to be claimed (Task 3's queue, capped at
+    /// App.MaxPendingCatches), not just a ready/not-ready flag — drives the "N поимок готово"
+    /// wording below.
+    private readonly Func<int> _catchReadyCount;
     private readonly Action _onStateChanged;
 
     /// Species id -> display name, resolved against the live species catalog by the caller.
@@ -22,13 +25,13 @@ public partial class CatchView : System.Windows.Controls.UserControl
     private readonly Func<int, string> _resolveSpeciesName;
     private DispatcherTimer? _liveRefreshTimer;
 
-    public CatchView(AppState appState, Func<CatchReveal?> tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<bool> isCatchReady, Action onStateChanged, Func<int, string> resolveSpeciesName)
+    public CatchView(AppState appState, Func<CatchReveal?> tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<int> catchReadyCount, Action onStateChanged, Func<int, string> resolveSpeciesName)
     {
         InitializeComponent();
         _appState = appState;
         _tryPerformCatch = tryPerformCatch;
         _fetchSprite = fetchSprite;
-        _isCatchReady = isCatchReady;
+        _catchReadyCount = catchReadyCount;
         _onStateChanged = onStateChanged;
         _resolveSpeciesName = resolveSpeciesName;
         Loaded += (_, _) => StartLiveRefresh();
@@ -53,13 +56,20 @@ public partial class CatchView : System.Windows.Controls.UserControl
     {
         var progress = ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding);
         CatchProgressBar.Value = progress.CatchFraction;
-        SetReady(_isCatchReady());
+        SetReady(_catchReadyCount());
     }
 
-    private void SetReady(bool ready)
+    /// count: how many catches are queued (0 = none ready). Wording escalates from "не готово"
+    /// through singular to plural once more than one is banked — see Task 3's spec.
+    private void SetReady(int count)
     {
-        CatchButton.IsEnabled = ready;
-        StatusText.Text = ready ? "Готов новый покемон! Жми «Поймать!»." : "Копи активность за ПК — полоса поимки ещё не заполнилась.";
+        CatchButton.IsEnabled = count > 0;
+        StatusText.Text = count switch
+        {
+            <= 0 => "Копи активность за ПК — полоса поимки ещё не заполнилась.",
+            1 => "Встретили нового покемона, скорее поймай его!",
+            _ => $"Готово {count} поимки — жми «Поймать!»."
+        };
     }
 
     private async void CatchButton_Click(object sender, RoutedEventArgs e)
@@ -76,7 +86,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
 
     public async Task PlayReveal(CatchReveal reveal)
     {
-        SetReady(false);
+        SetReady(0);
         RevealSpriteImage.Opacity = 0;
         RevealNameText.Opacity = 0;
         RevealRarityText.Opacity = 0;
