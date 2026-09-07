@@ -212,4 +212,44 @@ public class OverlayDpiPositioningTests
             }
         });
     }
+
+    // ===================== Task 2 fix A: mood tint recalibration math =====================
+    // Pure formulas (no live window needed) pulled out of SetMoodTint so the droop/opacity
+    // math driving the "pet fades away" feel is directly testable.
+
+    [Fact]
+    public void DroopOffsetFor_FullMood_IsZero()
+    {
+        Assert.Equal(0.0, OverlayWindow.DroopOffsetFor(1.0), 5);
+    }
+
+    [Fact]
+    public void DroopOffsetFor_ZeroMood_IsMaxTenPixels()
+    {
+        Assert.Equal(10.0, OverlayWindow.DroopOffsetFor(0.0), 5);
+    }
+
+    [Fact]
+    public void OpacityFor_ZeroMood_EqualsTheFloor()
+    {
+        Assert.Equal(0.18, OverlayWindow.OpacityFor(0.0, opacityFloor: 0.18), 5);
+    }
+
+    [Fact]
+    public void OpacityFor_FullMood_IsFullyOpaqueRegardlessOfFloor()
+    {
+        Assert.Equal(1.0, OverlayWindow.OpacityFor(1.0, opacityFloor: 0.18), 5);
+    }
+
+    /// The bug this whole task fixes: the OLD floor (0.5) made a fully-neglected Hardcore pet
+    /// only ever fade to half-opacity. The recalibrated Hardcore floor (0.18, see
+    /// App.HardcoreMoodOpacityFloor) must read as noticeably dimmer at mood=0 than the old one.
+    [Fact]
+    public void OpacityFor_ZeroMood_HardcoreFloorIsMuchDimmerThanOldChillFloor()
+    {
+        var hardcoreFloor = OverlayWindow.OpacityFor(0.0, opacityFloor: 0.18);
+        var oldFloor = OverlayWindow.OpacityFor(0.0, opacityFloor: 0.5);
+
+        Assert.True(hardcoreFloor < oldFloor - 0.25);
+    }
 }

@@ -35,6 +35,42 @@ public class CareModeServiceTests
         Assert.Equal(0.0, service.ComputeMood(state, now));
     }
 
+    /// Root-cause regression for the "6 hours of testing and nothing visibly happened" report:
+    /// Hardcore mood must decay over the 6h HardcoreNeglectThreshold (the actual run-away
+    /// deadline), not the 12h Chill-only MoodDecayFullPeriod — otherwise mood never reaches 0.0
+    /// by the moment the pet actually runs away.
+    [Fact]
+    public void ComputeMood_HardcoreMode_HalfwayThroughNeglectThreshold_IsHalf()
+    {
+        var service = new CareModeService();
+        var now = DateTimeOffset.UtcNow;
+        var state = new CareState { LastInteractionUtc = now - (CareModeTuning.HardcoreNeglectThreshold / 2) };
+
+        Assert.Equal(0.5, service.ComputeMood(state, now, CareMode.Hardcore), precision: 2);
+    }
+
+    [Fact]
+    public void ComputeMood_HardcoreMode_AtNeglectThreshold_IsZero()
+    {
+        var service = new CareModeService();
+        var now = DateTimeOffset.UtcNow;
+        var state = new CareState { LastInteractionUtc = now - CareModeTuning.HardcoreNeglectThreshold };
+
+        Assert.Equal(0.0, service.ComputeMood(state, now, CareMode.Hardcore), precision: 5);
+    }
+
+    /// Chill's calculation is unchanged — same 12h period whether or not the mode is passed
+    /// explicitly, so a hypothetical future Chill caller keeps today's gentle ambient feel.
+    [Fact]
+    public void ComputeMood_ChillModeExplicit_MatchesDefaultTwelveHourPeriod()
+    {
+        var service = new CareModeService();
+        var now = DateTimeOffset.UtcNow;
+        var state = new CareState { LastInteractionUtc = now - (CareModeTuning.MoodDecayFullPeriod / 2) };
+
+        Assert.Equal(service.ComputeMood(state, now), service.ComputeMood(state, now, CareMode.Chill), precision: 5);
+    }
+
     [Fact]
     public void ShouldRunAway_ChillMode_NeverTrue()
     {

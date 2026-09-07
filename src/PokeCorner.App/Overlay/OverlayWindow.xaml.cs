@@ -384,15 +384,70 @@ public partial class OverlayWindow : Window
         SpriteImage.BeginAnimation(OpacityProperty, fade);
     }
 
+    /// mood < this fraction of the way to full decay is when the mood cloud (Task 2, fix B)
+    /// starts showing — deliberately past the halfway point of the neglect window, per the
+    /// user's explicit spec ("не сразу, а когда питомец уже достаточно обижен"). At 0.4, that's
+    /// roughly the back 40% of the recalibrated 6-hour Hardcore window, not from t=0.
+    private const double MoodCloudThreshold = 0.4;
+
+    /// Advances once per SetMoodTint call (App's growth tick, ~once/second while Hardcore) so
+    /// the mood cloud's glyph can cycle/escalate without this window needing its own timer.
+    private int _moodCloudTicks;
+
     /// mood: 0.0 (long-neglected) to 1.0 (just interacted with) — CareModeService.ComputeMood's
     /// output, applied continuously so the sprite visibly droops/dims as Hardcore-mode
     /// neglect approaches the run-away threshold, not just at the moment it triggers.
-    public void SetMoodTint(double mood)
+    ///
+    /// opacityFloor: how dim the sprite is allowed to get at mood=0.0. The only caller
+    /// (App.CheckHardcoreNeglect, itself gated to CareMode.Hardcore) picks the value — a low
+    /// floor (~0.15-0.2) so a neglected-to-the-deadline pet genuinely reads as "fading away",
+    /// versus the gentler ambient floor Chill-mode-style callers would want if they ever called
+    /// this (none do today; CheckHardcoreNeglect is the single call site).
+    ///
+    /// Also drives the mood-cloud bubble: visible once mood drops under MoodCloudThreshold,
+    /// alternating/escalating glyphs as it keeps falling toward 0.
+    public void SetMoodTint(double mood, double opacityFloor = 0.5)
     {
-        var droopOffset = (1.0 - mood) * 10;
-        SpriteTranslateTransform.Y = droopOffset;
-        SpriteImage.Opacity = 0.5 + mood * 0.5;
+        SpriteTranslateTransform.Y = DroopOffsetFor(mood);
+        SpriteImage.Opacity = OpacityFor(mood, opacityFloor);
+
+        if (mood >= MoodCloudThreshold)
+        {
+            MoodCloudBubble.Visibility = Visibility.Collapsed;
+            _moodCloudTicks = 0;
+            return;
+        }
+
+        MoodCloudBubble.Visibility = Visibility.Visible;
+
+        // 0 right as the cloud first appears, 1 right at mood == 0 (about to run away).
+        var severity = Math.Clamp(1.0 - mood / MoodCloudThreshold, 0.0, 1.0);
+
+        // Glyph swap speeds up as severity rises: every 3rd tick near the threshold, every
+        // tick once fully upset. Ticks arrive ~once/second off App's growth timer.
+        var cyclePeriodTicks = Math.Max(1, 3 - (int)Math.Round(severity * 2));
+        _moodCloudTicks++;
+        var showBrokenHeart = (_moodCloudTicks / cyclePeriodTicks) % 2 == 0;
+        MoodCloudText.Text = showBrokenHeart ? "💔" : severity > 0.66 ? "💢💢" : "💢";
     }
+
+    /// Clears any droop/dim/mood-cloud state left over from Hardcore neglect. Called whenever
+    /// the active care mode isn't Hardcore (App.CheckHardcoreNeglect's early-return branch) —
+    /// without it, switching CareMode away from Hardcore mid-neglect would leave the sprite
+    /// stuck dim/drooped and the mood cloud stuck showing, since nothing would call
+    /// SetMoodTint again to clear them.
+    public void ResetMoodTint()
+    {
+        SpriteTranslateTransform.Y = 0;
+        SpriteImage.Opacity = 1.0;
+        MoodCloudBubble.Visibility = Visibility.Collapsed;
+        _moodCloudTicks = 0;
+    }
+
+    /// Pure droop/opacity formulas, pulled out of SetMoodTint so the math is directly testable
+    /// without a live WPF window — same pattern as ToDips/CornerPosition/IsOnWorkArea above.
+    public static double DroopOffsetFor(double mood) => (1.0 - mood) * 10;
+    public static double OpacityFor(double mood, double opacityFloor) => opacityFloor + mood * (1.0 - opacityFloor);
 
     /// Removes any still-holding scale animation clock (and the glyph fade's) so a newly
     /// started bounce/flash isn't silently outranked by the previous one's held end value.
@@ -424,11 +479,12 @@ public partial class OverlayWindow : Window
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, bounce);
 
         // Same reason as above: the previous fade holds Opacity at 0, which would outrank
-        // this plain assignment and make the glyph invisible on every bounce after the first.
-        ReactionGlyphText.BeginAnimation(OpacityProperty, null);
+        // this plain assignment and make the bubble invisible on every bounce after the first.
+        // The whole bubble (backing shape + glyph) fades as one unit — see ThoughtBubbleStyle.
+        ReactionBubble.BeginAnimation(OpacityProperty, null);
         ReactionGlyphText.Text = glyph;
-        ReactionGlyphText.Opacity = 1.0;
+        ReactionBubble.Opacity = 1.0;
         var fadeUp = new DoubleAnimation(1.0, 0.0, TimeSpan.FromMilliseconds(durationMs * 2));
-        ReactionGlyphText.BeginAnimation(OpacityProperty, fadeUp);
+        ReactionBubble.BeginAnimation(OpacityProperty, fadeUp);
     }
 }

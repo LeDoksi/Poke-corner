@@ -2,10 +2,17 @@ namespace PokeCorner.Core.Domain;
 
 public sealed class CareModeService
 {
-    public double ComputeMood(CareState state, DateTimeOffset nowUtc)
+    /// mode: Chill (default) keeps mood decaying over the full 12h MoodDecayFullPeriod — Chill
+    /// has no run-away consequence, so its gentle ambient feel is unchanged. Hardcore decays
+    /// over the 6h HardcoreNeglectThreshold instead, the ACTUAL deadline before the pet runs
+    /// away (see ShouldRunAway) — without this, mood was decoupled from that deadline and never
+    /// reached 0.0 by the time the pet actually left (6h is only half of the 12h period), which
+    /// made SetMoodTint's droop/dim barely perceptible right when it mattered most.
+    public double ComputeMood(CareState state, DateTimeOffset nowUtc, CareMode mode = CareMode.Chill)
     {
+        var fullPeriod = mode == CareMode.Hardcore ? CareModeTuning.HardcoreNeglectThreshold : CareModeTuning.MoodDecayFullPeriod;
         var elapsedSeconds = (nowUtc - state.LastInteractionUtc).TotalSeconds;
-        var fraction = elapsedSeconds / CareModeTuning.MoodDecayFullPeriod.TotalSeconds;
+        var fraction = elapsedSeconds / fullPeriod.TotalSeconds;
         return Math.Clamp(1.0 - fraction, 0.0, 1.0);
     }
 

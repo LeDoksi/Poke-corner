@@ -7,6 +7,20 @@
         ShowInTaskbar="False"
         ResizeMode="NoResize"
         SizeToContent="Manual">
+    <Window.Resources>
+        <!-- Shared "thought bubble" backing shape — Task 1's petting-reaction glyph and Task 2's
+             persistent mood cloud both sit inside one of these so a bare glyph never has to read
+             against a busy desktop background on its own. High CornerRadius reads as a rounded
+             cloud rather than a speech box; no tail/pointer shape, kept deliberately simple. -->
+        <Style x:Key="ThoughtBubbleStyle" TargetType="Border">
+            <Setter Property="Background" Value="#E6FFFFFF" />
+            <Setter Property="BorderBrush" Value="#33000000" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="11" />
+            <Setter Property="Padding" Value="7,3" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+    </Window.Resources>
     <!-- The window is deliberately LARGER than the configured pet size (see
          OverlayWindow.SpriteScaleHeadroom) and the sprite is centred inside it. A WPF window
          clips its content to its own client area, so with the sprite filling the window
@@ -28,6 +42,21 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <TextBlock x:Name="ReactionGlyphText" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Opacity="0" IsHitTestVisible="False" />
+
+        <!-- Transient petting/feed reaction (Task 1): PlayBounce fades this whole bubble's
+             Opacity, same timing as before — only the bare TextBlock grew a backing shape. -->
+        <Border x:Name="ReactionBubble" Style="{StaticResource ThoughtBubbleStyle}"
+                HorizontalAlignment="Center" VerticalAlignment="Top" Opacity="0">
+            <TextBlock x:Name="ReactionGlyphText" FontSize="18" />
+        </Border>
+
+        <!-- Persistent Hardcore-neglect "mood cloud" (Task 2, fix B): shown only once the pet is
+             sufficiently upset (see OverlayWindow.MoodCloudThreshold) and cycles/escalates as
+             mood keeps dropping. Offset to the corner so it never overlaps the reaction bubble
+             above, which can still fire (e.g. a petting click) while this is on screen. -->
+        <Border x:Name="MoodCloudBubble" Style="{StaticResource ThoughtBubbleStyle}"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed">
+            <TextBlock x:Name="MoodCloudText" FontSize="16" FontFamily="Segoe UI Emoji" />
+        </Border>
     </Grid>
 </Window>
