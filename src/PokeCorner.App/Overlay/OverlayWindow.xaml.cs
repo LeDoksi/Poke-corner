@@ -15,6 +15,7 @@ public partial class OverlayWindow : Window
     private const int GWL_EXSTYLE = -20;
     private const int WS_EX_LAYERED = 0x00080000;
     private const int WS_EX_TOOLWINDOW = 0x00000080;
+    private const int WS_EX_APPWINDOW = 0x00040000;
     private static readonly TimeSpan IdleFrameDuration = TimeSpan.FromMilliseconds(150);
 
     private SpriteAnimator? _animator;
@@ -386,11 +387,13 @@ public partial class OverlayWindow : Window
     /// window's z-order follows its owner: the pet kept WS_EX_TOPMOST yet sat under ordinary
     /// app windows — POKE-9, confirmed live 2026-10-02 by detaching the owner on the running
     /// app, which put the pet straight back on top. WS_EX_TOOLWINDOW does the hiding with no
-    /// owner involved. Call from SourceInitialized, i.e. before the window is first shown.
+    /// owner involved — but WPF puts WS_EX_APPWINDOW on every ShowInTaskbar window, and APPWINDOW
+    /// overrides TOOLWINDOW (1.0.15 shipped with a taskbar button because of exactly that), so it
+    /// has to come off too. Call from SourceInitialized, i.e. before the window is first shown.
     public static void HideFromTaskbarWithoutOwner(System.Windows.Window window)
     {
         var hwnd = new WindowInteropHelper(window).Handle;
-        SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW);
+        SetWindowLong(hwnd, GWL_EXSTYLE, (GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
     }
 
     private void MakeClickThroughExceptSprite()

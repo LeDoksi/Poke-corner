@@ -29,10 +29,21 @@ public class OverlayOwnershipTests
             var window = create();
             try
             {
-                var hwnd = new WindowInteropHelper(window).EnsureHandle();
+                // Shown, not just EnsureHandle'd: 1.0.15 passed an EnsureHandle-only version of
+                // this test and still got a taskbar button, because WPF puts WS_EX_APPWINDOW on
+                // a ShowInTaskbar window and APPWINDOW overrides TOOLWINDOW for the taskbar.
+                window.ShowActivated = false;
+                window.Show();
+                // The app hides/re-shows the pet for fullscreen apps — WPF must not restore
+                // APPWINDOW on the way back.
+                window.Hide();
+                window.Show();
+                var hwnd = new WindowInteropHelper(window).Handle;
+                var exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 
                 Assert.Equal(IntPtr.Zero, GetWindow(hwnd, GW_OWNER));
-                Assert.NotEqual(0, GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOOLWINDOW);
+                Assert.NotEqual(0, exStyle & WS_EX_TOOLWINDOW);
+                Assert.Equal(0, exStyle & WS_EX_APPWINDOW);
             }
             finally
             {
@@ -44,6 +55,7 @@ public class OverlayOwnershipTests
     private const uint GW_OWNER = 4;
     private const int GWL_EXSTYLE = -20;
     private const int WS_EX_TOOLWINDOW = 0x00000080;
+    private const int WS_EX_APPWINDOW = 0x00040000;
 
     [DllImport("user32.dll")] private static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
     [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
