@@ -31,8 +31,6 @@ namespace PokeCorner.Core.Domain;
 /// </summary>
 public static class LegacyOfflineChains
 {
-    public const int FirstLegacyChainId = 900001;
-
     public static IReadOnlyList<SpeciesEvolutionChain> All { get; } = new List<SpeciesEvolutionChain>
     {
         // StageTypes carry the same live PokeAPI values the bundled catalog was crawled with,

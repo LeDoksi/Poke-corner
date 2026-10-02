@@ -1,6 +1,5 @@
 using PokeCorner.App.Popup;
 using PokeCorner.Core;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Popup;
 

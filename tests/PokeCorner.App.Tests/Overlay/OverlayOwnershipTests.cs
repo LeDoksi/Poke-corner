@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Interop;
 using PokeCorner.App.Overlay;
 using PokeCorner.App.Tests.Theme;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Overlay;
 

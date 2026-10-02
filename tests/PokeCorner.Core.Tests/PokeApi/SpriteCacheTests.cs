@@ -1,7 +1,5 @@
-using System.Net.Http;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.PokeApi;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.PokeApi;
 

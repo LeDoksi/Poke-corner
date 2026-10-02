@@ -1,5 +1,4 @@
 using PokeCorner.App.Fullscreen;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Fullscreen;
 

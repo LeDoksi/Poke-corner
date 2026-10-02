@@ -1,5 +1,4 @@
 using PokeCorner.App.Input;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Input;
 

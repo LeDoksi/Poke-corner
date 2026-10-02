@@ -1,7 +1,6 @@
 using PokeCorner.App.Onboarding;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Onboarding;
 

@@ -1,6 +1,5 @@
 using System.Text.Json;
 using PokeCorner.Core.Domain;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.Domain;
 

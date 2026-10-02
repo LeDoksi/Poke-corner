@@ -1,5 +1,4 @@
 using PokeCorner.Core.Audio;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.Audio;
 

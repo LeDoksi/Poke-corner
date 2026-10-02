@@ -1,7 +1,5 @@
-using PokeCorner.Core;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.Persistence;
 

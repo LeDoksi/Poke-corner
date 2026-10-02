@@ -1,7 +1,6 @@
 using System.Net;
 using System.Text;
 using PokeCorner.Core.PokeApi;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.PokeApi;
 

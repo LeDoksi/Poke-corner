@@ -72,7 +72,7 @@ public sealed class PokedexCard
 
     public double EvolutionBarValue => EvolutionProgressDisplay.BarValue(EvolutionFraction, EvolutionState);
     public string EvolutionLabel => EvolutionProgressDisplay.Label(EvolutionFraction, EvolutionState);
-    public string EvolutionToolTip => EvolutionProgressDisplay.ToolTip(EvolutionFraction, EvolutionState);
+    public string EvolutionToolTip => EvolutionProgressDisplay.ToolTip(EvolutionState);
     public double EvolutionBarOpacity => EvolutionProgressDisplay.BarOpacity(EvolutionState);
 
     /// Popup-only detail: the roster rows used to show these inline and the species grid
@@ -100,24 +100,10 @@ public sealed class PokedexCard
     public Visibility ActiveBadgeVisibility => IsActive ? Visibility.Visible : Visibility.Collapsed;
     public Visibility UnavailableBadgeVisibility => IsAvailableToActivate ? Visibility.Collapsed : Visibility.Visible;
 
-    /// Pinned-to-the-top flag. The star glyph is a single Path drawn with both a Fill and a
-    /// Stroke, so one template covers both states: gold-on-gold when pinned, hollow with a
-    /// muted outline when not — no second glyph and no visibility swapping.
+    /// Pinned-to-the-top flag.
     public required bool IsFavorite { get; init; }
 
     public Visibility FavoriteBadgeVisibility => IsFavorite ? Visibility.Visible : Visibility.Collapsed;
-
-    public Brush FavoriteFill => IsFavorite
-        ? ThemeBrushes.Get("AccentGoldBrush")
-        : System.Windows.Media.Brushes.Transparent;
-
-    public Brush FavoriteStroke => IsFavorite
-        ? ThemeBrushes.Get("AccentGoldBrush")
-        : ThemeBrushes.Get("MutedTextBrush");
-
-    public string FavoriteToolTip => IsFavorite
-        ? "Убрать из избранного"
-        : "В избранное — закрепить в начале списка";
 }
 
 /// One node of the evolution-chain strip in the detail overlay.

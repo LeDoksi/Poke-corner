@@ -1,6 +1,5 @@
 // tests/PokeCorner.App.Tests/Overlay/FrameSequencerTests.cs
 using PokeCorner.App.Overlay;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Overlay;
 

@@ -1,8 +1,6 @@
-using PokeCorner.Core;
 using PokeCorner.Core.Activity;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
-using Xunit;
 
 namespace PokeCorner.Core.Tests;
 
@@ -107,7 +105,7 @@ public class AppStateTests
         var individual = MakeIndividual();
         state.Collection.Add(individual);
 
-        state.ApplyActivityUnits(1234, DateTimeOffset.UtcNow);
+        state.ApplyActivityUnits(1234);
 
         Assert.Equal(1234, individual.AccumulatedCarePoints);
     }
@@ -120,7 +118,7 @@ public class AppStateTests
         individual.AccumulatedCarePoints = int.MaxValue - 10;
         state.Collection.Add(individual);
 
-        state.ApplyActivityUnits(1000, DateTimeOffset.UtcNow);
+        state.ApplyActivityUnits(1000);
 
         Assert.Equal(int.MaxValue, individual.AccumulatedCarePoints);
     }
@@ -130,7 +128,7 @@ public class AppStateTests
     {
         var state = new AppState();
 
-        var exception = Record.Exception(() => state.ApplyActivityUnits(500, DateTimeOffset.UtcNow));
+        var exception = Record.Exception(() => state.ApplyActivityUnits(500));
 
         Assert.Null(exception);
     }
@@ -143,7 +141,7 @@ public class AppStateTests
         var raised = 0;
         state.CatchRollDue += () => raised++;
 
-        state.ApplyActivityUnits(ActivityAccumulator.CatchCheckIntervalUnits, DateTimeOffset.UtcNow);
+        state.ApplyActivityUnits(ActivityAccumulator.CatchCheckIntervalUnits);
 
         Assert.Equal(1, raised);
     }
@@ -311,7 +309,7 @@ public class AppStateTests
         var individual = MakeIndividual();
         state.Collection.Add(individual);
 
-        state.ApplyActivityUnits(EvolutionThresholds.Stage2Threshold, DateTimeOffset.UtcNow);
+        state.ApplyActivityUnits(EvolutionThresholds.Stage2Threshold);
 
         Assert.Equal(EvolutionStage.Stage1, individual.CurrentStage);
         Assert.True(state.IsReadyToEvolve(individual));

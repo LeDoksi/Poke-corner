@@ -21,7 +21,7 @@ public sealed class AppState
         Activity.CatchCheckDue += () => CatchRollDue?.Invoke();
     }
 
-    public void ApplyActivityUnits(long units, DateTimeOffset nowUtc)
+    public void ApplyActivityUnits(long units)
     {
         var active = Collection.GetActive();
         if (active is not null)

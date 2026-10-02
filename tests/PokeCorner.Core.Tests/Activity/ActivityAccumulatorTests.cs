@@ -1,5 +1,4 @@
 using PokeCorner.Core.Activity;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.Activity;
 

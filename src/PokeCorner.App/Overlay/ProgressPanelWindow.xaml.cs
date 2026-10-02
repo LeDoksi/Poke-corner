@@ -37,7 +37,7 @@ public partial class ProgressPanelWindow : System.Windows.Window
         // for one that reached its final form, and the tooltip says which.
         SetGauge(EvolutionArc, EvolutionProgressDisplay.BarValue(progress.EvolutionFraction, progress.EvolutionState));
         EvolutionGauge.Opacity = EvolutionProgressDisplay.BarOpacity(progress.EvolutionState);
-        EvolutionGauge.ToolTip = EvolutionProgressDisplay.ToolTip(progress.EvolutionFraction, progress.EvolutionState);
+        EvolutionGauge.ToolTip = EvolutionProgressDisplay.ToolTip(progress.EvolutionState);
     }
 
     /// Draws `fraction` of a ring by making the stroke a single dash that covers that much of

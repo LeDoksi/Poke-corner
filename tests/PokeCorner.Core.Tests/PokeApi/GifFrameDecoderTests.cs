@@ -1,7 +1,6 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using PokeCorner.Core.PokeApi;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.PokeApi;
 

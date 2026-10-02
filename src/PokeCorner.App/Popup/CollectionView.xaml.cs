@@ -267,7 +267,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // detail overlay and the desktop gauge always word them identically.
         EvolutionProgressBar.Value = EvolutionProgressDisplay.BarValue(progress.EvolutionFraction, progress.EvolutionState);
         EvolutionProgressBar.Opacity = EvolutionProgressDisplay.BarOpacity(progress.EvolutionState);
-        EvolutionProgressBar.ToolTip = EvolutionProgressDisplay.ToolTip(progress.EvolutionFraction, progress.EvolutionState);
+        EvolutionProgressBar.ToolTip = EvolutionProgressDisplay.ToolTip(progress.EvolutionState);
         EvolutionPercentText.Text = EvolutionProgressDisplay.Label(progress.EvolutionFraction, progress.EvolutionState);
         EvolutionPercentText.Foreground = progress.EvolutionState == EvolutionProgressState.InProgress
             ? ThemeBrushes.Get("SecondaryTextBrush")

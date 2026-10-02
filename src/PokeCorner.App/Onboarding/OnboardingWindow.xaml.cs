@@ -1,6 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 // Aliased because UseWindowsForms (needed for TrayIconService's NotifyIcon) pulls
 // System.Drawing into scope project-wide, making a bare "Brush" ambiguous.

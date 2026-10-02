@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -12,7 +12,6 @@ using PokeCorner.Core;
 using PokeCorner.Core.Audio;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.PokeApi;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Theme;
 
@@ -582,14 +581,10 @@ public class ThemeRenderingTests
             Assert.Equal(pinned.Id, cards[1].IndividualId);
             Assert.True(cards[1].IsFavorite);
             Assert.Equal(Visibility.Visible, cards[1].FavoriteBadgeVisibility);
-            Assert.Same(Application.Current.Resources["AccentGoldBrush"], cards[1].FavoriteFill);
 
-            // The unpinned card's star is hollow with a muted outline, not gold.
             Assert.Equal(plain.Id, cards[2].IndividualId);
             Assert.False(cards[2].IsFavorite);
             Assert.Equal(Visibility.Collapsed, cards[2].FavoriteBadgeVisibility);
-            Assert.Same(System.Windows.Media.Brushes.Transparent, cards[2].FavoriteFill);
-            Assert.Same(Application.Current.Resources["MutedTextBrush"], cards[2].FavoriteStroke);
         });
 
     // ================= search / pagination / nicknames (this wave) =================

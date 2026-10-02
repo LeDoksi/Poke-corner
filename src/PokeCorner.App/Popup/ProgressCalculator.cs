@@ -56,7 +56,7 @@ public static class EvolutionProgressDisplay
     };
 
     /// Longer wording for tooltips, where the bar itself carries no text (the desktop gauge).
-    public static string ToolTip(double? fraction, EvolutionProgressState state) => state switch
+    public static string ToolTip(EvolutionProgressState state) => state switch
     {
         EvolutionProgressState.NeverEvolves => "Этот покемон не имеет эволюций",
         EvolutionProgressState.FinalForm => "Достигнута финальная эволюция",

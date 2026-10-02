@@ -1,4 +1,3 @@
-using PokeCorner.App;
 using Xunit;
 
 namespace PokeCorner.App.Tests;

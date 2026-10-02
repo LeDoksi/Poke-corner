@@ -1,7 +1,6 @@
 // src/PokeCorner.App/Popup/CatchView.xaml.cs
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using PokeCorner.Core;

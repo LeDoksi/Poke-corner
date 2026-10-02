@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
-using PokeCorner.App.Autostart;
 using PokeCorner.App.Fullscreen;
 using PokeCorner.App.Input;
 using PokeCorner.App.Onboarding;
@@ -74,14 +73,8 @@ public partial class App : System.Windows.Application
     /// process's life so nothing writes the save file back after it has been deleted.
     private bool _isWipingSaveData;
 
-    /// Raw animated-GIF bytes per display species id — the in-memory tier in front of the
-    /// on-disk cache at AppPaths.GetAnimatedSpriteCacheDirectory(). GIFs get their own folder
-    /// rather than a SpriteCache slot because SpriteCache's filenames are always
-    /// "{speciesId}.png", so an animated entry would collide with the static one.
-    private readonly Dictionary<int, byte[]> _animatedSpriteCache = new();
-
     /// Decoded PNG frames per display species id (null = "no usable animation"), in front of
-    /// _animatedSpriteCache. Decoding a GIF is NOT cheap: measured ~22ms per species, ~350ms for
+    /// the on-disk GIF cache. Decoding a GIF is NOT cheap: measured ~22ms per species, ~350ms for
     /// one 16-card Pokédex page, which was the page-flip stutter of POKE-18.
     private readonly Dictionary<int, IReadOnlyList<byte[]>?> _decodedFramesCache = new();
 
@@ -250,7 +243,7 @@ public partial class App : System.Windows.Application
 
         // MUST come after _trayIconService exists, not before it. This is async void, and its
         // first await only suspends when the sprite actually has to be read from disk — after
-        // onboarding the starter's GIF is already in _animatedSpriteCache (the starter picker
+        // onboarding the starter's frames are already in _decodedFramesCache (the starter picker
         // put it there), so the await completes synchronously and the method runs straight
         // through to _trayIconService.SetSpriteIcon in the same call. Sited above the tray
         // service's construction, that dereferenced null and crashed the app on first run
@@ -303,7 +296,7 @@ public partial class App : System.Windows.Application
         var units = _inputCounter.DrainUnits();
         if (units > 0)
         {
-            _appState.ApplyActivityUnits(units, DateTimeOffset.UtcNow);
+            _appState.ApplyActivityUnits(units);
             _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
             _shopService.EarnCoinsFromActivity(_appState.Shop, units);
         }
@@ -646,55 +639,48 @@ public partial class App : System.Windows.Application
     {
         if (_decodedFramesCache.TryGetValue(speciesId, out var memoized)) return memoized;
 
-        if (!_animatedSpriteCache.TryGetValue(speciesId, out var animatedBytes))
+        byte[]? animatedBytes = null;
+        // Disk before network, mirroring SpriteCache's static-PNG contract. This is what
+        // lets the GIFs the installer ships into Data\animated render on a fresh machine
+        // with no network at all, and it stops a re-download on every app launch.
+        var gifPath = Path.Combine(AppPaths.GetAnimatedSpriteCacheDirectory(), $"{speciesId}.gif");
+        try
         {
-            // Disk before network, mirroring SpriteCache's static-PNG contract. This is what
-            // lets the GIFs the installer ships into Data\animated render on a fresh machine
-            // with no network at all, and it stops a re-download on every app launch.
-            var gifPath = Path.Combine(AppPaths.GetAnimatedSpriteCacheDirectory(), $"{speciesId}.gif");
+            if (File.Exists(gifPath))
+            {
+                animatedBytes = await File.ReadAllBytesAsync(gifPath);
+            }
+        }
+        catch (IOException)
+        {
+            animatedBytes = null;
+        }
+
+        if (animatedBytes is null)
+        {
             try
             {
-                if (File.Exists(gifPath))
-                {
-                    animatedBytes = await File.ReadAllBytesAsync(gifPath);
-                }
+                animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(speciesId);
             }
-            catch (IOException)
+            catch
             {
+                // Network errors already degrade to null inside PokeApiClient's normal paths;
+                // this guards the unexpected ones rather than letting them reach
+                // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
                 animatedBytes = null;
             }
 
-            if (animatedBytes is null)
+            // Persist a freshly fetched GIF so the next launch reads it off disk. Best-effort:
+            // a failed write only costs a re-fetch later, so it must never break rendering.
+            if (animatedBytes is { Length: > 0 })
             {
                 try
                 {
-                    animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(speciesId);
+                    Directory.CreateDirectory(AppPaths.GetAnimatedSpriteCacheDirectory());
+                    await File.WriteAllBytesAsync(gifPath, animatedBytes);
                 }
-                catch
-                {
-                    // Network errors already degrade to null inside PokeApiClient's normal paths;
-                    // this guards the unexpected ones rather than letting them reach
-                    // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
-                    animatedBytes = null;
-                }
-
-                // Persist a freshly fetched GIF so the next launch reads it off disk. Best-effort:
-                // a failed write only costs a re-fetch later, so it must never break rendering.
-                if (animatedBytes is { Length: > 0 })
-                {
-                    try
-                    {
-                        Directory.CreateDirectory(AppPaths.GetAnimatedSpriteCacheDirectory());
-                        await File.WriteAllBytesAsync(gifPath, animatedBytes);
-                    }
-                    catch (IOException) { }
-                    catch (UnauthorizedAccessException) { }
-                }
-            }
-
-            if (animatedBytes is not null)
-            {
-                _animatedSpriteCache[speciesId] = animatedBytes;
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
             }
         }
 

@@ -1,5 +1,4 @@
 using PokeCorner.Core.Domain;
-using Xunit;
 
 namespace PokeCorner.Core.Tests.Domain;
 
@@ -76,16 +75,6 @@ public class PokemonCollectionTests
 
         Assert.Null(collection.ActiveIndividualId);
         Assert.Null(collection.GetActive());
-    }
-
-    [Fact]
-    public void OwnsSpeciesChain_ReturnsTrueOnlyWhenChainPresent()
-    {
-        var collection = new PokemonCollection();
-        collection.Add(MakeIndividual(chainId: 7));
-
-        Assert.True(collection.OwnsSpeciesChain(7));
-        Assert.False(collection.OwnsSpeciesChain(8));
     }
 
     [Fact]

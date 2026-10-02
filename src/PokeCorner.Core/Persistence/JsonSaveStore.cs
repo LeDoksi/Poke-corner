@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace PokeCorner.Core.Persistence;
 
-public sealed class JsonSaveStore : ISaveStore
+public sealed class JsonSaveStore
 {
     private readonly string _filePath;
     private static readonly JsonSerializerOptions Options = new() { WriteIndented = true };

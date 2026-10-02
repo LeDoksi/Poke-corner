@@ -40,7 +40,4 @@ public sealed class PokemonCollection
 
     public PokemonIndividual? GetActive() =>
         _individuals.FirstOrDefault(i => i.Id == ActiveIndividualId);
-
-    public bool OwnsSpeciesChain(int evolutionChainId) =>
-        _individuals.Any(i => i.EvolutionChainId == evolutionChainId);
 }

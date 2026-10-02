@@ -1,6 +1,4 @@
-using System.IO;
 using PokeCorner.App.Overlay;
-using Xunit;
 
 namespace PokeCorner.App.Tests.Overlay;
 
