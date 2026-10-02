@@ -65,11 +65,7 @@ public partial class ProgressPanelWindow : System.Windows.Window
     }
 
     /// Positions the panel immediately to the LEFT of the overlay sprite, vertically centered
-    /// on it — called whenever the overlay is repositioned (corner/monitor/size settings).
-    ///
-    /// Renamed from PositionBelow along with the layout change: the panel is a vertical strip
-    /// beside the pet now, and a method still called "below" would be actively misleading at
-    /// its three call sites in App.ReconcileSettingsState/ApplyPetSizeAndPosition.
+    /// on it — called whenever the overlay is repositioned.
     public void PositionLeftOf(OverlayWindow overlay)
     {
         // SpriteBounds, not the overlay's own Left/Top/Width/Height: the overlay window is
@@ -108,9 +104,8 @@ public partial class ProgressPanelWindow : System.Windows.Window
             .FromPoint(new System.Drawing.Point((int)(pet.Left * dpi.DpiScaleX), (int)(pet.Top * dpi.DpiScaleY)))
             .WorkingArea, dpi);
 
-        // The left-edge case is this layout's counterpart to the old below/above flip: with
-        // the pet parked in a LEFT screen corner there is no room beside it on that side, so
-        // the panel goes to its right instead of running off-screen.
+        // A pet parked in a LEFT screen corner has no room on that side, so the panel goes to its
+        // right instead of running off-screen.
         if (Left < bounds.Left)
         {
             Left = pet.Right + Gap;
@@ -138,8 +133,7 @@ public partial class ProgressPanelWindow : System.Windows.Window
             Top = bounds.Top;
         }
 
-        // The panel needs the same z-order slot as the pet it hangs off — see
-        // KeepAboveAppsBelowShell's comment for why neither is Topmost="True" any more.
+        // The panel needs the same z-order slot as the pet it hangs off (KeepAboveAppsBelowShell).
         OverlayWindow.KeepAboveAppsBelowShell(this);
     }
 }

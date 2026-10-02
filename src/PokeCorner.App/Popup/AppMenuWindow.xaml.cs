@@ -21,8 +21,8 @@ public partial class AppMenuWindow : Window
         _catchView = catchView;
     }
 
-    /// Drag and double-click-to-maximize for the custom title bar. WindowChrome's
-    /// CaptionHeight is 0, so the OS does none of this for us any more.
+    /// Drag and double-click-to-maximize for the custom title bar: WindowChrome's CaptionHeight
+    /// is 0, so the OS does none of this.
     private void TitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.ClickCount == 2)

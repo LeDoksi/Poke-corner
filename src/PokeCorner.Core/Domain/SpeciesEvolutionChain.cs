@@ -21,14 +21,9 @@ public sealed record SpeciesEvolutionChain(
 
     public IReadOnlyList<int> StageSpeciesIds { get; init; } = StageSpeciesIds ?? Array.Empty<int>();
 
-    /// PokeAPI type names for each stage ("electric", "bug"/"flying"), positionally aligned
-    /// with <see cref="StageSpeciesIds"/>. Most species have one type, some have two.
-    ///
-    /// Normalized exactly like StageSpeciesNames and for exactly the same reason: a
-    /// catalog.json written before types were captured deserializes with this property missing,
-    /// and an empty list must degrade to "no badges" rather than crashing every card that
-    /// renders one. The inner lists are normalized too — a null element in the JSON array
-    /// would otherwise reach the UI as a null enumeration.
+    /// PokeAPI type names for each stage ("electric", "bug"/"flying"), positionally aligned with
+    /// <see cref="StageSpeciesIds"/>. Normalized like StageSpeciesNames — inner lists too — so a
+    /// catalog without types degrades to "no badges" instead of a null reaching the UI.
     public IReadOnlyList<IReadOnlyList<string>> StageTypes { get; init; } =
         StageTypes?.Select(types => types ?? (IReadOnlyList<string>)Array.Empty<string>()).ToList()
         ?? (IReadOnlyList<IReadOnlyList<string>>)Array.Empty<IReadOnlyList<string>>();
@@ -63,12 +58,8 @@ public static class SpeciesEvolutionChainExtensions
         return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
     }
 
-    /// Resolves a species' display name from catalog data by finding the chain that contains
-    /// the species and reading the name at the same stage index. Replaces the retired
-    /// hand-translated SpeciesNames dictionary: the bundled catalog now carries PokeAPI's own
-    /// English names for every species, so there is nothing left to maintain by hand.
-    /// Falls back to "Pokemon #{id}" only when the species is genuinely absent from every
-    /// available chain (shouldn't happen with the full bundled catalog, but never crashes).
+    /// Resolves a species' display name from the chain that contains it, at the same stage
+    /// index. Falls back to "Pokemon #{id}" when the species is in no available chain.
     public static string ResolveSpeciesName(this IReadOnlyList<SpeciesEvolutionChain> chains, int speciesId)
     {
         foreach (var chain in chains)

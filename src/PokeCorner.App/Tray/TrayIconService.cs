@@ -93,10 +93,8 @@ public sealed class TrayIconService : IDisposable
         return IconFromBitmap(bitmap);
     }
 
-    /// Toggles the "Поймать!" menu item and tray tooltip so the player can see a catch
-    /// is ready and trigger it themselves, rather than it happening automatically —
-    /// per explicit feedback, auto-catching on threshold felt like it took the moment
-    /// away from the player.
+    /// Toggles the "Поймать!" menu item and tray tooltip so the player sees a catch is ready
+    /// and claims it themselves (catching is never automatic).
     public void SetCatchReady(bool isReady)
     {
         _catchMenuItem.Enabled = isReady;

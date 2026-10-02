@@ -4,18 +4,15 @@
         Title="PokéCorner" Width="500" SizeToContent="Height"
         Style="{StaticResource DialogWindowStyle}"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <!-- SizeToContent="Height" rather than the old fixed Height="330": the cards grew a
-         rarity tag row, and a hardcoded height would have clipped the "Выбрать" buttons. -->
+    <!-- SizeToContent="Height": a fixed height clipped the "Выбрать" buttons. -->
     <StackPanel Margin="18">
         <TextBlock Text="Выбери своего первого покемона!" Style="{StaticResource ScreenTitleTextStyle}"
                    HorizontalAlignment="Center" Margin="0,0,0,4" />
         <TextBlock Text="Он поселится в углу твоего рабочего стола и будет расти вместе с тобой."
                    Style="{StaticResource CaptionTextStyle}" HorizontalAlignment="Center" TextAlignment="Center"
                    Margin="0,0,0,16" />
-        <!-- Each card shows sprite + name + RARITY, and the sprite animates. The rarity tag
-             uses the same dot-plus-label pill the Pokédex and roster cards use, driven by the
-             candidate chain's CaptureRate — data that was already loaded here and thrown away,
-             which left the three cards looking interchangeable apart from the artwork. -->
+        <!-- Each card: animated sprite, name and a rarity pill (same as the Pokédex cards), from
+             the candidate chain's CaptureRate. -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Border Style="{StaticResource CardStyle}" Width="136" Margin="6" Padding="10">
                 <StackPanel>

@@ -55,9 +55,8 @@ public partial class ShopView : System.Windows.Controls.UserControl
             return;
         }
         var bought = _shopService.BuyCarePointsBooster(_appState.Shop, active);
-        // No stage recompute here any more: the booster adds Care Points, and whether that
-        // crosses an evolution threshold is now the player's call via the Collection tab's
-        // "Эволюционировать!" button rather than something that happens behind their back.
+        // No stage recompute: crossing an evolution threshold only makes the pet ready; evolving
+        // is the player's call via the Collection tab's "Эволюционировать!" button.
         ReportResult(bought, "Бустер роста применён.", "Не хватает монет.");
     }
 
@@ -93,9 +92,6 @@ public partial class ShopView : System.Windows.Controls.UserControl
         CoinsText.Text = _appState.Shop.Coins.ToString(System.Globalization.CultureInfo.CurrentCulture);
         CoinProgressBar.Value = ProgressCalculator.ComputeCoinFraction(_appState.Shop);
 
-        // Each card carries its name and its price in separate elements now (the price sits
-        // in its own coin badge), so Refresh writes two TextBlocks per item instead of one
-        // combined Button.Content string.
         TreatPackNameText.Text = "Пачка лакомств (5 шт)";
         TreatPackPriceText.Text = ShopService.TreatPackPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
         CarePointsBoosterNameText.Text = $"Бустер роста (+{ShopService.CarePointsBoosterAmount:N0} CP)";

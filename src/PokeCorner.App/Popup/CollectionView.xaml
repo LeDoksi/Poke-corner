@@ -1,20 +1,13 @@
 <UserControl x:Class="PokeCorner.App.Popup.CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Two layers: the tabs, and the Pokédex detail card that overlays them. The card used to
-         be a separate top-level Window (PokemonDetailWindow) opened with ShowDialog(); the user
-         found a second OS window spawning out of a card "foreign", so it is an in-view overlay
-         now. Same content, same callbacks — only the hosting changed. -->
+    <!-- Two layers: the tabs, and the Pokédex detail card that overlays them (an in-view
+         overlay rather than a second OS window). -->
     <Grid>
     <TabControl>
         <!-- ============================== HOME ==============================
-             Deliberately only "what is happening right now": the active pet and its three
-             progress bars. The full collection — incubating eggs and every owned individual —
-             lives one tab over in the Pokédex, which is the "everything I have" screen.
-
-             The "Мои покемоны" roster list used to sit under the Pokédex tab alongside the
-             species grid. It is gone: the two showed the same name, rarity and sprite in two
-             parallel lists, and the grid now covers both jobs (see its own comment). -->
+             Only "what is happening right now": the active pet and its progress bars. Everything
+             owned — incubating eggs and every individual — lives on the Pokédex tab. -->
         <TabItem Header="Мой покемон">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
@@ -152,10 +145,8 @@
                             <ProgressBar x:Name="EvolutionProgressBar" Style="{StaticResource EvolutionProgressBarStyle}"
                                          Minimum="0" Maximum="1" Margin="0,0,0,8"
                                          ToolTip="Прогресс до следующей эволюции активного питомца" />
-                            <!-- Evolution no longer fires by itself the moment the bar fills:
-                                 the player presses this, exactly like "Вылупить!" on a ready egg.
-                                 Collapsed (not merely disabled) while the bar is still filling, so
-                                 the card doesn't carry a permanently greyed-out control. -->
+                            <!-- Evolution is the player's action, like "Вылупить!" on a ready egg. Collapsed (not
+                                 merely disabled) while the bar fills, so the card never carries a dead control. -->
                             <!-- No explicit Style: the implicit Button style is the primary
                                  (gold gradient) one, same as the egg's "Вылупить!" button. -->
                             <Button x:Name="EvolveButton" Click="EvolveButton_Click"
@@ -185,9 +176,8 @@
         </TabItem>
 
         <!-- ================================= POKÉDEX =================================
-             The "everything I own" screen, and now the ONLY list of owned Pokémon: one card
-             per owned individual (not per distinct species), plus the incubating eggs.
-             Clicking a card opens PokemonDetailWindow for the details and the actions. -->
+             The "everything I own" screen: one card per owned individual, plus the incubating
+             eggs. Clicking a card opens the detail overlay with the details and the actions. -->
         <TabItem Header="Pokédex">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
@@ -279,30 +269,14 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!-- One card per OWNED INDIVIDUAL now, not per distinct species,
-                                     so two Pikachus are two cards. Clicking one opens
-                                     PokemonDetailWindow with the catch date, nature and the
-                                     Выбрать/Отпустить/star actions that used to sit inline on
-                                     the separate roster list this grid absorbed.
-
-                                     A mouse handler on the Border rather than wrapping the card
-                                     in a Button: the card is already a styled Border with its
-                                     own hover/shadow treatment, and a Button around it would
-                                     layer a second chrome and focus rect over that. The Border
-                                     has a Background from CardStyle, so it is hit-testable
-                                     across its whole face, not just on its glyphs.
-
-                                     MouseLeftButtonDOWN, not Up, and that is load-bearing: the
-                                     detail overlay dismisses on mouse-DOWN, so a card that
-                                     opened on Up got the two halves of one physical click split
-                                     across two different visual trees. Clicking the backdrop to
-                                     dismiss hid the overlay on the down-stroke, and the up-
-                                     stroke then hit-tested straight through to whatever grid
-                                     card happened to sit under the pointer — dismissing the
-                                     card and instantly opening a DIFFERENT one in a single
-                                     click. Open and dismiss must fire on the same event, so
-                                     that the overlay (which is on top while it is open) eats
-                                     the whole click. -->
+                                <!-- A mouse handler on the Border rather than wrapping the card in a Button, which would
+                                     layer a second chrome and focus rect over the card's own hover/shadow. CardStyle's
+                                     Background makes the whole face hit-testable.
+                                
+                                     MouseLeftButtonDOWN, not Up, and that is load-bearing: the detail overlay dismisses on
+                                     mouse-DOWN, so a card opening on Up split one physical click across two visual trees —
+                                     the down-stroke dismissed the overlay and the up-stroke opened whatever card lay under
+                                     the pointer. Open and dismiss fire on the same event, so the overlay eats the whole click. -->
                                 <Border Style="{StaticResource CardStyle}" Width="112" Margin="5" Padding="9"
                                         Cursor="Hand" Tag="{Binding IndividualId}"
                                         MouseLeftButtonDown="PokedexCard_Click"
@@ -314,9 +288,8 @@
                                                 <TextBlock Text="{Binding DexNumber}" FontSize="9.5" FontWeight="SemiBold"
                                                            Foreground="{StaticResource SecondaryTextBrush}" />
                                             </Border>
-                                            <!-- Per-individual markers. Without them two cards of
-                                                 the same species would be indistinguishable now
-                                                 that the grid no longer dedupes. -->
+                                            <!-- Per-individual markers: without them two cards of the same species would be
+                                                 indistinguishable. -->
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                                         VerticalAlignment="Center">
                                                 <Path Width="11" Height="11" Stretch="Uniform" Margin="0,0,3,0"
@@ -478,16 +451,12 @@
     </TabControl>
 
         <!-- ===================== POKÉDEX DETAIL OVERLAY =====================
-             The dimmed backdrop is what closes the card: MouseLeftButtonDown on it hides the
-             layer, and the card itself marks the event Handled so a click INSIDE the card
-             never bubbles up here. ZIndex keeps it over the TabControl regardless of
-             declaration order.
-
-             Content is PokemonDetailWindow's, moved verbatim: sprite + dex number + rarity,
-             the catch date and nature the old roster rows carried, and the three actions that
-             used to sit inline on every card — Выбрать, Отпустить and the favourite star.
-             Names are Detail*-prefixed because several of them (SpriteImage, ShinyBadge)
-             collide with the home tab's own elements now that both live in one namescope. -->
+             The dimmed backdrop closes the card: MouseLeftButtonDown on it hides the layer, and the
+             card marks the event Handled so a click INSIDE the card never bubbles up here. ZIndex
+             keeps it over the TabControl regardless of declaration order.
+        
+             Names are Detail*-prefixed because several (SpriteImage, ShinyBadge) would collide with
+             the home tab's elements in the shared namescope. -->
         <Border x:Name="DetailOverlay" Panel.ZIndex="10" Visibility="Collapsed"
                 Background="#B2000000" MouseLeftButtonDown="DetailOverlay_MouseLeftButtonDown">
             <!-- This Grid exists purely to be a MEASURING STICK for the card's MaxHeight below.
@@ -503,23 +472,13 @@
                     MaxHeight="{Binding ActualHeight, ElementName=DetailOverlayArea}"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
-                <!-- The card's content is as tall as the individual makes it: a shiny, pinned,
-                     currently-active two-type Pokémon mid-way through a 3-stage line carries
-                     four badge pills, two type badges AND the whole evolution strip, which
-                     measured taller than the app window. With no scroller and no height cap the
-                     StackPanel simply grew, the card was arranged centred at that full height,
-                     and Выбрать/Отпустить rendered BELOW the bottom edge of the window with no
-                     way to reach them short of resizing the whole app. MaxHeight above bounds
-                     the card; the ScrollViewer below is what makes the overflow reachable.
-
-                     The action row is docked to the BOTTOM of this DockPanel instead of living
-                     inside the ScrollViewer's own content — added first, ahead of the
-                     ScrollViewer, so LastChildFill gives the scroller the rest. That keeps
-                     Отпустить's on-screen position immune to anything that reflows the
-                     scrollable content above it (evolution-chain length, badge count, the
-                     MaxHeight binding above settling across a layout pass or two — all of
-                     which visibly shook the row when it sat inside the same StackPanel), and
-                     as a bonus the buttons are reachable without scrolling in the common case. -->
+                <!-- MaxHeight bounds the card and the ScrollViewer makes overflow reachable: a shiny,
+                     pinned, active two-type Pokémon in a 3-stage line is taller than the app window, and
+                     without them Выбрать/Отпустить rendered below the window's bottom edge.
+                
+                     The action row is docked to the BOTTOM of this DockPanel (added first, so LastChildFill
+                     gives the scroller the rest), outside the scrollable content: its position is immune to
+                     anything that reflows the content above, and it is reachable without scrolling. -->
                 <DockPanel LastChildFill="True">
                     <Grid DockPanel.Dock="Bottom" Margin="0,12,0,0">
                         <Grid.ColumnDefinitions>
@@ -649,10 +608,8 @@
                                 <TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource MetaTextStyle}"
                                            HorizontalAlignment="Right" FontWeight="SemiBold" />
                             </Grid>
-                            <!-- The right-hand TextBlock is new: this row used to be a bare bar
-                                 with no readout at all, which made a full bar indistinguishable
-                                 between "99% there" and "has no further evolution". It carries
-                                 the percentage OR "Не эволюционирует" / "Финальная форма". -->
+                            <!-- The readout carries the percentage OR "Не эволюционирует" / "Финальная форма":
+                                 a bare bar can't tell "99% there" from "no further evolution". -->
                             <Grid Margin="0,0,0,4">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <ContentControl Style="{StaticResource EvolutionIconStyle}" Width="12" Height="12"
@@ -697,16 +654,9 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
 
-                                            <!-- 84, not the 92 this shipped with. The detail card
-                                                 is 360 wide with 18px padding and sits inside a
-                                                 well with 10px more, leaving 300 for the strip;
-                                                 three 92px stages plus two arrows measured 316,
-                                                 so a real 3-stage line (Shinx -> Luxio -> ???)
-                                                 had its outer two cards cut off at both edges.
-                                                 84 + tighter arrows measures 282. Three is the
-                                                 hard maximum — PokeApiClient.CollectStages keeps
-                                                 only the longest branch — so this is the widest
-                                                 case, not a lucky one. -->
+                                            <!-- 84 wide: the strip gets 300px inside the 360px card, and three stages plus two arrows
+                                                 must fit — at 84 + tight arrows they measure 282. Three is the hard maximum
+                                                 (PokeApiClient.CollectStages keeps only the longest branch). -->
                                             <!-- MouseLeftButtonDown, not Up — same reasoning as
                                                  PokedexCard_Click. Clicking a stage picks it as
                                                  the cosmetic display override (or resets it, if

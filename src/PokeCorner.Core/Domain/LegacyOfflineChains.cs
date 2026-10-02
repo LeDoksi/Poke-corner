@@ -1,12 +1,10 @@
 namespace PokeCorner.Core.Domain;
 
 /// <summary>
-/// Rescue data for individuals caught before the bundled catalog was unified with PokeAPI's
-/// real numbering.
+/// Rescue data for individuals caught before the bundled catalog used PokeAPI's real numbering.
 ///
-/// The old hand-authored offline starter pool invented its own <c>ChainId</c> values, and
-/// most of them collided with COMPLETELY UNRELATED real PokeAPI evolution chains — verified
-/// live against pokeapi.co:
+/// The early hand-authored offline pool invented its own <c>ChainId</c> values, most of which
+/// collide with UNRELATED real PokeAPI chains (verified against pokeapi.co):
 ///
 ///   old id 4   -> really Caterpie/Metapod/Butterfree   (not Charmander's line)
 ///   old id 7   -> really Rattata/Raticate              (not Squirtle's line)
@@ -14,20 +12,15 @@ namespace PokeCorner.Core.Domain;
 ///   old id 152 -> really Meditite/Medicham             (not Chikorita's line)
 ///   old id 155 -> really Minun, single-stage           (not Cyndaquil's line)
 ///   old id 158 -> really Budew/Roselia/Roserade        (not Totodile's line)
-///   old ids 10001/10002 -> not real chain ids at all; they resolve to nothing
+///   old ids 10001/10002 -> not real chain ids at all
 ///
-/// Now that the bundled catalog IS the real PokeAPI data, an individual still carrying one of
-/// those old ids would resolve to the wrong species (the app's own maintainer watched their
-/// Pikachu start displaying as "Покемон #172"/Pichu). <see cref="Migration"/> maps each old
-/// individual onto a reserved id in the 900000 range that can never collide with PokeAPI, and
-/// the chains below reproduce that individual's ORIGINAL shape exactly — same stage count,
-/// same evolution targets. Deliberately NOT retrofitted with baby pre-evolutions: an
-/// individual caught as a stage-0-of-2 Pikachu stays a 2-stage Pikachu -> Raichu.
+/// <see cref="Migration"/> maps each such individual onto a reserved id in the 900000 range,
+/// which can never collide with PokeAPI, and the chains below reproduce its ORIGINAL shape
+/// exactly (no baby pre-evolutions retrofitted).
 ///
-/// These chains are lookup-only. They are merged into
-/// <c>SpeciesCatalog.LoadForLookup()</c> (display species, rarity) but deliberately NOT into
-/// <c>LoadCachedOrFallback()</c>, which is the catch/hatch roll pool — rolling from them
-/// would let a player catch a second, duplicate Bulbasaur line under a legacy id.
+/// Lookup-only: merged into <c>SpeciesCatalog.LoadForLookup()</c> but NOT into
+/// <c>LoadCachedOrFallback()</c>, the catch/hatch roll pool — rolling from them would let a
+/// player catch a duplicate line under a legacy id.
 /// </summary>
 public static class LegacyOfflineChains
 {

@@ -11,20 +11,12 @@ namespace PokeCorner.App.Popup;
 /// UI-only projections of CollectionViewModel's records.
 ///
 /// Everything the card DataTemplates bind to is pre-resolved here — the sprite as a decoded
-/// ImageSource, rarity as a Brush, states as Visibility — rather than resolved through XAML
-/// IValueConverters. Two reasons: sprite lookup needs a SpriteCache instance, which a
-/// parameterless XAML-constructed converter can't have; and pre-resolving keeps the
-/// once-per-second refresh loop from re-running converter logic for every visible card.
-/// One OWNED INDIVIDUAL, rendered as a Pokédex grid card and — when that card is clicked —
-/// as the contents of PokemonDetailWindow.
-///
-/// This is the merge of what used to be two types. The home tab carried a "Мои покемоны"
-/// roster (one row per individual, with an inline Выбрать/Отпустить/star action row) and the
-/// Pokédex tab carried a species grid (one card per distinct species), which meant the same
-/// name, rarity and sprite were rendered twice in two parallel lists. There is now a single
-/// per-individual grid — two owned Pikachus are two cards — and the actions moved off the
-/// card into the detail popup. So this one model carries both the grid-facing fields and the
-/// individual's identity, catch date and nature that only the popup shows.
+/// ImageSource, rarity as a Brush, states as Visibility — rather than through XAML
+/// IValueConverters: sprite lookup needs a SpriteCache instance, which a XAML-constructed
+/// converter can't have, and pre-resolving keeps the once-a-second refresh from re-running
+/// converter logic for every visible card.
+/// One OWNED INDIVIDUAL (two owned Pikachus are two cards), rendered as a Pokédex grid card
+/// and — when clicked — as the contents of the detail overlay.
 public sealed class PokedexCard
 {
     public required Guid IndividualId { get; init; }
@@ -34,9 +26,8 @@ public sealed class PokedexCard
     public required int SpeciesId { get; init; }
     public required string SpeciesName { get; init; }
 
-    /// The player's own name for this individual, or null. A NEW field, never a replacement for
-    /// the species name: the two are rendered together everywhere (see DisplayName /
-    /// SpeciesSubtitle below), the way the games show "Sparky the Pikachu".
+    /// The player's own name for this individual, or null. Never replaces the species name: the
+    /// two are shown together (see DisplayName / SpeciesSubtitle below).
     public string? Nickname { get; init; }
 
     /// The headline: the nickname when there is one, the species otherwise. Never leaves the
@@ -75,8 +66,7 @@ public sealed class PokedexCard
     public string EvolutionToolTip => EvolutionProgressDisplay.ToolTip(EvolutionState);
     public double EvolutionBarOpacity => EvolutionProgressDisplay.BarOpacity(EvolutionState);
 
-    /// Popup-only detail: the roster rows used to show these inline and the species grid
-    /// dropped them entirely, which is half of why the two lists felt redundant-yet-incomplete.
+    /// Detail-overlay-only fields.
     public required string CaughtAtText { get; init; }
     public required string NatureText { get; init; }
 
@@ -90,9 +80,8 @@ public sealed class PokedexCard
     /// shows real artwork immediately whether or not an animated sprite exists or has landed.
     public ImageSource? SpriteImage { get; init; }
 
-    /// Every frame of the species' animated sprite, or null when it has none (or the GIF
-    /// hasn't been fetched yet). Two or more frames is what makes a card actually animate;
-    /// the cards used to render frame 0 forever while the desktop pet moved.
+    /// Every frame of the species' animated sprite, or null when it has none (or the GIF hasn't
+    /// been fetched yet). Two or more frames make the card animate.
     public IReadOnlyList<ImageSource>? SpriteFrames { get; init; }
 
     public Visibility PlaceholderVisibility => SpriteImage is null ? Visibility.Visible : Visibility.Collapsed;

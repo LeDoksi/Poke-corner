@@ -80,14 +80,12 @@ public sealed class CollectionViewModel
         _pendingEggs = pendingEggs;
     }
 
-    /// The grid's default order, in three bands: the individual currently on the desktop, then
-    /// the favorites, then everything else — with dex number ordering WITHIN each band. Catch
-    /// order used to be the tie-breaker, which made a large collection unbrowsable: the same
-    /// species caught twice sat at opposite ends of the list.
+    /// The grid's default order, in three bands: the individual on the desktop, then the
+    /// favorites, then everything else — by dex number WITHIN each band, so the same species
+    /// caught twice sits together.
     ///
-    /// Dex number here is the CURRENT stage's species id (what the card actually shows), not
-    /// the fixed starter species, so an evolved Charmander sorts where Charmeleon does.
-    /// Filtering (rarity pills, the search box) only narrows this list; it never reorders it.
+    /// Dex number is the CURRENT stage's species id (what the card shows), so an evolved
+    /// Charmander sorts where Charmeleon does. Filtering only narrows this list; it never reorders it.
     public IReadOnlyList<CollectionEntry> GetEntries(DateTimeOffset nowUtc) =>
         _collection.Individuals
             .OrderByDescending(i => i.Id == _collection.ActiveIndividualId)
@@ -158,12 +156,6 @@ public sealed class CollectionViewModel
         return stages;
     }
 
-    // (GetPokedexEntries lived here: one deduped entry per distinct DISPLAY species, feeding
-    // a Pokédex grid that sat above a separate roster list of the same Pokémon. The two lists
-    // were merged into one per-individual grid, so GetEntries above is now the only source
-    // the collection screen reads and the deduped projection had no remaining caller. The
-    // "Открыто видов: N" completion stat is still distinct-species — the view derives it with
-    // a Distinct() over the same entries rather than a second pass over the collection.)
 
     private int ResolveDisplaySpeciesId(PokemonIndividual individual) => individual.ResolveDisplaySpeciesId(_chains);
 

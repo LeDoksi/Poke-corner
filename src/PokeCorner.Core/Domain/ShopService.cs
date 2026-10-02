@@ -37,10 +37,8 @@ public sealed class ShopService
         return true;
     }
 
-    // Only mutates AccumulatedCarePoints, matching the pattern FeedingService.Pet/Feed
-    // established. Callers no longer recompute the evolution stage afterwards: crossing a
-    // threshold just makes the individual ready, and the player applies it themselves via the
-    // Collection tab's "Эволюционировать!" button (AppState.IsReadyToEvolve/TryEvolve).
+    // Only mutates AccumulatedCarePoints, like FeedingService.Pet/Feed: crossing a threshold just
+    // makes the individual ready, and the player evolves it via "Эволюционировать!".
     public bool BuyCarePointsBooster(ShopInventory shop, PokemonIndividual activeIndividual)
     {
         if (shop.Coins < CarePointsBoosterPrice) return false;

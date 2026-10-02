@@ -1,12 +1,9 @@
-<!-- src/PokeCorner.App/Theme/PokedexTheme.xaml
-
-     PokéCorner design system.
+<!-- PokéCorner design system.
 
      Layering rule (darkest to lightest): WindowBackground -> SurfaceBackground -> Card ->
-     CardHover. Every panel that sits "on top of" another must move exactly one step up that
-     ladder, which is what gives the UI depth instead of the old flat two-tone look. Accent
-     red is reserved for primary/commit actions and the selected tab; accent gold is for
-     resources/progress; rarity brushes are the only other saturated colors allowed. -->
+     CardHover. Every panel that sits "on top of" another moves exactly one step up that
+     ladder. Accent red is reserved for primary/commit actions and the selected tab; accent
+     gold for resources/progress; rarity brushes are the only other saturated colors. -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -80,19 +77,12 @@
         <GradientStop Color="#161D36" Offset="1" />
     </LinearGradientBrush>
 
-    <!-- KEYED, and every window must opt in with Style="{StaticResource AppWindowStyle}".
-         This used to be an unkeyed implicit style, which silently did nothing: WPF matches an
-         implicit style against an element's EXACT runtime type, and every window here is a
-         Window SUBCLASS (AppMenuWindow, OnboardingWindow, StarterSelectionWindow…), so none
-         of them ever resolved a `TargetType="Window"` style and all of them kept WPF's stock
-         white Window.Background. AppMenuWindow hid that because its content paints the entire
-         client area; StarterSelectionWindow did not, and rendered as a white window with
-         near-white title text on it — the bug the user reported.
-         (The implicit styles for Button/TabItem/ComboBox/etc. below are unaffected: those
-         elements ARE their exact target type, never a subclass.)
-
-         Not applied to OverlayWindow (Background="{x:Null}") or ProgressPanelWindow
-         (its own tinted Border): both depend on a transparent window surface. -->
+    <!-- KEYED: every window opts in with Style="{StaticResource AppWindowStyle}". An implicit
+         style would do nothing, because WPF matches implicit styles against the EXACT runtime
+         type and every window here is a Window SUBCLASS. (The implicit Button/TabItem/ComboBox
+         styles below are fine: those elements ARE their exact target type.)
+    
+         Not applied to OverlayWindow or ProgressPanelWindow: both need a transparent surface. -->
     <Style x:Key="AppWindowStyle" TargetType="Window">
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
@@ -353,14 +343,10 @@
     </Style>
 
     <!-- ===================== Custom window chrome ===================== -->
-    <!-- Minimize/maximize/close for the hand-drawn title bar that replaces the OS one (the
-         native bar renders in the light Windows chrome colour and clashed badly with this
-         dark theme). Glyphs come from Segoe MDL2 Assets, the same font the real Windows
-         title bar uses, so they match the system's shapes exactly.
-
-         BorderBrush carries the hover colour rather than the trigger hardcoding one — that
-         is the whole reason the close button below needs only a one-line override instead of
-         a second copy of this template. -->
+    <!-- Minimize/maximize/close for the hand-drawn title bar that replaces the light OS one.
+         Glyphs come from Segoe MDL2 Assets, the font the real Windows title bar uses.
+         BorderBrush carries the hover colour, so the close button below needs only a one-line
+         override rather than a second copy of this template. -->
     <Style x:Key="TitleBarButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="44" />
         <Setter Property="Height" Value="30" />
@@ -522,27 +508,16 @@
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
     </Style>
 
-    <!-- (MiniProgressBarStyle lived here. It existed solely for the desktop progress panel's
-         three stacked bars; that panel is now three radial gauges built from Ellipses, so the
-         style had no remaining consumer.) -->
 
     <!-- ================= Progress concept icons ==================
-         catch / evolution / treat used to be distinguishable only by colour (rose/blue/green),
-         which says nothing to a player who hasn't memorised the mapping. Each concept now has
-         a glyph, and — the point of putting them HERE rather than inline — the desktop
-         ProgressPanelWindow and the in-app "Прогресс" card render the SAME one, so the compact
-         desktop indicator is visually traceable to its full counterpart in the app.
-
-         Hand-drawn from Path/Ellipse primitives in the style the Pokédex header pokéball and
-         the shop's item glyphs already established — no external image assets. A ContentControl
-         Style (not a UserControl) keeps this to markup only: no new file, no code-behind, and
-         it lives in the same dictionary both windows already merge. The Viewbox means a call
-         site picks its size with plain Width/Height, and Foreground carries the tint.
-
-         Every glyph is deliberately background-INDEPENDENT — nothing is knocked out with a
-         surface-coloured fill — because these render on two different surfaces (the card's
-         #1B2340 and the desktop panel's translucent #E60D1120) and a hardcoded knockout colour
-         would show as a wrong-coloured patch on one of them. -->
+         Catch / evolution / treat each get a glyph rather than being told apart by colour
+         alone. Defined HERE so the desktop ProgressPanelWindow and the in-app "Прогресс" card
+         render the SAME one. A ContentControl Style (markup only); the Viewbox lets a call site
+         size it with Width/Height, and Foreground carries the tint.
+    
+         Every glyph is background-INDEPENDENT (nothing knocked out with a surface-coloured
+         fill): they render on two different surfaces, and a knockout colour would show as a
+         wrong-coloured patch on one of them. -->
 
     <Style x:Key="ProgressIconStyle" TargetType="ContentControl">
         <Setter Property="Focusable" Value="False" />
@@ -658,10 +633,9 @@
         </Setter>
     </Style>
 
-    <!-- Same pill look as FilterPillStyle, retargeted at CheckBox for an independent on/off
-         filter (Task 5's "Не завершившие эволюцию") rather than a mutually-exclusive group —
-         WPF Styles are type-exact, so RadioButton's style can't just be reused for CheckBox
-         even though both derive from ToggleButton and both expose IsChecked. -->
+    <!-- Same pill look as FilterPillStyle, for an independent on/off CheckBox filter rather
+         than a mutually-exclusive group — WPF styles are type-exact, so RadioButton's style
+         can't be reused for CheckBox. -->
     <Style x:Key="FilterPillCheckBoxStyle" TargetType="CheckBox">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontSize" Value="10.5" />
@@ -807,12 +781,9 @@
         </Setter>
     </Style>
 
-    <!-- WPF's default TabControl chrome paints its content-hosting area with its own
-         system-color background (independent of the surrounding Window's Background),
-         so without this override every tab's content rendered on a white/light panel no
-         matter how dark the TabItem headers or the Window itself were styled — the "white
-         window" bug. This template keeps that fix and adds the header rail: a Surface-tinted
-         strip with a hairline underneath, which is what the selected tab's accent bar sits on. -->
+    <!-- WPF's default TabControl chrome paints its content area with its own system-colour
+         (light) background regardless of the Window's. This template removes that and adds the
+         header rail: a Surface-tinted strip with a hairline the selected tab's accent bar sits on. -->
     <Style TargetType="TabControl">
         <Setter Property="Background" Value="{StaticResource SurfaceBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -957,11 +928,8 @@
     </Style>
 
     <!-- ===================== ScrollBar ===================== -->
-    <!-- The stock Aero scrollbar is a light-gray column with arrow buttons — the single
-         loudest "unstyled Windows app" tell inside an otherwise dark UI. This is the usual
-         minimal overlay-style replacement: no arrow buttons, a rounded thumb, transparent
-         trough. Horizontal is handled by the trigger even though every ScrollViewer in the
-         app currently disables it. -->
+    <!-- Minimal overlay-style scrollbar instead of the light Aero one: no arrow buttons, a
+         rounded thumb, transparent trough. -->
     <Style x:Key="ScrollBarThumbStyle" TargetType="Thumb">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
@@ -1042,13 +1010,9 @@
                         <Border.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
                         </Border.Effect>
-                        <!-- A TextBlock, not a bare ContentPresenter: every tooltip in this app
-                             is a plain string, and ContentPresenter renders a string into a
-                             TextBlock that does NOT wrap. Against the MaxWidth above, that meant
-                             any tooltip longer than ~40 Cyrillic characters was hard-clipped
-                             mid-word instead of wrapping — the reported case was the ЛАКОМСТВА
-                             stat's, which stopped dead at "…активностью и тр". Wrapping here
-                             fixes every tooltip in the app at once rather than one stat well. -->
+                        <!-- A wrapping TextBlock, not a bare ContentPresenter: every tooltip here is a plain string,
+                             and ContentPresenter renders a string into a TextBlock that does NOT wrap, so anything
+                             longer than ~40 characters was clipped mid-word against the MaxWidth above. -->
                         <TextBlock Text="{TemplateBinding Content}" TextWrapping="Wrap" />
                     </Border>
                 </ControlTemplate>
@@ -1099,15 +1063,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
                     <Grid>
-                        <!-- Foreground and Padding are template-bound onto the ToggleButton on
-                             purpose. WPF's stock ButtonBase theme style carries its own
-                             Foreground setter (SystemColors.ControlText — i.e. BLACK), and a
-                             style setter on the element outranks an inherited value, so
-                             without this local binding the closed box rendered the current
-                             selection in near-black text on the dark navy card: legible in
-                             theory from the ComboBox's own Foreground, invisible in practice.
-                             The dropdown list items were never affected, which is why this
-                             only ever reproduced on the collapsed box. -->
+                        <!-- Foreground and Padding are template-bound onto the ToggleButton on purpose: the stock
+                             ButtonBase style sets Foreground to SystemColors.ControlText (black), and that setter
+                             outranks the inherited value, so the closed box showed its selection in near-black on
+                             the dark card. -->
                         <ToggleButton x:Name="Toggle" Focusable="False" ClickMode="Press"
                                       Foreground="{TemplateBinding Foreground}"
                                       Padding="{TemplateBinding Padding}"

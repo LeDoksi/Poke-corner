@@ -70,36 +70,13 @@ public partial class OverlayWindow : Window
         };
     }
 
-    /// Keeps `window` above ordinary application windows but permanently below the taskbar
-    /// and the shell surfaces that sit with it — tray flyouts, the Start menu, notification
-    /// centre. It does that by inserting the window into the topmost band DIRECTLY BEHIND
-    /// Shell_TrayWnd, which is the taskbar's own window.
+    /// Keeps `window` above ordinary app windows but below the taskbar and the shell surfaces
+    /// that sit with it (tray flyouts, Start, notification centre), by inserting it into the
+    /// topmost band directly behind Shell_TrayWnd. Plain Topmost="True" can't do that: the
+    /// topmost band is flat, so the pet rendered over the taskbar and tray flyouts.
     ///
-    /// Two approaches were tried before this one, and it is worth recording why both fail,
-    /// because each looks obviously correct:
-    ///
-    ///   Topmost="True" — the original. The topmost band is flat: there is no "just below the
-    ///   shell" position inside it, so the pet could and did render over the taskbar and over
-    ///   tray flyouts.
-    ///
-    ///   SetWindowPos(HWND_TOP) with the window left non-topmost. This does keep the pet below
-    ///   every shell surface, but it does NOT put it above the window the user is working in:
-    ///   Windows refuses to raise a window above the foreground window on behalf of a process
-    ///   that does not own the foreground, so the call silently does nothing useful and the pet
-    ///   ends up buried under whatever was clicked last. Verified live — the pet sat below
-    ///   three ordinary app windows while this was in place.
-    ///
-    /// Passing a topmost window as hWndInsertAfter makes `window` topmost too and places it
-    /// immediately behind that window, which is exactly the "one rung below the shell" slot the
-    /// flat topmost band otherwise doesn't offer. The taskbar therefore always covers the pet,
-    /// and a flyout or the Start menu — which come up at the TOP of the topmost band when they
-    /// open, above Shell_TrayWnd — covers it as well.
-    ///
-    /// SWP_NOACTIVATE is essential: without it this would steal focus from whatever the user
-    /// just clicked on, which is the very thing that triggers this call.
-    ///
-    /// Static so ProgressPanelWindow — which needs the identical treatment for the identical
-    /// reason — can reuse it rather than carrying its own copy of the P/Invoke.
+    /// SWP_NOACTIVATE is essential: this runs right after the user clicks something and must not
+    /// steal focus from it. Static so ProgressPanelWindow can reuse it.
     public static void KeepAboveAppsBelowShell(System.Windows.Window window)
     {
         var hwnd = new WindowInteropHelper(window).Handle;
@@ -126,18 +103,13 @@ public partial class OverlayWindow : Window
         }
     }
 
-    /// Where to put the pet this round. "Behind Shell_TrayWnd makes it topmost" is not a
-    /// documented guarantee: the flag survives only if that slot is still inside the topmost
-    /// band, i.e. some OTHER topmost window sits below the taskbar. When the taskbar is the last
-    /// topmost window, the slot behind it is the top of the normal band, the flag is dropped,
-    /// and the pet can no longer be raised over the foreground window (see the second failed
-    /// approach above) — it stays buried. That is POKE-9, and why it had no visible pattern: it
-    /// depends on which other topmost windows exist at the moment.
-    ///
-    /// In that case the pet goes to the top of the topmost band instead — and is then LEFT
-    /// there while it stays topmost. Re-slotting it behind the taskbar on every tick would drop
-    /// the flag again each time and flip-flop twice a second (final-review finding). The price:
-    /// while no other topmost window exists, the pet can draw over a shell flyout near it.
+    /// Where to put the pet this round. "Behind Shell_TrayWnd" keeps the topmost flag only while
+    /// some OTHER topmost window sits below the taskbar; when the taskbar is the last one, that
+    /// slot is the top of the normal band and the flag would be dropped. Then the pet goes to the
+    /// top of the topmost band instead — and is LEFT there while it stays topmost, because
+    /// re-slotting it behind the taskbar every tick would drop the flag again and flip-flop twice
+    /// a second. The price: while no other topmost window exists, the pet can draw over a shell
+    /// flyout near it.
     public static ZSlot ChooseZSlot(bool taskbarFound, bool foreignTopmostBelowTaskbar, bool alreadyTopmost)
     {
         if (taskbarFound && foreignTopmostBelowTaskbar) return ZSlot.BehindTaskbar;
@@ -160,8 +132,8 @@ public partial class OverlayWindow : Window
         return false;
     }
 
-    /// How many times this session the fallback above had to fire — surfaced in zorder.log, so
-    /// a log sent in by a user shows whether that was the failure they were seeing.
+    /// How many times the fallback above fired this session — in zorder.log, so a log sent in
+    /// by a user shows whether it was involved.
     public static int TopmostFallbackCount { get; private set; }
 
     public void SetSpriteFrames(IReadOnlyList<ImageSource> frames)
@@ -186,10 +158,8 @@ public partial class OverlayWindow : Window
             return;
         }
 
-        // frameCount is always derived from frames.Count right here, so FrameSequencer
-        // and SpriteAnimator can never disagree about how many frames exist — a single
-        // frame (the common case until the animated-sprite follow-up plan lands) just
-        // means FrameIndexAt always returns 0, i.e. a static image with no visible cycling.
+        // frameCount comes from frames.Count right here, so FrameSequencer and SpriteAnimator can
+        // never disagree; a single frame just means a static image.
         var sequencer = new FrameSequencer(frames.Count, IdleFrameDuration);
         _animator = new SpriteAnimator(SpriteImage, sequencer, frames);
         _animator.Start();
@@ -199,14 +169,10 @@ public partial class OverlayWindow : Window
     /// every other number that reaches Left/Top/Width/Height.
     private const double CornerMargin = 12;
 
-    /// THE UNIT BOUNDARY. Everything System.Windows.Forms.Screen reports — WorkingArea,
-    /// Bounds — is in PHYSICAL pixels. Everything WPF's Window.Left/Top/Width/Height accepts
-    /// is in DIPs (1/96"), i.e. physical = DIP * scale. At 100% scaling the two are
-    /// numerically identical, so feeding one straight into the other is invisibly correct —
-    /// and that is exactly how a shipped build put the pet completely off-screen on a 150%
-    /// laptop: BottomRight on a 1920x1080 panel wants DIP 1280x844, but the raw physical
-    /// 1908x1032 was assigned instead, which the OS then re-multiplied by 1.5 to 2862x1548 —
-    /// far past the physical screen. Every value crossing that boundary goes through here.
+    /// THE UNIT BOUNDARY. System.Windows.Forms.Screen reports PHYSICAL pixels; WPF's
+    /// Left/Top/Width/Height take DIPs (1/96"), i.e. physical = DIP * scale. At 100% scaling the
+    /// two are numerically identical, which hides the mistake — at 150% a raw physical value put
+    /// the pet far off-screen. Every value crossing that boundary goes through here.
     public static Rect ToDips(System.Drawing.Rectangle physical, DpiScale dpi) =>
         new(physical.Left / dpi.DpiScaleX, physical.Top / dpi.DpiScaleY,
             physical.Width / dpi.DpiScaleX, physical.Height / dpi.DpiScaleY);
@@ -232,8 +198,7 @@ public partial class OverlayWindow : Window
     }
 
     /// Where a `sizeDips`-square pet sits in `corner` of an already-converted working area.
-    /// Pure, so the DIP arithmetic that broke on the 150% machine is directly testable
-    /// without a live window or a live monitor.
+    /// Pure, so the DIP arithmetic is testable without a live window or monitor.
     public static System.Windows.Point CornerPosition(ScreenCorner corner, Rect workAreaDips, double sizeDips) =>
         corner switch
         {
@@ -244,10 +209,8 @@ public partial class OverlayWindow : Window
         };
 
     /// Whether a remembered drag position still lands on `workAreaDips`. Both sides must be
-    /// DIPs: the remembered values come from Window.Left/Top (DIPs), so comparing them
-    /// against a raw physical WorkingArea silently misjudges the "is it still on a connected
-    /// monitor" question at any scaling other than 100% — at 150% it would accept positions
-    /// half a screen off the right edge and reject legitimate ones near it.
+    /// DIPs (Window.Left/Top are DIPs); against a raw physical WorkingArea the "still on a
+    /// connected monitor" check misjudges at any scaling other than 100%.
     public static bool IsOnWorkArea(double xDips, double yDips, double sizeDips, Rect workAreaDips) =>
         xDips >= workAreaDips.Left - sizeDips && xDips <= workAreaDips.Right &&
         yDips >= workAreaDips.Top - sizeDips && yDips <= workAreaDips.Bottom;
@@ -321,20 +284,15 @@ public partial class OverlayWindow : Window
         var position = CornerPosition(corner, ToDips(screen.WorkingArea, dpi), sizePixels);
         (Left, Top) = (position.X - headroomPad, position.Y - headroomPad);
 
-        // Moving/resizing a window can drop it behind others; without this the pet silently
-        // fell out of position in the z-order after a corner/monitor/size change and only
-        // recovered on the next foreground switch.
+        // Moving/resizing a window can drop it behind others; re-top it right away instead of
+        // waiting for the next foreground switch.
         KeepAboveAppsBelowShell(this);
     }
 
-    // Click-vs-drag detection via explicit mouse capture + MouseMove threshold, not a
-    // before/after position comparison around DragMove(). That approach turned out
-    // unreliable: DragMove() runs its own internal Win32 SC_MOVE modal loop that
-    // bypasses WPF's normal input pipeline, so WPF's Mouse.GetPosition() afterward
-    // isn't guaranteed to reflect what actually happened — in practice, clicks
-    // stopped registering at all. This is the standard, well-tested pattern instead:
-    // track real movement via WPF's own MouseMove stream, and only invoke DragMove()
-    // once we're already sure it's a genuine drag.
+    // Click-vs-drag detection via explicit mouse capture + a MouseMove threshold, not a
+    // before/after position comparison around DragMove(): DragMove() runs its own Win32
+    // SC_MOVE modal loop that bypasses WPF's input pipeline, so positions read afterwards are
+    // unreliable (clicks stopped registering). DragMove() starts only once it's surely a drag.
     private void SpriteImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ClickCount == 2)
@@ -381,31 +339,23 @@ public partial class OverlayWindow : Window
         _isDragging = false;
     }
 
-    /// WS_EX_TRANSPARENT operates at the Win32 WM_NCHITTEST level — it makes Windows
-    /// route ALL mouse input past the entire HWND (including its children) to whatever
-    /// is behind it, before WPF's own hit-testing ever runs. So it is deliberately NOT
-    /// applied here: only WS_EX_LAYERED is set, which is still needed (alongside
-    /// AllowsTransparency="True") for proper alpha-blended transparency rendering.
-    /// Instead, the window's own background is {x:Null} (see OverlayWindow.xaml) — a
-    /// null background has no hit-test surface at all, so WPF's hit-testing only ever
-    /// finds the SpriteImage control itself (hit-testable by default), meaning clicks on
-    /// the pet land on it while clicks elsewhere in the window's bounding box fall through
-    /// to whatever's behind it, all through WPF's normal hit-testing rather than Win32
-    /// click-through.
     /// Keeps a desk window off the taskbar and out of Alt+Tab WITHOUT ShowInTaskbar="False".
-    /// That property works by giving the window a hidden, non-topmost owner, and an owned
-    /// window's z-order follows its owner: the pet kept WS_EX_TOPMOST yet sat under ordinary
-    /// app windows — POKE-9, confirmed live 2026-10-02 by detaching the owner on the running
-    /// app, which put the pet straight back on top. WS_EX_TOOLWINDOW does the hiding with no
-    /// owner involved — but WPF puts WS_EX_APPWINDOW on every ShowInTaskbar window, and APPWINDOW
-    /// overrides TOOLWINDOW (1.0.15 shipped with a taskbar button because of exactly that), so it
-    /// has to come off too. Call from SourceInitialized, i.e. before the window is first shown.
+    /// That property gives the window a hidden, non-topmost owner, and an owned window's z-order
+    /// follows its owner: the pet kept WS_EX_TOPMOST yet sat under ordinary app windows (POKE-9).
+    /// WS_EX_TOOLWINDOW hides it with no owner involved — but WPF puts WS_EX_APPWINDOW on every
+    /// ShowInTaskbar window and APPWINDOW overrides TOOLWINDOW, so that has to come off too.
+    /// Call from SourceInitialized, i.e. before the window is first shown.
     public static void HideFromTaskbarWithoutOwner(System.Windows.Window window)
     {
         var hwnd = new WindowInteropHelper(window).Handle;
         SetWindowLong(hwnd, GWL_EXSTYLE, (NativeMethods.GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
     }
 
+    /// Only WS_EX_LAYERED (needed with AllowsTransparency for alpha-blended rendering), NOT
+    /// WS_EX_TRANSPARENT: that works at the Win32 WM_NCHITTEST level and would route ALL mouse
+    /// input past the window, the pet included. Click-through instead comes from the window's
+    /// {x:Null} background, which has no hit-test surface: clicks land on the sprite and fall
+    /// through everywhere else in the window's rectangle.
     private void MakeClickThroughExceptSprite()
     {
         var hwnd = new WindowInteropHelper(this).Handle;
@@ -463,10 +413,9 @@ public partial class OverlayWindow : Window
         SpriteImage.BeginAnimation(OpacityProperty, fade);
     }
 
-    /// mood < this fraction of the way to full decay is when the mood cloud (Task 2, fix B)
-    /// starts showing — deliberately past the halfway point of the neglect window, per the
-    /// user's explicit spec ("не сразу, а когда питомец уже достаточно обижен"). At 0.4, that's
-    /// roughly the back 40% of the recalibrated 6-hour Hardcore window, not from t=0.
+    /// mood below this fraction of the way to full decay shows the mood cloud — deliberately
+    /// past the halfway point ("не сразу, а когда питомец уже достаточно обижен"): roughly the
+    /// last 40% of the 6-hour Hardcore window.
     private const double MoodCloudThreshold = 0.4;
 
     /// Advances once per SetMoodTint call (App's growth tick, ~once/second while Hardcore) so
@@ -474,17 +423,14 @@ public partial class OverlayWindow : Window
     private int _moodCloudTicks;
 
     /// mood: 0.0 (long-neglected) to 1.0 (just interacted with) — CareModeService.ComputeMood's
-    /// output, applied continuously so the sprite visibly droops/dims as Hardcore-mode
-    /// neglect approaches the run-away threshold, not just at the moment it triggers.
+    /// output, applied continuously so the sprite visibly droops/dims as Hardcore neglect
+    /// approaches the run-away threshold, not just at the moment it triggers.
     ///
-    /// opacityFloor: how dim the sprite is allowed to get at mood=0.0. The only caller
-    /// (App.CheckHardcoreNeglect, itself gated to CareMode.Hardcore) picks the value — a low
-    /// floor (~0.15-0.2) so a neglected-to-the-deadline pet genuinely reads as "fading away",
-    /// versus the gentler ambient floor Chill-mode-style callers would want if they ever called
-    /// this (none do today; CheckHardcoreNeglect is the single call site).
+    /// opacityFloor: how dim the sprite may get at mood=0.0 (the caller picks ~0.15-0.2, so a pet
+    /// at the deadline reads as "fading away").
     ///
-    /// Also drives the mood-cloud bubble: visible once mood drops under MoodCloudThreshold,
-    /// alternating/escalating glyphs as it keeps falling toward 0.
+    /// Also drives the mood cloud: visible once mood drops under MoodCloudThreshold, with glyphs
+    /// alternating faster as it keeps falling toward 0.
     public void SetMoodTint(double mood, double opacityFloor = 0.5)
     {
         SpriteTranslateTransform.Y = DroopOffsetFor(mood);
@@ -510,11 +456,9 @@ public partial class OverlayWindow : Window
         MoodCloudText.Text = showBrokenHeart ? "💔" : severity > 0.66 ? "💢💢" : "💢";
     }
 
-    /// Clears any droop/dim/mood-cloud state left over from Hardcore neglect. Called whenever
-    /// the active care mode isn't Hardcore (App.CheckHardcoreNeglect's early-return branch) —
-    /// without it, switching CareMode away from Hardcore mid-neglect would leave the sprite
-    /// stuck dim/drooped and the mood cloud stuck showing, since nothing would call
-    /// SetMoodTint again to clear them.
+    /// Clears droop/dim/mood-cloud state left over from Hardcore neglect. Called whenever the care
+    /// mode isn't Hardcore; otherwise switching away mid-neglect would leave the sprite stuck dim,
+    /// since nothing would call SetMoodTint again.
     public void ResetMoodTint()
     {
         SpriteTranslateTransform.Y = 0;

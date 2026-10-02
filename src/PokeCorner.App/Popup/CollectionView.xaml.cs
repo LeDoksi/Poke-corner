@@ -22,8 +22,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Func<IReadOnlyList<byte[]>?> _getActiveSpriteFrames;
     private readonly Func<Guid, bool> _onHatchRequested;
 
-    /// Evolution is player-triggered now (it used to fire automatically the instant the bar
-    /// filled), so this view needs both "can they?" for the button's visibility and "do it".
+    /// Evolution is player-triggered, so this view needs both "can they?" (button visibility)
+    /// and "do it".
     private readonly Func<bool> _onEvolveRequested;
     private readonly Func<bool> _isReadyToEvolve;
     private DispatcherTimer? _liveRefreshTimer;
@@ -34,12 +34,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private SpriteAnimator? _heroAnimator;
 
-    /// Identity of the frame set currently driving the hero image. Refresh() runs once a
-    /// second; without this guard the animator would be torn down and restarted on every
-    /// tick, which resets the cycle to frame 0 and reads as a stuck sprite rather than an
-    /// animated one. Deliberately content-derived (individual + frame count + first frame
-    /// size) rather than a reference check: App re-decodes the GIF into a brand new list on
-    /// every overlay refresh, so reference identity would churn for no visible reason.
+    /// Identity of the frame set driving the hero image. Refresh() runs once a second; without
+    /// this guard the animator would restart every tick and the sprite would sit on frame 0.
+    /// Content-derived (individual + frame count + first frame size) so it stays stable even
+    /// when the same frames arrive as a different list instance.
     private string _heroSpriteSignature = string.Empty;
 
     /// null = "Все". Which rarity the Pokédex grid is filtered to.
@@ -157,8 +155,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         foreach (var animator in _cardAnimators.Values) animator.Stop();
         _cardAnimators.Clear();
 
-        // And the detail overlay's, which now lives in this view rather than in a window whose
-        // own Closed handler used to stop it.
+        // And the detail overlay's.
         _detailAnimator?.Stop();
         _detailAnimator = null;
     }
@@ -220,10 +217,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshHeroSprite(active);
     }
 
-    /// Drives the hero image from the SAME frame list the desktop overlay animates, so the pet
-    /// in the menu moves instead of sitting on a single frozen frame. Reuses the overlay's
-    /// FrameSequencer/SpriteAnimator pair — both already take their target Image as a
-    /// constructor argument, so pointing them at this view's Image needed no changes there.
+    /// Drives the hero image from the SAME frame list the desktop overlay animates, with the
+    /// overlay's FrameSequencer/SpriteAnimator pair.
     private void RefreshHeroSprite(PokemonIndividual? active)
     {
         var frames = _getActiveSpriteFrames();
@@ -388,24 +383,19 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    /// The grid is fed by GetEntries — the SAME per-individual source the removed roster list
-    /// used — rendered in the Pokédex card's style. That is the whole of item 4: one browsable
-    /// list instead of a deduped species grid sitting above a parallel roster of the same
-    /// Pokémon. Two owned Pikachus are therefore two cards, and the order is GetEntries' own
-    /// (favourites pinned first, then catch order) rather than dex number.
+    /// One card per individual (two owned Pikachus are two cards), in GetEntries' order:
+    /// active, then favourites, then dex number — unless a sort option replaces it.
     private void RefreshPokedex(IReadOnlyList<CollectionEntry> entries)
     {
         // Distinct SPECIES even though the cards are per-individual: this line reports Pokédex
-        // completion, which a second Pikachu does not advance. The owned total is reported
-        // alongside it because the cards no longer make it countable at a glance.
+        // completion, which a second Pikachu does not advance; the owned total sits alongside it.
         var speciesCount = entries.Select(e => e.DisplaySpeciesId).Distinct().Count();
         PokedexCountText.Text = speciesCount == 1
             ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
 
-        // All three filters narrow the SAME list GetEntries already ordered (AND, same as
-        // rarity+search already composed) before ApplySort decides whether to keep that
-        // active/favorites/dex banding or replace it with an alphabetical/catch-date order.
+        // All three filters narrow the list GetEntries already ordered (AND), then ApplySort
+        // keeps that banding or replaces it with an alphabetical/catch-date order.
         var visible = CollectionViewModel.ApplySort(entries
             .Where(entry => _rarityFilter is null || entry.Rarity == _rarityFilter.Value)
             .Where(entry => !_hideFullyEvolved || entry.HasEvolutionsRemaining)
@@ -521,8 +511,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             // rather than spinning up a timer that repaints the same bitmap.
             if (frames is null || frames.Count < 2) return;
 
-            // Off the UI thread: SpriteImages.Decode freezes each bitmap, which is what makes it legal to
-            // hand them back here. Decoding a page's worth on the dispatcher was a visible hitch.
+            // Off the UI thread: SpriteImages.Decode freezes each bitmap, which is what makes it legal
+            // to hand them back here.
             _animatedFrames[speciesId] = await Task.Run(() => frames.Select(SpriteImages.Decode).ToList());
             _pokedexSignature = string.Empty; // force the next tick to rebuild with the frames
         }
@@ -554,19 +544,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         animator.Stop();
     }
 
-    /// A Pokédex card was clicked: show the detail/actions card for that individual. The three
-    /// actions call straight back into the same CollectionViewModel methods the removed
-    /// roster's inline buttons used, so behaviour (including the Hardcore availability gate on
-    /// Выбрать) is unchanged — only where the buttons live has moved.
+    /// A Pokédex card was clicked: show the detail/actions overlay for that individual.
     ///
-    /// This used to construct a PokemonDetailWindow and ShowDialog() it. That window is gone:
-    /// a card in a grid spawning a second OS window read as foreign, so the same content is an
-    /// overlay layer inside this view now (see CollectionView.xaml's detail overlay).
-    ///
-    /// Bound to MouseLeftButtonDOWN, deliberately paired with the backdrop's dismiss below —
-    /// see the XAML comment on the card Border. When this ran on Up instead, one physical click
-    /// on the backdrop dismissed the overlay on its down-stroke and then opened whatever card
-    /// lay under the pointer on its up-stroke.
+    /// Bound to MouseLeftButtonDOWN, paired with the backdrop's dismiss below: on Up, one
+    /// physical click on the backdrop dismissed the overlay on its down-stroke and then opened
+    /// whatever card lay under the pointer on its up-stroke.
     private void PokedexCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not PokedexCard card) return;
@@ -574,8 +556,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     }
 
     // ======================= Pokédex detail overlay =======================
-    // Ported from PokemonDetailWindow's code-behind. Deliberately dumb: it renders the
-    // PokedexCard it is handed and routes every mutation through the same
+    // Renders the PokedexCard it is handed and routes every mutation through the same
     // SelectIndividual/ReleaseIndividual/ToggleFavorite methods the rest of this view uses.
 
     /// The card currently on show, or null when the overlay is hidden.
@@ -637,8 +618,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailUnavailableBadge.Visibility = card.UnavailableBadgeVisibility;
         DetailUnavailableBadge.ToolTip = card.AvailabilityToolTip;
 
-        // Exactly the roster's rule: an already-active pet, or one that has run away in
-        // Hardcore, can't be selected.
+        // An already-active pet, or one that has run away in Hardcore, can't be selected.
         DetailSelectButton.IsEnabled = card.CanSelect;
         DetailSelectButton.ToolTip = card.CanSelect ? null
             : card.IsActive ? "Этот покемон уже на рабочем столе"
@@ -660,15 +640,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _detailAnimator = null;
     }
 
-    /// Click-outside-to-close. The card itself marks its own mouse-down Handled (see
-    /// DetailCard_MouseLeftButtonDown), so this only ever runs for a click on the dimmed
-    /// backdrop around it.
-    ///
-    /// Marks the event Handled as well: the grid cards open on mouse-down now
-    /// (PokedexCard_Click), and a dismiss must never also count as a press on anything else.
-    /// Handled alone was NOT what fixed the reopen bug — the two halves of that click were
-    /// separate routed events, which Handled cannot span — but it keeps this click from
-    /// travelling any further now that both are down-events.
+    /// Click-outside-to-close. The card marks its own mouse-down Handled (see
+    /// DetailCard_MouseLeftButtonDown), so this only runs for a click on the dimmed backdrop.
+    /// Handled here too, so a dismiss never also counts as a press on anything else.
     private void DetailOverlay_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         HideDetail();
@@ -727,13 +701,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     }
 
     /// A stage in the evolution-chain strip was clicked: toggle it as the cosmetic display
-    /// override for the open individual. Only meaningful for a REVEALED stage — never a
-    /// masked/future one, which is the spoiler boundary the model already enforces (an
-    /// unrevealed EvolutionStageCard carries no identity to act on anyway, but the guard below
-    /// also stops the mutation itself from ever touching a stage not yet reached).
-    ///
-    /// e.Handled mirrors DetailCard_MouseLeftButtonDown: a click inside the card must never
-    /// bubble to the backdrop and dismiss the overlay it's interacting with.
+    /// override for the open individual. Only a REVEALED stage can be picked — never a future
+    /// one, which is the spoiler boundary the model enforces. e.Handled keeps the click from
+    /// bubbling to the backdrop and dismissing the overlay.
     private void DetailEvolutionStage_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         e.Handled = true;
@@ -747,9 +717,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // re-picking the same one — the click is a toggle, not a one-way pin.
         _appState.SetDisplayStage(individual, stage.IsDisplayed ? null : stage.StageIndex);
 
-        // Nudges the desktop pet's sprite immediately when this is the active individual — the
-        // same RefreshOverlayForActiveIndividual delegate every other mutation that can affect
-        // the active sprite already goes through (see PetActiveIndividual, DetailSelectButton).
+        // Nudges the desktop pet's sprite immediately when this is the active individual.
         if (individual.Id == _appState.Collection.ActiveIndividualId) _onStateChanged();
 
         // Card stays open (like the favorite star): rebuild just the strip in place from fresh
@@ -760,14 +728,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    /// Live rename. Like the star it deliberately does NOT call _onStateChanged — a name change
-    /// is not something the desktop overlay needs to re-fetch sprites for; the app's periodic
-    /// autosave persists it (Nickname is a plain settable property, so System.Text.Json
-    /// round-trips it with the rest of the individual).
-    ///
-    /// The headline and the species line are updated in place rather than by reopening the
-    /// card, and the grid behind picks the new name up on the next refresh tick because
-    /// Nickname is part of the grid's rebuild signature.
+    /// Live rename. Does NOT call _onStateChanged — the overlay has nothing to re-fetch; the
+    /// periodic autosave persists it. The grid behind picks the new name up on the next tick,
+    /// because Nickname is part of its rebuild signature.
     private void DetailNicknameBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (_isLoadingDetailNickname || _detailCard is null) return;
@@ -830,10 +793,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    /// Pins/unpins one individual so it sorts to the top of the grid.
-    /// Deliberately does NOT call _onStateChanged: that re-runs the overlay's sprite fetch,
-    /// which is real network work for a change that only affects list ordering. The flag is
-    /// written straight onto the individual and the app's periodic autosave persists it.
+    /// Pins/unpins one individual so it sorts to the top of the grid. Does NOT call
+    /// _onStateChanged: that re-runs the overlay's sprite fetch for a change that only affects
+    /// list ordering. The periodic autosave persists the flag.
     private void ToggleFavorite(Guid id)
     {
         _viewModel.ToggleFavorite(id);
@@ -847,9 +809,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    /// Cache-only sprite lookup: never touches the network, so it's safe on the UI thread.
-    /// A species that hasn't been fetched yet simply returns null and the card falls back to
-    /// its pokéball placeholder.
+    /// Cache-only sprite lookup, safe on the UI thread. A species with no usable cached PNG
+    /// returns null (the card shows its pokéball placeholder) and is fetched in the background.
     private ImageSource? TryGetThumbnail(int speciesId)
     {
         if (_spriteThumbnails.TryGetValue(speciesId, out var cached)) return cached;
@@ -900,15 +861,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     }
 
 
-    // (SelectButton_Click / FavoriteButton_Click / ReleaseButton_Click lived here as handlers
-    // for the roster rows' inline action buttons. The roster is gone; the same three
-    // operations are now SelectIndividual/ToggleFavorite/ReleaseIndividual above, invoked by
-    // PokemonDetailWindow.)
 
-    // Fully qualified as System.Windows.Controls.Button, not bare Button — Task 5 turned
-    // on UseWindowsForms for TrayIconService's NotifyIcon, which makes Button ambiguous
-    // with System.Windows.Forms.Button project-wide from that task onward (the same
-    // Application-ambiguity issue Task 5 hit, just a different colliding type name).
+    // Fully qualified: UseWindowsForms (for the tray's NotifyIcon) makes a bare Button
+    // ambiguous with System.Windows.Forms.Button.
     private void HatchButton_Click(object sender, RoutedEventArgs e)
     {
         var eggId = (Guid)((System.Windows.Controls.Button)sender).Tag;

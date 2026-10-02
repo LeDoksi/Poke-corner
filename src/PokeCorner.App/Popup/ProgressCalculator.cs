@@ -3,12 +3,9 @@ using PokeCorner.Core.Domain;
 
 namespace PokeCorner.App.Popup;
 
-/// Why an individual's evolution bar is not filling toward anything.
-///
-/// The bar used to be a bare 0..1 double, and BOTH terminal cases fell out of it as a flat
-/// 1.0 — a freshly-caught Emolga (a species with no evolutions at all) glowed at "100%",
-/// reading as "about to evolve any second". Two different situations hide behind that number
-/// and neither is a percentage, so they are named here instead of being encoded as a value.
+/// Why an individual's evolution bar is not filling toward anything. Both terminal cases
+/// would otherwise read as a flat 100% — "about to evolve any second" — for a species that
+/// never evolves at all. Neither is a percentage, so they are named here instead.
 public enum EvolutionProgressState
 {
     /// Genuinely progressing toward a next stage — EvolutionFraction carries a real 0..1.

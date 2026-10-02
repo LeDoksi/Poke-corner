@@ -21,9 +21,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Brand strip: gives the window an identity above the tab rail instead of
-             starting straight into bare tab buttons. Doubles as the window's title bar now
-             that the OS one is gone — hence the drag handler and the three chrome buttons. -->
+        <!-- Brand strip, doubling as the window's title bar (the OS one is gone) — hence the drag
+             handler and the three chrome buttons. -->
         <Border Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}" Padding="16,10,8,10"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
             <Grid>
@@ -63,9 +62,8 @@
         <TabControl x:Name="MenuTabControl" Grid.Row="1">
             <TabItem x:Name="CollectionTab" Header="Коллекция" />
             <TabItem x:Name="ShopTab" Header="Магазин" />
-            <!-- Header retemplated (text + badge) instead of a bare string, so a queued catch
-                 (Task 3) can surface a visual cue on the tab itself, not just the tray icon.
-                 CatchBadge starts hidden; SetCatchReady toggles it and its pulse together. -->
+            <!-- Header retemplated (text + badge) so a queued catch shows on the tab itself, not just
+                 the tray icon. SetCatchReady toggles CatchBadge and its pulse together. -->
             <TabItem x:Name="CatchTab">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">

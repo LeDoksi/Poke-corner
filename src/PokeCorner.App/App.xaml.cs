@@ -52,17 +52,12 @@ public partial class App : System.Windows.Application
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
 
-    /// Replaces the old one-shot `_catchReady` bool: activity kept accumulating past the
-    /// catch-check threshold while a catch was already pending used to silently discard those
-    /// extra rolls. Now they queue, up to MaxPendingCatches.
+    /// Catches waiting to be claimed on the Catch tab, up to MaxPendingCatches; rolls past the
+    /// cap are dropped.
     private int _catchReadyCount;
     private const int MaxPendingCatches = 3;
-    /// Every decoded frame of the active individual's sprite, in order — the same list the
-    /// overlay animates from. This replaces the previous single-frame `_activeSpriteBytes`
-    /// field: the collection popup only ever received frame 0 through it, which is why its
-    /// hero sprite sat perfectly still while the desktop pet animated. A single-element list
-    /// means "this species has no animated sprite", which the hero renders statically; null
-    /// means "nothing cached yet".
+    /// Every decoded frame of the active individual's sprite — the list the overlay animates
+    /// from. One element means a static sprite; null means nothing is cached yet.
     private IReadOnlyList<byte[]>? _activeSpriteFrames;
     private ProgressPanelWindow? _progressPanelWindow;
 
@@ -78,9 +73,8 @@ public partial class App : System.Windows.Application
     /// process's life so nothing writes the save file back after it has been deleted.
     private bool _isWipingSaveData;
 
-    /// Decoded PNG frames per display species id (null = "no usable animation"), in front of
-    /// the on-disk GIF cache. Decoding a GIF is NOT cheap: measured ~22ms per species, ~350ms for
-    /// one 16-card Pokédex page, which was the page-flip stutter of POKE-18.
+    /// Decoded PNG frames per display species id (null = no usable animation), in front of the
+    /// on-disk GIF cache. A GIF costs ~22 ms to decode, so each species is decoded once.
     private readonly Dictionary<int, IReadOnlyList<byte[]>?> _decodedFramesCache = new();
 
     protected override void OnStartup(StartupEventArgs e)
@@ -113,29 +107,18 @@ public partial class App : System.Windows.Application
         var catalogPath = Path.Combine(AppPaths.GetAppDataDirectory(), "catalog.json");
         _speciesCatalog = new SpeciesCatalog(_pokeApiClient, _spriteCache, catalogPath);
 
-        // The refresh crawls ~650 species (1000+ sequential requests against the free public
-        // PokeAPI), so firing it on every launch of an autostart-with-Windows app is both
-        // wasteful and rude to that API. Species data changes rarely — a weekly refresh is
-        // plenty. Fire-and-forget when it does run; today's rolls still use whatever
-        // LoadCachedOrFallback returns right now.
-        //
-        // IsCacheSchemaCurrent is part of the staleness test, not just the age: a catalog.json
-        // written before the crawler captured display names is "fresh" by any clock but
-        // resolves every species to "Pokemon #{id}". LoadCachedOrFallback already refuses to
-        // SERVE such a file (it returns the fully-named bundled catalog instead); this is what
-        // makes the file on disk actually get rewritten, rather than being ignored forever.
+        // The crawl is ~1600 requests against the free public PokeAPI, so it runs at most weekly —
+        // or when the cached file predates the current schema (names, types), which
+        // LoadCachedOrFallback refuses to serve and which would otherwise never be rewritten.
         var catalogIsStale = !File.Exists(catalogPath)
             || File.GetLastWriteTimeUtc(catalogPath) < DateTime.UtcNow.AddDays(-7)
             || !_speciesCatalog.IsCacheSchemaCurrent();
         if (catalogIsStale)
         {
-            // On the thread pool, not the dispatcher: each pokemon/{id}/ response is a few hundred
-            // KB of JSON, and ~1600 of them parsed on the UI thread over ~5 minutes was the
-            // after-launch stutter of POKE-18. Delayed because this app autostarts with Windows,
-            // usually before the network is up — the first request then failed and took the
-            // whole crawl down on every boot, so the file never actually refreshed.
-            // ponytail: one attempt per launch, no retry; add a retry loop if a 2-minute head
-            // start still loses to slow networks.
+            // On the thread pool: the responses are large JSON documents, and parsing ~1600 of them on
+            // the dispatcher stutters the UI for minutes. Delayed because the app autostarts with
+            // Windows, usually before the network is up.
+            // ponytail: one attempt per launch, no retry; add one if two minutes still loses to slow networks.
             _ = Task.Run(async () =>
             {
                 await Task.Delay(TimeSpan.FromMinutes(2));
@@ -155,12 +138,7 @@ public partial class App : System.Windows.Application
 
         if (FirstRunFlow.NeedsOnboarding(loaded))
         {
-            // Reads the SAME catalog as every other catch-pool call site here. It used to
-            // deliberately bypass SpeciesCatalog and read the narrow curated offline pool
-            // directly, because only that pool was guaranteed to work with zero network on a
-            // first launch. LoadCachedOrFallback's own fallback is now the complete bundled
-            // Gen 1-5 catalog, so it carries that same zero-network guarantee — and offers
-            // dozens of Common starters to choose between instead of two or three.
+            // The bundled full catalog makes this work with no network on a first launch.
             var allChains = _speciesCatalog.LoadCachedOrFallback();
             var commonCandidates = allChains
                 .Where(c => RarityClassifier.Classify(c.CaptureRate) == RarityTier.Common)
@@ -191,22 +169,16 @@ public partial class App : System.Windows.Application
 
         _inputCounter = new InputEventCounter();
 
-        // Unconditional: "your pet grows from your PC usage" is the app's premise, not an
-        // option, so there is no setting gating this any more. Started here on the dispatcher
-        // thread — which is exactly why OnGrowthTick must stay cheap; see its comment.
+        // Started on the dispatcher thread — which is why OnGrowthTick must stay cheap; see its comment.
         _inputHook = new GlobalInputHook(_inputCounter);
         _inputHook.Start();
 
-        // Same counter, same "unconditional" rule — a controller is just another way of using
-        // the PC. Unlike the hook above this one polls on a thread-pool timer, deliberately
-        // nowhere near the dispatcher thread. No-ops if the machine has no XInput DLL.
+        // A controller counts as PC use too. Polls on a thread-pool timer; no-op without XInput.
         _gamepadHook = new GamepadInputHook(_inputCounter);
         _gamepadHook.Start();
 
-        // One second, not five: this tick is what refreshes the progress bars, and at 5s they
-        // visibly lagged behind the activity the player had just generated. Everything else on
-        // the tick is cheap enough to run 5x more often — except the autosave, which is
-        // throttled back to its original cadence inside OnGrowthTick.
+        // One second so the progress bars keep up with activity; the autosave is throttled
+        // separately inside OnGrowthTick.
         _growthTickTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _growthTickTimer.Tick += (_, _) => OnGrowthTick();
         _growthTickTimer.Start();
@@ -214,9 +186,7 @@ public partial class App : System.Windows.Application
         _overlayWindow = new OverlayWindow();
         _overlayWindow.PetClicked += PetActiveIndividual;
         _overlayWindow.MenuRequested += () => OpenMenu(CollectionTabIndex);
-        // Re-top the pet the instant another app is brought to the front, rather than up to a
-        // second later on the growth tick — a visible lag now that HWND_TOP (not the topmost
-        // band) is what keeps it above ordinary windows.
+        // Re-top the pet the moment another app comes to the front, not on the next tick.
         _overlayWindow.ForegroundWindowChanged += ReassertOverlayTopmost;
         // Remember where the player actually leaves the pet, so relaunch/reboot restores that
         // spot instead of always snapping back to the configured corner.
@@ -227,13 +197,8 @@ public partial class App : System.Windows.Application
             PersistState();
         };
 
-        // Keeps the progress panel glued to the pet while it is being dragged. WPF raises
-        // LocationChanged continuously throughout DragMove()'s modal move loop, which is the
-        // only signal available during a drag: OverlayWindow.SpriteImage_MouseMove hands
-        // control to DragMove() and doesn't get it back until the mouse is released, so
-        // nothing in the App layer runs until then. Repositioning used to happen only on
-        // discrete events (settings changes, the growth tick), so the panel visibly trailed
-        // the sprite by up to a second and then snapped into place.
+        // Keeps the progress panel glued to the pet during a drag: LocationChanged is the only
+        // signal raised inside DragMove()'s modal loop.
         _overlayWindow.LocationChanged += (_, _) =>
         {
             if (_progressPanelWindow is null) return;
@@ -241,10 +206,8 @@ public partial class App : System.Windows.Application
             ReassertOverlayTopmost(); // PositionLeftOf re-tops the panel; put the pet back on top of it
         };
 
-        // The callbacks now mean "a fullscreen app is covering the pet's OWN monitor", not
-        // "something, somewhere, went fullscreen" — a fullscreen window on another screen no
-        // longer hides a pet it cannot possibly overlap. The handle is resolved per poll, not
-        // captured, so a pet dragged between monitors is judged against where it actually is.
+        // Fires only for a fullscreen app on the pet's OWN monitor; the pet's handle is read on
+        // every poll, so a pet dragged to another monitor is judged where it actually is.
         _fullscreenMonitor = new ForegroundWindowMonitor(
             onFullscreenEntered: () => { _isFullscreenHiding = true; RefreshOverlayForActiveIndividual(); },
             onFullscreenExited: () => { _isFullscreenHiding = false; RefreshOverlayForActiveIndividual(); },
@@ -261,14 +224,9 @@ public partial class App : System.Windows.Application
         // same treatment since it's created lazily and reads the live count when it is.
         _trayIconService.SetCatchReady(_catchReadyCount > 0);
 
-        // MUST come after _trayIconService exists, not before it. This is async void, and its
-        // first await only suspends when the sprite actually has to be read from disk — after
-        // onboarding the starter's frames are already in _decodedFramesCache (the starter picker
-        // put it there), so the await completes synchronously and the method runs straight
-        // through to _trayIconService.SetSpriteIcon in the same call. Sited above the tray
-        // service's construction, that dereferenced null and crashed the app on first run
-        // right after the tutorial — intermittently, since a species whose sprite does have to
-        // be read from disk suspends instead and resumes safely after OnStartup returns.
+        // MUST come after _trayIconService exists. This async void runs straight through to
+        // _trayIconService.SetSpriteIcon when the sprite is already memoized — which it is right after
+        // onboarding — so placed earlier it dereferenced null on first run.
         RefreshOverlayForActiveIndividual();
 
         ReconcileSettingsState();
@@ -283,19 +241,12 @@ public partial class App : System.Windows.Application
         };
     }
 
-    /// EVERYTHING ON THIS TICK MUST STAY CHEAP — this is not a style preference, it is a
-    /// system-wide correctness constraint. This runs on the WPF dispatcher thread, which is the
-    /// thread that called SetWindowsHookEx for WH_MOUSE_LL/WH_KEYBOARD_LL (see GlobalInputHook,
-    /// started in OnStartup). Windows cannot deliver low-level input to ANY application while
-    /// the hook's owning thread is busy, so N milliseconds spent here freezes the mouse cursor
-    /// for N milliseconds across the whole desktop, once per tick.
-    ///
-    /// That is not hypothetical: the Claude Code token-usage poll used to run inline here,
-    /// walking ~/.claude/projects and JSON-parsing every session log written today. Measured at
-    /// 176-196ms per tick on a real install, it froze the cursor system-wide once a second, in
-    /// every application. (That feature is gone now — but the constraint it violated is not.)
-    /// Anything that touches the disk, the network, or a large collection belongs on a
-    /// background thread with the result handed back here, not in this method.
+    /// EVERYTHING ON THIS TICK MUST STAY CHEAP — a system-wide correctness constraint, not style.
+    /// This runs on the dispatcher thread, which owns the WH_MOUSE_LL/WH_KEYBOARD_LL hooks
+    /// (GlobalInputHook). Windows delivers no low-level input to ANY application while that
+    /// thread is busy, so N ms spent here freezes the cursor across the desktop for N ms, once
+    /// per tick (measured at ~190 ms when a disk-walking poll once ran here). Disk, network and
+    /// large collections belong on a background thread, with the result handed back here.
     private void OnGrowthTick()
     {
         ReconcileSettingsState();
@@ -334,13 +285,8 @@ public partial class App : System.Windows.Application
             ZOrderProbe.ForegroundDescription(),
             DateTime.Now);
 
-        // Piggybacks on this timer so a crash or Task Manager kill never loses more than a
-        // few seconds of session state. JsonSaveStore.Save already writes atomically (temp
-        // file + rename), so calling it repeatedly here is safe. Deliberately kept on its
-        // original ~5-second cadence rather than following the timer down to 1s: this writes
-        // the entire save file to disk, and the finer tick exists for the progress bars, not
-        // for the autosave. Uses PersistState() (write-only), NOT SaveState() — SaveState()
-        // also disposes the input hook/fullscreen monitor/tray icon, which must stay alive.
+        // Autosave every ~5 s, so a crash or Task Manager kill loses little. PersistState only
+        // queues the write; the disk work happens off this thread.
         var nowUtc = DateTimeOffset.UtcNow;
         if (nowUtc - _lastAutosaveUtc >= AutosaveInterval)
         {
@@ -354,9 +300,7 @@ public partial class App : System.Windows.Application
     /// "fading away" rather than just slightly dimmed. See OverlayWindow.SetMoodTint.
     private const double HardcoreMoodOpacityFloor = 0.18;
 
-    /// Hardcore care mode's "убегает" mechanic (spec: "Уход за питомцем") only has a
-    /// visible effect if something polls for it — this is that poll, riding the same
-    /// 5-second timer as growth so it doesn't need a timer of its own.
+    /// Hardcore's run-away mechanic, polled from the growth tick.
     private void CheckHardcoreNeglect()
     {
         if (_appState.Settings.CareMode != CareMode.Hardcore)
@@ -422,10 +366,8 @@ public partial class App : System.Windows.Application
         _trayIconService.ShowNotification("PokéCorner", "Питомец расстроен и не хочет возвращаться на стол ещё час.");
     }
 
-    /// The evolution-ready counterpart to OnCatchRollDue's one-shot toast. AppState.IsReadyToEvolve
-    /// is a pure query with no "already told them" state of its own, so the same one-shot guard
-    /// _catchReady gives the catch path lives here instead — keyed by individual id, so evolving
-    /// (readiness drops) or switching pets both re-arm it for the next threshold crossing.
+    /// One-shot "ready to evolve" toast per individual; re-armed when readiness drops or the
+    /// active pet changes.
     private void CheckEvolutionReady()
     {
         var active = _appState.Collection.GetActive();
@@ -443,10 +385,6 @@ public partial class App : System.Windows.Application
 
     private void ReconcileSettingsState()
     {
-        // The input hook and the Claude Code token provider used to be started/stopped here from
-        // their settings toggles. Token tracking is gone entirely, and PC activity tracking is
-        // unconditional now — the hook is started once in OnStartup — so there is nothing left
-        // to reconcile for either.
         if (_appState.Settings.AutoHideInFullscreen && !_isFullscreenMonitorRunning)
         {
             _fullscreenMonitor.Start();
@@ -468,10 +406,7 @@ public partial class App : System.Windows.Application
         {
             _progressPanelWindow = new ProgressPanelWindow();
             _progressPanelWindow.PositionLeftOf(_overlayWindow);
-            // Prime the bars immediately. Without this the panel spends its first seconds
-            // showing three empty tracks — OnGrowthTick only pushes values every 5 seconds,
-            // so a freshly enabled panel looked broken right at the moment the user turned
-            // it on to look at it.
+            // Prime the bars now rather than leaving them empty until the next tick.
             _progressPanelWindow.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
             // Same fullscreen gate the overlay itself honours — turning the panel on from the
             // settings screen while a fullscreen app is in front must not pop it over that app.
@@ -489,14 +424,9 @@ public partial class App : System.Windows.Application
         _progressPanelWindow?.PositionLeftOf(_overlayWindow);
     }
 
-    /// Applies the corner/monitor/size settings to the overlay (and drags the progress panel
-    /// along with it), but only when something actually changed — repositioning on every call
-    /// would fight the user dragging the pet around.
-    ///
-    /// Extracted from ReconcileSettingsState so the settings screen can call it the instant
-    /// the size slider moves. It used to run only on the 5-second growth tick, which meant
-    /// dragging the slider changed the stored number immediately but the sprite on screen
-    /// only caught up seconds later — unusable as a live preview.
+    /// Applies the corner/monitor/size settings to the overlay (dragging the progress panel
+    /// along), only when something changed — repositioning on every call would fight the user
+    /// dragging the pet. The settings screen calls it as the size slider moves, for a live preview.
     private void ApplyPetSizeAndPosition()
     {
         var desiredCorner = ParseCorner(_appState.Settings.ScreenCorner);
@@ -570,11 +500,6 @@ public partial class App : System.Windows.Application
         byte[]? spriteBytes = null;
         try
         {
-            // Genuinely asynchronous now — no sync-over-async blocking on the WPF
-            // dispatcher thread, which previously deadlocked forever on any uncached
-            // sprite fetch (SpriteCache/PokeApiClient await without ConfigureAwait(false),
-            // so their continuations were posted back to this same dispatcher thread that
-            // .GetAwaiter().GetResult() was blocking).
             spriteBytes = await _spriteCache.GetOrFetchAsync(displaySpeciesId, () => _pokeApiClient.FetchSpriteAsync(displaySpeciesId));
         }
         catch
@@ -592,21 +517,10 @@ public partial class App : System.Windows.Application
             return;
         }
 
-        // GetOrFetchAsync returns null on a network failure (e.g. offline first launch
-        // with nothing cached yet) rather than throwing — this is exactly the case the
-        // spec's "работает без сети с первого раза" requirement covers. Skip the frame
-        // update and leave whatever the overlay was already showing (or nothing, on a
-        // true cold start) rather than crashing; RefreshOverlayForActiveIndividual will
-        // be called again on the next state change or growth tick and can retry then.
+        // null on a network failure (offline first launch, nothing cached): keep whatever the
+        // overlay already shows; the next refresh retries.
         if (spriteBytes is not null)
         {
-            // A single static frame for now — true Gen-V-style animated sprites come from
-            // PokeAPI's separate animated-GIF sprite set, not the static front_default PNG
-            // FetchSpriteAsync fetches; decoding multi-frame GIFs into FrameSequencer input
-            // is Task 2 of docs/superpowers/plans/2026-08-19-pokecorner-full-experience-and-installer.md,
-            // deliberately sequenced after this plan ships and is verified. SpriteAnimator/
-            // FrameSequencer both already work correctly with a one-frame list (no visible
-            // cycling, just a static sprite) so nothing here is broken in the meantime.
             _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { SpriteImages.Decode(spriteBytes) });
             _activeSpriteFrames = new[] { spriteBytes }; // one real frame: static, but not "unknown"
             _trayIconService.SetSpriteIcon(spriteBytes);
@@ -631,19 +545,10 @@ public partial class App : System.Windows.Application
         ReassertOverlayTopmost();
     }
 
-    /// Fetches and decodes one species' animated sprite into a list of PNG frames, or null
-    /// when the species has no animated sprite (plenty don't) or the fetch/decode failed —
-    /// every caller falls back to the static PNG in that case.
-    ///
-    /// Extracted from RefreshOverlayForActiveIndividual so the Pokédex cards and the starter
-    /// picker animate from exactly the same memoized source. Without the shared memo the
-    /// Pokédex would re-download a GIF per owned species every time the popup rebuilt its
-    /// grid, which is once a second.
-    ///
-    /// The decoded frames are memoized too (_decodedFramesCache) and decoded on a worker
-    /// thread: a page of the Pokédex used to decode all of its GIFs on the UI thread on every
-    /// open. The returned list is shared between callers — it is read-only and nobody writes
-    /// into the frame arrays.
+    /// One species' animated sprite as PNG frames, or null when it has none (plenty don't) or
+    /// the fetch/decode failed — callers then fall back to the static PNG. The overlay, the
+    /// Pokédex and the starter picker share this memo; each species is decoded once, on a worker
+    /// thread. The returned list is shared: read-only, and nobody writes into the frame arrays.
     private async Task<IReadOnlyList<byte[]>?> GetAnimatedFramesAsync(int speciesId)
     {
         if (_decodedFramesCache.TryGetValue(speciesId, out var memoized)) return memoized;
@@ -723,13 +628,8 @@ public partial class App : System.Windows.Application
         individual.ResolveDisplaySpeciesId(_speciesCatalog.LoadForLookup());
 
 
-    /// Activity has crossed the threshold for a catch — per explicit feedback, this
-    /// should NOT catch automatically (that took the moment away from the player).
-    /// Instead it queues one up (capped at MaxPendingCatches — extra rolls past the cap are
-    /// still discarded, a hard cap rather than unbounded banking) so the player triggers the
-    /// actual catch themselves from the Catch tab — the tray's "Поймать!" item now just opens
-    /// the menu there (see the CatchRequested subscription in OnStartup) and the tab's button
-    /// calls TryPerformCatch.
+    /// Activity crossed the catch threshold: queue a catch (capped at MaxPendingCatches) for the
+    /// player to claim on the Catch tab. Never catches automatically — that took the moment away.
     private void OnCatchRollDue()
     {
         if (_catchReadyCount >= MaxPendingCatches) return; // hard cap — extra rolls are discarded
@@ -777,9 +677,8 @@ public partial class App : System.Windows.Application
         return new CatchReveal(result, rarity);
     }
 
-    /// No tray toast here on purpose: PlayPetReaction is already a visible on-screen response
-    /// to every click, and pet/feed get clicked often enough that a notification per click was
-    /// pure noise. Evolution no longer happens inline either — see EvolveActiveIndividual.
+    /// No toast: the bounce is the feedback, and pets get clicked far too often for a
+    /// notification each time.
     private void PetActiveIndividual()
     {
         var active = _appState.Collection.GetActive();
@@ -792,18 +691,9 @@ public partial class App : System.Windows.Application
         PlayCry(ResolveDisplaySpeciesId(active));
     }
 
-    /// The one player every cry goes through, created lazily on first use and then reused.
-    ///
-    /// This used to be `new System.Media.SoundPlayer(path).Play()` per click. SoundPlayer has
-    /// no volume of its own — it always plays at full system volume — so the "Громкость крика
-    /// питомца" setting could not exist while it was in charge. MediaPlayer is WPF's own player,
-    /// takes a 0.0-1.0 Volume, and plays a local PCM WAV through Media Foundation with no codec
-    /// to install (which is the whole reason the crawl transcodes the upstream Ogg cries to WAV
-    /// — see PcmWavWriter). Play() is still non-blocking, so the pet animation is untouched.
-    ///
-    /// One instance rather than one per click: each MediaPlayer holds an unmanaged audio
-    /// session, and there is no Dispose to release it deterministically, so constructing one
-    /// per pet click would leak sessions for as long as the app runs.
+    /// One player for every cry, created lazily. MediaPlayer rather than SoundPlayer because it
+    /// has a volume and plays the bundled PCM WAVs with no codec. A single instance because each
+    /// holds an unmanaged audio session with no deterministic Dispose.
     private System.Windows.Media.MediaPlayer? _cryPlayer;
 
     /// Fire-and-forget cry for a species, from the WAV bundled at Data\cries\{id}.wav.
@@ -834,10 +724,8 @@ public partial class App : System.Windows.Application
             // the very next click with no restart. 0 maps to 0.0, which is real silence.
             _cryPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.CrySoundVolume);
 
-            // Re-Open every time. Unlike SoundPlayer, whose Play() re-reads its SoundLocation
-            // per call, MediaPlayer holds an open media and would otherwise replay the PREVIOUS
-            // species (or sit at the end of it) when the active pet changes. Opening also
-            // rewinds, which is what makes two pets of the same species in a row both audible.
+            // Re-Open every time: MediaPlayer keeps the previous media open and would replay the
+            // previous species; opening also rewinds, so the same species twice is audible twice.
             _cryPlayer.Open(new Uri(path));
             _cryPlayer.Play();
         }
@@ -860,15 +748,14 @@ public partial class App : System.Windows.Application
         }
         else
         {
-            // This one stays: unlike a successful feed, "you're out of treats" has no on-screen
-            // animation of its own, so without the toast the click would look like it did nothing.
+            // Unlike a successful feed, running out of treats has no on-screen animation, so without
+            // the toast the click would look like it did nothing.
             _trayIconService.ShowNotification("PokéCorner", "Не хватает лакомств — накопи ещё активности.");
         }
     }
 
-    /// Evolution is now an explicit player action rather than something that fires the instant
-    /// a threshold is crossed — same shape as hatching a ready egg. Returns false when the
-    /// active individual isn't actually ready (or there is none), so a stale click is inert.
+    /// Evolution is an explicit player action. False when the active individual isn't ready,
+    /// so a stale click is inert.
     private bool EvolveActiveIndividual()
     {
         var active = _appState.Collection.GetActive();
@@ -906,14 +793,8 @@ public partial class App : System.Windows.Application
         return true;
     }
 
-    /// Whether the species catalog currently in use (same source as BuyEgg/HatchEgg) has at
-    /// least one chain in this rarity tier, so the shop can't sell an egg that can never
-    /// hatch — spending the coins for good and crashing on the hatch attempt.
-    ///
-    /// The old 7-chain offline fallback had no Uncommon and no Legendary chains at all, which
-    /// is what made this guard load-bearing offline. The bundled full catalog covers all four
-    /// tiers, so it now only really fires against a hand-edited or partially-written cache —
-    /// still worth keeping as the cheap defense it always was.
+    /// Whether the catalog in use has a chain in this rarity tier, so the shop can't sell an
+    /// egg that can never hatch.
     private bool IsRarityTierAvailable(RarityTier tier) =>
         _speciesCatalog.LoadCachedOrFallback().Any(c => RarityClassifier.Classify(c.CaptureRate) == tier);
 
@@ -960,18 +841,10 @@ public partial class App : System.Windows.Application
         }
     }
 
-    /// Re-inserts the overlay (and the panel anchored to it) directly behind the taskbar, so
-    /// it stays above ordinary app windows but below every shell surface. Neither window sets
-    /// Topmost="True" any more — that put them in the flat topmost band, where they could and
-    /// did render over the taskbar and tray flyouts. See OverlayWindow.KeepAboveAppsBelowShell
-    /// for why the obvious non-topmost alternative does not work either.
-    ///
-    /// ORDER MATTERS, and it used to be the wrong way round. KeepAboveAppsBelowShell inserts
-    /// its window DIRECTLY behind the taskbar, so whichever window is re-topped LAST ends up
-    /// on top of the other. Doing the overlay first and the panel second put the panel above
-    /// the pet — which is why the pet's pet/feed bounce appeared clipped wherever it grew into
-    /// the panel's rectangle. The panel goes first now, so the sprite is always the upper of
-    /// the two and can scale up over it.
+    /// Re-slots the progress panel and the pet behind the taskbar (see
+    /// OverlayWindow.KeepAboveAppsBelowShell). Order matters: each call inserts directly behind
+    /// the taskbar, so the last one ends up on top — the panel goes first so the pet's bounce
+    /// can scale over it.
     private void ReassertOverlayTopmost()
     {
         if (_progressPanelWindow is not null)
@@ -989,13 +862,6 @@ public partial class App : System.Windows.Application
         _ => ScreenCorner.BottomRight
     };
 
-    /// Deletes the save file and relaunches, so the new process takes OnStartup's first-run
-    /// branch — FirstRunFlow.NeedsOnboarding gets a null SaveData when JsonSaveStore.Load
-    /// finds no file — and runs starter selection plus onboarding as if freshly installed.
-    ///
-    /// Only state.json goes. The sprite cache and catalog.json are deliberately kept: they
-    /// are asset caches, not player progress, and rebuilding the catalog means ~650 species
-    /// worth of PokeAPI requests, which would turn a reset into a multi-minute wait.
     /// The only way out: lets the pet window close (it refuses otherwise, see OverlayWindow.AllowClose).
     private void ShutdownApp()
     {
@@ -1003,6 +869,9 @@ public partial class App : System.Windows.Application
         Shutdown();
     }
 
+    /// Deletes the save file and relaunches, so the new process runs first-run onboarding
+    /// as if freshly installed. Only state.json goes: the sprite cache and catalog.json are
+    /// asset caches, and rebuilding the catalog would turn a reset into a multi-minute wait.
     private void ResetSaveDataAndRestart()
     {
         _isWipingSaveData = true;
@@ -1010,11 +879,8 @@ public partial class App : System.Windows.Application
 
         Process.Start(Environment.ProcessPath!, AfterRestartArg);
 
-        // Shutdown(), matching the tray's "Выход" item, rather than Environment.Exit: it runs
-        // the Exit handler, so the global input hook, the fullscreen monitor and the tray icon
-        // are all disposed properly instead of being abandoned while the replacement process
-        // is already starting up. Its SaveState() call reaches a write that _isWipingSaveData
-        // now suppresses.
+        // Shutdown(), not Environment.Exit: it runs the Exit handler, which disposes the hooks and
+        // the tray icon; the save write in it is suppressed by _isWipingSaveData.
         ShutdownApp();
     }
 
@@ -1033,11 +899,7 @@ public partial class App : System.Windows.Application
     /// synchronously, so the process can't end before the final state is on disk.
     private void PersistState(bool flush = false)
     {
-        // The one case where not writing is correct: ResetSaveDataAndRestart has just deleted
-        // state.json, and every remaining write path leads back here — the autosave tick, the
-        // Exit handler's SaveState(), the crash handler. Without this the shutdown that
-        // follows the delete would immediately write the in-memory collection straight back
-        // out and the relaunched process would find a save file exactly where it left one.
+        // ResetSaveDataAndRestart deleted state.json; writing now would bring it straight back.
         if (_isWipingSaveData) return;
 
         var data = _appState.ToSaveData(_catchReadyCount);

@@ -32,10 +32,8 @@ public sealed class PokemonCollection
         ActiveIndividualId = id;
     }
 
-    /// Leaves the desktop empty without removing anyone from the collection — used when
-    /// a Hardcore-mode individual runs away from neglect (spec: "никто не выходит
-    /// автоматически"; the App plan's composition root calls this, then the user
-    /// picks a replacement manually via the collection popup, or waits out the cooldown).
+    /// Leaves the desktop empty without removing anyone from the collection — used when a
+    /// Hardcore individual runs away; the player picks a replacement or waits out the cooldown.
     public void ClearActive() => ActiveIndividualId = null;
 
     public PokemonIndividual? GetActive() =>

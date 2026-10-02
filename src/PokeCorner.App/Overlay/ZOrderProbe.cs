@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace PokeCorner.App.Overlay;
 
-/// Reads where the pet actually sits in the z-order, for <see cref="ZOrderLog"/> (POKE-9).
-/// "Covered" means a visible window of another process sits ABOVE the pet and overlaps its
-/// rectangle — the user-visible symptom — not merely that some window is higher in the list.
+/// Reads where the pet actually sits in the z-order, for <see cref="ZOrderLog"/>. "Covered"
+/// means a visible window of another process sits ABOVE the pet and overlaps its rectangle —
+/// the user-visible symptom — not merely that some window is higher in the list.
 public static class ZOrderProbe
 {
     /// The state line to log, e.g. "topmost=True fallbacks=0 covered=[]". The shell's taskbars

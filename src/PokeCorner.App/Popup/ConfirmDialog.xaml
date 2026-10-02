@@ -4,14 +4,9 @@
         Title="PokéCorner" Width="420" SizeToContent="Height"
         Style="{StaticResource DialogWindowStyle}"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False">
-    <!-- A themed stand-in for MessageBox. The stock dialog renders in the light Windows
-         system chrome — a white box with black text — which is exactly the clash
-         AppWindowStyle exists to avoid, and it would show up at the one moment the app is
-         asking the player to confirm something irreversible.
-
-         DialogWindowStyle now also replaces the stock OS title bar with the app's own dark
-         strip: the dark body under a light system caption was the remaining half of that same
-         clash. No close (X) in that strip on purpose — Отмена is right there, and it maps to
+    <!-- A themed stand-in for MessageBox, whose stock light chrome would clash with the dark
+         app at the one moment it asks to confirm something irreversible. DialogWindowStyle also
+         replaces the OS title bar. No close (X) on purpose: Отмена is right there, and maps to
          Esc via IsCancel below. -->
     <Grid Margin="16">
         <Border Style="{StaticResource CardStyle}" Padding="20,18">

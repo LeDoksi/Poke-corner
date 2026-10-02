@@ -6,9 +6,8 @@ namespace PokeCorner.App.Popup;
 public sealed class SettingsViewModel
 {
     public const int MinPetSizePixels = 48;
-    // 192 used to be the ceiling, but with NearestNeighbor pixel-art scaling (no more
-    // blur at large sizes) that read as cramped — 192 is now roughly the comfortable
-    // middle of the range instead of the top.
+    // With NearestNeighbor pixel-art scaling large sizes stay crisp, so 192 sits mid-range
+    // rather than at the top.
     public const int MaxPetSizePixels = 384;
 
     private readonly AppSettings _settings;

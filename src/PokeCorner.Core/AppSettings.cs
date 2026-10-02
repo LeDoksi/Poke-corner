@@ -4,12 +4,6 @@ namespace PokeCorner.Core;
 
 public sealed class AppSettings
 {
-    // TokenTrackingEnabled/ActivityTrackingEnabled used to live here. Claude Code token
-    // tracking is gone entirely, and PC activity — the one remaining growth source — is the
-    // app's core premise rather than an option, so it is now unconditional and has no setting.
-    // Removing the properties is enough to drop them from the save file too: SaveData persists
-    // this whole object, so the JSON simply stops carrying them, and System.Text.Json ignores
-    // the stale keys still present in an existing state.json.
     public CareMode CareMode { get; set; } = CareMode.Chill;
     public bool AutoHideInFullscreen { get; set; } = true;
     public bool StartWithWindows { get; set; } = false;

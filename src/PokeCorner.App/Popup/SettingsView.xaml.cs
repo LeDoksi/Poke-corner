@@ -4,9 +4,8 @@ using PokeCorner.Core.Domain;
 
 namespace PokeCorner.App.Popup;
 
-// Qualified as System.Windows.Controls.UserControl, not bare UserControl — same
-// WPF/WinForms ambiguity Task 7's CollectionView hit (System.Windows.Forms.UserControl
-// also exists), just not caught here until now.
+// Qualified as System.Windows.Controls.UserControl: UseWindowsForms makes a bare
+// UserControl ambiguous with System.Windows.Forms.UserControl.
 public partial class SettingsView : System.Windows.Controls.UserControl
 {
     private readonly SettingsViewModel _viewModel;

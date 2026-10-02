@@ -4,10 +4,8 @@
         Title="PokéCorner — обучение" Width="450" Height="380"
         Style="{StaticResource DialogWindowStyle}"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <!-- The window stays a fixed size on purpose, but the body text no longer does: it used
-         to sit in a rigid Height="110" block, which left a short step floating in dead space
-         and clipped a long one. It now lives in the Grid's star row and is vertically
-         centered, so every step reads as deliberately composed regardless of its length. -->
+    <!-- Fixed-size window; the body text sits in the star row, vertically centered, so short
+         and long steps both read as deliberately composed. -->
     <Grid Margin="16">
         <Border Style="{StaticResource CardStyle}" Padding="20,18">
             <Grid>

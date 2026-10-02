@@ -31,17 +31,11 @@ public sealed class SpeciesCatalog
     /// ignored in favour of the bundled fallback on every launch, forever.
     public bool IsCacheSchemaCurrent() => IsCacheUsable(TryLoadCache(), out _);
 
-    /// A cached catalog written before FetchEvolutionChainAsync captured display names
-    /// deserializes fine (SpeciesEvolutionChain normalizes the missing property to an empty
-    /// list) but resolves EVERY species to "Pokemon #{id}". Age alone can't tell those files
-    /// apart from good ones, so presence of name data is the real freshness signal: one chain
-    /// carrying names is enough evidence the file came from the current crawler.
-    ///
-    /// Types are now held to the same standard, for the identical reason: a catalog crawled
-    /// before types were captured would otherwise be served forever, leaving every type badge
-    /// permanently blank while the bundled fallback right next to it has the data. Failing the
-    /// check sends the file back through RefreshFromNetworkAsync and serves the (complete)
-    /// bundled catalog meanwhile — the same degradation path the names change established.
+    /// A catalog.json written before the crawler captured display names or types deserializes
+    /// fine but shows every species as "Pokemon #{id}" with no type badges. Age can't tell
+    /// those files apart, so the presence of name and type data is the freshness signal: failing
+    /// it serves the complete bundled catalog and sends the file back through
+    /// RefreshFromNetworkAsync.
     private static bool IsCacheUsable(List<SpeciesEvolutionChain>? cached, out IReadOnlyList<SpeciesEvolutionChain>? usable)
     {
         usable = cached is { Count: > 0 }
@@ -53,10 +47,9 @@ public sealed class SpeciesCatalog
     }
 
     /// Last parse of the cache file, keyed by its write time. Callers hit this several times a
-    /// second (the shop's tier checks, every catch, sprite resolution) and used to re-read and
-    /// re-parse the whole file each time. Keying on the write time rather than caching forever
-    /// means a background RefreshFromNetworkAsync rewrite is still picked up on the next call.
-    /// One reference, swapped whole, so a reader never sees a time from one parse and data from another.
+    /// second (shop tier checks, catches, sprite resolution); keying on the write time means a
+    /// background RefreshFromNetworkAsync rewrite is still picked up on the next call. One
+    /// reference, swapped whole, so a reader never sees a time from one parse and data from another.
     private sealed record ParsedCache(DateTime WriteTimeUtc, List<SpeciesEvolutionChain>? Chains);
     private ParsedCache? _parsed;
 

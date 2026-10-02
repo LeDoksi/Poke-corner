@@ -27,10 +27,8 @@ public sealed class AppState
         if (active is not null)
         {
             active.AccumulatedCarePoints = (int)Math.Min((long)active.AccumulatedCarePoints + units, int.MaxValue);
-            // Deliberately does NOT advance CurrentStage. Evolution used to fire the instant
-            // the threshold was crossed, which took the moment away from the player — it now
-            // waits for an explicit "Эволюционировать!" press, mirroring how a ready egg waits
-            // for "Вылупить!". See IsReadyToEvolve/TryEvolve.
+            // Deliberately does NOT advance CurrentStage: evolving waits for an explicit
+            // "Эволюционировать!" press, like a ready egg waits for "Вылупить!" (IsReadyToEvolve/TryEvolve).
         }
 
         Activity.AddUnits(units);
@@ -87,11 +85,9 @@ public sealed class AppState
     {
         foreach (var individual in data.Individuals)
         {
-            // Rescue individuals caught under the old hand-authored offline starter pool,
-            // whose invented chain ids collide with unrelated REAL PokeAPI chains now that the
-            // bundled catalog is the real data. Safe to run unconditionally on every load: it
-            // only fires on an exact (SpeciesId, ChainLength, EvolutionChainId) match, and is
-            // idempotent because the replacement ids are outside the matched set.
+            // Rescue individuals caught under the early hand-authored offline pool, whose invented chain
+            // ids collide with real PokeAPI chains. Safe on every load: it only fires on an exact
+            // (SpeciesId, ChainLength, EvolutionChainId) match and is idempotent.
             LegacyOfflineChains.TryMigrate(individual);
             Collection.Add(individual);
         }

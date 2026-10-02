@@ -7,27 +7,16 @@
         ResizeMode="NoResize"
         Width="60"
         SizeToContent="Height">
-    <!-- Three filling CIRCLES stacked one above another, standing to the LEFT of the pet.
-
-         This is the shape the panel had two revisions ago, restored on the user's own
-         correction: an intervening redesign turned the gauges into three vertical bars in a
-         horizontal row, which is not what was asked for. What IS new here is the arrangement —
-         the gauges are a vertical COLUMN now, not a row, so the panel is a narrow strip beside
-         the sprite rather than a wide block. The narrow footprint is what makes "to the left of
-         the pet" work on a bottom-right-cornered pet without fighting the taskbar.
-
-         Each ring carries its concept icon INSIDE it (CatchIconStyle / EvolutionIconStyle /
-         TreatIconStyle from PokedexTheme.xaml — the same glyphs the in-app "Прогресс" card
-         uses, which is the whole point of factoring them into the theme dictionary). A ring
-         has a hole; putting the icon in it costs no extra space and makes each gauge
-         self-identifying, which three anonymous rings would not be.
-
-         The arcs are plain Ellipses driven by StrokeDashArray (see the code-behind) rather
-         than Path/ArcSegment geometry rebuilt per update: same visual, no geometry math, and
-         nothing to keep in sync when a size changes.
-
-         SizeToContent stays Height-only with an explicit Width, as the prior fix established;
-         the explicit number is what PositionLeftOf offsets against. -->
+    <!-- Three filling rings stacked in a column to the LEFT of the pet: a narrow strip beside
+         the sprite fits a bottom-right pet without fighting the taskbar.
+    
+         Each ring carries its concept icon inside it (Catch/Evolution/TreatIconStyle from
+         PokedexTheme.xaml, the same glyphs the in-app progress card uses), so every gauge is
+         self-identifying at no extra space.
+    
+         The arcs are plain Ellipses driven by StrokeDashArray (see code-behind) rather than
+         geometry rebuilt per update. SizeToContent is Height-only with an explicit Width,
+         which PositionLeftOf offsets against. -->
     <Border Background="#E60D1120" BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
             CornerRadius="12" Padding="10,10">
         <Border.Effect>

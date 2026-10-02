@@ -68,20 +68,14 @@ public sealed class ForegroundWindowMonitor : IDisposable
 
         if (!FullscreenDetector.IsFullscreen(windowScreenRect, monitorScreenRect, hasBorder)) return false;
 
-        // A fullscreen app only actually hides anything on ITS OWN monitor, so hiding the pet
-        // for a game on a different screen was pure loss — reported as surprising by the user.
-        //
-        // The comparison is monitor HANDLES from MonitorFromWindow for both windows, not a
-        // rect overlap computed here: that is the same "monitor containing the largest part of
-        // the window" rule for both sides, in the same units, with no DIP-vs-physical-pixel
-        // conversion to get wrong (this codebase has already shipped one bug from exactly that
-        // conversion — see OverlayWindow.ToDips). It also needs no notion of which monitor the
-        // MonitorIndex SETTING names, which after the drag-to-remember-position feature is no
-        // longer where the pet necessarily is.
+        // A fullscreen app only hides anything on ITS OWN monitor. Compared by monitor HANDLES
+        // (MonitorFromWindow for both windows): the same rule and units on both sides, no
+        // DIP/physical conversion to get wrong, and no reliance on the MonitorIndex setting — a
+        // dragged pet may be on another monitor.
         var petWindow = _petWindowHandle();
 
-        // No pet window yet (polling can start before the overlay is sourced): fall back to the
-        // old unconditional behaviour rather than leaving the pet over a fullscreen app.
+        // No pet window yet (polling can start before the overlay is sourced): hide anyway rather
+        // than risk the pet over a fullscreen app.
         if (petWindow == IntPtr.Zero) return true;
 
         return MonitorFromWindow(petWindow, MONITOR_DEFAULTTONEAREST) == monitorHandle;

@@ -13,15 +13,12 @@ public partial class CatchView : System.Windows.Controls.UserControl
     private readonly AppState _appState;
     private readonly Func<CatchReveal?> _tryPerformCatch;
     private readonly Func<int, Task<byte[]?>> _fetchSprite;
-    /// Count of queued catches waiting to be claimed (Task 3's queue, capped at
-    /// App.MaxPendingCatches), not just a ready/not-ready flag — drives the "N поимок готово"
-    /// wording below.
+    /// Number of queued catches waiting to be claimed (capped at App.MaxPendingCatches) — drives
+    /// the "N поимок готово" wording below.
     private readonly Func<int> _catchReadyCount;
     private readonly Action _onStateChanged;
 
     /// Species id -> display name, resolved against the live species catalog by the caller.
-    /// Replaces the retired hand-translated SpeciesNames dictionary; this view has no catalog
-    /// of its own, so the lookup is injected rather than reached for.
     private readonly Func<int, string> _resolveSpeciesName;
     private DispatcherTimer? _liveRefreshTimer;
 
@@ -61,8 +58,8 @@ public partial class CatchView : System.Windows.Controls.UserControl
         SetReady(_catchReadyCount());
     }
 
-    /// count: how many catches are queued (0 = none ready). Wording escalates from "не готово"
-    /// through singular to plural once more than one is banked — see Task 3's spec.
+    /// count: how many catches are queued (0 = none ready). Wording goes from "не готово"
+    /// through singular to plural.
     private void SetReady(int count)
     {
         CatchButton.IsEnabled = count > 0;

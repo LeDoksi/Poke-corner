@@ -2,10 +2,10 @@ using System.IO;
 
 namespace PokeCorner.App.Overlay;
 
-/// Diagnostic trail for POKE-9 ("the pet ends up under other windows, no visible pattern").
-/// Written once a second from the growth tick, but a line lands only when the pet's z-order
-/// STATE changes — the detail (what was in the foreground at that moment) rides along without
-/// being part of that comparison, so ordinary window switching doesn't flood the file.
+/// Diagnostic trail for "the pet ends up under other windows". Called once a second from the
+/// growth tick, but a line lands only when the pet's z-order STATE changes — the detail (what
+/// was in the foreground) rides along without being compared, so ordinary window switching
+/// doesn't flood the file.
 public sealed class ZOrderLog
 {
     /// Past this the file is simply started over: it is a "what happened lately" trail for a

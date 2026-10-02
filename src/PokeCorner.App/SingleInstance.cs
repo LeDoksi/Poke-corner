@@ -1,8 +1,8 @@
 namespace PokeCorner.App;
 
-/// One running copy per Windows session. Two copies used to autosave the same state.json
-/// every few seconds, each overwriting the other's progress (POKE-22). A second launch signals
-/// the running copy to show itself and exits.
+/// One running copy per Windows session — two copies would autosave the same state.json,
+/// each overwriting the other's progress. A second launch signals the running copy to show
+/// itself and exits.
 public sealed class SingleInstance : IDisposable
 {
     private readonly Mutex _mutex;

@@ -25,9 +25,8 @@ public sealed class CatchRoller
         var ownedChainIds = owned.Select(i => i.EvolutionChainId).ToHashSet();
         var chain = PickChain(allChains, ownedChainIds);
         var isDuplicate = ownedChainIds.Contains(chain.ChainId);
-        // Only the PICKED chain's natures count as "already owned" — which chain that is isn't
-        // known until PickChain returns, so callers can't pre-filter this (they used to try, and
-        // ended up passing every nature in the collection).
+        // Only the PICKED chain's natures count as "already owned"; which chain that is isn't known
+        // until PickChain returns, so callers can't pre-filter this.
         var ownedNaturesForDuplicateChain = owned.Where(i => i.EvolutionChainId == chain.ChainId).Select(i => i.Nature).ToHashSet();
 
         var isShiny = _random.NextDouble() < (isDuplicate ? BaseShinyChance * DuplicateShinyChanceMultiplier : BaseShinyChance) * shinyChanceMultiplier;
