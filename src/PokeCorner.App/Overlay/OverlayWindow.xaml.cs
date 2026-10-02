@@ -27,6 +27,17 @@ public partial class OverlayWindow : Window
     private readonly WinEventDelegate _foregroundChangedCallback;
     private IntPtr _foregroundHook;
 
+    /// False keeps the pet on screen when something tries to close it (Alt+F4 while it has
+    /// focus): with ShutdownMode=OnExplicitShutdown the process would otherwise keep running
+    /// with no pet. The app sets it right before shutting down.
+    public bool AllowClose { get; set; }
+
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+    {
+        if (!AllowClose) e.Cancel = true;
+        base.OnClosing(e);
+    }
+
     public event Action? PetClicked;
     public event Action? MenuRequested;
 

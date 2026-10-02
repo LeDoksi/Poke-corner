@@ -21,6 +21,9 @@ public partial class App : System.Windows.Application
 {
     private AppState _appState = null!;
     private JsonSaveStore _saveStore = null!;
+    private SingleInstance _singleInstance = null!;
+    private const string SingleInstanceName = @"Local\PokeCorner.SingleInstance";
+    private const string AfterRestartArg = "--after-restart";
     private BackgroundSaveWriter _saveWriter = null!;
     private SpriteCache _spriteCache = null!;
     private PokeApiClient _pokeApiClient = null!;
@@ -83,6 +86,19 @@ public partial class App : System.Windows.Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        // Before anything loads state: a second copy would autosave over this one's progress.
+        // After "reset save data" the new process starts while the old one is still exiting,
+        // so it waits for the name instead of bowing out.
+        var singleInstance = SingleInstance.TryAcquire(SingleInstanceName,
+            e.Args.Contains(AfterRestartArg) ? TimeSpan.FromSeconds(10) : TimeSpan.Zero);
+        if (singleInstance is null)
+        {
+            SingleInstance.SignalRunningInstance(SingleInstanceName);
+            Shutdown();
+            return;
+        }
+        _singleInstance = singleInstance;
 
         DispatcherUnhandledException += (_, args) =>
         {
@@ -239,7 +255,7 @@ public partial class App : System.Windows.Application
         _trayIconService.OpenSettingsRequested += () => OpenMenu(SettingsTabIndex);
         _trayIconService.OpenShopRequested += () => OpenMenu(ShopTabIndex);
         _trayIconService.CatchRequested += () => OpenMenu(CatchTabIndex);
-        _trayIconService.ExitRequested += () => Shutdown();
+        _trayIconService.ExitRequested += ShutdownApp;
         // Restore the tray's ready glyph if a catch was already queued when the app last closed
         // (see _catchReadyCount's hydration above) — the AppMenuWindow badge doesn't need the
         // same treatment since it's created lazily and reads the live count when it is.
@@ -257,7 +273,14 @@ public partial class App : System.Windows.Application
 
         ReconcileSettingsState();
 
-        Exit += (_, _) => SaveState();
+        _singleInstance.ActivationRequested += () => Dispatcher.BeginInvoke(() => OpenMenu(CollectionTabIndex));
+        // Windows logging off must not be blocked by the pet window refusing to close.
+        SessionEnding += (_, _) => _overlayWindow.AllowClose = true;
+        Exit += (_, _) =>
+        {
+            SaveState();
+            _singleInstance.Dispose();
+        };
     }
 
     /// EVERYTHING ON THIS TICK MUST STAY CHEAP — this is not a style preference, it is a
@@ -980,19 +1003,26 @@ public partial class App : System.Windows.Application
     /// Only state.json goes. The sprite cache and catalog.json are deliberately kept: they
     /// are asset caches, not player progress, and rebuilding the catalog means ~650 species
     /// worth of PokeAPI requests, which would turn a reset into a multi-minute wait.
+    /// The only way out: lets the pet window close (it refuses otherwise, see OverlayWindow.AllowClose).
+    private void ShutdownApp()
+    {
+        _overlayWindow.AllowClose = true;
+        Shutdown();
+    }
+
     private void ResetSaveDataAndRestart()
     {
         _isWipingSaveData = true;
         _saveWriter.Delete(); // also cancels an autosave still queued on the thread pool
 
-        Process.Start(Environment.ProcessPath!);
+        Process.Start(Environment.ProcessPath!, AfterRestartArg);
 
         // Shutdown(), matching the tray's "Выход" item, rather than Environment.Exit: it runs
         // the Exit handler, so the global input hook, the fullscreen monitor and the tray icon
         // are all disposed properly instead of being abandoned while the replacement process
         // is already starting up. Its SaveState() call reaches a write that _isWipingSaveData
         // now suppresses.
-        Shutdown();
+        ShutdownApp();
     }
 
     private void SaveState()
