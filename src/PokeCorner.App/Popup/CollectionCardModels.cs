@@ -185,6 +185,7 @@ public sealed class PendingEggCard
     public required double HatchFraction { get; init; }
     public required bool IsReady { get; init; }
     public required string StatusText { get; init; }
+    public string HatchesIntoText => $"Вылупится покемон редкости «{TierName}»";
 }
 
 /// Theme-dictionary brush lookup by resource key.

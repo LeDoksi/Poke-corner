@@ -1519,6 +1519,61 @@ public class ThemeRenderingTests
         });
 
     [Fact]
+    public void ShopView_CharmCard_ExplainsItselfOnTheCard() =>
+        WpfTestHost.Run(() =>
+        {
+            var view = new ShopView(new AppState(), new ShopService(), _ => true, _ => true, () => { });
+            WpfTestHost.Layout(view);
+
+            Assert.Equal("×4 к шансу шайни для следующего покемона — пойманного или из яйца",
+                ((TextBlock)view.FindName("CatchLuckyCharmDescriptionText")).Text);
+            var button = (System.Windows.Controls.Button)view.FindName("CatchLuckyCharmButton");
+            Assert.True(button.IsEnabled);
+            Assert.Equal("Купить", button.Content);
+        });
+
+    [Fact]
+    public void ShopView_CharmActive_ShowsActiveAndDisablesBuy() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            appState.Shop.CatchLuckyCharmActive = true;
+            var view = new ShopView(appState, new ShopService(), _ => true, _ => true, () => { });
+            WpfTestHost.Layout(view);
+
+            var button = (System.Windows.Controls.Button)view.FindName("CatchLuckyCharmButton");
+            Assert.False(button.IsEnabled);
+            Assert.Equal("Активен", button.Content);
+        });
+
+    [Fact]
+    public void CatchView_ExplainsCatching_AndMentionsAnActiveCharm() =>
+        WpfTestHost.Run(() =>
+        {
+            var appState = new AppState();
+            var view = new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}");
+            WpfTestHost.Layout(view);
+
+            Assert.Equal("Покемоны встречаются, пока ты активен за компьютером: шкала заполнилась — можно ловить. Встречи копятся, до 3 сразу.",
+                ((TextBlock)view.FindName("CatchExplanationText")).Text);
+            var charmText = (TextBlock)view.FindName("CatchCharmText");
+            Assert.Equal(Visibility.Collapsed, charmText.Visibility);
+
+            appState.Shop.CatchLuckyCharmActive = true;
+            view.Refresh();
+            Assert.Equal(Visibility.Visible, charmText.Visibility);
+            Assert.Equal("Талисман удачи активен: ×4 к шансу шайни на этой поимке.", charmText.Text);
+        });
+
+    [Fact]
+    public void PendingEggCard_SaysWhatHatches() =>
+        Assert.Equal("Вылупится покемон редкости «Редкий»", new PendingEggCard
+        {
+            EggId = Guid.NewGuid(), TierName = "Редкий", TierBrush = System.Windows.Media.Brushes.Gold,
+            HatchFraction = 0.5, IsReady = false, StatusText = "x"
+        }.HatchesIntoText);
+
+    [Fact]
     public void ShopView_UnavailableTier_DimsTheWholeCardNotJustTheButton() =>
         WpfTestHost.Run(() =>
         {

@@ -165,4 +165,14 @@ public class ShopServiceTests
         Assert.Equal(4.0, service.ConsumeCatchLuckyCharm(shop));
         Assert.Equal(1.0, service.ConsumeCatchLuckyCharm(shop));
     }
+
+    /// The charm is a flag, not a stack: buying it again while active used to just burn coins.
+    [Fact]
+    public void BuyCatchLuckyCharm_WhenAlreadyActive_FailsAndKeepsCoins()
+    {
+        var shop = new ShopInventory { Coins = ShopService.CatchLuckyCharmPrice * 2, CatchLuckyCharmActive = true };
+
+        Assert.False(new ShopService().BuyCatchLuckyCharm(shop));
+        Assert.Equal(ShopService.CatchLuckyCharmPrice * 2, shop.Coins);
+    }
 }

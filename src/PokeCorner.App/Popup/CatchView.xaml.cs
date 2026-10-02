@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using PokeCorner.Core;
+using PokeCorner.Core.Domain;
 
 namespace PokeCorner.App.Popup;
 
@@ -55,6 +56,8 @@ public partial class CatchView : System.Windows.Controls.UserControl
     {
         var progress = ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding);
         CatchProgressBar.Value = progress.CatchFraction;
+        CatchCharmText.Text = $"Талисман удачи активен: ×{ShopService.CatchLuckyCharmShinyMultiplier:0} к шансу шайни на этой поимке.";
+        CatchCharmText.Visibility = _appState.Shop.CatchLuckyCharmActive ? Visibility.Visible : Visibility.Collapsed;
         SetReady(_catchReadyCount());
     }
 

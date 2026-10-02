@@ -455,6 +455,8 @@
                                                 <TextBlock Text="{Binding TierName}" FontWeight="SemiBold"
                                                            Foreground="{Binding TierBrush}" />
                                             </StackPanel>
+                                            <TextBlock Text="{Binding HatchesIntoText}" Style="{StaticResource MetaTextStyle}"
+                                                       Margin="0,1,0,0" />
                                             <TextBlock Text="{Binding StatusText}" Style="{StaticResource MetaTextStyle}"
                                                        Margin="0,1,0,6" />
                                             <ProgressBar Style="{StaticResource GoldProgressBarStyle}" Height="8"

@@ -51,7 +51,8 @@ public sealed class ShopService
 
     public bool BuyCatchLuckyCharm(ShopInventory shop)
     {
-        if (shop.Coins < CatchLuckyCharmPrice) return false;
+        // A flag, not a stack: a second charm while one is active would only burn coins.
+        if (shop.CatchLuckyCharmActive || shop.Coins < CatchLuckyCharmPrice) return false;
         shop.Coins -= CatchLuckyCharmPrice;
         shop.CatchLuckyCharmActive = true;
         return true;

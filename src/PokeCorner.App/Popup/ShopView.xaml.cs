@@ -62,7 +62,10 @@ public partial class ShopView : System.Windows.Controls.UserControl
     }
 
     private void CatchLuckyCharmButton_Click(object sender, RoutedEventArgs e) =>
-        ReportResult(_shopService.BuyCatchLuckyCharm(_appState.Shop), "Талисман удачи активирован на следующую поимку или вылупление.", "Не хватает монет.");
+        ReportResult(_shopService.BuyCatchLuckyCharm(_appState.Shop), "Талисман удачи активирован на следующую поимку или вылупление.",
+            _appState.Shop.CatchLuckyCharmActive
+                ? "Талисман уже активен — он сработает на следующей поимке или вылуплении."
+                : "Не хватает монет.");
 
     private void EggCommonButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Common);
     private void EggUncommonButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Uncommon);
@@ -97,14 +100,12 @@ public partial class ShopView : System.Windows.Controls.UserControl
         TreatPackPriceText.Text = ShopService.TreatPackPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
         CarePointsBoosterNameText.Text = $"Бустер роста (+{ShopService.CarePointsBoosterAmount:N0} CP)";
         CarePointsBoosterPriceText.Text = ShopService.CarePointsBoosterPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        // Self-describing name, same pattern the other two consumables already use ("Пачка
-        // лакомств (5 шт)", "Бустер роста (+N CP)"). This card said only "Талисман удачи",
-        // which left the one item whose effect isn't guessable as the one item with no
-        // explanation. The multiplier is read from ShopService rather than written out, so it
-        // can't drift from the number CatchRoller actually applies; the fuller wording lives
-        // in the card's ToolTip in ShopView.xaml.
-        CatchLuckyCharmNameText.Text = $"Талисман удачи (×{ShopService.CatchLuckyCharmShinyMultiplier:0} шанс шайни)";
+        CatchLuckyCharmNameText.Text = "Талисман удачи"; // the effect is spelled out in the description line below it
         CatchLuckyCharmPriceText.Text = ShopService.CatchLuckyCharmPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
+        CatchLuckyCharmDescriptionText.Text = $"×{ShopService.CatchLuckyCharmShinyMultiplier:0} к шансу шайни для следующего покемона — пойманного или из яйца";
+        var charmActive = _appState.Shop.CatchLuckyCharmActive;
+        CatchLuckyCharmButton.IsEnabled = !charmActive;
+        CatchLuckyCharmButton.Content = charmActive ? "Активен" : "Купить";
 
         EggCommonNameText.Text = "Обычное яйцо";
         EggCommonPriceText.Text = ShopService.EggPriceCommon.ToString(System.Globalization.CultureInfo.CurrentCulture);
