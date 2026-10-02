@@ -516,7 +516,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             // rather than spinning up a timer that repaints the same bitmap.
             if (frames is null || frames.Count < 2) return;
 
-            _animatedFrames[speciesId] = frames.Select(DecodePng).ToList();
+            // Off the UI thread: DecodePng freezes each bitmap, which is what makes it legal to
+            // hand them back here. Decoding a page's worth on the dispatcher was a visible hitch.
+            _animatedFrames[speciesId] = await Task.Run(() => frames.Select(DecodePng).ToList());
             _pokedexSignature = string.Empty; // force the next tick to rebuild with the frames
         }
     }

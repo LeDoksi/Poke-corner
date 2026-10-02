@@ -46,9 +46,27 @@ public sealed class SpeciesCatalog
         return usable is not null;
     }
 
+    /// Last parse of the cache file, keyed by its write time. Callers hit this several times a
+    /// second (the shop's tier checks, every catch, sprite resolution) and used to re-read and
+    /// re-parse the whole file each time. Keying on the write time rather than caching forever
+    /// means a background RefreshFromNetworkAsync rewrite is still picked up on the next call.
+    /// One reference, swapped whole, so a reader never sees a time from one parse and data from another.
+    private sealed record ParsedCache(DateTime WriteTimeUtc, List<SpeciesEvolutionChain>? Chains);
+    private ParsedCache? _parsed;
+
     private List<SpeciesEvolutionChain>? TryLoadCache()
     {
         if (!File.Exists(_catalogFilePath)) return null;
+        var writeTimeUtc = File.GetLastWriteTimeUtc(_catalogFilePath);
+        if (_parsed is { } parsed && parsed.WriteTimeUtc == writeTimeUtc) return parsed.Chains;
+
+        var chains = ParseCacheFile();
+        _parsed = new ParsedCache(writeTimeUtc, chains);
+        return chains;
+    }
+
+    private List<SpeciesEvolutionChain>? ParseCacheFile()
+    {
         try
         {
             return JsonSerializer.Deserialize<List<SpeciesEvolutionChain>>(File.ReadAllText(_catalogFilePath));
@@ -91,6 +109,10 @@ public sealed class SpeciesCatalog
 
         var directory = Path.GetDirectoryName(_catalogFilePath);
         if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
-        File.WriteAllText(_catalogFilePath, JsonSerializer.Serialize(chains));
+        // Temp file + move, so a reader on another thread (the crawl runs on the thread pool)
+        // never parses a half-written file.
+        var tempPath = _catalogFilePath + ".tmp";
+        File.WriteAllText(tempPath, JsonSerializer.Serialize(chains));
+        File.Move(tempPath, _catalogFilePath, overwrite: true);
     }
 }

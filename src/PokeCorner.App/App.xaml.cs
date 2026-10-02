@@ -76,6 +76,11 @@ public partial class App : System.Windows.Application
     /// "{speciesId}.png", so an animated entry would collide with the static one.
     private readonly Dictionary<int, byte[]> _animatedSpriteCache = new();
 
+    /// Decoded PNG frames per display species id (null = "no usable animation"), in front of
+    /// _animatedSpriteCache. Decoding a GIF is NOT cheap: measured ~22ms per species, ~350ms for
+    /// one 16-card Pokédex page, which was the page-flip stutter of POKE-18.
+    private readonly Dictionary<int, IReadOnlyList<byte[]>?> _decodedFramesCache = new();
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -108,7 +113,18 @@ public partial class App : System.Windows.Application
             || !_speciesCatalog.IsCacheSchemaCurrent();
         if (catalogIsStale)
         {
-            _ = _speciesCatalog.RefreshFromNetworkAsync();
+            // On the thread pool, not the dispatcher: each pokemon/{id}/ response is a few hundred
+            // KB of JSON, and ~1600 of them parsed on the UI thread over ~5 minutes was the
+            // after-launch stutter of POKE-18. Delayed because this app autostarts with Windows,
+            // usually before the network is up — the first request then failed and took the
+            // whole crawl down on every boot, so the file never actually refreshed.
+            // ponytail: one attempt per launch, no retry; add a retry loop if a 2-minute head
+            // start still loses to slow networks.
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(TimeSpan.FromMinutes(2));
+                await _speciesCatalog.RefreshFromNetworkAsync();
+            });
         }
         _catchRoller = new CatchRoller();
         _eggIncubationService = new EggIncubationService();
@@ -613,11 +629,14 @@ public partial class App : System.Windows.Application
     /// Pokédex would re-download a GIF per owned species every time the popup rebuilt its
     /// grid, which is once a second.
     ///
-    /// The memo holds the raw GIF, not the decoded frames: decoding is cheap next to the two
-    /// HTTP round trips, and caching bytes keeps this method's contract (fresh list per call)
-    /// free of aliasing concerns between the overlay and the popup.
+    /// The decoded frames are memoized too (_decodedFramesCache) and decoded on a worker
+    /// thread: a page of the Pokédex used to decode all of its GIFs on the UI thread on every
+    /// open. The returned list is shared between callers — it is read-only and nobody writes
+    /// into the frame arrays.
     private async Task<IReadOnlyList<byte[]>?> GetAnimatedFramesAsync(int speciesId)
     {
+        if (_decodedFramesCache.TryGetValue(speciesId, out var memoized)) return memoized;
+
         if (!_animatedSpriteCache.TryGetValue(speciesId, out var animatedBytes))
         {
             // Disk before network, mirroring SpriteCache's static-PNG contract. This is what
@@ -670,19 +689,28 @@ public partial class App : System.Windows.Application
             }
         }
 
-        if (animatedBytes is null) return null;
+        IReadOnlyList<byte[]>? decoded = null;
+        if (animatedBytes is not null)
+        {
+            try
+            {
+                // A non-GIF or truncated response body makes the decode throw, and a
+                // malformed-but-decodable GIF can yield zero frames — both mean "no animation".
+                var gif = animatedBytes;
+                var frames = await Task.Run(() => GifFrameDecoder.DecodeFramesAsPng(gif));
+                decoded = frames.Count > 0 ? frames : null;
+            }
+            catch
+            {
+                decoded = null;
+            }
+        }
 
-        try
-        {
-            // A non-GIF or truncated response body makes the decode throw, and a
-            // malformed-but-decodable GIF can yield zero frames — both mean "no animation".
-            var frames = GifFrameDecoder.DecodeFramesAsPng(animatedBytes);
-            return frames.Count > 0 ? frames : null;
-        }
-        catch
-        {
-            return null;
-        }
+        // ponytail: unbounded, one entry per species ever shown (~650 max, a few MB of PNGs);
+        // add LRU eviction if memory ever matters. A null from a failed network fetch is not
+        // memoized, so it is retried on the next call.
+        if (animatedBytes is not null) _decodedFramesCache[speciesId] = decoded;
+        return decoded;
     }
 
     // Reads from the same widened species catalog as every other catch-pool call site here

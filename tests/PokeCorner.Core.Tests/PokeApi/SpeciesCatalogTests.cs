@@ -34,6 +34,43 @@ public class SpeciesCatalogTests : IDisposable
 
     public void Dispose() { if (Directory.Exists(_tempDir)) Directory.Delete(_tempDir, recursive: true); }
 
+    private void WriteUsableCatalog(int chainCount, DateTime writeTimeUtc)
+    {
+        Directory.CreateDirectory(_tempDir);
+        var chains = Enumerable.Range(1, chainCount)
+            .Select(id => new SpeciesEvolutionChain(id, id, 255, 1, new[] { id }, new[] { $"mon{id}" }, new IReadOnlyList<string>[] { new[] { "normal" } }))
+            .ToList();
+        File.WriteAllText(_catalogFile, JsonSerializer.Serialize(chains));
+        File.SetLastWriteTimeUtc(_catalogFile, writeTimeUtc);
+    }
+
+    /// The shop asks for the catalog four times a second; re-reading and re-parsing the file
+    /// on every one of those was a measurable part of the UI stutter (POKE-18).
+    [Fact]
+    public void LoadCachedOrFallback_CalledTwice_DeserializesOnce()
+    {
+        WriteUsableCatalog(chainCount: 1, DateTime.UtcNow.AddMinutes(-5));
+        var catalog = new SpeciesCatalog(new PokeApiClient(new RoutingStubHandler(_ => "{}")), _spriteCache, _catalogFile);
+
+        var first = catalog.LoadCachedOrFallback();
+        var second = catalog.LoadCachedOrFallback();
+
+        Assert.Same(first, second);
+    }
+
+    [Fact]
+    public void LoadCachedOrFallback_AfterFileRewritten_ReturnsNewContent()
+    {
+        var written = DateTime.UtcNow.AddMinutes(-5);
+        WriteUsableCatalog(chainCount: 1, written);
+        var catalog = new SpeciesCatalog(new PokeApiClient(new RoutingStubHandler(_ => "{}")), _spriteCache, _catalogFile);
+        Assert.Single(catalog.LoadCachedOrFallback());
+
+        WriteUsableCatalog(chainCount: 2, written.AddMinutes(1)); // e.g. a background RefreshFromNetworkAsync landed
+
+        Assert.Equal(2, catalog.LoadCachedOrFallback().Count);
+    }
+
     [Fact]
     public void LoadCachedOrFallback_NoCacheFile_ReturnsOfflineStarters()
     {
