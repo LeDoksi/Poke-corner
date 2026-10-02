@@ -13,7 +13,11 @@ public sealed class JsonSaveStore
         _filePath = filePath;
     }
 
-    public void Save(SaveData data)
+    public static string Serialize(SaveData data) => JsonSerializer.Serialize(data, Options);
+
+    public void Save(SaveData data) => SaveSerialized(Serialize(data));
+
+    public void SaveSerialized(string json)
     {
         var directory = Path.GetDirectoryName(_filePath);
         if (!string.IsNullOrEmpty(directory))
@@ -24,8 +28,13 @@ public sealed class JsonSaveStore
         // Write to a temp file first, then atomically move it into place: a crash mid-write
         // leaves either the old file intact or the new file complete, never a truncated one.
         var tempPath = _filePath + ".tmp";
-        File.WriteAllText(tempPath, JsonSerializer.Serialize(data, Options));
+        File.WriteAllText(tempPath, json);
         File.Move(tempPath, _filePath, overwrite: true);
+    }
+
+    public void Delete()
+    {
+        if (File.Exists(_filePath)) File.Delete(_filePath);
     }
 
     public SaveData? Load()

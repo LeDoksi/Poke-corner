@@ -21,6 +21,7 @@ public partial class App : System.Windows.Application
 {
     private AppState _appState = null!;
     private JsonSaveStore _saveStore = null!;
+    private BackgroundSaveWriter _saveWriter = null!;
     private SpriteCache _spriteCache = null!;
     private PokeApiClient _pokeApiClient = null!;
     private SpeciesCatalog _speciesCatalog = null!;
@@ -90,6 +91,7 @@ public partial class App : System.Windows.Application
         };
 
         _saveStore = new JsonSaveStore(AppPaths.GetSaveFilePath());
+        _saveWriter = new BackgroundSaveWriter(_saveStore);
         _spriteCache = new SpriteCache(AppPaths.GetSpriteCacheDirectory());
         _pokeApiClient = new PokeApiClient(new System.Net.Http.HttpClientHandler());
         var catalogPath = Path.Combine(AppPaths.GetAppDataDirectory(), "catalog.json");
@@ -981,12 +983,7 @@ public partial class App : System.Windows.Application
     private void ResetSaveDataAndRestart()
     {
         _isWipingSaveData = true;
-
-        var savePath = AppPaths.GetSaveFilePath();
-        if (File.Exists(savePath))
-        {
-            File.Delete(savePath);
-        }
+        _saveWriter.Delete(); // also cancels an autosave still queued on the thread pool
 
         Process.Start(Environment.ProcessPath!);
 
@@ -1005,15 +1002,13 @@ public partial class App : System.Windows.Application
         _fullscreenMonitor?.Dispose();
         _trayIconService?.Dispose();
 
-        PersistState();
+        PersistState(flush: true);
     }
 
-    // Just the data-write, with none of SaveState()'s resource disposal — used by the
-    // periodic autosave in OnGrowthTick, which must NOT tear down the global input hook,
-    // fullscreen monitor, or tray icon every 5 seconds. SaveState() (full shutdown path,
-    // used on Exit and from the crash handler) still disposes those and then delegates
-    // here for the actual write.
-    private void PersistState()
+    /// Autosaves (flush: false) only queue the disk write on the thread pool — they run on the
+    /// growth tick, whose thread owns the input hooks. Exit and the crash handler flush
+    /// synchronously, so the process can't end before the final state is on disk.
+    private void PersistState(bool flush = false)
     {
         // The one case where not writing is correct: ResetSaveDataAndRestart has just deleted
         // state.json, and every remaining write path leads back here — the autosave tick, the
@@ -1023,6 +1018,7 @@ public partial class App : System.Windows.Application
         if (_isWipingSaveData) return;
 
         var data = _appState.ToSaveData(_catchReadyCount);
-        _saveStore.Save(data);
+        if (flush) _saveWriter.Flush(data);
+        else _saveWriter.Post(data);
     }
 }
