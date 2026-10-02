@@ -87,7 +87,7 @@ public class CatchRollerTests
     }
 
     [Fact]
-    public void RollCatchFromTier_OnlyPicksFromMatchingTier()
+    public void TryRollCatchFromTier_OnlyPicksFromMatchingTier()
     {
         var legendary = CommonUnowned with { ChainId = 99, CaptureRate = 3 }; // RarityTier.Legendary
         var chains = new[] { CommonUnowned, legendary }; // CommonUnowned is CaptureRate 255 -> RarityTier.Common
@@ -95,19 +95,33 @@ public class CatchRollerTests
 
         for (var i = 0; i < 100; i++)
         {
-            var result = roller.RollCatchFromTier(chains, RarityTier.Legendary, Array.Empty<PokemonIndividual>());
+            Assert.True(roller.TryRollCatchFromTier(chains, RarityTier.Legendary, Array.Empty<PokemonIndividual>(), () => 1.0, out var result));
             Assert.Equal(legendary.ChainId, result.ChainId);
         }
     }
 
+    /// The lucky charm must survive a hatch that can't happen (no species of that rarity in the
+    /// catalog yet) — so the multiplier source is only consulted once a roll is certain.
     [Fact]
-    public void RollCatchFromTier_NoChainsInTier_Throws()
+    public void TryRollCatchFromTier_EmptyTier_ReturnsFalseAndDoesNotConsumeCharm()
     {
-        var chains = new[] { CommonUnowned }; // only RarityTier.Common available
+        var consumed = false;
         var roller = new CatchRoller(new Random(Seed: 21));
 
-        Assert.Throws<InvalidOperationException>(() =>
-            roller.RollCatchFromTier(chains, RarityTier.Legendary, Array.Empty<PokemonIndividual>()));
+        var rolled = roller.TryRollCatchFromTier(new[] { CommonUnowned }, RarityTier.Legendary, Array.Empty<PokemonIndividual>(),
+            () => { consumed = true; return 4.0; }, out _);
+
+        Assert.False(rolled);
+        Assert.False(consumed);
+    }
+
+    [Fact]
+    public void TryRollCatchFromTier_UsesTheConsumedMultiplier()
+    {
+        var roller = new CatchRoller(new Random(Seed: 22));
+
+        Assert.True(roller.TryRollCatchFromTier(new[] { CommonUnowned }, RarityTier.Common, Array.Empty<PokemonIndividual>(), () => 1e9, out var result));
+        Assert.True(result.IsShiny);
     }
 
     [Fact]

@@ -14,7 +14,13 @@ public sealed class SpeciesCatalog
         _client = client;
         _spriteCache = spriteCache;
         _catalogFilePath = catalogFilePath;
+
+        // Left by a crash between RefreshFromNetworkAsync's temp write and its move.
+        try { File.Delete(TempPath); }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { }
     }
+
+    private string TempPath => _catalogFilePath + ".tmp";
 
     public IReadOnlyList<SpeciesEvolutionChain> LoadCachedOrFallback() =>
         IsCacheUsable(TryLoadCache(), out var cached) ? cached! : _spriteCache.LoadOfflineStarters();
@@ -111,8 +117,7 @@ public sealed class SpeciesCatalog
         if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
         // Temp file + move, so a reader on another thread (the crawl runs on the thread pool)
         // never parses a half-written file.
-        var tempPath = _catalogFilePath + ".tmp";
-        File.WriteAllText(tempPath, JsonSerializer.Serialize(chains));
-        File.Move(tempPath, _catalogFilePath, overwrite: true);
+        File.WriteAllText(TempPath, JsonSerializer.Serialize(chains));
+        File.Move(TempPath, _catalogFilePath, overwrite: true);
     }
 }

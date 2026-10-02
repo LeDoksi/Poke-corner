@@ -77,6 +77,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// every tick, and without the decoded memo it would re-decode them every rebuild.
     private readonly Dictionary<int, IReadOnlyList<ImageSource>> _animatedFrames = new();
     private readonly HashSet<int> _animatedFetchStarted = new();
+    private readonly Func<int, Task<byte[]?>>? _fetchSprite;
+    private readonly HashSet<int> _thumbnailFetchStarted = new();
 
     /// One SpriteAnimator per realized card Image. A DataTemplate gives no named element to
     /// hand the animator at construction time the way the hero Image does, so each Image
@@ -102,7 +104,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private string _eggsSignature = string.Empty;
     private string _pokedexSignature = string.Empty;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<Guid, bool> onHatchRequested, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<Guid, bool> onHatchRequested, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -116,6 +118,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _getActiveSpriteFrames = getActiveSpriteFrames;
         _onHatchRequested = onHatchRequested;
         _getAnimatedFrames = getAnimatedFrames;
+        _fetchSprite = fetchSprite;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
         // rename there can never leave the filter pills saying something different.
@@ -850,11 +853,36 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (_spriteThumbnails.TryGetValue(speciesId, out var cached)) return cached;
 
         var bytes = _spriteCache.TryGetCachedBytes(speciesId);
-        if (bytes is null || bytes.Length == 0) return null;
+        if (bytes is null || bytes.Length == 0)
+        {
+            EnsureThumbnailFetched(speciesId);
+            return null;
+        }
 
         var decoded = SpriteImages.Decode(bytes);
         _spriteThumbnails[speciesId] = decoded;
         return decoded;
+    }
+
+    /// A species with no usable cached PNG — never fetched, or a truncated file SpriteCache just
+    /// dropped — is fetched once in the background; the next refresh tick then finds it on disk.
+    private void EnsureThumbnailFetched(int speciesId)
+    {
+        if (_fetchSprite is null || !_thumbnailFetchStarted.Add(speciesId)) return;
+
+        _ = FetchAsync();
+
+        async Task FetchAsync()
+        {
+            try
+            {
+                if (await _fetchSprite(speciesId) is not null) _pokedexSignature = string.Empty;
+            }
+            catch
+            {
+                // Same as the animated fetch: a fire-and-forget continuation must never crash the app.
+            }
+        }
     }
 
     private static string FormatPercent(double fraction) =>

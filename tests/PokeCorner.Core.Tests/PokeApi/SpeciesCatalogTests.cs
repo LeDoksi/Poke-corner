@@ -70,6 +70,19 @@ public class SpeciesCatalogTests : IDisposable
         Assert.Equal(2, catalog.LoadCachedOrFallback().Count);
     }
 
+    /// A crash between the temp write and the move leaves catalog.json.tmp behind in the install
+    /// folder, which the MSI doesn't own — so it would even survive an uninstall.
+    [Fact]
+    public void Constructor_DeletesStaleTmpFile()
+    {
+        Directory.CreateDirectory(_tempDir);
+        File.WriteAllText(_catalogFile + ".tmp", "half-written");
+
+        _ = new SpeciesCatalog(new PokeApiClient(new RoutingStubHandler(_ => "{}")), _spriteCache, _catalogFile);
+
+        Assert.False(File.Exists(_catalogFile + ".tmp"));
+    }
+
     [Fact]
     public void LoadCachedOrFallback_NoCacheFile_ReturnsOfflineStarters()
     {

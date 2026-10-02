@@ -38,20 +38,20 @@ public sealed class CatchRoller
         return new CatchResult(chain.ChainId, chain.StarterSpeciesId, nature, isShiny, isDuplicate, chain.ChainLength);
     }
 
-    // Guaranteed-tier catch for shop eggs — filters to the requested rarity first, then
-    // reuses the existing weighting/shiny/nature logic among just that subset.
-    public CatchResult RollCatchFromTier(
-        IReadOnlyList<SpeciesEvolutionChain> allChains,
-        RarityTier tier,
-        IReadOnlyCollection<PokemonIndividual> owned,
-        double shinyChanceMultiplier = 1.0)
+    /// Guaranteed-tier roll for a shop egg. Returns false — without calling
+    /// consumeShinyMultiplier — when the catalog has no species of that tier, so a lucky charm
+    /// isn't spent on a hatch that can't happen; otherwise consumes it exactly once and rolls.
+    public bool TryRollCatchFromTier(IReadOnlyList<SpeciesEvolutionChain> allChains, RarityTier tier, IReadOnlyCollection<PokemonIndividual> owned, Func<double> consumeShinyMultiplier, out CatchResult result)
     {
         var tierChains = allChains.Where(c => RarityClassifier.Classify(c.CaptureRate) == tier).ToList();
         if (tierChains.Count == 0)
         {
-            throw new InvalidOperationException($"No species available in rarity tier {tier} — caller must check availability before offering this purchase.");
+            result = null!;
+            return false;
         }
-        return RollCatch(tierChains, owned, shinyChanceMultiplier);
+
+        result = RollCatch(tierChains, owned, consumeShinyMultiplier());
+        return true;
     }
 
     // Used for starter selection: the player has already picked the species, so this

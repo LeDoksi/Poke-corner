@@ -710,7 +710,7 @@ public partial class App : System.Windows.Application
             }
         }
 
-        // ponytail: unbounded, one entry per species ever shown (~650 max, a few MB of PNGs);
+        // ponytail: unbounded, one entry per species ever shown (measured: ~57 MB if all 638 are viewed);
         // add LRU eviction if memory ever matters. A null from a failed network fetch is not
         // memoized, so it is retried on the next call.
         if (animatedBytes is not null) _decodedFramesCache[speciesId] = decoded;
@@ -890,23 +890,15 @@ public partial class App : System.Windows.Application
         var egg = _appState.PendingEggs.FirstOrDefault(e => e.Id == eggId);
         if (egg is null || !_eggIncubationService.IsReady(egg, DateTimeOffset.UtcNow)) return false;
 
-        var availableChains = _speciesCatalog.LoadCachedOrFallback();
-
-        // Defense in depth behind the shop's tier gating (see IsRarityTierAvailable): a save
-        // file written before that gating existed — or hand-edited — can still hold a pending
-        // egg of a tier the current catalog can't fill. RollCatchFromTier throws in that case,
-        // and DispatcherUnhandledException deliberately doesn't suppress crashes, so every
-        // launch would crash the moment that egg became hatchable. Bail out instead, keeping
-        // the egg pending so it can be retried once the catalog widens.
-        if (!availableChains.Any(c => RarityClassifier.Classify(c.CaptureRate) == egg.Tier))
+        // A save written before the shop's tier gating (or hand-edited) can hold an egg of a tier
+        // the catalog can't fill yet: keep the egg — and the lucky charm — for a later retry.
+        if (!_catchRoller.TryRollCatchFromTier(_speciesCatalog.LoadCachedOrFallback(), egg.Tier, _appState.Collection.Individuals,
+                () => _shopService.ConsumeCatchLuckyCharm(_appState.Shop), out var result))
         {
             _trayIconService.ShowNotification("PokéCorner", "Пока нет доступных покемонов этой редкости — попробуй позже, когда каталог обновится.");
             return false;
         }
 
-        var result = _catchRoller.RollCatchFromTier(availableChains, egg.Tier, _appState.Collection.Individuals,
-            // Only after the tier check above: an aborted hatch must not burn the charm.
-            _shopService.ConsumeCatchLuckyCharm(_appState.Shop));
         _appState.Collection.Add(result.ToIndividual(DateTimeOffset.UtcNow));
         _appState.PendingEggs.Remove(egg);
 
@@ -942,7 +934,8 @@ public partial class App : System.Windows.Application
                 // for individuals sitting on a migrated legacy chain id, not just real ones.
                 var lookupChains = _speciesCatalog.LoadForLookup();
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, lookupChains, _appState.PendingEggs);
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync);
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
+                    speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart);
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
