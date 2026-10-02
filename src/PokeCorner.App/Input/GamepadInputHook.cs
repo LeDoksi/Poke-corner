@@ -41,12 +41,14 @@ public sealed class GamepadInputHook : IDisposable
     private const int MaxControllers = 4; // XInput supports dwUserIndex 0-3, full stop.
     private const int ErrorSuccess = 0;
     private static readonly TimeSpan PollInterval = TimeSpan.FromMilliseconds(125);
+    private const int EmptySlotRecheckTicks = 24; // 3 s at PollInterval
 
     private static readonly XInputGetStateFn? Native = ResolveNative();
 
     private readonly InputEventCounter _counter;
     private readonly GamepadSnapshot[] _previous = new GamepadSnapshot[MaxControllers];
     private readonly bool[] _wasConnected = new bool[MaxControllers];
+    private readonly int[] _ticksSinceCheck = Enumerable.Repeat(EmptySlotRecheckTicks, MaxControllers).ToArray(); // probe every slot on the first poll
     private System.Threading.Timer? _timer;
     private int _polling;
 
@@ -109,6 +111,13 @@ public sealed class GamepadInputHook : IDisposable
         {
             for (var i = 0; i < MaxControllers; i++)
             {
+                if (!ShouldPoll(_wasConnected[i], _ticksSinceCheck[i]))
+                {
+                    _ticksSinceCheck[i]++;
+                    continue;
+                }
+                _ticksSinceCheck[i] = 0;
+
                 if (!TryReadState(i, out var current))
                 {
                     _wasConnected[i] = false;
@@ -135,6 +144,11 @@ public sealed class GamepadInputHook : IDisposable
             Interlocked.Exchange(ref _polling, 0);
         }
     }
+
+    /// Empty slots are the expensive XInput read, and with no gamepad all four are empty —
+    /// so a slot not connected last time is re-probed only every EmptySlotRecheckTicks polls.
+    public static bool ShouldPoll(bool lastKnownConnected, int ticksSinceLastCheck) =>
+        lastKnownConnected || ticksSinceLastCheck >= EmptySlotRecheckTicks;
 
     /// xinput1_4 ships with Windows 8+; the older names cover machines that only have the
     /// DirectX-redist or Windows 7-era versions. A machine with none of them just gets no

@@ -123,4 +123,21 @@ public class GamepadInputHookTests
         // controller must contribute exactly zero units.
         Assert.Equal(0, counter.DrainUnits());
     }
+
+    [Fact]
+    public void ShouldPoll_Connected_Always()
+    {
+        Assert.True(GamepadInputHook.ShouldPoll(lastKnownConnected: true, ticksSinceLastCheck: 0));
+        Assert.True(GamepadInputHook.ShouldPoll(lastKnownConnected: true, ticksSinceLastCheck: 5));
+    }
+
+    /// Reading an empty XInput slot is the expensive case, and on a machine with no gamepad
+    /// all four slots are empty — so they are re-probed every 3 s (24 ticks of 125 ms), not 8x a second.
+    [Fact]
+    public void ShouldPoll_Disconnected_OnlyEvery24Ticks()
+    {
+        Assert.False(GamepadInputHook.ShouldPoll(lastKnownConnected: false, ticksSinceLastCheck: 0));
+        Assert.False(GamepadInputHook.ShouldPoll(lastKnownConnected: false, ticksSinceLastCheck: 23));
+        Assert.True(GamepadInputHook.ShouldPoll(lastKnownConnected: false, ticksSinceLastCheck: 24));
+    }
 }
