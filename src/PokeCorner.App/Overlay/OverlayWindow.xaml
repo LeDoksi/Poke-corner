@@ -4,7 +4,6 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="{x:Null}"
-        ShowInTaskbar="False"
         ResizeMode="NoResize"
         SizeToContent="Manual">
     <Window.Resources>

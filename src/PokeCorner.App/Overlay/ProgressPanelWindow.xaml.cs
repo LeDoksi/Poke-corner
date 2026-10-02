@@ -23,6 +23,8 @@ public partial class ProgressPanelWindow : System.Windows.Window
     public ProgressPanelWindow()
     {
         InitializeComponent();
+        // Same no-owner treatment as the pet, for the same z-order reason.
+        SourceInitialized += (_, _) => OverlayWindow.HideFromTaskbarWithoutOwner(this);
     }
 
     public void UpdateProgress(ProgressInfo progress)

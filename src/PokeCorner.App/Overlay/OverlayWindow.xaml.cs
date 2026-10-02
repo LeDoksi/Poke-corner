@@ -14,6 +14,7 @@ public partial class OverlayWindow : Window
 {
     private const int GWL_EXSTYLE = -20;
     private const int WS_EX_LAYERED = 0x00080000;
+    private const int WS_EX_TOOLWINDOW = 0x00000080;
     private static readonly TimeSpan IdleFrameDuration = TimeSpan.FromMilliseconds(150);
 
     private SpriteAnimator? _animator;
@@ -45,6 +46,7 @@ public partial class OverlayWindow : Window
         SourceInitialized += (_, _) =>
         {
             MakeClickThroughExceptSprite();
+            HideFromTaskbarWithoutOwner(this);
             _foregroundHook = SetWinEventHook(
                 EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND,
                 IntPtr.Zero, _foregroundChangedCallback, 0, 0,
@@ -379,6 +381,18 @@ public partial class OverlayWindow : Window
     /// the pet land on it while clicks elsewhere in the window's bounding box fall through
     /// to whatever's behind it, all through WPF's normal hit-testing rather than Win32
     /// click-through.
+    /// Keeps a desk window off the taskbar and out of Alt+Tab WITHOUT ShowInTaskbar="False".
+    /// That property works by giving the window a hidden, non-topmost owner, and an owned
+    /// window's z-order follows its owner: the pet kept WS_EX_TOPMOST yet sat under ordinary
+    /// app windows — POKE-9, confirmed live 2026-10-02 by detaching the owner on the running
+    /// app, which put the pet straight back on top. WS_EX_TOOLWINDOW does the hiding with no
+    /// owner involved. Call from SourceInitialized, i.e. before the window is first shown.
+    public static void HideFromTaskbarWithoutOwner(System.Windows.Window window)
+    {
+        var hwnd = new WindowInteropHelper(window).Handle;
+        SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW);
+    }
+
     private void MakeClickThroughExceptSprite()
     {
         var hwnd = new WindowInteropHelper(this).Handle;
