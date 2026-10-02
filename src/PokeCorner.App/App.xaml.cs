@@ -61,6 +61,10 @@ public partial class App : System.Windows.Application
     /// means "nothing cached yet".
     private IReadOnlyList<byte[]>? _activeSpriteFrames;
     private ProgressPanelWindow? _progressPanelWindow;
+
+    /// POKE-9 diagnostics: %APPDATA%\PokeCorner\zorder.log, next to the save file, so a user can
+    /// find and send it. Lines only on z-order state changes (see ZOrderLog).
+    private readonly ZOrderLog _zOrderLog = new(Path.Combine(Path.GetDirectoryName(AppPaths.GetSaveFilePath())!, "zorder.log"));
     private static readonly TimeSpan AutosaveInterval = TimeSpan.FromSeconds(5);
     private DateTimeOffset _lastAutosaveUtc = DateTimeOffset.MinValue;
     private Guid? _evolutionReadyNotifiedFor;
@@ -314,6 +318,11 @@ public partial class App : System.Windows.Application
         // by another app), and SetWindowPos on an already-top window is a no-op, so this is
         // cheap enough to just keep doing on the existing tick.
         ReassertOverlayTopmost();
+        // After the re-raise on purpose: what gets logged is what survived it.
+        _zOrderLog.Append(
+            ZOrderProbe.Describe(new System.Windows.Interop.WindowInteropHelper(_overlayWindow).Handle),
+            ZOrderProbe.ForegroundDescription(),
+            DateTime.Now);
 
         // Piggybacks on this timer so a crash or Task Manager kill never loses more than a
         // few seconds of session state. JsonSaveStore.Save already writes atomically (temp

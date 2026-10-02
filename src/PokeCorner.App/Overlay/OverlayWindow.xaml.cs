@@ -99,7 +99,25 @@ public partial class OverlayWindow : Window
         var insertAfter = taskbar == IntPtr.Zero ? HWND_TOP : taskbar;
 
         SetWindowPos(hwnd, insertAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+
+        // The "behind Shell_TrayWnd makes it topmost" trick above is not a documented guarantee:
+        // Windows only keeps the topmost flag when the slot it lands in is still inside the
+        // topmost band. When the taskbar happens to be the LAST topmost window, the slot after it
+        // is the top of the normal band, the flag is dropped, and the HWND_TOP-style re-raise can
+        // no longer lift the pet over the foreground window (see the second failed approach
+        // above) — the pet stays buried. POKE-9, no visible pattern, because it depends on which
+        // other topmost windows exist at that moment. Fall back to the plain topmost band then:
+        // occasionally drawing over a shell surface beats being hidden under an app window.
+        if ((GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) == 0)
+        {
+            SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            TopmostFallbackCount++;
+        }
     }
+
+    /// How many times this session the fallback above had to fire — surfaced in zorder.log, so
+    /// a log sent in by a user shows whether that was the failure they were seeing.
+    public static int TopmostFallbackCount { get; private set; }
 
     public void SetSpriteFrames(IReadOnlyList<ImageSource> frames)
     {
@@ -345,6 +363,8 @@ public partial class OverlayWindow : Window
     private const uint WINEVENT_OUTOFCONTEXT = 0x0000;
     private const uint WINEVENT_SKIPOWNPROCESS = 0x0002;
     private static readonly IntPtr HWND_TOP = IntPtr.Zero;
+    private static readonly IntPtr HWND_TOPMOST = new(-1);
+    private const int WS_EX_TOPMOST = 0x00000008;
     private const uint SWP_NOSIZE = 0x0001;
     private const uint SWP_NOMOVE = 0x0002;
     private const uint SWP_NOACTIVATE = 0x0010;
