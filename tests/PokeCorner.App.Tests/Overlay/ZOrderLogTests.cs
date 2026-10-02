@@ -8,6 +8,7 @@ public class ZOrderLogTests : IDisposable
 {
     private readonly string _dir = Path.Combine(Path.GetTempPath(), "PokeCornerZOrderLogTests_" + Guid.NewGuid());
     private string LogPath => Path.Combine(_dir, "zorder.log");
+    private static void Inline(Action write) => write();
 
     public void Dispose()
     {
@@ -17,7 +18,7 @@ public class ZOrderLogTests : IDisposable
     [Fact]
     public void Append_SameStateTwice_WritesOnce()
     {
-        var log = new ZOrderLog(LogPath);
+        var log = new ZOrderLog(LogPath, Inline);
         var now = new DateTime(2026, 10, 2, 9, 0, 0);
 
         log.Append("topmost=True covered=[]", "fg=Notepad(notepad)", now);
@@ -35,17 +36,34 @@ public class ZOrderLogTests : IDisposable
     {
         Directory.CreateDirectory(_dir);
         File.WriteAllText(LogPath, new string('x', (int)ZOrderLog.MaxBytes + 1));
-        var log = new ZOrderLog(LogPath);
+        var log = new ZOrderLog(LogPath, Inline);
 
         log.Append("topmost=True covered=[]", "fg=x", new DateTime(2026, 10, 2));
 
         Assert.Single(File.ReadAllLines(LogPath));
     }
 
+    /// Disk work is banned on the growth tick's thread (it owns the low-level input hooks;
+    /// stalling it freezes the cursor system-wide), so the write must go through the runner,
+    /// not happen inline in Append.
+    [Fact]
+    public void Append_WritesOnlyThroughTheRunner()
+    {
+        Action? pending = null;
+        var log = new ZOrderLog(LogPath, runWrite: write => pending = write);
+
+        log.Append("topmost=True covered=[]", "fg=x", new DateTime(2026, 10, 2));
+
+        Assert.False(File.Exists(LogPath));
+        Assert.NotNull(pending);
+        pending!();
+        Assert.Single(File.ReadAllLines(LogPath));
+    }
+
     [Fact]
     public void Append_DirectoryMissing_CreatesIt()
     {
-        new ZOrderLog(LogPath).Append("s", "d", new DateTime(2026, 10, 2));
+        new ZOrderLog(LogPath, Inline).Append("s", "d", new DateTime(2026, 10, 2));
 
         Assert.True(File.Exists(LogPath));
     }

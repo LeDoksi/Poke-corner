@@ -92,27 +92,59 @@ public partial class OverlayWindow : Window
         var hwnd = new WindowInteropHelper(window).Handle;
         if (hwnd == IntPtr.Zero) return; // not yet sourced; the SourceInitialized/Show path re-runs this
 
-        // HWND_TOP as the fallback, never HWND_TOPMOST: if the taskbar can't be found there is
-        // nothing to stay underneath, and defaulting to the topmost band would quietly restore
-        // the exact over-the-taskbar bug this method exists to prevent.
         var taskbar = FindWindow("Shell_TrayWnd", null);
-        var insertAfter = taskbar == IntPtr.Zero ? HWND_TOP : taskbar;
+        var slot = ChooseZSlot(
+            taskbarFound: taskbar != IntPtr.Zero,
+            foreignTopmostBelowTaskbar: taskbar != IntPtr.Zero && HasForeignTopmostBelow(taskbar),
+            alreadyTopmost: IsTopmost(hwnd));
 
-        SetWindowPos(hwnd, insertAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+        if (slot == ZSlot.BehindTaskbar)
+        {
+            SetWindowPos(hwnd, taskbar, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            // Belt and braces: the slot was judged to be inside the topmost band, but if Windows
+            // dropped the flag anyway, being buried is the one outcome that must not stand.
+            if (!IsTopmost(hwnd)) slot = ZSlot.TopOfTopmostBand;
+        }
 
-        // The "behind Shell_TrayWnd makes it topmost" trick above is not a documented guarantee:
-        // Windows only keeps the topmost flag when the slot it lands in is still inside the
-        // topmost band. When the taskbar happens to be the LAST topmost window, the slot after it
-        // is the top of the normal band, the flag is dropped, and the HWND_TOP-style re-raise can
-        // no longer lift the pet over the foreground window (see the second failed approach
-        // above) — the pet stays buried. POKE-9, no visible pattern, because it depends on which
-        // other topmost windows exist at that moment. Fall back to the plain topmost band then:
-        // occasionally drawing over a shell surface beats being hidden under an app window.
-        if ((GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) == 0)
+        if (slot == ZSlot.TopOfTopmostBand)
         {
             SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
             TopmostFallbackCount++;
         }
+    }
+
+    /// Where to put the pet this round. "Behind Shell_TrayWnd makes it topmost" is not a
+    /// documented guarantee: the flag survives only if that slot is still inside the topmost
+    /// band, i.e. some OTHER topmost window sits below the taskbar. When the taskbar is the last
+    /// topmost window, the slot behind it is the top of the normal band, the flag is dropped,
+    /// and the pet can no longer be raised over the foreground window (see the second failed
+    /// approach above) — it stays buried. That is POKE-9, and why it had no visible pattern: it
+    /// depends on which other topmost windows exist at the moment.
+    ///
+    /// In that case the pet goes to the top of the topmost band instead — and is then LEFT
+    /// there while it stays topmost. Re-slotting it behind the taskbar on every tick would drop
+    /// the flag again each time and flip-flop twice a second (final-review finding). The price:
+    /// while no other topmost window exists, the pet can draw over a shell flyout near it.
+    public static ZSlot ChooseZSlot(bool taskbarFound, bool foreignTopmostBelowTaskbar, bool alreadyTopmost)
+    {
+        if (taskbarFound && foreignTopmostBelowTaskbar) return ZSlot.BehindTaskbar;
+        return alreadyTopmost ? ZSlot.LeaveAsIs : ZSlot.TopOfTopmostBand;
+    }
+
+    private static bool IsTopmost(IntPtr hwnd) => (GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
+
+    /// Whether a topmost window of another process sits below the taskbar — our own windows
+    /// (pet, progress panel) are skipped, since they are what is being placed.
+    private static bool HasForeignTopmostBelow(IntPtr taskbar)
+    {
+        var ownPid = (uint)Environment.ProcessId;
+        for (var next = GetWindow(taskbar, GW_HWNDNEXT); next != IntPtr.Zero; next = GetWindow(next, GW_HWNDNEXT))
+        {
+            GetWindowThreadProcessId(next, out var pid);
+            if (pid == ownPid) continue;
+            return IsTopmost(next);
+        }
+        return false;
     }
 
     /// How many times this session the fallback above had to fire — surfaced in zorder.log, so
@@ -362,7 +394,7 @@ public partial class OverlayWindow : Window
     private const uint EVENT_SYSTEM_FOREGROUND = 0x0003;
     private const uint WINEVENT_OUTOFCONTEXT = 0x0000;
     private const uint WINEVENT_SKIPOWNPROCESS = 0x0002;
-    private static readonly IntPtr HWND_TOP = IntPtr.Zero;
+    private const uint GW_HWNDNEXT = 2;
     private static readonly IntPtr HWND_TOPMOST = new(-1);
     private const int WS_EX_TOPMOST = 0x00000008;
     private const uint SWP_NOSIZE = 0x0001;
@@ -370,6 +402,8 @@ public partial class OverlayWindow : Window
     private const uint SWP_NOACTIVATE = 0x0010;
 
     [DllImport("user32.dll")] private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
+    [DllImport("user32.dll")] private static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+    [DllImport("user32.dll")] private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
     [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern IntPtr FindWindow(string? lpClassName, string? lpWindowName);
     [DllImport("user32.dll")] private static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
     [DllImport("user32.dll")] private static extern bool UnhookWinEvent(IntPtr hWinEventHook);
@@ -508,3 +542,5 @@ public partial class OverlayWindow : Window
         ReactionBubble.BeginAnimation(OpacityProperty, fadeUp);
     }
 }
+
+public enum ZSlot { BehindTaskbar, TopOfTopmostBand, LeaveAsIs }
