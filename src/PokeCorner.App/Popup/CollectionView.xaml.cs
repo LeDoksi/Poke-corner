@@ -298,7 +298,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var eggs = _viewModel.GetPendingEggEntries(nowUtc);
         EggsEmptyText.Visibility = eggs.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
 
-        var signature = string.Join("|", eggs.Select(e => $"{e.EggId}:{e.IsReady}:{Math.Round(e.HatchFraction, 3)}"));
+        var charmActive = _appState.Shop.CatchLuckyCharmActive;
+        var signature = charmActive + "|" + string.Join("|", eggs.Select(e => $"{e.EggId}:{e.IsReady}:{Math.Round(e.HatchFraction, 3)}"));
         if (signature == _eggsSignature) return;
         _eggsSignature = signature;
 
@@ -309,6 +310,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             TierBrush = RarityDisplay.GetBrush(egg.Tier),
             HatchFraction = egg.HatchFraction,
             IsReady = egg.IsReady,
+            CharmActive = charmActive,
             StatusText = egg.IsReady
                 ? "Готово — можно вылуплять!"
                 : $"Осталось ≈ {RemainingMinutes(egg.HatchFraction)} мин"

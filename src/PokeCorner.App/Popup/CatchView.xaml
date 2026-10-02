@@ -7,11 +7,8 @@
                 <TextBlock x:Name="StatusText" HorizontalAlignment="Center" Margin="0,0,0,16"
                            TextWrapping="Wrap" TextAlignment="Center" MaxWidth="300"
                            FontSize="13" Foreground="{StaticResource SecondaryTextBrush}" />
-                <TextBlock x:Name="CatchExplanationText" Style="{StaticResource CaptionTextStyle}" HorizontalAlignment="Center"
-                           TextWrapping="Wrap" TextAlignment="Center" MaxWidth="300" Margin="0,-8,0,6"
-                           Text="Покемоны встречаются, пока ты активен за компьютером: шкала заполнилась — можно ловить. Встречи копятся, до 3 сразу." />
                 <TextBlock x:Name="CatchCharmText" Style="{StaticResource CaptionTextStyle}" HorizontalAlignment="Center"
-                           TextWrapping="Wrap" TextAlignment="Center" MaxWidth="300" Margin="0,0,0,14"
+                           TextWrapping="Wrap" TextAlignment="Center" MaxWidth="300" Margin="0,-8,0,14"
                            Foreground="{StaticResource AccentGoldBrush}" Visibility="Collapsed" />
 
                 <StackPanel Width="260" Margin="0,0,0,22">

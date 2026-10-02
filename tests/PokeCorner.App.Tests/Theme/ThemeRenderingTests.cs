@@ -1547,15 +1547,13 @@ public class ThemeRenderingTests
         });
 
     [Fact]
-    public void CatchView_ExplainsCatching_AndMentionsAnActiveCharm() =>
+    public void CatchView_ShowsAnActiveCharm() =>
         WpfTestHost.Run(() =>
         {
             var appState = new AppState();
             var view = new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}");
             WpfTestHost.Layout(view);
 
-            Assert.Equal("Покемоны встречаются, пока ты активен за компьютером: шкала заполнилась — можно ловить. Встречи копятся, до 3 сразу.",
-                ((TextBlock)view.FindName("CatchExplanationText")).Text);
             var charmText = (TextBlock)view.FindName("CatchCharmText");
             Assert.Equal(Visibility.Collapsed, charmText.Visibility);
 
@@ -1565,13 +1563,25 @@ public class ThemeRenderingTests
             Assert.Equal("Талисман удачи активен: ×4 к шансу шайни на этой поимке.", charmText.Text);
         });
 
+    /// An active charm applies to whichever comes first, a catch or a hatch — so every pending
+    /// egg says so while it's active, and none does once it's spent.
     [Fact]
-    public void PendingEggCard_SaysWhatHatches() =>
-        Assert.Equal("Вылупится покемон редкости «Редкий»", new PendingEggCard
+    public void CollectionView_EggCards_ShowAnActiveCharm() =>
+        WpfTestHost.Run(() =>
         {
-            EggId = Guid.NewGuid(), TierName = "Редкий", TierBrush = System.Windows.Media.Brushes.Gold,
-            HatchFraction = 0.5, IsReady = false, StatusText = "x"
-        }.HatchesIntoText);
+            var appState = new AppState();
+            appState.PendingEggs.Add(new PendingEgg { Tier = RarityTier.Rare, ReadyAtUtc = DateTimeOffset.UtcNow.AddMinutes(30) });
+            var view = BuildCollectionView(appState, new List<SpeciesEvolutionChain>());
+            WpfTestHost.Layout(view);
+            PendingEggCard Card() => ((ItemsControl)view.FindName("PendingEggsList")!).ItemsSource.Cast<PendingEggCard>().Single();
+
+            Assert.Equal(Visibility.Collapsed, Card().CharmVisibility);
+
+            appState.Shop.CatchLuckyCharmActive = true;
+            view.Refresh();
+            Assert.Equal(Visibility.Visible, Card().CharmVisibility);
+            Assert.Equal("✨ Талисман активен: ×4 шанс шайни при вылуплении", Card().CharmText);
+        });
 
     [Fact]
     public void ShopView_UnavailableTier_DimsTheWholeCardNotJustTheButton() =>

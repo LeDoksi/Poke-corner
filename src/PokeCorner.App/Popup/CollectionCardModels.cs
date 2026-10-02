@@ -185,7 +185,11 @@ public sealed class PendingEggCard
     public required double HatchFraction { get; init; }
     public required bool IsReady { get; init; }
     public required string StatusText { get; init; }
-    public string HatchesIntoText => $"Вылупится покемон редкости «{TierName}»";
+    /// The lucky charm boosts whichever comes first, a catch or a hatch — so while it's active
+    /// every pending egg shows it.
+    public bool CharmActive { get; init; }
+    public Visibility CharmVisibility => CharmActive ? Visibility.Visible : Visibility.Collapsed;
+    public string CharmText => $"✨ Талисман активен: ×{PokeCorner.Core.Domain.ShopService.CatchLuckyCharmShinyMultiplier:0} шанс шайни при вылуплении";
 }
 
 /// Theme-dictionary brush lookup by resource key.
