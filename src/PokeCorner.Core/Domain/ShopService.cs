@@ -57,6 +57,15 @@ public sealed class ShopService
         return true;
     }
 
+    // Read-and-clear in one place so a catch and an egg hatch spend the charm identically:
+    // whichever happens first gets the boost, regardless of whether the roll comes up shiny.
+    public double ConsumeCatchLuckyCharm(ShopInventory shop)
+    {
+        if (!shop.CatchLuckyCharmActive) return 1.0;
+        shop.CatchLuckyCharmActive = false;
+        return CatchLuckyCharmShinyMultiplier;
+    }
+
     public static int EggPriceForTier(RarityTier tier) => tier switch
     {
         RarityTier.Common => EggPriceCommon,
@@ -66,10 +75,10 @@ public sealed class ShopService
         _ => throw new ArgumentOutOfRangeException(nameof(tier))
     };
 
-    // Only spends the currency — the App layer performs the actual catch roll via
-    // CatchRoller.RollCatchFromTier and adds the result to the collection (Task 13),
-    // mirroring how activity-triggered catches already work. Kept separate so ShopService,
-    // like FeedingService, never needs to know about PokemonCollection.
+    // Only spends the currency. The bought egg then incubates (EggIncubationService), and the
+    // species is rolled only when it hatches — App.HatchEgg via CatchRoller.RollCatchFromTier.
+    // Kept separate so ShopService, like FeedingService, never needs to know about
+    // PokemonCollection.
     public bool TrySpendForEgg(ShopInventory shop, RarityTier tier)
     {
         var price = EggPriceForTier(tier);

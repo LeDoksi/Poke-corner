@@ -89,11 +89,11 @@
                 </Border>
 
                 <!-- The effect is exactly CatchRoller's shiny roll: the charm multiplies the
-                     chance that the NEXT caught Pokémon is shiny (base 1/512) by
-                     ShopService.CatchLuckyCharmShinyMultiplier, and is consumed by that catch
-                     whatever it produces. It does NOT change which species or rarity is rolled. -->
+                     chance that the NEXT Pokémon — caught or hatched from an egg — is shiny
+                     (base 1/512) by ShopService.CatchLuckyCharmShinyMultiplier, and is consumed
+                     by that catch or hatch whatever it produces. It does NOT change which species or rarity is rolled. -->
                 <Border x:Name="CatchLuckyCharmCard" Style="{StaticResource CardStyle}" Width="150" Margin="6" Padding="12"
-                        ToolTip="В 4 раза повышает шанс, что следующий пойманный покемон будет блестящим (шайни). Тратится на первую же поимку, независимо от результата. На редкость и вид покемона не влияет.">
+                        ToolTip="В 4 раза повышает шанс, что следующий покемон — пойманный или вылупившийся из яйца — будет блестящим (шайни). Тратится на первую же поимку или вылупление, независимо от результата. На редкость и вид покемона не влияет.">
                     <StackPanel>
                         <Border Style="{StaticResource WellStyle}" Height="58" Margin="0,0,0,9">
                             <Canvas Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center">

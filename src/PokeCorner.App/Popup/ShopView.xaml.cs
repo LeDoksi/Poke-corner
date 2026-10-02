@@ -62,7 +62,7 @@ public partial class ShopView : System.Windows.Controls.UserControl
     }
 
     private void CatchLuckyCharmButton_Click(object sender, RoutedEventArgs e) =>
-        ReportResult(_shopService.BuyCatchLuckyCharm(_appState.Shop), "Талисман удачи активирован на следующую поимку.", "Не хватает монет.");
+        ReportResult(_shopService.BuyCatchLuckyCharm(_appState.Shop), "Талисман удачи активирован на следующую поимку или вылупление.", "Не хватает монет.");
 
     private void EggCommonButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Common);
     private void EggUncommonButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Uncommon);

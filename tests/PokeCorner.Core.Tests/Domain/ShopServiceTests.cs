@@ -139,4 +139,31 @@ public class ShopServiceTests
         Assert.False(spent);
         Assert.Equal(ShopService.EggPriceRare - 1, shop.Coins);
     }
+
+    [Fact]
+    public void ConsumeCatchLuckyCharm_WhenActive_ReturnsMultiplierAndClearsFlag()
+    {
+        var shop = new ShopInventory { CatchLuckyCharmActive = true };
+
+        var multiplier = new ShopService().ConsumeCatchLuckyCharm(shop);
+
+        Assert.Equal(4.0, multiplier);
+        Assert.False(shop.CatchLuckyCharmActive);
+    }
+
+    [Fact]
+    public void ConsumeCatchLuckyCharm_WhenInactive_ReturnsOne()
+    {
+        Assert.Equal(1.0, new ShopService().ConsumeCatchLuckyCharm(new ShopInventory()));
+    }
+
+    [Fact]
+    public void ConsumeCatchLuckyCharm_SecondCall_ReturnsOne()
+    {
+        var service = new ShopService();
+        var shop = new ShopInventory { CatchLuckyCharmActive = true };
+
+        Assert.Equal(4.0, service.ConsumeCatchLuckyCharm(shop));
+        Assert.Equal(1.0, service.ConsumeCatchLuckyCharm(shop));
+    }
 }
