@@ -29,7 +29,7 @@ public class InputEventCounterTests
     }
 
     [Fact]
-    public void RecordEvent_FromMultipleThreads_AllEventsCounted()
+    public async Task RecordEvent_FromMultipleThreads_AllEventsCounted()
     {
         var counter = new InputEventCounter();
         var tasks = Enumerable.Range(0, 8).Select(_ => Task.Run(() =>
@@ -37,7 +37,7 @@ public class InputEventCounterTests
             for (var i = 0; i < 1000; i++) counter.RecordEvent();
         }));
 
-        Task.WaitAll(tasks.ToArray());
+        await Task.WhenAll(tasks);
 
         Assert.Equal(8000, counter.DrainUnits());
     }

@@ -19,6 +19,53 @@ public class SpriteCacheTests : IDisposable
         if (Directory.Exists(_tempDir)) Directory.Delete(_tempDir, recursive: true);
     }
 
+    /// Smallest byte sequence SpriteCache accepts as a complete PNG: the 8-byte signature, a
+    /// marker byte so tests can tell payloads apart, and the IEND trailer.
+    private static byte[] FakePng(byte marker) =>
+        new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, marker, 0, 0, 0, 0, 0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82 };
+
+    [Fact]
+    public async Task GetOrFetchAsync_TruncatedCachedPng_RefetchesAndOverwrites()
+    {
+        var cache = new SpriteCache(_tempDir);
+        var path = Path.Combine(_tempDir, "25.png");
+        await File.WriteAllBytesAsync(path, FakePng(7)[..12]); // cut short mid-write: no IEND
+        var fetchCallCount = 0;
+        Task<byte[]> Fetch()
+        {
+            fetchCallCount++;
+            return Task.FromResult(FakePng(1));
+        }
+
+        var bytes = await cache.GetOrFetchAsync(speciesId: 25, Fetch);
+
+        Assert.Equal(1, fetchCallCount);
+        Assert.Equal(FakePng(1), bytes);
+        Assert.Equal(FakePng(1), await File.ReadAllBytesAsync(path));
+    }
+
+    [Fact]
+    public async Task TryGetCachedBytes_TruncatedCachedPng_ReturnsNullAndDeletesFile()
+    {
+        var cache = new SpriteCache(_tempDir);
+        var path = Path.Combine(_tempDir, "25.png");
+        await File.WriteAllBytesAsync(path, new byte[] { 0xDE, 0xAD });
+
+        Assert.Null(cache.TryGetCachedBytes(25));
+        Assert.False(File.Exists(path));
+    }
+
+    [Fact]
+    public async Task GetOrFetchAsync_FetchedBytesNotAPng_ReturnsNullAndDoesNotCache()
+    {
+        var cache = new SpriteCache(_tempDir);
+
+        var bytes = await cache.GetOrFetchAsync(speciesId: 25, () => Task.FromResult("<html>502</html>"u8.ToArray()));
+
+        Assert.Null(bytes);
+        Assert.False(File.Exists(Path.Combine(_tempDir, "25.png")));
+    }
+
     [Fact]
     public async Task GetOrFetchAsync_FirstCall_InvokesFetchAndWritesToDisk()
     {
@@ -27,12 +74,12 @@ public class SpriteCacheTests : IDisposable
         Task<byte[]> Fetch()
         {
             fetchCallCount++;
-            return Task.FromResult(new byte[] { 1, 2, 3 });
+            return Task.FromResult(FakePng(1));
         }
 
         var bytes = await cache.GetOrFetchAsync(speciesId: 25, Fetch);
 
-        Assert.Equal(new byte[] { 1, 2, 3 }, bytes);
+        Assert.Equal(FakePng(1), bytes);
         Assert.Equal(1, fetchCallCount);
         Assert.True(File.Exists(Path.Combine(_tempDir, "25.png")));
     }
@@ -45,13 +92,13 @@ public class SpriteCacheTests : IDisposable
         Task<byte[]> Fetch()
         {
             fetchCallCount++;
-            return Task.FromResult(new byte[] { 9, 9, 9 });
+            return Task.FromResult(FakePng(9));
         }
 
         await cache.GetOrFetchAsync(25, Fetch);
         var secondResult = await cache.GetOrFetchAsync(25, Fetch);
 
-        Assert.Equal(new byte[] { 9, 9, 9 }, secondResult);
+        Assert.Equal(FakePng(9), secondResult);
         Assert.Equal(1, fetchCallCount);
     }
 

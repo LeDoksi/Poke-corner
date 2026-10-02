@@ -170,7 +170,7 @@ public class CollectionViewModelTests
 
         // ...but the "Открыто видов" completion stat the view derives from these entries still
         // counts DISTINCT SPECIES, so a duplicate catch does not inflate it.
-        Assert.Equal(1, entries.Select(entry => entry.DisplaySpeciesId).Distinct().Count());
+        Assert.Single(entries.Select(entry => entry.DisplaySpeciesId).Distinct());
     }
 
     /// Two individuals from the same chain at different stages are genuinely two different

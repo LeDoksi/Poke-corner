@@ -3,6 +3,8 @@ using System.Drawing.Imaging;
 
 namespace PokeCorner.Core.PokeApi;
 
+// System.Drawing is Windows-only; so is this app (WPF), so say so instead of guarding every call.
+[System.Runtime.Versioning.SupportedOSPlatform("windows6.1")]
 public static class GifFrameDecoder
 {
     public static IReadOnlyList<byte[]> DecodeFramesAsPng(byte[] gifBytes)

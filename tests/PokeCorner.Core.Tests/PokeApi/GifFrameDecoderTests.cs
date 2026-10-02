@@ -5,6 +5,7 @@ using Xunit;
 
 namespace PokeCorner.Core.Tests.PokeApi;
 
+[System.Runtime.Versioning.SupportedOSPlatform("windows6.1")]
 public class GifFrameDecoderTests
 {
     private static byte[] MakeSingleFrameGif()

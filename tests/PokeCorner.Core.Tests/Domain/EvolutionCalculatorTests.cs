@@ -30,6 +30,14 @@ public class EvolutionCalculatorTests
         Assert.True(EvolutionThresholds.Stage2Threshold >= 3 * ActivityAccumulator.CatchCheckIntervalUnits);
     }
 
+    /// Per the 2026-10-02 decision (POKE-20): the third stage costs 30% less than the original
+    /// 280_000 — i.e. 196_000 total, not 30% off the Stage2→Stage3 gap.
+    [Fact]
+    public void Stage3Threshold_Is30PercentBelowTheOriginal280k()
+    {
+        Assert.Equal(196_000, EvolutionThresholds.Stage3Threshold);
+    }
+
     [Fact]
     public void StageForPoints_SingleStageChain_NeverEvolves()
     {

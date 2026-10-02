@@ -19,7 +19,9 @@ public sealed class SpriteCache
         var path = Path.Combine(_cacheDirectory, $"{speciesId}.png");
         if (File.Exists(path))
         {
-            return await File.ReadAllBytesAsync(path);
+            var cached = await File.ReadAllBytesAsync(path);
+            if (IsCompletePng(cached)) return cached;
+            DeleteQuietly(path); // cut short mid-write — re-download below instead of crashing every decoder
         }
 
         byte[] bytes;
@@ -34,9 +36,10 @@ public sealed class SpriteCache
             return null;
         }
 
-        if (bytes.Length == 0)
+        if (!IsCompletePng(bytes))
         {
-            // Treat an empty response the same as a failed fetch — don't cache a zero-byte file.
+            // Empty body, an HTML error page, a truncated download: treat it like a failed fetch.
+            // Caching it would hand every caller bytes their image decoder throws on.
             return null;
         }
 
@@ -53,7 +56,27 @@ public sealed class SpriteCache
     public byte[]? TryGetCachedBytes(int speciesId)
     {
         var path = Path.Combine(_cacheDirectory, $"{speciesId}.png");
-        return File.Exists(path) ? File.ReadAllBytes(path) : null;
+        if (!File.Exists(path)) return null;
+        var cached = File.ReadAllBytes(path);
+        if (IsCompletePng(cached)) return cached;
+        DeleteQuietly(path); // the next GetOrFetchAsync re-downloads it
+        return null;
+    }
+
+    private static readonly byte[] PngSignature = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+    private static readonly byte[] PngIendTrailer = { 0, 0, 0, 0, 0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82 };
+
+    /// Signature at the front, IEND chunk at the very end. Every decoder in the App (overlay,
+    /// Pokédex thumbnails, catch reveal, starter picker) throws on a file that fails this, and a
+    /// write interrupted by a crash or power loss is exactly what loses the trailing IEND.
+    /// Not full validation — a complete file with corrupt chunks in the middle still passes.
+    private static bool IsCompletePng(byte[] bytes) =>
+        bytes.AsSpan().StartsWith(PngSignature) && bytes.AsSpan().EndsWith(PngIendTrailer);
+
+    private static void DeleteQuietly(string path)
+    {
+        try { File.Delete(path); }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { }
     }
 
     /// The bundled, network-independent species catalog: every Gen 1-5 evolution chain
