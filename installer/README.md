@@ -27,7 +27,7 @@ dotnet publish src/PokeCorner.App/PokeCorner.App.csproj -c Release -r win-x64 ^
 dotnet build installer/PokeCorner.Installer.wixproj -c Release
 ```
 
-Output: `installer/bin/Release/PokeCorner.msi` (~66 MB).
+Output: `installer/bin/Release/PokeCorner.msi` (~110 MB).
 
 `--self-contained` is deliberate: the .NET 8 runtime is bundled, so the MSI works on a
 machine that has never had .NET installed. `-p:DebugType=none` keeps `.pdb` files out of
