@@ -134,4 +134,22 @@ public sealed class AppState
 
         PendingEggs.AddRange(data.PendingEggs);
     }
+
+    /// The other half of <see cref="Hydrate"/>; keep the two field lists in step (the
+    /// round-trip test fails when they drift). pendingCatchCount lives in the App layer.
+    public SaveData ToSaveData(int pendingCatchCount) => new()
+    {
+        Individuals = Collection.Individuals.ToList(),
+        ActiveIndividualId = Collection.ActiveIndividualId,
+        Settings = Settings,
+        FeedingTreats = Feeding.Treats,
+        CatchAccumulatorUnits = Activity.UnitsSinceLastCatchCheck,
+        FeedingRemainderUnits = Feeding.RemainderUnits,
+        ShopCoins = Shop.Coins,
+        ShopRemainderUnits = Shop.RemainderUnits,
+        ShopCatchLuckyCharmActive = Shop.CatchLuckyCharmActive,
+        PendingEggs = PendingEggs.ToList(),
+        CareStates = new Dictionary<Guid, CareState>(CareStateByIndividualId),
+        PendingCatchCount = pendingCatchCount
+    };
 }

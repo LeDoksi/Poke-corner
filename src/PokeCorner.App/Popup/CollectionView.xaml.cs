@@ -1,5 +1,5 @@
+using PokeCorner.App.Imaging;
 using System.Globalization;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -241,7 +241,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             return;
         }
 
-        var decoded = frames!.Select(DecodePng).ToList();
+        var decoded = frames!.Select(SpriteImages.Decode).ToList();
 
         // Assigned up front so the image is never blank for the animator's first tick, and so
         // a single-frame (no animated sprite for this species) list needs no timer at all.
@@ -516,9 +516,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             // rather than spinning up a timer that repaints the same bitmap.
             if (frames is null || frames.Count < 2) return;
 
-            // Off the UI thread: DecodePng freezes each bitmap, which is what makes it legal to
+            // Off the UI thread: SpriteImages.Decode freezes each bitmap, which is what makes it legal to
             // hand them back here. Decoding a page's worth on the dispatcher was a visible hitch.
-            _animatedFrames[speciesId] = await Task.Run(() => frames.Select(DecodePng).ToList());
+            _animatedFrames[speciesId] = await Task.Run(() => frames.Select(SpriteImages.Decode).ToList());
             _pokedexSignature = string.Empty; // force the next tick to rebuild with the frames
         }
     }
@@ -852,7 +852,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var bytes = _spriteCache.TryGetCachedBytes(speciesId);
         if (bytes is null || bytes.Length == 0) return null;
 
-        var decoded = DecodePng(bytes);
+        var decoded = SpriteImages.Decode(bytes);
         _spriteThumbnails[speciesId] = decoded;
         return decoded;
     }
@@ -869,17 +869,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         return Math.Max(1, (int)Math.Ceiling(remaining.TotalMinutes));
     }
 
-    private static ImageSource DecodePng(byte[] bytes)
-    {
-        using var stream = new MemoryStream(bytes);
-        var bitmap = new System.Windows.Media.Imaging.BitmapImage();
-        bitmap.BeginInit();
-        bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-        bitmap.StreamSource = stream;
-        bitmap.EndInit();
-        bitmap.Freeze();
-        return bitmap;
-    }
 
     // (SelectButton_Click / FavoriteButton_Click / ReleaseButton_Click lived here as handlers
     // for the roster rows' inline action buttons. The roster is gone; the same three

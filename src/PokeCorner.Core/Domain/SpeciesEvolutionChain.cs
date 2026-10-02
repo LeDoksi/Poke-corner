@@ -34,10 +34,35 @@ public sealed record SpeciesEvolutionChain(
         ?? (IReadOnlyList<IReadOnlyList<string>>)Array.Empty<IReadOnlyList<string>>();
 }
 
-public sealed record CatchResult(int ChainId, int SpeciesId, Nature Nature, bool IsShiny, bool WasDuplicateSpecies, int ChainLength);
+public sealed record CatchResult(int ChainId, int SpeciesId, Nature Nature, bool IsShiny, bool WasDuplicateSpecies, int ChainLength)
+{
+    public PokemonIndividual ToIndividual(DateTimeOffset caughtAtUtc) => new()
+    {
+        SpeciesId = SpeciesId,
+        EvolutionChainId = ChainId,
+        ChainLength = ChainLength,
+        Nature = Nature,
+        IsShiny = IsShiny,
+        CaughtAtUtc = caughtAtUtc
+    };
+}
 
 public static class SpeciesEvolutionChainExtensions
 {
+    /// The species to draw for an individual: its chain's species at the current stage, or at
+    /// DisplayStageOverride when that stays within [0, CurrentStage] (a hand-edited save is a
+    /// trust boundary). Falls back to the caught species when the chain isn't in the catalog.
+    public static int ResolveDisplaySpeciesId(this PokemonIndividual individual, IReadOnlyList<SpeciesEvolutionChain> lookupChains)
+    {
+        var chain = lookupChains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
+        if (chain is null) return individual.SpeciesId;
+
+        var stageIndex = individual.DisplayStageOverride is { } overrideIndex && overrideIndex >= 0 && overrideIndex <= (int)individual.CurrentStage
+            ? overrideIndex
+            : (int)individual.CurrentStage;
+        return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
+    }
+
     /// Resolves a species' display name from catalog data by finding the chain that contains
     /// the species and reading the name at the same stage index. Replaces the retired
     /// hand-translated SpeciesNames dictionary: the bundled catalog now carries PokeAPI's own

@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace PokeCorner.App.Overlay;
 
@@ -15,8 +14,8 @@ public static class ZOrderProbe
     {
         if (petHwnd == IntPtr.Zero || !IsWindowVisible(petHwnd)) return "hidden";
 
-        var topmost = (GetWindowLong(petHwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
-        GetWindowRect(petHwnd, out var pet);
+        var topmost = (NativeMethods.GetWindowLong(petHwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
+        NativeMethods.GetWindowRect(petHwnd, out var pet);
         var ownPid = (uint)Environment.ProcessId;
         var covering = new List<string>();
 
@@ -27,15 +26,15 @@ public static class ZOrderProbe
             if (hwnd == petHwnd) return false;
             if (!IsWindowVisible(hwnd) || IsCloaked(hwnd)) return true;
 
-            GetWindowThreadProcessId(hwnd, out var pid);
+            NativeMethods.GetWindowThreadProcessId(hwnd, out var pid);
             if (pid == ownPid) return true;
 
-            var className = GetClassName(hwnd);
+            var className = NativeMethods.ClassName(hwnd);
             if (className is "Shell_TrayWnd" or "Shell_SecondaryTrayWnd") return true;
 
-            if (!GetWindowRect(hwnd, out var r) || r.Right <= pet.Left || r.Left >= pet.Right || r.Bottom <= pet.Top || r.Top >= pet.Bottom) return true;
+            if (!NativeMethods.GetWindowRect(hwnd, out var r) || r.Right <= pet.Left || r.Left >= pet.Right || r.Bottom <= pet.Top || r.Top >= pet.Bottom) return true;
 
-            var otherTopmost = (GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
+            var otherTopmost = (NativeMethods.GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
             covering.Add($"{className}({ProcessName(pid)}{(otherTopmost ? ",topmost" : "")})");
             return true;
         }, IntPtr.Zero);
@@ -46,10 +45,10 @@ public static class ZOrderProbe
     /// What the user was working in at that moment — the detail half of a log line.
     public static string ForegroundDescription()
     {
-        var hwnd = GetForegroundWindow();
+        var hwnd = NativeMethods.GetForegroundWindow();
         if (hwnd == IntPtr.Zero) return "fg=none";
-        GetWindowThreadProcessId(hwnd, out var pid);
-        return $"fg={GetClassName(hwnd)}({ProcessName(pid)})";
+        NativeMethods.GetWindowThreadProcessId(hwnd, out var pid);
+        return $"fg={NativeMethods.ClassName(hwnd)}({ProcessName(pid)})";
     }
 
     private static string ProcessName(uint pid)
@@ -62,28 +61,15 @@ public static class ZOrderProbe
     private static bool IsCloaked(IntPtr hwnd) =>
         DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, out var cloaked, sizeof(int)) == 0 && cloaked != 0;
 
-    private static string GetClassName(IntPtr hwnd)
-    {
-        var buffer = new StringBuilder(256);
-        GetClassName(hwnd, buffer, buffer.Capacity);
-        return buffer.ToString();
-    }
 
     private const int GWL_EXSTYLE = -20;
     private const int WS_EX_TOPMOST = 0x00000008;
     private const int DWMWA_CLOAKED = 14;
 
-    [StructLayout(LayoutKind.Sequential)]
-    private struct RECT { public int Left, Top, Right, Bottom; }
 
     private delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
 
     [DllImport("user32.dll")] private static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
     [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr hWnd);
-    [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
-    [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-    [DllImport("user32.dll")] private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
-    [DllImport("user32.dll")] private static extern IntPtr GetForegroundWindow();
-    [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
     [DllImport("dwmapi.dll")] private static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out int pvAttribute, int cbAttribute);
 }

@@ -497,4 +497,43 @@ public class AppStateTests
         Assert.Equal(egg.Tier, state.PendingEggs[0].Tier);
         Assert.Equal(egg.ReadyAtUtc, state.PendingEggs[0].ReadyAtUtc);
     }
+
+    /// Hydrate (load) and ToSaveData (save) are two halves of one mapping; a field added to one
+    /// and forgotten in the other silently resets on every relaunch. Every SaveData field is set
+    /// to a non-default value here, so the JSON comparison catches any field either side drops.
+    [Fact]
+    public void ToSaveData_ThenHydrate_RoundTripsEveryField()
+    {
+        var individual = new PokemonIndividual
+        {
+            SpeciesId = 25, EvolutionChainId = 123_456, ChainLength = 2, Nature = Nature.Jolly, IsShiny = true,
+            CaughtAtUtc = DateTimeOffset.UnixEpoch, AccumulatedCarePoints = 999 // chain id outside LegacyOfflineChains' migration map
+        };
+        var original = new SaveData
+        {
+            Individuals = new List<PokemonIndividual> { individual },
+            ActiveIndividualId = individual.Id,
+            Settings = new AppSettings
+            {
+                CareMode = CareMode.Hardcore, AutoHideInFullscreen = false, StartWithWindows = true,
+                ScreenCorner = "TopLeft", MonitorIndex = 1, PetSizePixels = 128, ShowProgressPanel = true,
+                PetPositionX = 10, PetPositionY = 20, CrySoundVolume = 33, SuperHardcoreEnabled = true
+            },
+            FeedingTreats = 5,
+            CatchAccumulatorUnits = 111,
+            FeedingRemainderUnits = 222,
+            ShopCoins = 77,
+            ShopRemainderUnits = 333,
+            ShopCatchLuckyCharmActive = true,
+            CareStates = new Dictionary<Guid, CareState> { [individual.Id] = new CareState { LastInteractionUtc = DateTimeOffset.UnixEpoch } },
+            PendingEggs = new List<PendingEgg> { new() { Tier = RarityTier.Rare, ReadyAtUtc = DateTimeOffset.UnixEpoch } },
+            PendingCatchCount = 2
+        };
+        var state = new AppState();
+        state.Hydrate(original);
+
+        var saved = state.ToSaveData(pendingCatchCount: 2);
+
+        Assert.Equal(System.Text.Json.JsonSerializer.Serialize(original), System.Text.Json.JsonSerializer.Serialize(saved));
+    }
 }

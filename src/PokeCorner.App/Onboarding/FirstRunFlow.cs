@@ -10,15 +10,6 @@ public static class FirstRunFlow
 
     public static PokemonIndividual HatchChosen(SpeciesEvolutionChain chosenChain, CatchRoller roller, DateTimeOffset nowUtc)
     {
-        var result = roller.RollFromChain(chosenChain);
-        return new PokemonIndividual
-        {
-            SpeciesId = result.SpeciesId,
-            EvolutionChainId = result.ChainId,
-            ChainLength = result.ChainLength,
-            Nature = result.Nature,
-            IsShiny = result.IsShiny,
-            CaughtAtUtc = nowUtc
-        };
+        return roller.RollFromChain(chosenChain).ToIndividual(nowUtc);
     }
 }

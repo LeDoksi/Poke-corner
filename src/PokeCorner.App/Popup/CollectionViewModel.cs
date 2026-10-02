@@ -165,22 +165,7 @@ public sealed class CollectionViewModel
     // "Открыто видов: N" completion stat is still distinct-species — the view derives it with
     // a Distinct() over the same entries rather than a second pass over the collection.)
 
-    /// Mirrors App.xaml.cs's ResolveDisplaySpeciesId: walk the individual's chain to the
-    /// species id of its current stage, falling back to the fixed starter species when the
-    /// chain isn't in the catalog or the stage index is out of range.
-    private int ResolveDisplaySpeciesId(PokemonIndividual individual)
-    {
-        var chain = _chains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
-        if (chain is null) return individual.SpeciesId;
-
-        // A DisplayStageOverride only ever applies within [0, CurrentStage] — see
-        // AppState.SetDisplayStage — but the bound is re-checked here too, since a hand-edited
-        // save file is a trust boundary the same way Nickname's length clamp is.
-        var stageIndex = individual.DisplayStageOverride is { } overrideIndex && overrideIndex >= 0 && overrideIndex <= (int)individual.CurrentStage
-            ? overrideIndex
-            : (int)individual.CurrentStage;
-        return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
-    }
+    private int ResolveDisplaySpeciesId(PokemonIndividual individual) => individual.ResolveDisplaySpeciesId(_chains);
 
     public IReadOnlyList<PendingEggEntry> GetPendingEggEntries(DateTimeOffset nowUtc) =>
         _pendingEggs.Select(egg =>

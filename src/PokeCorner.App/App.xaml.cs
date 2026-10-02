@@ -1,3 +1,4 @@
+using PokeCorner.App.Imaging;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -130,7 +131,8 @@ public partial class App : System.Windows.Application
         _shopService = new ShopService();
 
         var loaded = _saveStore.Load();
-        _appState = BuildAppState(loaded);
+        _appState = new AppState();
+        if (loaded is not null) _appState.Hydrate(loaded);
         _catchReadyCount = Math.Clamp(loaded?.PendingCatchCount ?? 0, 0, MaxPendingCatches);
 
         if (FirstRunFlow.NeedsOnboarding(loaded))
@@ -254,16 +256,6 @@ public partial class App : System.Windows.Application
         ReconcileSettingsState();
 
         Exit += (_, _) => SaveState();
-    }
-
-    private AppState BuildAppState(SaveData? loaded)
-    {
-        var state = new AppState();
-        if (loaded is not null)
-        {
-            state.Hydrate(loaded);
-        }
-        return state;
     }
 
     /// EVERYTHING ON THIS TICK MUST STAY CHEAP — this is not a style preference, it is a
@@ -539,24 +531,11 @@ public partial class App : System.Windows.Application
 
         if (pngFrames is not null)
         {
-            _overlayWindow.SetSpriteFrames(pngFrames.Select(DecodeSprite).ToList());
+            _overlayWindow.SetSpriteFrames(pngFrames.Select(SpriteImages.Decode).ToList());
             _activeSpriteFrames = pngFrames;
             _trayIconService.SetSpriteIcon(pngFrames[0]);
 
-            if (_isFullscreenHiding)
-            {
-                _overlayWindow.Hide();
-                _progressPanelWindow?.Hide();
-            }
-            else
-            {
-                _overlayWindow.Show();
-                _progressPanelWindow?.Show();
-                // Show() doesn't guarantee topmost placement — without this the pet could sit
-                // freshly-shown but buried until the next growth tick (up to 1s later).
-                ReassertOverlayTopmost();
-            }
-
+            ApplyFullscreenVisibility();
             return;
         }
 
@@ -603,23 +582,28 @@ public partial class App : System.Windows.Application
             // deliberately sequenced after this plan ships and is verified. SpriteAnimator/
             // FrameSequencer both already work correctly with a one-frame list (no visible
             // cycling, just a static sprite) so nothing here is broken in the meantime.
-            _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { DecodeSprite(spriteBytes) });
+            _overlayWindow.SetSpriteFrames(new List<System.Windows.Media.ImageSource> { SpriteImages.Decode(spriteBytes) });
             _activeSpriteFrames = new[] { spriteBytes }; // one real frame: static, but not "unknown"
             _trayIconService.SetSpriteIcon(spriteBytes);
         }
 
+        ApplyFullscreenVisibility();
+    }
+
+    private void ApplyFullscreenVisibility()
+    {
         if (_isFullscreenHiding)
         {
             _overlayWindow.Hide();
             _progressPanelWindow?.Hide();
+            return;
         }
-        else
-        {
-            _overlayWindow.Show();
-            _progressPanelWindow?.Show();
-            // Same reason as the animated-sprite branch above: Show() alone doesn't re-top.
-            ReassertOverlayTopmost();
-        }
+
+        _overlayWindow.Show();
+        _progressPanelWindow?.Show();
+        // Show() doesn't guarantee topmost placement — without this the pet could sit
+        // freshly-shown but buried until the next growth tick (up to 1s later).
+        ReassertOverlayTopmost();
     }
 
     /// Fetches and decodes one species' animated sprite into a list of PNG frames, or null
@@ -708,37 +692,11 @@ public partial class App : System.Windows.Application
         return decoded;
     }
 
-    // Reads from the same widened species catalog as every other catch-pool call site here
-    // (OpenMenu/TryPerformCatch/HatchEgg). It used to search only the 7-chain offline
-    // starter pool, so any individual caught from the network catalog fell through to the
-    // defensive fallback below and the sprite never advanced past its base form.
-    private int ResolveDisplaySpeciesId(PokemonIndividual individual)
-    {
-        // LoadForLookup, not LoadCachedOrFallback: an individual migrated off the old colliding
-        // offline pool sits on a reserved legacy chain id that only the lookup view contains.
-        var chain = _speciesCatalog.LoadForLookup().FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
-        if (chain is null) return individual.SpeciesId; // defensive fallback for an individual whose chain isn't in the catalog
+    // LoadForLookup, not LoadCachedOrFallback: an individual migrated off the old colliding
+    // offline pool sits on a reserved legacy chain id that only the lookup view contains.
+    private int ResolveDisplaySpeciesId(PokemonIndividual individual) =>
+        individual.ResolveDisplaySpeciesId(_speciesCatalog.LoadForLookup());
 
-        // A DisplayStageOverride only ever applies within [0, CurrentStage] — see
-        // AppState.SetDisplayStage — but the bound is re-checked here too, since a hand-edited
-        // save file is a trust boundary the same way Nickname's length clamp is.
-        var stageIndex = individual.DisplayStageOverride is { } overrideIndex && overrideIndex >= 0 && overrideIndex <= (int)individual.CurrentStage
-            ? overrideIndex
-            : (int)individual.CurrentStage;
-        return stageIndex < chain.StageSpeciesIds.Count ? chain.StageSpeciesIds[stageIndex] : individual.SpeciesId;
-    }
-
-    private static System.Windows.Media.ImageSource DecodeSprite(byte[] bytes)
-    {
-        using var stream = new MemoryStream(bytes);
-        var bitmap = new System.Windows.Media.Imaging.BitmapImage();
-        bitmap.BeginInit();
-        bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-        bitmap.StreamSource = stream;
-        bitmap.EndInit();
-        bitmap.Freeze();
-        return bitmap;
-    }
 
     /// Activity has crossed the threshold for a catch — per explicit feedback, this
     /// should NOT catch automatically (that took the moment away from the player).
@@ -777,15 +735,7 @@ public partial class App : System.Windows.Application
         var shinyMultiplier = _shopService.ConsumeCatchLuckyCharm(_appState.Shop);
         var result = _catchRoller.RollCatch(availableChains, _appState.Collection.Individuals, shinyMultiplier);
 
-        _appState.Collection.Add(new PokemonIndividual
-        {
-            SpeciesId = result.SpeciesId,
-            EvolutionChainId = result.ChainId,
-            ChainLength = result.ChainLength,
-            Nature = result.Nature,
-            IsShiny = result.IsShiny,
-            CaughtAtUtc = DateTimeOffset.UtcNow
-        });
+        _appState.Collection.Add(result.ToIndividual(DateTimeOffset.UtcNow));
 
         if (hadNoActiveInNonEmptyCollection)
         {
@@ -932,15 +882,7 @@ public partial class App : System.Windows.Application
         var result = _catchRoller.RollCatchFromTier(availableChains, egg.Tier, _appState.Collection.Individuals,
             // Only after the tier check above: an aborted hatch must not burn the charm.
             _shopService.ConsumeCatchLuckyCharm(_appState.Shop));
-        _appState.Collection.Add(new PokemonIndividual
-        {
-            SpeciesId = result.SpeciesId,
-            EvolutionChainId = result.ChainId,
-            ChainLength = result.ChainLength,
-            Nature = result.Nature,
-            IsShiny = result.IsShiny,
-            CaughtAtUtc = DateTimeOffset.UtcNow
-        });
+        _appState.Collection.Add(result.ToIndividual(DateTimeOffset.UtcNow));
         _appState.PendingEggs.Remove(egg);
 
         _menuWindow?.ShowCatchReveal(new CatchReveal(result, egg.Tier));
@@ -1080,21 +1022,7 @@ public partial class App : System.Windows.Application
         // out and the relaunched process would find a save file exactly where it left one.
         if (_isWipingSaveData) return;
 
-        var data = new SaveData
-        {
-            Individuals = _appState.Collection.Individuals.ToList(),
-            ActiveIndividualId = _appState.Collection.ActiveIndividualId,
-            Settings = _appState.Settings,
-            FeedingTreats = _appState.Feeding.Treats,
-            CatchAccumulatorUnits = _appState.Activity.UnitsSinceLastCatchCheck,
-            FeedingRemainderUnits = _appState.Feeding.RemainderUnits,
-            ShopCoins = _appState.Shop.Coins,
-            ShopRemainderUnits = _appState.Shop.RemainderUnits,
-            ShopCatchLuckyCharmActive = _appState.Shop.CatchLuckyCharmActive,
-            PendingEggs = _appState.PendingEggs,
-            CareStates = new Dictionary<Guid, CareState>(_appState.CareStateByIndividualId),
-            PendingCatchCount = _catchReadyCount
-        };
+        var data = _appState.ToSaveData(_catchReadyCount);
         _saveStore.Save(data);
     }
 }

@@ -133,7 +133,7 @@ public partial class OverlayWindow : Window
         return alreadyTopmost ? ZSlot.LeaveAsIs : ZSlot.TopOfTopmostBand;
     }
 
-    private static bool IsTopmost(IntPtr hwnd) => (GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
+    private static bool IsTopmost(IntPtr hwnd) => (NativeMethods.GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
 
     /// Whether a topmost window of another process sits below the taskbar — our own windows
     /// (pet, progress panel) are skipped, since they are what is being placed.
@@ -142,7 +142,7 @@ public partial class OverlayWindow : Window
         var ownPid = (uint)Environment.ProcessId;
         for (var next = GetWindow(taskbar, GW_HWNDNEXT); next != IntPtr.Zero; next = GetWindow(next, GW_HWNDNEXT))
         {
-            GetWindowThreadProcessId(next, out var pid);
+            NativeMethods.GetWindowThreadProcessId(next, out var pid);
             if (pid == ownPid) continue;
             return IsTopmost(next);
         }
@@ -392,17 +392,16 @@ public partial class OverlayWindow : Window
     public static void HideFromTaskbarWithoutOwner(System.Windows.Window window)
     {
         var hwnd = new WindowInteropHelper(window).Handle;
-        SetWindowLong(hwnd, GWL_EXSTYLE, (GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
+        SetWindowLong(hwnd, GWL_EXSTYLE, (NativeMethods.GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
     }
 
     private void MakeClickThroughExceptSprite()
     {
         var hwnd = new WindowInteropHelper(this).Handle;
-        var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+        var extendedStyle = NativeMethods.GetWindowLong(hwnd, GWL_EXSTYLE);
         SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_LAYERED);
     }
 
-    [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     [DllImport("user32.dll")] private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
     private delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
@@ -419,7 +418,6 @@ public partial class OverlayWindow : Window
 
     [DllImport("user32.dll")] private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
     [DllImport("user32.dll")] private static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
-    [DllImport("user32.dll")] private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
     [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern IntPtr FindWindow(string? lpClassName, string? lpWindowName);
     [DllImport("user32.dll")] private static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
     [DllImport("user32.dll")] private static extern bool UnhookWinEvent(IntPtr hWinEventHook);

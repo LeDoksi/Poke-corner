@@ -43,21 +43,21 @@ public sealed class ForegroundWindowMonitor : IDisposable
 
     private bool IsPetCoveredByFullscreenWindow()
     {
-        var foreground = GetForegroundWindow();
+        var foreground = NativeMethods.GetForegroundWindow();
         if (foreground == IntPtr.Zero) return false;
 
         // The shell's own desktop/taskbar windows report as borderless full-monitor
         // too; exclude them by class name so the pet never hides on an empty desktop.
-        var className = GetClassName(foreground);
+        var className = NativeMethods.ClassName(foreground);
         if (className is "Progman" or "WorkerW" or "Shell_TrayWnd") return false;
 
-        if (!GetWindowRect(foreground, out var windowRect)) return false;
+        if (!NativeMethods.GetWindowRect(foreground, out var windowRect)) return false;
 
         var monitorHandle = MonitorFromWindow(foreground, MONITOR_DEFAULTTONEAREST);
         var monitorInfo = MONITORINFO.Create();
         if (!GetMonitorInfo(monitorHandle, ref monitorInfo)) return false;
 
-        int style = GetWindowLong(foreground, GWL_STYLE);
+        int style = NativeMethods.GetWindowLong(foreground, GWL_STYLE);
         var hasBorder = (style & (WS_CAPTION | WS_THICKFRAME)) != 0;
 
         var windowScreenRect = new ScreenRect(windowRect.Left, windowRect.Top, windowRect.Right - windowRect.Left, windowRect.Bottom - windowRect.Top);
@@ -87,36 +87,24 @@ public sealed class ForegroundWindowMonitor : IDisposable
         return MonitorFromWindow(petWindow, MONITOR_DEFAULTTONEAREST) == monitorHandle;
     }
 
-    private static string GetClassName(IntPtr hWnd)
-    {
-        var buffer = new System.Text.StringBuilder(256);
-        GetClassName(hWnd, buffer, buffer.Capacity);
-        return buffer.ToString();
-    }
 
     private const int GWL_STYLE = -16;
     private const int WS_CAPTION = 0x00C00000;
     private const int WS_THICKFRAME = 0x00040000;
     private const uint MONITOR_DEFAULTTONEAREST = 2;
 
-    [StructLayout(LayoutKind.Sequential)]
-    private struct RECT { public int Left, Top, Right, Bottom; }
 
     [StructLayout(LayoutKind.Sequential)]
     private struct MONITORINFO
     {
         public uint cbSize;
-        public RECT rcMonitor;
-        public RECT rcWork;
+        public NativeMethods.RECT rcMonitor;
+        public NativeMethods.RECT rcWork;
         public uint dwFlags;
 
         public static MONITORINFO Create() => new() { cbSize = (uint)Marshal.SizeOf<MONITORINFO>() };
     }
 
-    [DllImport("user32.dll")] private static extern IntPtr GetForegroundWindow();
-    [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
     [DllImport("user32.dll")] private static extern IntPtr MonitorFromWindow(IntPtr hWnd, uint dwFlags);
     [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
-    [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-    [DllImport("user32.dll", CharSet = CharSet.Auto)] private static extern int GetClassName(IntPtr hWnd, System.Text.StringBuilder lpClassName, int nMaxCount);
 }

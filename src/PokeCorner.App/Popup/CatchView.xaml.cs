@@ -1,5 +1,5 @@
 // src/PokeCorner.App/Popup/CatchView.xaml.cs
-using System.IO;
+using PokeCorner.App.Imaging;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
@@ -105,14 +105,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         var spriteBytes = await _fetchSprite(reveal.Result.SpeciesId);
         if (spriteBytes is not null)
         {
-            using var stream = new MemoryStream(spriteBytes);
-            var bitmap = new System.Windows.Media.Imaging.BitmapImage();
-            bitmap.BeginInit();
-            bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-            bitmap.StreamSource = stream;
-            bitmap.EndInit();
-            bitmap.Freeze();
-            RevealSpriteImage.Source = bitmap;
+            RevealSpriteImage.Source = SpriteImages.Decode(spriteBytes);
         }
 
         RevealNameText.Text = _resolveSpeciesName(reveal.Result.SpeciesId) + (reveal.Result.IsShiny ? " ✨" : "");

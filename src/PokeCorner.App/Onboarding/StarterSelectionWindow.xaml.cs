@@ -1,6 +1,5 @@
-using System.IO;
+using PokeCorner.App.Imaging;
 using System.Windows;
-using System.Windows.Media;
 using PokeCorner.App.Overlay;
 using PokeCorner.App.Popup;
 using PokeCorner.Core.Domain;
@@ -87,7 +86,7 @@ public partial class StarterSelectionWindow : Window
             // Static frame first: it is usually already on disk, so the card has real artwork
             // immediately instead of an empty well while the GIF downloads.
             var bytes = await _fetchSprite(speciesId);
-            if (bytes is not null) images[i].Source = DecodePng(bytes);
+            if (bytes is not null) images[i].Source = SpriteImages.Decode(bytes);
 
             if (_fetchAnimatedFrames is null) continue;
 
@@ -97,7 +96,7 @@ public partial class StarterSelectionWindow : Window
             // would repaint the same bitmap 30 times a second.
             if (frames is null || frames.Count < 2) continue;
 
-            var decoded = frames.Select(DecodePng).ToList();
+            var decoded = frames.Select(SpriteImages.Decode).ToList();
             images[i].Source = decoded[0];
 
             var animator = new SpriteAnimator(images[i], new FrameSequencer(decoded.Count, FrameDuration), decoded);
@@ -118,15 +117,4 @@ public partial class StarterSelectionWindow : Window
         Close();
     }
 
-    private static ImageSource DecodePng(byte[] bytes)
-    {
-        using var stream = new MemoryStream(bytes);
-        var bitmap = new System.Windows.Media.Imaging.BitmapImage();
-        bitmap.BeginInit();
-        bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-        bitmap.StreamSource = stream;
-        bitmap.EndInit();
-        bitmap.Freeze();
-        return bitmap;
-    }
 }
