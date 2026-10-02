@@ -14,8 +14,7 @@ public sealed class CatchRoller
 
     public CatchResult RollCatch(
         IReadOnlyList<SpeciesEvolutionChain> allChains,
-        IReadOnlySet<int> ownedChainIds,
-        IReadOnlySet<Nature> ownedNaturesForDuplicateChain,
+        IReadOnlyCollection<PokemonIndividual> owned,
         double shinyChanceMultiplier = 1.0)
     {
         if (allChains.Count == 0)
@@ -23,8 +22,13 @@ public sealed class CatchRoller
             throw new ArgumentException("At least one species chain is required to roll a catch.", nameof(allChains));
         }
 
+        var ownedChainIds = owned.Select(i => i.EvolutionChainId).ToHashSet();
         var chain = PickChain(allChains, ownedChainIds);
         var isDuplicate = ownedChainIds.Contains(chain.ChainId);
+        // Only the PICKED chain's natures count as "already owned" — which chain that is isn't
+        // known until PickChain returns, so callers can't pre-filter this (they used to try, and
+        // ended up passing every nature in the collection).
+        var ownedNaturesForDuplicateChain = owned.Where(i => i.EvolutionChainId == chain.ChainId).Select(i => i.Nature).ToHashSet();
 
         var isShiny = _random.NextDouble() < (isDuplicate ? BaseShinyChance * DuplicateShinyChanceMultiplier : BaseShinyChance) * shinyChanceMultiplier;
         var nature = isDuplicate
@@ -39,8 +43,7 @@ public sealed class CatchRoller
     public CatchResult RollCatchFromTier(
         IReadOnlyList<SpeciesEvolutionChain> allChains,
         RarityTier tier,
-        IReadOnlySet<int> ownedChainIds,
-        IReadOnlySet<Nature> ownedNaturesForDuplicateChain,
+        IReadOnlyCollection<PokemonIndividual> owned,
         double shinyChanceMultiplier = 1.0)
     {
         var tierChains = allChains.Where(c => RarityClassifier.Classify(c.CaptureRate) == tier).ToList();
@@ -48,7 +51,7 @@ public sealed class CatchRoller
         {
             throw new InvalidOperationException($"No species available in rarity tier {tier} — caller must check availability before offering this purchase.");
         }
-        return RollCatch(tierChains, ownedChainIds, ownedNaturesForDuplicateChain, shinyChanceMultiplier);
+        return RollCatch(tierChains, owned, shinyChanceMultiplier);
     }
 
     // Used for starter selection: the player has already picked the species, so this

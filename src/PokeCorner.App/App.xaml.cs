@@ -751,14 +751,8 @@ public partial class App : System.Windows.Application
         var hadNoActiveInNonEmptyCollection = _appState.Collection.ActiveIndividualId is null && _appState.Collection.Individuals.Count > 0;
 
         var availableChains = _speciesCatalog.LoadCachedOrFallback();
-        var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
-        var ownedNatures = _appState.Collection.Individuals
-            .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
-            .Select(i => i.Nature)
-            .ToHashSet();
-
         var shinyMultiplier = _appState.Shop.CatchLuckyCharmActive ? ShopService.CatchLuckyCharmShinyMultiplier : 1.0;
-        var result = _catchRoller.RollCatch(availableChains, ownedChainIds, ownedNatures, shinyMultiplier);
+        var result = _catchRoller.RollCatch(availableChains, _appState.Collection.Individuals, shinyMultiplier);
         _appState.Shop.CatchLuckyCharmActive = false; // consumed regardless of outcome
 
         _appState.Collection.Add(new PokemonIndividual
@@ -913,13 +907,7 @@ public partial class App : System.Windows.Application
             return false;
         }
 
-        var ownedChainIds = _appState.Collection.Individuals.Select(i => i.EvolutionChainId).ToHashSet();
-        var ownedNatures = _appState.Collection.Individuals
-            .Where(i => ownedChainIds.Contains(i.EvolutionChainId))
-            .Select(i => i.Nature)
-            .ToHashSet();
-
-        var result = _catchRoller.RollCatchFromTier(availableChains, egg.Tier, ownedChainIds, ownedNatures);
+        var result = _catchRoller.RollCatchFromTier(availableChains, egg.Tier, _appState.Collection.Individuals);
         _appState.Collection.Add(new PokemonIndividual
         {
             SpeciesId = result.SpeciesId,

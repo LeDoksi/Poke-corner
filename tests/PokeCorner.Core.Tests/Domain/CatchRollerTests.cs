@@ -16,13 +16,13 @@ public class CatchRollerTests
         // because owned chains are penalized (spec: "виды, которых ещё нет, весят больше").
         var equalRateOwned = RareOwned with { CaptureRate = 255 };
         var chains = new[] { CommonUnowned, equalRateOwned };
-        var owned = new HashSet<int> { equalRateOwned.ChainId };
+        var owned = new[] { Owned(equalRateOwned.ChainId) };
         var roller = new CatchRoller(new Random(Seed: 1));
 
         var unownedWins = 0;
         for (var i = 0; i < 1000; i++)
         {
-            var result = roller.RollCatch(chains, owned, ownedNaturesForDuplicateChain: new HashSet<Nature>());
+            var result = roller.RollCatch(chains, owned);
             if (result.ChainId == CommonUnowned.ChainId) unownedWins++;
         }
 
@@ -33,10 +33,10 @@ public class CatchRollerTests
     public void RollCatch_OnlyOwnedChainsAvailable_StillProducesDuplicate()
     {
         var chains = new[] { CommonUnowned };
-        var owned = new HashSet<int> { CommonUnowned.ChainId };
+        var owned = new[] { Owned(CommonUnowned.ChainId) };
         var roller = new CatchRoller(new Random(Seed: 2));
 
-        var result = roller.RollCatch(chains, owned, ownedNaturesForDuplicateChain: new HashSet<Nature>());
+        var result = roller.RollCatch(chains, owned);
 
         Assert.Equal(CommonUnowned.ChainId, result.ChainId);
         Assert.True(result.WasDuplicateSpecies);
@@ -46,9 +46,9 @@ public class CatchRollerTests
     public void RollCatch_Duplicate_ShinyChanceIsHigherThanNewCatch()
     {
         var chains = new[] { CommonUnowned };
-        var owned = new HashSet<int> { CommonUnowned.ChainId };
+        var owned = new[] { Owned(CommonUnowned.ChainId) };
 
-        var newCatchShinyCount = CountShiny(chains, ownedChainIds: new HashSet<int>(), trials: 20_000, seed: 3);
+        var newCatchShinyCount = CountShiny(chains, owned: Array.Empty<PokemonIndividual>(), trials: 20_000, seed: 3);
         var duplicateShinyCount = CountShiny(chains, owned, trials: 20_000, seed: 4);
 
         Assert.True(duplicateShinyCount > newCatchShinyCount,
@@ -59,14 +59,13 @@ public class CatchRollerTests
     public void RollCatch_Duplicate_PrefersNatureNotYetOwnedForThatSpecies()
     {
         var chains = new[] { CommonUnowned };
-        var owned = new HashSet<int> { CommonUnowned.ChainId };
-        var alreadyOwnedNatures = Enum.GetValues<Nature>().Where(n => n != Nature.Jolly).ToHashSet();
+        var owned = Enum.GetValues<Nature>().Where(n => n != Nature.Jolly).Select(n => Owned(CommonUnowned.ChainId, n)).ToList();
         var roller = new CatchRoller(new Random(Seed: 5));
 
         var jollyCount = 0;
         for (var i = 0; i < 500; i++)
         {
-            var result = roller.RollCatch(chains, owned, alreadyOwnedNatures);
+            var result = roller.RollCatch(chains, owned);
             if (result.Nature == Nature.Jolly) jollyCount++;
         }
 
@@ -79,7 +78,7 @@ public class CatchRollerTests
     public void RollCatch_ShinyChanceMultiplier_IncreasesShinyRate()
     {
         var chains = new[] { CommonUnowned };
-        var owned = new HashSet<int>();
+        var owned = Array.Empty<PokemonIndividual>();
 
         var baselineShinyCount = CountShiny(chains, owned, trials: 20_000, seed: 10, shinyChanceMultiplier: 1.0);
         var boostedShinyCount = CountShiny(chains, owned, trials: 20_000, seed: 11, shinyChanceMultiplier: 4.0);
@@ -97,7 +96,7 @@ public class CatchRollerTests
 
         for (var i = 0; i < 100; i++)
         {
-            var result = roller.RollCatchFromTier(chains, RarityTier.Legendary, new HashSet<int>(), new HashSet<Nature>());
+            var result = roller.RollCatchFromTier(chains, RarityTier.Legendary, Array.Empty<PokemonIndividual>());
             Assert.Equal(legendary.ChainId, result.ChainId);
         }
     }
@@ -109,7 +108,7 @@ public class CatchRollerTests
         var roller = new CatchRoller(new Random(Seed: 21));
 
         Assert.Throws<InvalidOperationException>(() =>
-            roller.RollCatchFromTier(chains, RarityTier.Legendary, new HashSet<int>(), new HashSet<Nature>()));
+            roller.RollCatchFromTier(chains, RarityTier.Legendary, Array.Empty<PokemonIndividual>()));
     }
 
     [Fact]
@@ -124,26 +123,47 @@ public class CatchRollerTests
         Assert.False(result.WasDuplicateSpecies);
     }
 
-    private static int CountShiny(IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlySet<int> ownedChainIds, int trials, int seed)
+    [Fact]
+    public void RollCatch_DuplicateNatureBias_UsesOnlyThePickedChainsNatures()
     {
-        var roller = new CatchRoller(new Random(seed));
-        var shinyCount = 0;
+        // The picked chain owns only Hardy; a DIFFERENT chain owns every other nature. Only the
+        // picked chain's natures may count as "already owned", so Hardy must be the rare one —
+        // the old caller-side filter fed every owned nature in, which made Hardy the favourite.
+        var otherChain = RareOwned.ChainId;
+        var owned = Enum.GetValues<Nature>().Where(n => n != Nature.Hardy).Select(n => Owned(otherChain, n))
+            .Append(Owned(CommonUnowned.ChainId, Nature.Hardy))
+            .ToList();
+        var roller = new CatchRoller(new Random(Seed: 42));
+
+        var hardyCount = 0;
+        const int trials = 5000;
         for (var i = 0; i < trials; i++)
         {
-            var result = roller.RollCatch(chains, ownedChainIds, ownedNaturesForDuplicateChain: new HashSet<Nature>());
-            if (result.IsShiny) shinyCount++;
+            if (roller.RollCatch(new[] { CommonUnowned }, owned).Nature == Nature.Hardy) hardyCount++;
         }
-        return shinyCount;
+
+        // Correct: Hardy weighs 0.3 against 24 x 1.0 → ~1.2%. Old (all owned natures counted): all 25
+        // weigh 0.3 alike → uniform 4%.
+        Assert.True(hardyCount / (double)trials < 0.025, $"Expected Hardy (owned on the picked chain) to be rare, got {hardyCount}/{trials}");
     }
 
-    private static int CountShiny(IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlySet<int> ownedChainIds, int trials, int seed, double shinyChanceMultiplier)
+    private static PokemonIndividual Owned(int chainId, Nature nature = Nature.Hardy) => new()
+    {
+        SpeciesId = 1,
+        EvolutionChainId = chainId,
+        ChainLength = 3,
+        Nature = nature,
+        IsShiny = false,
+        CaughtAtUtc = DateTimeOffset.UnixEpoch
+    };
+
+    private static int CountShiny(IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlyCollection<PokemonIndividual> owned, int trials, int seed, double shinyChanceMultiplier = 1.0)
     {
         var roller = new CatchRoller(new Random(seed));
         var shinyCount = 0;
         for (var i = 0; i < trials; i++)
         {
-            var result = roller.RollCatch(chains, ownedChainIds, ownedNaturesForDuplicateChain: new HashSet<Nature>(), shinyChanceMultiplier);
-            if (result.IsShiny) shinyCount++;
+            if (roller.RollCatch(chains, owned, shinyChanceMultiplier).IsShiny) shinyCount++;
         }
         return shinyCount;
     }
