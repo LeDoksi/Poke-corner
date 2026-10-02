@@ -64,6 +64,30 @@ public class SpriteCacheTests : IDisposable
         Assert.False(File.Exists(Path.Combine(_tempDir, "25.png")));
     }
 
+    /// The Pokédex polls TryGetCachedBytes once a second while a background fetch may be
+    /// writing that very file; a sharing violation there reached DispatcherUnhandledException
+    /// and crashed the app. A file mid-write is simply "not cached yet".
+    [Fact]
+    public void TryGetCachedBytes_FileBeingWritten_ReturnsNullInsteadOfThrowing()
+    {
+        var cache = new SpriteCache(_tempDir);
+        using var writer = new FileStream(Path.Combine(_tempDir, "25.png"), FileMode.Create, FileAccess.Write, FileShare.Read);
+        writer.Write(FakePng(1));
+
+        Assert.Null(cache.TryGetCachedBytes(25));
+    }
+
+    [Fact]
+    public async Task GetOrFetchAsync_FileBeingWritten_ReturnsFetchedBytesInsteadOfThrowing()
+    {
+        var cache = new SpriteCache(_tempDir);
+        using var writer = new FileStream(Path.Combine(_tempDir, "25.png"), FileMode.Create, FileAccess.Write, FileShare.Read);
+
+        var bytes = await cache.GetOrFetchAsync(25, () => Task.FromResult(FakePng(2)));
+
+        Assert.Equal(FakePng(2), bytes);
+    }
+
     [Fact]
     public async Task GetOrFetchAsync_FirstCall_InvokesFetchAndWritesToDisk()
     {

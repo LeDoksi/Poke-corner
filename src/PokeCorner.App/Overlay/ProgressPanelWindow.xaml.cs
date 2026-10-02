@@ -20,6 +20,17 @@ public partial class ProgressPanelWindow : System.Windows.Window
     /// panel has to be clamped against one.
     private const double Gap = 6;
 
+    /// Same guard as OverlayWindow.AllowClose: Alt+F4 must not close the panel behind App's back
+    /// (App keeps the reference and would later Show() a closed window). App sets it before
+    /// closing the panel itself.
+    public bool AllowClose { get; set; }
+
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+    {
+        if (!AllowClose) e.Cancel = true;
+        base.OnClosing(e);
+    }
+
     public ProgressPanelWindow()
     {
         InitializeComponent();

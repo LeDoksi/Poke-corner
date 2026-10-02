@@ -17,9 +17,9 @@ public sealed class SpriteCache
     public async Task<byte[]?> GetOrFetchAsync(int speciesId, Func<Task<byte[]>> fetch)
     {
         var path = Path.Combine(_cacheDirectory, $"{speciesId}.png");
-        if (File.Exists(path))
+        var cached = await TryReadAsync(path);
+        if (cached is not null)
         {
-            var cached = await File.ReadAllBytesAsync(path);
             if (IsCompletePng(cached)) return cached;
             DeleteQuietly(path); // cut short mid-write — re-download below instead of crashing every decoder
         }
@@ -43,21 +43,37 @@ public sealed class SpriteCache
             return null;
         }
 
-        await File.WriteAllBytesAsync(path, bytes);
+        // Temp file + move, so a reader polling this path never opens a half-written file. A
+        // write that loses a race with another writer still returns the bytes it fetched.
+        try
+        {
+            var tempPath = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
+            await File.WriteAllBytesAsync(tempPath, bytes);
+            try { File.Move(tempPath, path, overwrite: true); }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { DeleteQuietly(tempPath); }
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { }
         return bytes;
     }
 
-    /// Synchronous, network-free peek at the on-disk sprite cache. Collection/Pokédex card
-    /// thumbnails use this so they can render on the UI thread without awaiting a fetch:
-    /// by the time a player opens the Collection screen, every species they own has already
-    /// been fetched-and-cached by the overlay refresh path. Returns null when the species
-    /// genuinely isn't cached yet, and callers are expected to show a placeholder rather
-    /// than block. Deliberately additive — GetOrFetchAsync's behavior is untouched.
+    /// null when the file is missing or can't be read right now (another thread is writing it).
+    private static async Task<byte[]?> TryReadAsync(string path)
+    {
+        if (!File.Exists(path)) return null;
+        try { return await File.ReadAllBytesAsync(path); }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { return null; }
+    }
+
+    /// Synchronous, network-free peek at the on-disk sprite cache, for UI-thread thumbnails.
+    /// null when the species isn't cached (yet), the file is mid-write, or it is truncated —
+    /// callers show a placeholder rather than block.
     public byte[]? TryGetCachedBytes(int speciesId)
     {
         var path = Path.Combine(_cacheDirectory, $"{speciesId}.png");
         if (!File.Exists(path)) return null;
-        var cached = File.ReadAllBytes(path);
+        byte[] cached;
+        try { cached = File.ReadAllBytes(path); }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { return null; } // mid-write: not cached yet
         if (IsCompletePng(cached)) return cached;
         DeleteQuietly(path); // the next GetOrFetchAsync re-downloads it
         return null;

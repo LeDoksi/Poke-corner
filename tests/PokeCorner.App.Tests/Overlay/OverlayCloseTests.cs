@@ -23,4 +23,23 @@ public class OverlayCloseTests
             Assert.False(window.IsVisible);
         });
     }
+
+    /// Same for the progress panel: closed by Alt+F4, it stayed referenced by App, and the next
+    /// Show() on the closed window threw and crashed the app.
+    [Fact]
+    public void ProgressPanel_CloseWithoutAllowClose_StaysOpen()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var window = new ProgressPanelWindow { ShowActivated = false };
+            window.Show();
+
+            window.Close();
+
+            Assert.True(window.IsVisible);
+            window.AllowClose = true;
+            window.Close();
+            Assert.False(window.IsVisible);
+        });
+    }
 }

@@ -44,9 +44,16 @@ public sealed class SingleInstance : IDisposable
     {
         if (EventWaitHandle.TryOpenExisting(ActivationName(name), out var activation))
         {
+            // Windows only lets the foreground process bring another one forward. This launch
+            // is the foreground one (the user just started it), so it hands that right over
+            // before signalling; without it the running copy's menu opens behind other windows.
+            AllowSetForegroundWindow(AsfwAny);
             using (activation) activation.Set();
         }
     }
+
+    private const int AsfwAny = -1;
+    [System.Runtime.InteropServices.DllImport("user32.dll")] private static extern bool AllowSetForegroundWindow(int processId);
 
     private static string ActivationName(string name) => name + ".Activate";
 

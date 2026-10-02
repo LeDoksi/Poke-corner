@@ -233,7 +233,7 @@ public partial class App : System.Windows.Application
 
         _singleInstance.ActivationRequested += () => Dispatcher.BeginInvoke(() => OpenMenu(CollectionTabIndex));
         // Windows logging off must not be blocked by the pet window refusing to close.
-        SessionEnding += (_, _) => _overlayWindow.AllowClose = true;
+        SessionEnding += (_, _) => AllowDeskWindowsToClose();
         Exit += (_, _) =>
         {
             SaveState();
@@ -417,6 +417,7 @@ public partial class App : System.Windows.Application
         }
         else if (!_appState.Settings.ShowProgressPanel && _progressPanelWindow is not null)
         {
+            _progressPanelWindow.AllowClose = true;
             _progressPanelWindow.Close();
             _progressPanelWindow = null;
         }
@@ -862,10 +863,16 @@ public partial class App : System.Windows.Application
         _ => ScreenCorner.BottomRight
     };
 
+    private void AllowDeskWindowsToClose()
+    {
+        _overlayWindow.AllowClose = true;
+        if (_progressPanelWindow is not null) _progressPanelWindow.AllowClose = true;
+    }
+
     /// The only way out: lets the pet window close (it refuses otherwise, see OverlayWindow.AllowClose).
     private void ShutdownApp()
     {
-        _overlayWindow.AllowClose = true;
+        AllowDeskWindowsToClose();
         Shutdown();
     }
 
