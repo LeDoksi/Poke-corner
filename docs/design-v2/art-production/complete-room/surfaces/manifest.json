@@ -1,0 +1,833 @@
+{
+  "assets": [
+    {
+      "id": "curtain-short-blue",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-short-blue.png",
+      "position": [
+        9,
+        -1
+      ],
+      "logicalSize": [
+        121,
+        53
+      ],
+      "rodEndpoints": [
+        [
+          0.037037,
+          0.094463
+        ],
+        [
+          0.960114,
+          0.198697
+        ]
+      ],
+      "mountingAnchor": [
+        0.037037,
+        0.094463
+      ],
+      "source": "curtains\\assets\\curtain-short-blue.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-linen-blue",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-linen-blue.png",
+      "position": [
+        8,
+        -1
+      ],
+      "logicalSize": [
+        122,
+        90
+      ],
+      "rodEndpoints": [
+        [
+          0.040288,
+          0.052326
+        ],
+        [
+          0.959712,
+          0.120155
+        ]
+      ],
+      "mountingAnchor": [
+        0.040288,
+        0.052326
+      ],
+      "source": "curtains\\assets\\curtain-linen-blue.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-tied-blue",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-tied-blue.png",
+      "position": [
+        5,
+        -1
+      ],
+      "logicalSize": [
+        130,
+        89
+      ],
+      "rodEndpoints": [
+        [
+          0.064052,
+          0.061303
+        ],
+        [
+          0.926797,
+          0.132184
+        ]
+      ],
+      "mountingAnchor": [
+        0.064052,
+        0.061303
+      ],
+      "source": "curtains\\assets\\curtain-tied-blue.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-short-cream",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-short-cream.png",
+      "position": [
+        9,
+        0
+      ],
+      "logicalSize": [
+        120,
+        56
+      ],
+      "rodEndpoints": [
+        [
+          0.034125,
+          0.076433
+        ],
+        [
+          0.965875,
+          0.232484
+        ]
+      ],
+      "mountingAnchor": [
+        0.034125,
+        0.076433
+      ],
+      "source": "curtains\\assets\\curtain-short-cream.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-linen-cream",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-linen-cream.png",
+      "position": [
+        8,
+        0
+      ],
+      "logicalSize": [
+        121,
+        91
+      ],
+      "rodEndpoints": [
+        [
+          0.038576,
+          0.047337
+        ],
+        [
+          0.962908,
+          0.143984
+        ]
+      ],
+      "mountingAnchor": [
+        0.038576,
+        0.047337
+      ],
+      "source": "curtains\\assets\\curtain-linen-cream.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-tied-cream",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-tied-cream.png",
+      "position": [
+        7,
+        -1
+      ],
+      "logicalSize": [
+        124,
+        88
+      ],
+      "rodEndpoints": [
+        [
+          0.048991,
+          0.052632
+        ],
+        [
+          0.95389,
+          0.147773
+        ]
+      ],
+      "mountingAnchor": [
+        0.048991,
+        0.052632
+      ],
+      "source": "curtains\\assets\\curtain-tied-cream.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-short-sage",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-short-sage.png",
+      "position": [
+        9,
+        0
+      ],
+      "logicalSize": [
+        121,
+        57
+      ],
+      "rodEndpoints": [
+        [
+          0.033708,
+          0.071856
+        ],
+        [
+          0.962079,
+          0.206587
+        ]
+      ],
+      "mountingAnchor": [
+        0.033708,
+        0.071856
+      ],
+      "source": "curtains\\assets\\curtain-short-sage.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-linen-sage",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-linen-sage.png",
+      "position": [
+        9,
+        0
+      ],
+      "logicalSize": [
+        120,
+        92
+      ],
+      "rodEndpoints": [
+        [
+          0.035817,
+          0.048507
+        ],
+        [
+          0.971347,
+          0.134328
+        ]
+      ],
+      "mountingAnchor": [
+        0.035817,
+        0.048507
+      ],
+      "source": "curtains\\assets\\curtain-linen-sage.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "curtain-tied-sage",
+      "category": "curtains",
+      "file": "surfaces\\assets\\curtain-tied-sage.png",
+      "position": [
+        6,
+        -1
+      ],
+      "logicalSize": [
+        124,
+        79
+      ],
+      "rodEndpoints": [
+        [
+          0.053619,
+          0.061311
+        ],
+        [
+          0.955764,
+          0.145877
+        ]
+      ],
+      "mountingAnchor": [
+        0.053619,
+        0.061311
+      ],
+      "source": "curtains\\assets\\curtain-tied-sage.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-woven-cream",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-woven-cream.png",
+      "position": [
+        162,
+        155
+      ],
+      "logicalSize": [
+        280,
+        65
+      ],
+      "backEdgeAnchor": [
+        0.502242,
+        0.057692
+      ],
+      "footAnchor": [
+        0.502242,
+        0.956731
+      ],
+      "source": "rugs\\assets\\rug-woven-cream.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-checkered-cream",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-checkered-cream.png",
+      "position": [
+        162,
+        155
+      ],
+      "logicalSize": [
+        280,
+        66
+      ],
+      "backEdgeAnchor": [
+        0.498276,
+        0.053398
+      ],
+      "footAnchor": [
+        0.498276,
+        0.956311
+      ],
+      "source": "rugs\\assets\\rug-checkered-cream.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-oval-cream",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-oval-cream.png",
+      "position": [
+        162,
+        155
+      ],
+      "logicalSize": [
+        280,
+        82
+      ],
+      "backEdgeAnchor": [
+        0.501746,
+        0.047809
+      ],
+      "footAnchor": [
+        0.501746,
+        0.964143
+      ],
+      "source": "rugs\\assets\\rug-oval-cream.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-pokeball-cream",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-pokeball-cream.png",
+      "position": [
+        162,
+        156
+      ],
+      "logicalSize": [
+        280,
+        69
+      ],
+      "backEdgeAnchor": [
+        0.498885,
+        0.045455
+      ],
+      "footAnchor": [
+        0.498885,
+        0.959091
+      ],
+      "source": "rugs\\assets\\rug-pokeball-cream.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-woven-sage",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-woven-sage.png",
+      "position": [
+        162,
+        155
+      ],
+      "logicalSize": [
+        280,
+        67
+      ],
+      "backEdgeAnchor": [
+        0.503885,
+        0.055556
+      ],
+      "footAnchor": [
+        0.503885,
+        0.935185
+      ],
+      "source": "rugs\\assets\\rug-woven-sage.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-checkered-sage",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-checkered-sage.png",
+      "position": [
+        162,
+        155
+      ],
+      "logicalSize": [
+        280,
+        70
+      ],
+      "backEdgeAnchor": [
+        0.497696,
+        0.050691
+      ],
+      "footAnchor": [
+        0.497696,
+        0.953917
+      ],
+      "source": "rugs\\assets\\rug-checkered-sage.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-oval-sage",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-oval-sage.png",
+      "position": [
+        162,
+        156
+      ],
+      "logicalSize": [
+        280,
+        84
+      ],
+      "backEdgeAnchor": [
+        0.503468,
+        0.03861
+      ],
+      "footAnchor": [
+        0.503468,
+        0.96139
+      ],
+      "source": "rugs\\assets\\rug-oval-sage.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-pokeball-sage",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-pokeball-sage.png",
+      "position": [
+        162,
+        156
+      ],
+      "logicalSize": [
+        280,
+        79
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.035573
+      ],
+      "footAnchor": [
+        0.5,
+        0.948617
+      ],
+      "source": "rugs\\assets\\rug-pokeball-sage.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-woven-blue",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-woven-blue.png",
+      "position": [
+        162,
+        155
+      ],
+      "logicalSize": [
+        280,
+        72
+      ],
+      "backEdgeAnchor": [
+        0.504075,
+        0.054299
+      ],
+      "footAnchor": [
+        0.504075,
+        0.959276
+      ],
+      "source": "rugs\\assets\\rug-woven-blue.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-checkered-blue",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-checkered-blue.png",
+      "position": [
+        162,
+        155
+      ],
+      "logicalSize": [
+        280,
+        75
+      ],
+      "backEdgeAnchor": [
+        0.501206,
+        0.049327
+      ],
+      "footAnchor": [
+        0.501206,
+        0.959641
+      ],
+      "source": "rugs\\assets\\rug-checkered-blue.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-oval-blue",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-oval-blue.png",
+      "position": [
+        162,
+        156
+      ],
+      "logicalSize": [
+        280,
+        90
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.037879
+      ],
+      "footAnchor": [
+        0.5,
+        0.965909
+      ],
+      "source": "rugs\\assets\\rug-oval-blue.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "rug-pokeball-blue",
+      "category": "rugs",
+      "file": "surfaces\\assets\\rug-pokeball-blue.png",
+      "position": [
+        162,
+        156
+      ],
+      "logicalSize": [
+        280,
+        84
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.039216
+      ],
+      "footAnchor": [
+        0.5,
+        0.960784
+      ],
+      "source": "rugs\\assets\\rug-pokeball-blue.png",
+      "method": "Uniform nearest normalization; source RGB/alpha retained",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-plain-cream",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-plain-cream.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "architecture/assets/room-base.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-plain-sage",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-plain-sage.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-plain-sage.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-plain-blue",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-plain-blue.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-plain-blue.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-panels-honey",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-panels-honey.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-panels-honey.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-panels-cream",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-panels-cream.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-panels-cream.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-panels-walnut",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-panels-walnut.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-panels-walnut.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-floral-cream",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-floral-cream.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-floral-cream.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-floral-sage",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-floral-sage.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-floral-sage.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-floral-blue",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-floral-blue.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-floral-blue.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-stars-cream",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-stars-cream.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-stars-cream.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-stars-sage",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-stars-sage.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-stars-sage.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    },
+    {
+      "id": "wall-stars-blue",
+      "category": "walls",
+      "file": "surfaces\\assets\\wall-stars-blue.png",
+      "position": [
+        0,
+        0
+      ],
+      "logicalSize": [
+        480,
+        193
+      ],
+      "source": "walls/assets/wall-stars-blue.png",
+      "method": "Registered upper-wall plane replacement; common protected architecture",
+      "displayScale": 3
+    }
+  ],
+  "wallPlanes": [
+    [
+      [
+        7,
+        0
+      ],
+      [
+        23,
+        0
+      ],
+      [
+        23,
+        89
+      ],
+      [
+        7,
+        90
+      ]
+    ],
+    [
+      [
+        119,
+        1
+      ],
+      [
+        156,
+        11
+      ],
+      [
+        156,
+        85
+      ],
+      [
+        119,
+        85
+      ]
+    ],
+    [
+      [
+        168,
+        5
+      ],
+      [
+        431,
+        5
+      ],
+      [
+        431,
+        85
+      ],
+      [
+        168,
+        85
+      ]
+    ],
+    [
+      [
+        437,
+        10
+      ],
+      [
+        474,
+        1
+      ],
+      [
+        474,
+        93
+      ],
+      [
+        437,
+        86
+      ]
+    ]
+  ],
+  "counts": {
+    "curtains": 9,
+    "rugs": 12,
+    "walls": 12
+  }
+}

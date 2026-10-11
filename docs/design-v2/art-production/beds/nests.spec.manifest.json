@@ -1,0 +1,95 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "bed-nest-cream",
+      "name": "Гнездо сливочное",
+      "category": "beds",
+      "cellRect": [
+        0,
+        0,
+        887,
+        600
+      ],
+      "row": 0,
+      "col": 0,
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "file": "beds/assets/bed-nest-cream.png",
+      "size": [
+        681,
+        382
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        115,
+        120,
+        780,
+        486
+      ],
+      "cropInCell": [
+        107,
+        112,
+        788,
+        494
+      ],
+      "sha256": "807c7d4bd41c9b00efbfb443da0244770fe6b07e933fa2b9a4e0e5e9af399b70",
+      "source": "beds/_sources/nests-atlas-v1.png",
+      "promptFile": "beds/_sources/nests-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "bed-nest-sage",
+      "name": "Гнездо шалфейное",
+      "category": "beds",
+      "cellRect": [
+        887,
+        0,
+        1774,
+        600
+      ],
+      "row": 0,
+      "col": 1,
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "file": "beds/assets/bed-nest-sage.png",
+      "size": [
+        681,
+        380
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        112,
+        122,
+        777,
+        486
+      ],
+      "cropInCell": [
+        104,
+        114,
+        785,
+        494
+      ],
+      "sha256": "9dc78cb0a1f17776805bcfb2229702ff336b6d2c30eea4d152f02aadd31c485a",
+      "source": "beds/_sources/nests-atlas-v1.png",
+      "promptFile": "beds/_sources/nests-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    }
+  ]
+}

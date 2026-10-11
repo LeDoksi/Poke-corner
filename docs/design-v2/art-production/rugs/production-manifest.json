@@ -1,0 +1,438 @@
+{
+  "produce": [
+    {
+      "id": "rug-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-cream-v2.png",
+      "output_path": "rugs/assets/rug-woven-cream.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "CRITICAL CAMERA CORRECTION: apparent opaque rug silhouette must be SIXTIMES widerthanheight, about600x100atroompreview. View just10degreesabovethefloor, muchflatterthanordinarycatalogueimage. NO rug exceeds width/5.5 inprojectedheight; narrowflatstripnotdeepmat. Use LARGE chunkyhand-placed rectangularpixelclusterslikeapprovedroomrug; no photographicnoisyfibersor grain. All edges hard pixelstairs, notsmoothantialiasedsurfaces. Use case: stylized-concept. Generate a NEW high-resolution clean transparent sprite atlas of FOUR separate complete floor rugs for the approved PokeCorner room. Reference image is style and room camera evidence, never crop reference pixels. Request 4096x2048 atlas with eachrug at least1700 pixels wide if supported. Exactly 2 rows by2columns, one whole rug perquadrant. Generous transparent margins and gaps; no text, no grid, no labels, no other objects. Every rug is already projected onto the room's shallow floor plane, as seen from low room camera pitcheddown15degrees. Width to projected height about5.6to1: VERY WIDE AND FLAT; not square, not topdown, not a tall isometric diamond. Rectangular rugs have almost horizontal top/bottom edges, backedge modestly shorter than frontedge, sides slantout subtly, complete near frontedge and far backedge visible. Whole silhouette including fringes fitswithin cell. Ovalrug similarly flatelongated ellipse, neverdeepvertical. Warm upper-left light ON textile, crisp squarepixel clusters, soft woven textile shading in warmbrown selectiveoutline. Transparent outside object, no roomfloor, no castshadow, no wall, no glow, no Pokemon character. Rug material/pattern fullyopaque. Distinct authentic rug constructions: wovenrectangular mat with fine braids and plain narrow border; checkered rectangular woolrug with large wovenchecks; soft ovalrug with plush edge and subtle fleecy center; rectangular bordered rug with ONE understated woven Pokeball emblem nearcenter (muted physical textile motif, nowriting). All4rugs share the warm oatmeal cream, soft muted honey shadows; companion checks and borders warm taupe palette. Top-left:wovenrectangular rug, tactile tightbraiding, a simple plainborder, short tasselfringes on bothsideends. Top-right:checkeredrectangularrug, veryreadablelargechecks followingfloorplane, narrowwovenbindingedge, no emblem. Bottom-left:softovalrug, rounded complete plushoutline, subtle fleecytexture with smoothcenter, no checks/no motif. Bottom-right:borderedrectangularrug with a single understated mutedPokeball textilemotifnearcenter, restrained finegeometricborder, no checks, nofringe. Theseare4differentmodels, notfourrecolors or identicalrectangles.\n",
+      "dimensions": [
+        892,
+        208
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 4.670213,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.502242,
+        0.956731
+      ],
+      "backEdgeAnchor": [
+        0.502242,
+        0.057692
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-checkered-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-cream-v2.png",
+      "output_path": "rugs/assets/rug-checkered-cream.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "CRITICAL CAMERA CORRECTION: apparent opaque rug silhouette must be SIXTIMES widerthanheight, about600x100atroompreview. View just10degreesabovethefloor, muchflatterthanordinarycatalogueimage. NO rug exceeds width/5.5 inprojectedheight; narrowflatstripnotdeepmat. Use LARGE chunkyhand-placed rectangularpixelclusterslikeapprovedroomrug; no photographicnoisyfibersor grain. All edges hard pixelstairs, notsmoothantialiasedsurfaces. Use case: stylized-concept. Generate a NEW high-resolution clean transparent sprite atlas of FOUR separate complete floor rugs for the approved PokeCorner room. Reference image is style and room camera evidence, never crop reference pixels. Request 4096x2048 atlas with eachrug at least1700 pixels wide if supported. Exactly 2 rows by2columns, one whole rug perquadrant. Generous transparent margins and gaps; no text, no grid, no labels, no other objects. Every rug is already projected onto the room's shallow floor plane, as seen from low room camera pitcheddown15degrees. Width to projected height about5.6to1: VERY WIDE AND FLAT; not square, not topdown, not a tall isometric diamond. Rectangular rugs have almost horizontal top/bottom edges, backedge modestly shorter than frontedge, sides slantout subtly, complete near frontedge and far backedge visible. Whole silhouette including fringes fitswithin cell. Ovalrug similarly flatelongated ellipse, neverdeepvertical. Warm upper-left light ON textile, crisp squarepixel clusters, soft woven textile shading in warmbrown selectiveoutline. Transparent outside object, no roomfloor, no castshadow, no wall, no glow, no Pokemon character. Rug material/pattern fullyopaque. Distinct authentic rug constructions: wovenrectangular mat with fine braids and plain narrow border; checkered rectangular woolrug with large wovenchecks; soft ovalrug with plush edge and subtle fleecy center; rectangular bordered rug with ONE understated woven Pokeball emblem nearcenter (muted physical textile motif, nowriting). All4rugs share the warm oatmeal cream, soft muted honey shadows; companion checks and borders warm taupe palette. Top-left:wovenrectangular rug, tactile tightbraiding, a simple plainborder, short tasselfringes on bothsideends. Top-right:checkeredrectangularrug, veryreadablelargechecks followingfloorplane, narrowwovenbindingedge, no emblem. Bottom-left:softovalrug, rounded complete plushoutline, subtle fleecytexture with smoothcenter, no checks/no motif. Bottom-right:borderedrectangularrug with a single understated mutedPokeball textilemotifnearcenter, restrained finegeometricborder, no checks, nofringe. Theseare4differentmodels, notfourrecolors or identicalrectangles.\n",
+      "dimensions": [
+        870,
+        206
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 4.596774,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498276,
+        0.956311
+      ],
+      "backEdgeAnchor": [
+        0.498276,
+        0.053398
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-oval-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-cream-v2.png",
+      "output_path": "rugs/assets/rug-oval-cream.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "CRITICAL CAMERA CORRECTION: apparent opaque rug silhouette must be SIXTIMES widerthanheight, about600x100atroompreview. View just10degreesabovethefloor, muchflatterthanordinarycatalogueimage. NO rug exceeds width/5.5 inprojectedheight; narrowflatstripnotdeepmat. Use LARGE chunkyhand-placed rectangularpixelclusterslikeapprovedroomrug; no photographicnoisyfibersor grain. All edges hard pixelstairs, notsmoothantialiasedsurfaces. Use case: stylized-concept. Generate a NEW high-resolution clean transparent sprite atlas of FOUR separate complete floor rugs for the approved PokeCorner room. Reference image is style and room camera evidence, never crop reference pixels. Request 4096x2048 atlas with eachrug at least1700 pixels wide if supported. Exactly 2 rows by2columns, one whole rug perquadrant. Generous transparent margins and gaps; no text, no grid, no labels, no other objects. Every rug is already projected onto the room's shallow floor plane, as seen from low room camera pitcheddown15degrees. Width to projected height about5.6to1: VERY WIDE AND FLAT; not square, not topdown, not a tall isometric diamond. Rectangular rugs have almost horizontal top/bottom edges, backedge modestly shorter than frontedge, sides slantout subtly, complete near frontedge and far backedge visible. Whole silhouette including fringes fitswithin cell. Ovalrug similarly flatelongated ellipse, neverdeepvertical. Warm upper-left light ON textile, crisp squarepixel clusters, soft woven textile shading in warmbrown selectiveoutline. Transparent outside object, no roomfloor, no castshadow, no wall, no glow, no Pokemon character. Rug material/pattern fullyopaque. Distinct authentic rug constructions: wovenrectangular mat with fine braids and plain narrow border; checkered rectangular woolrug with large wovenchecks; soft ovalrug with plush edge and subtle fleecy center; rectangular bordered rug with ONE understated woven Pokeball emblem nearcenter (muted physical textile motif, nowriting). All4rugs share the warm oatmeal cream, soft muted honey shadows; companion checks and borders warm taupe palette. Top-left:wovenrectangular rug, tactile tightbraiding, a simple plainborder, short tasselfringes on bothsideends. Top-right:checkeredrectangularrug, veryreadablelargechecks followingfloorplane, narrowwovenbindingedge, no emblem. Bottom-left:softovalrug, rounded complete plushoutline, subtle fleecytexture with smoothcenter, no checks/no motif. Bottom-right:borderedrectangularrug with a single understated mutedPokeball textilemotifnearcenter, restrained finegeometricborder, no checks, nofringe. Theseare4differentmodels, notfourrecolors or identicalrectangles.\n",
+      "dimensions": [
+        859,
+        251
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 3.636364,
+      "displayWidth": 720,
+      "footAnchor": [
+        0.501746,
+        0.964143
+      ],
+      "backEdgeAnchor": [
+        0.501746,
+        0.047809
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-pokeball-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-cream-v2.png",
+      "output_path": "rugs/assets/rug-pokeball-cream.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "CRITICAL CAMERA CORRECTION: apparent opaque rug silhouette must be SIXTIMES widerthanheight, about600x100atroompreview. View just10degreesabovethefloor, muchflatterthanordinarycatalogueimage. NO rug exceeds width/5.5 inprojectedheight; narrowflatstripnotdeepmat. Use LARGE chunkyhand-placed rectangularpixelclusterslikeapprovedroomrug; no photographicnoisyfibersor grain. All edges hard pixelstairs, notsmoothantialiasedsurfaces. Use case: stylized-concept. Generate a NEW high-resolution clean transparent sprite atlas of FOUR separate complete floor rugs for the approved PokeCorner room. Reference image is style and room camera evidence, never crop reference pixels. Request 4096x2048 atlas with eachrug at least1700 pixels wide if supported. Exactly 2 rows by2columns, one whole rug perquadrant. Generous transparent margins and gaps; no text, no grid, no labels, no other objects. Every rug is already projected onto the room's shallow floor plane, as seen from low room camera pitcheddown15degrees. Width to projected height about5.6to1: VERY WIDE AND FLAT; not square, not topdown, not a tall isometric diamond. Rectangular rugs have almost horizontal top/bottom edges, backedge modestly shorter than frontedge, sides slantout subtly, complete near frontedge and far backedge visible. Whole silhouette including fringes fitswithin cell. Ovalrug similarly flatelongated ellipse, neverdeepvertical. Warm upper-left light ON textile, crisp squarepixel clusters, soft woven textile shading in warmbrown selectiveoutline. Transparent outside object, no roomfloor, no castshadow, no wall, no glow, no Pokemon character. Rug material/pattern fullyopaque. Distinct authentic rug constructions: wovenrectangular mat with fine braids and plain narrow border; checkered rectangular woolrug with large wovenchecks; soft ovalrug with plush edge and subtle fleecy center; rectangular bordered rug with ONE understated woven Pokeball emblem nearcenter (muted physical textile motif, nowriting). All4rugs share the warm oatmeal cream, soft muted honey shadows; companion checks and borders warm taupe palette. Top-left:wovenrectangular rug, tactile tightbraiding, a simple plainborder, short tasselfringes on bothsideends. Top-right:checkeredrectangularrug, veryreadablelargechecks followingfloorplane, narrowwovenbindingedge, no emblem. Bottom-left:softovalrug, rounded complete plushoutline, subtle fleecytexture with smoothcenter, no checks/no motif. Bottom-right:borderedrectangularrug with a single understated mutedPokeball textilemotifnearcenter, restrained finegeometricborder, no checks, nofringe. Theseare4differentmodels, notfourrecolors or identicalrectangles.\n",
+      "dimensions": [
+        897,
+        220
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 4.383085,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498885,
+        0.959091
+      ],
+      "backEdgeAnchor": [
+        0.498885,
+        0.045455
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-woven-sage",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-sage-v2.png",
+      "output_path": "rugs/assets/rug-woven-sage.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Use the provided atlas as exact edit target. Keep FOUR existing rug models, current palette and material, existing2x2positions and complete edges. Restore approved simple-modelcontract: top-left wovenrug must have PLAIN narrowborder and visible braidedweave ONLY, REMOVE allflowers,crosses,dotsand ornamental motifs from itscenterandborder. Bottom-left plushoval musthave onlysoftcenterandplain roundedborder, REMOVEall floral orcrossornaments. Keep largechecks in top-right and ONE subtlePokeballemblem/quietborder in bottom-right unchanged. Flatten all projectedrugheights byadjusting lowcameraangle, to approximately5.6timeswiderthanheight (not verticalresizing blur), preservingcompletefloorplaneandpixeltexture. Crisp clusteredpixelartfromPokeCorner reference, no photorealism. All outsidepixelstransparent; nofloor/shadow/glow/text. This is a faithful productioncleanup, no newobjectsorconcepts.\n",
+      "dimensions": [
+        901,
+        216
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 4.659686,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.503885,
+        0.935185
+      ],
+      "backEdgeAnchor": [
+        0.503885,
+        0.055556
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-checkered-sage",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-sage-v2.png",
+      "output_path": "rugs/assets/rug-checkered-sage.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Use the provided atlas as exact edit target. Keep FOUR existing rug models, current palette and material, existing2x2positions and complete edges. Restore approved simple-modelcontract: top-left wovenrug must have PLAIN narrowborder and visible braidedweave ONLY, REMOVE allflowers,crosses,dotsand ornamental motifs from itscenterandborder. Bottom-left plushoval musthave onlysoftcenterandplain roundedborder, REMOVEall floral orcrossornaments. Keep largechecks in top-right and ONE subtlePokeballemblem/quietborder in bottom-right unchanged. Flatten all projectedrugheights byadjusting lowcameraangle, to approximately5.6timeswiderthanheight (not verticalresizing blur), preservingcompletefloorplaneandpixeltexture. Crisp clusteredpixelartfromPokeCorner reference, no photorealism. All outsidepixelstransparent; nofloor/shadow/glow/text. This is a faithful productioncleanup, no newobjectsorconcepts.\n",
+      "dimensions": [
+        868,
+        217
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 4.387755,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.497696,
+        0.953917
+      ],
+      "backEdgeAnchor": [
+        0.497696,
+        0.050691
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-oval-sage",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-sage-v2.png",
+      "output_path": "rugs/assets/rug-oval-sage.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Use the provided atlas as exact edit target. Keep FOUR existing rug models, current palette and material, existing2x2positions and complete edges. Restore approved simple-modelcontract: top-left wovenrug must have PLAIN narrowborder and visible braidedweave ONLY, REMOVE allflowers,crosses,dotsand ornamental motifs from itscenterandborder. Bottom-left plushoval musthave onlysoftcenterandplain roundedborder, REMOVEall floral orcrossornaments. Keep largechecks in top-right and ONE subtlePokeballemblem/quietborder in bottom-right unchanged. Flatten all projectedrugheights byadjusting lowcameraangle, to approximately5.6timeswiderthanheight (not verticalresizing blur), preservingcompletefloorplaneandpixeltexture. Crisp clusteredpixelartfromPokeCorner reference, no photorealism. All outsidepixelstransparent; nofloor/shadow/glow/text. This is a faithful productioncleanup, no newobjectsorconcepts.\n",
+      "dimensions": [
+        865,
+        259
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 3.545833,
+      "displayWidth": 720,
+      "footAnchor": [
+        0.503468,
+        0.96139
+      ],
+      "backEdgeAnchor": [
+        0.503468,
+        0.03861
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-pokeball-sage",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-sage-v2.png",
+      "output_path": "rugs/assets/rug-pokeball-sage.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Use the provided atlas as exact edit target. Keep FOUR existing rug models, current palette and material, existing2x2positions and complete edges. Restore approved simple-modelcontract: top-left wovenrug must have PLAIN narrowborder and visible braidedweave ONLY, REMOVE allflowers,crosses,dotsand ornamental motifs from itscenterandborder. Bottom-left plushoval musthave onlysoftcenterandplain roundedborder, REMOVEall floral orcrossornaments. Keep largechecks in top-right and ONE subtlePokeballemblem/quietborder in bottom-right unchanged. Flatten all projectedrugheights byadjusting lowcameraangle, to approximately5.6timeswiderthanheight (not verticalresizing blur), preservingcompletefloorplaneandpixeltexture. Crisp clusteredpixelartfromPokeCorner reference, no photorealism. All outsidepixelstransparent; nofloor/shadow/glow/text. This is a faithful productioncleanup, no newobjectsorconcepts.\n",
+      "dimensions": [
+        892,
+        253
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 3.835498,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.5,
+        0.948617
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.035573
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-woven-blue",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-blue-spaced.png",
+      "output_path": "rugs/assets/rug-woven-blue.png",
+      "strategy": "standalone native transparent generation; bounded cleanup and spacing-only correction; shared technical alpha slicing",
+      "prompt_used": "Edit this exact four-rug sprite atlas for TECHNICAL SEPARATION ONLY. Current upper-left woven blue rug tassels accidentally TOUCH upper-right checkered blue rug. Preserve every rug's visual design, palette, materials, floor perspective, projectedheight/widthaspect, motifs and pixelstyle. DO NOT change camera or patterns. Re-space the FOUR complete objects into isolated2x2quadrants with AT LEAST80pixels trulytransparent gap between neighboring silhouettes and40pixels margin atcanvasouteredges. You may enlarge canvas or uniformly reduce all4objects slightly together toachieveclearpadding. Nevercut/cropanyfringeorborder. Everyobject'scompletewholeoutline visible. Top-left plainwovenblue; top-right bluecreamchecks; bottom-left plushovalbluebordercreamcenter; bottom-right subtlePokeballemblemblueborderedrug. Outsideactualtextile truealpha0, no castshadow/noambienthaze/nofloor/noannotations/noUI/no text. This is ONLY spacing cleanup of alreadyapprovedmodels.\n",
+      "dimensions": [
+        859,
+        221
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 4.218905,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.504075,
+        0.959276
+      ],
+      "backEdgeAnchor": [
+        0.504075,
+        0.054299
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-checkered-blue",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-blue-spaced.png",
+      "output_path": "rugs/assets/rug-checkered-blue.png",
+      "strategy": "standalone native transparent generation; bounded cleanup and spacing-only correction; shared technical alpha slicing",
+      "prompt_used": "Edit this exact four-rug sprite atlas for TECHNICAL SEPARATION ONLY. Current upper-left woven blue rug tassels accidentally TOUCH upper-right checkered blue rug. Preserve every rug's visual design, palette, materials, floor perspective, projectedheight/widthaspect, motifs and pixelstyle. DO NOT change camera or patterns. Re-space the FOUR complete objects into isolated2x2quadrants with AT LEAST80pixels trulytransparent gap between neighboring silhouettes and40pixels margin atcanvasouteredges. You may enlarge canvas or uniformly reduce all4objects slightly together toachieveclearpadding. Nevercut/cropanyfringeorborder. Everyobject'scompletewholeoutline visible. Top-left plainwovenblue; top-right bluecreamchecks; bottom-left plushovalbluebordercreamcenter; bottom-right subtlePokeballemblemblueborderedrug. Outsideactualtextile truealpha0, no castshadow/noambienthaze/nofloor/noannotations/noUI/no text. This is ONLY spacing cleanup of alreadyapprovedmodels.\n",
+      "dimensions": [
+        829,
+        223
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 3.965686,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.501206,
+        0.959641
+      ],
+      "backEdgeAnchor": [
+        0.501206,
+        0.049327
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-oval-blue",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-blue-spaced.png",
+      "output_path": "rugs/assets/rug-oval-blue.png",
+      "strategy": "standalone native transparent generation; bounded cleanup and spacing-only correction; shared technical alpha slicing",
+      "prompt_used": "Edit this exact four-rug sprite atlas for TECHNICAL SEPARATION ONLY. Current upper-left woven blue rug tassels accidentally TOUCH upper-right checkered blue rug. Preserve every rug's visual design, palette, materials, floor perspective, projectedheight/widthaspect, motifs and pixelstyle. DO NOT change camera or patterns. Re-space the FOUR complete objects into isolated2x2quadrants with AT LEAST80pixels trulytransparent gap between neighboring silhouettes and40pixels margin atcanvasouteredges. You may enlarge canvas or uniformly reduce all4objects slightly together toachieveclearpadding. Nevercut/cropanyfringeorborder. Everyobject'scompletewholeoutline visible. Top-left plainwovenblue; top-right bluecreamchecks; bottom-left plushovalbluebordercreamcenter; bottom-right subtlePokeballemblemblueborderedrug. Outsideactualtextile truealpha0, no castshadow/noambienthaze/nofloor/noannotations/noUI/no text. This is ONLY spacing cleanup of alreadyapprovedmodels.\n",
+      "dimensions": [
+        821,
+        264
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 3.264228,
+      "displayWidth": 720,
+      "footAnchor": [
+        0.5,
+        0.965909
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.037879
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    },
+    {
+      "id": "rug-pokeball-blue",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "rugs/_sources/rugs-blue-spaced.png",
+      "output_path": "rugs/assets/rug-pokeball-blue.png",
+      "strategy": "standalone native transparent generation; bounded cleanup and spacing-only correction; shared technical alpha slicing",
+      "prompt_used": "Edit this exact four-rug sprite atlas for TECHNICAL SEPARATION ONLY. Current upper-left woven blue rug tassels accidentally TOUCH upper-right checkered blue rug. Preserve every rug's visual design, palette, materials, floor perspective, projectedheight/widthaspect, motifs and pixelstyle. DO NOT change camera or patterns. Re-space the FOUR complete objects into isolated2x2quadrants with AT LEAST80pixels trulytransparent gap between neighboring silhouettes and40pixels margin atcanvasouteredges. You may enlarge canvas or uniformly reduce all4objects slightly together toachieveclearpadding. Nevercut/cropanyfringeorborder. Everyobject'scompletewholeoutline visible. Top-left plainwovenblue; top-right bluecreamchecks; bottom-left plushovalbluebordercreamcenter; bottom-right subtlePokeballemblemblueborderedrug. Outsideactualtextile truealpha0, no castshadow/noambienthaze/nofloor/noannotations/noUI/no text. This is ONLY spacing cleanup of alreadyapprovedmodels.\n",
+      "dimensions": [
+        848,
+        255
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 3.516949,
+      "displayWidth": 730,
+      "footAnchor": [
+        0.5,
+        0.960784
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.039216
+      ],
+      "rodEndpoints": null,
+      "mountingAnchor": null,
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "placement_qa": "pending parent static full-room and swap combinations"
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "rugs-composition",
+      "implementation": "Separate full RGBA floor-image layer below pet/furniture; position by measured backEdgeAnchor at y664 and uniformly fit width. Viewport clipping owns visible front cut; physical source remains full. Keep rug art distinct from pet, bed and floor.",
+      "notes": "Scale whole room and anchored children together responsively. Parent owns app implementation; static composites still required.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "Generate bounded transparent category atlases",
+    "One cleanup for unrequested motifs/style/geometry",
+    "Inspect white alpha plates and complete native outlines",
+    "Shared split-atlas.py cut at real empty gaps",
+    "Record back edges / rod mounts and parent composite checks"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "No software implementation or final room-copy edits.",
+    "Preserve native pixels; no nonuniform stretching or background painting.",
+    "Files in _sources are references/retries/QA only; assets directory contains deliverables."
+  ]
+}

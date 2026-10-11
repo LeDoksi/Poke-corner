@@ -1,0 +1,54 @@
+{
+  "roomSize": [
+    1448,
+    582
+  ],
+  "masterSha256": "de14c63c411515ae7a6952d9b761d347988d478c673b870f0f224238f56a7791",
+  "anchors": [
+    [
+      664,
+      280
+    ],
+    [
+      810,
+      280
+    ],
+    [
+      956,
+      280
+    ]
+  ],
+  "slotBounds": [
+    [
+      592,
+      183,
+      735,
+      284
+    ],
+    [
+      737,
+      183,
+      883,
+      284
+    ],
+    [
+      885,
+      183,
+      1028,
+      284
+    ]
+  ],
+  "frontlipRect": [
+    590,
+    281,
+    1031,
+    288
+  ],
+  "maxDimensions": [
+    132,
+    94
+  ],
+  "source": "Original art-production/trophies/assets RGBA",
+  "sampling": "LANCZOS",
+  "modularityScope": "Only interchangeable independent awards on one coherent detailed room."
+}

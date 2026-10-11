@@ -1,0 +1,237 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "plant-palm-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "palm terracotta",
+      "category": "plants",
+      "displayWidth": 101,
+      "footAnchor": [
+        0.480695,
+        0.9839
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        0,
+        0,
+        644,
+        578
+      ],
+      "file": "plants/assets/plant-palm-terracotta.png",
+      "size": [
+        518,
+        559
+      ],
+      "atlasSize": [
+        1287,
+        1222
+      ],
+      "alphaBoundsInCell": [
+        106,
+        18,
+        608,
+        561
+      ],
+      "cropInCell": [
+        98,
+        10,
+        616,
+        569
+      ],
+      "sha256": "475dac8021b7c2bb981050850571e4be8f2602d53150426ba74a36ec69824284",
+      "source": "plants/_sources/plants-floor-02.png",
+      "promptFile": "plants/_sources/plants-floor-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        249.0,
+        550
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-palm-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "palm woven cream",
+      "category": "plants",
+      "displayWidth": 101,
+      "footAnchor": [
+        0.488462,
+        0.982238
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        644,
+        0,
+        1287,
+        578
+      ],
+      "file": "plants/assets/plant-palm-woven-cream.png",
+      "size": [
+        520,
+        563
+      ],
+      "atlasSize": [
+        1287,
+        1222
+      ],
+      "alphaBoundsInCell": [
+        50,
+        18,
+        554,
+        565
+      ],
+      "cropInCell": [
+        42,
+        10,
+        562,
+        573
+      ],
+      "sha256": "4a44333f58535dbf80c34e10478288fbec798aef46ccfb87b7a22a71bb1533cd",
+      "source": "plants/_sources/plants-floor-02.png",
+      "promptFile": "plants/_sources/plants-floor-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        254.0,
+        553
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-dracaena-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "dracaena terracotta",
+      "category": "plants",
+      "displayWidth": 78,
+      "footAnchor": [
+        0.498925,
+        0.984076
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        0,
+        578,
+        644,
+        1222
+      ],
+      "file": "plants/assets/plant-dracaena-terracotta.png",
+      "size": [
+        465,
+        628
+      ],
+      "atlasSize": [
+        1287,
+        1222
+      ],
+      "alphaBoundsInCell": [
+        137,
+        5,
+        586,
+        620
+      ],
+      "cropInCell": [
+        129,
+        0,
+        594,
+        628
+      ],
+      "sha256": "341c674a3263f16cb2d7af552ad45b8cfbbfd6359ca48ab6ca5341f496584fe7",
+      "source": "plants/_sources/plants-floor-02.png",
+      "promptFile": "plants/_sources/plants-floor-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        232.0,
+        618
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-dracaena-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "dracaena woven cream",
+      "category": "plants",
+      "displayWidth": 78,
+      "footAnchor": [
+        0.493658,
+        0.982595
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        644,
+        578,
+        1287,
+        1222
+      ],
+      "file": "plants/assets/plant-dracaena-woven-cream.png",
+      "size": [
+        473,
+        632
+      ],
+      "atlasSize": [
+        1287,
+        1222
+      ],
+      "alphaBoundsInCell": [
+        84,
+        7,
+        541,
+        624
+      ],
+      "cropInCell": [
+        76,
+        0,
+        549,
+        632
+      ],
+      "sha256": "3c426bff5175c7dfc696661302d1817dfc33b8ebda0158d81fc56a82f412e77c",
+      "source": "plants/_sources/plants-floor-02.png",
+      "promptFile": "plants/_sources/plants-floor-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        233.5,
+        621
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ]
+}

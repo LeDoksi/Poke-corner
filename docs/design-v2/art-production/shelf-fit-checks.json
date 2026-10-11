@@ -1,0 +1,5300 @@
+{
+  "status": "mathematical-envelope-check-not-all-artistic-combinations",
+  "checks": 756,
+  "passed": 756,
+  "uniformFitReductionUsed": 33,
+  "records": [
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-species-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-population-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-catches-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-expeditions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-regions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-team-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-care-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-nursery-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-evolution-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-shiny-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-decor-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-nick",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-nick",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-nick",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-favorite",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-favorite",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-favorite",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-type-team",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-type-team",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-type-team",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-berries",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-berries",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-berries",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-plants",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-plants",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-plants",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-legends",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-legends",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-all-legends",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-second-trait",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-second-trait",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-second-trait",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-retrain",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-retrain",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-retrain",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-rehome",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-rehome",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-rehome",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c1",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-species-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-population-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-catches-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-expeditions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-regions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-team-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-care-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-nursery-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-evolution-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-shiny-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-decor-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-nick",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-nick",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-nick",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-favorite",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-favorite",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-favorite",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-type-team",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-type-team",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-type-team",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-berries",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-berries",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-berries",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-plants",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-plants",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-plants",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-legends",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-legends",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-all-legends",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-second-trait",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-second-trait",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-second-trait",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-retrain",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-retrain",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-retrain",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-rehome",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-rehome",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-rehome",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c2",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-species-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-population-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-catches-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-expeditions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-regions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-team-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-care-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-nursery-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-evolution-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-shiny-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-decor-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-nick",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-nick",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-nick",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-favorite",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-favorite",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-favorite",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-type-team",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-type-team",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-type-team",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-berries",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-berries",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-berries",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-plants",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-plants",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-plants",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-legends",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-legends",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-all-legends",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-second-trait",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-second-trait",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-second-trait",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-retrain",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-retrain",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-retrain",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-rehome",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-rehome",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-rehome",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c3",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-species-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-population-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-catches-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-expeditions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-regions-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-team-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-care-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-nursery-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-evolution-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-shiny-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-1",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-1",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-1",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-2",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-2",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-2",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-3",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-3",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-3",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-4",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-4",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-decor-4",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-nick",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-nick",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-nick",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-favorite",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-favorite",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-favorite",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-type-team",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-type-team",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-type-team",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-bonus-find",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-nursery-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-family-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-evolved-expedition",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-berries",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-berries",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-berries",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-berry-evolution",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-branch-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-offspring-choice",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-plants",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-plants",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-plants",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-three-pictures",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-mixed-furniture",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-legends",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-legends",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-all-legends",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-second-trait",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-second-trait",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-second-trait",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-retrain",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-retrain",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-retrain",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-rehome",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-rehome",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-rehome",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": false
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 0,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 1,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    },
+    {
+      "cabinet": "cabinet-c4",
+      "trophy": "trophy-special-xp-potion",
+      "slot": 2,
+      "fitsEnvelope": true,
+      "scaledBelowNominal": true
+    }
+  ]
+}

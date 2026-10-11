@@ -1,0 +1,1580 @@
+{
+  "sourcePage": "https://swonevial.itch.io/alizarinredscvpacks",
+  "archiveBytes": 92475795,
+  "archiveSha256": "a784a0b35f5c015fcf9e99b069bf08edcebfddc9627544e32ba6e8522a85100a",
+  "packSpeciesFiles": 736,
+  "newBwCandidates": 68,
+  "pcmReadable": 39,
+  "remainingBw": [
+    {
+      "id": 652,
+      "name": "chesnaught"
+    },
+    {
+      "id": 670,
+      "name": "floette"
+    },
+    {
+      "id": 679,
+      "name": "honedge"
+    },
+    {
+      "id": 681,
+      "name": "aegislash"
+    },
+    {
+      "id": 688,
+      "name": "binacle"
+    },
+    {
+      "id": 693,
+      "name": "clawitzer"
+    },
+    {
+      "id": 703,
+      "name": "carbink"
+    },
+    {
+      "id": 708,
+      "name": "phantump"
+    },
+    {
+      "id": 712,
+      "name": "bergmite"
+    },
+    {
+      "id": 713,
+      "name": "avalugg"
+    },
+    {
+      "id": 715,
+      "name": "noivern"
+    },
+    {
+      "id": 719,
+      "name": "diancie"
+    },
+    {
+      "id": 721,
+      "name": "volcanion"
+    },
+    {
+      "id": 727,
+      "name": "incineroar"
+    },
+    {
+      "id": 730,
+      "name": "primarina"
+    },
+    {
+      "id": 733,
+      "name": "toucannon"
+    },
+    {
+      "id": 734,
+      "name": "yungoos"
+    },
+    {
+      "id": 735,
+      "name": "gumshoos"
+    },
+    {
+      "id": 738,
+      "name": "vikavolt"
+    },
+    {
+      "id": 739,
+      "name": "crabrawler"
+    },
+    {
+      "id": 740,
+      "name": "crabominable"
+    },
+    {
+      "id": 743,
+      "name": "ribombee"
+    },
+    {
+      "id": 746,
+      "name": "wishiwashi"
+    },
+    {
+      "id": 749,
+      "name": "mudbray"
+    },
+    {
+      "id": 750,
+      "name": "mudsdale"
+    },
+    {
+      "id": 751,
+      "name": "dewpider"
+    },
+    {
+      "id": 752,
+      "name": "araquanid"
+    },
+    {
+      "id": 754,
+      "name": "lurantis"
+    },
+    {
+      "id": 759,
+      "name": "stufful"
+    },
+    {
+      "id": 770,
+      "name": "palossand"
+    },
+    {
+      "id": 771,
+      "name": "pyukumuku"
+    },
+    {
+      "id": 772,
+      "name": "type-null"
+    },
+    {
+      "id": 773,
+      "name": "silvally"
+    },
+    {
+      "id": 774,
+      "name": "minior"
+    },
+    {
+      "id": 779,
+      "name": "bruxish"
+    },
+    {
+      "id": 782,
+      "name": "jangmo-o"
+    },
+    {
+      "id": 783,
+      "name": "hakamo-o"
+    },
+    {
+      "id": 784,
+      "name": "kommo-o"
+    },
+    {
+      "id": 785,
+      "name": "tapu-koko"
+    },
+    {
+      "id": 786,
+      "name": "tapu-lele"
+    },
+    {
+      "id": 787,
+      "name": "tapu-bulu"
+    },
+    {
+      "id": 789,
+      "name": "cosmog"
+    },
+    {
+      "id": 790,
+      "name": "cosmoem"
+    },
+    {
+      "id": 791,
+      "name": "solgaleo"
+    },
+    {
+      "id": 792,
+      "name": "lunala"
+    },
+    {
+      "id": 793,
+      "name": "nihilego"
+    },
+    {
+      "id": 794,
+      "name": "buzzwole"
+    },
+    {
+      "id": 795,
+      "name": "pheromosa"
+    },
+    {
+      "id": 796,
+      "name": "xurkitree"
+    },
+    {
+      "id": 797,
+      "name": "celesteela"
+    },
+    {
+      "id": 798,
+      "name": "kartana"
+    },
+    {
+      "id": 800,
+      "name": "necrozma"
+    },
+    {
+      "id": 801,
+      "name": "magearna"
+    },
+    {
+      "id": 802,
+      "name": "marshadow"
+    },
+    {
+      "id": 804,
+      "name": "naganadel"
+    },
+    {
+      "id": 805,
+      "name": "stakataka"
+    },
+    {
+      "id": 806,
+      "name": "blacephalon"
+    },
+    {
+      "id": 807,
+      "name": "zeraora"
+    },
+    {
+      "id": 808,
+      "name": "meltan"
+    },
+    {
+      "id": 809,
+      "name": "melmetal"
+    },
+    {
+      "id": 810,
+      "name": "grookey"
+    },
+    {
+      "id": 811,
+      "name": "thwackey"
+    },
+    {
+      "id": 813,
+      "name": "scorbunny"
+    },
+    {
+      "id": 814,
+      "name": "raboot"
+    },
+    {
+      "id": 816,
+      "name": "sobble"
+    },
+    {
+      "id": 817,
+      "name": "drizzile"
+    },
+    {
+      "id": 818,
+      "name": "inteleon"
+    },
+    {
+      "id": 821,
+      "name": "rookidee"
+    },
+    {
+      "id": 822,
+      "name": "corvisquire"
+    },
+    {
+      "id": 823,
+      "name": "corviknight"
+    },
+    {
+      "id": 824,
+      "name": "blipbug"
+    },
+    {
+      "id": 830,
+      "name": "eldegoss"
+    },
+    {
+      "id": 831,
+      "name": "wooloo"
+    },
+    {
+      "id": 832,
+      "name": "dubwool"
+    },
+    {
+      "id": 833,
+      "name": "chewtle"
+    },
+    {
+      "id": 834,
+      "name": "drednaw"
+    },
+    {
+      "id": 835,
+      "name": "yamper"
+    },
+    {
+      "id": 837,
+      "name": "rolycoly"
+    },
+    {
+      "id": 838,
+      "name": "carkol"
+    },
+    {
+      "id": 839,
+      "name": "coalossal"
+    },
+    {
+      "id": 840,
+      "name": "applin"
+    },
+    {
+      "id": 843,
+      "name": "silicobra"
+    },
+    {
+      "id": 844,
+      "name": "sandaconda"
+    },
+    {
+      "id": 845,
+      "name": "cramorant"
+    },
+    {
+      "id": 846,
+      "name": "arrokuda"
+    },
+    {
+      "id": 847,
+      "name": "barraskewda"
+    },
+    {
+      "id": 848,
+      "name": "toxel"
+    },
+    {
+      "id": 849,
+      "name": "toxtricity"
+    },
+    {
+      "id": 852,
+      "name": "clobbopus"
+    },
+    {
+      "id": 856,
+      "name": "hatenna"
+    },
+    {
+      "id": 858,
+      "name": "hatterene"
+    },
+    {
+      "id": 859,
+      "name": "impidimp"
+    },
+    {
+      "id": 861,
+      "name": "grimmsnarl"
+    },
+    {
+      "id": 862,
+      "name": "obstagoon"
+    },
+    {
+      "id": 863,
+      "name": "perrserker"
+    },
+    {
+      "id": 864,
+      "name": "cursola"
+    },
+    {
+      "id": 866,
+      "name": "mr-rime"
+    },
+    {
+      "id": 867,
+      "name": "runerigus"
+    },
+    {
+      "id": 868,
+      "name": "milcery"
+    },
+    {
+      "id": 869,
+      "name": "alcremie"
+    },
+    {
+      "id": 870,
+      "name": "falinks"
+    },
+    {
+      "id": 871,
+      "name": "pincurchin"
+    },
+    {
+      "id": 872,
+      "name": "snom"
+    },
+    {
+      "id": 873,
+      "name": "frosmoth"
+    },
+    {
+      "id": 874,
+      "name": "stonjourner"
+    },
+    {
+      "id": 875,
+      "name": "eiscue"
+    },
+    {
+      "id": 876,
+      "name": "indeedee"
+    },
+    {
+      "id": 877,
+      "name": "morpeko"
+    },
+    {
+      "id": 878,
+      "name": "cufant"
+    },
+    {
+      "id": 880,
+      "name": "dracozolt"
+    },
+    {
+      "id": 882,
+      "name": "dracovish"
+    },
+    {
+      "id": 883,
+      "name": "arctovish"
+    },
+    {
+      "id": 884,
+      "name": "duraludon"
+    },
+    {
+      "id": 885,
+      "name": "dreepy"
+    },
+    {
+      "id": 886,
+      "name": "drakloak"
+    },
+    {
+      "id": 887,
+      "name": "dragapult"
+    },
+    {
+      "id": 888,
+      "name": "zacian"
+    },
+    {
+      "id": 889,
+      "name": "zamazenta"
+    },
+    {
+      "id": 890,
+      "name": "eternatus"
+    },
+    {
+      "id": 895,
+      "name": "regidrago"
+    },
+    {
+      "id": 896,
+      "name": "glastrier"
+    },
+    {
+      "id": 898,
+      "name": "calyrex"
+    },
+    {
+      "id": 899,
+      "name": "wyrdeer"
+    },
+    {
+      "id": 901,
+      "name": "ursaluna"
+    },
+    {
+      "id": 902,
+      "name": "basculegion"
+    },
+    {
+      "id": 904,
+      "name": "overqwil"
+    },
+    {
+      "id": 924,
+      "name": "tandemaus"
+    },
+    {
+      "id": 925,
+      "name": "maushold"
+    },
+    {
+      "id": 932,
+      "name": "nacli"
+    },
+    {
+      "id": 938,
+      "name": "tadbulb"
+    },
+    {
+      "id": 969,
+      "name": "glimmet"
+    },
+    {
+      "id": 978,
+      "name": "tatsugiri"
+    },
+    {
+      "id": 980,
+      "name": "clodsire"
+    },
+    {
+      "id": 984,
+      "name": "great-tusk"
+    },
+    {
+      "id": 987,
+      "name": "flutter-mane"
+    },
+    {
+      "id": 992,
+      "name": "iron-hands"
+    },
+    {
+      "id": 994,
+      "name": "iron-moth"
+    },
+    {
+      "id": 995,
+      "name": "iron-thorns"
+    },
+    {
+      "id": 996,
+      "name": "frigibax"
+    },
+    {
+      "id": 997,
+      "name": "arctibax"
+    },
+    {
+      "id": 999,
+      "name": "gimmighoul"
+    },
+    {
+      "id": 1000,
+      "name": "gholdengo"
+    },
+    {
+      "id": 1001,
+      "name": "wo-chien"
+    },
+    {
+      "id": 1002,
+      "name": "chien-pao"
+    },
+    {
+      "id": 1003,
+      "name": "ting-lu"
+    },
+    {
+      "id": 1004,
+      "name": "chi-yu"
+    },
+    {
+      "id": 1006,
+      "name": "iron-valiant"
+    },
+    {
+      "id": 1008,
+      "name": "miraidon"
+    },
+    {
+      "id": 1019,
+      "name": "hydrapple"
+    },
+    {
+      "id": 1020,
+      "name": "gouging-fire"
+    },
+    {
+      "id": 1024,
+      "name": "terapagos"
+    }
+  ],
+  "decoded": 68,
+  "rows": [
+    {
+      "id": 651,
+      "name": "quilladin",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/651.wav",
+      "bytes": 149670,
+      "sha256": "12bdb00f07960f551a0b0ec9d64efbd4118d7b6b9f12cce4579e846babb01113",
+      "path": "651.wav",
+      "duration": 0.814875283446712,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/651.wav",
+      "decoded": true
+    },
+    {
+      "id": 653,
+      "name": "fennekin",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/653.wav",
+      "bytes": 53364,
+      "sha256": "f9d5cbd1d0b3cfbb4a077bba8ce5c8d922edd0ea91f84a27e9c46b1dfa7e3edd",
+      "path": "653.wav",
+      "duration": 0.5554195011337868,
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/653.wav",
+      "decoded": true
+    },
+    {
+      "id": 654,
+      "name": "braixen",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/654.wav",
+      "bytes": 160382,
+      "sha256": "db8d48f4796319cc303ccb10417f1183931846e6abfdbe936c9737b08aa224a9",
+      "path": "654.wav",
+      "duration": 0.8756009070294785,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/654.wav",
+      "decoded": true
+    },
+    {
+      "id": 656,
+      "name": "froakie",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/656.wav",
+      "bytes": 118402,
+      "sha256": "0b7ada4b1f62265915da52a6c353bab1c9e65a961b73756886d9718b5a1f2b49",
+      "path": "656.wav",
+      "duration": 0.6376417233560091,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/656.wav",
+      "decoded": true
+    },
+    {
+      "id": 658,
+      "name": "greninja",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/658.wav",
+      "bytes": 579748,
+      "sha256": "86be2299ec768e10b2d0b839990a94785144ad1922b346ca036fba72eb329e24",
+      "path": "658.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/658.wav",
+      "decoded": true,
+      "duration": 1.6159637188208618
+    },
+    {
+      "id": 661,
+      "name": "fletchling",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/661.wav",
+      "bytes": 69118,
+      "sha256": "437055b00d8ec695f6f5874d36b14d65195ec46ff09af8b57ef02853b4796388",
+      "path": "661.wav",
+      "duration": 0.7195238095238096,
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/661.wav",
+      "decoded": true
+    },
+    {
+      "id": 662,
+      "name": "fletchinder",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/662.wav",
+      "bytes": 200262,
+      "sha256": "063f7b6993aefab17a4f7c4ec8ddf91605ff3ab2fcf6722b29322476723b65f4",
+      "path": "662.wav",
+      "duration": 1.1016780045351473,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/662.wav",
+      "decoded": true
+    },
+    {
+      "id": 663,
+      "name": "talonflame",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/663.wav",
+      "bytes": 181502,
+      "sha256": "4027d090a91a2285a5e0b4e5bd1d9d5e834bf3cbeeb0a6230afc2177cea31eb8",
+      "path": "663.wav",
+      "duration": 0.995328798185941,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/663.wav",
+      "decoded": true
+    },
+    {
+      "id": 664,
+      "name": "scatterbug",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/664.wav",
+      "bytes": 312502,
+      "sha256": "5157846034b1fb0e7a0f6061d5757bfff71a453b5987bd6edcc7a5f559dce392",
+      "path": "664.wav",
+      "duration": 1.7379591836734694,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/664.wav",
+      "decoded": true
+    },
+    {
+      "id": 665,
+      "name": "spewpa",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/665.wav",
+      "bytes": 54812,
+      "sha256": "23dedc4d83920f7c263b2a9a122140fce07e35f753e7a6f348df9614047ae2af",
+      "path": "665.wav",
+      "duration": 0.5705215419501134,
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/665.wav",
+      "decoded": true
+    },
+    {
+      "id": 666,
+      "name": "vivillon",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/666.wav",
+      "bytes": 191878,
+      "sha256": "f0dc69907832b474c6eb812765aa9b31a7367815e482ec679f4691d6ee957607",
+      "path": "666.wav",
+      "duration": 1.0541496598639455,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/666.wav",
+      "decoded": true
+    },
+    {
+      "id": 667,
+      "name": "litleo",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/667.wav",
+      "bytes": 269970,
+      "sha256": "57294dd973e2d36ea15dc77516f0f6edece431d6837688ce8a40ae524d558133",
+      "path": "667.wav",
+      "duration": 1.4968480725623583,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/667.wav",
+      "decoded": true
+    },
+    {
+      "id": 668,
+      "name": "pyroar",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/668.wav",
+      "bytes": 278714,
+      "sha256": "d317e1daeb5d0eda607b5c17dd9237f68b6c36135e25c17c042d4c214e92fe51",
+      "path": "668.wav",
+      "duration": 1.5464172335600908,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/668.wav",
+      "decoded": true
+    },
+    {
+      "id": 669,
+      "name": "flabebe",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/669.wav",
+      "bytes": 171862,
+      "sha256": "3146984f971c0f3d1dcc9064bc30efc946a02ae4d65bcc3529ee8a435e2ba332",
+      "path": "669.wav",
+      "duration": 0.9406802721088435,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/669.wav",
+      "decoded": true
+    },
+    {
+      "id": 671,
+      "name": "florges",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/671.wav",
+      "bytes": 191356,
+      "sha256": "e1ef1efe3de249b367421c0a14381662f6732652c99aba40d4a564314c7bfedd",
+      "path": "671.wav",
+      "duration": 1.046235827664399,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/671.wav",
+      "decoded": true
+    },
+    {
+      "id": 672,
+      "name": "skiddo",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/672.wav",
+      "bytes": 160482,
+      "sha256": "76a36a0deab679f8f33b816c04ab4817967fbccf05a9c6d59c47a131b1855920",
+      "path": "672.wav",
+      "duration": 0.8761678004535147,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/672.wav",
+      "decoded": true
+    },
+    {
+      "id": 674,
+      "name": "pancham",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/674.wav",
+      "bytes": 227226,
+      "sha256": "0b708810a3c3fd6ee1249c78b9fbdccf4d9f5fdfce8422ff4210ccce2d39fe05",
+      "path": "674.wav",
+      "duration": 1.2545351473922903,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/674.wav",
+      "decoded": true
+    },
+    {
+      "id": 675,
+      "name": "pangoro",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/675.wav",
+      "bytes": 399662,
+      "sha256": "6201ea2fb9be481b54f4e6c9bcf21544acf293efbe92553892db5cd7290cab32",
+      "path": "675.wav",
+      "duration": 2.232063492063492,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/675.wav",
+      "decoded": true
+    },
+    {
+      "id": 682,
+      "name": "spritzee",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/682.wav",
+      "bytes": 277058,
+      "sha256": "84e651485c6b673e0a6cf438bdb13d47e76dcf08a27bcfc0ce20529ebe04039b",
+      "path": "682.wav",
+      "duration": 1.5370294784580498,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/682.wav",
+      "decoded": true
+    },
+    {
+      "id": 684,
+      "name": "swirlix",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/684.wav",
+      "bytes": 62696,
+      "sha256": "5bae2a672dbc6db1e5f8a294ce5588f5d1589c25747283ffd79195da049af39e",
+      "path": "684.wav",
+      "duration": 0.6526303854875284,
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/684.wav",
+      "decoded": true
+    },
+    {
+      "id": 685,
+      "name": "slurpuff",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/685.wav",
+      "bytes": 202854,
+      "sha256": "f39d10282c1c17a038657359667eca79ef9a185a19da02f16ea5b5cb95949749",
+      "path": "685.wav",
+      "duration": 1.1163718820861679,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/685.wav",
+      "decoded": true
+    },
+    {
+      "id": 686,
+      "name": "inkay",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/686.wav",
+      "bytes": 188038,
+      "sha256": "f4ca9d1779f3680a64ef61dd4d18fe4cb982eafb73f3d011634bc76e3a594bac",
+      "path": "686.wav",
+      "duration": 1.0323809523809524,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/686.wav",
+      "decoded": true
+    },
+    {
+      "id": 687,
+      "name": "malamar",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/687.wav",
+      "bytes": 269438,
+      "sha256": "b2d300d80d15e46cd75217575ba62e65b57fc8b1a6b9760f03c6085285529f4c",
+      "path": "687.wav",
+      "duration": 1.4938321995464852,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/687.wav",
+      "decoded": true
+    },
+    {
+      "id": 691,
+      "name": "dragalge",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/691.wav",
+      "bytes": 257686,
+      "sha256": "a23e491406b5f3bee41bd843d2cf3621033605182c64ef2f65556fe87b4e3c44",
+      "path": "691.wav",
+      "duration": 1.4272108843537414,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/691.wav",
+      "decoded": true
+    },
+    {
+      "id": 692,
+      "name": "clauncher",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/692.wav",
+      "bytes": 162480,
+      "sha256": "666a7b0ef78cb5c9248b46c0918546ea8d17d073a286048059c89c8e9aff2d04",
+      "path": "692.wav",
+      "duration": 0.8826077097505669,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/692.wav",
+      "decoded": true
+    },
+    {
+      "id": 694,
+      "name": "helioptile",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/694.wav",
+      "bytes": 186564,
+      "sha256": "ba5117013deaf32d51622e81bd8f339ea5cf83438450f76f3f34e3647006d9c9",
+      "path": "694.wav",
+      "duration": 1.0190702947845804,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/694.wav",
+      "decoded": true
+    },
+    {
+      "id": 696,
+      "name": "tyrunt",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/696.wav",
+      "bytes": 1018876,
+      "sha256": "399296e2794cecb5d56163c9b5abf231ade5595eb0bd7866ccb4e1ccbcf19d39",
+      "path": "696.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/696.wav",
+      "decoded": true,
+      "duration": 2.860657596371882
+    },
+    {
+      "id": 697,
+      "name": "tyrantrum",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/697.wav",
+      "bytes": 393622,
+      "sha256": "a8e3563d40f5cdffd7768730b58fc94729de0a7b05845db1c155e1db34aa57c8",
+      "path": "697.wav",
+      "duration": 2.1978231292517005,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/697.wav",
+      "decoded": true
+    },
+    {
+      "id": 698,
+      "name": "amaura",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/698.wav",
+      "bytes": 141538,
+      "sha256": "94cd953745f732d119040bfc750cf86966d4ad8c31df58c4cf5a25475fa560fa",
+      "path": "698.wav",
+      "duration": 0.7687755102040816,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/698.wav",
+      "decoded": true
+    },
+    {
+      "id": 700,
+      "name": "sylveon",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/700.wav",
+      "bytes": 305706,
+      "sha256": "e95554f866ad8ccba9b610d9167991abdeafc6ebfbc1f6d6c7b00363093372f5",
+      "path": "700.wav",
+      "duration": 1.6994557823129253,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/700.wav",
+      "decoded": true
+    },
+    {
+      "id": 702,
+      "name": "dedenne",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/702.wav",
+      "bytes": 57926,
+      "sha256": "33db82d0d4657a5b8a9c02896b1c12a7ff209ab4ec4c6177d5e944f1762a9e34",
+      "path": "702.wav",
+      "duration": 0.6029251700680273,
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/702.wav",
+      "decoded": true
+    },
+    {
+      "id": 704,
+      "name": "goomy",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/704.wav",
+      "bytes": 161044,
+      "sha256": "dbe6396ce762c344839121acf9a2bd26ddc91ddccc37de4d484457cad32d2ad3",
+      "path": "704.wav",
+      "duration": 0.881859410430839,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/704.wav",
+      "decoded": true
+    },
+    {
+      "id": 705,
+      "name": "sliggoo",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/705.wav",
+      "bytes": 157882,
+      "sha256": "45a8cb61ef5185002b34fab42d912eb52bd4ac80e9a1245e8576685b33a83b92",
+      "path": "705.wav",
+      "duration": 0.8614285714285714,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/705.wav",
+      "decoded": true
+    },
+    {
+      "id": 706,
+      "name": "goodra",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/706.wav",
+      "bytes": 208330,
+      "sha256": "dd60d8d5a781e563aa5383db9eab7fd6a13efd12d3c4d73fcbb7bf8cacd8b9bd",
+      "path": "706.wav",
+      "duration": 1.1474149659863946,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/706.wav",
+      "decoded": true
+    },
+    {
+      "id": 707,
+      "name": "klefki",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/707.wav",
+      "bytes": 175646,
+      "sha256": "fcd290b081453252857b0dbf710b535c76d9d6332db5f4b51c1456f186aa5b32",
+      "path": "707.wav",
+      "duration": 0.9621315192743765,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/707.wav",
+      "decoded": true
+    },
+    {
+      "id": 709,
+      "name": "trevenant",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/709.wav",
+      "bytes": 254202,
+      "sha256": "92432fa37f6ef2f1d4eb0d2acd080425faa4f97dc3f2d52e751a501aae656fb3",
+      "path": "709.wav",
+      "duration": 1.4074603174603175,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/709.wav",
+      "decoded": true
+    },
+    {
+      "id": 714,
+      "name": "noibat",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/714.wav",
+      "bytes": 257002,
+      "sha256": "db6b44c9dafbffa340c2f3ca6a1dbed59f2130d7ef32f31f31569ee335f054ac",
+      "path": "714.wav",
+      "duration": 1.4233333333333333,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/714.wav",
+      "decoded": true
+    },
+    {
+      "id": 716,
+      "name": "xerneas",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/716.wav",
+      "bytes": 145992,
+      "sha256": "fdb04c5310a4a04967568b3deb9774698cef4372a3263834ea77d6b176a1f699",
+      "path": "716.wav",
+      "duration": 1.5202947845804988,
+      "channels": 1,
+      "sampleRate": 48000,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/716.wav",
+      "decoded": true
+    },
+    {
+      "id": 717,
+      "name": "yveltal",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/717.wav",
+      "bytes": 341618,
+      "sha256": "2f8836283a4db9f0140921f9fd6b631e432bc20976601d32171e1173cd0d1520",
+      "path": "717.wav",
+      "duration": 1.903015873015873,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/717.wav",
+      "decoded": true
+    },
+    {
+      "id": 718,
+      "name": "zygarde",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/718.wav",
+      "bytes": 297666,
+      "sha256": "8a2a221f14b0f74e8209a869c2a9f23e9fa506b2672ced479e38c860f4942d8a",
+      "path": "718.wav",
+      "duration": 1.6538775510204082,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/718.wav",
+      "decoded": true
+    },
+    {
+      "id": 720,
+      "name": "hoopa",
+      "archiveMember": "Pokemon Anime Cries/Gen 6 - Kalos/720.wav",
+      "bytes": 139686,
+      "sha256": "5090ec9b06b5b01ff8aab037bbd7b9b88deed57bd1595f5a583ced2c551e9ef6",
+      "path": "720.wav",
+      "duration": 0.7582766439909298,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcm": true,
+      "preview": "pcm/720.wav",
+      "decoded": true
+    },
+    {
+      "id": 722,
+      "name": "rowlet",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/722.wav",
+      "bytes": 385166,
+      "sha256": "f6577039976ad437570d3d0b1d1ecacbb919de1e476780c3087b2b0187488572",
+      "path": "722.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/722.wav",
+      "decoded": true,
+      "duration": 1.0749433106575963
+    },
+    {
+      "id": 725,
+      "name": "litten",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/725.wav",
+      "bytes": 434750,
+      "sha256": "72ba2df7a4e7fbe42a7fb87a010357015d963c38e09b2b71b49fb3b70aa0ff2b",
+      "path": "725.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/725.wav",
+      "decoded": true,
+      "duration": 1.2
+    },
+    {
+      "id": 728,
+      "name": "popplio",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/728.wav",
+      "bytes": 509774,
+      "sha256": "1f31aeb7ae53f450b36a6458cb5ea628a52a13a63e88c661995929406532b6d6",
+      "path": "728.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/728.wav",
+      "decoded": true,
+      "duration": 1.428140589569161
+    },
+    {
+      "id": 729,
+      "name": "brionne",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/729.wav",
+      "bytes": 288166,
+      "sha256": "89840d4972816d63448b8d4cf79591d09c57c8e86be875a2f94cab73e4aeff21",
+      "path": "729.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/729.wav",
+      "decoded": true,
+      "duration": 0.8
+    },
+    {
+      "id": 731,
+      "name": "pikipek",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/731.wav",
+      "bytes": 271586,
+      "sha256": "12eb47b30ac030880277d1a33f34a7198d28b87fd20dedf066bb6b768579a7e6",
+      "path": "731.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/731.wav",
+      "decoded": true,
+      "duration": 0.7480498866213152
+    },
+    {
+      "id": 732,
+      "name": "trumbeak",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/732.wav",
+      "bytes": 287558,
+      "sha256": "e8eb8a855e5799a0344c3b777bfc0e8ee961ec69856d059994a40b372e10f1ac",
+      "path": "732.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/732.wav",
+      "decoded": true,
+      "duration": 0.7982766439909297
+    },
+    {
+      "id": 736,
+      "name": "grubbin",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/736.wav",
+      "bytes": 235470,
+      "sha256": "988403a764c494fa6712b4336a2325293b4a76dd982c25c67fbff707b443f992",
+      "path": "736.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/736.wav",
+      "decoded": true,
+      "duration": 0.6506349206349207
+    },
+    {
+      "id": 737,
+      "name": "charjabug",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/737.wav",
+      "bytes": 504040,
+      "sha256": "0f3d69e799a09a3c5054a8559865d4fff0acc904d0393d5e993170cef8a01ae1",
+      "path": "737.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/737.wav",
+      "decoded": true,
+      "duration": 1.3939229024943312
+    },
+    {
+      "id": 742,
+      "name": "cutiefly",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/742.wav",
+      "bytes": 642662,
+      "sha256": "a4237d49e199a8e97fc0bdca06a05bfd59c898c6f0c5b45884d37da30da7ab13",
+      "path": "742.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/742.wav",
+      "decoded": true,
+      "duration": 1.8048072562358277
+    },
+    {
+      "id": 744,
+      "name": "rockruff",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/744.wav",
+      "bytes": 199966,
+      "sha256": "427a162ebaa641875db1d98aa806409d1485ae055dd25416d07e7b42cec444c5",
+      "path": "744.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/744.wav",
+      "decoded": true,
+      "duration": 0.55
+    },
+    {
+      "id": 745,
+      "name": "lycanroc",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/745.wav",
+      "bytes": 415446,
+      "sha256": "5a97297c42156ab60693733715503800b6bf13019857104dec8a63f292266aa4",
+      "path": "745.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/745.wav",
+      "decoded": true,
+      "duration": 1.145283446712018
+    },
+    {
+      "id": 748,
+      "name": "toxapex",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/748.wav",
+      "bytes": 348110,
+      "sha256": "db35e245d187adef8986a560fc76224972d900eefbd3af6243f76c6fda3eccf2",
+      "path": "748.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/748.wav",
+      "decoded": true,
+      "duration": 0.9699092970521542
+    },
+    {
+      "id": 753,
+      "name": "fomantis",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/753.wav",
+      "bytes": 535126,
+      "sha256": "8f459205ab71959f29a4a9cbbedd693f6c668cea86df6fd7ce895580c025e4f7",
+      "path": "753.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/753.wav",
+      "decoded": true,
+      "duration": 1.5
+    },
+    {
+      "id": 755,
+      "name": "morelull",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/755.wav",
+      "bytes": 341086,
+      "sha256": "dde537fb2abc695effacf216c7535318b1aab33de2658f094331fc559a226018",
+      "path": "755.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/755.wav",
+      "decoded": true,
+      "duration": 0.95
+    },
+    {
+      "id": 756,
+      "name": "shiinotic",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/756.wav",
+      "bytes": 446926,
+      "sha256": "2e6f26bf72261c2d597be0b73d1c1a559aa64507ecd6bcd6eb81ae9717d0e2e2",
+      "path": "756.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/756.wav",
+      "decoded": true,
+      "duration": 1.25
+    },
+    {
+      "id": 760,
+      "name": "bewear",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/760.wav",
+      "bytes": 555182,
+      "sha256": "26052148d0bb7cdd01bbb0f621e4b3778a0ba4d122f34da15837e1b410b5a6d3",
+      "path": "760.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/760.wav",
+      "decoded": true,
+      "duration": 1.573514739229025
+    },
+    {
+      "id": 761,
+      "name": "bounsweet",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/761.wav",
+      "bytes": 477366,
+      "sha256": "56abf2215d50bcf831b76dd4ca1dda42e95dc072f53c1eb5cfa9259539514b8b",
+      "path": "761.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/761.wav",
+      "decoded": true,
+      "duration": 1.336281179138322
+    },
+    {
+      "id": 762,
+      "name": "steenee",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/762.wav",
+      "bytes": 339590,
+      "sha256": "500b8e3dfc367001099ad8b472f8423c711e66128505480a456b5df4a5719546",
+      "path": "762.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/762.wav",
+      "decoded": true,
+      "duration": 0.9457596371882087
+    },
+    {
+      "id": 764,
+      "name": "comfey",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/764.wav",
+      "bytes": 306712,
+      "sha256": "4906ee0f4db1476c2f5cadbfe522aea89c4d61c371092499cd986566dd81511b",
+      "path": "764.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/764.wav",
+      "decoded": true,
+      "duration": 0.8500907029478458
+    },
+    {
+      "id": 767,
+      "name": "wimpod",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/767.wav",
+      "bytes": 692838,
+      "sha256": "a977b6ed3f9c30e3f6c9c7cf7f793719428faab29c53e4314b3209c611371fbb",
+      "path": "767.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/767.wav",
+      "decoded": true,
+      "duration": 1.94702947845805
+    },
+    {
+      "id": 769,
+      "name": "sandygast",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/769.wav",
+      "bytes": 383824,
+      "sha256": "342e4024583346d166750626d9c313a6a23bc2937224452d956a87b3beb46ba3",
+      "path": "769.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/769.wav",
+      "decoded": true,
+      "duration": 1.0686621315192744
+    },
+    {
+      "id": 775,
+      "name": "komala",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/775.wav",
+      "bytes": 701390,
+      "sha256": "190b053e5b41ff81ab283f6ca6ad47bb04c51461efba9372462491cd549967ae",
+      "path": "775.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/775.wav",
+      "decoded": true,
+      "duration": 1.9712698412698413
+    },
+    {
+      "id": 776,
+      "name": "turtonator",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/776.wav",
+      "bytes": 578662,
+      "sha256": "933c057ae6ce04319fdf5127b46a50286e3e6f27a437df9a3b3d594db8c1814d",
+      "path": "776.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/776.wav",
+      "decoded": true,
+      "duration": 1.6234013605442177
+    },
+    {
+      "id": 777,
+      "name": "togedemaru",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/777.wav",
+      "bytes": 598438,
+      "sha256": "c038e696b7e74e34af9df4dce9af9392a1d9db82f90433bb5138337096e10805",
+      "path": "777.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/777.wav",
+      "decoded": true,
+      "duration": 1.6794557823129252
+    },
+    {
+      "id": 778,
+      "name": "mimikyu",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/778.wav",
+      "bytes": 552574,
+      "sha256": "457700248ef32e518b611c281b85d3c86082c86d073b06e5692d6f5579c2c838",
+      "path": "778.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/778.wav",
+      "decoded": true,
+      "duration": 1.5494557823129251
+    },
+    {
+      "id": 780,
+      "name": "drampa",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/780.wav",
+      "bytes": 635134,
+      "sha256": "1ec3181e9e94b887acb34fa731ac698226d182b1c62551957550006dbf1f088b",
+      "path": "780.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/780.wav",
+      "decoded": true,
+      "duration": 1.783469387755102
+    },
+    {
+      "id": 781,
+      "name": "dhelmise",
+      "archiveMember": "Pokemon Anime Cries/Gen 7 - Alola/781.wav",
+      "bytes": 571006,
+      "sha256": "e795e20edf080b3f89be7b5ac2cb0cb5dbf1dee341c7a26b72f952cfea54e0e7",
+      "path": "781.wav",
+      "pcm": false,
+      "review": "unknown format: 3",
+      "preview": "pcm/781.wav",
+      "decoded": true,
+      "duration": 1.6017006802721088
+    }
+  ],
+  "quality": "Unreviewed by listening; presence and PCM structure only."
+}

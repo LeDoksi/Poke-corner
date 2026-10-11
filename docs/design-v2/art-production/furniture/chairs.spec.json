@@ -1,0 +1,59 @@
+{
+  "source": "_sources/chairs-atlas-v2.png",
+  "promptFile": "_sources/chairs-repair-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "armchair-a1",
+      "name": "Клетчатое",
+      "category": "armchairs",
+      "row": 0,
+      "col": 0,
+      "displayWidth": 197.514,
+      "footAnchor": [
+        0.5,
+        0.94
+      ]
+    },
+    {
+      "id": "armchair-a2",
+      "name": "Тёплое",
+      "category": "armchairs",
+      "row": 0,
+      "col": 1,
+      "displayWidth": 186.464,
+      "footAnchor": [
+        0.5,
+        0.94
+      ]
+    },
+    {
+      "id": "armchair-a3",
+      "name": "Плетёное",
+      "category": "armchairs",
+      "row": 1,
+      "col": 0,
+      "displayWidth": 183.011,
+      "footAnchor": [
+        0.5,
+        0.94
+      ]
+    },
+    {
+      "id": "armchair-a4",
+      "name": "Облачко",
+      "category": "armchairs",
+      "row": 1,
+      "col": 1,
+      "displayWidth": 200.276,
+      "footAnchor": [
+        0.5,
+        0.94
+      ]
+    }
+  ]
+}

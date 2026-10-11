@@ -1,0 +1,225 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "trophy-nursery-1",
+      "row": 0,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 48,
+      "footAnchor": [
+        0.5,
+        0.97382
+      ],
+      "file": "trophies/assets/trophy-nursery-1.png",
+      "size": [
+        451,
+        382
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "alphaBoundsInCell": [
+        117,
+        191,
+        552,
+        557
+      ],
+      "cropInCell": [
+        109,
+        183,
+        560,
+        565
+      ],
+      "sha256": "8d74738a77d72e0903f1515688442825c12959a624d5eca9ca276171b39ee48a",
+      "source": "trophies/_sources/nursery.png",
+      "promptFile": "trophies/_sources/nursery-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        8,
+        441,
+        372
+      ],
+      "logicalSize": [
+        48,
+        40.66
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-nursery-2",
+      "row": 0,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 56,
+      "footAnchor": [
+        0.5,
+        0.97596
+      ],
+      "file": "trophies/assets/trophy-nursery-2.png",
+      "size": [
+        459,
+        416
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "alphaBoundsInCell": [
+        78,
+        157,
+        521,
+        557
+      ],
+      "cropInCell": [
+        70,
+        149,
+        529,
+        565
+      ],
+      "sha256": "ebcead40931d9f09c259daa813073e6991862468f885d1af59f0f5611d95a140",
+      "source": "trophies/_sources/nursery.png",
+      "promptFile": "trophies/_sources/nursery-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        8,
+        450,
+        406
+      ],
+      "logicalSize": [
+        56,
+        50.75
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-nursery-3",
+      "row": 1,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 64,
+      "footAnchor": [
+        0.5,
+        0.98117
+      ],
+      "file": "trophies/assets/trophy-nursery-3.png",
+      "size": [
+        489,
+        531
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        90,
+        25,
+        563,
+        540
+      ],
+      "cropInCell": [
+        82,
+        17,
+        571,
+        548
+      ],
+      "sha256": "7fca13d71d558f38773d18862b87de74ac7527a552c037c08c891e559d0a300b",
+      "source": "trophies/_sources/nursery.png",
+      "promptFile": "trophies/_sources/nursery-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        10,
+        481,
+        521
+      ],
+      "logicalSize": [
+        64,
+        69.5
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-nursery-4",
+      "row": 1,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 72,
+      "footAnchor": [
+        0.5,
+        0.98188
+      ],
+      "file": "trophies/assets/trophy-nursery-4.png",
+      "size": [
+        560,
+        552
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        32,
+        6,
+        576,
+        544
+      ],
+      "cropInCell": [
+        24,
+        0,
+        584,
+        552
+      ],
+      "sha256": "c10f382182886586fa9a0510aa9a22a87ec0900a6173aad8c01e03a6af2d0807",
+      "source": "trophies/_sources/nursery.png",
+      "promptFile": "trophies/_sources/nursery-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        9,
+        7,
+        552,
+        542
+      ],
+      "logicalSize": [
+        72,
+        70.97
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    }
+  ]
+}

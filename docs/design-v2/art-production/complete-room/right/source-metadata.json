@@ -1,0 +1,42 @@
+{
+  "sources": [
+    {
+      "id": "dresser-d1-zone",
+      "raw": "_sources\\dresser-d1-context.png",
+      "rawSize": [
+        1977,
+        795
+      ],
+      "exactPrompt": "_sources\\dresser-d1-prompt.txt"
+    },
+    {
+      "id": "dresser-d2-zone",
+      "raw": "_sources\\dresser-d2-context.png",
+      "rawSize": [
+        1978,
+        795
+      ],
+      "exactPrompt": "_sources\\dresser-d2-prompt.txt"
+    },
+    {
+      "id": "dresser-d3-zone",
+      "raw": "_sources\\dresser-d3-context.png",
+      "rawSize": [
+        1977,
+        795
+      ],
+      "exactPrompt": "_sources\\dresser-d3-prompt.txt"
+    },
+    {
+      "id": "dresser-d4-zone",
+      "raw": "_sources\\dresser-d4-context.png",
+      "rawSize": [
+        1978,
+        795
+      ],
+      "exactPrompt": "_sources\\dresser-d4-prompt.txt"
+    }
+  ],
+  "bedOrigins": "../../beds/asset-manifest.json",
+  "masterSha256": "0743a12386b90312386ca3db153f4f3288594008582456e82106bea34f3d939a"
+}

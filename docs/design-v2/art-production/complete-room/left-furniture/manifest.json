@@ -1,0 +1,697 @@
+{
+  "produce": [
+    {
+      "id": "T3",
+      "source_crop": "_sources/t3-context.png",
+      "output_path": "assets/table-t3-zone.png",
+      "strategy": "contextual full-room edit then true alpha bounded zone patch",
+      "prompt_used": "_sources/t3-prompt.txt",
+      "dimensions": [
+        60,
+        61
+      ],
+      "logicalDimensions": [
+        60,
+        61
+      ],
+      "roomCanvas": [
+        480,
+        193
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        124,
+        107,
+        184,
+        168
+      ],
+      "anchors": {
+        "topPlantAnchor": [
+          151,
+          120
+        ],
+        "floorAnchor": [
+          151,
+          150
+        ],
+        "maxTopPlantLogicalSize": [
+          25,
+          29
+        ]
+      },
+      "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/t3-context.png",
+        "sourceSha256": "584b57fc05c874b3eebfb17d0ed56e5d6e72a4295ee47fb578feeece8843c1de",
+        "editTarget": "next-zones\\left\\master-no-plant.png",
+        "zoneRect": [
+          124,
+          107,
+          184,
+          168
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": null,
+        "protectedTablePlantRect": null
+      },
+      "deviations": "Raw contextual surroundings may drift; only bounded local patch ships.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "T4",
+      "source_crop": "_sources/t4-context.png",
+      "output_path": "assets/table-t4-zone.png",
+      "strategy": "contextual full-room edit then true alpha bounded zone patch",
+      "prompt_used": "_sources/t4-prompt.txt",
+      "dimensions": [
+        60,
+        61
+      ],
+      "logicalDimensions": [
+        60,
+        61
+      ],
+      "roomCanvas": [
+        480,
+        193
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        124,
+        107,
+        184,
+        168
+      ],
+      "anchors": {
+        "topPlantAnchor": [
+          151,
+          116
+        ],
+        "floorAnchor": [
+          151,
+          155
+        ],
+        "maxTopPlantLogicalSize": [
+          25,
+          29
+        ]
+      },
+      "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/t4-context.png",
+        "sourceSha256": "56a3cb3847a6ffadfcd793bb74efd7d6f4b34ef4c5e3093abfbebdb4c8633e66",
+        "editTarget": "next-zones\\left\\master-no-plant.png",
+        "zoneRect": [
+          124,
+          107,
+          184,
+          168
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": null,
+        "protectedTablePlantRect": null
+      },
+      "deviations": "Raw contextual surroundings may drift; only bounded local patch ships.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "A3",
+      "source_crop": "_sources/a3-context.png",
+      "output_path": "assets/armchair-a3-zone.png",
+      "strategy": "contextual full-room edit then true alpha bounded zone patch",
+      "prompt_used": "_sources/a3-prompt.txt",
+      "dimensions": [
+        225,
+        121
+      ],
+      "logicalDimensions": [
+        225,
+        121
+      ],
+      "roomCanvas": [
+        480,
+        193
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        0,
+        72,
+        225,
+        193
+      ],
+      "anchors": {
+        "floorAnchor": [
+          85,
+          178
+        ],
+        "objectContactApprox": [
+          85,
+          163
+        ],
+        "protectedTablePlantRect": [
+          128,
+          92,
+          187,
+          168
+        ]
+      },
+      "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/a3-context.png",
+        "sourceSha256": "d5b5f971f59b84024621365e289092af5ff18d974e7f86f5dfbc9e1b5b8f06d4",
+        "editTarget": "next-zones\\left\\master-no-plant.png",
+        "zoneRect": [
+          0,
+          72,
+          225,
+          193
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": null,
+        "protectedTablePlantRect": [
+          128,
+          92,
+          187,
+          168
+        ]
+      },
+      "deviations": "Raw contextual surroundings may drift; only bounded local patch ships.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "A4",
+      "source_crop": "_sources/a4-context.png",
+      "output_path": "assets/armchair-a4-zone.png",
+      "strategy": "contextual full-room edit then true alpha bounded zone patch",
+      "prompt_used": "_sources/a4-prompt.txt",
+      "dimensions": [
+        225,
+        121
+      ],
+      "logicalDimensions": [
+        225,
+        121
+      ],
+      "roomCanvas": [
+        480,
+        193
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        0,
+        72,
+        225,
+        193
+      ],
+      "anchors": {
+        "floorAnchor": [
+          85,
+          178
+        ],
+        "objectContactApprox": [
+          85,
+          163
+        ],
+        "protectedTablePlantRect": [
+          128,
+          92,
+          187,
+          168
+        ]
+      },
+      "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/a4-context.png",
+        "sourceSha256": "0702e363a3955d4ac15f577acddc2932519e68f85bed5cdeaeab1eb0aaa94ac1",
+        "editTarget": "next-zones\\left\\master-no-plant.png",
+        "zoneRect": [
+          0,
+          72,
+          225,
+          193
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": null,
+        "protectedTablePlantRect": [
+          128,
+          92,
+          187,
+          168
+        ]
+      },
+      "deviations": "Raw contextual surroundings may drift; only bounded local patch ships.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "C2",
+      "source_crop": "_sources/c2-context.png",
+      "output_path": "assets/cabinet-c2-zone.png",
+      "strategy": "contextual full-room edit then true alpha bounded zone patch",
+      "prompt_used": "_sources/c2-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "logicalDimensions": [
+        150,
+        77
+      ],
+      "roomCanvas": [
+        480,
+        193
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        195,
+        65,
+        345,
+        142
+      ],
+      "anchors": {
+        "floorAnchor": [
+          262,
+          136
+        ],
+        "shelfAnchors": [
+          [
+            226,
+            106
+          ],
+          [
+            262,
+            106
+          ],
+          [
+            300,
+            106
+          ]
+        ],
+        "slotRects": [
+          [
+            209,
+            79,
+            243,
+            108
+          ],
+          [
+            245,
+            79,
+            279,
+            108
+          ],
+          [
+            283,
+            79,
+            317,
+            108
+          ]
+        ],
+        "shelfFrontlipBounds": [
+          207,
+          106,
+          317,
+          108
+        ],
+        "topPlantAnchor": [
+          307,
+          73
+        ],
+        "topPlantMaxSize": [
+          20,
+          18
+        ]
+      },
+      "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/c2-context.png",
+        "sourceSha256": "01e1dd311c30df8fff29122dba667735f15816272a38efb3bbee4dfc79e93906",
+        "editTarget": "pilot-zones\\master.png",
+        "zoneRect": [
+          195,
+          65,
+          345,
+          142
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": {
+          "sourceObjectBounds": [
+            195,
+            70,
+            317,
+            133
+          ],
+          "targetObjectBounds": [
+            198,
+            72,
+            325,
+            136
+          ],
+          "sourceTargetVerticalBands": [
+            [
+              70,
+              101,
+              72,
+              106
+            ],
+            [
+              101,
+              103,
+              106,
+              108
+            ],
+            [
+              103,
+              133,
+              108,
+              136
+            ]
+          ],
+          "method": "nearest source-band registration; intrinsic shelf RGB unchanged except sampling"
+        },
+        "protectedTablePlantRect": null
+      },
+      "deviations": "Cabinet source bands technically registered to exact common shelf/floor grid.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "C2-frontlip",
+      "source_crop": "_sources/c2-context.png",
+      "output_path": "assets/cabinet-c2-frontlip.png",
+      "strategy": "intrinsic source shelf edge split for trophy occlusion",
+      "prompt_used": "_sources/c2-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "logicalDimensions": [
+        150,
+        77
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        195,
+        65,
+        345,
+        142
+      ],
+      "cropMethod": "source lip pixels only",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/c2-context.png",
+        "sourceSha256": "01e1dd311c30df8fff29122dba667735f15816272a38efb3bbee4dfc79e93906",
+        "editTarget": "pilot-zones\\master.png",
+        "zoneRect": [
+          195,
+          65,
+          345,
+          142
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": {
+          "sourceObjectBounds": [
+            195,
+            70,
+            317,
+            133
+          ],
+          "targetObjectBounds": [
+            198,
+            72,
+            325,
+            136
+          ],
+          "sourceTargetVerticalBands": [
+            [
+              70,
+              101,
+              72,
+              106
+            ],
+            [
+              101,
+              103,
+              106,
+              108
+            ],
+            [
+              103,
+              133,
+              108,
+              136
+            ]
+          ],
+          "method": "nearest source-band registration; intrinsic shelf RGB unchanged except sampling"
+        },
+        "protectedTablePlantRect": null
+      },
+      "deviations": "Same technical registration as cabinet zone.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "C4",
+      "source_crop": "_sources/c4-context.png",
+      "output_path": "assets/cabinet-c4-zone.png",
+      "strategy": "contextual full-room edit then true alpha bounded zone patch",
+      "prompt_used": "_sources/c4-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "logicalDimensions": [
+        150,
+        77
+      ],
+      "roomCanvas": [
+        480,
+        193
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        195,
+        65,
+        345,
+        142
+      ],
+      "anchors": {
+        "floorAnchor": [
+          262,
+          136
+        ],
+        "shelfAnchors": [
+          [
+            226,
+            106
+          ],
+          [
+            262,
+            106
+          ],
+          [
+            300,
+            106
+          ]
+        ],
+        "slotRects": [
+          [
+            209,
+            79,
+            243,
+            108
+          ],
+          [
+            245,
+            79,
+            279,
+            108
+          ],
+          [
+            283,
+            79,
+            317,
+            108
+          ]
+        ],
+        "shelfFrontlipBounds": [
+          207,
+          106,
+          317,
+          108
+        ],
+        "topPlantAnchor": [
+          307,
+          73
+        ],
+        "topPlantMaxSize": [
+          20,
+          18
+        ]
+      },
+      "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/c4-context.png",
+        "sourceSha256": "a2aa50d5ec7d379de90ad4482a3cf3ca83dcdb3b72ca508adb2dda3467bcce2d",
+        "editTarget": "pilot-zones\\master.png",
+        "zoneRect": [
+          195,
+          65,
+          345,
+          142
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": {
+          "sourceObjectBounds": [
+            196,
+            72,
+            323,
+            133
+          ],
+          "targetObjectBounds": [
+            198,
+            72,
+            325,
+            136
+          ],
+          "sourceTargetVerticalBands": [
+            [
+              72,
+              104,
+              72,
+              106
+            ],
+            [
+              104,
+              106,
+              106,
+              108
+            ],
+            [
+              106,
+              133,
+              108,
+              136
+            ]
+          ],
+          "method": "nearest source-band registration; intrinsic shelf RGB unchanged except sampling"
+        },
+        "protectedTablePlantRect": null
+      },
+      "deviations": "Cabinet source bands technically registered to exact common shelf/floor grid.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "C4-frontlip",
+      "source_crop": "_sources/c4-context.png",
+      "output_path": "assets/cabinet-c4-frontlip.png",
+      "strategy": "intrinsic source shelf edge split for trophy occlusion",
+      "prompt_used": "_sources/c4-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "logicalDimensions": [
+        150,
+        77
+      ],
+      "format": "png",
+      "transparency": true,
+      "zoneRect": [
+        195,
+        65,
+        345,
+        142
+      ],
+      "cropMethod": "source lip pixels only",
+      "provenance": {
+        "tool": "builtin image_gen.imagegen",
+        "source": "_sources/c4-context.png",
+        "sourceSha256": "a2aa50d5ec7d379de90ad4482a3cf3ca83dcdb3b72ca508adb2dda3467bcce2d",
+        "editTarget": "pilot-zones\\master.png",
+        "zoneRect": [
+          195,
+          65,
+          345,
+          142
+        ],
+        "cropMethod": "native nearest normalization, actual contextual region alpha mask",
+        "registration": {
+          "sourceObjectBounds": [
+            196,
+            72,
+            323,
+            133
+          ],
+          "targetObjectBounds": [
+            198,
+            72,
+            325,
+            136
+          ],
+          "sourceTargetVerticalBands": [
+            [
+              72,
+              104,
+              72,
+              106
+            ],
+            [
+              104,
+              106,
+              106,
+              108
+            ],
+            [
+              106,
+              133,
+              108,
+              136
+            ]
+          ],
+          "method": "nearest source-band registration; intrinsic shelf RGB unchanged except sampling"
+        },
+        "protectedTablePlantRect": null
+      },
+      "deviations": "Same technical registration as cabinet zone.",
+      "qa_status": "accepted"
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "registered-furniture-room-composition",
+      "implementation": "Compose shared 480x193 master first; for chair/table use next-zones/left/master-no-plant.png. Paste each alpha zone at zoneRect x/y with integer nearest sampling. Place independent table plants by per-model topPlantAnchor. For cabinets paste three independent trophy sprites by footAnchor at common shelfAnchors, then cabinet-frontlip at same zoneRect. Draw original BW pet after room/decor layers. Scale display3 to1440x579, preserving native pixels.",
+      "notes": "Chair masks hard-exclude the entire original table/plant rectangle. Alpha zones are contextual room overlays, not portable studio furniture cutouts. Cabinet band registration preserves intrinsic source art and standard trophy geometry.",
+      "qa_status": "accepted"
+    }
+  ],
+  "execution_order": [
+    "T3 contextual edit",
+    "T4 contextual edit",
+    "A3 contextual edit",
+    "A4 contextual edit",
+    "C2 contextual edit",
+    "C4 contextual edit",
+    "technical crop/mask/source registration",
+    "bounds and canonical pet/trophy checks",
+    "visual patch comparison"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "Only six assigned missing furniture models produced; no app code changes.",
+    "Parent composes other room layers and furniture combinations.",
+    "DisplayScale3 is nearest sampling; sources saved non-destructively.",
+    "Exact prompts embedded with installed Impeccable embed-prompt.mjs; metadata asserted equal to sidecar."
+  ]
+}

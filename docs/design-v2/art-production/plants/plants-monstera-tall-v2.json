@@ -1,0 +1,103 @@
+{
+  "source": "_sources/plants-monstera-tall-v2.png",
+  "promptFile": "_sources/plants-monstera-tall-v2-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    1,
+    2
+  ],
+  "cells": [
+    {
+      "id": "plant-monstera-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "Tall narrow floor monstera terracotta",
+      "category": "plants",
+      "displayWidth": 101.257332,
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "footAnchor": [
+        0.495108,
+        0.991649
+      ],
+      "logicalTargetWh": [
+        150,
+        270
+      ],
+      "maxOpaqueDrawWh": [
+        165,
+        285
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Measured height/width 1.91 rather than nominal 1.8; uniform270px height yields141.2px width, fitting150x270 target and165x285 maximum."
+      ],
+      "strategy": "approved room scale repair: regenerate tall narrow standalone transparent Monstera; shared technical slicing",
+      "footAnchorPixels": [
+        253.0,
+        950
+      ],
+      "alphaBounds128": [
+        10,
+        9,
+        502,
+        950
+      ],
+      "heightWidthRatio": 1.912602,
+      "logicalOpaqueDrawWh": [
+        141.169,
+        270
+      ],
+      "visual_qa": "Tall upright habit, matching pot variants, complete silhouette and white alpha plate comparison passed; assembled-room rerender pending.",
+      "scaleRepair": "Replaces previous broad shrub silhouette that read too short beside armchair."
+    },
+    {
+      "id": "plant-monstera-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "Tall narrow floor monstera woven-cream",
+      "category": "plants",
+      "displayWidth": 101.059176,
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "footAnchor": [
+        0.488235,
+        0.990615
+      ],
+      "logicalTargetWh": [
+        150,
+        270
+      ],
+      "maxOpaqueDrawWh": [
+        165,
+        285
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Measured height/width 1.91 rather than nominal 1.8; uniform270px height yields141.2px width, fitting150x270 target and165x285 maximum."
+      ],
+      "strategy": "approved room scale repair: regenerate tall narrow standalone transparent Monstera; shared technical slicing",
+      "footAnchorPixels": [
+        249.0,
+        950
+      ],
+      "alphaBounds128": [
+        10,
+        9,
+        502,
+        950
+      ],
+      "heightWidthRatio": 1.912602,
+      "logicalOpaqueDrawWh": [
+        141.169,
+        270
+      ],
+      "visual_qa": "Tall upright habit, matching pot variants, complete silhouette and white alpha plate comparison passed; assembled-room rerender pending.",
+      "scaleRepair": "Replaces previous broad shrub silhouette that read too short beside armchair."
+    }
+  ]
+}

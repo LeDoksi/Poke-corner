@@ -1,0 +1,6126 @@
+[
+  {
+    "id": 1,
+    "name": "bulbasaur",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/1.wav"
+  },
+  {
+    "id": 2,
+    "name": "ivysaur",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/2.wav"
+  },
+  {
+    "id": 3,
+    "name": "venusaur",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/3.wav"
+  },
+  {
+    "id": 4,
+    "name": "charmander",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/4.wav"
+  },
+  {
+    "id": 5,
+    "name": "charmeleon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/5.wav"
+  },
+  {
+    "id": 6,
+    "name": "charizard",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/6.wav"
+  },
+  {
+    "id": 7,
+    "name": "squirtle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/7.wav"
+  },
+  {
+    "id": 8,
+    "name": "wartortle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/8.wav"
+  },
+  {
+    "id": 9,
+    "name": "blastoise",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/9.wav"
+  },
+  {
+    "id": 10,
+    "name": "caterpie",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/10.wav"
+  },
+  {
+    "id": 11,
+    "name": "metapod",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/11.wav"
+  },
+  {
+    "id": 12,
+    "name": "butterfree",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/12.wav"
+  },
+  {
+    "id": 13,
+    "name": "weedle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/13.wav"
+  },
+  {
+    "id": 14,
+    "name": "kakuna",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/14.wav"
+  },
+  {
+    "id": 15,
+    "name": "beedrill",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/15.wav"
+  },
+  {
+    "id": 16,
+    "name": "pidgey",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/16.wav"
+  },
+  {
+    "id": 17,
+    "name": "pidgeotto",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/17.wav"
+  },
+  {
+    "id": 18,
+    "name": "pidgeot",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/18.wav"
+  },
+  {
+    "id": 19,
+    "name": "rattata",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/19.wav"
+  },
+  {
+    "id": 20,
+    "name": "raticate",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/20.wav"
+  },
+  {
+    "id": 21,
+    "name": "spearow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/21.wav"
+  },
+  {
+    "id": 22,
+    "name": "fearow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/22.wav"
+  },
+  {
+    "id": 23,
+    "name": "ekans",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/23.wav"
+  },
+  {
+    "id": 24,
+    "name": "arbok",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/24.wav"
+  },
+  {
+    "id": 25,
+    "name": "pikachu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/25.wav"
+  },
+  {
+    "id": 26,
+    "name": "raichu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/26.wav"
+  },
+  {
+    "id": 27,
+    "name": "sandshrew",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/27.wav"
+  },
+  {
+    "id": 28,
+    "name": "sandslash",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/28.wav"
+  },
+  {
+    "id": 29,
+    "name": "nidoran-f",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/29.wav"
+  },
+  {
+    "id": 30,
+    "name": "nidorina",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/30.wav"
+  },
+  {
+    "id": 31,
+    "name": "nidoqueen",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/31.wav"
+  },
+  {
+    "id": 32,
+    "name": "nidoran-m",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/32.wav"
+  },
+  {
+    "id": 33,
+    "name": "nidorino",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/33.wav"
+  },
+  {
+    "id": 34,
+    "name": "nidoking",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/34.wav"
+  },
+  {
+    "id": 35,
+    "name": "clefairy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/35.wav"
+  },
+  {
+    "id": 36,
+    "name": "clefable",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/36.wav"
+  },
+  {
+    "id": 37,
+    "name": "vulpix",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/37.wav"
+  },
+  {
+    "id": 38,
+    "name": "ninetales",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/38.wav"
+  },
+  {
+    "id": 39,
+    "name": "jigglypuff",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/39.wav"
+  },
+  {
+    "id": 40,
+    "name": "wigglytuff",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/40.wav"
+  },
+  {
+    "id": 41,
+    "name": "zubat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/41.wav"
+  },
+  {
+    "id": 42,
+    "name": "golbat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/42.wav"
+  },
+  {
+    "id": 43,
+    "name": "oddish",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/43.wav"
+  },
+  {
+    "id": 44,
+    "name": "gloom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/44.wav"
+  },
+  {
+    "id": 45,
+    "name": "vileplume",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/45.wav"
+  },
+  {
+    "id": 46,
+    "name": "paras",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/46.wav"
+  },
+  {
+    "id": 47,
+    "name": "parasect",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/47.wav"
+  },
+  {
+    "id": 48,
+    "name": "venonat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/48.wav"
+  },
+  {
+    "id": 49,
+    "name": "venomoth",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/49.wav"
+  },
+  {
+    "id": 50,
+    "name": "diglett",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/50.wav"
+  },
+  {
+    "id": 51,
+    "name": "dugtrio",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/51.wav"
+  },
+  {
+    "id": 52,
+    "name": "meowth",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/52.wav"
+  },
+  {
+    "id": 53,
+    "name": "persian",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/53.wav"
+  },
+  {
+    "id": 54,
+    "name": "psyduck",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/54.wav"
+  },
+  {
+    "id": 55,
+    "name": "golduck",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/55.wav"
+  },
+  {
+    "id": 56,
+    "name": "mankey",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/56.wav"
+  },
+  {
+    "id": 57,
+    "name": "primeape",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/57.wav"
+  },
+  {
+    "id": 58,
+    "name": "growlithe",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/58.wav"
+  },
+  {
+    "id": 59,
+    "name": "arcanine",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/59.wav"
+  },
+  {
+    "id": 60,
+    "name": "poliwag",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/60.wav"
+  },
+  {
+    "id": 61,
+    "name": "poliwhirl",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/61.wav"
+  },
+  {
+    "id": 62,
+    "name": "poliwrath",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/62.wav"
+  },
+  {
+    "id": 63,
+    "name": "abra",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/63.wav"
+  },
+  {
+    "id": 64,
+    "name": "kadabra",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/64.wav"
+  },
+  {
+    "id": 65,
+    "name": "alakazam",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/65.wav"
+  },
+  {
+    "id": 66,
+    "name": "machop",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/66.wav"
+  },
+  {
+    "id": 67,
+    "name": "machoke",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/67.wav"
+  },
+  {
+    "id": 68,
+    "name": "machamp",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/68.wav"
+  },
+  {
+    "id": 69,
+    "name": "bellsprout",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/69.wav"
+  },
+  {
+    "id": 70,
+    "name": "weepinbell",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/70.wav"
+  },
+  {
+    "id": 71,
+    "name": "victreebel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/71.wav"
+  },
+  {
+    "id": 72,
+    "name": "tentacool",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/72.wav"
+  },
+  {
+    "id": 73,
+    "name": "tentacruel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/73.wav"
+  },
+  {
+    "id": 74,
+    "name": "geodude",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/74.wav"
+  },
+  {
+    "id": 75,
+    "name": "graveler",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/75.wav"
+  },
+  {
+    "id": 76,
+    "name": "golem",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/76.wav"
+  },
+  {
+    "id": 77,
+    "name": "ponyta",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/77.wav"
+  },
+  {
+    "id": 78,
+    "name": "rapidash",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/78.wav"
+  },
+  {
+    "id": 79,
+    "name": "slowpoke",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/79.wav"
+  },
+  {
+    "id": 80,
+    "name": "slowbro",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/80.wav"
+  },
+  {
+    "id": 81,
+    "name": "magnemite",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/81.wav"
+  },
+  {
+    "id": 82,
+    "name": "magneton",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/82.wav"
+  },
+  {
+    "id": 83,
+    "name": "farfetchd",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/83.wav"
+  },
+  {
+    "id": 84,
+    "name": "doduo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/84.wav"
+  },
+  {
+    "id": 85,
+    "name": "dodrio",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/85.wav"
+  },
+  {
+    "id": 86,
+    "name": "seel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/86.wav"
+  },
+  {
+    "id": 87,
+    "name": "dewgong",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/87.wav"
+  },
+  {
+    "id": 88,
+    "name": "grimer",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/88.wav"
+  },
+  {
+    "id": 89,
+    "name": "muk",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/89.wav"
+  },
+  {
+    "id": 90,
+    "name": "shellder",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/90.wav"
+  },
+  {
+    "id": 91,
+    "name": "cloyster",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/91.wav"
+  },
+  {
+    "id": 92,
+    "name": "gastly",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/92.wav"
+  },
+  {
+    "id": 93,
+    "name": "haunter",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/93.wav"
+  },
+  {
+    "id": 94,
+    "name": "gengar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/94.wav"
+  },
+  {
+    "id": 95,
+    "name": "onix",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/95.wav"
+  },
+  {
+    "id": 96,
+    "name": "drowzee",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/96.wav"
+  },
+  {
+    "id": 97,
+    "name": "hypno",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/97.wav"
+  },
+  {
+    "id": 98,
+    "name": "krabby",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/98.wav"
+  },
+  {
+    "id": 99,
+    "name": "kingler",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/99.wav"
+  },
+  {
+    "id": 100,
+    "name": "voltorb",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/100.wav"
+  },
+  {
+    "id": 101,
+    "name": "electrode",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/101.wav"
+  },
+  {
+    "id": 102,
+    "name": "exeggcute",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/102.wav"
+  },
+  {
+    "id": 103,
+    "name": "exeggutor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/103.wav"
+  },
+  {
+    "id": 104,
+    "name": "cubone",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/104.wav"
+  },
+  {
+    "id": 105,
+    "name": "marowak",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/105.wav"
+  },
+  {
+    "id": 106,
+    "name": "hitmonlee",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/106.wav"
+  },
+  {
+    "id": 107,
+    "name": "hitmonchan",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/107.wav"
+  },
+  {
+    "id": 108,
+    "name": "lickitung",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/108.wav"
+  },
+  {
+    "id": 109,
+    "name": "koffing",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/109.wav"
+  },
+  {
+    "id": 110,
+    "name": "weezing",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/110.wav"
+  },
+  {
+    "id": 111,
+    "name": "rhyhorn",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/111.wav"
+  },
+  {
+    "id": 112,
+    "name": "rhydon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/112.wav"
+  },
+  {
+    "id": 113,
+    "name": "chansey",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/113.wav"
+  },
+  {
+    "id": 114,
+    "name": "tangela",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/114.wav"
+  },
+  {
+    "id": 115,
+    "name": "kangaskhan",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/115.wav"
+  },
+  {
+    "id": 116,
+    "name": "horsea",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/116.wav"
+  },
+  {
+    "id": 117,
+    "name": "seadra",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/117.wav"
+  },
+  {
+    "id": 118,
+    "name": "goldeen",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/118.wav"
+  },
+  {
+    "id": 119,
+    "name": "seaking",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/119.wav"
+  },
+  {
+    "id": 120,
+    "name": "staryu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/120.wav"
+  },
+  {
+    "id": 121,
+    "name": "starmie",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/121.wav"
+  },
+  {
+    "id": 122,
+    "name": "mr-mime",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/122.wav"
+  },
+  {
+    "id": 123,
+    "name": "scyther",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/123.wav"
+  },
+  {
+    "id": 124,
+    "name": "jynx",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/124.wav"
+  },
+  {
+    "id": 125,
+    "name": "electabuzz",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/125.wav"
+  },
+  {
+    "id": 126,
+    "name": "magmar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/126.wav"
+  },
+  {
+    "id": 127,
+    "name": "pinsir",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/127.wav"
+  },
+  {
+    "id": 128,
+    "name": "tauros",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/128.wav"
+  },
+  {
+    "id": 129,
+    "name": "magikarp",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/129.wav"
+  },
+  {
+    "id": 130,
+    "name": "gyarados",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/130.wav"
+  },
+  {
+    "id": 131,
+    "name": "lapras",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/131.wav"
+  },
+  {
+    "id": 132,
+    "name": "ditto",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/132.wav"
+  },
+  {
+    "id": 133,
+    "name": "eevee",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/133.wav"
+  },
+  {
+    "id": 134,
+    "name": "vaporeon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/134.wav"
+  },
+  {
+    "id": 135,
+    "name": "jolteon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/135.wav"
+  },
+  {
+    "id": 136,
+    "name": "flareon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/136.wav"
+  },
+  {
+    "id": 137,
+    "name": "porygon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/137.wav"
+  },
+  {
+    "id": 138,
+    "name": "omanyte",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/138.wav"
+  },
+  {
+    "id": 139,
+    "name": "omastar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/139.wav"
+  },
+  {
+    "id": 140,
+    "name": "kabuto",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/140.wav"
+  },
+  {
+    "id": 141,
+    "name": "kabutops",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/141.wav"
+  },
+  {
+    "id": 142,
+    "name": "aerodactyl",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/142.wav"
+  },
+  {
+    "id": 143,
+    "name": "snorlax",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/143.wav"
+  },
+  {
+    "id": 144,
+    "name": "articuno",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/144.wav"
+  },
+  {
+    "id": 145,
+    "name": "zapdos",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/145.wav"
+  },
+  {
+    "id": 146,
+    "name": "moltres",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/146.wav"
+  },
+  {
+    "id": 147,
+    "name": "dratini",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/147.wav"
+  },
+  {
+    "id": 148,
+    "name": "dragonair",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/148.wav"
+  },
+  {
+    "id": 149,
+    "name": "dragonite",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/149.wav"
+  },
+  {
+    "id": 150,
+    "name": "mewtwo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/150.wav"
+  },
+  {
+    "id": 151,
+    "name": "mew",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/151.wav"
+  },
+  {
+    "id": 152,
+    "name": "chikorita",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/152.wav"
+  },
+  {
+    "id": 153,
+    "name": "bayleef",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/153.wav"
+  },
+  {
+    "id": 154,
+    "name": "meganium",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/154.wav"
+  },
+  {
+    "id": 155,
+    "name": "cyndaquil",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/155.wav"
+  },
+  {
+    "id": 156,
+    "name": "quilava",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/156.wav"
+  },
+  {
+    "id": 157,
+    "name": "typhlosion",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/157.wav"
+  },
+  {
+    "id": 158,
+    "name": "totodile",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/158.wav"
+  },
+  {
+    "id": 159,
+    "name": "croconaw",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/159.wav"
+  },
+  {
+    "id": 160,
+    "name": "feraligatr",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/160.wav"
+  },
+  {
+    "id": 161,
+    "name": "sentret",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/161.wav"
+  },
+  {
+    "id": 162,
+    "name": "furret",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/162.wav"
+  },
+  {
+    "id": 163,
+    "name": "hoothoot",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/163.wav"
+  },
+  {
+    "id": 164,
+    "name": "noctowl",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/164.wav"
+  },
+  {
+    "id": 165,
+    "name": "ledyba",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/165.wav"
+  },
+  {
+    "id": 166,
+    "name": "ledian",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/166.wav"
+  },
+  {
+    "id": 167,
+    "name": "spinarak",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/167.wav"
+  },
+  {
+    "id": 168,
+    "name": "ariados",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/168.wav"
+  },
+  {
+    "id": 169,
+    "name": "crobat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/169.wav"
+  },
+  {
+    "id": 170,
+    "name": "chinchou",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/170.wav"
+  },
+  {
+    "id": 171,
+    "name": "lanturn",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/171.wav"
+  },
+  {
+    "id": 172,
+    "name": "pichu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/172.wav"
+  },
+  {
+    "id": 173,
+    "name": "cleffa",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/173.wav"
+  },
+  {
+    "id": 174,
+    "name": "igglybuff",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/174.wav"
+  },
+  {
+    "id": 175,
+    "name": "togepi",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/175.wav"
+  },
+  {
+    "id": 176,
+    "name": "togetic",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/176.wav"
+  },
+  {
+    "id": 177,
+    "name": "natu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/177.wav"
+  },
+  {
+    "id": 178,
+    "name": "xatu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/178.wav"
+  },
+  {
+    "id": 179,
+    "name": "mareep",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/179.wav"
+  },
+  {
+    "id": 180,
+    "name": "flaaffy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/180.wav"
+  },
+  {
+    "id": 181,
+    "name": "ampharos",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/181.wav"
+  },
+  {
+    "id": 182,
+    "name": "bellossom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/182.wav"
+  },
+  {
+    "id": 183,
+    "name": "marill",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/183.wav"
+  },
+  {
+    "id": 184,
+    "name": "azumarill",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/184.wav"
+  },
+  {
+    "id": 185,
+    "name": "sudowoodo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/185.wav"
+  },
+  {
+    "id": 186,
+    "name": "politoed",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/186.wav"
+  },
+  {
+    "id": 187,
+    "name": "hoppip",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/187.wav"
+  },
+  {
+    "id": 188,
+    "name": "skiploom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/188.wav"
+  },
+  {
+    "id": 189,
+    "name": "jumpluff",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/189.wav"
+  },
+  {
+    "id": 190,
+    "name": "aipom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/190.wav"
+  },
+  {
+    "id": 191,
+    "name": "sunkern",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/191.wav"
+  },
+  {
+    "id": 192,
+    "name": "sunflora",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/192.wav"
+  },
+  {
+    "id": 193,
+    "name": "yanma",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/193.wav"
+  },
+  {
+    "id": 194,
+    "name": "wooper",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/194.wav"
+  },
+  {
+    "id": 195,
+    "name": "quagsire",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/195.wav"
+  },
+  {
+    "id": 196,
+    "name": "espeon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/196.wav"
+  },
+  {
+    "id": 197,
+    "name": "umbreon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/197.wav"
+  },
+  {
+    "id": 198,
+    "name": "murkrow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/198.wav"
+  },
+  {
+    "id": 199,
+    "name": "slowking",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/199.wav"
+  },
+  {
+    "id": 200,
+    "name": "misdreavus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/200.wav"
+  },
+  {
+    "id": 201,
+    "name": "unown",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/201.wav"
+  },
+  {
+    "id": 202,
+    "name": "wobbuffet",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/202.wav"
+  },
+  {
+    "id": 203,
+    "name": "girafarig",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/203.wav"
+  },
+  {
+    "id": 204,
+    "name": "pineco",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/204.wav"
+  },
+  {
+    "id": 205,
+    "name": "forretress",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/205.wav"
+  },
+  {
+    "id": 206,
+    "name": "dunsparce",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/206.wav"
+  },
+  {
+    "id": 207,
+    "name": "gligar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/207.wav"
+  },
+  {
+    "id": 208,
+    "name": "steelix",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/208.wav"
+  },
+  {
+    "id": 209,
+    "name": "snubbull",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/209.wav"
+  },
+  {
+    "id": 210,
+    "name": "granbull",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/210.wav"
+  },
+  {
+    "id": 211,
+    "name": "qwilfish",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/211.wav"
+  },
+  {
+    "id": 212,
+    "name": "scizor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/212.wav"
+  },
+  {
+    "id": 213,
+    "name": "shuckle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/213.wav"
+  },
+  {
+    "id": 214,
+    "name": "heracross",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/214.wav"
+  },
+  {
+    "id": 215,
+    "name": "sneasel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/215.wav"
+  },
+  {
+    "id": 216,
+    "name": "teddiursa",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/216.wav"
+  },
+  {
+    "id": 217,
+    "name": "ursaring",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/217.wav"
+  },
+  {
+    "id": 218,
+    "name": "slugma",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/218.wav"
+  },
+  {
+    "id": 219,
+    "name": "magcargo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/219.wav"
+  },
+  {
+    "id": 220,
+    "name": "swinub",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/220.wav"
+  },
+  {
+    "id": 221,
+    "name": "piloswine",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/221.wav"
+  },
+  {
+    "id": 222,
+    "name": "corsola",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/222.wav"
+  },
+  {
+    "id": 223,
+    "name": "remoraid",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/223.wav"
+  },
+  {
+    "id": 224,
+    "name": "octillery",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/224.wav"
+  },
+  {
+    "id": 225,
+    "name": "delibird",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/225.wav"
+  },
+  {
+    "id": 226,
+    "name": "mantine",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/226.wav"
+  },
+  {
+    "id": 227,
+    "name": "skarmory",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/227.wav"
+  },
+  {
+    "id": 228,
+    "name": "houndour",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/228.wav"
+  },
+  {
+    "id": 229,
+    "name": "houndoom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/229.wav"
+  },
+  {
+    "id": 230,
+    "name": "kingdra",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/230.wav"
+  },
+  {
+    "id": 231,
+    "name": "phanpy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/231.wav"
+  },
+  {
+    "id": 232,
+    "name": "donphan",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/232.wav"
+  },
+  {
+    "id": 233,
+    "name": "porygon2",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/233.wav"
+  },
+  {
+    "id": 234,
+    "name": "stantler",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/234.wav"
+  },
+  {
+    "id": 235,
+    "name": "smeargle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/235.wav"
+  },
+  {
+    "id": 236,
+    "name": "tyrogue",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/236.wav"
+  },
+  {
+    "id": 237,
+    "name": "hitmontop",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/237.wav"
+  },
+  {
+    "id": 238,
+    "name": "smoochum",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/238.wav"
+  },
+  {
+    "id": 239,
+    "name": "elekid",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/239.wav"
+  },
+  {
+    "id": 240,
+    "name": "magby",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/240.wav"
+  },
+  {
+    "id": 241,
+    "name": "miltank",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/241.wav"
+  },
+  {
+    "id": 242,
+    "name": "blissey",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/242.wav"
+  },
+  {
+    "id": 243,
+    "name": "raikou",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/243.wav"
+  },
+  {
+    "id": 244,
+    "name": "entei",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/244.wav"
+  },
+  {
+    "id": 245,
+    "name": "suicune",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/245.wav"
+  },
+  {
+    "id": 246,
+    "name": "larvitar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/246.wav"
+  },
+  {
+    "id": 247,
+    "name": "pupitar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/247.wav"
+  },
+  {
+    "id": 248,
+    "name": "tyranitar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/248.wav"
+  },
+  {
+    "id": 249,
+    "name": "lugia",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/249.wav"
+  },
+  {
+    "id": 250,
+    "name": "ho-oh",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/250.wav"
+  },
+  {
+    "id": 251,
+    "name": "celebi",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/251.wav"
+  },
+  {
+    "id": 252,
+    "name": "treecko",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/252.wav"
+  },
+  {
+    "id": 253,
+    "name": "grovyle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/253.wav"
+  },
+  {
+    "id": 254,
+    "name": "sceptile",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/254.wav"
+  },
+  {
+    "id": 255,
+    "name": "torchic",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/255.wav"
+  },
+  {
+    "id": 256,
+    "name": "combusken",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/256.wav"
+  },
+  {
+    "id": 257,
+    "name": "blaziken",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/257.wav"
+  },
+  {
+    "id": 258,
+    "name": "mudkip",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/258.wav"
+  },
+  {
+    "id": 259,
+    "name": "marshtomp",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/259.wav"
+  },
+  {
+    "id": 260,
+    "name": "swampert",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/260.wav"
+  },
+  {
+    "id": 261,
+    "name": "poochyena",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/261.wav"
+  },
+  {
+    "id": 262,
+    "name": "mightyena",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/262.wav"
+  },
+  {
+    "id": 263,
+    "name": "zigzagoon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/263.wav"
+  },
+  {
+    "id": 264,
+    "name": "linoone",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/264.wav"
+  },
+  {
+    "id": 265,
+    "name": "wurmple",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/265.wav"
+  },
+  {
+    "id": 266,
+    "name": "silcoon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/266.wav"
+  },
+  {
+    "id": 267,
+    "name": "beautifly",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/267.wav"
+  },
+  {
+    "id": 268,
+    "name": "cascoon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/268.wav"
+  },
+  {
+    "id": 269,
+    "name": "dustox",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/269.wav"
+  },
+  {
+    "id": 270,
+    "name": "lotad",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/270.wav"
+  },
+  {
+    "id": 271,
+    "name": "lombre",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/271.wav"
+  },
+  {
+    "id": 272,
+    "name": "ludicolo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/272.wav"
+  },
+  {
+    "id": 273,
+    "name": "seedot",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/273.wav"
+  },
+  {
+    "id": 274,
+    "name": "nuzleaf",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/274.wav"
+  },
+  {
+    "id": 275,
+    "name": "shiftry",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/275.wav"
+  },
+  {
+    "id": 276,
+    "name": "taillow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/276.wav"
+  },
+  {
+    "id": 277,
+    "name": "swellow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/277.wav"
+  },
+  {
+    "id": 278,
+    "name": "wingull",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/278.wav"
+  },
+  {
+    "id": 279,
+    "name": "pelipper",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/279.wav"
+  },
+  {
+    "id": 280,
+    "name": "ralts",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/280.wav"
+  },
+  {
+    "id": 281,
+    "name": "kirlia",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/281.wav"
+  },
+  {
+    "id": 282,
+    "name": "gardevoir",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/282.wav"
+  },
+  {
+    "id": 283,
+    "name": "surskit",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/283.wav"
+  },
+  {
+    "id": 284,
+    "name": "masquerain",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/284.wav"
+  },
+  {
+    "id": 285,
+    "name": "shroomish",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/285.wav"
+  },
+  {
+    "id": 286,
+    "name": "breloom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/286.wav"
+  },
+  {
+    "id": 287,
+    "name": "slakoth",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/287.wav"
+  },
+  {
+    "id": 288,
+    "name": "vigoroth",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/288.wav"
+  },
+  {
+    "id": 289,
+    "name": "slaking",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/289.wav"
+  },
+  {
+    "id": 290,
+    "name": "nincada",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/290.wav"
+  },
+  {
+    "id": 291,
+    "name": "ninjask",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/291.wav"
+  },
+  {
+    "id": 292,
+    "name": "shedinja",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/292.wav"
+  },
+  {
+    "id": 293,
+    "name": "whismur",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/293.wav"
+  },
+  {
+    "id": 294,
+    "name": "loudred",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/294.wav"
+  },
+  {
+    "id": 295,
+    "name": "exploud",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/295.wav"
+  },
+  {
+    "id": 296,
+    "name": "makuhita",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/296.wav"
+  },
+  {
+    "id": 297,
+    "name": "hariyama",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/297.wav"
+  },
+  {
+    "id": 298,
+    "name": "azurill",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/298.wav"
+  },
+  {
+    "id": 299,
+    "name": "nosepass",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/299.wav"
+  },
+  {
+    "id": 300,
+    "name": "skitty",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/300.wav"
+  },
+  {
+    "id": 301,
+    "name": "delcatty",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/301.wav"
+  },
+  {
+    "id": 302,
+    "name": "sableye",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/302.wav"
+  },
+  {
+    "id": 303,
+    "name": "mawile",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/303.wav"
+  },
+  {
+    "id": 304,
+    "name": "aron",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/304.wav"
+  },
+  {
+    "id": 305,
+    "name": "lairon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/305.wav"
+  },
+  {
+    "id": 306,
+    "name": "aggron",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/306.wav"
+  },
+  {
+    "id": 307,
+    "name": "meditite",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/307.wav"
+  },
+  {
+    "id": 308,
+    "name": "medicham",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/308.wav"
+  },
+  {
+    "id": 309,
+    "name": "electrike",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/309.wav"
+  },
+  {
+    "id": 310,
+    "name": "manectric",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/310.wav"
+  },
+  {
+    "id": 311,
+    "name": "plusle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/311.wav"
+  },
+  {
+    "id": 312,
+    "name": "minun",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/312.wav"
+  },
+  {
+    "id": 313,
+    "name": "volbeat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/313.wav"
+  },
+  {
+    "id": 314,
+    "name": "illumise",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/314.wav"
+  },
+  {
+    "id": 315,
+    "name": "roselia",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/315.wav"
+  },
+  {
+    "id": 316,
+    "name": "gulpin",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/316.wav"
+  },
+  {
+    "id": 317,
+    "name": "swalot",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/317.wav"
+  },
+  {
+    "id": 318,
+    "name": "carvanha",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/318.wav"
+  },
+  {
+    "id": 319,
+    "name": "sharpedo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/319.wav"
+  },
+  {
+    "id": 320,
+    "name": "wailmer",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/320.wav"
+  },
+  {
+    "id": 321,
+    "name": "wailord",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/321.wav"
+  },
+  {
+    "id": 322,
+    "name": "numel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/322.wav"
+  },
+  {
+    "id": 323,
+    "name": "camerupt",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/323.wav"
+  },
+  {
+    "id": 324,
+    "name": "torkoal",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/324.wav"
+  },
+  {
+    "id": 325,
+    "name": "spoink",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/325.wav"
+  },
+  {
+    "id": 326,
+    "name": "grumpig",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/326.wav"
+  },
+  {
+    "id": 327,
+    "name": "spinda",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/327.wav"
+  },
+  {
+    "id": 328,
+    "name": "trapinch",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/328.wav"
+  },
+  {
+    "id": 329,
+    "name": "vibrava",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/329.wav"
+  },
+  {
+    "id": 330,
+    "name": "flygon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/330.wav"
+  },
+  {
+    "id": 331,
+    "name": "cacnea",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/331.wav"
+  },
+  {
+    "id": 332,
+    "name": "cacturne",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/332.wav"
+  },
+  {
+    "id": 333,
+    "name": "swablu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/333.wav"
+  },
+  {
+    "id": 334,
+    "name": "altaria",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/334.wav"
+  },
+  {
+    "id": 335,
+    "name": "zangoose",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/335.wav"
+  },
+  {
+    "id": 336,
+    "name": "seviper",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/336.wav"
+  },
+  {
+    "id": 337,
+    "name": "lunatone",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/337.wav"
+  },
+  {
+    "id": 338,
+    "name": "solrock",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/338.wav"
+  },
+  {
+    "id": 339,
+    "name": "barboach",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/339.wav"
+  },
+  {
+    "id": 340,
+    "name": "whiscash",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/340.wav"
+  },
+  {
+    "id": 341,
+    "name": "corphish",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/341.wav"
+  },
+  {
+    "id": 342,
+    "name": "crawdaunt",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/342.wav"
+  },
+  {
+    "id": 343,
+    "name": "baltoy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/343.wav"
+  },
+  {
+    "id": 344,
+    "name": "claydol",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/344.wav"
+  },
+  {
+    "id": 345,
+    "name": "lileep",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/345.wav"
+  },
+  {
+    "id": 346,
+    "name": "cradily",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/346.wav"
+  },
+  {
+    "id": 347,
+    "name": "anorith",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/347.wav"
+  },
+  {
+    "id": 348,
+    "name": "armaldo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/348.wav"
+  },
+  {
+    "id": 349,
+    "name": "feebas",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/349.wav"
+  },
+  {
+    "id": 350,
+    "name": "milotic",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/350.wav"
+  },
+  {
+    "id": 351,
+    "name": "castform",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/351.wav"
+  },
+  {
+    "id": 352,
+    "name": "kecleon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/352.wav"
+  },
+  {
+    "id": 353,
+    "name": "shuppet",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/353.wav"
+  },
+  {
+    "id": 354,
+    "name": "banette",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/354.wav"
+  },
+  {
+    "id": 355,
+    "name": "duskull",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/355.wav"
+  },
+  {
+    "id": 356,
+    "name": "dusclops",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/356.wav"
+  },
+  {
+    "id": 357,
+    "name": "tropius",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/357.wav"
+  },
+  {
+    "id": 358,
+    "name": "chimecho",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/358.wav"
+  },
+  {
+    "id": 359,
+    "name": "absol",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/359.wav"
+  },
+  {
+    "id": 360,
+    "name": "wynaut",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/360.wav"
+  },
+  {
+    "id": 361,
+    "name": "snorunt",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/361.wav"
+  },
+  {
+    "id": 362,
+    "name": "glalie",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/362.wav"
+  },
+  {
+    "id": 363,
+    "name": "spheal",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/363.wav"
+  },
+  {
+    "id": 364,
+    "name": "sealeo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/364.wav"
+  },
+  {
+    "id": 365,
+    "name": "walrein",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/365.wav"
+  },
+  {
+    "id": 366,
+    "name": "clamperl",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/366.wav"
+  },
+  {
+    "id": 367,
+    "name": "huntail",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/367.wav"
+  },
+  {
+    "id": 368,
+    "name": "gorebyss",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/368.wav"
+  },
+  {
+    "id": 369,
+    "name": "relicanth",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/369.wav"
+  },
+  {
+    "id": 370,
+    "name": "luvdisc",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/370.wav"
+  },
+  {
+    "id": 371,
+    "name": "bagon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/371.wav"
+  },
+  {
+    "id": 372,
+    "name": "shelgon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/372.wav"
+  },
+  {
+    "id": 373,
+    "name": "salamence",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/373.wav"
+  },
+  {
+    "id": 374,
+    "name": "beldum",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/374.wav"
+  },
+  {
+    "id": 375,
+    "name": "metang",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/375.wav"
+  },
+  {
+    "id": 376,
+    "name": "metagross",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/376.wav"
+  },
+  {
+    "id": 377,
+    "name": "regirock",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/377.wav"
+  },
+  {
+    "id": 378,
+    "name": "regice",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/378.wav"
+  },
+  {
+    "id": 379,
+    "name": "registeel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/379.wav"
+  },
+  {
+    "id": 380,
+    "name": "latias",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/380.wav"
+  },
+  {
+    "id": 381,
+    "name": "latios",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/381.wav"
+  },
+  {
+    "id": 382,
+    "name": "kyogre",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/382.wav"
+  },
+  {
+    "id": 383,
+    "name": "groudon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/383.wav"
+  },
+  {
+    "id": 384,
+    "name": "rayquaza",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/384.wav"
+  },
+  {
+    "id": 385,
+    "name": "jirachi",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/385.wav"
+  },
+  {
+    "id": 386,
+    "name": "deoxys",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/386.wav"
+  },
+  {
+    "id": 387,
+    "name": "turtwig",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/387.wav"
+  },
+  {
+    "id": 388,
+    "name": "grotle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/388.wav"
+  },
+  {
+    "id": 389,
+    "name": "torterra",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/389.wav"
+  },
+  {
+    "id": 390,
+    "name": "chimchar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/390.wav"
+  },
+  {
+    "id": 391,
+    "name": "monferno",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/391.wav"
+  },
+  {
+    "id": 392,
+    "name": "infernape",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/392.wav"
+  },
+  {
+    "id": 393,
+    "name": "piplup",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/393.wav"
+  },
+  {
+    "id": 394,
+    "name": "prinplup",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/394.wav"
+  },
+  {
+    "id": 395,
+    "name": "empoleon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/395.wav"
+  },
+  {
+    "id": 396,
+    "name": "starly",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/396.wav"
+  },
+  {
+    "id": 397,
+    "name": "staravia",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/397.wav"
+  },
+  {
+    "id": 398,
+    "name": "staraptor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/398.wav"
+  },
+  {
+    "id": 399,
+    "name": "bidoof",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/399.wav"
+  },
+  {
+    "id": 400,
+    "name": "bibarel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/400.wav"
+  },
+  {
+    "id": 401,
+    "name": "kricketot",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/401.wav"
+  },
+  {
+    "id": 402,
+    "name": "kricketune",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/402.wav"
+  },
+  {
+    "id": 403,
+    "name": "shinx",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/403.wav"
+  },
+  {
+    "id": 404,
+    "name": "luxio",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/404.wav"
+  },
+  {
+    "id": 405,
+    "name": "luxray",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/405.wav"
+  },
+  {
+    "id": 406,
+    "name": "budew",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/406.wav"
+  },
+  {
+    "id": 407,
+    "name": "roserade",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/407.wav"
+  },
+  {
+    "id": 408,
+    "name": "cranidos",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/408.wav"
+  },
+  {
+    "id": 409,
+    "name": "rampardos",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/409.wav"
+  },
+  {
+    "id": 410,
+    "name": "shieldon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/410.wav"
+  },
+  {
+    "id": 411,
+    "name": "bastiodon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/411.wav"
+  },
+  {
+    "id": 412,
+    "name": "burmy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/412.wav"
+  },
+  {
+    "id": 413,
+    "name": "wormadam",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/413.wav"
+  },
+  {
+    "id": 414,
+    "name": "mothim",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/414.wav"
+  },
+  {
+    "id": 415,
+    "name": "combee",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/415.wav"
+  },
+  {
+    "id": 416,
+    "name": "vespiquen",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/416.wav"
+  },
+  {
+    "id": 417,
+    "name": "pachirisu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/417.wav"
+  },
+  {
+    "id": 418,
+    "name": "buizel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/418.wav"
+  },
+  {
+    "id": 419,
+    "name": "floatzel",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/419.wav"
+  },
+  {
+    "id": 420,
+    "name": "cherubi",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/420.wav"
+  },
+  {
+    "id": 421,
+    "name": "cherrim",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/421.wav"
+  },
+  {
+    "id": 422,
+    "name": "shellos",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/422.wav"
+  },
+  {
+    "id": 423,
+    "name": "gastrodon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/423.wav"
+  },
+  {
+    "id": 424,
+    "name": "ambipom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/424.wav"
+  },
+  {
+    "id": 425,
+    "name": "drifloon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/425.wav"
+  },
+  {
+    "id": 426,
+    "name": "drifblim",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/426.wav"
+  },
+  {
+    "id": 427,
+    "name": "buneary",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/427.wav"
+  },
+  {
+    "id": 428,
+    "name": "lopunny",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/428.wav"
+  },
+  {
+    "id": 429,
+    "name": "mismagius",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/429.wav"
+  },
+  {
+    "id": 430,
+    "name": "honchkrow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/430.wav"
+  },
+  {
+    "id": 431,
+    "name": "glameow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/431.wav"
+  },
+  {
+    "id": 432,
+    "name": "purugly",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/432.wav"
+  },
+  {
+    "id": 433,
+    "name": "chingling",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/433.wav"
+  },
+  {
+    "id": 434,
+    "name": "stunky",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/434.wav"
+  },
+  {
+    "id": 435,
+    "name": "skuntank",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/435.wav"
+  },
+  {
+    "id": 436,
+    "name": "bronzor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/436.wav"
+  },
+  {
+    "id": 437,
+    "name": "bronzong",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/437.wav"
+  },
+  {
+    "id": 438,
+    "name": "bonsly",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/438.wav"
+  },
+  {
+    "id": 439,
+    "name": "mime-jr",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/439.wav"
+  },
+  {
+    "id": 440,
+    "name": "happiny",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/440.wav"
+  },
+  {
+    "id": 441,
+    "name": "chatot",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/441.wav"
+  },
+  {
+    "id": 442,
+    "name": "spiritomb",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/442.wav"
+  },
+  {
+    "id": 443,
+    "name": "gible",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/443.wav"
+  },
+  {
+    "id": 444,
+    "name": "gabite",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/444.wav"
+  },
+  {
+    "id": 445,
+    "name": "garchomp",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/445.wav"
+  },
+  {
+    "id": 446,
+    "name": "munchlax",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/446.wav"
+  },
+  {
+    "id": 447,
+    "name": "riolu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/447.wav"
+  },
+  {
+    "id": 448,
+    "name": "lucario",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/448.wav"
+  },
+  {
+    "id": 449,
+    "name": "hippopotas",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/449.wav"
+  },
+  {
+    "id": 450,
+    "name": "hippowdon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/450.wav"
+  },
+  {
+    "id": 451,
+    "name": "skorupi",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/451.wav"
+  },
+  {
+    "id": 452,
+    "name": "drapion",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/452.wav"
+  },
+  {
+    "id": 453,
+    "name": "croagunk",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/453.wav"
+  },
+  {
+    "id": 454,
+    "name": "toxicroak",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/454.wav"
+  },
+  {
+    "id": 455,
+    "name": "carnivine",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/455.wav"
+  },
+  {
+    "id": 456,
+    "name": "finneon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/456.wav"
+  },
+  {
+    "id": 457,
+    "name": "lumineon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/457.wav"
+  },
+  {
+    "id": 458,
+    "name": "mantyke",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/458.wav"
+  },
+  {
+    "id": 459,
+    "name": "snover",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/459.wav"
+  },
+  {
+    "id": 460,
+    "name": "abomasnow",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/460.wav"
+  },
+  {
+    "id": 461,
+    "name": "weavile",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/461.wav"
+  },
+  {
+    "id": 462,
+    "name": "magnezone",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/462.wav"
+  },
+  {
+    "id": 463,
+    "name": "lickilicky",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/463.wav"
+  },
+  {
+    "id": 464,
+    "name": "rhyperior",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/464.wav"
+  },
+  {
+    "id": 465,
+    "name": "tangrowth",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/465.wav"
+  },
+  {
+    "id": 466,
+    "name": "electivire",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/466.wav"
+  },
+  {
+    "id": 467,
+    "name": "magmortar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/467.wav"
+  },
+  {
+    "id": 468,
+    "name": "togekiss",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/468.wav"
+  },
+  {
+    "id": 469,
+    "name": "yanmega",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/469.wav"
+  },
+  {
+    "id": 470,
+    "name": "leafeon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/470.wav"
+  },
+  {
+    "id": 471,
+    "name": "glaceon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/471.wav"
+  },
+  {
+    "id": 472,
+    "name": "gliscor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/472.wav"
+  },
+  {
+    "id": 473,
+    "name": "mamoswine",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/473.wav"
+  },
+  {
+    "id": 474,
+    "name": "porygon-z",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/474.wav"
+  },
+  {
+    "id": 475,
+    "name": "gallade",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/475.wav"
+  },
+  {
+    "id": 476,
+    "name": "probopass",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/476.wav"
+  },
+  {
+    "id": 477,
+    "name": "dusknoir",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/477.wav"
+  },
+  {
+    "id": 478,
+    "name": "froslass",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/478.wav"
+  },
+  {
+    "id": 479,
+    "name": "rotom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/479.wav"
+  },
+  {
+    "id": 480,
+    "name": "uxie",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/480.wav"
+  },
+  {
+    "id": 481,
+    "name": "mesprit",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/481.wav"
+  },
+  {
+    "id": 482,
+    "name": "azelf",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/482.wav"
+  },
+  {
+    "id": 483,
+    "name": "dialga",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/483.wav"
+  },
+  {
+    "id": 484,
+    "name": "palkia",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/484.wav"
+  },
+  {
+    "id": 485,
+    "name": "heatran",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/485.wav"
+  },
+  {
+    "id": 486,
+    "name": "regigigas",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/486.wav"
+  },
+  {
+    "id": 487,
+    "name": "giratina",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/487.wav"
+  },
+  {
+    "id": 488,
+    "name": "cresselia",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/488.wav"
+  },
+  {
+    "id": 489,
+    "name": "phione",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/489.wav"
+  },
+  {
+    "id": 490,
+    "name": "manaphy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/490.wav"
+  },
+  {
+    "id": 491,
+    "name": "darkrai",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/491.wav"
+  },
+  {
+    "id": 492,
+    "name": "shaymin",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/492.wav"
+  },
+  {
+    "id": 493,
+    "name": "arceus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/493.wav"
+  },
+  {
+    "id": 494,
+    "name": "victini",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/494.wav"
+  },
+  {
+    "id": 495,
+    "name": "snivy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/495.wav"
+  },
+  {
+    "id": 496,
+    "name": "servine",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/496.wav"
+  },
+  {
+    "id": 497,
+    "name": "serperior",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/497.wav"
+  },
+  {
+    "id": 498,
+    "name": "tepig",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/498.wav"
+  },
+  {
+    "id": 499,
+    "name": "pignite",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/499.wav"
+  },
+  {
+    "id": 500,
+    "name": "emboar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/500.wav"
+  },
+  {
+    "id": 501,
+    "name": "oshawott",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/501.wav"
+  },
+  {
+    "id": 502,
+    "name": "dewott",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/502.wav"
+  },
+  {
+    "id": 503,
+    "name": "samurott",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/503.wav"
+  },
+  {
+    "id": 504,
+    "name": "patrat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/504.wav"
+  },
+  {
+    "id": 505,
+    "name": "watchog",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/505.wav"
+  },
+  {
+    "id": 506,
+    "name": "lillipup",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/506.wav"
+  },
+  {
+    "id": 507,
+    "name": "herdier",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/507.wav"
+  },
+  {
+    "id": 508,
+    "name": "stoutland",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/508.wav"
+  },
+  {
+    "id": 509,
+    "name": "purrloin",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/509.wav"
+  },
+  {
+    "id": 510,
+    "name": "liepard",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/510.wav"
+  },
+  {
+    "id": 511,
+    "name": "pansage",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/511.wav"
+  },
+  {
+    "id": 512,
+    "name": "simisage",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/512.wav"
+  },
+  {
+    "id": 513,
+    "name": "pansear",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/513.wav"
+  },
+  {
+    "id": 514,
+    "name": "simisear",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/514.wav"
+  },
+  {
+    "id": 515,
+    "name": "panpour",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/515.wav"
+  },
+  {
+    "id": 516,
+    "name": "simipour",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/516.wav"
+  },
+  {
+    "id": 517,
+    "name": "munna",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/517.wav"
+  },
+  {
+    "id": 518,
+    "name": "musharna",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/518.wav"
+  },
+  {
+    "id": 519,
+    "name": "pidove",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/519.wav"
+  },
+  {
+    "id": 520,
+    "name": "tranquill",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/520.wav"
+  },
+  {
+    "id": 521,
+    "name": "unfezant",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/521.wav"
+  },
+  {
+    "id": 522,
+    "name": "blitzle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/522.wav"
+  },
+  {
+    "id": 523,
+    "name": "zebstrika",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/523.wav"
+  },
+  {
+    "id": 524,
+    "name": "roggenrola",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/524.wav"
+  },
+  {
+    "id": 525,
+    "name": "boldore",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/525.wav"
+  },
+  {
+    "id": 526,
+    "name": "gigalith",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/526.wav"
+  },
+  {
+    "id": 527,
+    "name": "woobat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/527.wav"
+  },
+  {
+    "id": 528,
+    "name": "swoobat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/528.wav"
+  },
+  {
+    "id": 529,
+    "name": "drilbur",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/529.wav"
+  },
+  {
+    "id": 530,
+    "name": "excadrill",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/530.wav"
+  },
+  {
+    "id": 531,
+    "name": "audino",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/531.wav"
+  },
+  {
+    "id": 532,
+    "name": "timburr",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/532.wav"
+  },
+  {
+    "id": 533,
+    "name": "gurdurr",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/533.wav"
+  },
+  {
+    "id": 534,
+    "name": "conkeldurr",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/534.wav"
+  },
+  {
+    "id": 535,
+    "name": "tympole",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/535.wav"
+  },
+  {
+    "id": 536,
+    "name": "palpitoad",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/536.wav"
+  },
+  {
+    "id": 537,
+    "name": "seismitoad",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/537.wav"
+  },
+  {
+    "id": 538,
+    "name": "throh",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/538.wav"
+  },
+  {
+    "id": 539,
+    "name": "sawk",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/539.wav"
+  },
+  {
+    "id": 540,
+    "name": "sewaddle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/540.wav"
+  },
+  {
+    "id": 541,
+    "name": "swadloon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/541.wav"
+  },
+  {
+    "id": 542,
+    "name": "leavanny",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/542.wav"
+  },
+  {
+    "id": 543,
+    "name": "venipede",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/543.wav"
+  },
+  {
+    "id": 544,
+    "name": "whirlipede",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/544.wav"
+  },
+  {
+    "id": 545,
+    "name": "scolipede",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/545.wav"
+  },
+  {
+    "id": 546,
+    "name": "cottonee",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/546.wav"
+  },
+  {
+    "id": 547,
+    "name": "whimsicott",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/547.wav"
+  },
+  {
+    "id": 548,
+    "name": "petilil",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/548.wav"
+  },
+  {
+    "id": 549,
+    "name": "lilligant",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/549.wav"
+  },
+  {
+    "id": 550,
+    "name": "basculin",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/550.wav"
+  },
+  {
+    "id": 551,
+    "name": "sandile",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/551.wav"
+  },
+  {
+    "id": 552,
+    "name": "krokorok",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/552.wav"
+  },
+  {
+    "id": 553,
+    "name": "krookodile",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/553.wav"
+  },
+  {
+    "id": 554,
+    "name": "darumaka",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/554.wav"
+  },
+  {
+    "id": 555,
+    "name": "darmanitan",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/555.wav"
+  },
+  {
+    "id": 556,
+    "name": "maractus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/556.wav"
+  },
+  {
+    "id": 557,
+    "name": "dwebble",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/557.wav"
+  },
+  {
+    "id": 558,
+    "name": "crustle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/558.wav"
+  },
+  {
+    "id": 559,
+    "name": "scraggy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/559.wav"
+  },
+  {
+    "id": 560,
+    "name": "scrafty",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/560.wav"
+  },
+  {
+    "id": 561,
+    "name": "sigilyph",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/561.wav"
+  },
+  {
+    "id": 562,
+    "name": "yamask",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/562.wav"
+  },
+  {
+    "id": 563,
+    "name": "cofagrigus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/563.wav"
+  },
+  {
+    "id": 564,
+    "name": "tirtouga",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/564.wav"
+  },
+  {
+    "id": 565,
+    "name": "carracosta",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/565.wav"
+  },
+  {
+    "id": 566,
+    "name": "archen",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/566.wav"
+  },
+  {
+    "id": 567,
+    "name": "archeops",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/567.wav"
+  },
+  {
+    "id": 568,
+    "name": "trubbish",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/568.wav"
+  },
+  {
+    "id": 569,
+    "name": "garbodor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/569.wav"
+  },
+  {
+    "id": 570,
+    "name": "zorua",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/570.wav"
+  },
+  {
+    "id": 571,
+    "name": "zoroark",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/571.wav"
+  },
+  {
+    "id": 572,
+    "name": "minccino",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/572.wav"
+  },
+  {
+    "id": 573,
+    "name": "cinccino",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/573.wav"
+  },
+  {
+    "id": 574,
+    "name": "gothita",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/574.wav"
+  },
+  {
+    "id": 575,
+    "name": "gothorita",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/575.wav"
+  },
+  {
+    "id": 576,
+    "name": "gothitelle",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/576.wav"
+  },
+  {
+    "id": 577,
+    "name": "solosis",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/577.wav"
+  },
+  {
+    "id": 578,
+    "name": "duosion",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/578.wav"
+  },
+  {
+    "id": 579,
+    "name": "reuniclus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/579.wav"
+  },
+  {
+    "id": 580,
+    "name": "ducklett",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/580.wav"
+  },
+  {
+    "id": 581,
+    "name": "swanna",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/581.wav"
+  },
+  {
+    "id": 582,
+    "name": "vanillite",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/582.wav"
+  },
+  {
+    "id": 583,
+    "name": "vanillish",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/583.wav"
+  },
+  {
+    "id": 584,
+    "name": "vanilluxe",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/584.wav"
+  },
+  {
+    "id": 585,
+    "name": "deerling",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/585.wav"
+  },
+  {
+    "id": 586,
+    "name": "sawsbuck",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/586.wav"
+  },
+  {
+    "id": 587,
+    "name": "emolga",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/587.wav"
+  },
+  {
+    "id": 588,
+    "name": "karrablast",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/588.wav"
+  },
+  {
+    "id": 589,
+    "name": "escavalier",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/589.wav"
+  },
+  {
+    "id": 590,
+    "name": "foongus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/590.wav"
+  },
+  {
+    "id": 591,
+    "name": "amoonguss",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/591.wav"
+  },
+  {
+    "id": 592,
+    "name": "frillish",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/592.wav"
+  },
+  {
+    "id": 593,
+    "name": "jellicent",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/593.wav"
+  },
+  {
+    "id": 594,
+    "name": "alomomola",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/594.wav"
+  },
+  {
+    "id": 595,
+    "name": "joltik",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/595.wav"
+  },
+  {
+    "id": 596,
+    "name": "galvantula",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/596.wav"
+  },
+  {
+    "id": 597,
+    "name": "ferroseed",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/597.wav"
+  },
+  {
+    "id": 598,
+    "name": "ferrothorn",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/598.wav"
+  },
+  {
+    "id": 599,
+    "name": "klink",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/599.wav"
+  },
+  {
+    "id": 600,
+    "name": "klang",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/600.wav"
+  },
+  {
+    "id": 601,
+    "name": "klinklang",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/601.wav"
+  },
+  {
+    "id": 602,
+    "name": "tynamo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/602.wav"
+  },
+  {
+    "id": 603,
+    "name": "eelektrik",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/603.wav"
+  },
+  {
+    "id": 604,
+    "name": "eelektross",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/604.wav"
+  },
+  {
+    "id": 605,
+    "name": "elgyem",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/605.wav"
+  },
+  {
+    "id": 606,
+    "name": "beheeyem",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/606.wav"
+  },
+  {
+    "id": 607,
+    "name": "litwick",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/607.wav"
+  },
+  {
+    "id": 608,
+    "name": "lampent",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/608.wav"
+  },
+  {
+    "id": 609,
+    "name": "chandelure",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/609.wav"
+  },
+  {
+    "id": 610,
+    "name": "axew",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/610.wav"
+  },
+  {
+    "id": 611,
+    "name": "fraxure",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/611.wav"
+  },
+  {
+    "id": 612,
+    "name": "haxorus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/612.wav"
+  },
+  {
+    "id": 613,
+    "name": "cubchoo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/613.wav"
+  },
+  {
+    "id": 614,
+    "name": "beartic",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/614.wav"
+  },
+  {
+    "id": 615,
+    "name": "cryogonal",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/615.wav"
+  },
+  {
+    "id": 616,
+    "name": "shelmet",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/616.wav"
+  },
+  {
+    "id": 617,
+    "name": "accelgor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/617.wav"
+  },
+  {
+    "id": 618,
+    "name": "stunfisk",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/618.wav"
+  },
+  {
+    "id": 619,
+    "name": "mienfoo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/619.wav"
+  },
+  {
+    "id": 620,
+    "name": "mienshao",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/620.wav"
+  },
+  {
+    "id": 621,
+    "name": "druddigon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/621.wav"
+  },
+  {
+    "id": 622,
+    "name": "golett",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/622.wav"
+  },
+  {
+    "id": 623,
+    "name": "golurk",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/623.wav"
+  },
+  {
+    "id": 624,
+    "name": "pawniard",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/624.wav"
+  },
+  {
+    "id": 625,
+    "name": "bisharp",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/625.wav"
+  },
+  {
+    "id": 626,
+    "name": "bouffalant",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/626.wav"
+  },
+  {
+    "id": 627,
+    "name": "rufflet",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/627.wav"
+  },
+  {
+    "id": 628,
+    "name": "braviary",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/628.wav"
+  },
+  {
+    "id": 629,
+    "name": "vullaby",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/629.wav"
+  },
+  {
+    "id": 630,
+    "name": "mandibuzz",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/630.wav"
+  },
+  {
+    "id": 631,
+    "name": "heatmor",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/631.wav"
+  },
+  {
+    "id": 632,
+    "name": "durant",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/632.wav"
+  },
+  {
+    "id": 633,
+    "name": "deino",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/633.wav"
+  },
+  {
+    "id": 634,
+    "name": "zweilous",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/634.wav"
+  },
+  {
+    "id": 635,
+    "name": "hydreigon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/635.wav"
+  },
+  {
+    "id": 636,
+    "name": "larvesta",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/636.wav"
+  },
+  {
+    "id": 637,
+    "name": "volcarona",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/637.wav"
+  },
+  {
+    "id": 638,
+    "name": "cobalion",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/638.wav"
+  },
+  {
+    "id": 639,
+    "name": "terrakion",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/639.wav"
+  },
+  {
+    "id": 640,
+    "name": "virizion",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/640.wav"
+  },
+  {
+    "id": 641,
+    "name": "tornadus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/641.wav"
+  },
+  {
+    "id": 642,
+    "name": "thundurus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/642.wav"
+  },
+  {
+    "id": 643,
+    "name": "reshiram",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/643.wav"
+  },
+  {
+    "id": 644,
+    "name": "zekrom",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/644.wav"
+  },
+  {
+    "id": 645,
+    "name": "landorus",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/645.wav"
+  },
+  {
+    "id": 646,
+    "name": "kyurem",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/646.wav"
+  },
+  {
+    "id": 647,
+    "name": "keldeo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/647.wav"
+  },
+  {
+    "id": 648,
+    "name": "meloetta",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/648.wav"
+  },
+  {
+    "id": 649,
+    "name": "genesect",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/649.wav"
+  },
+  {
+    "id": 651,
+    "name": "quilladin",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/651.wav"
+  },
+  {
+    "id": 652,
+    "name": "chesnaught",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/652.wav"
+  },
+  {
+    "id": 653,
+    "name": "fennekin",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/653.wav"
+  },
+  {
+    "id": 654,
+    "name": "braixen",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/654.wav"
+  },
+  {
+    "id": 656,
+    "name": "froakie",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/656.wav"
+  },
+  {
+    "id": 658,
+    "name": "greninja",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/658.wav"
+  },
+  {
+    "id": 661,
+    "name": "fletchling",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/661.wav"
+  },
+  {
+    "id": 662,
+    "name": "fletchinder",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/662.wav"
+  },
+  {
+    "id": 663,
+    "name": "talonflame",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/663.wav"
+  },
+  {
+    "id": 664,
+    "name": "scatterbug",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/664.wav"
+  },
+  {
+    "id": 665,
+    "name": "spewpa",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/665.wav"
+  },
+  {
+    "id": 666,
+    "name": "vivillon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/666.wav"
+  },
+  {
+    "id": 667,
+    "name": "litleo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/667.wav"
+  },
+  {
+    "id": 668,
+    "name": "pyroar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/668.wav"
+  },
+  {
+    "id": 669,
+    "name": "flabebe",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/669.wav"
+  },
+  {
+    "id": 670,
+    "name": "floette",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/670.wav"
+  },
+  {
+    "id": 671,
+    "name": "florges",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/671.wav"
+  },
+  {
+    "id": 672,
+    "name": "skiddo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/672.wav"
+  },
+  {
+    "id": 674,
+    "name": "pancham",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/674.wav"
+  },
+  {
+    "id": 675,
+    "name": "pangoro",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/675.wav"
+  },
+  {
+    "id": 679,
+    "name": "honedge",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/679.wav"
+  },
+  {
+    "id": 681,
+    "name": "aegislash",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/681.wav"
+  },
+  {
+    "id": 682,
+    "name": "spritzee",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/682.wav"
+  },
+  {
+    "id": 684,
+    "name": "swirlix",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/684.wav"
+  },
+  {
+    "id": 685,
+    "name": "slurpuff",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/685.wav"
+  },
+  {
+    "id": 686,
+    "name": "inkay",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/686.wav"
+  },
+  {
+    "id": 687,
+    "name": "malamar",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/687.wav"
+  },
+  {
+    "id": 688,
+    "name": "binacle",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/688.wav"
+  },
+  {
+    "id": 691,
+    "name": "dragalge",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/691.wav"
+  },
+  {
+    "id": 692,
+    "name": "clauncher",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/692.wav"
+  },
+  {
+    "id": 693,
+    "name": "clawitzer",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/693.wav"
+  },
+  {
+    "id": 694,
+    "name": "helioptile",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/694.wav"
+  },
+  {
+    "id": 696,
+    "name": "tyrunt",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/696.wav"
+  },
+  {
+    "id": 697,
+    "name": "tyrantrum",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/697.wav"
+  },
+  {
+    "id": 698,
+    "name": "amaura",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/698.wav"
+  },
+  {
+    "id": 700,
+    "name": "sylveon",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/700.wav"
+  },
+  {
+    "id": 702,
+    "name": "dedenne",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/702.wav"
+  },
+  {
+    "id": 703,
+    "name": "carbink",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/703.wav"
+  },
+  {
+    "id": 704,
+    "name": "goomy",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/704.wav"
+  },
+  {
+    "id": 705,
+    "name": "sliggoo",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/705.wav"
+  },
+  {
+    "id": 706,
+    "name": "goodra",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/706.wav"
+  },
+  {
+    "id": 707,
+    "name": "klefki",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/707.wav"
+  },
+  {
+    "id": 708,
+    "name": "phantump",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/708.wav"
+  },
+  {
+    "id": 709,
+    "name": "trevenant",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/709.wav"
+  },
+  {
+    "id": 712,
+    "name": "bergmite",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/712.wav"
+  },
+  {
+    "id": 713,
+    "name": "avalugg",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/713.wav"
+  },
+  {
+    "id": 714,
+    "name": "noibat",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/714.wav"
+  },
+  {
+    "id": 715,
+    "name": "noivern",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/715.wav"
+  },
+  {
+    "id": 716,
+    "name": "xerneas",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/716.wav"
+  },
+  {
+    "id": 717,
+    "name": "yveltal",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/717.wav"
+  },
+  {
+    "id": 718,
+    "name": "zygarde",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/718.wav"
+  },
+  {
+    "id": 719,
+    "name": "diancie",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/719.wav"
+  },
+  {
+    "id": 720,
+    "name": "hoopa",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/720.wav"
+  },
+  {
+    "id": 721,
+    "name": "volcanion",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/721.wav"
+  },
+  {
+    "id": 722,
+    "name": "rowlet",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/722.wav"
+  },
+  {
+    "id": 725,
+    "name": "litten",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/725.wav"
+  },
+  {
+    "id": 727,
+    "name": "incineroar",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/727.wav"
+  },
+  {
+    "id": 728,
+    "name": "popplio",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/728.wav"
+  },
+  {
+    "id": 729,
+    "name": "brionne",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/729.wav"
+  },
+  {
+    "id": 730,
+    "name": "primarina",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/730.wav"
+  },
+  {
+    "id": 731,
+    "name": "pikipek",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/731.wav"
+  },
+  {
+    "id": 732,
+    "name": "trumbeak",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/732.wav"
+  },
+  {
+    "id": 733,
+    "name": "toucannon",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/733.wav"
+  },
+  {
+    "id": 734,
+    "name": "yungoos",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/734.wav"
+  },
+  {
+    "id": 735,
+    "name": "gumshoos",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/735.wav"
+  },
+  {
+    "id": 736,
+    "name": "grubbin",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/736.wav"
+  },
+  {
+    "id": 737,
+    "name": "charjabug",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/737.wav"
+  },
+  {
+    "id": 738,
+    "name": "vikavolt",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/738.wav"
+  },
+  {
+    "id": 739,
+    "name": "crabrawler",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/739.wav"
+  },
+  {
+    "id": 740,
+    "name": "crabominable",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/740.wav"
+  },
+  {
+    "id": 742,
+    "name": "cutiefly",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/742.wav"
+  },
+  {
+    "id": 743,
+    "name": "ribombee",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/743.wav"
+  },
+  {
+    "id": 744,
+    "name": "rockruff",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/744.wav"
+  },
+  {
+    "id": 745,
+    "name": "lycanroc",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/745.wav"
+  },
+  {
+    "id": 746,
+    "name": "wishiwashi",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/746.wav"
+  },
+  {
+    "id": 748,
+    "name": "toxapex",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/748.wav"
+  },
+  {
+    "id": 749,
+    "name": "mudbray",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/749.wav"
+  },
+  {
+    "id": 750,
+    "name": "mudsdale",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/750.wav"
+  },
+  {
+    "id": 751,
+    "name": "dewpider",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/751.wav"
+  },
+  {
+    "id": 752,
+    "name": "araquanid",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/752.wav"
+  },
+  {
+    "id": 753,
+    "name": "fomantis",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/753.wav"
+  },
+  {
+    "id": 754,
+    "name": "lurantis",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/754.wav"
+  },
+  {
+    "id": 755,
+    "name": "morelull",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/755.wav"
+  },
+  {
+    "id": 756,
+    "name": "shiinotic",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/756.wav"
+  },
+  {
+    "id": 759,
+    "name": "stufful",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/759.wav"
+  },
+  {
+    "id": 760,
+    "name": "bewear",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/760.wav"
+  },
+  {
+    "id": 761,
+    "name": "bounsweet",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/761.wav"
+  },
+  {
+    "id": 762,
+    "name": "steenee",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/762.wav"
+  },
+  {
+    "id": 764,
+    "name": "comfey",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/764.wav"
+  },
+  {
+    "id": 767,
+    "name": "wimpod",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/767.wav"
+  },
+  {
+    "id": 769,
+    "name": "sandygast",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/769.wav"
+  },
+  {
+    "id": 770,
+    "name": "palossand",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/770.wav"
+  },
+  {
+    "id": 771,
+    "name": "pyukumuku",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/771.wav"
+  },
+  {
+    "id": 772,
+    "name": "type-null",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/772.wav"
+  },
+  {
+    "id": 773,
+    "name": "silvally",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/773.wav"
+  },
+  {
+    "id": 774,
+    "name": "minior",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/774.wav"
+  },
+  {
+    "id": 775,
+    "name": "komala",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/775.wav"
+  },
+  {
+    "id": 776,
+    "name": "turtonator",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/776.wav"
+  },
+  {
+    "id": 777,
+    "name": "togedemaru",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/777.wav"
+  },
+  {
+    "id": 778,
+    "name": "mimikyu",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/778.wav"
+  },
+  {
+    "id": 779,
+    "name": "bruxish",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/779.wav"
+  },
+  {
+    "id": 780,
+    "name": "drampa",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/780.wav"
+  },
+  {
+    "id": 781,
+    "name": "dhelmise",
+    "source": "itch",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/781.wav"
+  },
+  {
+    "id": 782,
+    "name": "jangmo-o",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/782.wav"
+  },
+  {
+    "id": 783,
+    "name": "hakamo-o",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/783.wav"
+  },
+  {
+    "id": 784,
+    "name": "kommo-o",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/784.wav"
+  },
+  {
+    "id": 785,
+    "name": "tapu-koko",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/785.wav"
+  },
+  {
+    "id": 786,
+    "name": "tapu-lele",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/786.wav"
+  },
+  {
+    "id": 787,
+    "name": "tapu-bulu",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/787.wav"
+  },
+  {
+    "id": 789,
+    "name": "cosmog",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/789.wav"
+  },
+  {
+    "id": 790,
+    "name": "cosmoem",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/790.wav"
+  },
+  {
+    "id": 791,
+    "name": "solgaleo",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/791.wav"
+  },
+  {
+    "id": 792,
+    "name": "lunala",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/792.wav"
+  },
+  {
+    "id": 793,
+    "name": "nihilego",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/793.wav"
+  },
+  {
+    "id": 794,
+    "name": "buzzwole",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/794.wav"
+  },
+  {
+    "id": 795,
+    "name": "pheromosa",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/795.wav"
+  },
+  {
+    "id": 796,
+    "name": "xurkitree",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/796.wav"
+  },
+  {
+    "id": 797,
+    "name": "celesteela",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/797.wav"
+  },
+  {
+    "id": 798,
+    "name": "kartana",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/798.wav"
+  },
+  {
+    "id": 800,
+    "name": "necrozma",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/800.wav"
+  },
+  {
+    "id": 801,
+    "name": "magearna",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/801.wav"
+  },
+  {
+    "id": 802,
+    "name": "marshadow",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/802.wav"
+  },
+  {
+    "id": 804,
+    "name": "naganadel",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/804.wav"
+  },
+  {
+    "id": 805,
+    "name": "stakataka",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/805.wav"
+  },
+  {
+    "id": 806,
+    "name": "blacephalon",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/806.wav"
+  },
+  {
+    "id": 807,
+    "name": "zeraora",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/807.wav"
+  },
+  {
+    "id": 808,
+    "name": "meltan",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/808.wav"
+  },
+  {
+    "id": 809,
+    "name": "melmetal",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/809.wav"
+  },
+  {
+    "id": 810,
+    "name": "grookey",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/810.wav"
+  },
+  {
+    "id": 811,
+    "name": "thwackey",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/811.wav"
+  },
+  {
+    "id": 813,
+    "name": "scorbunny",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/813.wav"
+  },
+  {
+    "id": 814,
+    "name": "raboot",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/814.wav"
+  },
+  {
+    "id": 816,
+    "name": "sobble",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/816.wav"
+  },
+  {
+    "id": 817,
+    "name": "drizzile",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/817.wav"
+  },
+  {
+    "id": 818,
+    "name": "inteleon",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/818.wav"
+  },
+  {
+    "id": 821,
+    "name": "rookidee",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/821.wav"
+  },
+  {
+    "id": 822,
+    "name": "corvisquire",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/822.wav"
+  },
+  {
+    "id": 823,
+    "name": "corviknight",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/823.wav"
+  },
+  {
+    "id": 824,
+    "name": "blipbug",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/824.wav"
+  },
+  {
+    "id": 830,
+    "name": "eldegoss",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/830.wav"
+  },
+  {
+    "id": 831,
+    "name": "wooloo",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/831.wav"
+  },
+  {
+    "id": 832,
+    "name": "dubwool",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/832.wav"
+  },
+  {
+    "id": 833,
+    "name": "chewtle",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/833.wav"
+  },
+  {
+    "id": 834,
+    "name": "drednaw",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/834.wav"
+  },
+  {
+    "id": 835,
+    "name": "yamper",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/835.wav"
+  },
+  {
+    "id": 837,
+    "name": "rolycoly",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/837.wav"
+  },
+  {
+    "id": 838,
+    "name": "carkol",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/838.wav"
+  },
+  {
+    "id": 839,
+    "name": "coalossal",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/839.wav"
+  },
+  {
+    "id": 840,
+    "name": "applin",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/840.wav"
+  },
+  {
+    "id": 843,
+    "name": "silicobra",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/843.wav"
+  },
+  {
+    "id": 844,
+    "name": "sandaconda",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/844.wav"
+  },
+  {
+    "id": 845,
+    "name": "cramorant",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/845.wav"
+  },
+  {
+    "id": 846,
+    "name": "arrokuda",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/846.wav"
+  },
+  {
+    "id": 847,
+    "name": "barraskewda",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/847.wav"
+  },
+  {
+    "id": 848,
+    "name": "toxel",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/848.wav"
+  },
+  {
+    "id": 849,
+    "name": "toxtricity",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/849.wav"
+  },
+  {
+    "id": 852,
+    "name": "clobbopus",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/852.wav"
+  },
+  {
+    "id": 856,
+    "name": "hatenna",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/856.wav"
+  },
+  {
+    "id": 858,
+    "name": "hatterene",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/858.wav"
+  },
+  {
+    "id": 859,
+    "name": "impidimp",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/859.wav"
+  },
+  {
+    "id": 861,
+    "name": "grimmsnarl",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/861.wav"
+  },
+  {
+    "id": 862,
+    "name": "obstagoon",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/862.wav"
+  },
+  {
+    "id": 863,
+    "name": "perrserker",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/863.wav"
+  },
+  {
+    "id": 864,
+    "name": "cursola",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/864.wav"
+  },
+  {
+    "id": 866,
+    "name": "mr-rime",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/866.wav"
+  },
+  {
+    "id": 867,
+    "name": "runerigus",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/867.wav"
+  },
+  {
+    "id": 868,
+    "name": "milcery",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/868.wav"
+  },
+  {
+    "id": 869,
+    "name": "alcremie",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/869.wav"
+  },
+  {
+    "id": 870,
+    "name": "falinks",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/870.wav"
+  },
+  {
+    "id": 871,
+    "name": "pincurchin",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/871.wav"
+  },
+  {
+    "id": 872,
+    "name": "snom",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/872.wav"
+  },
+  {
+    "id": 873,
+    "name": "frosmoth",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/873.wav"
+  },
+  {
+    "id": 874,
+    "name": "stonjourner",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/874.wav"
+  },
+  {
+    "id": 875,
+    "name": "eiscue",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/875.wav"
+  },
+  {
+    "id": 876,
+    "name": "indeedee",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/876.wav"
+  },
+  {
+    "id": 877,
+    "name": "morpeko",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/877.wav"
+  },
+  {
+    "id": 878,
+    "name": "cufant",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/878.wav"
+  },
+  {
+    "id": 880,
+    "name": "dracozolt",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/880.wav"
+  },
+  {
+    "id": 882,
+    "name": "dracovish",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/882.wav"
+  },
+  {
+    "id": 883,
+    "name": "arctovish",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/883.wav"
+  },
+  {
+    "id": 884,
+    "name": "duraludon",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/884.wav"
+  },
+  {
+    "id": 885,
+    "name": "dreepy",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/885.wav"
+  },
+  {
+    "id": 886,
+    "name": "drakloak",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/886.wav"
+  },
+  {
+    "id": 887,
+    "name": "dragapult",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/887.wav"
+  },
+  {
+    "id": 888,
+    "name": "zacian",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/888.wav"
+  },
+  {
+    "id": 889,
+    "name": "zamazenta",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/889.wav"
+  },
+  {
+    "id": 890,
+    "name": "eternatus",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/890.wav"
+  },
+  {
+    "id": 895,
+    "name": "regidrago",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/895.wav"
+  },
+  {
+    "id": 896,
+    "name": "glastrier",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/896.wav"
+  },
+  {
+    "id": 898,
+    "name": "calyrex",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/898.wav"
+  },
+  {
+    "id": 899,
+    "name": "wyrdeer",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/899.wav"
+  },
+  {
+    "id": 901,
+    "name": "ursaluna",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/901.wav"
+  },
+  {
+    "id": 902,
+    "name": "basculegion",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/902.wav"
+  },
+  {
+    "id": 904,
+    "name": "overqwil",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/904.wav"
+  },
+  {
+    "id": 924,
+    "name": "tandemaus",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/924.wav"
+  },
+  {
+    "id": 925,
+    "name": "maushold",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/925.wav"
+  },
+  {
+    "id": 932,
+    "name": "nacli",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/932.wav"
+  },
+  {
+    "id": 938,
+    "name": "tadbulb",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/938.wav"
+  },
+  {
+    "id": 969,
+    "name": "glimmet",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/969.wav"
+  },
+  {
+    "id": 978,
+    "name": "tatsugiri",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/978.wav"
+  },
+  {
+    "id": 980,
+    "name": "clodsire",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/980.wav"
+  },
+  {
+    "id": 984,
+    "name": "great-tusk",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/984.wav"
+  },
+  {
+    "id": 987,
+    "name": "flutter-mane",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/987.wav"
+  },
+  {
+    "id": 992,
+    "name": "iron-hands",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/992.wav"
+  },
+  {
+    "id": 994,
+    "name": "iron-moth",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/994.wav"
+  },
+  {
+    "id": 995,
+    "name": "iron-thorns",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/995.wav"
+  },
+  {
+    "id": 996,
+    "name": "frigibax",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/996.wav"
+  },
+  {
+    "id": 997,
+    "name": "arctibax",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/997.wav"
+  },
+  {
+    "id": 999,
+    "name": "gimmighoul",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/999.wav"
+  },
+  {
+    "id": 1000,
+    "name": "gholdengo",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/1000.wav"
+  },
+  {
+    "id": 1001,
+    "name": "wo-chien",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/1001.wav"
+  },
+  {
+    "id": 1002,
+    "name": "chien-pao",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/1002.wav"
+  },
+  {
+    "id": 1003,
+    "name": "ting-lu",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/1003.wav"
+  },
+  {
+    "id": 1004,
+    "name": "chi-yu",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/1004.wav"
+  },
+  {
+    "id": 1006,
+    "name": "iron-valiant",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/1006.wav"
+  },
+  {
+    "id": 1008,
+    "name": "miraidon",
+    "source": "pixelmon",
+    "resourceStatus": "ready",
+    "deliveryPath": "audio/1008.wav"
+  },
+  {
+    "id": 1019,
+    "name": "hydrapple",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/1019.wav"
+  },
+  {
+    "id": 1020,
+    "name": "gouging-fire",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/1020.wav"
+  },
+  {
+    "id": 1024,
+    "name": "terapagos",
+    "source": "pokeapi-latest",
+    "temporary": true,
+    "resourceStatus": "ready",
+    "replacementTask": "POKE-31",
+    "deliveryPath": "audio/1024.wav"
+  }
+]

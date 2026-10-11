@@ -1,0 +1,71 @@
+{
+  "source": "_sources/tables-atlas-v1.png",
+  "promptFile": "_sources/tables-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "table-t1",
+      "name": "Круглый",
+      "displayWidth": 102.21,
+      "category": "tables",
+      "row": 0,
+      "col": 0,
+      "footAnchor": [
+        0.5,
+        0.94
+      ]
+    },
+    {
+      "id": "table-t2",
+      "name": "С ящиком",
+      "displayWidth": 113.95,
+      "category": "tables",
+      "row": 0,
+      "col": 1,
+      "footAnchor": [
+        0.5,
+        0.94
+      ]
+    },
+    {
+      "id": "table-t3",
+      "name": "Сундук",
+      "displayWidth": 145.028,
+      "category": "tables",
+      "row": 1,
+      "col": 0,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        0,
+        627,
+        646,
+        1254
+      ]
+    },
+    {
+      "id": "table-t4",
+      "name": "Овальный",
+      "displayWidth": 155.387,
+      "category": "tables",
+      "row": 1,
+      "col": 1,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        646,
+        627,
+        1254,
+        1254
+      ]
+    }
+  ]
+}

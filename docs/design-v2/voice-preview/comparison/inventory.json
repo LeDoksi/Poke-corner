@@ -1,0 +1,134 @@
+[
+  {
+    "id": 25,
+    "name": "pikachu",
+    "newArchiveMember": "Pokemon Anime Cries/Gen 1 - Kanto/025.wav",
+    "oldPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\pikachu.wav",
+    "newPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\comparison\\itch-pikachu.wav",
+    "old": {
+      "duration": 0.5558276643990929,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "ef6fe118572ed35e4e8de994a9d09cee7e0c50589d68bebcef5484e383306ed1"
+    },
+    "new": {
+      "duration": 0.9795691609977324,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "c954d48483d10b82c20fa1e6fc559013dd999d68c8b67ccacda83b9b6d55d4b6"
+    },
+    "identicalDecodedAudio": false
+  },
+  {
+    "id": 133,
+    "name": "eevee",
+    "newArchiveMember": "Pokemon Anime Cries/Gen 1 - Kanto/133.wav",
+    "oldPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\eevee.wav",
+    "newPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\comparison\\itch-eevee.wav",
+    "old": {
+      "duration": 0.6632199546485261,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "ee1280336fc4928a6209f274724e6a254808e8a73f5e9d8defd5135da906e170"
+    },
+    "new": {
+      "duration": 0.6661224489795918,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "2dd8accc96588d54a2bf1e2ac5fa5789f63c275601655705f688263e4dd89480"
+    },
+    "identicalDecodedAudio": false
+  },
+  {
+    "id": 1,
+    "name": "bulbasaur",
+    "newArchiveMember": "Pokemon Anime Cries/Gen 1 - Kanto/001.wav",
+    "oldPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\bulbasaur.wav",
+    "newPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\comparison\\itch-bulbasaur.wav",
+    "old": {
+      "duration": 1.4033333333333333,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "8621bd46622ea53fbcb852e7758ac1c2f57e7352c9f9869f530371292b1985da"
+    },
+    "new": {
+      "duration": 1.4033333333333333,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "addfaaf7aca966230d6b126e371a0997c04cc16704d786b43d5f17d1ebcdb22c"
+    },
+    "identicalDecodedAudio": false
+  },
+  {
+    "id": 6,
+    "name": "charizard",
+    "newArchiveMember": "Pokemon Anime Cries/Gen 1 - Kanto/006.wav",
+    "oldPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\charizard.wav",
+    "newPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\comparison\\itch-charizard.wav",
+    "old": {
+      "duration": 2.0074603174603176,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "54c3a284f5e76d6bc46e05ea458efe99f6b3cb6ded76fce35bde201c237f0870"
+    },
+    "new": {
+      "duration": 2.0074603174603176,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "2daf9f2d87b2e06d24a8b23301bab871aaf8f82328c51d394d971406bc08d525"
+    },
+    "identicalDecodedAudio": false
+  },
+  {
+    "id": 129,
+    "name": "magikarp",
+    "newArchiveMember": "Pokemon Anime Cries/Gen 1 - Kanto/129.wav",
+    "oldPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\magikarp.wav",
+    "newPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\comparison\\itch-magikarp.wav",
+    "old": {
+      "duration": 1.449795918367347,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "53e486d08aff14d25e28c1ba56e8566a3732b3d46c0c6d71acaa4166a4610d57"
+    },
+    "new": {
+      "duration": 1.449795918367347,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "ea9f3a720bffd74403508eece6cf58fc3a8d43abfc6957de707d2046e34bded2"
+    },
+    "identicalDecodedAudio": false
+  },
+  {
+    "id": 92,
+    "name": "gastly",
+    "newArchiveMember": "Pokemon Anime Cries/Gen 1 - Kanto/092.wav",
+    "oldPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\gastly.wav",
+    "newPath": "C:\\Users\\Georgy\\OneDrive\\\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b\\\u043d\u0435\u0439\u0440\u043e\u043d\u043a\u0430\\PokeTokenBar-Windows\\docs\\design-v2\\voice-preview\\comparison\\itch-gastly.wav",
+    "old": {
+      "duration": 2.28281179138322,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "4cc4e38f768381f66bb208cabb63a0c6ad41348012f4ce5d0c3da84ffc2113a0"
+    },
+    "new": {
+      "duration": 2.28281179138322,
+      "channels": 2,
+      "sampleRate": 44100,
+      "sampleWidth": 2,
+      "pcmSha256": "84ad527c1deef04bbd1b0f2d1009729a6375993956d288fc2e56d3c14bf72dcc"
+    },
+    "identicalDecodedAudio": false
+  }
+]

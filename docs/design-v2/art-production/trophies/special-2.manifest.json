@@ -1,0 +1,225 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "trophy-special-nursery-expedition",
+      "row": 0,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 62,
+      "footAnchor": [
+        0.5,
+        0.9793
+      ],
+      "file": "trophies/assets/trophy-special-nursery-expedition.png",
+      "size": [
+        514,
+        483
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "alphaBoundsInCell": [
+        74,
+        137,
+        572,
+        604
+      ],
+      "cropInCell": [
+        66,
+        129,
+        580,
+        612
+      ],
+      "sha256": "27c3c8852b1f54a5f302ec031e7133d6cd9b8f0847122451dc6465621f0395f2",
+      "source": "trophies/_sources/special-2.png",
+      "promptFile": "trophies/_sources/special-2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        9,
+        504,
+        473
+      ],
+      "logicalSize": [
+        62,
+        58.26
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "row": 0,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 62,
+      "footAnchor": [
+        0.5,
+        0.98138
+      ],
+      "file": "trophies/assets/trophy-special-family-expedition.png",
+      "size": [
+        587,
+        537
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "alphaBoundsInCell": [
+        31,
+        83,
+        602,
+        604
+      ],
+      "cropInCell": [
+        23,
+        75,
+        610,
+        612
+      ],
+      "sha256": "98ef59d138fa7a639cd15ebf5ba65454c00e68720401f26a7dae0a4af51024ff",
+      "source": "trophies/_sources/special-2.png",
+      "promptFile": "trophies/_sources/special-2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        8,
+        10,
+        578,
+        527
+      ],
+      "logicalSize": [
+        62,
+        56.72
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "row": 1,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 62,
+      "footAnchor": [
+        0.5,
+        0.98279
+      ],
+      "file": "trophies/assets/trophy-special-evolved-expedition.png",
+      "size": [
+        570,
+        523
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        57,
+        54,
+        611,
+        561
+      ],
+      "cropInCell": [
+        49,
+        46,
+        619,
+        569
+      ],
+      "sha256": "95d8fc25cbaaa610dbf567f33de772e0e867891590f6e8fe8aa06767c2a692d7",
+      "source": "trophies/_sources/special-2.png",
+      "promptFile": "trophies/_sources/special-2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        10,
+        562,
+        514
+      ],
+      "logicalSize": [
+        62,
+        56.89
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "row": 1,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 62,
+      "footAnchor": [
+        0.5,
+        0.98099
+      ],
+      "file": "trophies/assets/trophy-special-all-berries.png",
+      "size": [
+        555,
+        526
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        53,
+        52,
+        592,
+        562
+      ],
+      "cropInCell": [
+        45,
+        44,
+        600,
+        570
+      ],
+      "sha256": "4d447233d541ce4e18afaf1cc12498f5fcb309a28c2fdd74df9ba3191430cc57",
+      "source": "trophies/_sources/special-2.png",
+      "promptFile": "trophies/_sources/special-2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        10,
+        545,
+        516
+      ],
+      "logicalSize": [
+        62,
+        58.76
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    }
+  ]
+}

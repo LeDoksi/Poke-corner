@@ -1,0 +1,702 @@
+{
+  "produce": [
+    {
+      "id": "table-t1",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          150,
+          141,
+          153,
+          133
+        ]
+      },
+      "output_path": "furniture/assets/table-t1.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: reusable PokeCorner production pixel-art object sprites. The provided images are APPROVED STYLE/MODEL REFERENCES ONLY, never shipping pixels. Recreate these models as original clean asset-grade objects. Preserve cozy high-detail crisp pixel art, dark warm outlines, honey wood grain, warm upper-left sunlight and muted cream/sage/walnut palette. Match the ROOM camera: slightly elevated mostly frontal view, upright verticals, cabinet fronts horizontal, right side visible. No dramatic isometric rotation. Transparent alpha background with only minimal semitransparent grounded contact shadows. Square 2048x2048 atlas, four equal 1024x1024 invisible cells in a 2x2 arrangement; one complete object centred in each cell, generous transparent separation, every object wholly inside its cell and approximately 650-800px wide. NO text, labels, grid, background, floor patches, scene, UI, frame, watermark, accessories, plants or trophies. No additional objects. Do not copy the mock's presentation shadows/background. TABLES ONLY: top left T1 small round honey-oak table, thick circular top, four sturdy straight legs matching reference; top right T2 square light-pine side table, single drawer with small brass knob and lower open shelf; bottom left T3 low walnut chest, broad closed hinged lid, understated brass corner fittings and central clasp; bottom right T4 low oval honey-wood tabletop with cream painted apron/base and short turned legs. All tabletops completely bare. Fixed palette for each model, faithful silhouette and material. Table T1 room-facing four leg arrangement is binding. Deliver one PNG atlas.",
+      "prompt_file": "furniture/_sources/tables-prompt.txt",
+      "dimensions": [
+        464,
+        380
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        9,
+        9,
+        432,
+        369
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 102.21,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "table-t2",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          477,
+          126,
+          172,
+          149
+        ]
+      },
+      "output_path": "furniture/assets/table-t2.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: reusable PokeCorner production pixel-art object sprites. The provided images are APPROVED STYLE/MODEL REFERENCES ONLY, never shipping pixels. Recreate these models as original clean asset-grade objects. Preserve cozy high-detail crisp pixel art, dark warm outlines, honey wood grain, warm upper-left sunlight and muted cream/sage/walnut palette. Match the ROOM camera: slightly elevated mostly frontal view, upright verticals, cabinet fronts horizontal, right side visible. No dramatic isometric rotation. Transparent alpha background with only minimal semitransparent grounded contact shadows. Square 2048x2048 atlas, four equal 1024x1024 invisible cells in a 2x2 arrangement; one complete object centred in each cell, generous transparent separation, every object wholly inside its cell and approximately 650-800px wide. NO text, labels, grid, background, floor patches, scene, UI, frame, watermark, accessories, plants or trophies. No additional objects. Do not copy the mock's presentation shadows/background. TABLES ONLY: top left T1 small round honey-oak table, thick circular top, four sturdy straight legs matching reference; top right T2 square light-pine side table, single drawer with small brass knob and lower open shelf; bottom left T3 low walnut chest, broad closed hinged lid, understated brass corner fittings and central clasp; bottom right T4 low oval honey-wood tabletop with cream painted apron/base and short turned legs. All tabletops completely bare. Fixed palette for each model, faithful silhouette and material. Table T1 room-facing four leg arrangement is binding. Deliver one PNG atlas.",
+      "prompt_file": "furniture/_sources/tables-prompt.txt",
+      "dimensions": [
+        534,
+        429
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        12,
+        9,
+        476,
+        419
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 113.95,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "table-t3",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          783,
+          141,
+          253,
+          135
+        ]
+      },
+      "output_path": "furniture/assets/table-t3.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: reusable PokeCorner production pixel-art object sprites. The provided images are APPROVED STYLE/MODEL REFERENCES ONLY, never shipping pixels. Recreate these models as original clean asset-grade objects. Preserve cozy high-detail crisp pixel art, dark warm outlines, honey wood grain, warm upper-left sunlight and muted cream/sage/walnut palette. Match the ROOM camera: slightly elevated mostly frontal view, upright verticals, cabinet fronts horizontal, right side visible. No dramatic isometric rotation. Transparent alpha background with only minimal semitransparent grounded contact shadows. Square 2048x2048 atlas, four equal 1024x1024 invisible cells in a 2x2 arrangement; one complete object centred in each cell, generous transparent separation, every object wholly inside its cell and approximately 650-800px wide. NO text, labels, grid, background, floor patches, scene, UI, frame, watermark, accessories, plants or trophies. No additional objects. Do not copy the mock's presentation shadows/background. TABLES ONLY: top left T1 small round honey-oak table, thick circular top, four sturdy straight legs matching reference; top right T2 square light-pine side table, single drawer with small brass knob and lower open shelf; bottom left T3 low walnut chest, broad closed hinged lid, understated brass corner fittings and central clasp; bottom right T4 low oval honey-wood tabletop with cream painted apron/base and short turned legs. All tabletops completely bare. Fixed palette for each model, faithful silhouette and material. Table T1 room-facing four leg arrangement is binding. Deliver one PNG atlas.",
+      "prompt_file": "furniture/_sources/tables-prompt.txt",
+      "dimensions": [
+        621,
+        348
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        25,
+        9,
+        576,
+        335
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 145.028,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "table-t4",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          1142,
+          144,
+          253,
+          131
+        ]
+      },
+      "output_path": "furniture/assets/table-t4.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: reusable PokeCorner production pixel-art object sprites. The provided images are APPROVED STYLE/MODEL REFERENCES ONLY, never shipping pixels. Recreate these models as original clean asset-grade objects. Preserve cozy high-detail crisp pixel art, dark warm outlines, honey wood grain, warm upper-left sunlight and muted cream/sage/walnut palette. Match the ROOM camera: slightly elevated mostly frontal view, upright verticals, cabinet fronts horizontal, right side visible. No dramatic isometric rotation. Transparent alpha background with only minimal semitransparent grounded contact shadows. Square 2048x2048 atlas, four equal 1024x1024 invisible cells in a 2x2 arrangement; one complete object centred in each cell, generous transparent separation, every object wholly inside its cell and approximately 650-800px wide. NO text, labels, grid, background, floor patches, scene, UI, frame, watermark, accessories, plants or trophies. No additional objects. Do not copy the mock's presentation shadows/background. TABLES ONLY: top left T1 small round honey-oak table, thick circular top, four sturdy straight legs matching reference; top right T2 square light-pine side table, single drawer with small brass knob and lower open shelf; bottom left T3 low walnut chest, broad closed hinged lid, understated brass corner fittings and central clasp; bottom right T4 low oval honey-wood tabletop with cream painted apron/base and short turned legs. All tabletops completely bare. Fixed palette for each model, faithful silhouette and material. Table T1 room-facing four leg arrangement is binding. Deliver one PNG atlas.",
+      "prompt_file": "furniture/_sources/tables-prompt.txt",
+      "dimensions": [
+        585,
+        323
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        9,
+        9,
+        566,
+        310
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 155.387,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "cabinet-c1",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          139,
+          344,
+          246,
+          187
+        ]
+      },
+      "output_path": "furniture/assets/cabinet-c1.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "PRODUCTION GEOMETRY REPAIR: regenerate four clean LOW WIDE CABINET SIDEBOARDS for PokeCorner pixel room. Input1 ROOM is the binding geometry/camera authority. Input2 catalogue is ONLY identity/material reference; DO NOT inherit its tall square cabinet geometry. Final each object silhouette width:height must be1.9to2.0, like ROOM C3cabinet453x234. These are broad squat horizontal sideboards, NEVER tall furniture boxes. Square transparent atlas with four invisible equal2x2cells. In EACH cell, centred cabinet occupies approximately80percent cell WIDTH but ONLY40percent cell HEIGHT (example500wide x255high in625cell). Four complete silhouettes, all inside their cells with clear alpha gutters. Camera near-frontal, perfectly upright posts, almost horizontal front edges, shallow top visibility and NARROW RIGHT side only, identical to room cabinet, no catalogue deep three-quarter view. Crisp warm clustered pixel illustration with brown stepped outlines, wood grain, warm upper-left sunlight confined within object; true alpha zero outside objects. NO drop shadow/haze/glow/background/floor. TOP LEFT C1 honey oak broad straight sideboard: one WIDE OPEN EMPTY trophy display niche across upper half, two closed lower oak doors with round brass knobs. TOP RIGHT C2 muted sage painted pine broad workshop sideboard with honey oak flat top, one WIDE OPEN EMPTY upper trophy niche, three shallow lower drawers with brass cup pulls. BOTTOM LEFT C3 warm walnut LOW WIDE book sideboard, one WIDE OPEN EMPTY upper trophy niche; lower row two closed walnut doors around a central compartment containing intrinsic small multicolour books. BOTTOM RIGHT C4 ivory cream LOW WIDE sideboard, gently softened upper trim, pale honey top, one WIDE OPEN EMPTY upper trophy niche, two low lower doors with round brass knobs. All upper trophy niches ENTIRELY EMPTY, dark wood backing visible, no dividers in upper bay, continuous broad shelf surface and visible thin front shelf lip. Space for three trophy overlays side by side; do not draw trophies. All cabinet tops BARE for future plant overlay. Compress upper niche/lower door construction naturally into LOW WIDE furniture geometry, no vertical stretching and no redesign of construction or palette. Every silhouette1.9-2.0width/height is a hard requirement. No plants, trophies, loose props, UI, label, text, grid, frame, watermark. Return one genuine transparent PNG atlas, aim2048x2048.",
+      "prompt_file": "furniture/_sources/cabinets-wide-prompt.txt",
+      "dimensions": [
+        580,
+        333
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        9,
+        10,
+        570,
+        324
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 303.867,
+      "footAnchor": [
+        0.498276,
+        0.957958
+      ],
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "cabinet-c2",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          443,
+          340,
+          283,
+          190
+        ]
+      },
+      "output_path": "furniture/assets/cabinet-c2.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "PRODUCTION GEOMETRY REPAIR: regenerate four clean LOW WIDE CABINET SIDEBOARDS for PokeCorner pixel room. Input1 ROOM is the binding geometry/camera authority. Input2 catalogue is ONLY identity/material reference; DO NOT inherit its tall square cabinet geometry. Final each object silhouette width:height must be1.9to2.0, like ROOM C3cabinet453x234. These are broad squat horizontal sideboards, NEVER tall furniture boxes. Square transparent atlas with four invisible equal2x2cells. In EACH cell, centred cabinet occupies approximately80percent cell WIDTH but ONLY40percent cell HEIGHT (example500wide x255high in625cell). Four complete silhouettes, all inside their cells with clear alpha gutters. Camera near-frontal, perfectly upright posts, almost horizontal front edges, shallow top visibility and NARROW RIGHT side only, identical to room cabinet, no catalogue deep three-quarter view. Crisp warm clustered pixel illustration with brown stepped outlines, wood grain, warm upper-left sunlight confined within object; true alpha zero outside objects. NO drop shadow/haze/glow/background/floor. TOP LEFT C1 honey oak broad straight sideboard: one WIDE OPEN EMPTY trophy display niche across upper half, two closed lower oak doors with round brass knobs. TOP RIGHT C2 muted sage painted pine broad workshop sideboard with honey oak flat top, one WIDE OPEN EMPTY upper trophy niche, three shallow lower drawers with brass cup pulls. BOTTOM LEFT C3 warm walnut LOW WIDE book sideboard, one WIDE OPEN EMPTY upper trophy niche; lower row two closed walnut doors around a central compartment containing intrinsic small multicolour books. BOTTOM RIGHT C4 ivory cream LOW WIDE sideboard, gently softened upper trim, pale honey top, one WIDE OPEN EMPTY upper trophy niche, two low lower doors with round brass knobs. All upper trophy niches ENTIRELY EMPTY, dark wood backing visible, no dividers in upper bay, continuous broad shelf surface and visible thin front shelf lip. Space for three trophy overlays side by side; do not draw trophies. All cabinet tops BARE for future plant overlay. Compress upper niche/lower door construction naturally into LOW WIDE furniture geometry, no vertical stretching and no redesign of construction or palette. Every silhouette1.9-2.0width/height is a hard requirement. No plants, trophies, loose props, UI, label, text, grid, frame, watermark. Return one genuine transparent PNG atlas, aim2048x2048.",
+      "prompt_file": "furniture/_sources/cabinets-wide-prompt.txt",
+      "dimensions": [
+        584,
+        335
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        11,
+        11,
+        573,
+        325
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 313.536,
+      "footAnchor": [
+        0.496575,
+        0.955224
+      ],
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "cabinet-c3",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          785,
+          340,
+          285,
+          192
+        ]
+      },
+      "output_path": "furniture/assets/cabinet-c3.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "PRODUCTION GEOMETRY REPAIR: regenerate four clean LOW WIDE CABINET SIDEBOARDS for PokeCorner pixel room. Input1 ROOM is the binding geometry/camera authority. Input2 catalogue is ONLY identity/material reference; DO NOT inherit its tall square cabinet geometry. Final each object silhouette width:height must be1.9to2.0, like ROOM C3cabinet453x234. These are broad squat horizontal sideboards, NEVER tall furniture boxes. Square transparent atlas with four invisible equal2x2cells. In EACH cell, centred cabinet occupies approximately80percent cell WIDTH but ONLY40percent cell HEIGHT (example500wide x255high in625cell). Four complete silhouettes, all inside their cells with clear alpha gutters. Camera near-frontal, perfectly upright posts, almost horizontal front edges, shallow top visibility and NARROW RIGHT side only, identical to room cabinet, no catalogue deep three-quarter view. Crisp warm clustered pixel illustration with brown stepped outlines, wood grain, warm upper-left sunlight confined within object; true alpha zero outside objects. NO drop shadow/haze/glow/background/floor. TOP LEFT C1 honey oak broad straight sideboard: one WIDE OPEN EMPTY trophy display niche across upper half, two closed lower oak doors with round brass knobs. TOP RIGHT C2 muted sage painted pine broad workshop sideboard with honey oak flat top, one WIDE OPEN EMPTY upper trophy niche, three shallow lower drawers with brass cup pulls. BOTTOM LEFT C3 warm walnut LOW WIDE book sideboard, one WIDE OPEN EMPTY upper trophy niche; lower row two closed walnut doors around a central compartment containing intrinsic small multicolour books. BOTTOM RIGHT C4 ivory cream LOW WIDE sideboard, gently softened upper trim, pale honey top, one WIDE OPEN EMPTY upper trophy niche, two low lower doors with round brass knobs. All upper trophy niches ENTIRELY EMPTY, dark wood backing visible, no dividers in upper bay, continuous broad shelf surface and visible thin front shelf lip. Space for three trophy overlays side by side; do not draw trophies. All cabinet tops BARE for future plant overlay. Compress upper niche/lower door construction naturally into LOW WIDE furniture geometry, no vertical stretching and no redesign of construction or palette. Every silhouette1.9-2.0width/height is a hard requirement. No plants, trophies, loose props, UI, label, text, grid, frame, watermark. Return one genuine transparent PNG atlas, aim2048x2048.",
+      "prompt_file": "furniture/_sources/cabinets-wide-prompt.txt",
+      "dimensions": [
+        582,
+        335
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        10,
+        9,
+        572,
+        326
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 312.845,
+      "footAnchor": [
+        0.496564,
+        0.961194
+      ],
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "cabinet-c4",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          1133,
+          339,
+          266,
+          195
+        ]
+      },
+      "output_path": "furniture/assets/cabinet-c4.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "PRODUCTION GEOMETRY REPAIR: regenerate four clean LOW WIDE CABINET SIDEBOARDS for PokeCorner pixel room. Input1 ROOM is the binding geometry/camera authority. Input2 catalogue is ONLY identity/material reference; DO NOT inherit its tall square cabinet geometry. Final each object silhouette width:height must be1.9to2.0, like ROOM C3cabinet453x234. These are broad squat horizontal sideboards, NEVER tall furniture boxes. Square transparent atlas with four invisible equal2x2cells. In EACH cell, centred cabinet occupies approximately80percent cell WIDTH but ONLY40percent cell HEIGHT (example500wide x255high in625cell). Four complete silhouettes, all inside their cells with clear alpha gutters. Camera near-frontal, perfectly upright posts, almost horizontal front edges, shallow top visibility and NARROW RIGHT side only, identical to room cabinet, no catalogue deep three-quarter view. Crisp warm clustered pixel illustration with brown stepped outlines, wood grain, warm upper-left sunlight confined within object; true alpha zero outside objects. NO drop shadow/haze/glow/background/floor. TOP LEFT C1 honey oak broad straight sideboard: one WIDE OPEN EMPTY trophy display niche across upper half, two closed lower oak doors with round brass knobs. TOP RIGHT C2 muted sage painted pine broad workshop sideboard with honey oak flat top, one WIDE OPEN EMPTY upper trophy niche, three shallow lower drawers with brass cup pulls. BOTTOM LEFT C3 warm walnut LOW WIDE book sideboard, one WIDE OPEN EMPTY upper trophy niche; lower row two closed walnut doors around a central compartment containing intrinsic small multicolour books. BOTTOM RIGHT C4 ivory cream LOW WIDE sideboard, gently softened upper trim, pale honey top, one WIDE OPEN EMPTY upper trophy niche, two low lower doors with round brass knobs. All upper trophy niches ENTIRELY EMPTY, dark wood backing visible, no dividers in upper bay, continuous broad shelf surface and visible thin front shelf lip. Space for three trophy overlays side by side; do not draw trophies. All cabinet tops BARE for future plant overlay. Compress upper niche/lower door construction naturally into LOW WIDE furniture geometry, no vertical stretching and no redesign of construction or palette. Every silhouette1.9-2.0width/height is a hard requirement. No plants, trophies, loose props, UI, label, text, grid, frame, watermark. Return one genuine transparent PNG atlas, aim2048x2048.",
+      "prompt_file": "furniture/_sources/cabinets-wide-prompt.txt",
+      "dimensions": [
+        584,
+        335
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        11,
+        9,
+        573,
+        326
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 308.011,
+      "footAnchor": [
+        0.496575,
+        0.961194
+      ],
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "armchair-a1",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          115,
+          580,
+          218,
+          188
+        ]
+      },
+      "output_path": "furniture/assets/armchair-a1.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Precise production atlas packing repair only. Use provided chairs atlas as edit target. Keep EXACTLY the same four pixel-art chair designs, silhouettes, colours, materials, lighting, orientation and detail, no redesign. Fix packaging: four equal invisible square2x2 grid cells, each chair including its full contact shadow is uniformly smaller and RECENTRED to occupy at most80percent of the cell width and height. Leave at least50px of clear transparent alpha between each subject/shadow and EACH cell boundary, including full vertical and horizontal centre lines. No part of any chair or shadow may touch a cell boundary or canvas edge. Keep subject aspect ratio. Do not invent objects, do not mirror. Retain true transparent alpha outside objects, no checkerboard painted background. All complete chairs visible; no text, labels, grid, floor or background. Correct cell placements top-left green plaid oak chair facing right showing LEFT side, top-right terracotta padded chair, bottom-left wicker cream cushion chair, bottom-right dusty blue round chair. Return one transparent PNG atlas.",
+      "prompt_file": "furniture/_sources/chairs-repair-prompt.txt",
+      "dimensions": [
+        470,
+        401
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        9,
+        9,
+        461,
+        392
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 197.514,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "armchair-a2",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          462,
+          579,
+          218,
+          190
+        ]
+      },
+      "output_path": "furniture/assets/armchair-a2.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Precise production atlas packing repair only. Use provided chairs atlas as edit target. Keep EXACTLY the same four pixel-art chair designs, silhouettes, colours, materials, lighting, orientation and detail, no redesign. Fix packaging: four equal invisible square2x2 grid cells, each chair including its full contact shadow is uniformly smaller and RECENTRED to occupy at most80percent of the cell width and height. Leave at least50px of clear transparent alpha between each subject/shadow and EACH cell boundary, including full vertical and horizontal centre lines. No part of any chair or shadow may touch a cell boundary or canvas edge. Keep subject aspect ratio. Do not invent objects, do not mirror. Retain true transparent alpha outside objects, no checkerboard painted background. All complete chairs visible; no text, labels, grid, floor or background. Correct cell placements top-left green plaid oak chair facing right showing LEFT side, top-right terracotta padded chair, bottom-left wicker cream cushion chair, bottom-right dusty blue round chair. Return one transparent PNG atlas.",
+      "prompt_file": "furniture/_sources/chairs-repair-prompt.txt",
+      "dimensions": [
+        452,
+        405
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        10,
+        9,
+        443,
+        396
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 186.464,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "armchair-a3",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          801,
+          580,
+          214,
+          192
+        ]
+      },
+      "output_path": "furniture/assets/armchair-a3.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Precise production atlas packing repair only. Use provided chairs atlas as edit target. Keep EXACTLY the same four pixel-art chair designs, silhouettes, colours, materials, lighting, orientation and detail, no redesign. Fix packaging: four equal invisible square2x2 grid cells, each chair including its full contact shadow is uniformly smaller and RECENTRED to occupy at most80percent of the cell width and height. Leave at least50px of clear transparent alpha between each subject/shadow and EACH cell boundary, including full vertical and horizontal centre lines. No part of any chair or shadow may touch a cell boundary or canvas edge. Keep subject aspect ratio. Do not invent objects, do not mirror. Retain true transparent alpha outside objects, no checkerboard painted background. All complete chairs visible; no text, labels, grid, floor or background. Correct cell placements top-left green plaid oak chair facing right showing LEFT side, top-right terracotta padded chair, bottom-left wicker cream cushion chair, bottom-right dusty blue round chair. Return one transparent PNG atlas.",
+      "prompt_file": "furniture/_sources/chairs-repair-prompt.txt",
+      "dimensions": [
+        446,
+        405
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        9,
+        9,
+        435,
+        396
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 183.011,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "armchair-a4",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          1155,
+          582,
+          231,
+          190
+        ]
+      },
+      "output_path": "furniture/assets/armchair-a4.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Precise production atlas packing repair only. Use provided chairs atlas as edit target. Keep EXACTLY the same four pixel-art chair designs, silhouettes, colours, materials, lighting, orientation and detail, no redesign. Fix packaging: four equal invisible square2x2 grid cells, each chair including its full contact shadow is uniformly smaller and RECENTRED to occupy at most80percent of the cell width and height. Leave at least50px of clear transparent alpha between each subject/shadow and EACH cell boundary, including full vertical and horizontal centre lines. No part of any chair or shadow may touch a cell boundary or canvas edge. Keep subject aspect ratio. Do not invent objects, do not mirror. Retain true transparent alpha outside objects, no checkerboard painted background. All complete chairs visible; no text, labels, grid, floor or background. Correct cell placements top-left green plaid oak chair facing right showing LEFT side, top-right terracotta padded chair, bottom-left wicker cream cushion chair, bottom-right dusty blue round chair. Return one transparent PNG atlas.",
+      "prompt_file": "furniture/_sources/chairs-repair-prompt.txt",
+      "dimensions": [
+        477,
+        402
+      ],
+      "atlas_dimensions": [
+        1254,
+        1254
+      ],
+      "opaque_bounds": [
+        9,
+        8,
+        468,
+        393
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 200.276,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "dresser-d1",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          159,
+          825,
+          213,
+          177
+        ]
+      },
+      "output_path": "furniture/assets/dresser-d1.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use approved room/catalogue only as reference of pixel art STYLE and models. Produce four clean isolated furniture cutouts on genuine alpha-zero transparent background. Shade ONLY INSIDE furniture silhouettes. NO shadows, NO contact shadows, NO drop shadow, NO glow, NO vignette, NO atmospheric haze, NO floor, NO ambient colour or background pixels. Four invisible equal square2x2 cells, complete dresser in each, every object at least50px INSIDE its cell boundaries. Render ONLY the physical furniture. Faithful warm crisp clustered pixel illustration with dark timber outline, warm upper-left light confined to object, mostly frontal room view, narrow RIGHT side and shallow top visible. TOP LEFT classic honey oak dresser, THREE wide drawers each with two brass bail handles, short simple feet. TOP RIGHT low wide cream ivory dresser, TWO broad drawers each with two brass cup pulls, honey oak top, short feet. BOTTOM LEFT TALL NARROW dusty blue dresser, FOUR stacked drawers, one brass round knob each, keep narrow silhouette. BOTTOM RIGHT low broad walnut sideboard, left sliding door, right small upper panel and lower knob drawer, short feet. Fixed approved palettes and material grain, all top surfaces absolutely bare. No plants, trophies, books, text, label, grid, UI, room, frame or watermark. Original asset-grade sprites, transparent PNG.",
+      "prompt_file": "furniture/_sources/dressers-fresh-prompt.txt",
+      "dimensions": [
+        567,
+        456
+      ],
+      "atlas_dimensions": [
+        1367,
+        1150
+      ],
+      "opaque_bounds": [
+        11,
+        10,
+        558,
+        445
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 164.365,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "dresser-d2",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          443,
+          845,
+          280,
+          159
+        ]
+      },
+      "output_path": "furniture/assets/dresser-d2.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use approved room/catalogue only as reference of pixel art STYLE and models. Produce four clean isolated furniture cutouts on genuine alpha-zero transparent background. Shade ONLY INSIDE furniture silhouettes. NO shadows, NO contact shadows, NO drop shadow, NO glow, NO vignette, NO atmospheric haze, NO floor, NO ambient colour or background pixels. Four invisible equal square2x2 cells, complete dresser in each, every object at least50px INSIDE its cell boundaries. Render ONLY the physical furniture. Faithful warm crisp clustered pixel illustration with dark timber outline, warm upper-left light confined to object, mostly frontal room view, narrow RIGHT side and shallow top visible. TOP LEFT classic honey oak dresser, THREE wide drawers each with two brass bail handles, short simple feet. TOP RIGHT low wide cream ivory dresser, TWO broad drawers each with two brass cup pulls, honey oak top, short feet. BOTTOM LEFT TALL NARROW dusty blue dresser, FOUR stacked drawers, one brass round knob each, keep narrow silhouette. BOTTOM RIGHT low broad walnut sideboard, left sliding door, right small upper panel and lower knob drawer, short feet. Fixed approved palettes and material grain, all top surfaces absolutely bare. No plants, trophies, books, text, label, grid, UI, room, frame or watermark. Original asset-grade sprites, transparent PNG.",
+      "prompt_file": "furniture/_sources/dressers-fresh-prompt.txt",
+      "dimensions": [
+        610,
+        364
+      ],
+      "atlas_dimensions": [
+        1367,
+        1150
+      ],
+      "opaque_bounds": [
+        9,
+        11,
+        602,
+        353
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 213.398,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "Native opaque width593px is slightly below2x309px room width. Generated model taller than room contract; preserve aspect.",
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "qa_status": "needs_parent_review",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "dresser-d3",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          869,
+          813,
+          122,
+          191
+        ]
+      },
+      "output_path": "furniture/assets/dresser-d3.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use approved room/catalogue only as reference of pixel art STYLE and models. Produce four clean isolated furniture cutouts on genuine alpha-zero transparent background. Shade ONLY INSIDE furniture silhouettes. NO shadows, NO contact shadows, NO drop shadow, NO glow, NO vignette, NO atmospheric haze, NO floor, NO ambient colour or background pixels. Four invisible equal square2x2 cells, complete dresser in each, every object at least50px INSIDE its cell boundaries. Render ONLY the physical furniture. Faithful warm crisp clustered pixel illustration with dark timber outline, warm upper-left light confined to object, mostly frontal room view, narrow RIGHT side and shallow top visible. TOP LEFT classic honey oak dresser, THREE wide drawers each with two brass bail handles, short simple feet. TOP RIGHT low wide cream ivory dresser, TWO broad drawers each with two brass cup pulls, honey oak top, short feet. BOTTOM LEFT TALL NARROW dusty blue dresser, FOUR stacked drawers, one brass round knob each, keep narrow silhouette. BOTTOM RIGHT low broad walnut sideboard, left sliding door, right small upper panel and lower knob drawer, short feet. Fixed approved palettes and material grain, all top surfaces absolutely bare. No plants, trophies, books, text, label, grid, UI, room, frame or watermark. Original asset-grade sprites, transparent PNG.",
+      "prompt_file": "furniture/_sources/dressers-fresh-prompt.txt",
+      "dimensions": [
+        326,
+        488
+      ],
+      "atlas_dimensions": [
+        1367,
+        1150
+      ],
+      "opaque_bounds": [
+        10,
+        11,
+        316,
+        479
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 95.304,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "dresser-d4",
+      "source_crop": {
+        "reference": "docs/design-v2/furniture-models-v1.png",
+        "rect": [
+          1127,
+          839,
+          284,
+          160
+        ]
+      },
+      "output_path": "furniture/assets/dresser-d4.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use approved room/catalogue only as reference of pixel art STYLE and models. Produce four clean isolated furniture cutouts on genuine alpha-zero transparent background. Shade ONLY INSIDE furniture silhouettes. NO shadows, NO contact shadows, NO drop shadow, NO glow, NO vignette, NO atmospheric haze, NO floor, NO ambient colour or background pixels. Four invisible equal square2x2 cells, complete dresser in each, every object at least50px INSIDE its cell boundaries. Render ONLY the physical furniture. Faithful warm crisp clustered pixel illustration with dark timber outline, warm upper-left light confined to object, mostly frontal room view, narrow RIGHT side and shallow top visible. TOP LEFT classic honey oak dresser, THREE wide drawers each with two brass bail handles, short simple feet. TOP RIGHT low wide cream ivory dresser, TWO broad drawers each with two brass cup pulls, honey oak top, short feet. BOTTOM LEFT TALL NARROW dusty blue dresser, FOUR stacked drawers, one brass round knob each, keep narrow silhouette. BOTTOM RIGHT low broad walnut sideboard, left sliding door, right small upper panel and lower knob drawer, short feet. Fixed approved palettes and material grain, all top surfaces absolutely bare. No plants, trophies, books, text, label, grid, UI, room, frame or watermark. Original asset-grade sprites, transparent PNG.",
+      "prompt_file": "furniture/_sources/dressers-fresh-prompt.txt",
+      "dimensions": [
+        773,
+        391
+      ],
+      "atlas_dimensions": [
+        1367,
+        1150
+      ],
+      "opaque_bounds": [
+        10,
+        10,
+        763,
+        382
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 215.47,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "deviations": [
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "furniture-composition",
+      "implementation": "Use one uniformly scaled fixed scene layer container (WPF Canvas or equivalent HTML positioned scene). Draw independent PNG object sprites at slot ground anchors; preserve image aspect ratio and recompute surface children on model swap. Compose separate contact shadows where absent, then attached objects and foreground lip. Room clipping, navigation, labels and shop controls stay native components. For cabinet use cabinet-surface-registration.json measured per-master3anchors and front-lip geometry. Empty beds remain behind central live pet at side ground anchor.",
+      "notes": "Parent owns scene integration and final static stress previews. No implementation code edited.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "tables",
+    "cabinets",
+    "chairs",
+    "dressers"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "Original clean art generated with built-in image_gen; transparent_background true. Only shared splitter performs shipping technical cuts.",
+    "All PNG files visually inspected by workspace-relative path. No all-combination room validation claimed.",
+    "Requested atlas size 2048 where stated; actual native dimensions retained without upscaling."
+  ]
+}

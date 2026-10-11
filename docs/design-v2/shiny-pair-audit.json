@@ -1,0 +1,6184 @@
+{
+  "pairs": 865,
+  "differentFiles": 859,
+  "differentVisibleFirstFrameColors": 859,
+  "review": [
+    {
+      "id": 123,
+      "name": "scyther",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 335,
+      "name": "zangoose",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 493,
+      "name": "arceus",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 613,
+      "name": "cubchoo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 614,
+      "name": "beartic",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 644,
+      "name": "zekrom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 668,
+      "name": "pyroar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 675,
+      "name": "pangoro",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 679,
+      "name": "honedge",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 686,
+      "name": "inkay",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 687,
+      "name": "malamar",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 722,
+      "name": "rowlet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 760,
+      "name": "bewear",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 774,
+      "name": "minior",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 778,
+      "name": "mimikyu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 831,
+      "name": "wooloo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 840,
+      "name": "applin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    }
+  ],
+  "limitation": "Visible first-frame color sets compared, not canonical palette correctness or every animation frame.",
+  "rows": [
+    {
+      "id": 1,
+      "name": "bulbasaur",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 2,
+      "name": "ivysaur",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 3,
+      "name": "venusaur",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 4,
+      "name": "charmander",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 5,
+      "name": "charmeleon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 6,
+      "name": "charizard",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 7,
+      "name": "squirtle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 8,
+      "name": "wartortle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 9,
+      "name": "blastoise",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 10,
+      "name": "caterpie",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 11,
+      "name": "metapod",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 12,
+      "name": "butterfree",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 13,
+      "name": "weedle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 14,
+      "name": "kakuna",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 15,
+      "name": "beedrill",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 16,
+      "name": "pidgey",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 17,
+      "name": "pidgeotto",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 18,
+      "name": "pidgeot",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 19,
+      "name": "rattata",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 20,
+      "name": "raticate",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 21,
+      "name": "spearow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 22,
+      "name": "fearow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 23,
+      "name": "ekans",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 24,
+      "name": "arbok",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 25,
+      "name": "pikachu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 26,
+      "name": "raichu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 27,
+      "name": "sandshrew",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 28,
+      "name": "sandslash",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 29,
+      "name": "nidoran-f",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 30,
+      "name": "nidorina",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 31,
+      "name": "nidoqueen",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 32,
+      "name": "nidoran-m",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 33,
+      "name": "nidorino",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 34,
+      "name": "nidoking",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 35,
+      "name": "clefairy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 36,
+      "name": "clefable",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 37,
+      "name": "vulpix",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 38,
+      "name": "ninetales",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 39,
+      "name": "jigglypuff",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 40,
+      "name": "wigglytuff",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 41,
+      "name": "zubat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 42,
+      "name": "golbat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 43,
+      "name": "oddish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 44,
+      "name": "gloom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 45,
+      "name": "vileplume",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 46,
+      "name": "paras",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 47,
+      "name": "parasect",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 48,
+      "name": "venonat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 49,
+      "name": "venomoth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 50,
+      "name": "diglett",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 51,
+      "name": "dugtrio",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 52,
+      "name": "meowth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 53,
+      "name": "persian",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 54,
+      "name": "psyduck",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 55,
+      "name": "golduck",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 56,
+      "name": "mankey",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 57,
+      "name": "primeape",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 58,
+      "name": "growlithe",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 59,
+      "name": "arcanine",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 60,
+      "name": "poliwag",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 61,
+      "name": "poliwhirl",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 62,
+      "name": "poliwrath",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 63,
+      "name": "abra",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 64,
+      "name": "kadabra",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 65,
+      "name": "alakazam",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 66,
+      "name": "machop",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 67,
+      "name": "machoke",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 68,
+      "name": "machamp",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 69,
+      "name": "bellsprout",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 70,
+      "name": "weepinbell",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 71,
+      "name": "victreebel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 72,
+      "name": "tentacool",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 73,
+      "name": "tentacruel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 74,
+      "name": "geodude",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 75,
+      "name": "graveler",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 76,
+      "name": "golem",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 77,
+      "name": "ponyta",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 78,
+      "name": "rapidash",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 79,
+      "name": "slowpoke",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 80,
+      "name": "slowbro",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 81,
+      "name": "magnemite",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 82,
+      "name": "magneton",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 83,
+      "name": "farfetchd",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 84,
+      "name": "doduo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 85,
+      "name": "dodrio",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 86,
+      "name": "seel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 87,
+      "name": "dewgong",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 88,
+      "name": "grimer",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 89,
+      "name": "muk",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 90,
+      "name": "shellder",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 91,
+      "name": "cloyster",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 92,
+      "name": "gastly",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 93,
+      "name": "haunter",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 94,
+      "name": "gengar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 95,
+      "name": "onix",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 96,
+      "name": "drowzee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 97,
+      "name": "hypno",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 98,
+      "name": "krabby",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 99,
+      "name": "kingler",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 100,
+      "name": "voltorb",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 101,
+      "name": "electrode",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 102,
+      "name": "exeggcute",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 103,
+      "name": "exeggutor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 104,
+      "name": "cubone",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 105,
+      "name": "marowak",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 106,
+      "name": "hitmonlee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 107,
+      "name": "hitmonchan",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 108,
+      "name": "lickitung",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 109,
+      "name": "koffing",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 110,
+      "name": "weezing",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 111,
+      "name": "rhyhorn",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 112,
+      "name": "rhydon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 113,
+      "name": "chansey",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 114,
+      "name": "tangela",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 115,
+      "name": "kangaskhan",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 116,
+      "name": "horsea",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 117,
+      "name": "seadra",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 118,
+      "name": "goldeen",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 119,
+      "name": "seaking",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 120,
+      "name": "staryu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 121,
+      "name": "starmie",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 122,
+      "name": "mr-mime",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 123,
+      "name": "scyther",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 124,
+      "name": "jynx",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 125,
+      "name": "electabuzz",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 126,
+      "name": "magmar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 127,
+      "name": "pinsir",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 128,
+      "name": "tauros",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 129,
+      "name": "magikarp",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 130,
+      "name": "gyarados",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 131,
+      "name": "lapras",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 132,
+      "name": "ditto",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 133,
+      "name": "eevee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 134,
+      "name": "vaporeon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 135,
+      "name": "jolteon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 136,
+      "name": "flareon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 137,
+      "name": "porygon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 138,
+      "name": "omanyte",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 139,
+      "name": "omastar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 140,
+      "name": "kabuto",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 141,
+      "name": "kabutops",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 142,
+      "name": "aerodactyl",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 143,
+      "name": "snorlax",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 144,
+      "name": "articuno",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 145,
+      "name": "zapdos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 146,
+      "name": "moltres",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 147,
+      "name": "dratini",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 148,
+      "name": "dragonair",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 149,
+      "name": "dragonite",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 150,
+      "name": "mewtwo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 151,
+      "name": "mew",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 152,
+      "name": "chikorita",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 153,
+      "name": "bayleef",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 154,
+      "name": "meganium",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 155,
+      "name": "cyndaquil",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 156,
+      "name": "quilava",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 157,
+      "name": "typhlosion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 158,
+      "name": "totodile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 159,
+      "name": "croconaw",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 160,
+      "name": "feraligatr",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 161,
+      "name": "sentret",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 162,
+      "name": "furret",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 163,
+      "name": "hoothoot",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 164,
+      "name": "noctowl",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 165,
+      "name": "ledyba",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 166,
+      "name": "ledian",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 167,
+      "name": "spinarak",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 168,
+      "name": "ariados",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 169,
+      "name": "crobat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 170,
+      "name": "chinchou",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 171,
+      "name": "lanturn",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 172,
+      "name": "pichu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 173,
+      "name": "cleffa",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 174,
+      "name": "igglybuff",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 175,
+      "name": "togepi",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 176,
+      "name": "togetic",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 177,
+      "name": "natu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 178,
+      "name": "xatu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 179,
+      "name": "mareep",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 180,
+      "name": "flaaffy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 181,
+      "name": "ampharos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 182,
+      "name": "bellossom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 183,
+      "name": "marill",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 184,
+      "name": "azumarill",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 185,
+      "name": "sudowoodo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 186,
+      "name": "politoed",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 187,
+      "name": "hoppip",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 188,
+      "name": "skiploom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 189,
+      "name": "jumpluff",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 190,
+      "name": "aipom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 191,
+      "name": "sunkern",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 192,
+      "name": "sunflora",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 193,
+      "name": "yanma",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 194,
+      "name": "wooper",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 195,
+      "name": "quagsire",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 196,
+      "name": "espeon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 197,
+      "name": "umbreon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 198,
+      "name": "murkrow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 199,
+      "name": "slowking",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 200,
+      "name": "misdreavus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 201,
+      "name": "unown",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 202,
+      "name": "wobbuffet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 203,
+      "name": "girafarig",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 204,
+      "name": "pineco",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 205,
+      "name": "forretress",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 206,
+      "name": "dunsparce",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 207,
+      "name": "gligar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 208,
+      "name": "steelix",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 209,
+      "name": "snubbull",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 210,
+      "name": "granbull",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 211,
+      "name": "qwilfish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 212,
+      "name": "scizor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 213,
+      "name": "shuckle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 214,
+      "name": "heracross",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 215,
+      "name": "sneasel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 216,
+      "name": "teddiursa",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 217,
+      "name": "ursaring",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 218,
+      "name": "slugma",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 219,
+      "name": "magcargo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 220,
+      "name": "swinub",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 221,
+      "name": "piloswine",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 222,
+      "name": "corsola",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 223,
+      "name": "remoraid",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 224,
+      "name": "octillery",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 225,
+      "name": "delibird",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 226,
+      "name": "mantine",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 227,
+      "name": "skarmory",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 228,
+      "name": "houndour",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 229,
+      "name": "houndoom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 230,
+      "name": "kingdra",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 231,
+      "name": "phanpy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 232,
+      "name": "donphan",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 233,
+      "name": "porygon2",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 234,
+      "name": "stantler",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 235,
+      "name": "smeargle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 236,
+      "name": "tyrogue",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 237,
+      "name": "hitmontop",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 238,
+      "name": "smoochum",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 239,
+      "name": "elekid",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 240,
+      "name": "magby",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 241,
+      "name": "miltank",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 242,
+      "name": "blissey",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 243,
+      "name": "raikou",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 244,
+      "name": "entei",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 245,
+      "name": "suicune",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 246,
+      "name": "larvitar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 247,
+      "name": "pupitar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 248,
+      "name": "tyranitar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 249,
+      "name": "lugia",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 250,
+      "name": "ho-oh",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 251,
+      "name": "celebi",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 252,
+      "name": "treecko",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 253,
+      "name": "grovyle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 254,
+      "name": "sceptile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 255,
+      "name": "torchic",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 256,
+      "name": "combusken",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 257,
+      "name": "blaziken",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 258,
+      "name": "mudkip",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 259,
+      "name": "marshtomp",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 260,
+      "name": "swampert",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 261,
+      "name": "poochyena",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 262,
+      "name": "mightyena",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 263,
+      "name": "zigzagoon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 264,
+      "name": "linoone",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 265,
+      "name": "wurmple",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 266,
+      "name": "silcoon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 267,
+      "name": "beautifly",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 268,
+      "name": "cascoon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 269,
+      "name": "dustox",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 270,
+      "name": "lotad",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 271,
+      "name": "lombre",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 272,
+      "name": "ludicolo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 273,
+      "name": "seedot",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 274,
+      "name": "nuzleaf",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 275,
+      "name": "shiftry",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 276,
+      "name": "taillow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 277,
+      "name": "swellow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 278,
+      "name": "wingull",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 279,
+      "name": "pelipper",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 280,
+      "name": "ralts",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 281,
+      "name": "kirlia",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 282,
+      "name": "gardevoir",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 283,
+      "name": "surskit",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 284,
+      "name": "masquerain",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 285,
+      "name": "shroomish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 286,
+      "name": "breloom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 287,
+      "name": "slakoth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 288,
+      "name": "vigoroth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 289,
+      "name": "slaking",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 290,
+      "name": "nincada",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 291,
+      "name": "ninjask",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 292,
+      "name": "shedinja",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 293,
+      "name": "whismur",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 294,
+      "name": "loudred",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 295,
+      "name": "exploud",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 296,
+      "name": "makuhita",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 297,
+      "name": "hariyama",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 298,
+      "name": "azurill",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 299,
+      "name": "nosepass",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 300,
+      "name": "skitty",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 301,
+      "name": "delcatty",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 302,
+      "name": "sableye",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 303,
+      "name": "mawile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 304,
+      "name": "aron",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 305,
+      "name": "lairon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 306,
+      "name": "aggron",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 307,
+      "name": "meditite",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 308,
+      "name": "medicham",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 309,
+      "name": "electrike",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 310,
+      "name": "manectric",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 311,
+      "name": "plusle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 312,
+      "name": "minun",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 313,
+      "name": "volbeat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 314,
+      "name": "illumise",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 315,
+      "name": "roselia",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 316,
+      "name": "gulpin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 317,
+      "name": "swalot",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 318,
+      "name": "carvanha",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 319,
+      "name": "sharpedo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 320,
+      "name": "wailmer",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 321,
+      "name": "wailord",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 322,
+      "name": "numel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 323,
+      "name": "camerupt",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 324,
+      "name": "torkoal",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 325,
+      "name": "spoink",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 326,
+      "name": "grumpig",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 327,
+      "name": "spinda",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 328,
+      "name": "trapinch",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 329,
+      "name": "vibrava",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 330,
+      "name": "flygon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 331,
+      "name": "cacnea",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 332,
+      "name": "cacturne",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 333,
+      "name": "swablu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 334,
+      "name": "altaria",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 335,
+      "name": "zangoose",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 336,
+      "name": "seviper",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 337,
+      "name": "lunatone",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 338,
+      "name": "solrock",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 339,
+      "name": "barboach",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 340,
+      "name": "whiscash",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 341,
+      "name": "corphish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 342,
+      "name": "crawdaunt",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 343,
+      "name": "baltoy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 344,
+      "name": "claydol",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 345,
+      "name": "lileep",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 346,
+      "name": "cradily",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 347,
+      "name": "anorith",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 348,
+      "name": "armaldo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 349,
+      "name": "feebas",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 350,
+      "name": "milotic",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 351,
+      "name": "castform",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 352,
+      "name": "kecleon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 353,
+      "name": "shuppet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 354,
+      "name": "banette",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 355,
+      "name": "duskull",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 356,
+      "name": "dusclops",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 357,
+      "name": "tropius",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 358,
+      "name": "chimecho",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 359,
+      "name": "absol",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 360,
+      "name": "wynaut",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 361,
+      "name": "snorunt",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 362,
+      "name": "glalie",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 363,
+      "name": "spheal",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 364,
+      "name": "sealeo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 365,
+      "name": "walrein",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 366,
+      "name": "clamperl",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 367,
+      "name": "huntail",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 368,
+      "name": "gorebyss",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 369,
+      "name": "relicanth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 370,
+      "name": "luvdisc",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 371,
+      "name": "bagon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 372,
+      "name": "shelgon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 373,
+      "name": "salamence",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 374,
+      "name": "beldum",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 375,
+      "name": "metang",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 376,
+      "name": "metagross",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 377,
+      "name": "regirock",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 378,
+      "name": "regice",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 379,
+      "name": "registeel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 380,
+      "name": "latias",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 381,
+      "name": "latios",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 382,
+      "name": "kyogre",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 383,
+      "name": "groudon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 384,
+      "name": "rayquaza",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 385,
+      "name": "jirachi",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 386,
+      "name": "deoxys",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 387,
+      "name": "turtwig",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 388,
+      "name": "grotle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 389,
+      "name": "torterra",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 390,
+      "name": "chimchar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 391,
+      "name": "monferno",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 392,
+      "name": "infernape",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 393,
+      "name": "piplup",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 394,
+      "name": "prinplup",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 395,
+      "name": "empoleon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 396,
+      "name": "starly",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 397,
+      "name": "staravia",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 398,
+      "name": "staraptor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 399,
+      "name": "bidoof",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 400,
+      "name": "bibarel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 401,
+      "name": "kricketot",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 402,
+      "name": "kricketune",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 403,
+      "name": "shinx",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 404,
+      "name": "luxio",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 405,
+      "name": "luxray",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 406,
+      "name": "budew",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 407,
+      "name": "roserade",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 408,
+      "name": "cranidos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 409,
+      "name": "rampardos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 410,
+      "name": "shieldon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 411,
+      "name": "bastiodon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 412,
+      "name": "burmy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 413,
+      "name": "wormadam",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 414,
+      "name": "mothim",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 415,
+      "name": "combee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 416,
+      "name": "vespiquen",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 417,
+      "name": "pachirisu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 418,
+      "name": "buizel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 419,
+      "name": "floatzel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 420,
+      "name": "cherubi",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 421,
+      "name": "cherrim",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 422,
+      "name": "shellos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 423,
+      "name": "gastrodon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 424,
+      "name": "ambipom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 425,
+      "name": "drifloon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 426,
+      "name": "drifblim",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 427,
+      "name": "buneary",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 428,
+      "name": "lopunny",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 429,
+      "name": "mismagius",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 430,
+      "name": "honchkrow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 431,
+      "name": "glameow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 432,
+      "name": "purugly",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 433,
+      "name": "chingling",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 434,
+      "name": "stunky",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 435,
+      "name": "skuntank",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 436,
+      "name": "bronzor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 437,
+      "name": "bronzong",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 438,
+      "name": "bonsly",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 439,
+      "name": "mime-jr",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 440,
+      "name": "happiny",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 441,
+      "name": "chatot",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 442,
+      "name": "spiritomb",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 443,
+      "name": "gible",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 444,
+      "name": "gabite",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 445,
+      "name": "garchomp",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 446,
+      "name": "munchlax",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 447,
+      "name": "riolu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 448,
+      "name": "lucario",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 449,
+      "name": "hippopotas",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 450,
+      "name": "hippowdon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 451,
+      "name": "skorupi",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 452,
+      "name": "drapion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 453,
+      "name": "croagunk",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 454,
+      "name": "toxicroak",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 455,
+      "name": "carnivine",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 456,
+      "name": "finneon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 457,
+      "name": "lumineon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 458,
+      "name": "mantyke",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 459,
+      "name": "snover",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 460,
+      "name": "abomasnow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 461,
+      "name": "weavile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 462,
+      "name": "magnezone",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 463,
+      "name": "lickilicky",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 464,
+      "name": "rhyperior",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 465,
+      "name": "tangrowth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 466,
+      "name": "electivire",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 467,
+      "name": "magmortar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 468,
+      "name": "togekiss",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 469,
+      "name": "yanmega",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 470,
+      "name": "leafeon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 471,
+      "name": "glaceon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 472,
+      "name": "gliscor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 473,
+      "name": "mamoswine",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 474,
+      "name": "porygon-z",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 475,
+      "name": "gallade",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 476,
+      "name": "probopass",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 477,
+      "name": "dusknoir",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 478,
+      "name": "froslass",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 479,
+      "name": "rotom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 480,
+      "name": "uxie",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 481,
+      "name": "mesprit",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 482,
+      "name": "azelf",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 483,
+      "name": "dialga",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 484,
+      "name": "palkia",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 485,
+      "name": "heatran",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 486,
+      "name": "regigigas",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 487,
+      "name": "giratina",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 488,
+      "name": "cresselia",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 489,
+      "name": "phione",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 490,
+      "name": "manaphy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 491,
+      "name": "darkrai",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 492,
+      "name": "shaymin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 493,
+      "name": "arceus",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 494,
+      "name": "victini",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 495,
+      "name": "snivy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 496,
+      "name": "servine",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 497,
+      "name": "serperior",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 498,
+      "name": "tepig",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 499,
+      "name": "pignite",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 500,
+      "name": "emboar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 501,
+      "name": "oshawott",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 502,
+      "name": "dewott",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 503,
+      "name": "samurott",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 504,
+      "name": "patrat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 505,
+      "name": "watchog",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 506,
+      "name": "lillipup",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 507,
+      "name": "herdier",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 508,
+      "name": "stoutland",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 509,
+      "name": "purrloin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 510,
+      "name": "liepard",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 511,
+      "name": "pansage",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 512,
+      "name": "simisage",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 513,
+      "name": "pansear",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 514,
+      "name": "simisear",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 515,
+      "name": "panpour",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 516,
+      "name": "simipour",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 517,
+      "name": "munna",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 518,
+      "name": "musharna",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 519,
+      "name": "pidove",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 520,
+      "name": "tranquill",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 521,
+      "name": "unfezant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 522,
+      "name": "blitzle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 523,
+      "name": "zebstrika",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 524,
+      "name": "roggenrola",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 525,
+      "name": "boldore",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 526,
+      "name": "gigalith",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 527,
+      "name": "woobat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 528,
+      "name": "swoobat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 529,
+      "name": "drilbur",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 530,
+      "name": "excadrill",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 531,
+      "name": "audino",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 532,
+      "name": "timburr",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 533,
+      "name": "gurdurr",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 534,
+      "name": "conkeldurr",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 535,
+      "name": "tympole",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 536,
+      "name": "palpitoad",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 537,
+      "name": "seismitoad",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 538,
+      "name": "throh",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 539,
+      "name": "sawk",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 540,
+      "name": "sewaddle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 541,
+      "name": "swadloon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 542,
+      "name": "leavanny",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 543,
+      "name": "venipede",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 544,
+      "name": "whirlipede",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 545,
+      "name": "scolipede",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 546,
+      "name": "cottonee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 547,
+      "name": "whimsicott",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 548,
+      "name": "petilil",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 549,
+      "name": "lilligant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 550,
+      "name": "basculin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 551,
+      "name": "sandile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 552,
+      "name": "krokorok",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 553,
+      "name": "krookodile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 554,
+      "name": "darumaka",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 555,
+      "name": "darmanitan",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 556,
+      "name": "maractus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 557,
+      "name": "dwebble",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 558,
+      "name": "crustle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 559,
+      "name": "scraggy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 560,
+      "name": "scrafty",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 561,
+      "name": "sigilyph",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 562,
+      "name": "yamask",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 563,
+      "name": "cofagrigus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 564,
+      "name": "tirtouga",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 565,
+      "name": "carracosta",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 566,
+      "name": "archen",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 567,
+      "name": "archeops",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 568,
+      "name": "trubbish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 569,
+      "name": "garbodor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 570,
+      "name": "zorua",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 571,
+      "name": "zoroark",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 572,
+      "name": "minccino",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 573,
+      "name": "cinccino",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 574,
+      "name": "gothita",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 575,
+      "name": "gothorita",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 576,
+      "name": "gothitelle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 577,
+      "name": "solosis",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 578,
+      "name": "duosion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 579,
+      "name": "reuniclus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 580,
+      "name": "ducklett",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 581,
+      "name": "swanna",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 582,
+      "name": "vanillite",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 583,
+      "name": "vanillish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 584,
+      "name": "vanilluxe",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 585,
+      "name": "deerling",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 586,
+      "name": "sawsbuck",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 587,
+      "name": "emolga",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 588,
+      "name": "karrablast",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 589,
+      "name": "escavalier",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 590,
+      "name": "foongus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 591,
+      "name": "amoonguss",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 592,
+      "name": "frillish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 593,
+      "name": "jellicent",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 594,
+      "name": "alomomola",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 595,
+      "name": "joltik",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 596,
+      "name": "galvantula",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 597,
+      "name": "ferroseed",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 598,
+      "name": "ferrothorn",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 599,
+      "name": "klink",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 600,
+      "name": "klang",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 601,
+      "name": "klinklang",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 602,
+      "name": "tynamo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 603,
+      "name": "eelektrik",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 604,
+      "name": "eelektross",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 605,
+      "name": "elgyem",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 606,
+      "name": "beheeyem",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 607,
+      "name": "litwick",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 608,
+      "name": "lampent",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 609,
+      "name": "chandelure",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 610,
+      "name": "axew",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 611,
+      "name": "fraxure",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 612,
+      "name": "haxorus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 613,
+      "name": "cubchoo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 614,
+      "name": "beartic",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 615,
+      "name": "cryogonal",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 616,
+      "name": "shelmet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 617,
+      "name": "accelgor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 618,
+      "name": "stunfisk",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 619,
+      "name": "mienfoo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 620,
+      "name": "mienshao",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 621,
+      "name": "druddigon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 622,
+      "name": "golett",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 623,
+      "name": "golurk",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 624,
+      "name": "pawniard",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 625,
+      "name": "bisharp",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 626,
+      "name": "bouffalant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 627,
+      "name": "rufflet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 628,
+      "name": "braviary",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 629,
+      "name": "vullaby",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 630,
+      "name": "mandibuzz",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 631,
+      "name": "heatmor",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 632,
+      "name": "durant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 633,
+      "name": "deino",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 634,
+      "name": "zweilous",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 635,
+      "name": "hydreigon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 636,
+      "name": "larvesta",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 637,
+      "name": "volcarona",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 638,
+      "name": "cobalion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 639,
+      "name": "terrakion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 640,
+      "name": "virizion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 641,
+      "name": "tornadus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 642,
+      "name": "thundurus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 643,
+      "name": "reshiram",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 644,
+      "name": "zekrom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 645,
+      "name": "landorus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 646,
+      "name": "kyurem",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 647,
+      "name": "keldeo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 648,
+      "name": "meloetta",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 649,
+      "name": "genesect",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 651,
+      "name": "quilladin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 653,
+      "name": "fennekin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 654,
+      "name": "braixen",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 656,
+      "name": "froakie",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 658,
+      "name": "greninja",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 661,
+      "name": "fletchling",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 662,
+      "name": "fletchinder",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 663,
+      "name": "talonflame",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 664,
+      "name": "scatterbug",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 665,
+      "name": "spewpa",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 666,
+      "name": "vivillon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 667,
+      "name": "litleo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 668,
+      "name": "pyroar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 669,
+      "name": "flabebe",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 670,
+      "name": "floette",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 671,
+      "name": "florges",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 672,
+      "name": "skiddo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 674,
+      "name": "pancham",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 675,
+      "name": "pangoro",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 679,
+      "name": "honedge",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 681,
+      "name": "aegislash",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 682,
+      "name": "spritzee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 684,
+      "name": "swirlix",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 685,
+      "name": "slurpuff",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 686,
+      "name": "inkay",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 687,
+      "name": "malamar",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 688,
+      "name": "binacle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 691,
+      "name": "dragalge",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 692,
+      "name": "clauncher",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 693,
+      "name": "clawitzer",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 694,
+      "name": "helioptile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 696,
+      "name": "tyrunt",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 697,
+      "name": "tyrantrum",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 698,
+      "name": "amaura",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 700,
+      "name": "sylveon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 702,
+      "name": "dedenne",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 703,
+      "name": "carbink",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 704,
+      "name": "goomy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 705,
+      "name": "sliggoo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 706,
+      "name": "goodra",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 707,
+      "name": "klefki",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 708,
+      "name": "phantump",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 709,
+      "name": "trevenant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 712,
+      "name": "bergmite",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 713,
+      "name": "avalugg",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 714,
+      "name": "noibat",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 716,
+      "name": "xerneas",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 717,
+      "name": "yveltal",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 718,
+      "name": "zygarde",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 719,
+      "name": "diancie",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 720,
+      "name": "hoopa",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 721,
+      "name": "volcanion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 722,
+      "name": "rowlet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 725,
+      "name": "litten",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 727,
+      "name": "incineroar",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 728,
+      "name": "popplio",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 729,
+      "name": "brionne",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 730,
+      "name": "primarina",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 731,
+      "name": "pikipek",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 732,
+      "name": "trumbeak",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 733,
+      "name": "toucannon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 734,
+      "name": "yungoos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 735,
+      "name": "gumshoos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 736,
+      "name": "grubbin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 737,
+      "name": "charjabug",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 738,
+      "name": "vikavolt",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 739,
+      "name": "crabrawler",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 740,
+      "name": "crabominable",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 742,
+      "name": "cutiefly",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 743,
+      "name": "ribombee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 744,
+      "name": "rockruff",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 745,
+      "name": "lycanroc",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 746,
+      "name": "wishiwashi",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 748,
+      "name": "toxapex",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 749,
+      "name": "mudbray",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 750,
+      "name": "mudsdale",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 751,
+      "name": "dewpider",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 752,
+      "name": "araquanid",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 753,
+      "name": "fomantis",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 754,
+      "name": "lurantis",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 755,
+      "name": "morelull",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 756,
+      "name": "shiinotic",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 759,
+      "name": "stufful",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 760,
+      "name": "bewear",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 761,
+      "name": "bounsweet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 762,
+      "name": "steenee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 764,
+      "name": "comfey",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 767,
+      "name": "wimpod",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 769,
+      "name": "sandygast",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 770,
+      "name": "palossand",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 771,
+      "name": "pyukumuku",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 772,
+      "name": "type-null",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 773,
+      "name": "silvally",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 774,
+      "name": "minior",
+      "bytesDiffer": false,
+      "visibleFirstFrameColorsDiffer": false,
+      "sameDimensions": true
+    },
+    {
+      "id": 775,
+      "name": "komala",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 776,
+      "name": "turtonator",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 777,
+      "name": "togedemaru",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 778,
+      "name": "mimikyu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 779,
+      "name": "bruxish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 780,
+      "name": "drampa",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 781,
+      "name": "dhelmise",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 782,
+      "name": "jangmo-o",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 783,
+      "name": "hakamo-o",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 784,
+      "name": "kommo-o",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 785,
+      "name": "tapu-koko",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 786,
+      "name": "tapu-lele",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 787,
+      "name": "tapu-bulu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 789,
+      "name": "cosmog",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 790,
+      "name": "cosmoem",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 791,
+      "name": "solgaleo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 792,
+      "name": "lunala",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 793,
+      "name": "nihilego",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 794,
+      "name": "buzzwole",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 795,
+      "name": "pheromosa",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 796,
+      "name": "xurkitree",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 797,
+      "name": "celesteela",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 798,
+      "name": "kartana",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 800,
+      "name": "necrozma",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 801,
+      "name": "magearna",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 802,
+      "name": "marshadow",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 804,
+      "name": "naganadel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 805,
+      "name": "stakataka",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 806,
+      "name": "blacephalon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 807,
+      "name": "zeraora",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 808,
+      "name": "meltan",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 809,
+      "name": "melmetal",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 810,
+      "name": "grookey",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 811,
+      "name": "thwackey",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 813,
+      "name": "scorbunny",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 814,
+      "name": "raboot",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 816,
+      "name": "sobble",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 817,
+      "name": "drizzile",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 818,
+      "name": "inteleon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 821,
+      "name": "rookidee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 822,
+      "name": "corvisquire",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 823,
+      "name": "corviknight",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 824,
+      "name": "blipbug",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 830,
+      "name": "eldegoss",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 831,
+      "name": "wooloo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 832,
+      "name": "dubwool",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 833,
+      "name": "chewtle",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 834,
+      "name": "drednaw",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 835,
+      "name": "yamper",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 837,
+      "name": "rolycoly",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 838,
+      "name": "carkol",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 839,
+      "name": "coalossal",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 840,
+      "name": "applin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": false
+    },
+    {
+      "id": 843,
+      "name": "silicobra",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 844,
+      "name": "sandaconda",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 845,
+      "name": "cramorant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 846,
+      "name": "arrokuda",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 847,
+      "name": "barraskewda",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 848,
+      "name": "toxel",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 849,
+      "name": "toxtricity",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 852,
+      "name": "clobbopus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 856,
+      "name": "hatenna",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 858,
+      "name": "hatterene",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 859,
+      "name": "impidimp",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 861,
+      "name": "grimmsnarl",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 862,
+      "name": "obstagoon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 863,
+      "name": "perrserker",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 864,
+      "name": "cursola",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 866,
+      "name": "mr-rime",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 867,
+      "name": "runerigus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 868,
+      "name": "milcery",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 869,
+      "name": "alcremie",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 871,
+      "name": "pincurchin",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 872,
+      "name": "snom",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 873,
+      "name": "frosmoth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 874,
+      "name": "stonjourner",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 875,
+      "name": "eiscue",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 876,
+      "name": "indeedee",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 877,
+      "name": "morpeko",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 878,
+      "name": "cufant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 880,
+      "name": "dracozolt",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 882,
+      "name": "dracovish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 883,
+      "name": "arctovish",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 884,
+      "name": "duraludon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 885,
+      "name": "dreepy",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 886,
+      "name": "drakloak",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 887,
+      "name": "dragapult",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 888,
+      "name": "zacian",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 889,
+      "name": "zamazenta",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 890,
+      "name": "eternatus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 895,
+      "name": "regidrago",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 896,
+      "name": "glastrier",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 898,
+      "name": "calyrex",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 899,
+      "name": "wyrdeer",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 901,
+      "name": "ursaluna",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 902,
+      "name": "basculegion",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 904,
+      "name": "overqwil",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 924,
+      "name": "tandemaus",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 925,
+      "name": "maushold",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 932,
+      "name": "nacli",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 938,
+      "name": "tadbulb",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 969,
+      "name": "glimmet",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 978,
+      "name": "tatsugiri",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 980,
+      "name": "clodsire",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 984,
+      "name": "great-tusk",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 987,
+      "name": "flutter-mane",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 992,
+      "name": "iron-hands",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 994,
+      "name": "iron-moth",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 995,
+      "name": "iron-thorns",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 996,
+      "name": "frigibax",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 997,
+      "name": "arctibax",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 999,
+      "name": "gimmighoul",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1000,
+      "name": "gholdengo",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1001,
+      "name": "wo-chien",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1002,
+      "name": "chien-pao",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1003,
+      "name": "ting-lu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1004,
+      "name": "chi-yu",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1006,
+      "name": "iron-valiant",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1008,
+      "name": "miraidon",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1019,
+      "name": "hydrapple",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1020,
+      "name": "gouging-fire",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    },
+    {
+      "id": 1024,
+      "name": "terapagos",
+      "bytesDiffer": true,
+      "visibleFirstFrameColorsDiffer": true,
+      "sameDimensions": true
+    }
+  ]
+}

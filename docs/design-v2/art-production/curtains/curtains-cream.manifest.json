@@ -1,0 +1,309 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "curtain-short-cream",
+      "row": 0,
+      "col": 0,
+      "name": "short-cream",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500742,
+        0.974522
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        0,
+        790,
+        450
+      ],
+      "file": "curtains/assets/curtain-short-cream.png",
+      "size": [
+        674,
+        314
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        61,
+        9,
+        719,
+        307
+      ],
+      "cropInCell": [
+        53,
+        1,
+        727,
+        315
+      ],
+      "sha256": "75b94364a1d8e6227d2ffa092cba7338b16075f263424493f846db74ab93f5a0",
+      "source": "curtains/_sources/curtains-cream.png",
+      "promptFile": "curtains/_sources/curtains-cream-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        10,
+        9,
+        665,
+        306
+      ],
+      "actualAspect": 2.205387,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.034125,
+          0.076433
+        ],
+        [
+          0.965875,
+          0.232484
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          76,
+          25
+        ],
+        [
+          704,
+          74
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.034125,
+        0.076433
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        159,
+        86,
+        370,
+        220
+      ],
+      "openingRect": [
+        0.235905,
+        0.273885,
+        0.548961,
+        0.700637
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-linen-cream",
+      "row": 0,
+      "col": 1,
+      "name": "linen-cream",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500742,
+        0.982249
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        790,
+        0,
+        1536,
+        570
+      ],
+      "file": "curtains/assets/curtain-linen-cream.png",
+      "size": [
+        674,
+        507
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        39,
+        9,
+        697,
+        500
+      ],
+      "cropInCell": [
+        31,
+        1,
+        705,
+        508
+      ],
+      "sha256": "d7643298642e0457551cd03ece6aa6249e6abeb01c479890ccf71ccee977c79f",
+      "source": "curtains/_sources/curtains-cream.png",
+      "promptFile": "curtains/_sources/curtains-cream-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        10,
+        9,
+        665,
+        498
+      ],
+      "actualAspect": 1.339468,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.038576,
+          0.047337
+        ],
+        [
+          0.962908,
+          0.143984
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          847,
+          25
+        ],
+        [
+          1470,
+          74
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.038576,
+        0.047337
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        169,
+        93,
+        352,
+        406
+      ],
+      "openingRect": [
+        0.250742,
+        0.183432,
+        0.522255,
+        0.800789
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-tied-cream",
+      "row": 1,
+      "col": 0,
+      "name": "tied-cream",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.49928,
+        0.981781
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        450,
+        790,
+        1024
+      ],
+      "file": "curtains/assets/curtain-tied-cream.png",
+      "size": [
+        694,
+        494
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        49,
+        70,
+        727,
+        548
+      ],
+      "cropInCell": [
+        41,
+        62,
+        735,
+        556
+      ],
+      "sha256": "45dbbd25ba5433a57ddce881e7bac9b436371cc1ec42a061ea912dc0fc054d8e",
+      "source": "curtains/_sources/curtains-cream.png",
+      "promptFile": "curtains/_sources/curtains-cream-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        9,
+        9,
+        684,
+        485
+      ],
+      "actualAspect": 1.418067,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.048991,
+          0.052632
+        ],
+        [
+          0.95389,
+          0.147773
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          75,
+          538
+        ],
+        [
+          703,
+          585
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.048991,
+        0.052632
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        179,
+        93,
+        358,
+        393
+      ],
+      "openingRect": [
+        0.257925,
+        0.188259,
+        0.51585,
+        0.795547
+      ],
+      "openingVerificationAlphaThreshold": 8
+    }
+  ]
+}

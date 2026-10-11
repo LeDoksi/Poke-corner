@@ -1,0 +1,2669 @@
+{
+  "version": 1,
+  "scope": "One fixed detailed room and56independent active awards; full decor customization retired.",
+  "room": {
+    "file": "assets/room-master.png",
+    "dimensions": [
+      1448,
+      582
+    ],
+    "sourceFile": "../master.png",
+    "sourceSha256": "de14c63c411515ae7a6952d9b761d347988d478c673b870f0f224238f56a7791",
+    "rgbaPixelIdentity": true
+  },
+  "frontlip": {
+    "file": "assets/shelf-frontlip.png",
+    "rect": [
+      590,
+      281,
+      1031,
+      288
+    ],
+    "dimensions": [
+      441,
+      7
+    ],
+    "intrinsicSourcePixels": true
+  },
+  "shelf": {
+    "anchors": [
+      [
+        664,
+        280
+      ],
+      [
+        810,
+        280
+      ],
+      [
+        956,
+        280
+      ]
+    ],
+    "slotBounds": [
+      [
+        592,
+        183,
+        735,
+        284
+      ],
+      [
+        737,
+        183,
+        883,
+        284
+      ],
+      [
+        885,
+        183,
+        1028,
+        284
+      ]
+    ],
+    "maxAwardDimensions": [
+      132,
+      94
+    ],
+    "renderOrder": [
+      "room-master",
+      "independent-awards",
+      "shelf-frontlip",
+      "pet-root-owned"
+    ]
+  },
+  "trophies": [
+    {
+      "id": "trophy-species-1",
+      "category": "chain",
+      "chainId": "species",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-species-1",
+      "sourceFile": "../trophies/assets/trophy-species-1.png",
+      "sourceSha256": "f7b2272a988ad5d8aacdf77cc745c07fdac42bcd700a4fd2d22b7ecad97b41a6",
+      "sourceRGBASha256": "8860fd8d9fed02f04ed62dea5ac4dc9586e4e58ffb33c34168e22036d21e651b",
+      "file": "assets/trophies/trophy-species-1.png",
+      "maskFile": "assets/masks/trophy-species-1.png",
+      "footAnchor": [
+        0.5,
+        0.98034
+      ],
+      "logicalSize": [
+        107,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-species-2",
+      "category": "chain",
+      "chainId": "species",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-species-2",
+      "sourceFile": "../trophies/assets/trophy-species-2.png",
+      "sourceSha256": "1e62a07afe2ad56e791d61da19b83234a225bb6e4518400d759758e088492608",
+      "sourceRGBASha256": "6c3d75bb0b2754b767aaca94833fc383745c9f280c4dace17c6c2d4e21d17979",
+      "file": "assets/trophies/trophy-species-2.png",
+      "maskFile": "assets/masks/trophy-species-2.png",
+      "footAnchor": [
+        0.5,
+        0.97519
+      ],
+      "logicalSize": [
+        123,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-species-3",
+      "category": "chain",
+      "chainId": "species",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-species-3",
+      "sourceFile": "../trophies/assets/trophy-species-3.png",
+      "sourceSha256": "daf204c691b5b70f0c92d96c55fddd82eaf10e330f36a6e13ac6b48e669b60dd",
+      "sourceRGBASha256": "f3bc802560b748cd12109de044619a900bad47fff98042b9f58c602419b404e3",
+      "file": "assets/trophies/trophy-species-3.png",
+      "maskFile": "assets/masks/trophy-species-3.png",
+      "footAnchor": [
+        0.5,
+        0.9782
+      ],
+      "logicalSize": [
+        132,
+        86
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-species-4",
+      "category": "chain",
+      "chainId": "species",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-species-4",
+      "sourceFile": "../trophies/assets/trophy-species-4.png",
+      "sourceSha256": "44c88ee0c7b9fd833285c9a50d0244fdb295c57f1a882049be540bd0d61e04e9",
+      "sourceRGBASha256": "b70c937707fd2a2939d07df17f08001d00b3a52653f55e5092c385079b78ecea",
+      "file": "assets/trophies/trophy-species-4.png",
+      "maskFile": "assets/masks/trophy-species-4.png",
+      "footAnchor": [
+        0.5,
+        0.98301
+      ],
+      "logicalSize": [
+        112,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-population-1",
+      "category": "chain",
+      "chainId": "population",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-decor-1",
+      "sourceFile": "../trophies/assets/trophy-decor-1.png",
+      "sourceSha256": "e7ef5f7bd83ae9ed5942b12c100b7469bad1948e99c3108d2331dc330a48a893",
+      "sourceRGBASha256": "afe8590a9c8b2a078425f80314965da851dc6ce243a033819aa01f20eb00b91b",
+      "file": "assets/trophies/trophy-population-1.png",
+      "maskFile": "assets/masks/trophy-population-1.png",
+      "footAnchor": [
+        0.5,
+        0.97619
+      ],
+      "logicalSize": [
+        100,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-population-2",
+      "category": "chain",
+      "chainId": "population",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-decor-2",
+      "sourceFile": "../trophies/assets/trophy-decor-2.png",
+      "sourceSha256": "2d19a0b295ea82b2b74540b877db84e284ab412d1d1edfc7ae016231bd2a6416",
+      "sourceRGBASha256": "13f12f5df7b55dee10fffae83b8ebef99f36ce67aef63cb5a6c9410e55b5f4e2",
+      "file": "assets/trophies/trophy-population-2.png",
+      "maskFile": "assets/masks/trophy-population-2.png",
+      "footAnchor": [
+        0.5,
+        0.97416
+      ],
+      "logicalSize": [
+        104,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-population-3",
+      "category": "chain",
+      "chainId": "population",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-decor-3",
+      "sourceFile": "../trophies/assets/trophy-decor-3.png",
+      "sourceSha256": "6784e0f13f2d2f9f5af03e7aed80294c86cc26a55fc7b3ce84423addb1f85297",
+      "sourceRGBASha256": "a1cdc2140c2072f034a4b4bb9f2713d52b857474aa034408d7014da69d9bb395",
+      "file": "assets/trophies/trophy-population-3.png",
+      "maskFile": "assets/masks/trophy-population-3.png",
+      "footAnchor": [
+        0.5,
+        0.98091
+      ],
+      "logicalSize": [
+        110,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-population-4",
+      "category": "chain",
+      "chainId": "population",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-decor-4",
+      "sourceFile": "../trophies/assets/trophy-decor-4.png",
+      "sourceSha256": "ac84589516a075804a7fb2c40a01a485f8dc8a19474e0006e05b382cf29d9eaf",
+      "sourceRGBASha256": "95e945dcb9ddeeb39823994ed534bc940e4888baf30a520d82fecd84b8915ac6",
+      "file": "assets/trophies/trophy-population-4.png",
+      "maskFile": "assets/masks/trophy-population-4.png",
+      "footAnchor": [
+        0.5,
+        0.9828
+      ],
+      "logicalSize": [
+        112,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-catches-1",
+      "category": "chain",
+      "chainId": "catches",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-catches-1",
+      "sourceFile": "../trophies/assets/trophy-catches-1.png",
+      "sourceSha256": "fa6771b3fc0c068d8bcca00b35fbbfb2b916b28bdceea9e178c041c1531a7444",
+      "sourceRGBASha256": "c5eb5e3f5b3b6a646ffb28a6fe743c03f20aed19d626932ede453036258754de",
+      "file": "assets/trophies/trophy-catches-1.png",
+      "maskFile": "assets/masks/trophy-catches-1.png",
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "logicalSize": [
+        106,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-catches-2",
+      "category": "chain",
+      "chainId": "catches",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-catches-2",
+      "sourceFile": "../trophies/assets/trophy-catches-2.png",
+      "sourceSha256": "458d6bdb4b2c6b0681f481893d5af67f02a2a31ca0ff73a45d30154aa430d807",
+      "sourceRGBASha256": "0f711c9899ee7be28e56ff372337bd774ceb5f31a804862a768b7c8937190293",
+      "file": "assets/trophies/trophy-catches-2.png",
+      "maskFile": "assets/masks/trophy-catches-2.png",
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "logicalSize": [
+        132,
+        91
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-catches-3",
+      "category": "chain",
+      "chainId": "catches",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-catches-3",
+      "sourceFile": "../trophies/assets/trophy-catches-3.png",
+      "sourceSha256": "4288ae1c89433c4d3e88ccc45480deabb38ee516d26058712ef5ada2cdcda09b",
+      "sourceRGBASha256": "7cb1878202a3a857c4969c592ee51e2b3e3dab724030306ae25f80a17e197524",
+      "file": "assets/trophies/trophy-catches-3.png",
+      "maskFile": "assets/masks/trophy-catches-3.png",
+      "footAnchor": [
+        0.5,
+        0.98148
+      ],
+      "logicalSize": [
+        126,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-catches-4",
+      "category": "chain",
+      "chainId": "catches",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-catches-4",
+      "sourceFile": "../trophies/assets/trophy-catches-4.png",
+      "sourceSha256": "45ec5f8127281cde78068e9726a1774f47656f7eb8c0c46c7fe48557d7544b7d",
+      "sourceRGBASha256": "bf2183f4304fd78ac032f2570088af821cab294a7a38cfa0d940d85adcce5f7b",
+      "file": "assets/trophies/trophy-catches-4.png",
+      "maskFile": "assets/masks/trophy-catches-4.png",
+      "footAnchor": [
+        0.5,
+        0.98206
+      ],
+      "logicalSize": [
+        122,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "category": "chain",
+      "chainId": "expeditions",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-expeditions-1",
+      "sourceFile": "../trophies/assets/trophy-expeditions-1.png",
+      "sourceSha256": "a860b1217339e9ce24d17cd017bb9670f64501ba5ff432872a1f8bcd0c45fa50",
+      "sourceRGBASha256": "7f42aa3d6a6df7499eb7a01e8cad66838b392a914150a8dcb8589659ad4afc62",
+      "file": "assets/trophies/trophy-expeditions-1.png",
+      "maskFile": "assets/masks/trophy-expeditions-1.png",
+      "footAnchor": [
+        0.5,
+        0.97479
+      ],
+      "logicalSize": [
+        116,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "category": "chain",
+      "chainId": "expeditions",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-expeditions-2",
+      "sourceFile": "../trophies/assets/trophy-expeditions-2.png",
+      "sourceSha256": "f4ef4b01208c54bcff467bb3d1e7e53b8276079a932043232078b116b26c55b7",
+      "sourceRGBASha256": "f76acfba98e7825bb4e8b861b0a071a51b971f30515e0f86efb35679b54345b0",
+      "file": "assets/trophies/trophy-expeditions-2.png",
+      "maskFile": "assets/masks/trophy-expeditions-2.png",
+      "footAnchor": [
+        0.5,
+        0.97653
+      ],
+      "logicalSize": [
+        103,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "category": "chain",
+      "chainId": "expeditions",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-expeditions-3",
+      "sourceFile": "../trophies/assets/trophy-expeditions-3.png",
+      "sourceSha256": "f57306de5e152d2f1228eae0580db7868b323614fbe74b01ebf50a8152411e32",
+      "sourceRGBASha256": "f44bd03d1b65197bea7cd5ce879d9e25ae71e649840b433f15ee4f4fbf9e469b",
+      "file": "assets/trophies/trophy-expeditions-3.png",
+      "maskFile": "assets/masks/trophy-expeditions-3.png",
+      "footAnchor": [
+        0.5,
+        0.97887
+      ],
+      "logicalSize": [
+        120,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "category": "chain",
+      "chainId": "expeditions",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-expeditions-4",
+      "sourceFile": "../trophies/assets/trophy-expeditions-4.png",
+      "sourceSha256": "144f7e6bcf26e070bc72475ebdf9436a0eb217ca3af63fbf0e8f53295943a85a",
+      "sourceRGBASha256": "0ac09fc9969fb5e2bd5c49a67f43e3ecb03c54b7de7d5b5801c70bebc8a41b11",
+      "file": "assets/trophies/trophy-expeditions-4.png",
+      "maskFile": "assets/masks/trophy-expeditions-4.png",
+      "footAnchor": [
+        0.5,
+        0.98069
+      ],
+      "logicalSize": [
+        98,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-regions-1",
+      "category": "chain",
+      "chainId": "regions",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-regions-1",
+      "sourceFile": "../trophies/assets/trophy-regions-1.png",
+      "sourceSha256": "f9ab57c7d80b79227f5dc737fcce449a5164ad03644b2b5cbb5d49442ddc8761",
+      "sourceRGBASha256": "ebef3a63898939d96b448771149ae7cf105a3fb461789c14f1ac505c189252f7",
+      "file": "assets/trophies/trophy-regions-1.png",
+      "maskFile": "assets/masks/trophy-regions-1.png",
+      "footAnchor": [
+        0.5,
+        0.9705
+      ],
+      "logicalSize": [
+        120,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-regions-2",
+      "category": "chain",
+      "chainId": "regions",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-regions-2",
+      "sourceFile": "../trophies/assets/trophy-regions-2.png",
+      "sourceSha256": "90e47e1945dbd1d8d71df624f76c07b7a661939b113a11985ae9e272fca50135",
+      "sourceRGBASha256": "eb8753b31b8591c9bc8fbca1d572a8b44a76e8ba072b18a251bcf9af93e1dcaa",
+      "file": "assets/trophies/trophy-regions-2.png",
+      "maskFile": "assets/masks/trophy-regions-2.png",
+      "footAnchor": [
+        0.5,
+        0.97602
+      ],
+      "logicalSize": [
+        124,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-regions-3",
+      "category": "chain",
+      "chainId": "regions",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-regions-3",
+      "sourceFile": "../trophies/assets/trophy-regions-3.png",
+      "sourceSha256": "f46dce06ddfd5d2f3335f83e2fd20dc83e53558da970746e3a88e439e79c11cc",
+      "sourceRGBASha256": "9865c3a029bf02d7943b754020ab12dccf6a7ea3d83bc83f58c3a7d59784f6aa",
+      "file": "assets/trophies/trophy-regions-3.png",
+      "maskFile": "assets/masks/trophy-regions-3.png",
+      "footAnchor": [
+        0.5,
+        0.98126
+      ],
+      "logicalSize": [
+        109,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-regions-4",
+      "category": "chain",
+      "chainId": "regions",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-regions-4",
+      "sourceFile": "../trophies/assets/trophy-regions-4.png",
+      "sourceSha256": "eca490e963a4271a2ea707283f40fd7b3d084dbaaf966af35123ca6d32470be9",
+      "sourceRGBASha256": "3b5bca55b47b6b14a6df95803f5b39df9a7857819e35c7da9431156f906c4b18",
+      "file": "assets/trophies/trophy-regions-4.png",
+      "maskFile": "assets/masks/trophy-regions-4.png",
+      "footAnchor": [
+        0.5,
+        0.97899
+      ],
+      "logicalSize": [
+        113,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-team-1",
+      "category": "chain",
+      "chainId": "team",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-team-1",
+      "sourceFile": "../trophies/assets/trophy-team-1.png",
+      "sourceSha256": "d0b9bad82fbd83badc7469700f1e30fe25e08f63dc24aef74e547d50d8c87a26",
+      "sourceRGBASha256": "d85c0275182593d5583ce8977db7a418993271e9b2e838b950ce9d4c69fd149c",
+      "file": "assets/trophies/trophy-team-1.png",
+      "maskFile": "assets/masks/trophy-team-1.png",
+      "footAnchor": [
+        0.5,
+        0.97368
+      ],
+      "logicalSize": [
+        105,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-team-2",
+      "category": "chain",
+      "chainId": "team",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-team-2",
+      "sourceFile": "../trophies/assets/trophy-team-2.png",
+      "sourceSha256": "99fbc1cecbc4e7b0ac932005531c90f83cbf16218c4780990f5aaf5927c27b38",
+      "sourceRGBASha256": "b1c9a264e29238e8b0a530da937cfbb5c72a00ea16235ef86b62fcf2f533a38e",
+      "file": "assets/trophies/trophy-team-2.png",
+      "maskFile": "assets/masks/trophy-team-2.png",
+      "footAnchor": [
+        0.5,
+        0.97842
+      ],
+      "logicalSize": [
+        128,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-team-3",
+      "category": "chain",
+      "chainId": "team",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-team-3",
+      "sourceFile": "../trophies/assets/trophy-team-3.png",
+      "sourceSha256": "595fcc052e1b2f4372e24c01b1b699abebf2d6b1e4d34d1759c12b4f4275187c",
+      "sourceRGBASha256": "6877ac2c84410ae5a664b7d30cbc65f8f05d1b3fc75c30f3db786cecfe5bf270",
+      "file": "assets/trophies/trophy-team-3.png",
+      "maskFile": "assets/masks/trophy-team-3.png",
+      "footAnchor": [
+        0.5,
+        0.97523
+      ],
+      "logicalSize": [
+        122,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-team-4",
+      "category": "chain",
+      "chainId": "team",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-team-4",
+      "sourceFile": "../trophies/assets/trophy-team-4.png",
+      "sourceSha256": "07bcf48c4fe49fa548b98ac8c2a7b54554eae15c4060e8605d0f30cdd6115a53",
+      "sourceRGBASha256": "d1674ca9764fa7e11dbefa36c764908c22e789c16d09a0b8578cccb57231f119",
+      "file": "assets/trophies/trophy-team-4.png",
+      "maskFile": "assets/masks/trophy-team-4.png",
+      "footAnchor": [
+        0.5,
+        0.98167
+      ],
+      "logicalSize": [
+        115,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-care-1",
+      "category": "chain",
+      "chainId": "care",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-care-1",
+      "sourceFile": "../trophies/assets/trophy-care-1.png",
+      "sourceSha256": "b4574a6efd50083b4b5fce421d066679bdeaa1c8144ffab9bf857a9c0a71d60a",
+      "sourceRGBASha256": "c5e58842c74ec152b7df21dc749b05a101229f9db4d1a23047abd2afab48744f",
+      "file": "assets/trophies/trophy-care-1.png",
+      "maskFile": "assets/masks/trophy-care-1.png",
+      "footAnchor": [
+        0.5,
+        0.97585
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-care-2",
+      "category": "chain",
+      "chainId": "care",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-care-2",
+      "sourceFile": "../trophies/assets/trophy-care-2.png",
+      "sourceSha256": "6b2fc5f74d88e2479647662aef78fe30e894db21c38575f10f406099a49a6507",
+      "sourceRGBASha256": "caa765886872aef1b4f35ec6ab4023a91cc9f5313fcf45ba08a7835fa4d3d980",
+      "file": "assets/trophies/trophy-care-2.png",
+      "maskFile": "assets/masks/trophy-care-2.png",
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-care-3",
+      "category": "chain",
+      "chainId": "care",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-care-3",
+      "sourceFile": "../trophies/assets/trophy-care-3.png",
+      "sourceSha256": "14564cfbf5126b3041cd2c8b526db67f20f7d7b95178165e2b4c6bda1ca44dda",
+      "sourceRGBASha256": "6f0e36711e96a7f65b53f0d188ffc51e7c74124a5b0b5c2288a92f059875d91d",
+      "file": "assets/trophies/trophy-care-3.png",
+      "maskFile": "assets/masks/trophy-care-3.png",
+      "footAnchor": [
+        0.5,
+        0.97831
+      ],
+      "logicalSize": [
+        97,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-care-4",
+      "category": "chain",
+      "chainId": "care",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-care-4",
+      "sourceFile": "../trophies/assets/trophy-care-4.png",
+      "sourceSha256": "b05e37ab650b89ed1e9c8a4dcf4dbab0d7ece986cb7b9e202052c041e8443501",
+      "sourceRGBASha256": "9090fae2fa9f660e78036b9e529c0224a77c610a6591f2e50a651e8bb370883a",
+      "file": "assets/trophies/trophy-care-4.png",
+      "maskFile": "assets/masks/trophy-care-4.png",
+      "footAnchor": [
+        0.5,
+        0.98016
+      ],
+      "logicalSize": [
+        101,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-nursery-1",
+      "category": "chain",
+      "chainId": "nursery",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-nursery-1",
+      "sourceFile": "../trophies/assets/trophy-nursery-1.png",
+      "sourceSha256": "338926d66900d8dd2dd2ab1fca033d7932c54fbc7df10ff094a6bfece0ac6b20",
+      "sourceRGBASha256": "2d2a3a06bec3c28d2cd5f218e637b008f74ea3a326ef6d4eb12516a2bff7ea7f",
+      "file": "assets/trophies/trophy-nursery-1.png",
+      "maskFile": "assets/masks/trophy-nursery-1.png",
+      "footAnchor": [
+        0.5,
+        0.97382
+      ],
+      "logicalSize": [
+        111,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-nursery-2",
+      "category": "chain",
+      "chainId": "nursery",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-nursery-2",
+      "sourceFile": "../trophies/assets/trophy-nursery-2.png",
+      "sourceSha256": "f7216b5ce786b105d5279b9c4922a6b84623aedcd604f907a569d89c969c1b23",
+      "sourceRGBASha256": "0416052183ad4d1a28a380e20a3eddbf62638a500be9c7515832b83d1e2db33d",
+      "file": "assets/trophies/trophy-nursery-2.png",
+      "maskFile": "assets/masks/trophy-nursery-2.png",
+      "footAnchor": [
+        0.5,
+        0.97596
+      ],
+      "logicalSize": [
+        104,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-nursery-3",
+      "category": "chain",
+      "chainId": "nursery",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-nursery-3",
+      "sourceFile": "../trophies/assets/trophy-nursery-3.png",
+      "sourceSha256": "1eca8bda5d6041458f0bacbc81dfae72388e6db3afcc4b25289c8eec05c344f7",
+      "sourceRGBASha256": "d00d6d15c7dc8fa94d0a6cf6b208ff61d73f3f38ad1df566ffd41cf11c81edd9",
+      "file": "assets/trophies/trophy-nursery-3.png",
+      "maskFile": "assets/masks/trophy-nursery-3.png",
+      "footAnchor": [
+        0.5,
+        0.98117
+      ],
+      "logicalSize": [
+        87,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-nursery-4",
+      "category": "chain",
+      "chainId": "nursery",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-nursery-4",
+      "sourceFile": "../trophies/assets/trophy-nursery-4.png",
+      "sourceSha256": "153a070cea82398eebeb96b33ec76af9e04f99c7e87d82281b65ff98a0c3db26",
+      "sourceRGBASha256": "1bfbd9279adbcd71f9234e023d9f67d879531962b80f0d0e6c60a225e6c5fd19",
+      "file": "assets/trophies/trophy-nursery-4.png",
+      "maskFile": "assets/masks/trophy-nursery-4.png",
+      "footAnchor": [
+        0.5,
+        0.98188
+      ],
+      "logicalSize": [
+        95,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-evolution-1",
+      "category": "chain",
+      "chainId": "evolution",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-evolution-1",
+      "sourceFile": "../trophies/assets/trophy-evolution-1.png",
+      "sourceSha256": "bb4b65480294fadbb2d3078d2a4f16b896c6e7bb156967609aecf8e726387877",
+      "sourceRGBASha256": "54c2dbceca332e5669ed58baed880a031a315c4f128981b9452e1966decdefcc",
+      "file": "assets/trophies/trophy-evolution-1.png",
+      "maskFile": "assets/masks/trophy-evolution-1.png",
+      "footAnchor": [
+        0.5,
+        0.97312
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-evolution-2",
+      "category": "chain",
+      "chainId": "evolution",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-evolution-2",
+      "sourceFile": "../trophies/assets/trophy-evolution-2.png",
+      "sourceSha256": "6e96305bf4a8f42f75c61cc7284cfae7951720cb3e9559314feec6b4ab681326",
+      "sourceRGBASha256": "64e21476edbe49bd1100b602c75a85e96d4b444e4f2c48d3b8daf0489c458443",
+      "file": "assets/trophies/trophy-evolution-2.png",
+      "maskFile": "assets/masks/trophy-evolution-2.png",
+      "footAnchor": [
+        0.5,
+        0.98185
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-evolution-3",
+      "category": "chain",
+      "chainId": "evolution",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-evolution-3",
+      "sourceFile": "../trophies/assets/trophy-evolution-3.png",
+      "sourceSha256": "a597df7bcfd5dbd0798f55c63cc9e495a912dab36ff25abd284d82800bf66d9a",
+      "sourceRGBASha256": "545bc1a9532f08818f83fd3f91122b74dfd06910e122cae37bfef8d687575657",
+      "file": "assets/trophies/trophy-evolution-3.png",
+      "maskFile": "assets/masks/trophy-evolution-3.png",
+      "footAnchor": [
+        0.5,
+        0.98051
+      ],
+      "logicalSize": [
+        92,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-evolution-4",
+      "category": "chain",
+      "chainId": "evolution",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-evolution-4",
+      "sourceFile": "../trophies/assets/trophy-evolution-4.png",
+      "sourceSha256": "a2f9c1c347a2f70f9478b5f956b5e711d07de49bbeae0197f11c0dd20b9085e0",
+      "sourceRGBASha256": "e9084e4e77e69ad72bf3483263a74e5157758660fecee43fff998f8a0d7ca72b",
+      "file": "assets/trophies/trophy-evolution-4.png",
+      "maskFile": "assets/masks/trophy-evolution-4.png",
+      "footAnchor": [
+        0.5,
+        0.98295
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-shiny-1",
+      "category": "chain",
+      "chainId": "shiny",
+      "tier": 1,
+      "active": true,
+      "sourceId": "trophy-shiny-1",
+      "sourceFile": "../trophies/assets/trophy-shiny-1.png",
+      "sourceSha256": "7199fc2defa28b095ac0faafe5048533b0501bf54a87ebc1106e84f5791f019e",
+      "sourceRGBASha256": "876af18abc64518de195242a9737eafc7297d0b4ed5a832762428dc4399d0712",
+      "file": "assets/trophies/trophy-shiny-1.png",
+      "maskFile": "assets/masks/trophy-shiny-1.png",
+      "footAnchor": [
+        0.5,
+        0.97753
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-shiny-2",
+      "category": "chain",
+      "chainId": "shiny",
+      "tier": 2,
+      "active": true,
+      "sourceId": "trophy-shiny-2",
+      "sourceFile": "../trophies/assets/trophy-shiny-2.png",
+      "sourceSha256": "d483b2e6d608d5e58041a13b0395d68c07d73de7572e689e60e7ecdb8ab11a6d",
+      "sourceRGBASha256": "ce54dfb45c38cc6b1bcf03996b039f6050cd554fb688059798f6d916f65d4997",
+      "file": "assets/trophies/trophy-shiny-2.png",
+      "maskFile": "assets/masks/trophy-shiny-2.png",
+      "footAnchor": [
+        0.5,
+        0.97732
+      ],
+      "logicalSize": [
+        98,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-shiny-3",
+      "category": "chain",
+      "chainId": "shiny",
+      "tier": 3,
+      "active": true,
+      "sourceId": "trophy-shiny-3",
+      "sourceFile": "../trophies/assets/trophy-shiny-3.png",
+      "sourceSha256": "9e6ce5d6793a26913adc92aeef04b8c79590f8cbfcb00711f043fb0136e85d74",
+      "sourceRGBASha256": "4dfcbdbb32745429b09ab9c99dba6aa4a0f831f1bf36c83f890e6d182282084a",
+      "file": "assets/trophies/trophy-shiny-3.png",
+      "maskFile": "assets/masks/trophy-shiny-3.png",
+      "footAnchor": [
+        0.5,
+        0.98016
+      ],
+      "logicalSize": [
+        91,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-shiny-4",
+      "category": "chain",
+      "chainId": "shiny",
+      "tier": 4,
+      "active": true,
+      "sourceId": "trophy-shiny-4",
+      "sourceFile": "../trophies/assets/trophy-shiny-4.png",
+      "sourceSha256": "f76278b0474613e3f48a4980d540c3dfcecaee8a2ec63374073d17d6623efd4b",
+      "sourceRGBASha256": "bfef818dd7af2da8a9864d005559d78d2a5b6c85b3e2d1a3003a0a72997cec57",
+      "file": "assets/trophies/trophy-shiny-4.png",
+      "maskFile": "assets/masks/trophy-shiny-4.png",
+      "footAnchor": [
+        0.5,
+        0.98165
+      ],
+      "logicalSize": [
+        95,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-nick",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-nick",
+      "sourceFile": "../trophies/assets/trophy-special-nick.png",
+      "sourceSha256": "9413d4eb507cec5d9d18afe8fa8815f760e2526712a1668adb92c6243ce16f36",
+      "sourceRGBASha256": "5bcf906710665b5606fa7bd3fb0115c81f0ea07e5ced98cfca05f486a089985e",
+      "file": "assets/trophies/trophy-special-nick.png",
+      "maskFile": "assets/masks/trophy-special-nick.png",
+      "footAnchor": [
+        0.5,
+        0.98035
+      ],
+      "logicalSize": [
+        99,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-favorite",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-favorite",
+      "sourceFile": "../trophies/assets/trophy-special-favorite.png",
+      "sourceSha256": "cf6a0b6ed10be42c579a374e456577517183baac953d812e318abff7d0f7d263",
+      "sourceRGBASha256": "157a9dbe0fea4f1c8a08eb7cd7e0741ab3f7464a1611a37a44a5ccd1f2674758",
+      "file": "assets/trophies/trophy-special-favorite.png",
+      "maskFile": "assets/masks/trophy-special-favorite.png",
+      "footAnchor": [
+        0.5,
+        0.98238
+      ],
+      "logicalSize": [
+        90,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-type-team",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-type-team",
+      "sourceFile": "../trophies/assets/trophy-special-type-team.png",
+      "sourceSha256": "443b35298dd285a77fc963f8ce4dfa480db259baa3345cdbab70cb262a5b0d1d",
+      "sourceRGBASha256": "10a4095a30ba90d6a18d20b6cbc6f19b2e9f88cc7844fb066bfb5a383bdc94da",
+      "file": "assets/trophies/trophy-special-type-team.png",
+      "maskFile": "assets/masks/trophy-special-type-team.png",
+      "footAnchor": [
+        0.5,
+        0.97872
+      ],
+      "logicalSize": [
+        117,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-bonus-find",
+      "sourceFile": "../trophies/assets/trophy-special-bonus-find.png",
+      "sourceSha256": "c19ce6ac47d332803ad43f8353849365bacc0dc095d99fdb127b8597e396781b",
+      "sourceRGBASha256": "b6f8d077676d1da315659440dd4b5b42a96e4693dbb6c60e7fbda5e3dda23e3c",
+      "file": "assets/trophies/trophy-special-bonus-find.png",
+      "maskFile": "assets/masks/trophy-special-bonus-find.png",
+      "footAnchor": [
+        0.5,
+        0.98218
+      ],
+      "logicalSize": [
+        100,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-nursery-expedition",
+      "sourceFile": "../trophies/assets/trophy-special-nursery-expedition.png",
+      "sourceSha256": "1c4860a1ab69457167c7803d2bbc52f96be9db841a3062de76261ff1dd29f0f8",
+      "sourceRGBASha256": "0a9cec9da2ccd0703346dc0d38209b9e153e18a0fa1fed58f92a496c6cbb5a38",
+      "file": "assets/trophies/trophy-special-nursery-expedition.png",
+      "maskFile": "assets/masks/trophy-special-nursery-expedition.png",
+      "footAnchor": [
+        0.5,
+        0.9793
+      ],
+      "logicalSize": [
+        100,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-family-expedition",
+      "sourceFile": "../trophies/assets/trophy-special-family-expedition.png",
+      "sourceSha256": "b4d4fb3db430dc64837c3bd114013a3ea0881743b2c6ff6cbb07ed90558d7b10",
+      "sourceRGBASha256": "3bca597fa6bdb4312788a9d3e8e487d10d5a708b1535089884cab759345fbff6",
+      "file": "assets/trophies/trophy-special-family-expedition.png",
+      "maskFile": "assets/masks/trophy-special-family-expedition.png",
+      "footAnchor": [
+        0.5,
+        0.98138
+      ],
+      "logicalSize": [
+        103,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-evolved-expedition",
+      "sourceFile": "../trophies/assets/trophy-special-evolved-expedition.png",
+      "sourceSha256": "3b3bec191e92b9814810ee1278dce6c0a0902b74f21ecff400e70b3275200247",
+      "sourceRGBASha256": "d68d31836ae488ad56977c95887c2cf43232e442ef78d60703937e3fcb57efc3",
+      "file": "assets/trophies/trophy-special-evolved-expedition.png",
+      "maskFile": "assets/masks/trophy-special-evolved-expedition.png",
+      "footAnchor": [
+        0.5,
+        0.98279
+      ],
+      "logicalSize": [
+        102,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-all-berries",
+      "sourceFile": "../trophies/assets/trophy-special-all-berries.png",
+      "sourceSha256": "d125a203ac730827194e17e32defb7724d611af9aed88b0c7d8c8deba1d3eddd",
+      "sourceRGBASha256": "230aa0fd33d84ecb2ecfc4816409278f05f2780d93a47ac4c50976359c283c28",
+      "file": "assets/trophies/trophy-special-all-berries.png",
+      "maskFile": "assets/masks/trophy-special-all-berries.png",
+      "footAnchor": [
+        0.5,
+        0.98099
+      ],
+      "logicalSize": [
+        99,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-berry-evolution",
+      "sourceFile": "../trophies/assets/trophy-special-berry-evolution.png",
+      "sourceSha256": "383b89640471f0dd7eef6124cf4b9016465ba971725415a62212b221e65c78e5",
+      "sourceRGBASha256": "62539855baf83b7241087971f26fa3785319c0df2f3b31fb5e255cd6fe7e0561",
+      "file": "assets/trophies/trophy-special-berry-evolution.png",
+      "maskFile": "assets/masks/trophy-special-berry-evolution.png",
+      "footAnchor": [
+        0.5,
+        0.98211
+      ],
+      "logicalSize": [
+        84,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-branch-choice",
+      "sourceFile": "../trophies/assets/trophy-special-branch-choice.png",
+      "sourceSha256": "53bb8fb8371097c5fa52bfdd54c15a9ae1e70a32d1a06150c29036abc16d450d",
+      "sourceRGBASha256": "ea91866505a786261306e14ec1a4f44e85af5e877380854c034917550b9b9ada",
+      "file": "assets/trophies/trophy-special-branch-choice.png",
+      "maskFile": "assets/masks/trophy-special-branch-choice.png",
+      "footAnchor": [
+        0.5,
+        0.97963
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-offspring-choice",
+      "sourceFile": "../trophies/assets/trophy-special-offspring-choice.png",
+      "sourceSha256": "37b06d9f20f5486a808fcd8f36f1160383e61fa2c8c37fdbd7c379c1f3549501",
+      "sourceRGBASha256": "6b7c68efd10c0c975163c8c7e3197d9e0a3ce36832db07823a05cc7819d2c8ee",
+      "file": "assets/trophies/trophy-special-offspring-choice.png",
+      "maskFile": "assets/masks/trophy-special-offspring-choice.png",
+      "footAnchor": [
+        0.5,
+        0.98034
+      ],
+      "logicalSize": [
+        124,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-all-legends",
+      "sourceFile": "../trophies/assets/trophy-special-all-legends.png",
+      "sourceSha256": "7e9ba6ac26ab7ca03ababc1bc2e60885acd6e89395e5a5134d016e688d04267e",
+      "sourceRGBASha256": "a51883bad2b2356835629cfdb21ead8189a4ef2fde6ace2a936b92c97ae3153a",
+      "file": "assets/trophies/trophy-special-all-legends.png",
+      "maskFile": "assets/masks/trophy-special-all-legends.png",
+      "footAnchor": [
+        0.5,
+        0.98131
+      ],
+      "logicalSize": [
+        93,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-second-trait",
+      "sourceFile": "../trophies/assets/trophy-special-second-trait.png",
+      "sourceSha256": "cae072fdad0c4376cf2bfc10b34d16e945e7d248d8f902aa5f3bfdcc8a603709",
+      "sourceRGBASha256": "b53bb8145462a9963a3374cd42db620271cb73ef838aa4f9bc21137e0131f9be",
+      "file": "assets/trophies/trophy-special-second-trait.png",
+      "maskFile": "assets/masks/trophy-special-second-trait.png",
+      "footAnchor": [
+        0.5,
+        0.97947
+      ],
+      "logicalSize": [
+        101,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-retrain",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-retrain",
+      "sourceFile": "../trophies/assets/trophy-special-retrain.png",
+      "sourceSha256": "69c5a9303caa1e9571a50c0f9ce7e6489400228e6062f6d0d114b6dc0f082b64",
+      "sourceRGBASha256": "439fbd79879bbcfc41e8b8750c94d250a33649ff78e2102490bab87f2519e859",
+      "file": "assets/trophies/trophy-special-retrain.png",
+      "maskFile": "assets/masks/trophy-special-retrain.png",
+      "footAnchor": [
+        0.5,
+        0.98283
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-rehome",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-rehome",
+      "sourceFile": "../trophies/assets/trophy-special-rehome.png",
+      "sourceSha256": "0686bd6f19b710ce976e8aa24a7ddbb3bcd83a0b2cd128be38c5fbd09178f19a",
+      "sourceRGBASha256": "661f9621ec4dc6186cdf403f33b6e2441c44860eb068621ae60c553601ca5e2f",
+      "file": "assets/trophies/trophy-special-rehome.png",
+      "maskFile": "assets/masks/trophy-special-rehome.png",
+      "footAnchor": [
+        0.5,
+        0.98301
+      ],
+      "logicalSize": [
+        103,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "category": "special",
+      "chainId": null,
+      "tier": null,
+      "active": true,
+      "sourceId": "trophy-special-xp-potion",
+      "sourceFile": "../trophies/assets/trophy-special-xp-potion.png",
+      "sourceSha256": "38f274e894d0dbc00905d558dbaf1aa3f3f951899e6a8d8e7729fc9da7824d89",
+      "sourceRGBASha256": "69aef07d135924b9bb8bb41c9c5400d0a7332b983954754ee4c1542a6f93db59",
+      "file": "assets/trophies/trophy-special-xp-potion.png",
+      "maskFile": "assets/masks/trophy-special-xp-potion.png",
+      "footAnchor": [
+        0.5,
+        0.98012
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "layers": [
+        "room-master",
+        "independent-award",
+        "shelf-frontlip"
+      ],
+      "destinationAnchors": [
+        [
+          664,
+          280
+        ],
+        [
+          810,
+          280
+        ],
+        [
+          956,
+          280
+        ]
+      ],
+      "qa_status": "needs_parent_review",
+      "role": "Active award in fixed detailed room; final user acceptance not inferred from export",
+      "imagePixelsIdenticalToSource": true,
+      "maskAlphaIdenticalToSource": true
+    }
+  ],
+  "albumCards": [
+    "trophy-species-1",
+    "trophy-population-1",
+    "trophy-catches-1",
+    "trophy-expeditions-1",
+    "trophy-regions-1",
+    "trophy-team-1",
+    "trophy-care-1",
+    "trophy-nursery-1",
+    "trophy-evolution-1",
+    "trophy-shiny-1",
+    "trophy-special-nick",
+    "trophy-special-favorite",
+    "trophy-special-type-team",
+    "trophy-special-bonus-find",
+    "trophy-special-nursery-expedition",
+    "trophy-special-family-expedition",
+    "trophy-special-evolved-expedition",
+    "trophy-special-all-berries",
+    "trophy-special-berry-evolution",
+    "trophy-special-branch-choice",
+    "trophy-special-offspring-choice",
+    "trophy-special-all-legends",
+    "trophy-special-second-trait",
+    "trophy-special-retrain",
+    "trophy-special-rehome",
+    "trophy-special-xp-potion"
+  ],
+  "lockedCardSources": {
+    "trophy-species-1": "trophy-species-1",
+    "trophy-population-1": "trophy-decor-1",
+    "trophy-catches-1": "trophy-catches-1",
+    "trophy-expeditions-1": "trophy-expeditions-1",
+    "trophy-regions-1": "trophy-regions-1",
+    "trophy-team-1": "trophy-team-1",
+    "trophy-care-1": "trophy-care-1",
+    "trophy-nursery-1": "trophy-nursery-1",
+    "trophy-evolution-1": "trophy-evolution-1",
+    "trophy-shiny-1": "trophy-shiny-1",
+    "trophy-special-nick": "trophy-special-nick",
+    "trophy-special-favorite": "trophy-special-favorite",
+    "trophy-special-type-team": "trophy-special-type-team",
+    "trophy-special-bonus-find": "trophy-special-bonus-find",
+    "trophy-special-nursery-expedition": "trophy-special-nursery-expedition",
+    "trophy-special-family-expedition": "trophy-special-family-expedition",
+    "trophy-special-evolved-expedition": "trophy-special-evolved-expedition",
+    "trophy-special-all-berries": "trophy-special-all-berries",
+    "trophy-special-berry-evolution": "trophy-special-berry-evolution",
+    "trophy-special-branch-choice": "trophy-special-branch-choice",
+    "trophy-special-offspring-choice": "trophy-special-offspring-choice",
+    "trophy-special-all-legends": "trophy-special-all-legends",
+    "trophy-special-second-trait": "trophy-special-second-trait",
+    "trophy-special-retrain": "trophy-special-retrain",
+    "trophy-special-rehome": "trophy-special-rehome",
+    "trophy-special-xp-potion": "trophy-special-xp-potion"
+  },
+  "lateTierReviewOnlyCards": [
+    "trophy-species-4",
+    "trophy-population-4",
+    "trophy-catches-4",
+    "trophy-expeditions-4",
+    "trophy-regions-4",
+    "trophy-team-4",
+    "trophy-care-4",
+    "trophy-nursery-4",
+    "trophy-evolution-4",
+    "trophy-shiny-4",
+    "trophy-special-nick",
+    "trophy-special-favorite",
+    "trophy-special-type-team",
+    "trophy-special-bonus-find",
+    "trophy-special-nursery-expedition",
+    "trophy-special-family-expedition",
+    "trophy-special-evolved-expedition",
+    "trophy-special-all-berries",
+    "trophy-special-berry-evolution",
+    "trophy-special-branch-choice",
+    "trophy-special-offspring-choice",
+    "trophy-special-all-legends",
+    "trophy-special-second-trait",
+    "trophy-special-retrain",
+    "trophy-special-rehome",
+    "trophy-special-xp-potion"
+  ],
+  "retiredIds": [
+    "trophy-decor-1",
+    "trophy-decor-2",
+    "trophy-decor-3",
+    "trophy-decor-4",
+    "trophy-special-all-plants",
+    "trophy-special-three-pictures",
+    "trophy-special-mixed-furniture"
+  ],
+  "sourceBank": {
+    "file": "../trophies/manifest.json",
+    "count": 63,
+    "preserved": true,
+    "oldPopulationVisuals": "Archived in original source bank; not active export"
+  },
+  "counts": {
+    "activeTrophies": 56,
+    "chainAppearances": 40,
+    "chains": 10,
+    "specials": 16,
+    "masks": 56,
+    "albumCards": 26,
+    "retiredAppearances": 7
+  },
+  "semantic": [
+    {
+      "id": "locked-opacity-brush",
+      "implementation": "Use white RGBA mask as opacity brush, with UI-owned dark fill for locked card. Chain card uses first tier only while locked; do not use tier4to hint future appearance. Only active canonical id selects awarded source art. Room positions/lip stay independent; root owns pet and controls.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "Read current detailed master/source bank",
+    "Export canonical56with population-house mapping",
+    "Copy exact alpha into56white masks",
+    "Check168slot placements and metadata",
+    "Inspect one final room and locked/open contacts"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "All source63and retired art retained separately.",
+    "No new image generation or RGB repainting.",
+    "No app/WPF/pet integration in this export.",
+    "Asset export is not user visual approval."
+  ]
+}

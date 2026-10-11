@@ -1,4 +1,5 @@
 using PokeCorner.Core.Domain;
+using PokeCorner.Core.Activity;
 using PokeCorner.Core.Persistence;
 
 namespace PokeCorner.Core.Tests.Persistence;
@@ -262,14 +263,111 @@ public class JsonSaveStoreTests : IDisposable
     }
 
     [Fact]
-    public void Load_CorruptedJsonFile_ReturnsNullInsteadOfThrowing()
+    public void Load_CorruptedJsonFile_ThrowsDiagnosticAndPreservesFile()
     {
         File.WriteAllText(_tempFile, "{not valid json");
         var store = new JsonSaveStore(_tempFile);
 
-        var loaded = store.Load();
+        var error = Assert.ThrowsAny<IOException>(() => store.Load());
+        Assert.Equal("SaveLoadException", error.GetType().Name);
+        Assert.Contains(_tempFile, error.Message);
+        Assert.Equal("{not valid json", File.ReadAllText(_tempFile));
+    }
 
-        Assert.Null(loaded);
+    [Theory]
+    [InlineData("null")]
+    [InlineData("{\"Individuals\":null,\"Settings\":{}}")]
+    [InlineData("{\"Individuals\":[null],\"Settings\":{}}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":null}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"PendingEggs\":null}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"PendingEggs\":[null]}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"CareStates\":null}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"FeedingTreats\":-1}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"ShopCoins\":2147483648}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"SchemaVersion\":2}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"SchemaVersion\":\"future\"}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"CareStates\":{\"3f2504e0-4f89-11d3-9a0c-0305e82c3301\":null}}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"PendingCatchCount\":-1}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"CatchAccumulatorUnits\":-1}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"FeedingRemainderUnits\":-1}")]
+    [InlineData("{\"Individuals\":[],\"Settings\":{},\"ShopRemainderUnits\":-1}")]
+    public void Load_InvalidSave_ThrowsWithoutChangingBytes(string json)
+    {
+        File.WriteAllText(_tempFile, json);
+        Assert.ThrowsAny<IOException>(() => new JsonSaveStore(_tempFile).Load());
+        Assert.Equal(json, File.ReadAllText(_tempFile));
+    }
+
+    [Theory]
+    [InlineData(nameof(SaveData.CatchAccumulatorUnits), ActivityAccumulator.CatchCheckIntervalUnits)]
+    [InlineData(nameof(SaveData.FeedingRemainderUnits), FeedingService.ActivityUnitsPerTreatEarned)]
+    [InlineData(nameof(SaveData.ShopRemainderUnits), ShopService.ActivityUnitsPerCoinEarned)]
+    [InlineData(nameof(SaveData.CatchAccumulatorUnits), 9_000_000_000_000_000_000L)]
+    [InlineData(nameof(SaveData.FeedingRemainderUnits), 9_000_000_000_000_000_000L)]
+    [InlineData(nameof(SaveData.ShopRemainderUnits), 9_000_000_000_000_000_000L)]
+    public void Load_RemainderOutsideEarningInterval_ThrowsAndPreservesFile(string field, long units)
+    {
+        var json = $"{{\"Individuals\":[],\"Settings\":{{}},\"{field}\":{units}}}";
+        File.WriteAllText(_tempFile, json);
+
+        var error = Assert.Throws<SaveLoadException>(() => new JsonSaveStore(_tempFile).Load());
+
+        Assert.Contains("остаток", error.Message);
+        Assert.Equal(json, File.ReadAllText(_tempFile));
+    }
+
+    [Fact]
+    public void Load_MaximumValidRemainders_PreserveProgressAndSettleOnNextActivity()
+    {
+        var store = new JsonSaveStore(_tempFile);
+        store.Save(new SaveData
+        {
+            Individuals = new(), Settings = new(),
+            CatchAccumulatorUnits = ActivityAccumulator.CatchCheckIntervalUnits - 1,
+            FeedingRemainderUnits = FeedingService.ActivityUnitsPerTreatEarned - 1,
+            ShopRemainderUnits = ShopService.ActivityUnitsPerCoinEarned - 1
+        });
+        var state = new AppState();
+        state.Hydrate(store.Load()!);
+
+        state.ApplyActivityUnits(1);
+        new FeedingService().EarnTreatsFromActivity(state.Feeding, 1);
+        new ShopService().EarnCoinsFromActivity(state.Shop, 1);
+
+        Assert.Equal(0, state.Activity.UnitsSinceLastCatchCheck);
+        Assert.Equal(1, state.Feeding.Treats);
+        Assert.Equal(0, state.Feeding.RemainderUnits);
+        Assert.Equal(1, state.Shop.Coins);
+        Assert.Equal(0, state.Shop.RemainderUnits);
+    }
+
+    [Theory]
+    [InlineData("missing-id")]
+    [InlineData("empty-id")]
+    [InlineData("duplicate-id")]
+    [InlineData("stage")]
+    [InlineData("display-stage")]
+    [InlineData("care-points")]
+    [InlineData("egg-id")]
+    public void Load_InvalidIdentityOrProgress_Throws(string corruption)
+    {
+        var individual = new PokemonIndividual { SpeciesId = 25, EvolutionChainId = 10, ChainLength = 2,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        var root = System.Text.Json.Nodes.JsonNode.Parse(JsonSaveStore.Serialize(new SaveData
+            { Individuals = new() { individual }, Settings = new() }))!;
+        var entry = root["Individuals"]![0]!;
+        switch (corruption)
+        {
+            case "missing-id": entry.AsObject().Remove("Id"); break;
+            case "empty-id": entry["Id"] = Guid.Empty.ToString(); break;
+            case "duplicate-id": root["Individuals"]!.AsArray().Add(entry.DeepClone()); break;
+            case "stage": entry["CurrentStage"] = 2; break;
+            case "display-stage": entry["DisplayStageOverride"] = 1; break;
+            case "care-points": entry["AccumulatedCarePoints"] = -1; break;
+            case "egg-id": root["PendingEggs"]!.AsArray().Add(System.Text.Json.Nodes.JsonNode.Parse("{\"Tier\":0,\"ReadyAtUtc\":\"2026-01-01T00:00:00Z\"}")); break;
+        }
+        File.WriteAllText(_tempFile, root.ToJsonString());
+        Assert.ThrowsAny<IOException>(() => new JsonSaveStore(_tempFile).Load());
     }
 
     [Theory]

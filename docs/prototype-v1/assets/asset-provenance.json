@@ -1,0 +1,55 @@
+{
+  "produce": [
+    {
+      "id": "room",
+      "source_crop": "pokecorner-first-concept.png — left room scene",
+      "output_path": "docs/prototype-v1/assets/room.png",
+      "strategy": "Faithful regeneration as clean background via built-in imagegen",
+      "prompt_used": "Use the provided approved PokéCorner mock as the binding visual reference, specifically the cozy bedroom scene in its LEFT panel. Create only a clean reusable production BACKGROUND of that same room, no app interface. Landscape 3:2 image at 1536x1024 or larger. Preserve detailed crisp pixel art, warm afternoon sunlight from large left window, honey wood floor, cozy cream plaster and timber wall, wood bookshelves with books and small plants in the back, little cabinet at right, green blanket bed partially at right edge, central oval green rug. The entire central rug must be EMPTY so a separate animated Eevee can be overlaid in code. Preserve reference camera angle and scene detail, material, texture, palette, lighting, and composition. Remove ALL Pokemon, people, creatures, text, lettering, labels, logos, app navigation, UI, buttons, hearts, borders, rounded clipping, drop shadows, padding, layout background and caption bands. Fill image edge to edge with the actual room. Do not redesign or add new concepts. This is a room scene asset, not a screenshot or app mockup.",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "format": "png",
+      "transparency": false,
+      "deviations": "Physical wall badges and Pokeball rug retained as reference room decor.",
+      "qa_status": "accepted"
+    },
+    {
+      "id": "forest",
+      "source_crop": "pokecorner-first-concept.png — center forest scene",
+      "output_path": "docs/prototype-v1/assets/forest.png",
+      "strategy": "Faithful regeneration as clean background via built-in imagegen",
+      "prompt_used": "Use the provided approved PokéCorner mock as the binding visual reference, specifically the forest and pond scene at the top of its CENTER panel. Create only a clean reusable production route BACKGROUND of that same environment, no app interface. Landscape 2:1 image at 2048x1024. Preserve detailed crisp pixel art, lush green woodland with large tree at left, a winding sunny dirt path through grass and tiny wildflowers, blue pond on right, small rustic wooden pier at right center, distant wooded hills and soft blue sky. Preserve reference camera angle, composition, palette, material, texture, and daylight. Remove ALL Pokemon, people, creatures, text, lettering, labels including any readable marks on signposts, logos, app navigation, UI, buttons, borders, rounded clipping, drop shadows, padding, layout background and caption bands. Fill image edge to edge with actual natural scene. Do not redesign or add new concepts. This is a forest route scene asset, not a screenshot or app mockup.",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "format": "png",
+      "transparency": false,
+      "deviations": "Unreadable signpost omitted. Tool produced 1774x887 instead of requested 2048x1024; exact 2:1 retained and sufficient for prototype display.",
+      "qa_status": "accepted"
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "scene_composition",
+      "implementation": "Room: relative-positioned scene container with image background and separately animated Eevee positioned on rug at x 54%, y 73%; CSS owns clipping and border. Forest: responsive image background, semantic route title/duration/rewards and encounter overlay rendered in HTML. Creature sprites remain separate layers.",
+      "notes": "Do not bake app labels, progress, Pokemon, action buttons or card chrome into scene assets. Use object-fit cover only where needed.",
+      "qa_status": "accepted"
+    }
+  ],
+  "execution_order": [
+    "room and forest generation in parallel",
+    "copy to assigned paths",
+    "visual comparison",
+    "embed exact prompts"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "PNG requested by parent; opaque backgrounds.",
+    "1536x1024 room and 2048x1024 forest target dimensions.",
+    "Only assigned assets and manifest modified."
+  ]
+}

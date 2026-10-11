@@ -1,0 +1,95 @@
+{
+  "source": "_sources/plants-small-01.png",
+  "promptFile": "_sources/plants-small-01-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "plant-cactus-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "cactus terracotta",
+      "category": "plants",
+      "displayWidth": 39,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-cactus-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "cactus woven cream",
+      "category": "plants",
+      "displayWidth": 39,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-succulent-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "succulent terracotta",
+      "category": "plants",
+      "displayWidth": 37,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-succulent-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "succulent woven cream",
+      "category": "plants",
+      "displayWidth": 37,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    }
+  ]
+}

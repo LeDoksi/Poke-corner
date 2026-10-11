@@ -1,0 +1,95 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "bed-basket-cream",
+      "name": "Корзинка сливочная",
+      "category": "beds",
+      "row": 1,
+      "col": 0,
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "file": "beds/assets/bed-basket-cream.png",
+      "size": [
+        695,
+        382
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        51,
+        42,
+        730,
+        408
+      ],
+      "cropInCell": [
+        43,
+        34,
+        738,
+        416
+      ],
+      "sha256": "44f8b1037e8741275404e080e7dc7a62e39eecd36ea261adb760c59293ca4b0a",
+      "source": "beds/_sources/pillow-basket-atlas-v1.png",
+      "promptFile": "beds/_sources/pillow-basket-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "bed-basket-sage",
+      "name": "Корзинка шалфейная",
+      "category": "beds",
+      "row": 1,
+      "col": 1,
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "file": "beds/assets/bed-basket-sage.png",
+      "size": [
+        695,
+        382
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        40,
+        42,
+        719,
+        408
+      ],
+      "cropInCell": [
+        32,
+        34,
+        727,
+        416
+      ],
+      "sha256": "a2de2ee634b42faa9f9dbe2c79214946bd7e0cd169435d1889ff10bdfd04ca90",
+      "source": "beds/_sources/pillow-basket-atlas-v1.png",
+      "promptFile": "beds/_sources/pillow-basket-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    }
+  ]
+}

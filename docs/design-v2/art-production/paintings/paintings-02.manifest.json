@@ -1,0 +1,233 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "painting-ecruteak-lanterns",
+      "row": 0,
+      "col": 0,
+      "name": "ecruteak-lanterns",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.500743,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-ecruteak-lanterns.png",
+      "size": [
+        673,
+        493
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        0,
+        0,
+        701,
+        561
+      ],
+      "alphaBoundsInCell": [
+        34,
+        73,
+        691,
+        550
+      ],
+      "cropInCell": [
+        26,
+        65,
+        699,
+        558
+      ],
+      "sha256": "278041f139e72bbd890511c8dd53d026887c64dffe15a9262ca0eea323d31b09",
+      "source": "paintings/_sources/paintings-02.png",
+      "promptFile": "paintings/_sources/paintings-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3768,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-lake",
+      "row": 0,
+      "col": 1,
+      "name": "lake",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.498988
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-lake.png",
+      "size": [
+        672,
+        494
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        701,
+        0,
+        1402,
+        561
+      ],
+      "alphaBoundsInCell": [
+        11,
+        73,
+        667,
+        551
+      ],
+      "cropInCell": [
+        3,
+        65,
+        675,
+        559
+      ],
+      "sha256": "ee1e7d6f170ad481bb0bdcd8c06495ab833e12f4e83a04bd0aa81274ad6fdf2b",
+      "source": "paintings/_sources/paintings-02.png",
+      "promptFile": "paintings/_sources/paintings-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3768,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-pikachu-berries",
+      "row": 1,
+      "col": 0,
+      "name": "pikachu-berries",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.500743,
+        0.501022
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-pikachu-berries.png",
+      "size": [
+        673,
+        489
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        0,
+        561,
+        701,
+        1122
+      ],
+      "alphaBoundsInCell": [
+        34,
+        9,
+        691,
+        482
+      ],
+      "cropInCell": [
+        26,
+        1,
+        699,
+        490
+      ],
+      "sha256": "2ce240c644c44630347252a1d4ba0939e0a8420e1a2fdd259d8dc7de5a1202ba",
+      "source": "paintings/_sources/paintings-02.png",
+      "promptFile": "paintings/_sources/paintings-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3856,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-eevee-forest",
+      "row": 1,
+      "col": 1,
+      "name": "eevee-forest",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.500743,
+        0.501022
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-eevee-forest.png",
+      "size": [
+        673,
+        489
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        701,
+        561,
+        1402,
+        1122
+      ],
+      "alphaBoundsInCell": [
+        10,
+        9,
+        667,
+        482
+      ],
+      "cropInCell": [
+        2,
+        1,
+        675,
+        490
+      ],
+      "sha256": "9abd91ec2445bc979827bce2d2725cf95f9a217f9fceee97fd6c0dce61fac117",
+      "source": "paintings/_sources/paintings-02.png",
+      "promptFile": "paintings/_sources/paintings-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3856,
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ]
+}

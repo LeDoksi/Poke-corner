@@ -32,13 +32,12 @@ public sealed class CareModeService
     /// which is exactly the value adjusted here.
     public void DiscountIdleGap(CareState state, DateTimeOffset nowUtc)
     {
-        if (state.LastNeglectCheckUtc is { } lastCheckUtc)
+        // Legacy saves without a checkpoint cannot prove neglect while the app was closed.
+        var lastCheckUtc = state.LastNeglectCheckUtc ?? state.LastInteractionUtc;
+        var gap = nowUtc - lastCheckUtc;
+        if (gap > CareModeTuning.NeglectIdleGrace)
         {
-            var gap = nowUtc - lastCheckUtc;
-            if (gap > CareModeTuning.NeglectIdleGrace)
-            {
-                state.LastInteractionUtc += gap - CareModeTuning.NeglectIdleGrace;
-            }
+            state.LastInteractionUtc += gap - CareModeTuning.NeglectIdleGrace;
         }
 
         state.LastNeglectCheckUtc = nowUtc;

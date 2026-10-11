@@ -1,0 +1,31 @@
+{
+  "status": "accepted-working-balance-2026-10-10-not-implemented",
+  "unit": "total-berries",
+  "evolution": {
+    "perTransition": 6,
+    "singleBerryTypePerTransition": true
+  },
+  "nursery": {
+    "offspring": "evolution-root-including-baby-species",
+    "base": 10,
+    "selectedOffspringSurcharge": 4,
+    "hoursByHighestOutcomeRarity": {"Common":2,"Uncommon":4,"Rare":6,"Legendary":8}
+  },
+  "retraining": {"perSelectedSlot":60},
+  "normalExpeditionYieldProposal": [
+    {"minutes":30,"primaryBerries":1},
+    {"minutes":90,"primaryBerries":3},
+    {"minutes":180,"primaryBerries":6},
+    {"minutes":360,"primaryBerries":12}
+  ],
+  "notes": [
+    "Numbers mean total quantities; exact berry combinations depend on individual recipes.",
+    "Costs do not depend on rarity or evolution stage.",
+    "Selected offspring costs base plus surcharge plus one selection talisman.",
+    "Retraining is random with exclusions already specified in TRAITS.md.",
+    "Evolution preserves rarity and does not create extra transitions.",
+    "Yield proposal assumes at least two participants meeting the recommended average level; existing modifiers remain.",
+    "Single-berry-type evolution recipes are accepted; concrete types still need assigning.",
+    "Store prices are not set here."
+  ]
+}

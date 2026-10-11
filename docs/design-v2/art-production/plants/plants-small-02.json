@@ -1,0 +1,95 @@
+{
+  "source": "_sources/plants-small-02.png",
+  "promptFile": "_sources/plants-small-02-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "plant-fern-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "fern terracotta",
+      "category": "plants",
+      "displayWidth": 53,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-fern-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "fern woven cream",
+      "category": "plants",
+      "displayWidth": 53,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-orchid-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "orchid terracotta",
+      "category": "plants",
+      "displayWidth": 35,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-orchid-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "orchid woven cream",
+      "category": "plants",
+      "displayWidth": 35,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    }
+  ]
+}

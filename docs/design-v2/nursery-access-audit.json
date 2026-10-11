@@ -1,0 +1,112 @@
+{
+  "status": "synthetic-access-check-not-full-game-simulation",
+  "seed": 20261010,
+  "samples": 3000,
+  "assumptions": "Three distinct Common/Uncommon species for initial snapshot; larger collections drawn with 60/30/9/1 rarity weights and duplicate rejection. No species affinities, starter choice, item stock, care or time modeled. Same-species breeding needs two individuals and is excluded.",
+  "smallCollection": [
+    {
+      "distinctSpecies": 3,
+      "samples": 3000,
+      "probabilityAtLeastOneDifferentParentRecipe": 0.015,
+      "meanCompatiblePairs": 0.015
+    },
+    {
+      "distinctSpecies": 10,
+      "samples": 3000,
+      "probabilityAtLeastOneDifferentParentRecipe": 0.12466666666666666,
+      "meanCompatiblePairs": 0.12866666666666668
+    },
+    {
+      "distinctSpecies": 25,
+      "samples": 3000,
+      "probabilityAtLeastOneDifferentParentRecipe": 0.577,
+      "meanCompatiblePairs": 0.8506666666666667
+    },
+    {
+      "distinctSpecies": 50,
+      "samples": 3000,
+      "probabilityAtLeastOneDifferentParentRecipe": 0.975,
+      "meanCompatiblePairs": 3.478
+    }
+  ],
+  "activeSpeciesWithoutDifferentParentRecipeAsParent": [],
+  "unavailableSpeciesUsedAsParents": [],
+  "existingExamplePairs": [
+    {
+      "parents": [
+        19,
+        52
+      ],
+      "meaning": "Rattata + Meowth",
+      "recipe": {
+        "id": "19-52",
+        "parentIds": [
+          19,
+          52
+        ],
+        "commonTypes": [
+          "normal"
+        ],
+        "baseBerries": {
+          "oran": 10
+        },
+        "selectedSurcharge": {
+          "oran": 4
+        },
+        "hours": 4,
+        "plannedHours": 4,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 84,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.5,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.5
+          },
+          {
+            "speciesId": 133,
+            "rarity": "Uncommon",
+            "weight": 4,
+            "probability": 0.25,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.25
+          },
+          {
+            "speciesId": 203,
+            "rarity": "Uncommon",
+            "weight": 4,
+            "probability": 0.25,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.25
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "parents": [
+        43,
+        69
+      ],
+      "meaning": "Oddish + Bellsprout",
+      "recipe": null
+    },
+    {
+      "parents": [
+        10,
+        13
+      ],
+      "meaning": "Caterpie + Weedle",
+      "recipe": null
+    }
+  ]
+}

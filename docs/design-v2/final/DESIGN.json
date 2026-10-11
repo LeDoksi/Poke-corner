@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T12:29:53.619793+00:00",
+  "title": "Design System: PokéCorner — Fixed Room",
+  "extensions": {
+    "colorMeta": {
+      "forest-action": {
+        "role": "primary",
+        "displayName": "Forest action"
+      },
+      "forest-selected": {
+        "role": "primary",
+        "displayName": "Forest selected"
+      },
+      "forest-link": {
+        "role": "primary",
+        "displayName": "Forest link"
+      },
+      "forest-button-text": {
+        "role": "primary",
+        "displayName": "Forest button text"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink"
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted ink"
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White"
+      },
+      "paper-ground": {
+        "role": "neutral",
+        "displayName": "Paper ground"
+      },
+      "paper-surface": {
+        "role": "neutral",
+        "displayName": "Paper surface"
+      },
+      "paper-button": {
+        "role": "neutral",
+        "displayName": "Paper button"
+      },
+      "paper-quantity": {
+        "role": "neutral",
+        "displayName": "Paper quantity"
+      },
+      "paper-shelf": {
+        "role": "neutral",
+        "displayName": "Paper shelf"
+      },
+      "border-window": {
+        "role": "neutral",
+        "displayName": "Border window"
+      },
+      "border-navigation": {
+        "role": "neutral",
+        "displayName": "Border navigation"
+      },
+      "border-button": {
+        "role": "neutral",
+        "displayName": "Border button"
+      },
+      "border-row": {
+        "role": "neutral",
+        "displayName": "Border row"
+      },
+      "meter-track": {
+        "role": "neutral",
+        "displayName": "Meter track"
+      },
+      "encounter-surface": {
+        "role": "secondary",
+        "displayName": "Encounter surface"
+      },
+      "encounter-ink": {
+        "role": "secondary",
+        "displayName": "Encounter ink"
+      },
+      "encounter-border": {
+        "role": "secondary",
+        "displayName": "Encounter border"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Sheet titles; compact source override is 29px."
+      },
+      "section-title": {
+        "displayName": "Section title",
+        "purpose": "Consumable, berry and album headings."
+      },
+      "item-title": {
+        "displayName": "Item title",
+        "purpose": "Product and achievement names."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "17px text; 1.5 leading applies to paragraphs."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Bold navigation; compact source override is 13px."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Secondary, purchase and care controls."
+      },
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "Repeated application name."
+      },
+      "wallet": {
+        "displayName": "Wallet",
+        "purpose": "Balance with tabular numerals."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "850px"
+      }
+    ],
+    "preparationSheets": {
+      "count": 3,
+      "settings": "all existing visible controls preserved",
+      "onboardingSteps": 6,
+      "serviceStates": 16,
+      "source": "preparation.py",
+      "liveVerified": false
+    }
+  },
+  "components": [
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Static outlined control used for settings and the single achievement album entry; shelf selection is inside the album.",
+      "html": "<button class=\"ds-secondary\" disabled>Достижения</button>",
+      "css": ".ds-secondary{border:1px solid #929a8e;background:#f7f4e8;color:#274932;padding:10px 18px;border-radius:9px;font:700 16px \"Nunito\", \"Segoe UI\",sans-serif}.ds-secondary:disabled{opacity:1}"
+    },
+    {
+      "name": "Purchase button",
+      "kind": "button",
+      "refersTo": "button-purchase",
+      "description": "Static purchase action beside a total price.",
+      "html": "<button class=\"ds-purchase\" disabled>Купить</button>",
+      "css": ".ds-purchase{border:1px solid #929a8e;background:#f7f4e8;color:#274932;padding:10px 18px;border-radius:9px;font:700 16px \"Nunito\", \"Segoe UI\",sans-serif;background:#31694d;color:#fff;border:0}.ds-purchase:disabled{opacity:1}"
+    },
+    {
+      "name": "Pet-care button",
+      "kind": "button",
+      "refersTo": "button-care",
+      "description": "Static pet-care action below the three status bars.",
+      "html": "<button class=\"ds-care-button\" disabled>Погладить</button>",
+      "css": ".ds-care-button{border:1px solid #929a8e;background:#f7f4e8;color:#274932;padding:10px 18px;border-radius:9px;font:700 16px \"Nunito\", \"Segoe UI\",sans-serif;min-width:220px;background:#31694d;color:#fff;border:0;padding:14px}.ds-care-button:disabled{opacity:1}@media(max-width:850px){.ds-care-button{min-width:0;flex:1}}"
+    },
+    {
+      "name": "Five-section navigation",
+      "kind": "nav",
+      "refersTo": "navigation-selected",
+      "description": "Static five-section strip with the corner selected; labels are spans.",
+      "html": "<nav class=\"ds-navigation\"><span class=\"ds-nav ds-selected\">Уголок</span><span class=\"ds-nav\">Покедекс</span><span class=\"ds-nav\">Экспедиции</span><span class=\"ds-nav\">Питомник</span><span class=\"ds-nav\">Магазин</span></nav>",
+      "css": ".ds-navigation{font:17px Nunito,\"Segoe UI\",sans-serif;color:#26352d;display:flex;border:1px solid #c6c0b1;border-radius:9px;overflow:hidden}.ds-nav{flex:1;text-align:center;padding:14px 8px;font-weight:700}.ds-selected{background:#2f654d;color:#fff}@media(max-width:850px){.ds-nav{font-size:13px}}"
+    },
+    {
+      "name": "Berry quantity capsule",
+      "kind": "chip",
+      "refersTo": "quantity",
+      "description": "Display-only batch quantity from the six repeated berry rows; not an input.",
+      "html": "<span class=\"ds-quantity\">− &nbsp; 6 &nbsp; +</span>",
+      "css": ".ds-quantity{font:17px Nunito,\"Segoe UI\",sans-serif;color:#26352d;background:#ebe7d9;border-radius:8px;padding:8px 14px}"
+    },
+    {
+      "name": "Product row",
+      "kind": "card",
+      "description": "Divided catalog row with independent transparent icon, effect, inventory, total and disabled purchase control. Twelve 160px source icons render at 80px, or 64px up to 500px.",
+      "html": "<div class=\"ds-product\"><img class='ds-item-icon' src='assets/shop/treats.png' alt='' width='80' height='80'><div><h3>Пачка лакомств</h3><p>5 штук для питомца</p><small>У вас: 8</small></div><div class=\"ds-buy\"><strong>20 монет</strong><button disabled>Купить</button></div></div>",
+      "css": ".ds-product{font:17px Nunito,\"Segoe UI\",sans-serif;color:#26352d;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;border-bottom:1px solid #c8c2b3}.ds-product h3{font-size:20px;margin:0 0 7px}.ds-product p{margin:0 0 10px;line-height:1.5}.ds-product small{color:#50614f}.ds-buy{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:10px;white-space:nowrap}.ds-buy button{border:1px solid #929a8e;background:#f7f4e8;color:#274932;padding:10px 18px;border-radius:9px;font:700 16px \"Nunito\", \"Segoe UI\",sans-serif;background:#31694d;color:#fff;border:0}.ds-buy button:disabled{opacity:1}.ds-item-icon{width:80px;height:80px;flex:none;object-fit:contain}"
+    },
+    {
+      "name": "Care track",
+      "kind": "custom",
+      "refersTo": "care-track",
+      "description": "Static labeled care progress example; shown fill percentage is demo data.",
+      "html": "<div class=\"ds-meter\"><span>Уход</span><div class=\"ds-track\"><i></i></div></div>",
+      "css": ".ds-meter{font:17px Nunito,\"Segoe UI\",sans-serif;color:#26352d;}.ds-meter span{display:block;margin-bottom:8px}.ds-track{height:11px;border-radius:7px;background:#d8d7ce;overflow:hidden}.ds-track i{display:block;height:100%;border-radius:7px;width:58%;background:#39835b}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Fixed Companion Room",
+    "overview": "Cream paper, forest controls and rounded Nunito lettering frame a detailed honey-timber illustration. The room carries the material richness: sunlit wood, checked fabric, foliage, a patterned rug, framed pictures and an empty side bed. Earned objects have illustrated silhouettes and consistent timber bases. Original Pokémon sprites remain independent of this artwork.\n\nThis is a local record of the shipped static sheets in `docs/design-v2/final`, not a replacement for the application theme or older design directions. Its evidence is the generated `index.html`, its `build.py`, the canonical asset manifest/proof, inspected master/first-tier-room/open-album/locked-album PNGs, and the product constraints in root `PRODUCT.md` and `DECOR.md`, `SHOP.md`, `ACHIEVEMENTS.md`. The direction contract lands as a fixed detailed companion room with independent awards; the original three sheets show visiting the pet, 12 shop entries and the 26-card album with three shelf selections. The five-section navigation precedes the wide room; three care bars and care actions follow it. The form is a static Operate sheet, seed `pokecorner-fixed-room`.\n\nCSS dimensions below are source-derived, not browser-computed measurements. Artwork appearance was inspected in PNGs; manifest coordinates are intrinsic asset measurements. `QA.md` says `ship` for art exports and code/spec consistency only. It does not establish live CSS rendering, responsive acceptance, font loading, GIF playback, WPF behavior or user visual approval. Buttons are disabled, navigation sections are spans, balances/progress are demonstration values and there is no runtime JavaScript.\n\nUser follow-up 2026-10-11: one corner album entry, shelf selection inside the album, twelve transparent shop icons. TROPHY-SEMANTICS.md documented three card families for replacement and six for refinement; those proposals were approved and completed as detailed below. User review of the resulting new pictures remains open.\n\nUser-approved semantic corrections completed: 20 newly generated trophies plus 4 original population stages restored. Updated canonical colors, exact-alpha masks, room/album previews and 168 placements. Current sources/accepted prompts are in trophy-revision/jobs.json; game IDs and conditions remain unchanged.\n\nThe extension ships settings, six short onboarding steps and eighteen service states in the same Nunito/paper/forest grammar. They are static declarations and do not confirm browser layout or runtime behavior.",
+    "keyCharacteristics": [
+      "Detailed fixed interior with independently positioned earned objects.",
+      "Cream surfaces, forest actions and descriptive Nunito text.",
+      "Plain divided catalog rows instead of boxed cards within boxed cards.",
+      "Exact-alpha locked silhouettes that preserve first-tier secrecy."
+    ],
+    "rules": [
+      {
+        "name": "The Material Carries Color Rule",
+        "body": "Keep the room and awards in their source raster colors; use the extracted paper and forest palette for the surrounding controls.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Use Nunito for titles, descriptions, navigation and controls; preserve the source's size-based hierarchy without introducing a separate display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Shared Coordinate Frame Rule",
+        "body": "Register room, awards, shelf lip and independent pet against the same 1448×582 scene, then scale the composition together.",
+        "section": "layout"
+      },
+      {
+        "name": "The Shelf Occlusion Rule",
+        "body": "Draw the clean room first, independent awards second, the intrinsic shelf lip third, and the independent pet above the scene layers.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Earned Appearance Rule",
+        "body": "Show the last earned chain appearance; before the first award, use only the first-tier exact-alpha silhouette, never a later-tier preview.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do retain the source room's timber, fabric, foliage and illustrated depth while keeping controls on cream paper.",
+      "Do scale the room and independent layers in one coordinate frame and position awards by their recorded feet.",
+      "Do show one album entry per chain and preserve the first-tier locked silhouette until its first award.",
+      "Do use Nunito, descriptive status text and the repeated forest/paper control treatments.",
+      "Do keep game assets, archived sources and review previews distinct when handing off the scene."
+    ],
+    "donts": [
+      "Don't bake the pet or earned awards into the master room or draw awards above the shelf-front lip.",
+      "Don't expose future chain-tier art through a locked card or place locked awards on the shelf.",
+      "Don't promote archived customization IDs or the eight preview PNGs into the active asset inventory.",
+      "Don't treat static demo balances, disabled controls or CSS declarations as proof of gameplay, live rendering or user acceptance."
+    ]
+  }
+}

@@ -1,0 +1,4560 @@
+{
+  "sourceUrl": "https://cdn.modrinth.com/data/59ZceYlU/versions/tY57GRtu/Pixelmon-1.21.1-9.4.1-universal.jar",
+  "version": "9.4.1",
+  "archiveBytes": 400171869,
+  "readBytes": 8004445,
+  "audio": [
+    {
+      "name": "assets/pixelmon/sounds/blocks/bell.ogg",
+      "bytes": 27290
+    },
+    {
+      "name": "assets/pixelmon/sounds/blocks/healing_table_activate.ogg",
+      "bytes": 68925
+    },
+    {
+      "name": "assets/pixelmon/sounds/blocks/healing_table_idle.ogg",
+      "bytes": 24760
+    },
+    {
+      "name": "assets/pixelmon/sounds/blocks/pc.ogg",
+      "bytes": 8227
+    },
+    {
+      "name": "assets/pixelmon/sounds/blocks/poke_loot_obtained.ogg",
+      "bytes": 46701
+    },
+    {
+      "name": "assets/pixelmon/sounds/gui/egg_hype.ogg",
+      "bytes": 156838
+    },
+    {
+      "name": "assets/pixelmon/sounds/gui/egg_reveal.ogg",
+      "bytes": 66612
+    },
+    {
+      "name": "assets/pixelmon/sounds/items/camera_shutter.ogg",
+      "bytes": 20258
+    },
+    {
+      "name": "assets/pixelmon/sounds/items/pokeball_capture.ogg",
+      "bytes": 49167
+    },
+    {
+      "name": "assets/pixelmon/sounds/items/pokeball_capture_success.ogg",
+      "bytes": 23606
+    },
+    {
+      "name": "assets/pixelmon/sounds/items/pokeball_close.ogg",
+      "bytes": 9154
+    },
+    {
+      "name": "assets/pixelmon/sounds/items/pokeball_release.ogg",
+      "bytes": 33272
+    },
+    {
+      "name": "assets/pixelmon/sounds/items/ultra_wormhole.ogg",
+      "bytes": 176605
+    },
+    {
+      "name": "assets/pixelmon/sounds/music/battle_music_1.ogg",
+      "bytes": 4376515
+    },
+    {
+      "name": "assets/pixelmon/sounds/music/battle_music_2.ogg",
+      "bytes": 6158109
+    },
+    {
+      "name": "assets/pixelmon/sounds/music/battle_music_3.ogg",
+      "bytes": 2606721
+    },
+    {
+      "name": "assets/pixelmon/sounds/music/pokecenter_waltz.ogg",
+      "bytes": 3710689
+    },
+    {
+      "name": "assets/pixelmon/sounds/music/ultra_space.ogg",
+      "bytes": 4234234
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/abomasnow.ogg",
+      "bytes": 32714
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/abra.ogg",
+      "bytes": 48385
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/aegislash.ogg",
+      "bytes": 34483
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/aerodactyl.ogg",
+      "bytes": 19290
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/aggron.ogg",
+      "bytes": 31438
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/aipom.ogg",
+      "bytes": 18245
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/alakazam.ogg",
+      "bytes": 25681
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/alcremie.ogg",
+      "bytes": 32367
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/alomomola.ogg",
+      "bytes": 24853
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/altaria.ogg",
+      "bytes": 28102
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/amaura.ogg",
+      "bytes": 26952
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ambipom.ogg",
+      "bytes": 19511
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/amoonguss.ogg",
+      "bytes": 29366
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ampharos.ogg",
+      "bytes": 16996
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/annihilape.ogg",
+      "bytes": 35156
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/anorith.ogg",
+      "bytes": 12920
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/appletun.ogg",
+      "bytes": 26360
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/applin.ogg",
+      "bytes": 16953
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arbok.ogg",
+      "bytes": 22444
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arboliva.ogg",
+      "bytes": 49274
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arcanine.ogg",
+      "bytes": 14367
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arceus.ogg",
+      "bytes": 60941
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/archen.ogg",
+      "bytes": 14339
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/archeops.ogg",
+      "bytes": 22899
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arctibax.ogg",
+      "bytes": 23111
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arctovish.ogg",
+      "bytes": 22773
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arctozolt.ogg",
+      "bytes": 26568
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ariados.ogg",
+      "bytes": 10790
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/armaldo.ogg",
+      "bytes": 22752
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/armarouge.ogg",
+      "bytes": 57283
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/aron.ogg",
+      "bytes": 9964
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/arrokuda.ogg",
+      "bytes": 25491
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/articuno-galar.ogg",
+      "bytes": 29477
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/articuno.ogg",
+      "bytes": 24148
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/audino.ogg",
+      "bytes": 23878
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/avalugg-hisui.ogg",
+      "bytes": 34464
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/avalugg.ogg",
+      "bytes": 29228
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/axew.ogg",
+      "bytes": 21779
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/axew2.ogg",
+      "bytes": 28346
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/axew3.ogg",
+      "bytes": 15225
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/axew4.ogg",
+      "bytes": 9644
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/azumarill.ogg",
+      "bytes": 24330
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/azurill.ogg",
+      "bytes": 23423
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bagon.ogg",
+      "bytes": 12350
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/baltoy.ogg",
+      "bytes": 12710
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/banette.ogg",
+      "bytes": 26428
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/barbaracle.ogg",
+      "bytes": 29001
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/basculegion-male.ogg",
+      "bytes": 17277
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bastiodon.ogg",
+      "bytes": 17868
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/baxcalibur.ogg",
+      "bytes": 36013
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bayleef.ogg",
+      "bytes": 15692
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/beartic.ogg",
+      "bytes": 30360
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/beautifly.ogg",
+      "bytes": 34775
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/beedrill.ogg",
+      "bytes": 14644
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/beldum.ogg",
+      "bytes": 38431
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bellibolt.ogg",
+      "bytes": 34266
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bellossom.ogg",
+      "bytes": 22753
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bellsprout.ogg",
+      "bytes": 16665
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bergmite.ogg",
+      "bytes": 45750
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bibarel.ogg",
+      "bytes": 19030
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bidoof.ogg",
+      "bytes": 16716
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/binacle.ogg",
+      "bytes": 17747
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bisharp.ogg",
+      "bytes": 18831
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/blacephalon.ogg",
+      "bytes": 33458
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/blastoise.ogg",
+      "bytes": 28800
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/blaziken.ogg",
+      "bytes": 15356
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/blipbug.ogg",
+      "bytes": 29386
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/blissey.ogg",
+      "bytes": 17815
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/boldore.ogg",
+      "bytes": 19874
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/boltund.ogg",
+      "bytes": 26144
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bonsly.ogg",
+      "bytes": 25115
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bouffalant.ogg",
+      "bytes": 29367
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bounsweet.ogg",
+      "bytes": 17776
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/braixen.ogg",
+      "bytes": 25128
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/brambleghast.ogg",
+      "bytes": 50260
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bramblin.ogg",
+      "bytes": 33137
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/braviary-hisuian.ogg",
+      "bytes": 26338
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/breloom.ogg",
+      "bytes": 23283
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/brionne.ogg",
+      "bytes": 19258
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bronzong.ogg",
+      "bytes": 22950
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/brute_bonnet.ogg",
+      "bytes": 44295
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bruxish.ogg",
+      "bytes": 32247
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/budew.ogg",
+      "bytes": 17951
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/buizel.ogg",
+      "bytes": 17645
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bulbasaurf.ogg",
+      "bytes": 13914
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bulbasaurm.ogg",
+      "bytes": 23691
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/buneary.ogg",
+      "bytes": 16717
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/bunnelby.ogg",
+      "bytes": 23956
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/burmy.ogg",
+      "bytes": 21853
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/butterfree.ogg",
+      "bytes": 17362
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/buzzwole.ogg",
+      "bytes": 54056
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cacnea.ogg",
+      "bytes": 27611
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cacturne.ogg",
+      "bytes": 36962
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/calyrex-ice_rider.ogg",
+      "bytes": 49200
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/calyrex-shadow_rider.ogg",
+      "bytes": 44401
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/calyrex.ogg",
+      "bytes": 23897
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/capsakid.ogg",
+      "bytes": 19711
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/caracosta.ogg",
+      "bytes": 15826
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/carkol.ogg",
+      "bytes": 20833
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/carvahna.ogg",
+      "bytes": 10049
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cascoon.ogg",
+      "bytes": 25877
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/castform.ogg",
+      "bytes": 34538
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/caterpie.ogg",
+      "bytes": 14713
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/celebi.ogg",
+      "bytes": 42566
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/celesteela.ogg",
+      "bytes": 50453
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/centiskorch.ogg",
+      "bytes": 33402
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ceruledge.ogg",
+      "bytes": 36197
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cetitan.ogg",
+      "bytes": 28034
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cetoddle.ogg",
+      "bytes": 49526
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chandelure.ogg",
+      "bytes": 24646
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chansey.ogg",
+      "bytes": 24127
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/charcadet.ogg",
+      "bytes": 43621
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/charizard.ogg",
+      "bytes": 11657
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/charmander.ogg",
+      "bytes": 25499
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/charmeleon.ogg",
+      "bytes": 32395
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chatot.ogg",
+      "bytes": 13904
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cherrim.ogg",
+      "bytes": 22686
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cherubi.ogg",
+      "bytes": 18207
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chespin.ogg",
+      "bytes": 33315
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chewtle.ogg",
+      "bytes": 14547
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chi-yu.ogg",
+      "bytes": 39933
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chienpao.ogg",
+      "bytes": 51505
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chikoritaf.ogg",
+      "bytes": 21390
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chikoritam.ogg",
+      "bytes": 14337
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chimchar.ogg",
+      "bytes": 15547
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chimecho.ogg",
+      "bytes": 17705
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chinchou.ogg",
+      "bytes": 16757
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/chingling.ogg",
+      "bytes": 14571
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cinderace.ogg",
+      "bytes": 27844
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clamperl.ogg",
+      "bytes": 12866
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/claydol.ogg",
+      "bytes": 29939
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clefable.ogg",
+      "bytes": 29317
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clefable2.ogg",
+      "bytes": 29196
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clefable3.ogg",
+      "bytes": 23660
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clefable4.ogg",
+      "bytes": 21231
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clefairy.ogg",
+      "bytes": 31532
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cleffa.ogg",
+      "bytes": 13607
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clobbopus.ogg",
+      "bytes": 17412
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/clodsire.ogg",
+      "bytes": 50623
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cloyster.ogg",
+      "bytes": 20146
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/coalossal.ogg",
+      "bytes": 35796
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cobalion.ogg",
+      "bytes": 41194
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cofagrigus.ogg",
+      "bytes": 23101
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/combee.ogg",
+      "bytes": 19764
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/combusken.ogg",
+      "bytes": 18752
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/comfey.ogg",
+      "bytes": 23760
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/copperajah.ogg",
+      "bytes": 40026
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/corphish.ogg",
+      "bytes": 11940
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/corsola-galar.ogg",
+      "bytes": 23187
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/corsola.ogg",
+      "bytes": 28532
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/corviknight.ogg",
+      "bytes": 21090
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/corvisquire.ogg",
+      "bytes": 26571
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cosmog.ogg",
+      "bytes": 13437
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cottonee.ogg",
+      "bytes": 15646
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/crabominable.ogg",
+      "bytes": 28893
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/crabrawler.ogg",
+      "bytes": 29132
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cramorant.ogg",
+      "bytes": 12160
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cranidos.ogg",
+      "bytes": 17248
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/crawdaunt.ogg",
+      "bytes": 22082
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cresselia.ogg",
+      "bytes": 25087
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/croagunk.ogg",
+      "bytes": 24510
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/crobat.ogg",
+      "bytes": 15681
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/crocalor.ogg",
+      "bytes": 40807
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/croconaw.ogg",
+      "bytes": 23864
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/crustle.ogg",
+      "bytes": 29616
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cryoganal.ogg",
+      "bytes": 11676
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cubchoo.ogg",
+      "bytes": 16130
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cubone.ogg",
+      "bytes": 15438
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cufant.ogg",
+      "bytes": 17534
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cursola.ogg",
+      "bytes": 21469
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cutiefly.ogg",
+      "bytes": 21023
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cyclizar.ogg",
+      "bytes": 34434
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/cyndaquil.ogg",
+      "bytes": 18383
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dachsbun.ogg",
+      "bytes": 15753
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/darkrai.ogg",
+      "bytes": 18654
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/darmanitan.ogg",
+      "bytes": 25537
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dartrix.ogg",
+      "bytes": 11767
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/darumaka-galar.ogg",
+      "bytes": 26832
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/darumaka.ogg",
+      "bytes": 22296
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dedenne.ogg",
+      "bytes": 22961
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/deerling.ogg",
+      "bytes": 22274
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/deino.ogg",
+      "bytes": 18359
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/delibird.ogg",
+      "bytes": 14015
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/delphox.ogg",
+      "bytes": 32204
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/deoxys.ogg",
+      "bytes": 35336
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dewgong.ogg",
+      "bytes": 18122
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dewott.ogg",
+      "bytes": 12522
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dialga.ogg",
+      "bytes": 31434
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/diancie.ogg",
+      "bytes": 23447
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/diggersby.ogg",
+      "bytes": 30624
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/diglett.ogg",
+      "bytes": 15145
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ditto.ogg",
+      "bytes": 14579
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dodrio.ogg",
+      "bytes": 10432
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/doduo.ogg",
+      "bytes": 14760
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dolliv.ogg",
+      "bytes": 24662
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dondozo.ogg",
+      "bytes": 43212
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/donphan.ogg",
+      "bytes": 22113
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dottler.ogg",
+      "bytes": 32367
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/doublade.ogg",
+      "bytes": 30572
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dracovish.ogg",
+      "bytes": 34727
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dracozolt.ogg",
+      "bytes": 23982
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dragapult.ogg",
+      "bytes": 28266
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dragonair.ogg",
+      "bytes": 16030
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dragonite.ogg",
+      "bytes": 10753
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drakloak.ogg",
+      "bytes": 37450
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drapion.ogg",
+      "bytes": 17248
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dratini.ogg",
+      "bytes": 15704
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drednaw.ogg",
+      "bytes": 24785
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dreepy.ogg",
+      "bytes": 30954
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drifblim.ogg",
+      "bytes": 25960
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drifloon.ogg",
+      "bytes": 20427
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drilbur.ogg",
+      "bytes": 16122
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drizzile.ogg",
+      "bytes": 28847
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/drowzee.ogg",
+      "bytes": 30147
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/druddigon.ogg",
+      "bytes": 37810
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dubwool.ogg",
+      "bytes": 27175
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dudunsparce.ogg",
+      "bytes": 35110
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dugtrio.ogg",
+      "bytes": 24834
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dunsparce.ogg",
+      "bytes": 20233
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/duosion.ogg",
+      "bytes": 19105
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/duraludon.ogg",
+      "bytes": 33742
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dusclops.ogg",
+      "bytes": 29078
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dusknoir.ogg",
+      "bytes": 42450
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/duskull.ogg",
+      "bytes": 25829
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dustox.ogg",
+      "bytes": 25695
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/dwebble.ogg",
+      "bytes": 23798
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/eelektrik.ogg",
+      "bytes": 25630
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/eelektross.ogg",
+      "bytes": 33662
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/eevee.ogg",
+      "bytes": 25285
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/eiscue.ogg",
+      "bytes": 20206
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ekans.ogg",
+      "bytes": 19490
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/eldegoss.ogg",
+      "bytes": 60472
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/electabuzz.ogg",
+      "bytes": 24867
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/electivire.ogg",
+      "bytes": 32246
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/electrode.ogg",
+      "bytes": 18853
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/elekid.ogg",
+      "bytes": 17389
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/emboar.ogg",
+      "bytes": 16863
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/emolga.ogg",
+      "bytes": 27116
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/empoleon.ogg",
+      "bytes": 23874
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/enamorus.ogg",
+      "bytes": 64666
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/entei.ogg",
+      "bytes": 24779
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/espathra.ogg",
+      "bytes": 23578
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/espeon.ogg",
+      "bytes": 15230
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/espurr.ogg",
+      "bytes": 32392
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/eternatus.ogg",
+      "bytes": 75726
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/excadrill.ogg",
+      "bytes": 32270
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/exeggcute.ogg",
+      "bytes": 19335
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/exeggutor-alola.ogg",
+      "bytes": 41698
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/exeggutor.ogg",
+      "bytes": 32497
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/exploud.ogg",
+      "bytes": 29664
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/falinks.ogg",
+      "bytes": 17845
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/farfetchd-galar.ogg",
+      "bytes": 25540
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/farfetchd.ogg",
+      "bytes": 26279
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/fearow.ogg",
+      "bytes": 14906
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/fennekin.ogg",
+      "bytes": 27976
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/feraligatr.ogg",
+      "bytes": 32700
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/fezandipiti.ogg",
+      "bytes": 20773
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/fidough.ogg",
+      "bytes": 26746
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flaaffy.ogg",
+      "bytes": 17021
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flabebe.ogg",
+      "bytes": 20487
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flamigo.ogg",
+      "bytes": 22374
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flapple.ogg",
+      "bytes": 18217
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flareon.ogg",
+      "bytes": 17715
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flittle.ogg",
+      "bytes": 15957
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/floatzel.ogg",
+      "bytes": 21986
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/floette.ogg",
+      "bytes": 20325
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/floragato.ogg",
+      "bytes": 44683
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/florges.ogg",
+      "bytes": 23436
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/fluttermane.ogg",
+      "bytes": 27115
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flygonf.ogg",
+      "bytes": 16034
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/flygonm.ogg",
+      "bytes": 24208
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/foongus.ogg",
+      "bytes": 34893
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/forretress.ogg",
+      "bytes": 21816
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/fraxure.ogg",
+      "bytes": 33757
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/frigibax.ogg",
+      "bytes": 21954
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/frillish.ogg",
+      "bytes": 20346
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/froakie.ogg",
+      "bytes": 28519
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/frogadier.ogg",
+      "bytes": 21068
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/froslass.ogg",
+      "bytes": 26310
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/frosmoth.ogg",
+      "bytes": 24903
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/fuecoco.ogg",
+      "bytes": 28130
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/furfrou.ogg",
+      "bytes": 15133
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/furret.ogg",
+      "bytes": 15585
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gabite.ogg",
+      "bytes": 18419
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gallade.ogg",
+      "bytes": 16253
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/galvantula.ogg",
+      "bytes": 23920
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/garchomp.ogg",
+      "bytes": 20391
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gardevoir.ogg",
+      "bytes": 26210
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/garganacl.ogg",
+      "bytes": 66790
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gastly.ogg",
+      "bytes": 35282
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gastrodon.ogg",
+      "bytes": 58601
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/genesect.ogg",
+      "bytes": 28538
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gengar.ogg",
+      "bytes": 32108
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/geodude.ogg",
+      "bytes": 20836
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gholdengo.ogg",
+      "bytes": 29866
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gible.ogg",
+      "bytes": 26550
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gimmighoul.ogg",
+      "bytes": 47099
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/girafarig.ogg",
+      "bytes": 21215
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/giratina.ogg",
+      "bytes": 37948
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/glaceon.ogg",
+      "bytes": 20815
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/glameow.ogg",
+      "bytes": 51589
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/glastrier.ogg",
+      "bytes": 33421
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gligar.ogg",
+      "bytes": 26696
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/glimmet.ogg",
+      "bytes": 23264
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/glimmora.ogg",
+      "bytes": 23244
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gliscor.ogg",
+      "bytes": 38503
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gloom.ogg",
+      "bytes": 13360
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gogoat.ogg",
+      "bytes": 26996
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/golbat.ogg",
+      "bytes": 19165
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/goldeen.ogg",
+      "bytes": 21661
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/golduck.ogg",
+      "bytes": 13855
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/golem.ogg",
+      "bytes": 35857
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/golett.ogg",
+      "bytes": 26973
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/golisopod.ogg",
+      "bytes": 44537
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/golurk.ogg",
+      "bytes": 34704
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/goodra.ogg",
+      "bytes": 22646
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/goomy.ogg",
+      "bytes": 47297
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gorebyss.ogg",
+      "bytes": 19452
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gossifleur.ogg",
+      "bytes": 21409
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gothita.ogg",
+      "bytes": 22727
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gothitelle.ogg",
+      "bytes": 22858
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gothorita.ogg",
+      "bytes": 26844
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grafaiai.ogg",
+      "bytes": 33481
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grapploct.ogg",
+      "bytes": 22126
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/graveler.ogg",
+      "bytes": 29305
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/greattusk.ogg",
+      "bytes": 31698
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/greavard.ogg",
+      "bytes": 35073
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/greedent.ogg",
+      "bytes": 29472
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/greninja.ogg",
+      "bytes": 26140
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grimer.ogg",
+      "bytes": 30889
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grimmsnarl.ogg",
+      "bytes": 30406
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grookey.ogg",
+      "bytes": 13620
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grotle.ogg",
+      "bytes": 16225
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/groudon-primal.ogg",
+      "bytes": 51492
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/groudon.ogg",
+      "bytes": 43821
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grovyle.ogg",
+      "bytes": 36604
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/growlithe-hisuian.ogg",
+      "bytes": 34095
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/growlithe.ogg",
+      "bytes": 17798
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/grumpig.ogg",
+      "bytes": 17294
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gulpin.ogg",
+      "bytes": 20416
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/guzzlord.ogg",
+      "bytes": 58182
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/gyarados.ogg",
+      "bytes": 26047
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hakamo-o.ogg",
+      "bytes": 27201
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/happiny.ogg",
+      "bytes": 22602
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hariyama.ogg",
+      "bytes": 27726
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hatenna.ogg",
+      "bytes": 15343
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/haunter.ogg",
+      "bytes": 59733
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hawlucha.ogg",
+      "bytes": 18774
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/haxorus.ogg",
+      "bytes": 21805
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/heatmor.ogg",
+      "bytes": 29268
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/heatran.ogg",
+      "bytes": 17505
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/heracross.ogg",
+      "bytes": 18839
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hippowdon.ogg",
+      "bytes": 54262
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hitmonchan.ogg",
+      "bytes": 23421
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hitmonlee.ogg",
+      "bytes": 17615
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ho-oh.ogg",
+      "bytes": 22361
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/honedge.ogg",
+      "bytes": 22389
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hoopa.ogg",
+      "bytes": 15843
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hoothoot.ogg",
+      "bytes": 17311
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hoppip.ogg",
+      "bytes": 22472
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/horsea.ogg",
+      "bytes": 15232
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/houndoom.ogg",
+      "bytes": 11341
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/houndstone.ogg",
+      "bytes": 42526
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/huntail.ogg",
+      "bytes": 18914
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hydreigon.ogg",
+      "bytes": 48378
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/hypno.ogg",
+      "bytes": 29105
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/igglybuff.ogg",
+      "bytes": 25655
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/impidimp.ogg",
+      "bytes": 30591
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/incineroar.ogg",
+      "bytes": 33027
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/indeedee.ogg",
+      "bytes": 18024
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/infernape.ogg",
+      "bytes": 23416
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/inkay.ogg",
+      "bytes": 25357
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/inteleon.ogg",
+      "bytes": 26591
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ironbundle.ogg",
+      "bytes": 44736
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ironhands.ogg",
+      "bytes": 35423
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ironjugulis.ogg",
+      "bytes": 25651
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ironmoth.ogg",
+      "bytes": 42550
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ironthorns.ogg",
+      "bytes": 27958
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ironthreads.ogg",
+      "bytes": 36793
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ivysaur.ogg",
+      "bytes": 35871
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/jangmo-o.ogg",
+      "bytes": 19673
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/jigglypuff.ogg",
+      "bytes": 25297
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/jirachi.ogg",
+      "bytes": 22099
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/jolteon.ogg",
+      "bytes": 17106
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/joltik.ogg",
+      "bytes": 11505
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/jumpluff.ogg",
+      "bytes": 37595
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/jynx.ogg",
+      "bytes": 14565
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kabuto.ogg",
+      "bytes": 22463
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kabutops.ogg",
+      "bytes": 24249
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kadabra.ogg",
+      "bytes": 29282
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kakuna.ogg",
+      "bytes": 14712
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kangaskhan.ogg",
+      "bytes": 19301
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kartana.ogg",
+      "bytes": 52705
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/keldeo.ogg",
+      "bytes": 25756
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kingambit.ogg",
+      "bytes": 35171
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kingdra.ogg",
+      "bytes": 21898
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kingler.ogg",
+      "bytes": 25430
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kirlia.ogg",
+      "bytes": 24689
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/klawf.ogg",
+      "bytes": 69863
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/klefki.ogg",
+      "bytes": 16761
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/koffing.ogg",
+      "bytes": 26153
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kommo-o.ogg",
+      "bytes": 18970
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/koraidon.ogg",
+      "bytes": 36107
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/krabby.ogg",
+      "bytes": 20337
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kricketot.ogg",
+      "bytes": 23336
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kricketune.ogg",
+      "bytes": 18267
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/krokorok.ogg",
+      "bytes": 19944
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/krookodile.ogg",
+      "bytes": 22124
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kubfu.ogg",
+      "bytes": 13806
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kyogre-primal.ogg",
+      "bytes": 29701
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kyogre.ogg",
+      "bytes": 51102
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kyurem-blackwhite.ogg",
+      "bytes": 30235
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/kyurem.ogg",
+      "bytes": 37384
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lampent.ogg",
+      "bytes": 24021
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/landorus.ogg",
+      "bytes": 17629
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lapras.ogg",
+      "bytes": 18516
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/larvesta.ogg",
+      "bytes": 27334
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/latias.ogg",
+      "bytes": 21886
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/latios.ogg",
+      "bytes": 28630
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/leafeon.ogg",
+      "bytes": 14135
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/leavanny.ogg",
+      "bytes": 27537
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lechonk.ogg",
+      "bytes": 31434
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ledyba.ogg",
+      "bytes": 29838
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lickitung.ogg",
+      "bytes": 22513
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lilligant-hisui.ogg",
+      "bytes": 28252
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lillipup.ogg",
+      "bytes": 23617
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/linoone-galar.ogg",
+      "bytes": 25428
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/linoone.ogg",
+      "bytes": 28170
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/litleo.ogg",
+      "bytes": 13980
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/litten.ogg",
+      "bytes": 23591
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/litwick.ogg",
+      "bytes": 24309
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lokix.ogg",
+      "bytes": 24009
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lombre.ogg",
+      "bytes": 19127
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lopunny.ogg",
+      "bytes": 20005
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lotad.ogg",
+      "bytes": 16944
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/loudred.ogg",
+      "bytes": 27227
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lucario.ogg",
+      "bytes": 16509
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ludicolo.ogg",
+      "bytes": 20060
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lugia.ogg",
+      "bytes": 33110
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lunala.ogg",
+      "bytes": 39543
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lunatone.ogg",
+      "bytes": 30880
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lurantis.ogg",
+      "bytes": 21505
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/luvdisc.ogg",
+      "bytes": 25656
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/luxio.ogg",
+      "bytes": 23853
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/lycanroc-midnight.ogg",
+      "bytes": 24221
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/machamp.ogg",
+      "bytes": 42341
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/machoke.ogg",
+      "bytes": 17359
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/machop.ogg",
+      "bytes": 20708
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/magearna.ogg",
+      "bytes": 21055
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/magikarp.ogg",
+      "bytes": 25757
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/magmar.ogg",
+      "bytes": 22197
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/magmortar.ogg",
+      "bytes": 28558
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/magnemite.ogg",
+      "bytes": 24234
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/magneton.ogg",
+      "bytes": 27407
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/magnezone.ogg",
+      "bytes": 24919
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mamoswine.ogg",
+      "bytes": 30014
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/manaphy.ogg",
+      "bytes": 15107
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mandibuzz.ogg",
+      "bytes": 27778
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mankey.ogg",
+      "bytes": 16497
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mareanie.ogg",
+      "bytes": 26422
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mareep.ogg",
+      "bytes": 15833
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/marill.ogg",
+      "bytes": 22055
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/marowak-alola.ogg",
+      "bytes": 21815
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/marowak.ogg",
+      "bytes": 17068
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/marshadow.ogg",
+      "bytes": 15923
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/marshtomp.ogg",
+      "bytes": 30007
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/maushold.ogg",
+      "bytes": 27986
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mawile.ogg",
+      "bytes": 23658
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/meganium.ogg",
+      "bytes": 15991
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/melmetal.ogg",
+      "bytes": 34423
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/meloetta.ogg",
+      "bytes": 20633
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/meltan.ogg",
+      "bytes": 23436
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/meowscarada.ogg",
+      "bytes": 27441
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/meowstic.ogg",
+      "bytes": 17380
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/meowth-galar.ogg",
+      "bytes": 20308
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/meowth.ogg",
+      "bytes": 14314
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/metagross.ogg",
+      "bytes": 21660
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/metang.ogg",
+      "bytes": 16775
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/metapod.ogg",
+      "bytes": 17410
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mew.ogg",
+      "bytes": 10625
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mewtwo.ogg",
+      "bytes": 15701
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/milcery.ogg",
+      "bytes": 23618
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/milotic1.ogg",
+      "bytes": 28794
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/miltank.ogg",
+      "bytes": 14117
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mime_jr.ogg",
+      "bytes": 25248
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mimikyu.ogg",
+      "bytes": 29268
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/minccino.ogg",
+      "bytes": 18991
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/minior.ogg",
+      "bytes": 20895
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/minun.ogg",
+      "bytes": 28115
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/miraidon.ogg",
+      "bytes": 33037
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/misdreavus.ogg",
+      "bytes": 39260
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/moltres.ogg",
+      "bytes": 24347
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/monferno.ogg",
+      "bytes": 20992
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/morelull.ogg",
+      "bytes": 18640
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/morgrem.ogg",
+      "bytes": 33876
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/morpeko.ogg",
+      "bytes": 25260
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mrmime-galar.ogg",
+      "bytes": 25644
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mrmime.ogg",
+      "bytes": 28129
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mrrime.ogg",
+      "bytes": 56017
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/mudkip.ogg",
+      "bytes": 14465
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/muk.ogg",
+      "bytes": 20776
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/munchlax.ogg",
+      "bytes": 18173
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/munna.ogg",
+      "bytes": 21493
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/murkrow.ogg",
+      "bytes": 27679
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/musharna.ogg",
+      "bytes": 32262
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nacli.ogg",
+      "bytes": 25987
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/naclstack.ogg",
+      "bytes": 33185
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/naganadel.ogg",
+      "bytes": 56204
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/natu.ogg",
+      "bytes": 35092
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/necrozma-dawn.ogg",
+      "bytes": 50671
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/necrozma-dusk.ogg",
+      "bytes": 53204
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/necrozma.ogg",
+      "bytes": 35188
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nickit.ogg",
+      "bytes": 30679
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nidoking.ogg",
+      "bytes": 23724
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nidoqueen.ogg",
+      "bytes": 39985
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nidoranfemale.ogg",
+      "bytes": 17855
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nidoranmale.ogg",
+      "bytes": 16511
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nidorina.ogg",
+      "bytes": 19160
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nidorino.ogg",
+      "bytes": 19321
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nincada.ogg",
+      "bytes": 20133
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ninetales-alola.ogg",
+      "bytes": 37195
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ninetales.ogg",
+      "bytes": 29818
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ninjask.ogg",
+      "bytes": 29616
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/noctowl.ogg",
+      "bytes": 21084
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/noibat.ogg",
+      "bytes": 14801
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/noivern.ogg",
+      "bytes": 16067
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nosepass.ogg",
+      "bytes": 29970
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/numel.ogg",
+      "bytes": 31951
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/nymble.ogg",
+      "bytes": 15201
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/obstagoon.ogg",
+      "bytes": 25584
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/oddish.ogg",
+      "bytes": 15592
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ogerpon.ogg",
+      "bytes": 32202
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/oinkologne.ogg",
+      "bytes": 16250
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/okidogi.ogg",
+      "bytes": 65521
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/omanyte.ogg",
+      "bytes": 13382
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/omastar.ogg",
+      "bytes": 24037
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/onix.ogg",
+      "bytes": 34712
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/oranguru.ogg",
+      "bytes": 20287
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/orbeetle.ogg",
+      "bytes": 28696
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/orthworm.ogg",
+      "bytes": 40756
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/oshawott.ogg",
+      "bytes": 26849
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/overqwil.ogg",
+      "bytes": 33330
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pachirisu.ogg",
+      "bytes": 33692
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/palkia.ogg",
+      "bytes": 30874
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/palossand.ogg",
+      "bytes": 23269
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/panpour.ogg",
+      "bytes": 26917
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/paras.ogg",
+      "bytes": 12794
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/parasect.ogg",
+      "bytes": 19054
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/passimian.ogg",
+      "bytes": 22002
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/patrat.ogg",
+      "bytes": 46253
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pawmi.ogg",
+      "bytes": 17351
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pawmo.ogg",
+      "bytes": 23383
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pawmot.ogg",
+      "bytes": 22349
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pawniard.ogg",
+      "bytes": 14308
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pecharunt.ogg",
+      "bytes": 25793
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pelipper.ogg",
+      "bytes": 24311
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/perrserker.ogg",
+      "bytes": 22798
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/persain.ogg",
+      "bytes": 35503
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/phanpy.ogg",
+      "bytes": 28885
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/phantump.ogg",
+      "bytes": 19603
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pheromosa.ogg",
+      "bytes": 36350
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/phione.ogg",
+      "bytes": 28140
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pichu.ogg",
+      "bytes": 12183
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pidgeot.ogg",
+      "bytes": 11076
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pidgeotto.ogg",
+      "bytes": 15705
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pidgey.ogg",
+      "bytes": 15564
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pidove.ogg",
+      "bytes": 9564
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pignite.ogg",
+      "bytes": 12382
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pikachu.ogg",
+      "bytes": 20007
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pikipek.ogg",
+      "bytes": 19594
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/piloswine.ogg",
+      "bytes": 17459
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pincurchin.ogg",
+      "bytes": 49010
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pineco.ogg",
+      "bytes": 19540
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pinsir.ogg",
+      "bytes": 23264
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/piplup.ogg",
+      "bytes": 15713
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/plusle.ogg",
+      "bytes": 23827
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/poipole.ogg",
+      "bytes": 33803
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/poliwag.ogg",
+      "bytes": 16287
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/poliwhirl.ogg",
+      "bytes": 19069
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/poliwrath.ogg",
+      "bytes": 14863
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/poltchageist.ogg",
+      "bytes": 38940
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/polteageist.ogg",
+      "bytes": 23787
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ponyta.ogg",
+      "bytes": 13338
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/popplio.ogg",
+      "bytes": 19496
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/porygon.ogg",
+      "bytes": 25126
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/porygonz.ogg",
+      "bytes": 33711
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/primarina.ogg",
+      "bytes": 36859
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/primeape.ogg",
+      "bytes": 21423
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/prinplup.ogg",
+      "bytes": 19622
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/probopass.ogg",
+      "bytes": 36687
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/psyduck.ogg",
+      "bytes": 36272
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pumpkaboo.ogg",
+      "bytes": 34288
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/purugly.ogg",
+      "bytes": 16833
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/pyukumuku.ogg",
+      "bytes": 29877
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/quagsire.ogg",
+      "bytes": 24804
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/quaquaval.ogg",
+      "bytes": 24126
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/quaxly.ogg",
+      "bytes": 26439
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/quaxwell.ogg",
+      "bytes": 29900
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/quilava.ogg",
+      "bytes": 27258
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/qwilfish-hisui.ogg",
+      "bytes": 16475
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/raboot.ogg",
+      "bytes": 20860
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rabsca.ogg",
+      "bytes": 62647
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ragingbolt.ogg",
+      "bytes": 40838
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/raichu-alola.ogg",
+      "bytes": 30086
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/raichu.ogg",
+      "bytes": 15325
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/raikou.ogg",
+      "bytes": 27451
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ralts.ogg",
+      "bytes": 21061
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rampardos.ogg",
+      "bytes": 19950
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/raticate.ogg",
+      "bytes": 17616
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rattata.ogg",
+      "bytes": 18061
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rayquaza.ogg",
+      "bytes": 33543
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/regice.ogg",
+      "bytes": 34530
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/regidrago.ogg",
+      "bytes": 38440
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/regieleki.ogg",
+      "bytes": 20502
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/regigigas.ogg",
+      "bytes": 36608
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/regirock.ogg",
+      "bytes": 18661
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/registeel.ogg",
+      "bytes": 18347
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/relicanth.ogg",
+      "bytes": 69559
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rellor.ogg",
+      "bytes": 54847
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/reshiram.ogg",
+      "bytes": 42050
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/revavroom.ogg",
+      "bytes": 41513
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rhydon.ogg",
+      "bytes": 14801
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rhyhorn.ogg",
+      "bytes": 11160
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rhyperior.ogg",
+      "bytes": 21922
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rillaboom.ogg",
+      "bytes": 30408
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/riolu.ogg",
+      "bytes": 21630
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/roaringmoon.ogg",
+      "bytes": 41028
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rockruff.ogg",
+      "bytes": 15137
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/roggenrola.ogg",
+      "bytes": 18390
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rolycoly.ogg",
+      "bytes": 13132
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rookidee.ogg",
+      "bytes": 21295
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/roselia.ogg",
+      "bytes": 20961
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rotom.ogg",
+      "bytes": 19467
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/rowlet.ogg",
+      "bytes": 37551
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/runerigus.ogg",
+      "bytes": 36379
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sableye.ogg",
+      "bytes": 15607
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/salamence.ogg",
+      "bytes": 28730
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/salandit.ogg",
+      "bytes": 21269
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/salazzle.ogg",
+      "bytes": 26830
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/samurott.ogg",
+      "bytes": 16980
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sandaconda.ogg",
+      "bytes": 38604
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sandile.ogg",
+      "bytes": 17485
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sandshrew.ogg",
+      "bytes": 19268
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sandslash.ogg",
+      "bytes": 21893
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sandygast.ogg",
+      "bytes": 27383
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sandyshocks.ogg",
+      "bytes": 36835
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sawk.ogg",
+      "bytes": 13179
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sceptile.ogg",
+      "bytes": 27692
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/scizor.ogg",
+      "bytes": 18879
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/scolipede.ogg",
+      "bytes": 50158
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/scorbunny.ogg",
+      "bytes": 20122
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/scovillain.ogg",
+      "bytes": 26461
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/screamtail.ogg",
+      "bytes": 35892
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/scytherf.ogg",
+      "bytes": 19372
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/scytherm.ogg",
+      "bytes": 24758
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/seadra.ogg",
+      "bytes": 17552
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/seaking.ogg",
+      "bytes": 25255
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/seedot.ogg",
+      "bytes": 22034
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/seel.ogg",
+      "bytes": 10729
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sentret.ogg",
+      "bytes": 15421
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/servinef.ogg",
+      "bytes": 21988
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/servinem.ogg",
+      "bytes": 24007
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/seviper.ogg",
+      "bytes": 21994
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sharpedo.ogg",
+      "bytes": 21757
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shaymin.ogg",
+      "bytes": 24201
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shedinja.ogg",
+      "bytes": 65706
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shelgon.ogg",
+      "bytes": 14074
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shellder.ogg",
+      "bytes": 18711
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shellos.ogg",
+      "bytes": 37613
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shieldon.ogg",
+      "bytes": 22160
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shiftry.ogg",
+      "bytes": 19470
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shiinotic.ogg",
+      "bytes": 30979
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shinx.ogg",
+      "bytes": 18300
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shroodle.ogg",
+      "bytes": 23616
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shroomish.ogg",
+      "bytes": 27873
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shuckle.ogg",
+      "bytes": 25229
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/shuppet.ogg",
+      "bytes": 13833
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/silcoon.ogg",
+      "bytes": 21109
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/silicobra.ogg",
+      "bytes": 26102
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/simipour.ogg",
+      "bytes": 48215
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sinistcha.ogg",
+      "bytes": 35820
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sinistea.ogg",
+      "bytes": 32361
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sirfetchd.ogg",
+      "bytes": 22033
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sizzlipede.ogg",
+      "bytes": 23998
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/skarmory.ogg",
+      "bytes": 22248
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/skeledirge.ogg",
+      "bytes": 32842
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/skiploom.ogg",
+      "bytes": 33439
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/skitty.ogg",
+      "bytes": 21234
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/skuntank.ogg",
+      "bytes": 37782
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/skwovet.ogg",
+      "bytes": 22308
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/slaking.ogg",
+      "bytes": 34524
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sliggoo-hisui.ogg",
+      "bytes": 25982
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sliggoo.ogg",
+      "bytes": 21393
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/slitherwing.ogg",
+      "bytes": 49800
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/slowbro.ogg",
+      "bytes": 24450
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/slowking.ogg",
+      "bytes": 37383
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/slowpoke.ogg",
+      "bytes": 32074
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/slurpuff.ogg",
+      "bytes": 27407
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/smeargle.ogg",
+      "bytes": 20862
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/smoliv.ogg",
+      "bytes": 29202
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/smoochum.ogg",
+      "bytes": 21298
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sneasler.ogg",
+      "bytes": 25325
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/snivyf.ogg",
+      "bytes": 16944
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/snivym.ogg",
+      "bytes": 12925
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/snom.ogg",
+      "bytes": 21120
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/snorlax.ogg",
+      "bytes": 51668
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/snorunt.ogg",
+      "bytes": 27006
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/snubbull.ogg",
+      "bytes": 14682
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sobble.ogg",
+      "bytes": 22570
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/solgaleo.ogg",
+      "bytes": 50482
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/spearow.ogg",
+      "bytes": 30090
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/spectrier.ogg",
+      "bytes": 36671
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/spidops.ogg",
+      "bytes": 55800
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/spinarak.ogg",
+      "bytes": 9205
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/spinda.ogg",
+      "bytes": 48368
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/spiritomb.ogg",
+      "bytes": 91171
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/spoink.ogg",
+      "bytes": 23767
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sprigatito.ogg",
+      "bytes": 38395
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/squirtle.ogg",
+      "bytes": 42200
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/stakataka.ogg",
+      "bytes": 34286
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/staraptor.ogg",
+      "bytes": 18894
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/staravia.ogg",
+      "bytes": 17592
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/starly.ogg",
+      "bytes": 16103
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/starmie.ogg",
+      "bytes": 8262
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/staryu.ogg",
+      "bytes": 8261
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/steenee.ogg",
+      "bytes": 17576
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/stonjourner.ogg",
+      "bytes": 32144
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/stunky.ogg",
+      "bytes": 13790
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sudowoodo.ogg",
+      "bytes": 29906
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/suicune.ogg",
+      "bytes": 19047
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sunflora.ogg",
+      "bytes": 32034
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sunkern.ogg",
+      "bytes": 24686
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/surskit.ogg",
+      "bytes": 23118
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/swablu.ogg",
+      "bytes": 30851
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/swalot.ogg",
+      "bytes": 22720
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/swampert.ogg",
+      "bytes": 15597
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/swellow.ogg",
+      "bytes": 26650
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/swinub.ogg",
+      "bytes": 19691
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/swirlix.ogg",
+      "bytes": 23645
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/swoobat.ogg",
+      "bytes": 23996
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/sylveon.ogg",
+      "bytes": 12454
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tadbulb.ogg",
+      "bytes": 18403
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tandemaus.ogg",
+      "bytes": 29090
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tangela.ogg",
+      "bytes": 27320
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tangrowth.ogg",
+      "bytes": 36934
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tapubulu.ogg",
+      "bytes": 31104
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tapufini.ogg",
+      "bytes": 36336
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tapukoko.ogg",
+      "bytes": 38259
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tapulele.ogg",
+      "bytes": 22774
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tarountula.ogg",
+      "bytes": 43970
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tatsugiri.ogg",
+      "bytes": 12435
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tauros.ogg",
+      "bytes": 30148
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/teddiursa.ogg",
+      "bytes": 29832
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tentacool.ogg",
+      "bytes": 18563
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tentacruel.ogg",
+      "bytes": 22050
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tepig.ogg",
+      "bytes": 15667
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/terrakion.ogg",
+      "bytes": 46589
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/thievul.ogg",
+      "bytes": 18598
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/throh.ogg",
+      "bytes": 26143
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/thundurus.ogg",
+      "bytes": 15625
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/thwackey.ogg",
+      "bytes": 21531
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tinglu.ogg",
+      "bytes": 32486
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tinkatink.ogg",
+      "bytes": 46932
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tinkaton.ogg",
+      "bytes": 32880
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tinkatuff.ogg",
+      "bytes": 49798
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/toedscool.ogg",
+      "bytes": 22117
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/toedscruel.ogg",
+      "bytes": 24954
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/togedemaru.ogg",
+      "bytes": 27077
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/togepi.ogg",
+      "bytes": 25157
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/torchic.ogg",
+      "bytes": 13172
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/torkoal.ogg",
+      "bytes": 20254
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tornadus.ogg",
+      "bytes": 21804
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/torterra.ogg",
+      "bytes": 30636
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/totodile.ogg",
+      "bytes": 24210
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/toucannon.ogg",
+      "bytes": 26291
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/toxapex.ogg",
+      "bytes": 24495
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/toxel.ogg",
+      "bytes": 22222
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/toxicroak.ogg",
+      "bytes": 22197
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/toxtricity.ogg",
+      "bytes": 26029
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/trapinchf.ogg",
+      "bytes": 14716
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/trapinchm.ogg",
+      "bytes": 13820
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/treecko.ogg",
+      "bytes": 14862
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/trevenant.ogg",
+      "bytes": 26558
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/trumbeak.ogg",
+      "bytes": 24409
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/turtonator.ogg",
+      "bytes": 16321
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/turtwig.ogg",
+      "bytes": 19811
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tynamo.ogg",
+      "bytes": 15090
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/typhlosion.ogg",
+      "bytes": 19254
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tyranitar.ogg",
+      "bytes": 43243
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tyrantrum.ogg",
+      "bytes": 25235
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tyrogue.ogg",
+      "bytes": 19549
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/tyrunt.ogg",
+      "bytes": 13834
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/umbreonf.ogg",
+      "bytes": 14385
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/umbreonm.ogg",
+      "bytes": 15023
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/unown.ogg",
+      "bytes": 93301
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ursaluna.ogg",
+      "bytes": 16499
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ursalunabloodmoon.ogg",
+      "bytes": 32538
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/ursaring.ogg",
+      "bytes": 23303
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vanillish.ogg",
+      "bytes": 23965
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vanillite.ogg",
+      "bytes": 15852
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vanilluxe.ogg",
+      "bytes": 24400
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vaporeon.ogg",
+      "bytes": 19944
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/varoom.ogg",
+      "bytes": 31937
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/veluza.ogg",
+      "bytes": 26639
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/venipede.ogg",
+      "bytes": 21153
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/venomoth.ogg",
+      "bytes": 16943
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/venonat.ogg",
+      "bytes": 13762
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/venusaur.ogg",
+      "bytes": 30813
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vibrava.ogg",
+      "bytes": 22281
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/victini.ogg",
+      "bytes": 12689
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/victreebel.ogg",
+      "bytes": 16568
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vileplume.ogg",
+      "bytes": 19128
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vivillon.ogg",
+      "bytes": 20441
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/volcanion.ogg",
+      "bytes": 33121
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/volcarona.ogg",
+      "bytes": 43493
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/voltorb.ogg",
+      "bytes": 16327
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vullaby.ogg",
+      "bytes": 24839
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vulpix-alola.ogg",
+      "bytes": 36182
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/vulpix.ogg",
+      "bytes": 18611
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wailord.ogg",
+      "bytes": 63495
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/walkingwake.ogg",
+      "bytes": 46910
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/walrein.ogg",
+      "bytes": 25519
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wartotle.ogg",
+      "bytes": 25383
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/watchog.ogg",
+      "bytes": 41508
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/weavile.ogg",
+      "bytes": 21899
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/weedle.ogg",
+      "bytes": 18346
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/weepinbell.ogg",
+      "bytes": 19270
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/weezing-galar.ogg",
+      "bytes": 24523
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/weezing.ogg",
+      "bytes": 22131
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/whimsicott.ogg",
+      "bytes": 14181
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/whirlipede.ogg",
+      "bytes": 28718
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/whiscash.ogg",
+      "bytes": 17764
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/whismur1.ogg",
+      "bytes": 22242
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wigglytuff.ogg",
+      "bytes": 27182
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wiglett.ogg",
+      "bytes": 20569
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wingull.ogg",
+      "bytes": 21639
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wishiwashi.ogg",
+      "bytes": 26722
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wo-chien.ogg",
+      "bytes": 52881
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wobbuffet.ogg",
+      "bytes": 24996
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/woobat.ogg",
+      "bytes": 22015
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wooloo.ogg",
+      "bytes": 21041
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wooper.ogg",
+      "bytes": 11416
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wugtrio.ogg",
+      "bytes": 28950
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/wynaut.ogg",
+      "bytes": 16733
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/xatu.ogg",
+      "bytes": 39135
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/xurkitree.ogg",
+      "bytes": 32390
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/yamper.ogg",
+      "bytes": 27273
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/yanma.ogg",
+      "bytes": 18991
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/yanmega.ogg",
+      "bytes": 23292
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/yveltal.ogg",
+      "bytes": 38316
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zacian.ogg",
+      "bytes": 47972
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zangoose.ogg",
+      "bytes": 19613
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zapdos-galar.ogg",
+      "bytes": 21011
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zapdos.ogg",
+      "bytes": 26628
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zarude.ogg",
+      "bytes": 12448
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zekrom.ogg",
+      "bytes": 66696
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zeraora.ogg",
+      "bytes": 56159
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zigzagoon-galar.ogg",
+      "bytes": 28470
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zigzagoon.ogg",
+      "bytes": 23351
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zoroark.ogg",
+      "bytes": 16173
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zorua.ogg",
+      "bytes": 14607
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zubat.ogg",
+      "bytes": 14259
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zygarde-100.ogg",
+      "bytes": 22971
+    },
+    {
+      "name": "assets/pixelmon/sounds/pixelmon/zygarde-50.ogg",
+      "bytes": 26417
+    }
+  ],
+  "candidates": [
+    {
+      "id": 670,
+      "name": "floette",
+      "path": "assets/pixelmon/sounds/pixelmon/floette.ogg",
+      "localPath": "670.ogg",
+      "bytes": 20325,
+      "decoded": true
+    },
+    {
+      "id": 679,
+      "name": "honedge",
+      "path": "assets/pixelmon/sounds/pixelmon/honedge.ogg",
+      "localPath": "679.ogg",
+      "bytes": 22389,
+      "decoded": true
+    },
+    {
+      "id": 681,
+      "name": "aegislash",
+      "path": "assets/pixelmon/sounds/pixelmon/aegislash.ogg",
+      "localPath": "681.ogg",
+      "bytes": 34483,
+      "decoded": true
+    },
+    {
+      "id": 688,
+      "name": "binacle",
+      "path": "assets/pixelmon/sounds/pixelmon/binacle.ogg",
+      "localPath": "688.ogg",
+      "bytes": 17747,
+      "decoded": true
+    },
+    {
+      "id": 708,
+      "name": "phantump",
+      "path": "assets/pixelmon/sounds/pixelmon/phantump.ogg",
+      "localPath": "708.ogg",
+      "bytes": 19603,
+      "decoded": true
+    },
+    {
+      "id": 712,
+      "name": "bergmite",
+      "path": "assets/pixelmon/sounds/pixelmon/bergmite.ogg",
+      "localPath": "712.ogg",
+      "bytes": 45750,
+      "decoded": true
+    },
+    {
+      "id": 713,
+      "name": "avalugg",
+      "path": "assets/pixelmon/sounds/pixelmon/avalugg.ogg",
+      "localPath": "713.ogg",
+      "bytes": 29228,
+      "decoded": true
+    },
+    {
+      "id": 715,
+      "name": "noivern",
+      "path": "assets/pixelmon/sounds/pixelmon/noivern.ogg",
+      "localPath": "715.ogg",
+      "bytes": 16067,
+      "decoded": true
+    },
+    {
+      "id": 719,
+      "name": "diancie",
+      "path": "assets/pixelmon/sounds/pixelmon/diancie.ogg",
+      "localPath": "719.ogg",
+      "bytes": 23447,
+      "decoded": true
+    },
+    {
+      "id": 721,
+      "name": "volcanion",
+      "path": "assets/pixelmon/sounds/pixelmon/volcanion.ogg",
+      "localPath": "721.ogg",
+      "bytes": 33121,
+      "decoded": true
+    },
+    {
+      "id": 727,
+      "name": "incineroar",
+      "path": "assets/pixelmon/sounds/pixelmon/incineroar.ogg",
+      "localPath": "727.ogg",
+      "bytes": 33027,
+      "preview": "727.wav",
+      "decoded": true
+    },
+    {
+      "id": 730,
+      "name": "primarina",
+      "path": "assets/pixelmon/sounds/pixelmon/primarina.ogg",
+      "localPath": "730.ogg",
+      "bytes": 36859,
+      "decoded": true
+    },
+    {
+      "id": 733,
+      "name": "toucannon",
+      "path": "assets/pixelmon/sounds/pixelmon/toucannon.ogg",
+      "localPath": "733.ogg",
+      "bytes": 26291,
+      "decoded": true
+    },
+    {
+      "id": 739,
+      "name": "crabrawler",
+      "path": "assets/pixelmon/sounds/pixelmon/crabrawler.ogg",
+      "localPath": "739.ogg",
+      "bytes": 29132,
+      "decoded": true
+    },
+    {
+      "id": 740,
+      "name": "crabominable",
+      "path": "assets/pixelmon/sounds/pixelmon/crabominable.ogg",
+      "localPath": "740.ogg",
+      "bytes": 28893,
+      "decoded": true
+    },
+    {
+      "id": 746,
+      "name": "wishiwashi",
+      "path": "assets/pixelmon/sounds/pixelmon/wishiwashi.ogg",
+      "localPath": "746.ogg",
+      "bytes": 26722,
+      "decoded": true
+    },
+    {
+      "id": 754,
+      "name": "lurantis",
+      "path": "assets/pixelmon/sounds/pixelmon/lurantis.ogg",
+      "localPath": "754.ogg",
+      "bytes": 21505,
+      "decoded": true
+    },
+    {
+      "id": 770,
+      "name": "palossand",
+      "path": "assets/pixelmon/sounds/pixelmon/palossand.ogg",
+      "localPath": "770.ogg",
+      "bytes": 23269,
+      "decoded": true
+    },
+    {
+      "id": 771,
+      "name": "pyukumuku",
+      "path": "assets/pixelmon/sounds/pixelmon/pyukumuku.ogg",
+      "localPath": "771.ogg",
+      "bytes": 29877,
+      "decoded": true
+    },
+    {
+      "id": 774,
+      "name": "minior",
+      "path": "assets/pixelmon/sounds/pixelmon/minior.ogg",
+      "localPath": "774.ogg",
+      "bytes": 20895,
+      "decoded": true
+    },
+    {
+      "id": 779,
+      "name": "bruxish",
+      "path": "assets/pixelmon/sounds/pixelmon/bruxish.ogg",
+      "localPath": "779.ogg",
+      "bytes": 32247,
+      "decoded": true
+    },
+    {
+      "id": 782,
+      "name": "jangmo-o",
+      "path": "assets/pixelmon/sounds/pixelmon/jangmo-o.ogg",
+      "localPath": "782.ogg",
+      "bytes": 19673,
+      "decoded": true
+    },
+    {
+      "id": 783,
+      "name": "hakamo-o",
+      "path": "assets/pixelmon/sounds/pixelmon/hakamo-o.ogg",
+      "localPath": "783.ogg",
+      "bytes": 27201,
+      "decoded": true
+    },
+    {
+      "id": 784,
+      "name": "kommo-o",
+      "path": "assets/pixelmon/sounds/pixelmon/kommo-o.ogg",
+      "localPath": "784.ogg",
+      "bytes": 18970,
+      "decoded": true
+    },
+    {
+      "id": 785,
+      "name": "tapu-koko",
+      "path": "assets/pixelmon/sounds/pixelmon/tapukoko.ogg",
+      "localPath": "785.ogg",
+      "bytes": 38259,
+      "preview": "785.wav",
+      "decoded": true
+    },
+    {
+      "id": 786,
+      "name": "tapu-lele",
+      "path": "assets/pixelmon/sounds/pixelmon/tapulele.ogg",
+      "localPath": "786.ogg",
+      "bytes": 22774,
+      "decoded": true
+    },
+    {
+      "id": 787,
+      "name": "tapu-bulu",
+      "path": "assets/pixelmon/sounds/pixelmon/tapubulu.ogg",
+      "localPath": "787.ogg",
+      "bytes": 31104,
+      "decoded": true
+    },
+    {
+      "id": 789,
+      "name": "cosmog",
+      "path": "assets/pixelmon/sounds/pixelmon/cosmog.ogg",
+      "localPath": "789.ogg",
+      "bytes": 13437,
+      "decoded": true
+    },
+    {
+      "id": 791,
+      "name": "solgaleo",
+      "path": "assets/pixelmon/sounds/pixelmon/solgaleo.ogg",
+      "localPath": "791.ogg",
+      "bytes": 50482,
+      "decoded": true
+    },
+    {
+      "id": 792,
+      "name": "lunala",
+      "path": "assets/pixelmon/sounds/pixelmon/lunala.ogg",
+      "localPath": "792.ogg",
+      "bytes": 39543,
+      "decoded": true
+    },
+    {
+      "id": 794,
+      "name": "buzzwole",
+      "path": "assets/pixelmon/sounds/pixelmon/buzzwole.ogg",
+      "localPath": "794.ogg",
+      "bytes": 54056,
+      "decoded": true
+    },
+    {
+      "id": 795,
+      "name": "pheromosa",
+      "path": "assets/pixelmon/sounds/pixelmon/pheromosa.ogg",
+      "localPath": "795.ogg",
+      "bytes": 36350,
+      "decoded": true
+    },
+    {
+      "id": 796,
+      "name": "xurkitree",
+      "path": "assets/pixelmon/sounds/pixelmon/xurkitree.ogg",
+      "localPath": "796.ogg",
+      "bytes": 32390,
+      "decoded": true
+    },
+    {
+      "id": 797,
+      "name": "celesteela",
+      "path": "assets/pixelmon/sounds/pixelmon/celesteela.ogg",
+      "localPath": "797.ogg",
+      "bytes": 50453,
+      "decoded": true
+    },
+    {
+      "id": 798,
+      "name": "kartana",
+      "path": "assets/pixelmon/sounds/pixelmon/kartana.ogg",
+      "localPath": "798.ogg",
+      "bytes": 52705,
+      "decoded": true
+    },
+    {
+      "id": 800,
+      "name": "necrozma",
+      "path": "assets/pixelmon/sounds/pixelmon/necrozma.ogg",
+      "localPath": "800.ogg",
+      "bytes": 35188,
+      "decoded": true
+    },
+    {
+      "id": 801,
+      "name": "magearna",
+      "path": "assets/pixelmon/sounds/pixelmon/magearna.ogg",
+      "localPath": "801.ogg",
+      "bytes": 21055,
+      "decoded": true
+    },
+    {
+      "id": 802,
+      "name": "marshadow",
+      "path": "assets/pixelmon/sounds/pixelmon/marshadow.ogg",
+      "localPath": "802.ogg",
+      "bytes": 15923,
+      "decoded": true
+    },
+    {
+      "id": 804,
+      "name": "naganadel",
+      "path": "assets/pixelmon/sounds/pixelmon/naganadel.ogg",
+      "localPath": "804.ogg",
+      "bytes": 56204,
+      "decoded": true
+    },
+    {
+      "id": 805,
+      "name": "stakataka",
+      "path": "assets/pixelmon/sounds/pixelmon/stakataka.ogg",
+      "localPath": "805.ogg",
+      "bytes": 34286,
+      "decoded": true
+    },
+    {
+      "id": 806,
+      "name": "blacephalon",
+      "path": "assets/pixelmon/sounds/pixelmon/blacephalon.ogg",
+      "localPath": "806.ogg",
+      "bytes": 33458,
+      "decoded": true
+    },
+    {
+      "id": 807,
+      "name": "zeraora",
+      "path": "assets/pixelmon/sounds/pixelmon/zeraora.ogg",
+      "localPath": "807.ogg",
+      "bytes": 56159,
+      "decoded": true
+    },
+    {
+      "id": 808,
+      "name": "meltan",
+      "path": "assets/pixelmon/sounds/pixelmon/meltan.ogg",
+      "localPath": "808.ogg",
+      "bytes": 23436,
+      "decoded": true
+    },
+    {
+      "id": 809,
+      "name": "melmetal",
+      "path": "assets/pixelmon/sounds/pixelmon/melmetal.ogg",
+      "localPath": "809.ogg",
+      "bytes": 34423,
+      "decoded": true
+    },
+    {
+      "id": 810,
+      "name": "grookey",
+      "path": "assets/pixelmon/sounds/pixelmon/grookey.ogg",
+      "localPath": "810.ogg",
+      "bytes": 13620,
+      "preview": "810.wav",
+      "decoded": true
+    },
+    {
+      "id": 811,
+      "name": "thwackey",
+      "path": "assets/pixelmon/sounds/pixelmon/thwackey.ogg",
+      "localPath": "811.ogg",
+      "bytes": 21531,
+      "decoded": true
+    },
+    {
+      "id": 813,
+      "name": "scorbunny",
+      "path": "assets/pixelmon/sounds/pixelmon/scorbunny.ogg",
+      "localPath": "813.ogg",
+      "bytes": 20122,
+      "preview": "813.wav",
+      "decoded": true
+    },
+    {
+      "id": 814,
+      "name": "raboot",
+      "path": "assets/pixelmon/sounds/pixelmon/raboot.ogg",
+      "localPath": "814.ogg",
+      "bytes": 20860,
+      "decoded": true
+    },
+    {
+      "id": 816,
+      "name": "sobble",
+      "path": "assets/pixelmon/sounds/pixelmon/sobble.ogg",
+      "localPath": "816.ogg",
+      "bytes": 22570,
+      "decoded": true
+    },
+    {
+      "id": 817,
+      "name": "drizzile",
+      "path": "assets/pixelmon/sounds/pixelmon/drizzile.ogg",
+      "localPath": "817.ogg",
+      "bytes": 28847,
+      "decoded": true
+    },
+    {
+      "id": 818,
+      "name": "inteleon",
+      "path": "assets/pixelmon/sounds/pixelmon/inteleon.ogg",
+      "localPath": "818.ogg",
+      "bytes": 26591,
+      "decoded": true
+    },
+    {
+      "id": 821,
+      "name": "rookidee",
+      "path": "assets/pixelmon/sounds/pixelmon/rookidee.ogg",
+      "localPath": "821.ogg",
+      "bytes": 21295,
+      "decoded": true
+    },
+    {
+      "id": 822,
+      "name": "corvisquire",
+      "path": "assets/pixelmon/sounds/pixelmon/corvisquire.ogg",
+      "localPath": "822.ogg",
+      "bytes": 26571,
+      "decoded": true
+    },
+    {
+      "id": 823,
+      "name": "corviknight",
+      "path": "assets/pixelmon/sounds/pixelmon/corviknight.ogg",
+      "localPath": "823.ogg",
+      "bytes": 21090,
+      "decoded": true
+    },
+    {
+      "id": 824,
+      "name": "blipbug",
+      "path": "assets/pixelmon/sounds/pixelmon/blipbug.ogg",
+      "localPath": "824.ogg",
+      "bytes": 29386,
+      "decoded": true
+    },
+    {
+      "id": 830,
+      "name": "eldegoss",
+      "path": "assets/pixelmon/sounds/pixelmon/eldegoss.ogg",
+      "localPath": "830.ogg",
+      "bytes": 60472,
+      "decoded": true
+    },
+    {
+      "id": 831,
+      "name": "wooloo",
+      "path": "assets/pixelmon/sounds/pixelmon/wooloo.ogg",
+      "localPath": "831.ogg",
+      "bytes": 21041,
+      "preview": "831.wav",
+      "decoded": true
+    },
+    {
+      "id": 832,
+      "name": "dubwool",
+      "path": "assets/pixelmon/sounds/pixelmon/dubwool.ogg",
+      "localPath": "832.ogg",
+      "bytes": 27175,
+      "decoded": true
+    },
+    {
+      "id": 833,
+      "name": "chewtle",
+      "path": "assets/pixelmon/sounds/pixelmon/chewtle.ogg",
+      "localPath": "833.ogg",
+      "bytes": 14547,
+      "decoded": true
+    },
+    {
+      "id": 834,
+      "name": "drednaw",
+      "path": "assets/pixelmon/sounds/pixelmon/drednaw.ogg",
+      "localPath": "834.ogg",
+      "bytes": 24785,
+      "decoded": true
+    },
+    {
+      "id": 835,
+      "name": "yamper",
+      "path": "assets/pixelmon/sounds/pixelmon/yamper.ogg",
+      "localPath": "835.ogg",
+      "bytes": 27273,
+      "decoded": true
+    },
+    {
+      "id": 837,
+      "name": "rolycoly",
+      "path": "assets/pixelmon/sounds/pixelmon/rolycoly.ogg",
+      "localPath": "837.ogg",
+      "bytes": 13132,
+      "decoded": true
+    },
+    {
+      "id": 838,
+      "name": "carkol",
+      "path": "assets/pixelmon/sounds/pixelmon/carkol.ogg",
+      "localPath": "838.ogg",
+      "bytes": 20833,
+      "decoded": true
+    },
+    {
+      "id": 839,
+      "name": "coalossal",
+      "path": "assets/pixelmon/sounds/pixelmon/coalossal.ogg",
+      "localPath": "839.ogg",
+      "bytes": 35796,
+      "decoded": true
+    },
+    {
+      "id": 840,
+      "name": "applin",
+      "path": "assets/pixelmon/sounds/pixelmon/applin.ogg",
+      "localPath": "840.ogg",
+      "bytes": 16953,
+      "decoded": true
+    },
+    {
+      "id": 843,
+      "name": "silicobra",
+      "path": "assets/pixelmon/sounds/pixelmon/silicobra.ogg",
+      "localPath": "843.ogg",
+      "bytes": 26102,
+      "decoded": true
+    },
+    {
+      "id": 844,
+      "name": "sandaconda",
+      "path": "assets/pixelmon/sounds/pixelmon/sandaconda.ogg",
+      "localPath": "844.ogg",
+      "bytes": 38604,
+      "decoded": true
+    },
+    {
+      "id": 845,
+      "name": "cramorant",
+      "path": "assets/pixelmon/sounds/pixelmon/cramorant.ogg",
+      "localPath": "845.ogg",
+      "bytes": 12160,
+      "decoded": true
+    },
+    {
+      "id": 846,
+      "name": "arrokuda",
+      "path": "assets/pixelmon/sounds/pixelmon/arrokuda.ogg",
+      "localPath": "846.ogg",
+      "bytes": 25491,
+      "decoded": true
+    },
+    {
+      "id": 848,
+      "name": "toxel",
+      "path": "assets/pixelmon/sounds/pixelmon/toxel.ogg",
+      "localPath": "848.ogg",
+      "bytes": 22222,
+      "decoded": true
+    },
+    {
+      "id": 849,
+      "name": "toxtricity",
+      "path": "assets/pixelmon/sounds/pixelmon/toxtricity.ogg",
+      "localPath": "849.ogg",
+      "bytes": 26029,
+      "decoded": true
+    },
+    {
+      "id": 852,
+      "name": "clobbopus",
+      "path": "assets/pixelmon/sounds/pixelmon/clobbopus.ogg",
+      "localPath": "852.ogg",
+      "bytes": 17412,
+      "decoded": true
+    },
+    {
+      "id": 856,
+      "name": "hatenna",
+      "path": "assets/pixelmon/sounds/pixelmon/hatenna.ogg",
+      "localPath": "856.ogg",
+      "bytes": 15343,
+      "decoded": true
+    },
+    {
+      "id": 859,
+      "name": "impidimp",
+      "path": "assets/pixelmon/sounds/pixelmon/impidimp.ogg",
+      "localPath": "859.ogg",
+      "bytes": 30591,
+      "decoded": true
+    },
+    {
+      "id": 861,
+      "name": "grimmsnarl",
+      "path": "assets/pixelmon/sounds/pixelmon/grimmsnarl.ogg",
+      "localPath": "861.ogg",
+      "bytes": 30406,
+      "decoded": true
+    },
+    {
+      "id": 862,
+      "name": "obstagoon",
+      "path": "assets/pixelmon/sounds/pixelmon/obstagoon.ogg",
+      "localPath": "862.ogg",
+      "bytes": 25584,
+      "decoded": true
+    },
+    {
+      "id": 863,
+      "name": "perrserker",
+      "path": "assets/pixelmon/sounds/pixelmon/perrserker.ogg",
+      "localPath": "863.ogg",
+      "bytes": 22798,
+      "decoded": true
+    },
+    {
+      "id": 864,
+      "name": "cursola",
+      "path": "assets/pixelmon/sounds/pixelmon/cursola.ogg",
+      "localPath": "864.ogg",
+      "bytes": 21469,
+      "decoded": true
+    },
+    {
+      "id": 866,
+      "name": "mr-rime",
+      "path": "assets/pixelmon/sounds/pixelmon/mrrime.ogg",
+      "localPath": "866.ogg",
+      "bytes": 56017,
+      "decoded": true
+    },
+    {
+      "id": 867,
+      "name": "runerigus",
+      "path": "assets/pixelmon/sounds/pixelmon/runerigus.ogg",
+      "localPath": "867.ogg",
+      "bytes": 36379,
+      "decoded": true
+    },
+    {
+      "id": 868,
+      "name": "milcery",
+      "path": "assets/pixelmon/sounds/pixelmon/milcery.ogg",
+      "localPath": "868.ogg",
+      "bytes": 23618,
+      "decoded": true
+    },
+    {
+      "id": 869,
+      "name": "alcremie",
+      "path": "assets/pixelmon/sounds/pixelmon/alcremie.ogg",
+      "localPath": "869.ogg",
+      "bytes": 32367,
+      "decoded": true
+    },
+    {
+      "id": 870,
+      "name": "falinks",
+      "path": "assets/pixelmon/sounds/pixelmon/falinks.ogg",
+      "localPath": "870.ogg",
+      "bytes": 17845,
+      "decoded": true
+    },
+    {
+      "id": 871,
+      "name": "pincurchin",
+      "path": "assets/pixelmon/sounds/pixelmon/pincurchin.ogg",
+      "localPath": "871.ogg",
+      "bytes": 49010,
+      "decoded": true
+    },
+    {
+      "id": 872,
+      "name": "snom",
+      "path": "assets/pixelmon/sounds/pixelmon/snom.ogg",
+      "localPath": "872.ogg",
+      "bytes": 21120,
+      "decoded": true
+    },
+    {
+      "id": 873,
+      "name": "frosmoth",
+      "path": "assets/pixelmon/sounds/pixelmon/frosmoth.ogg",
+      "localPath": "873.ogg",
+      "bytes": 24903,
+      "decoded": true
+    },
+    {
+      "id": 874,
+      "name": "stonjourner",
+      "path": "assets/pixelmon/sounds/pixelmon/stonjourner.ogg",
+      "localPath": "874.ogg",
+      "bytes": 32144,
+      "decoded": true
+    },
+    {
+      "id": 875,
+      "name": "eiscue",
+      "path": "assets/pixelmon/sounds/pixelmon/eiscue.ogg",
+      "localPath": "875.ogg",
+      "bytes": 20206,
+      "decoded": true
+    },
+    {
+      "id": 876,
+      "name": "indeedee",
+      "path": "assets/pixelmon/sounds/pixelmon/indeedee.ogg",
+      "localPath": "876.ogg",
+      "bytes": 18024,
+      "decoded": true
+    },
+    {
+      "id": 877,
+      "name": "morpeko",
+      "path": "assets/pixelmon/sounds/pixelmon/morpeko.ogg",
+      "localPath": "877.ogg",
+      "bytes": 25260,
+      "decoded": true
+    },
+    {
+      "id": 878,
+      "name": "cufant",
+      "path": "assets/pixelmon/sounds/pixelmon/cufant.ogg",
+      "localPath": "878.ogg",
+      "bytes": 17534,
+      "decoded": true
+    },
+    {
+      "id": 880,
+      "name": "dracozolt",
+      "path": "assets/pixelmon/sounds/pixelmon/dracozolt.ogg",
+      "localPath": "880.ogg",
+      "bytes": 23982,
+      "decoded": true
+    },
+    {
+      "id": 882,
+      "name": "dracovish",
+      "path": "assets/pixelmon/sounds/pixelmon/dracovish.ogg",
+      "localPath": "882.ogg",
+      "bytes": 34727,
+      "decoded": true
+    },
+    {
+      "id": 883,
+      "name": "arctovish",
+      "path": "assets/pixelmon/sounds/pixelmon/arctovish.ogg",
+      "localPath": "883.ogg",
+      "bytes": 22773,
+      "decoded": true
+    },
+    {
+      "id": 884,
+      "name": "duraludon",
+      "path": "assets/pixelmon/sounds/pixelmon/duraludon.ogg",
+      "localPath": "884.ogg",
+      "bytes": 33742,
+      "decoded": true
+    },
+    {
+      "id": 885,
+      "name": "dreepy",
+      "path": "assets/pixelmon/sounds/pixelmon/dreepy.ogg",
+      "localPath": "885.ogg",
+      "bytes": 30954,
+      "decoded": true
+    },
+    {
+      "id": 886,
+      "name": "drakloak",
+      "path": "assets/pixelmon/sounds/pixelmon/drakloak.ogg",
+      "localPath": "886.ogg",
+      "bytes": 37450,
+      "decoded": true
+    },
+    {
+      "id": 887,
+      "name": "dragapult",
+      "path": "assets/pixelmon/sounds/pixelmon/dragapult.ogg",
+      "localPath": "887.ogg",
+      "bytes": 28266,
+      "decoded": true
+    },
+    {
+      "id": 888,
+      "name": "zacian",
+      "path": "assets/pixelmon/sounds/pixelmon/zacian.ogg",
+      "localPath": "888.ogg",
+      "bytes": 47972,
+      "decoded": true
+    },
+    {
+      "id": 890,
+      "name": "eternatus",
+      "path": "assets/pixelmon/sounds/pixelmon/eternatus.ogg",
+      "localPath": "890.ogg",
+      "bytes": 75726,
+      "decoded": true
+    },
+    {
+      "id": 895,
+      "name": "regidrago",
+      "path": "assets/pixelmon/sounds/pixelmon/regidrago.ogg",
+      "localPath": "895.ogg",
+      "bytes": 38440,
+      "decoded": true
+    },
+    {
+      "id": 896,
+      "name": "glastrier",
+      "path": "assets/pixelmon/sounds/pixelmon/glastrier.ogg",
+      "localPath": "896.ogg",
+      "bytes": 33421,
+      "decoded": true
+    },
+    {
+      "id": 898,
+      "name": "calyrex",
+      "path": "assets/pixelmon/sounds/pixelmon/calyrex.ogg",
+      "localPath": "898.ogg",
+      "bytes": 23897,
+      "decoded": true
+    },
+    {
+      "id": 901,
+      "name": "ursaluna",
+      "path": "assets/pixelmon/sounds/pixelmon/ursaluna.ogg",
+      "localPath": "901.ogg",
+      "bytes": 16499,
+      "decoded": true
+    },
+    {
+      "id": 902,
+      "name": "basculegion",
+      "path": "assets/pixelmon/sounds/pixelmon/basculegion-male.ogg",
+      "localPath": "902.ogg",
+      "bytes": 17277,
+      "decoded": true
+    },
+    {
+      "id": 904,
+      "name": "overqwil",
+      "path": "assets/pixelmon/sounds/pixelmon/overqwil.ogg",
+      "localPath": "904.ogg",
+      "bytes": 33330,
+      "decoded": true
+    },
+    {
+      "id": 924,
+      "name": "tandemaus",
+      "path": "assets/pixelmon/sounds/pixelmon/tandemaus.ogg",
+      "localPath": "924.ogg",
+      "bytes": 29090,
+      "decoded": true
+    },
+    {
+      "id": 925,
+      "name": "maushold",
+      "path": "assets/pixelmon/sounds/pixelmon/maushold.ogg",
+      "localPath": "925.ogg",
+      "bytes": 27986,
+      "decoded": true
+    },
+    {
+      "id": 932,
+      "name": "nacli",
+      "path": "assets/pixelmon/sounds/pixelmon/nacli.ogg",
+      "localPath": "932.ogg",
+      "bytes": 25987,
+      "decoded": true
+    },
+    {
+      "id": 938,
+      "name": "tadbulb",
+      "path": "assets/pixelmon/sounds/pixelmon/tadbulb.ogg",
+      "localPath": "938.ogg",
+      "bytes": 18403,
+      "decoded": true
+    },
+    {
+      "id": 969,
+      "name": "glimmet",
+      "path": "assets/pixelmon/sounds/pixelmon/glimmet.ogg",
+      "localPath": "969.ogg",
+      "bytes": 23264,
+      "decoded": true
+    },
+    {
+      "id": 978,
+      "name": "tatsugiri",
+      "path": "assets/pixelmon/sounds/pixelmon/tatsugiri.ogg",
+      "localPath": "978.ogg",
+      "bytes": 12435,
+      "decoded": true
+    },
+    {
+      "id": 980,
+      "name": "clodsire",
+      "path": "assets/pixelmon/sounds/pixelmon/clodsire.ogg",
+      "localPath": "980.ogg",
+      "bytes": 50623,
+      "decoded": true
+    },
+    {
+      "id": 984,
+      "name": "great-tusk",
+      "path": "assets/pixelmon/sounds/pixelmon/greattusk.ogg",
+      "localPath": "984.ogg",
+      "bytes": 31698,
+      "decoded": true
+    },
+    {
+      "id": 987,
+      "name": "flutter-mane",
+      "path": "assets/pixelmon/sounds/pixelmon/fluttermane.ogg",
+      "localPath": "987.ogg",
+      "bytes": 27115,
+      "decoded": true
+    },
+    {
+      "id": 992,
+      "name": "iron-hands",
+      "path": "assets/pixelmon/sounds/pixelmon/ironhands.ogg",
+      "localPath": "992.ogg",
+      "bytes": 35423,
+      "decoded": true
+    },
+    {
+      "id": 994,
+      "name": "iron-moth",
+      "path": "assets/pixelmon/sounds/pixelmon/ironmoth.ogg",
+      "localPath": "994.ogg",
+      "bytes": 42550,
+      "decoded": true
+    },
+    {
+      "id": 995,
+      "name": "iron-thorns",
+      "path": "assets/pixelmon/sounds/pixelmon/ironthorns.ogg",
+      "localPath": "995.ogg",
+      "bytes": 27958,
+      "decoded": true
+    },
+    {
+      "id": 996,
+      "name": "frigibax",
+      "path": "assets/pixelmon/sounds/pixelmon/frigibax.ogg",
+      "localPath": "996.ogg",
+      "bytes": 21954,
+      "decoded": true
+    },
+    {
+      "id": 997,
+      "name": "arctibax",
+      "path": "assets/pixelmon/sounds/pixelmon/arctibax.ogg",
+      "localPath": "997.ogg",
+      "bytes": 23111,
+      "decoded": true
+    },
+    {
+      "id": 999,
+      "name": "gimmighoul",
+      "path": "assets/pixelmon/sounds/pixelmon/gimmighoul.ogg",
+      "localPath": "999.ogg",
+      "bytes": 47099,
+      "decoded": true
+    },
+    {
+      "id": 1000,
+      "name": "gholdengo",
+      "path": "assets/pixelmon/sounds/pixelmon/gholdengo.ogg",
+      "localPath": "1000.ogg",
+      "bytes": 29866,
+      "preview": "1000.wav",
+      "decoded": true
+    },
+    {
+      "id": 1001,
+      "name": "wo-chien",
+      "path": "assets/pixelmon/sounds/pixelmon/wo-chien.ogg",
+      "localPath": "1001.ogg",
+      "bytes": 52881,
+      "decoded": true
+    },
+    {
+      "id": 1002,
+      "name": "chien-pao",
+      "path": "assets/pixelmon/sounds/pixelmon/chienpao.ogg",
+      "localPath": "1002.ogg",
+      "bytes": 51505,
+      "decoded": true
+    },
+    {
+      "id": 1003,
+      "name": "ting-lu",
+      "path": "assets/pixelmon/sounds/pixelmon/tinglu.ogg",
+      "localPath": "1003.ogg",
+      "bytes": 32486,
+      "decoded": true
+    },
+    {
+      "id": 1004,
+      "name": "chi-yu",
+      "path": "assets/pixelmon/sounds/pixelmon/chi-yu.ogg",
+      "localPath": "1004.ogg",
+      "bytes": 39933,
+      "decoded": true
+    },
+    {
+      "id": 1008,
+      "name": "miraidon",
+      "path": "assets/pixelmon/sounds/pixelmon/miraidon.ogg",
+      "localPath": "1008.ogg",
+      "bytes": 33037,
+      "decoded": true
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "combinations": 28,
+  "assets": 10,
+  "allOutputsTrueAlpha": true,
+  "checks": [
+    {
+      "dresser": "d1",
+      "bed": "none",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d1",
+      "bed": "bed-pillow-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d1",
+      "bed": "bed-pillow-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d1",
+      "bed": "bed-basket-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d1",
+      "bed": "bed-basket-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d1",
+      "bed": "bed-nest-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d1",
+      "bed": "bed-nest-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d2",
+      "bed": "none",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d2",
+      "bed": "bed-pillow-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d2",
+      "bed": "bed-pillow-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d2",
+      "bed": "bed-basket-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d2",
+      "bed": "bed-basket-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d2",
+      "bed": "bed-nest-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d2",
+      "bed": "bed-nest-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d3",
+      "bed": "none",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d3",
+      "bed": "bed-pillow-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d3",
+      "bed": "bed-pillow-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d3",
+      "bed": "bed-basket-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d3",
+      "bed": "bed-basket-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d3",
+      "bed": "bed-nest-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d3",
+      "bed": "bed-nest-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d4",
+      "bed": "none",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d4",
+      "bed": "bed-pillow-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d4",
+      "bed": "bed-pillow-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d4",
+      "bed": "bed-basket-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d4",
+      "bed": "bed-basket-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d4",
+      "bed": "bed-nest-cream",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    },
+    {
+      "dresser": "d4",
+      "bed": "bed-nest-sage",
+      "outsideZoneUnchanged": true,
+      "cabinetReserveUnchanged": true,
+      "petReserveUnchanged": true
+    }
+  ],
+  "petSource": "pilot-zones/eevee-reference.png; original BW frame",
+  "limits": [
+    "One static original pet frame only; no WPF execution.",
+    "Artistic verification is separate from numeric assertions."
+  ]
+}

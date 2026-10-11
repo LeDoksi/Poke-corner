@@ -1,0 +1,181 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "table-t1",
+      "name": "Круглый",
+      "displayWidth": 102.21,
+      "category": "tables",
+      "row": 0,
+      "col": 0,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "file": "furniture/assets/table-t1.png",
+      "size": [
+        464,
+        380
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "alphaBoundsInCell": [
+        114,
+        189,
+        562,
+        553
+      ],
+      "cropInCell": [
+        106,
+        181,
+        570,
+        561
+      ],
+      "sha256": "abde52b98712198d03b2d4dfc29205b1eff2daf1568b1e6f405f9b043eb01a9d",
+      "source": "furniture/_sources/tables-atlas-v1.png",
+      "promptFile": "furniture/_sources/tables-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "table-t2",
+      "name": "С ящиком",
+      "displayWidth": 113.95,
+      "category": "tables",
+      "row": 0,
+      "col": 1,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "file": "furniture/assets/table-t2.png",
+      "size": [
+        534,
+        429
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "alphaBoundsInCell": [
+        74,
+        153,
+        592,
+        566
+      ],
+      "cropInCell": [
+        66,
+        145,
+        600,
+        574
+      ],
+      "sha256": "abd667b0678e70dd967f3d1929d3f9af7e8b5d282824cf3b02e5fd5abe4a0ed9",
+      "source": "furniture/_sources/tables-atlas-v1.png",
+      "promptFile": "furniture/_sources/tables-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "table-t3",
+      "name": "Сундук",
+      "displayWidth": 145.028,
+      "category": "tables",
+      "row": 1,
+      "col": 0,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        0,
+        627,
+        646,
+        1254
+      ],
+      "file": "furniture/assets/table-t3.png",
+      "size": [
+        621,
+        348
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        33,
+        145,
+        641,
+        477
+      ],
+      "cropInCell": [
+        25,
+        137,
+        646,
+        485
+      ],
+      "sha256": "8888464409d96ba841452f4292c01a8ed7b1434550598897ff299e2fcb25fcd2",
+      "source": "furniture/_sources/tables-atlas-v1.png",
+      "promptFile": "furniture/_sources/tables-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "table-t4",
+      "name": "Овальный",
+      "displayWidth": 155.387,
+      "category": "tables",
+      "row": 1,
+      "col": 1,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        646,
+        627,
+        1254,
+        1254
+      ],
+      "file": "furniture/assets/table-t4.png",
+      "size": [
+        585,
+        323
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        14,
+        170,
+        583,
+        477
+      ],
+      "cropInCell": [
+        6,
+        162,
+        591,
+        485
+      ],
+      "sha256": "8a596c27195298c78dce5e7a309d0c01edbd89a4f1530d06c590b81b1e6442f4",
+      "source": "furniture/_sources/tables-atlas-v1.png",
+      "promptFile": "furniture/_sources/tables-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    }
+  ]
+}

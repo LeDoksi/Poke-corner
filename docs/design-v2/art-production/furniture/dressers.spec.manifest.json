@@ -1,0 +1,181 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "dresser-d1",
+      "name": "Классический",
+      "category": "dressers",
+      "row": 0,
+      "col": 0,
+      "displayWidth": 164.365,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        0,
+        0,
+        684,
+        575
+      ],
+      "file": "furniture/assets/dresser-d1.png",
+      "size": [
+        567,
+        456
+      ],
+      "atlasSize": [
+        1367,
+        1150
+      ],
+      "alphaBoundsInCell": [
+        58,
+        91,
+        609,
+        531
+      ],
+      "cropInCell": [
+        50,
+        83,
+        617,
+        539
+      ],
+      "sha256": "d393a89cb9c195b3feafc6e4f0aefd5c97a19ccc3efffb8f40896beacc43d119",
+      "source": "furniture/_sources/dressers-atlas-v3.png",
+      "promptFile": "furniture/_sources/dressers-fresh-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "dresser-d2",
+      "name": "Низкий",
+      "category": "dressers",
+      "row": 0,
+      "col": 1,
+      "displayWidth": 213.398,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        684,
+        0,
+        1367,
+        575
+      ],
+      "file": "furniture/assets/dresser-d2.png",
+      "size": [
+        610,
+        364
+      ],
+      "atlasSize": [
+        1367,
+        1150
+      ],
+      "alphaBoundsInCell": [
+        23,
+        183,
+        617,
+        531
+      ],
+      "cropInCell": [
+        15,
+        175,
+        625,
+        539
+      ],
+      "sha256": "89555c1911ca8c21f2f0f91243dca0f52d72427adb78727ed5cca1dc70a2a63d",
+      "source": "furniture/_sources/dressers-atlas-v3.png",
+      "promptFile": "furniture/_sources/dressers-fresh-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "dresser-d3",
+      "name": "Узкий",
+      "category": "dressers",
+      "row": 1,
+      "col": 0,
+      "displayWidth": 95.304,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        0,
+        575,
+        550,
+        1150
+      ],
+      "file": "furniture/assets/dresser-d3.png",
+      "size": [
+        326,
+        488
+      ],
+      "atlasSize": [
+        1367,
+        1150
+      ],
+      "alphaBoundsInCell": [
+        181,
+        20,
+        491,
+        492
+      ],
+      "cropInCell": [
+        173,
+        12,
+        499,
+        500
+      ],
+      "sha256": "42946dd5f9e0595f190ff938c002b46483179f3dc7c686d380171ad1801cacee",
+      "source": "furniture/_sources/dressers-atlas-v3.png",
+      "promptFile": "furniture/_sources/dressers-fresh-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "dresser-d4",
+      "name": "Раздвижной",
+      "category": "dressers",
+      "row": 1,
+      "col": 1,
+      "displayWidth": 215.47,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        550,
+        575,
+        1367,
+        1150
+      ],
+      "file": "furniture/assets/dresser-d4.png",
+      "size": [
+        773,
+        391
+      ],
+      "atlasSize": [
+        1367,
+        1150
+      ],
+      "alphaBoundsInCell": [
+        32,
+        124,
+        789,
+        499
+      ],
+      "cropInCell": [
+        24,
+        116,
+        797,
+        507
+      ],
+      "sha256": "7cc644e3bf7a4fcdba4d36a728cf06671f04e072308af4b6e5a4d266e6dfdab9",
+      "source": "furniture/_sources/dressers-atlas-v3.png",
+      "promptFile": "furniture/_sources/dressers-fresh-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    }
+  ]
+}

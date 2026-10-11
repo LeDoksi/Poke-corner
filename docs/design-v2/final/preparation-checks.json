@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "species": 1025,
+  "normal": 868,
+  "usableShiny": 859,
+  "voices": 868,
+  "audioEffects": 1,
+  "artPng": 114,
+  "shopPng": 12,
+  "tasks": 20,
+  "dependencyGraphAcyclic": true,
+  "runtimeFiles": 2739,
+  "runtimeBytes": 255731272,
+  "allOperationalPathsInAllowlist": true,
+  "runtimeManifestSha256": "dc76a960bc1896c53662c7ebf26755a95e86414bf1163a81a041bc4a59da557a",
+  "scope": "Prepared files and local task registry; live board verified separately. Not WPF migration/release acceptance."
+}

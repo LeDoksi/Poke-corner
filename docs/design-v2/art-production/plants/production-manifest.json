@@ -1,0 +1,816 @@
+{
+  "produce": [
+    {
+      "id": "plant-ficus-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-floor-01.png",
+      "output_path": "plants/assets/plant-ficus-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. These are FLOOR PLANTS about 100 to 120cm high, substantial large pots, foliage towering over pot, whole tall or broad silhouette fits quadrant. Top-left: floor ficus with slim woody trunk and branching canopy of glossy broad oval green leaves, large terracotta pot. Top-right: identical ficus cream woven large basket. Bottom-left: floor monstera with several big split perforated glossy leaves on sturdy stems, broad canopy, large terracotta. Bottom-right: identical monstera cream woven large basket. Keep ficus upright and monstera spreading; reproduce monstera visual role of approved room.\n",
+      "dimensions": [
+        420,
+        580
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        10,
+        410,
+        571
+      ],
+      "displayWidth": 87,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.54881,
+        0.984483
+      ],
+      "anchorPixels": [
+        230.5,
+        571
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-ficus-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-floor-01.png",
+      "output_path": "plants/assets/plant-ficus-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. These are FLOOR PLANTS about 100 to 120cm high, substantial large pots, foliage towering over pot, whole tall or broad silhouette fits quadrant. Top-left: floor ficus with slim woody trunk and branching canopy of glossy broad oval green leaves, large terracotta pot. Top-right: identical ficus cream woven large basket. Bottom-left: floor monstera with several big split perforated glossy leaves on sturdy stems, broad canopy, large terracotta. Bottom-right: identical monstera cream woven large basket. Keep ficus upright and monstera spreading; reproduce monstera visual role of approved room.\n",
+      "dimensions": [
+        418,
+        583
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        8,
+        11,
+        409,
+        574
+      ],
+      "displayWidth": 87,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.541866,
+        0.984563
+      ],
+      "anchorPixels": [
+        226.5,
+        574
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-monstera-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved far-left FLOOR Monstera style and scale authority)",
+      "source_atlas": "plants/_sources/plants-monstera-tall-v2.png",
+      "output_path": "plants/assets/plant-monstera-terracotta.png",
+      "strategy": "Standalone regeneration of tall narrow floor Monstera, shared alpha slicing; no stretching or repainting",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW reusable transparent pixel-art sprite atlas containing exactly TWO matching TALL NARROW FLOOR MONSTERA plants, side by side, one terracotta pot variant LEFT and one cream woven basket variant RIGHT. Reference image is the APPROVED PokeCorner room: use its far-left floor Monstera as authority for height, plant habit, camera, square-pixel clusters, warm upper-left golden light and dark warm brown selective outlines. Never copy/crop room pixels. Entire silhouette of each plant including every leaf tip and pot bottom is visible, isolated with at least70px transparent margins and generous transparent gap between plants. No background/wall/floor/ground/shadow/props/labels/text/grid. True alpha transparency outside subject and leaf gaps. Critical dimensions: this is a 120cm TALL floor plant with 60cm NARROW canopy. Each whole plant silhouette must be about150logicalpixels WIDE and270logicalpixels HIGH: height/width approximately1.8. Staggered distinct split/fenestrated Monstera leaves at several heights on long upright slender green stems, high top leaf above lower leaves; canopy rises vertically like the approved floor plant beside the chair. Clearly defined glossy sage/forest green leaves with varied sizes, holes and split lobes, silhouette stays NARROW. NOT a low broad bush, NOT a compact rosette, NOT a fan-shaped shrub, NOT a palm/ficus. Several upright stems are visible between lower and upper leaves. Do not add wooden support stakes. Lower leaves do not sprawl horizontally; every leaf stays inside narrow upright silhouette. Large but proportionate pot: pot width around45percent of canopy width, pot height around20percent of total plant height. Both variants have identical foliage silhouette, height and room-facing mostly frontal camera with small visible pot top; only pot style changes. LEFT simple warm orange terracotta clay pot; RIGHT pale cream woven basket planter with defined chunky weave. Use crisp clearly visible rectangular pixel clusters matching approved cozy game room, strong leaf midribs and subtle highlights, NO photorealistic noise/fine grain/vector art/blur. Request native atlas at least1536x1024, each plant at least400x720 productionpixels if supported. Preserve actual aspect without stretching. These are tall room floor plants that should read as at least armchair-back height when uniformly fitted to150x270 room bounds.\n",
+      "dimensions": [
+        511,
+        958
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Measured height/width 1.91 rather than nominal 1.8; uniform270px height yields141.2px width, fitting150x270 target and165x285 maximum."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "Tall upright habit, matching pot variants, complete silhouette and white alpha plate comparison passed; assembled-room rerender pending.",
+      "alphaBounds128": [
+        10,
+        9,
+        502,
+        950
+      ],
+      "displayWidth": 101.257332,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.495108,
+        0.991649
+      ],
+      "anchorPixels": [
+        253.0,
+        950
+      ],
+      "footAnchor": [
+        0.495108,
+        0.991649
+      ],
+      "heightWidthRatio": 1.912602,
+      "logicalOpaqueDrawWh": [
+        141.169,
+        270
+      ],
+      "logicalTargetWh": [
+        150,
+        270
+      ],
+      "maxOpaqueDrawWh": [
+        165,
+        285
+      ],
+      "placement_qa": "pending parent repaired assembled-room rerender"
+    },
+    {
+      "id": "plant-monstera-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved far-left FLOOR Monstera style and scale authority)",
+      "source_atlas": "plants/_sources/plants-monstera-tall-v2.png",
+      "output_path": "plants/assets/plant-monstera-woven-cream.png",
+      "strategy": "Standalone regeneration of tall narrow floor Monstera, shared alpha slicing; no stretching or repainting",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW reusable transparent pixel-art sprite atlas containing exactly TWO matching TALL NARROW FLOOR MONSTERA plants, side by side, one terracotta pot variant LEFT and one cream woven basket variant RIGHT. Reference image is the APPROVED PokeCorner room: use its far-left floor Monstera as authority for height, plant habit, camera, square-pixel clusters, warm upper-left golden light and dark warm brown selective outlines. Never copy/crop room pixels. Entire silhouette of each plant including every leaf tip and pot bottom is visible, isolated with at least70px transparent margins and generous transparent gap between plants. No background/wall/floor/ground/shadow/props/labels/text/grid. True alpha transparency outside subject and leaf gaps. Critical dimensions: this is a 120cm TALL floor plant with 60cm NARROW canopy. Each whole plant silhouette must be about150logicalpixels WIDE and270logicalpixels HIGH: height/width approximately1.8. Staggered distinct split/fenestrated Monstera leaves at several heights on long upright slender green stems, high top leaf above lower leaves; canopy rises vertically like the approved floor plant beside the chair. Clearly defined glossy sage/forest green leaves with varied sizes, holes and split lobes, silhouette stays NARROW. NOT a low broad bush, NOT a compact rosette, NOT a fan-shaped shrub, NOT a palm/ficus. Several upright stems are visible between lower and upper leaves. Do not add wooden support stakes. Lower leaves do not sprawl horizontally; every leaf stays inside narrow upright silhouette. Large but proportionate pot: pot width around45percent of canopy width, pot height around20percent of total plant height. Both variants have identical foliage silhouette, height and room-facing mostly frontal camera with small visible pot top; only pot style changes. LEFT simple warm orange terracotta clay pot; RIGHT pale cream woven basket planter with defined chunky weave. Use crisp clearly visible rectangular pixel clusters matching approved cozy game room, strong leaf midribs and subtle highlights, NO photorealistic noise/fine grain/vector art/blur. Request native atlas at least1536x1024, each plant at least400x720 productionpixels if supported. Preserve actual aspect without stretching. These are tall room floor plants that should read as at least armchair-back height when uniformly fitted to150x270 room bounds.\n",
+      "dimensions": [
+        510,
+        959
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Measured height/width 1.91 rather than nominal 1.8; uniform270px height yields141.2px width, fitting150x270 target and165x285 maximum."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "Tall upright habit, matching pot variants, complete silhouette and white alpha plate comparison passed; assembled-room rerender pending.",
+      "alphaBounds128": [
+        10,
+        9,
+        502,
+        950
+      ],
+      "displayWidth": 101.059176,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.488235,
+        0.990615
+      ],
+      "anchorPixels": [
+        249.0,
+        950
+      ],
+      "footAnchor": [
+        0.488235,
+        0.990615
+      ],
+      "heightWidthRatio": 1.912602,
+      "logicalOpaqueDrawWh": [
+        141.169,
+        270
+      ],
+      "logicalTargetWh": [
+        150,
+        270
+      ],
+      "maxOpaqueDrawWh": [
+        165,
+        285
+      ],
+      "placement_qa": "pending parent repaired assembled-room rerender"
+    },
+    {
+      "id": "plant-palm-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-floor-02.png",
+      "output_path": "plants/assets/plant-palm-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. These are FLOOR PLANTS about 120cm high with substantial pots, foliage height around four times pot height. No tiny table palm. Top-left: graceful tall indoor palm with multiple thin trunks and arching segmented fronds, large terracotta pot. Top-right: identical palm cream woven large basket. Bottom-left: upright tall dracaena with slim woody canes and several clusters of long narrow pointed striped sage green leaves, large terracotta pot. Bottom-right: identical dracaena cream woven large basket. Fully include all tips and pot bottoms.\n",
+      "dimensions": [
+        518,
+        559
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        10,
+        508,
+        550
+      ],
+      "displayWidth": 101,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.480695,
+        0.9839
+      ],
+      "anchorPixels": [
+        249.0,
+        550
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-palm-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-floor-02.png",
+      "output_path": "plants/assets/plant-palm-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. These are FLOOR PLANTS about 120cm high with substantial pots, foliage height around four times pot height. No tiny table palm. Top-left: graceful tall indoor palm with multiple thin trunks and arching segmented fronds, large terracotta pot. Top-right: identical palm cream woven large basket. Bottom-left: upright tall dracaena with slim woody canes and several clusters of long narrow pointed striped sage green leaves, large terracotta pot. Bottom-right: identical dracaena cream woven large basket. Fully include all tips and pot bottoms.\n",
+      "dimensions": [
+        520,
+        563
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        11,
+        10,
+        510,
+        553
+      ],
+      "displayWidth": 101,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.488462,
+        0.982238
+      ],
+      "anchorPixels": [
+        254.0,
+        553
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-dracaena-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-floor-02.png",
+      "output_path": "plants/assets/plant-dracaena-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. These are FLOOR PLANTS about 120cm high with substantial pots, foliage height around four times pot height. No tiny table palm. Top-left: graceful tall indoor palm with multiple thin trunks and arching segmented fronds, large terracotta pot. Top-right: identical palm cream woven large basket. Bottom-left: upright tall dracaena with slim woody canes and several clusters of long narrow pointed striped sage green leaves, large terracotta pot. Bottom-right: identical dracaena cream woven large basket. Fully include all tips and pot bottoms.\n",
+      "dimensions": [
+        465,
+        628
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        6,
+        456,
+        618
+      ],
+      "displayWidth": 78,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.498925,
+        0.984076
+      ],
+      "anchorPixels": [
+        232.0,
+        618
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-dracaena-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-floor-02.png",
+      "output_path": "plants/assets/plant-dracaena-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. These are FLOOR PLANTS about 120cm high with substantial pots, foliage height around four times pot height. No tiny table palm. Top-left: graceful tall indoor palm with multiple thin trunks and arching segmented fronds, large terracotta pot. Top-right: identical palm cream woven large basket. Bottom-left: upright tall dracaena with slim woody canes and several clusters of long narrow pointed striped sage green leaves, large terracotta pot. Bottom-right: identical dracaena cream woven large basket. Fully include all tips and pot bottoms.\n",
+      "dimensions": [
+        473,
+        632
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        8,
+        462,
+        621
+      ],
+      "displayWidth": 78,
+      "slots": [
+        "floor-left"
+      ],
+      "anchor": [
+        0.493658,
+        0.982595
+      ],
+      "anchorPixels": [
+        233.5,
+        621
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-cactus-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-01.png",
+      "output_path": "plants/assets/plant-cactus-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: modest small branching cactus in terracotta pot. Top-right: same cactus in cream woven basket. Bottom-left: small low succulent rosette with thick clustered green leaves in terracotta. Bottom-right: same succulent in cream woven basket. Both species are small tabletop plants about 25 to 30 cm high, NOT floor plants, cactus slightly taller than succulent. Fully include every object.\n",
+      "dimensions": [
+        367,
+        464
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        358,
+        462
+      ],
+      "displayWidth": 39,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.474114,
+        0.99569
+      ],
+      "anchorPixels": [
+        174.0,
+        462
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-cactus-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-01.png",
+      "output_path": "plants/assets/plant-cactus-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: modest small branching cactus in terracotta pot. Top-right: same cactus in cream woven basket. Bottom-left: small low succulent rosette with thick clustered green leaves in terracotta. Bottom-right: same succulent in cream woven basket. Both species are small tabletop plants about 25 to 30 cm high, NOT floor plants, cactus slightly taller than succulent. Fully include every object.\n",
+      "dimensions": [
+        379,
+        464
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        370,
+        463
+      ],
+      "displayWidth": 39,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.485488,
+        0.997845
+      ],
+      "anchorPixels": [
+        184.0,
+        463
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-succulent-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-01.png",
+      "output_path": "plants/assets/plant-succulent-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: modest small branching cactus in terracotta pot. Top-right: same cactus in cream woven basket. Bottom-left: small low succulent rosette with thick clustered green leaves in terracotta. Bottom-right: same succulent in cream woven basket. Both species are small tabletop plants about 25 to 30 cm high, NOT floor plants, cactus slightly taller than succulent. Fully include every object.\n",
+      "dimensions": [
+        339,
+        410
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        330,
+        401
+      ],
+      "displayWidth": 37,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.495575,
+        0.978049
+      ],
+      "anchorPixels": [
+        168.0,
+        401
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-succulent-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-01.png",
+      "output_path": "plants/assets/plant-succulent-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: modest small branching cactus in terracotta pot. Top-right: same cactus in cream woven basket. Bottom-left: small low succulent rosette with thick clustered green leaves in terracotta. Bottom-right: same succulent in cream woven basket. Both species are small tabletop plants about 25 to 30 cm high, NOT floor plants, cactus slightly taller than succulent. Fully include every object.\n",
+      "dimensions": [
+        349,
+        411
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        338,
+        403
+      ],
+      "displayWidth": 37,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.487106,
+        0.980535
+      ],
+      "anchorPixels": [
+        170.0,
+        403
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-fern-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-02.png",
+      "output_path": "plants/assets/plant-fern-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small dense fern with curving finely segmented fronds in terracotta. Top-right: same fern in cream woven basket. Bottom-left: compact miniature orchid, two slim stems with several soft dusty pink flowers and broad basal leaves, terracotta pot. Bottom-right: same compact orchid in cream woven basket. Small surface plants: fern 35cm tall; orchid only 40cm, delicate bloom stems not giant or floor plant; fern spreads wider than orchid.\n",
+      "dimensions": [
+        593,
+        470
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        8,
+        9,
+        584,
+        461
+      ],
+      "displayWidth": 53,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.487352,
+        0.980851
+      ],
+      "anchorPixels": [
+        289.0,
+        461
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-fern-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-02.png",
+      "output_path": "plants/assets/plant-fern-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small dense fern with curving finely segmented fronds in terracotta. Top-right: same fern in cream woven basket. Bottom-left: compact miniature orchid, two slim stems with several soft dusty pink flowers and broad basal leaves, terracotta pot. Bottom-right: same compact orchid in cream woven basket. Small surface plants: fern 35cm tall; orchid only 40cm, delicate bloom stems not giant or floor plant; fern spreads wider than orchid.\n",
+      "dimensions": [
+        594,
+        473
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        8,
+        9,
+        584,
+        464
+      ],
+      "displayWidth": 53,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.492424,
+        0.980973
+      ],
+      "anchorPixels": [
+        292.5,
+        464
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-orchid-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-02.png",
+      "output_path": "plants/assets/plant-orchid-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small dense fern with curving finely segmented fronds in terracotta. Top-right: same fern in cream woven basket. Bottom-left: compact miniature orchid, two slim stems with several soft dusty pink flowers and broad basal leaves, terracotta pot. Bottom-right: same compact orchid in cream woven basket. Small surface plants: fern 35cm tall; orchid only 40cm, delicate bloom stems not giant or floor plant; fern spreads wider than orchid.\n",
+      "dimensions": [
+        432,
+        464
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        8,
+        423,
+        455
+      ],
+      "displayWidth": 35,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.534722,
+        0.980603
+      ],
+      "anchorPixels": [
+        231.0,
+        455
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-orchid-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-02.png",
+      "output_path": "plants/assets/plant-orchid-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small dense fern with curving finely segmented fronds in terracotta. Top-right: same fern in cream woven basket. Bottom-left: compact miniature orchid, two slim stems with several soft dusty pink flowers and broad basal leaves, terracotta pot. Bottom-right: same compact orchid in cream woven basket. Small surface plants: fern 35cm tall; orchid only 40cm, delicate bloom stems not giant or floor plant; fern spreads wider than orchid.\n",
+      "dimensions": [
+        418,
+        463
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        8,
+        408,
+        454
+      ],
+      "displayWidth": 35,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.522727,
+        0.980562
+      ],
+      "anchorPixels": [
+        218.5,
+        454
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-pilea-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-03.png",
+      "output_path": "plants/assets/plant-pilea-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small pilea with airy round coin-shaped sage green leaves on thin stems, terracotta pot. Top-right: same pilea cream woven basket. Bottom-left: small compact flowering shrub with dark green leaves and several tiny muted coral and cream blossoms, terracotta. Bottom-right: same flowering shrub cream woven basket. Both are small 30cm surface plants, flowering shrub is compact bushy, not a tree.\n",
+      "dimensions": [
+        480,
+        455
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        10,
+        9,
+        470,
+        445
+      ],
+      "displayWidth": 47,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.515625,
+        0.978022
+      ],
+      "anchorPixels": [
+        247.5,
+        445
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-pilea-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-03.png",
+      "output_path": "plants/assets/plant-pilea-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small pilea with airy round coin-shaped sage green leaves on thin stems, terracotta pot. Top-right: same pilea cream woven basket. Bottom-left: small compact flowering shrub with dark green leaves and several tiny muted coral and cream blossoms, terracotta. Bottom-right: same flowering shrub cream woven basket. Both are small 30cm surface plants, flowering shrub is compact bushy, not a tree.\n",
+      "dimensions": [
+        479,
+        456
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        470,
+        448
+      ],
+      "displayWidth": 47,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.526096,
+        0.982456
+      ],
+      "anchorPixels": [
+        252.0,
+        448
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-flowering-shrub-terracotta",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-03.png",
+      "output_path": "plants/assets/plant-flowering-shrub-terracotta.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small pilea with airy round coin-shaped sage green leaves on thin stems, terracotta pot. Top-right: same pilea cream woven basket. Bottom-left: small compact flowering shrub with dark green leaves and several tiny muted coral and cream blossoms, terracotta. Bottom-right: same flowering shrub cream woven basket. Both are small 30cm surface plants, flowering shrub is compact bushy, not a tree.\n",
+      "dimensions": [
+        447,
+        429
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        437,
+        420
+      ],
+      "displayWidth": 45,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.489933,
+        0.979021
+      ],
+      "anchorPixels": [
+        219.0,
+        420
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "plant-flowering-shrub-woven-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "plants/_sources/plants-small-03.png",
+      "output_path": "plants/assets/plant-flowering-shrub-woven-cream.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Produce a NEW clean reusable production sprite atlas, reference images are style references ONLY, never copy or crop their pixels. Match the approved PokeCorner cozy pixel-art room: warm upper-left golden window light, crisp visible square pixel clusters, warm brown selective outline, shaded sage and forest green leaves, warm terracotta and cream basket materials. The room is viewed mostly front-on with a little visible top of objects, NOT top-down isometric. Transparent alpha background, no floor or wall or cast shadow. Exactly four separate isolated potted plants in a spacious 2 by 2 arrangement, one in each quadrant, every leaf and pot wholly within its own quadrant with generous transparent margins and gaps; no grid, no text, no labels. Both variants of each species have identical believable size, silhouette and foliage, only pot style differs. Pot styles: simple orange terracotta clay pot vs cream woven basket planter with visible pale weave. High quality game sprite pixel art, no vector or photorealism. Top-left: small pilea with airy round coin-shaped sage green leaves on thin stems, terracotta pot. Top-right: same pilea cream woven basket. Bottom-left: small compact flowering shrub with dark green leaves and several tiny muted coral and cream blossoms, terracotta. Bottom-right: same flowering shrub cream woven basket. Both are small 30cm surface plants, flowering shrub is compact bushy, not a tree.\n",
+      "dimensions": [
+        445,
+        430
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [],
+      "qa_status": "accepted",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        8,
+        10,
+        436,
+        421
+      ],
+      "displayWidth": 45,
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "anchor": [
+        0.502247,
+        0.97907
+      ],
+      "anchorPixels": [
+        223.5,
+        421
+      ],
+      "placement_qa": "pending parent composite scene checks"
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "plants-placement",
+      "implementation": "Separate RGBA image layers on room canvas; uniformly scale small plants into windowsill/table/cabinet surface bounds and floor family into floor slot. Use measured pot-base anchor with selected furniture surface heights. Compose separate contact shadow and depth ordering for leaves around armchair. Keep pet floor protected.",
+      "notes": "Use scene-contract.json. No drag-anywhere flow or baked labels. Responsive transform scales the whole room and its anchors together. Parent owns implementation.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "Generate bounded transparent atlases",
+    "Inspect reference fidelity and composite over white to verify actual alpha",
+    "Slice with shared split-atlas.py preserving pixels",
+    "Record native dimensions and measured anchors",
+    "Parent reviews static composed scene combinations"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "No application code or pet sprites are part of this handoff.",
+    "displayWidth is in 1000-wide scene units, scale uniformly per scene-contract limits.",
+    "Source atlases, rejected cleanup and QA white plates remain _sources only; consume assets only."
+  ]
+}

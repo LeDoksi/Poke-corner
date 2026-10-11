@@ -1,0 +1,918 @@
+{
+  "status": "structural-checks-passed-theme-and-economy-review-pending",
+  "canonicalBerryIdsVerified": true,
+  "sameSpeciesRecipes": 1025,
+  "recipes": 1046,
+  "activeRecipes": 961,
+  "twoOutcomes": 288,
+  "threeOutcomes": 758,
+  "fullSpeciesCovered": 1025,
+  "baseSpeciesCovered": 541,
+  "activeBaseSpeciesCovered": 463,
+  "activeSpeciesCovered": 855,
+  "activeBlockedByAssets": [
+    {
+      "id": 651,
+      "name": "quilladin",
+      "familyRootId": 650
+    },
+    {
+      "id": 652,
+      "name": "chesnaught",
+      "familyRootId": 650
+    },
+    {
+      "id": 658,
+      "name": "greninja",
+      "familyRootId": 656
+    },
+    {
+      "id": 681,
+      "name": "aegislash",
+      "familyRootId": 679
+    },
+    {
+      "id": 691,
+      "name": "dragalge",
+      "familyRootId": 690
+    },
+    {
+      "id": 727,
+      "name": "incineroar",
+      "familyRootId": 725
+    },
+    {
+      "id": 748,
+      "name": "toxapex",
+      "familyRootId": 747
+    },
+    {
+      "id": 804,
+      "name": "naganadel",
+      "familyRootId": 803
+    },
+    {
+      "id": 830,
+      "name": "eldegoss",
+      "familyRootId": 829
+    },
+    {
+      "id": 858,
+      "name": "hatterene",
+      "familyRootId": 856
+    },
+    {
+      "id": 861,
+      "name": "grimmsnarl",
+      "familyRootId": 859
+    },
+    {
+      "id": 890,
+      "name": "eternatus",
+      "familyRootId": 890
+    },
+    {
+      "id": 1019,
+      "name": "hydrapple",
+      "familyRootId": 840
+    }
+  ],
+  "legendaryUniqueRecipes": 88,
+  "exposureSummary": {
+    "Common": {
+      "species": 242,
+      "min": 6,
+      "max": 16,
+      "mean": 7.87603305785124
+    },
+    "Uncommon": {
+      "species": 113,
+      "min": 5,
+      "max": 5,
+      "mean": 5
+    },
+    "Rare": {
+      "species": 98,
+      "min": 2,
+      "max": 3,
+      "mean": 2.9693877551020407
+    },
+    "Legendary": {
+      "species": 88,
+      "min": 1,
+      "max": 1,
+      "mean": 1
+    }
+  },
+  "fullClosure": {
+    "seed": "All Common evolution roots; nursery plus evolution edges, not three starting individuals",
+    "rounds": [
+      {
+        "round": 0,
+        "added": 242,
+        "total": 242
+      },
+      {
+        "round": 1,
+        "added": 315,
+        "total": 557
+      },
+      {
+        "round": 2,
+        "added": 201,
+        "total": 758
+      },
+      {
+        "round": 3,
+        "added": 122,
+        "total": 880
+      },
+      {
+        "round": 4,
+        "added": 74,
+        "total": 954
+      },
+      {
+        "round": 5,
+        "added": 47,
+        "total": 1001
+      },
+      {
+        "round": 6,
+        "added": 20,
+        "total": 1021
+      },
+      {
+        "round": 7,
+        "added": 4,
+        "total": 1025
+      }
+    ],
+    "unreachable": []
+  },
+  "activeClosure": {
+    "seed": "All Common evolution roots; nursery plus evolution edges, not three starting individuals",
+    "rounds": [
+      {
+        "round": 0,
+        "added": 213,
+        "total": 213
+      },
+      {
+        "round": 1,
+        "added": 262,
+        "total": 475
+      },
+      {
+        "round": 2,
+        "added": 165,
+        "total": 640
+      },
+      {
+        "round": 3,
+        "added": 92,
+        "total": 732
+      },
+      {
+        "round": 4,
+        "added": 62,
+        "total": 794
+      },
+      {
+        "round": 5,
+        "added": 40,
+        "total": 834
+      },
+      {
+        "round": 6,
+        "added": 18,
+        "total": 852
+      },
+      {
+        "round": 7,
+        "added": 3,
+        "total": 855
+      }
+    ],
+    "unreachable": [
+      651,
+      652,
+      658,
+      681,
+      691,
+      727,
+      748,
+      804,
+      830,
+      858,
+      861,
+      890,
+      1019
+    ]
+  },
+  "giftPairCandidates": 789,
+  "activeSingleOutcomeRecipes": [],
+  "highParentUse": [
+    {
+      "id": 748,
+      "name": "toxapex",
+      "count": 7
+    },
+    {
+      "id": 876,
+      "name": "indeedee",
+      "count": 7
+    },
+    {
+      "id": 166,
+      "name": "ledian",
+      "count": 6
+    },
+    {
+      "id": 38,
+      "name": "ninetales",
+      "count": 5
+    },
+    {
+      "id": 55,
+      "name": "golduck",
+      "count": 5
+    },
+    {
+      "id": 124,
+      "name": "jynx",
+      "count": 5
+    },
+    {
+      "id": 238,
+      "name": "smoochum",
+      "count": 5
+    },
+    {
+      "id": 277,
+      "name": "swellow",
+      "count": 5
+    },
+    {
+      "id": 301,
+      "name": "delcatty",
+      "count": 5
+    },
+    {
+      "id": 337,
+      "name": "lunatone",
+      "count": 5
+    },
+    {
+      "id": 338,
+      "name": "solrock",
+      "count": 5
+    },
+    {
+      "id": 375,
+      "name": "metang",
+      "count": 5
+    },
+    {
+      "id": 558,
+      "name": "crustle",
+      "count": 5
+    },
+    {
+      "id": 586,
+      "name": "sawsbuck",
+      "count": 5
+    },
+    {
+      "id": 587,
+      "name": "emolga",
+      "count": 5
+    }
+  ],
+  "examples": [
+    {
+      "id": 1,
+      "name": "bulbasaur",
+      "offspringId": 1,
+      "recipeIds": [
+        "42-88",
+        "43-315",
+        "44-315",
+        "45-69",
+        "114-798"
+      ],
+      "firstRecipe": {
+        "id": "42-88",
+        "parentIds": [
+          42,
+          88
+        ],
+        "commonTypes": [
+          "poison"
+        ],
+        "baseBerries": {
+          "pecha": 10
+        },
+        "selectedSurcharge": {
+          "pecha": 4
+        },
+        "hours": 4,
+        "plannedHours": 4,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 1,
+            "rarity": "Uncommon",
+            "weight": 4,
+            "probability": 0.2,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.3333333333333333
+          },
+          {
+            "speciesId": 13,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.4,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.6666666666666666
+          },
+          {
+            "speciesId": 747,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.4,
+            "active": false,
+            "normalAvailable": false,
+            "shinyAvailable": false,
+            "activeProbability": 0
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 25,
+      "name": "pikachu",
+      "offspringId": 172,
+      "recipeIds": [
+        "25-403",
+        "25-404",
+        "25-835",
+        "81-101",
+        "82-100",
+        "135-309",
+        "179-403",
+        "836-921"
+      ],
+      "firstRecipe": {
+        "id": "25-403",
+        "parentIds": [
+          25,
+          403
+        ],
+        "commonTypes": [
+          "electric"
+        ],
+        "baseBerries": {
+          "oran": 10
+        },
+        "selectedSurcharge": {
+          "oran": 4
+        },
+        "hours": 2,
+        "plannedHours": 2,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 172,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.3333333333333333,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.3333333333333333
+          },
+          {
+            "speciesId": 179,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.3333333333333333,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.3333333333333333
+          },
+          {
+            "speciesId": 595,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.3333333333333333,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.3333333333333333
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 133,
+      "name": "eevee",
+      "offspringId": 133,
+      "recipeIds": [
+        "19-52",
+        "20-53",
+        "52-161",
+        "52-832",
+        "242-759"
+      ],
+      "firstRecipe": {
+        "id": "19-52",
+        "parentIds": [
+          19,
+          52
+        ],
+        "commonTypes": [
+          "normal"
+        ],
+        "baseBerries": {
+          "oran": 10
+        },
+        "selectedSurcharge": {
+          "oran": 4
+        },
+        "hours": 4,
+        "plannedHours": 4,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 84,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.5,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.5
+          },
+          {
+            "speciesId": 133,
+            "rarity": "Uncommon",
+            "weight": 4,
+            "probability": 0.25,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.25
+          },
+          {
+            "speciesId": 203,
+            "rarity": "Uncommon",
+            "weight": 4,
+            "probability": 0.25,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.25
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 144,
+      "name": "articuno",
+      "offspringId": 144,
+      "recipeIds": [
+        "131-615"
+      ],
+      "firstRecipe": {
+        "id": "131-615",
+        "parentIds": [
+          131,
+          615
+        ],
+        "commonTypes": [
+          "ice"
+        ],
+        "baseBerries": {
+          "aspear": 6,
+          "oran": 4
+        },
+        "selectedSurcharge": {
+          "aspear": 4
+        },
+        "hours": 8,
+        "plannedHours": 8,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 144,
+            "rarity": "Legendary",
+            "weight": 0.5,
+            "probability": 0.058823529411764705,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.058823529411764705
+          },
+          {
+            "speciesId": 363,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.9411764705882353,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.9411764705882353
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 145,
+      "name": "zapdos",
+      "offspringId": 145,
+      "recipeIds": [
+        "466-479"
+      ],
+      "firstRecipe": {
+        "id": "466-479",
+        "parentIds": [
+          466,
+          479
+        ],
+        "commonTypes": [
+          "electric"
+        ],
+        "baseBerries": {
+          "oran": 6,
+          "chesto": 4
+        },
+        "selectedSurcharge": {
+          "oran": 4
+        },
+        "hours": 8,
+        "plannedHours": 8,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 145,
+            "rarity": "Legendary",
+            "weight": 0.5,
+            "probability": 0.2,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.2
+          },
+          {
+            "speciesId": 239,
+            "rarity": "Rare",
+            "weight": 2,
+            "probability": 0.8,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.8
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 146,
+      "name": "moltres",
+      "offspringId": 146,
+      "recipeIds": [
+        "467-637"
+      ],
+      "firstRecipe": {
+        "id": "467-637",
+        "parentIds": [
+          467,
+          637
+        ],
+        "commonTypes": [
+          "fire"
+        ],
+        "baseBerries": {
+          "cheri": 6,
+          "rawst": 4
+        },
+        "selectedSurcharge": {
+          "cheri": 4
+        },
+        "hours": 8,
+        "plannedHours": 8,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 146,
+            "rarity": "Legendary",
+            "weight": 0.5,
+            "probability": 0.2,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.2
+          },
+          {
+            "speciesId": 240,
+            "rarity": "Rare",
+            "weight": 2,
+            "probability": 0.8,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.8
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 150,
+      "name": "mewtwo",
+      "offspringId": 150,
+      "recipeIds": [
+        "124-376"
+      ],
+      "firstRecipe": {
+        "id": "124-376",
+        "parentIds": [
+          124,
+          376
+        ],
+        "commonTypes": [
+          "psychic"
+        ],
+        "baseBerries": {
+          "chesto": 6,
+          "aspear": 4
+        },
+        "selectedSurcharge": {
+          "chesto": 4
+        },
+        "hours": 8,
+        "plannedHours": 8,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 150,
+            "rarity": "Legendary",
+            "weight": 0.5,
+            "probability": 0.058823529411764705,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.058823529411764705
+          },
+          {
+            "speciesId": 280,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.9411764705882353,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.9411764705882353
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 151,
+      "name": "mew",
+      "offspringId": 151,
+      "recipeIds": [
+        "375-876"
+      ],
+      "firstRecipe": {
+        "id": "375-876",
+        "parentIds": [
+          375,
+          876
+        ],
+        "commonTypes": [
+          "psychic"
+        ],
+        "baseBerries": {
+          "chesto": 6,
+          "cheri": 4
+        },
+        "selectedSurcharge": {
+          "chesto": 4
+        },
+        "hours": 8,
+        "plannedHours": 8,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 151,
+            "rarity": "Legendary",
+            "weight": 0.5,
+            "probability": 0.058823529411764705,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.058823529411764705
+          },
+          {
+            "speciesId": 325,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.9411764705882353,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.9411764705882353
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 493,
+      "name": "arceus",
+      "offspringId": 493,
+      "recipeIds": [
+        "132-474"
+      ],
+      "firstRecipe": {
+        "id": "132-474",
+        "parentIds": [
+          132,
+          474
+        ],
+        "commonTypes": [
+          "normal"
+        ],
+        "baseBerries": {
+          "oran": 10
+        },
+        "selectedSurcharge": {
+          "oran": 4
+        },
+        "hours": 8,
+        "plannedHours": 8,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 137,
+            "rarity": "Rare",
+            "weight": 2,
+            "probability": 0.8,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.8
+          },
+          {
+            "speciesId": 493,
+            "rarity": "Legendary",
+            "weight": 0.5,
+            "probability": 0.2,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": false,
+            "activeProbability": 0.2
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 1000,
+      "name": "gholdengo",
+      "offspringId": 999,
+      "recipeIds": [
+        "200-792",
+        "426-864",
+        "709-770"
+      ],
+      "firstRecipe": {
+        "id": "200-792",
+        "parentIds": [
+          200,
+          792
+        ],
+        "commonTypes": [
+          "ghost"
+        ],
+        "baseBerries": {
+          "chesto": 10
+        },
+        "selectedSurcharge": {
+          "chesto": 4
+        },
+        "hours": 6,
+        "plannedHours": 6,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 353,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.8,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.8
+          },
+          {
+            "speciesId": 999,
+            "rarity": "Rare",
+            "weight": 2,
+            "probability": 0.2,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.2
+          }
+        ],
+        "needsThemeReview": true
+      }
+    },
+    {
+      "id": 1025,
+      "name": "pecharunt",
+      "offspringId": 1025,
+      "recipeIds": [
+        "211-994"
+      ],
+      "firstRecipe": {
+        "id": "211-994",
+        "parentIds": [
+          211,
+          994
+        ],
+        "commonTypes": [
+          "poison"
+        ],
+        "baseBerries": {
+          "pecha": 6,
+          "oran": 4
+        },
+        "selectedSurcharge": {
+          "pecha": 4
+        },
+        "hours": 2,
+        "plannedHours": 8,
+        "active": true,
+        "selectionUseful": true,
+        "outcomes": [
+          {
+            "speciesId": 32,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.48484848484848486,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.5
+          },
+          {
+            "speciesId": 88,
+            "rarity": "Common",
+            "weight": 8,
+            "probability": 0.48484848484848486,
+            "active": true,
+            "normalAvailable": true,
+            "shinyAvailable": true,
+            "activeProbability": 0.5
+          },
+          {
+            "speciesId": 1025,
+            "rarity": "Legendary",
+            "weight": 0.5,
+            "probability": 0.030303030303030304,
+            "active": false,
+            "normalAvailable": false,
+            "shinyAvailable": false,
+            "activeProbability": 0
+          }
+        ],
+        "needsThemeReview": true
+      }
+    }
+  ]
+}

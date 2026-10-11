@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PokéCorner — интерактивный прототип</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+<!--
+THESIS: A cozy companion for short visits; the pet and its room lead each return.
+OWN-WORLD: Cream paper, forest-green controls, terracotta care actions, detailed pixel scenes and animated sprites.
+STORY: Visit the pet, collect a gentle expedition result, prepare companions, return to the desktop.
+FIRST VIEWPORT: One compact application left, quiet companion right; five tabs above a wide room, care actions directly beneath.
+FORM: User-pinned nostalgic pixel world, approved first concept. Earlier degraded seed key 7b8ec431 assigned 6; no independent FORM roll evidence retained. The user choice is authoritative.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+<header class="prototype-heading"><div><h1>PokéCorner</h1><p>Интерактивный прототип · уютный мир рядом</p></div><div class="demo-tools"><button id="advance">Завершить ожидание</button><button id="reset">Сбросить демо</button></div></header>
+<p class="prototype-note">Демонстрационные данные и баланс. Ожидание можно завершить кнопкой выше. Озвучка из аниме пока не подключена.</p>
+<main class="workspace"><section class="app" aria-label="Основное окно PokéCorner"><header class="app-top"><a class="brand" href="#home"><span class="pokeball" aria-hidden="true"></span>PokéCorner</a><div class="wallet" id="wallet"></div><button id="encounters" class="soft"></button><button id="settings" class="icon-button" aria-label="Настройки"></button></header><nav id="nav" aria-label="Разделы приложения"></nav><div id="view"></div><footer class="app-footer"><span class="online-dot"></span>Твой маленький мир. В твоём ритме.<span id="berry-count"></span></footer></section>
+<aside class="desktop"><h2>Рядом на рабочем столе</h2><p>Один клик — погладить.<br>Двойной — открыть приложение.</p><div class="desktop-stage"><button id="desktop-pet" class="desktop-pet" aria-label="Погладить питомца; двойной клик открывает приложение"></button><div id="desktop-reaction" aria-live="polite"></div><div id="rings" hidden></div></div><p class="desktop-note">Индикаторы скрыты по умолчанию.<br>Включаются в настройках.</p><button id="open-app" class="quiet">Открыть приложение</button></aside></main>
+<div id="toast" role="status" aria-live="polite"></div><dialog id="dialog"><button id="close-dialog" class="dialog-close" aria-label="Закрыть">×</button><div id="dialog-content"></div></dialog><script src="app.js"></script></body></html>

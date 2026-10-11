@@ -1,0 +1,250 @@
+{
+  "chainTiers": [
+    5,
+    10,
+    20,
+    40
+  ],
+  "specials": {
+    "trophy-special-nick": 5,
+    "trophy-special-favorite": 5,
+    "trophy-special-type-team": 5,
+    "trophy-special-bonus-find": 5,
+    "trophy-special-nursery-expedition": 5,
+    "trophy-special-family-expedition": 10,
+    "trophy-special-evolved-expedition": 10,
+    "trophy-special-all-berries": 10,
+    "trophy-special-berry-evolution": 5,
+    "trophy-special-branch-choice": 10,
+    "trophy-special-offspring-choice": 10,
+    "trophy-special-all-legends": 10,
+    "trophy-special-second-trait": 5,
+    "trophy-special-retrain": 10,
+    "trophy-special-rehome": 5,
+    "trophy-special-xp-potion": 5
+  },
+  "chainGoals": [
+    {
+      "awardId": "trophy-species-1",
+      "condition": "discovered-species",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-species-2",
+      "condition": "discovered-species",
+      "count": 25
+    },
+    {
+      "awardId": "trophy-species-3",
+      "condition": "discovered-species",
+      "count": 100
+    },
+    {
+      "awardId": "trophy-species-4",
+      "condition": "all-normal-species-in-award-revision",
+      "count": 868
+    },
+    {
+      "awardId": "trophy-population-1",
+      "condition": "owned-individuals",
+      "count": 3
+    },
+    {
+      "awardId": "trophy-population-2",
+      "condition": "owned-individuals",
+      "count": 10
+    },
+    {
+      "awardId": "trophy-population-3",
+      "condition": "owned-individuals",
+      "count": 30
+    },
+    {
+      "awardId": "trophy-population-4",
+      "condition": "owned-individuals",
+      "count": 100
+    },
+    {
+      "awardId": "trophy-catches-1",
+      "condition": "successful-catches",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-catches-2",
+      "condition": "successful-catches",
+      "count": 25
+    },
+    {
+      "awardId": "trophy-catches-3",
+      "condition": "successful-catches",
+      "count": 100
+    },
+    {
+      "awardId": "trophy-catches-4",
+      "condition": "successful-catches",
+      "count": 500
+    },
+    {
+      "awardId": "trophy-expeditions-1",
+      "condition": "claimed-expeditions",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-expeditions-2",
+      "condition": "claimed-expeditions",
+      "count": 10
+    },
+    {
+      "awardId": "trophy-expeditions-3",
+      "condition": "claimed-expeditions",
+      "count": 50
+    },
+    {
+      "awardId": "trophy-expeditions-4",
+      "condition": "claimed-expeditions",
+      "count": 200
+    },
+    {
+      "awardId": "trophy-regions-1",
+      "condition": "visited-regions",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-regions-2",
+      "condition": "visited-regions",
+      "count": 4
+    },
+    {
+      "awardId": "trophy-regions-3",
+      "condition": "visited-regions",
+      "count": 8
+    },
+    {
+      "awardId": "trophy-regions-4",
+      "condition": "hard-expedition-in-each-region",
+      "count": 8
+    },
+    {
+      "awardId": "trophy-team-1",
+      "condition": "first-expedition-xp",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-team-2",
+      "condition": "individuals-at-required-level",
+      "count": 3,
+      "minimumLevel": 10
+    },
+    {
+      "awardId": "trophy-team-3",
+      "condition": "individuals-at-required-level",
+      "count": 3,
+      "minimumLevel": 20
+    },
+    {
+      "awardId": "trophy-team-4",
+      "condition": "individuals-at-required-level",
+      "count": 3,
+      "minimumLevel": 40
+    },
+    {
+      "awardId": "trophy-care-1",
+      "condition": "first-feeding",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-care-2",
+      "condition": "first-care-evolution-ready",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-care-3",
+      "condition": "distinct-cared-individuals",
+      "count": 10
+    },
+    {
+      "awardId": "trophy-care-4",
+      "condition": "distinct-cared-individuals",
+      "count": 50
+    },
+    {
+      "awardId": "trophy-nursery-1",
+      "condition": "distinct-hatched-root-species",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-nursery-2",
+      "condition": "distinct-hatched-root-species",
+      "count": 5
+    },
+    {
+      "awardId": "trophy-nursery-3",
+      "condition": "distinct-hatched-root-species",
+      "count": 15
+    },
+    {
+      "awardId": "trophy-nursery-4",
+      "condition": "distinct-hatched-root-species",
+      "count": 30
+    },
+    {
+      "awardId": "trophy-evolution-1",
+      "condition": "distinct-species-transitions",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-evolution-2",
+      "condition": "distinct-species-transitions",
+      "count": 5
+    },
+    {
+      "awardId": "trophy-evolution-3",
+      "condition": "distinct-species-transitions",
+      "count": 20
+    },
+    {
+      "awardId": "trophy-evolution-4",
+      "condition": "distinct-species-transitions",
+      "count": 50
+    },
+    {
+      "awardId": "trophy-shiny-1",
+      "condition": "distinct-shiny-species",
+      "count": 1
+    },
+    {
+      "awardId": "trophy-shiny-2",
+      "condition": "distinct-shiny-species",
+      "count": 3
+    },
+    {
+      "awardId": "trophy-shiny-3",
+      "condition": "distinct-shiny-species",
+      "count": 10
+    },
+    {
+      "awardId": "trophy-shiny-4",
+      "condition": "distinct-shiny-species",
+      "count": 30
+    }
+  ],
+  "specialMinimumOccurrences": 1,
+  "specialThresholds": {
+    "trophy-special-type-team": {
+      "members": 3,
+      "matchingMembers": 3
+    },
+    "trophy-special-all-berries": {
+      "distinctBerryIds": 6
+    },
+    "trophy-special-second-trait": {
+      "level": 10
+    },
+    "trophy-special-all-legends": {
+      "speciesCount": 81,
+      "countSource": "available-normal-legendary-species-at-award-revision"
+    }
+  },
+  "catalogCountsAreAwardRevisionSnapshots": true,
+  "oneTimePerAwardId": true
+}

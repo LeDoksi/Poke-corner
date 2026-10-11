@@ -1,0 +1,26 @@
+Use case: stylized-concept.
+Asset type: a STATIC furniture design sheet for the existing PokeCorner desktop companion app, NOT an interactive UI.
+Reference image: the attached room-states.png is VISUAL STYLE AUTHORITY ONLY: retain its warm nostalgic detailed Pokemon Black and White inspired pixel-art interiors, wooden materials, warm cream canvas, soft forest green and muted terracotta accents. Do NOT copy its two-window layout or the sleeping Eevee.
+Create a large readable landscape design sheet approximately 2048 by 1536, showing EXACTLY SIXTEEN separate furniture models in a precise 4-column by 4-row arrangement. Every cell has one isolated furniture item, plenty of breathing space, and a short clear Cyrillic name underneath. Clean flat warm cream sheet, unobtrusive thin dividers, no nested cards, no prices, no color swatches, no dropdowns, no tiny text, no extra decorations. Heading verbatim: "Мебель для уголка". Small subtitle: "16 моделей · у каждой своя палитра". Each ROW is a category, labeled at its left above the items: "Столики", "Шкафы", "Кресла", "Комоды". All objects are rendered in the SAME gentle three-quarter front-left perspective, consistent pixel density, warm window light from upper-left and grounded soft contact shadows. This is crafted pixel illustration, not smooth 3D or flat vector.
+ROW 1 TABLES, four genuinely different silhouettes:
+1 "Круглый" — small round honey-oak side table, four sturdy legs.
+2 "С ящиком" — compact square light-pine table with one small drawer and lower shelf.
+3 "Сундук" — low walnut chest used as a coffee table with restrained brass corners.
+4 "Овальный" — low oval cream-painted wood table with a warm wooden top and rounded legs.
+ROW 2 DISPLAY CABINETS, four genuinely different constructions, all similar room footprint and below wall paintings. Each cabinet has ONE clearly visible wide horizontal display bay containing EXACTLY THREE tiny distinct achievement figurines, evenly spaced and physically resting on shelf, above closed storage:
+1 "Дубовый" — straight sturdy honey-oak sideboard, simple lower twin doors.
+2 "Мастерская" — muted sage-painted pine cabinet with warm oak top, one wide open display bay above divided workshop-style drawers.
+3 "Книжный" — walnut display sideboard, one wide open trophy bay above low book cubbies and lower doors.
+4 "Светлый" — rounded ivory-wood display cabinet with open horizontal trophy bay, arched upper edges and two rounded lower doors.
+The THREE trophies in every cabinet are tiny cottage, mountain and heart awards, NOT three separate cabinets. These trophy objects are integrated, no floating icons.
+ROW 3 ARMCHAIRS:
+1 "Клетчатое" — honey-oak armchair frame with muted green plaid fabric cushion.
+2 "Тёплое" — soft terracotta upholstered armchair, compact winged back, wooden feet.
+3 "Плетёное" — honey wicker lounge chair with cream cushion.
+4 "Облачко" — rounded dusty-blue upholstered chair, soft sculptural silhouette, short walnut legs.
+ROW 4 DRESSERS / SIDE CABINETS:
+1 "Классический" — honey-oak three-drawer chest with brass handles.
+2 "Низкий" — low ivory-painted cabinet, two wide drawers and warm oak top.
+3 "Узкий" — narrow tall muted dusty-blue chest with four drawers, brass pulls.
+4 "Раздвижной" — low walnut side cabinet with one sliding door and a small drawer.
+Palette is PART OF EACH MODEL, never recolor duplicates or four same furniture models. Every model is recognizably distinct by shape/construction. All 16 fit one coherent cozy world and can be mixed individually. Small specific labels readable in clean dark sans-serif, not fake glyphs. No other rows.

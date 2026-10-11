@@ -1,0 +1,35 @@
+{
+  "source": "_sources/pillow-basket-atlas-v1.png",
+  "promptFile": "_sources/pillow-basket-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "bed-basket-cream",
+      "name": "Корзинка сливочная",
+      "category": "beds",
+      "row": 1,
+      "col": 0,
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ]
+    },
+    {
+      "id": "bed-basket-sage",
+      "name": "Корзинка шалфейная",
+      "category": "beds",
+      "row": 1,
+      "col": 1,
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+Use case: ui-mockup.
+Asset type: a STATIC single-screen interior concept for the existing PokeCorner Windows desktop app. No code, no browser.
+Input references:
+Image 1 room-states.png: authoritative approved world, cream interface, green navigation, detailed warm nostalgic Pokemon Black and White inspired pixel-art wooden interior. It is NOT the final layout: the central sleeping Eevee and central bed are obsolete.
+Image 2 furniture-models-v1.png: exact furniture models and fixed palettes to use. Select round honey-oak table (row1 column1), walnut "Книжный" display cabinet (row2 column3), green plaid wooden armchair (row3 column1), low cream dresser "Низкий" (row4 column2). Mix these four individual pieces, not a color-matched furniture set.
+Primary request: create ONE large readable landscape application window approximately 1536x1024, a refined update of "Мой уголок", proving the agreed room slots without annotations. The scene is the focus, around 60% of screen height, wide and generous. Match the existing interface, do not invent a different theme or redesign navigation.
+UI: restrained warm cream surface, dark charcoal clear Cyrillic sans text, forest green selected nav, terracotta care button. Windows titlebar with Pokeball and "PokéCorner", minimize and close. Top utility row coins "1 240", Pokeball icon button "Встречи · 2", settings gear. Navigation exactly five labels: "Уголок" selected, "Покедекс", "Экспедиции", "Питомник", "Магазин". Heading "Мой уголок" at left, small buttons "Достижения" and "Украсить" at right.
+ROOM: same sunlit timber architecture as Image1, window on left wall looking out onto green trees and blue sky, plaster back wall with warm wooden beams, wooden floor with consistent depth and one large muted sage woven rug. Camera gentle three-quarter interior view; all furniture shares scene perspective and actual contact shadows. Use selected furniture from Image2:
+A green-plaid armchair at front-left, small round oak side table immediately to its right (still in left third), broad low walnut display cabinet centered on back wall, low cream dresser against back-right wall.
+EXACTLY THREE small distinct achievement figurines (miniature house, mountain, heart) physically on ONE open shelf inside the back cabinet, evenly spaced, with visible shelf edges, correct scale, contact shadows. No floating badges or additional trophies elsewhere.
+EXACTLY THREE framed paintings above the cabinet in three separate fixed wall positions: a nostalgic region map, a Bulbasaur among plants illustration, a Mew among stars illustration. Each is framed art, not a clock or pokeball wall medallion.
+EXACTLY FOUR indoor potted plants, one at each allowed place, easy to distinguish:
+1 small fern on the left WINDOW SILL, curtains tied clear of its foliage.
+2 tiny succulent on the ROUND SIDE TABLE, next to a single small mug; fully visible, not hidden behind chair.
+3 small trailing pothos ON TOP of the display cabinet, near one end, its short vine does not cover trophies or paintings.
+4 tall potted monstera on the FLOOR beside the left armchair, positioned so pot and leaves do not block the chair, table, central pet or window-sill fern. No other potted plants or background floor plants.
+Light cream linen curtains at the window, clear of plant.
+PET: one alert, awake, upright pixel Eevee on all four paws, small relative to room, at center foreground ON THE RUG with space around entire silhouette. No pet lying down, no sleeping, no second pet. No floating heart or dark cloud in this calm base state. The central pet floor area is spacious and not occupied by furniture.
+BED: one EMPTY small woven bed/cushion on the back-right floor beside dresser, clearly BEHIND AND TO THE SIDE of Eevee, never under pet, never in the center, never blocks it. There is no sleep mechanic.
+No decorative items or pots on dresser except two unobtrusive books, no extra plants.
+Every object integrates into the architecture and scene lighting. No pasted sticker or PNG overlay look. Keep depth anchors consistent and distinct, no objects floating, no giant plant covering trophy shelf.
+Below room: compact text profile "Иви · #0133", then three separate modest indicators with labels "Уход", "Поимка", "Лакомства". Correct respective icons: leaf/heart, Pokeball, cookie; NOT a coin for treats. Two clear actions "Погладить" and "Покормить".
+Avoid: explanatory arrows/slot labels in the actual interface, additional gameplay meters, sleep, lying Eevee, central bed, oversized pet, decorative clutter, fourth painting, fourth trophy, fifth plant, mobile phone frame, tiny unreadable copy. This is a polished static design proposal with real furniture choices, not production-ready game art.

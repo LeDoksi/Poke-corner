@@ -1,0 +1,209 @@
+{
+  "canvas": [
+    480,
+    193
+  ],
+  "displayScale": 3,
+  "master": "../../pilot-zones/master.png",
+  "models": [
+    {
+      "id": "C1",
+      "zoneRect": [
+        195,
+        65,
+        345,
+        142
+      ],
+      "cabinetBounds": [
+        198,
+        72,
+        325,
+        136
+      ],
+      "shelfAnchors": [
+        [
+          226,
+          106
+        ],
+        [
+          262,
+          106
+        ],
+        [
+          300,
+          106
+        ]
+      ],
+      "slotRects": [
+        [
+          209,
+          79,
+          243,
+          108
+        ],
+        [
+          245,
+          79,
+          279,
+          108
+        ],
+        [
+          283,
+          79,
+          317,
+          108
+        ]
+      ],
+      "shelfFrontlipBounds": [
+        207,
+        106,
+        317,
+        108
+      ],
+      "trophyScale": 0.3,
+      "topPlantAnchor": [
+        307,
+        73
+      ],
+      "topPlantMaxSize": [
+        20,
+        18
+      ],
+      "paintingReserve": [
+        195,
+        10,
+        340,
+        60
+      ],
+      "changedPixelBox": [
+        195,
+        72,
+        340,
+        142
+      ]
+    },
+    {
+      "id": "C3",
+      "zoneRect": [
+        195,
+        65,
+        345,
+        142
+      ],
+      "cabinetBounds": [
+        198,
+        72,
+        325,
+        136
+      ],
+      "shelfAnchors": [
+        [
+          226,
+          106
+        ],
+        [
+          262,
+          106
+        ],
+        [
+          300,
+          106
+        ]
+      ],
+      "slotRects": [
+        [
+          209,
+          79,
+          243,
+          108
+        ],
+        [
+          245,
+          79,
+          279,
+          108
+        ],
+        [
+          283,
+          79,
+          317,
+          108
+        ]
+      ],
+      "shelfFrontlipBounds": [
+        207,
+        106,
+        317,
+        108
+      ],
+      "trophyScale": 0.3,
+      "topPlantAnchor": [
+        307,
+        73
+      ],
+      "topPlantMaxSize": [
+        20,
+        18
+      ],
+      "paintingReserve": [
+        195,
+        10,
+        340,
+        60
+      ],
+      "changedPixelBox": [
+        195,
+        72,
+        340,
+        142
+      ]
+    }
+  ],
+  "maskPolygon": [
+    [
+      199,
+      72
+    ],
+    [
+      323,
+      72
+    ],
+    [
+      324,
+      74
+    ],
+    [
+      323,
+      127
+    ],
+    [
+      324,
+      130
+    ],
+    [
+      322,
+      135
+    ],
+    [
+      199,
+      135
+    ],
+    [
+      198,
+      130
+    ],
+    [
+      199,
+      127
+    ]
+  ],
+  "shadowMaskFeatherPx": 1,
+  "renderOrder": [
+    "master",
+    "cabinetZone",
+    "independentTrophies",
+    "cabinetFrontlip",
+    "topPlant",
+    "separateOriginalPet"
+  ]
+}

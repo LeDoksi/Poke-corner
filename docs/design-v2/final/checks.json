@@ -1,0 +1,32 @@
+{
+  "staticScreens": 6,
+  "onboardingSteps": 6,
+  "serviceStates": 18,
+  "activeAwards": 56,
+  "albumCards": 26,
+  "berriesOnSameScreen": 6,
+  "runtimeJavaScript": false,
+  "localizedSpecies": 1025,
+  "portableVoices": 868,
+  "temporaryCries": 24,
+  "soundEffects": 1,
+  "effectsVolumeDefault": 30,
+  "movementPreference": "Windows ClientAreaAnimation",
+  "closedSpeciesSearch": "number-and-visible-route-hint",
+  "specimenSelectionState": true,
+  "localFileLinks": 48,
+  "leafCoverage": [
+    "album",
+    "home",
+    "onboarding",
+    "settings",
+    "shop",
+    "states"
+  ],
+  "internalAnchorsExist": true,
+  "shopIcons": 12,
+  "homeAchievementEntries": 1,
+  "linksExist": true,
+  "roomMode": "fixed-with-independent-awards",
+  "liveBrowserVerified": false
+}

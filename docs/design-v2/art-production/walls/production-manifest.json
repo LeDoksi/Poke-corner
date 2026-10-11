@@ -1,0 +1,773 @@
+{
+  "status": "all12wallvariants_have_rawmasters_static_final-composition-review-pending",
+  "produce": [
+    {
+      "id": "wall-plain-sage",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-plain-sage.png",
+      "file": "walls/assets/wall-plain-sage.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Change upper plaster to quiet muted sage green matte paint, subtle original plaster texture only, no pattern. Preserve warm golden window-light hue over sage.",
+      "prompt_file": "walls/_sources/wall-plain-sage-prompt.txt",
+      "dimensions": [
+        1978,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1978,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          4.561,
+          4.83,
+          4.852
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          7.892,
+          5.915,
+          6.588
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "f96914b93c9b39de781460235823cd879c490da7efb0967efc77cb227ddc16ef"
+    },
+    {
+      "id": "wall-plain-blue",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-plain-blue.png",
+      "file": "walls/assets/wall-plain-blue.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Change upper plaster to quiet muted dusty powder blue matte paint, subtle original plaster texture only, no pattern. Preserve warm golden window-light hue over blue.",
+      "prompt_file": "walls/_sources/wall-plain-blue-prompt.txt",
+      "dimensions": [
+        1978,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1978,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          4.949,
+          5.332,
+          4.894
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          8.484,
+          6.583,
+          8.029
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "1cbbbd40177a7d9c0f52b4cbaa2f4dbcda26b92970e47914268576468f8ceb7f"
+    },
+    {
+      "id": "wall-panels-honey",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-panels-honey.png",
+      "file": "walls/assets/wall-panels-honey.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Replace ONLY upper plaster wall surfaces with fine subtly-grained warm honey wood panelling finish. Add slim closely-spaced vertical board seams, aligned in the existing wall planes. This is surface material, not new structures: NO extra beams or rails, NO duplicated floor, NO thick framing, no new ceiling. Existing lower wainscot/floor/posts/window stay unchanged; upper honey boards lighter/quieter than structural timber.",
+      "prompt_file": "walls/_sources/wall-panels-honey-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.548,
+          5.927,
+          5.836
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          8.122,
+          8.174,
+          9.605
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "b6bfe54676fd2dc0cd2b7846ed1b8e1ca5d6d4159ea210178976f8f00c833927"
+    },
+    {
+      "id": "wall-panels-cream",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-panels-cream.png",
+      "file": "walls/assets/wall-panels-cream.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Replace ONLY upper plaster wall surfaces with fine cream ivory painted wood panelling finish, slim subtle vertical board seams and quiet wood grain. Keep cream finish matte, softly illuminated warm upper-left. This is surface material, NO new beams/posts/rails or frame, NO extra floor. Existing lower honey wood wainscot/floor/posts/window stay exactly unchanged.",
+      "prompt_file": "walls/_sources/wall-panels-cream-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.914,
+          4.529,
+          4.099
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          7.652,
+          6.746,
+          7.697
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "9639a0d096dbdfa3602a8dbb41d8b14e93753b8f7137f35d658ba60fea021f31"
+    },
+    {
+      "id": "wall-panels-walnut",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-panels-walnut.png",
+      "file": "walls/assets/wall-panels-walnut.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Replace ONLY upper plaster wall surfaces with fine warm walnut brown wood panelling finish, narrow subtle vertical board seams and quiet wood grain. Muted medium walnut, retain enough warmth/brightness, no black wall. This is a wall surface material, NO new beams/posts/rails or frame, NO extra floor. Existing lower honey wood wainscot/floor/posts/window stay exactly unchanged.",
+      "prompt_file": "walls/_sources/wall-panels-walnut-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.151,
+          4.691,
+          4.273
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          10.086,
+          9.546,
+          10.401
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "689dee4c29c76f56731a9d9e0624996bf608d36ae336ac2d524bf830b54464fa"
+    },
+    {
+      "id": "wall-floral-cream",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-floral-cream.png",
+      "file": "walls/assets/wall-floral-cream.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Set ONLY upper wall plaster surfaces to warm cream ivory wallpaper with a SMALL QUIET repeating botanical leaf-sprig motif. Tiny matte desaturated sage leaf pairs, roughly10–16px motifs widely spaced, low contrast (barely8percent darker than background), no large floral art, no vines outside wall, no flowers as foreground props. Retain subtle plaster paper texture. Window sunlight overlays pattern unchanged.",
+      "prompt_file": "walls/_sources/wall-floral-cream-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.444,
+          5.147,
+          3.949
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          7.114,
+          6.526,
+          7.058
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "032986e4b9de7c7d779807ab355a7bd01ac6e73a9c68265f2cf36159604939e8"
+    },
+    {
+      "id": "wall-floral-sage",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-floral-sage.png",
+      "file": "walls/assets/wall-floral-sage.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Set ONLY upper wall plaster surfaces to muted sage green wallpaper with a SMALL QUIET repeating botanical leaf-sprig motif. Tiny slightly darker sage-grey leaf pairs, roughly10–16px motifs widely spaced, low contrast (barely8percent darker than background), no large floral art, no vines outside wall, no flowers as foreground props. Retain subtle plaster paper texture. Window sunlight overlays pattern unchanged.",
+      "prompt_file": "walls/_sources/wall-floral-sage-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.144,
+          5.444,
+          4.408
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          6.991,
+          5.047,
+          5.384
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "1f2c22b35fdede372df514f7efa670f4032c88dbc34f816ede94adc3772201fe"
+    },
+    {
+      "id": "wall-floral-blue",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-floral-blue.png",
+      "file": "walls/assets/wall-floral-blue.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Set ONLY upper wall plaster surfaces to muted dusty powder blue wallpaper with a SMALL QUIET repeating botanical leaf-sprig motif. Tiny desaturated blue-grey leaf pairs, roughly10–16px motifs widely spaced, low contrast (barely8percent darker than background), no large floral art, no vines outside wall, no flowers as foreground props. Retain subtle plaster paper texture. Window sunlight overlays pattern unchanged.",
+      "prompt_file": "walls/_sources/wall-floral-blue-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.436,
+          5.151,
+          4.152
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          7.418,
+          6.856,
+          7.324
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "da15442909e4937e776850219c9a12c8d8eb528de84c294550a0bc166dc88705"
+    },
+    {
+      "id": "wall-stars-cream",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-stars-cream.png",
+      "file": "walls/assets/wall-stars-cream.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Set ONLY upper wall plaster surfaces to warm cream ivory wallpaper with tiny quiet scattered stars and short miniature constellation motifs. Very small4point stars/dots, a few sparse3–4dot connections with hair-thin lines, matte desaturated warm-grey/tan print, LOW contrast. This is discreet printed wallpaper, not a cosmic scene: no big stars, no moons, galaxies, glows, bright objects, text or named constellations. Pattern rests ONLY within plaster surfaces under unchanged window daylight.",
+      "prompt_file": "walls/_sources/wall-stars-cream-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.992,
+          5.559,
+          3.971
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          7.374,
+          7.026,
+          7.584
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "0ca225e45c709ce3e39823a0cc5db5b13505a5065c275d251dc5555631f19d8b"
+    },
+    {
+      "id": "wall-stars-sage",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-stars-sage.png",
+      "file": "walls/assets/wall-stars-sage.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Set ONLY upper wall plaster surfaces to muted sage green wallpaper with tiny quiet scattered stars and short miniature constellation motifs. Very small4point stars/dots, a few sparse3–4dot connections with hair-thin lines, matte slightly darker sage-grey print, LOW contrast. This is discreet printed wallpaper, not a cosmic scene: no big stars, no moons, galaxies, glows, bright objects, text or named constellations. Pattern rests ONLY within plaster surfaces under unchanged window daylight.",
+      "prompt_file": "walls/_sources/wall-stars-sage-prompt.txt",
+      "dimensions": [
+        1978,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1978,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          5.042,
+          5.194,
+          4.874
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          7.632,
+          5.954,
+          6.276
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "eb0d8bedcf35b1ea845a1eac3d70c2bb19af3db6fbfe2f7af45d6b78441ec730"
+    },
+    {
+      "id": "wall-stars-blue",
+      "category": "walls",
+      "source_crop": {
+        "reference": "architecture/assets/room-base.png",
+        "rect": [
+          0,
+          0,
+          1978,
+          795
+        ],
+        "type": "regenerated production source, full-frame edit, no mock crop"
+      },
+      "output_path": "walls/assets/wall-stars-blue.png",
+      "file": "walls/assets/wall-stars-blue.png",
+      "strategy": "built-in precise image edit of whole registered room plate, change upper wall finish only; opaque room-plate exception authorized",
+      "prompt_used": "PRECISE FULL-SCENE IMAGE EDIT, production room plate. Use supplied regenerated empty room as EDIT TARGET, keep exact entire1978x795 frame/aspect2.49:1 and fixed scene registration. Change ONLY the upper plaster wall finish surfaces on BACK and BOTH SIDE walls between the existing dark timber structural posts and above the existing wainscot rail. Preserve the original pixel illustration, camera, perspective, walls/floor seam, exact positions/shapes of EVERY structural beam, post, horizontal rail, lower wooden wainscoting, baseboard, WINDOW and its4panes/sill, outdoor trees/sky/clouds, honey timber FLOOR/plank seams and all window sunlight patches/shadows/reflections. Do not shift, resize, crop, extend, add or remove architectural features. Lower wainscot remains original honey wood. Preserve window light over new finish with the SAME geometry/intensity. Entire room EMPTY, no furniture, props, curtains, rugs, paintings, pet, text, UI, labels or watermark. Deliver one opaque full room PNG plate, same wide aspect and preferably1978x795native. Set ONLY upper wall plaster surfaces to muted dusty powder blue wallpaper with tiny quiet scattered stars and short miniature constellation motifs. Very small4point stars/dots, a few sparse3–4dot connections with hair-thin lines, matte slightly darker desaturated blue-grey print, LOW contrast. This is discreet printed wallpaper, not a cosmic scene: no big stars, no moons, galaxies, glows, bright objects, text or named constellations. Pattern rests ONLY within plaster surfaces under unchanged window daylight.",
+      "prompt_file": "walls/_sources/wall-stars-blue-prompt.txt",
+      "dimensions": [
+        1977,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "source_frame_wh": [
+          1977,
+          795
+        ],
+        "scale_policy": "uniform full-frame fit; no wall/floor/beam reflow or individual transform"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [
+        "Protected floor/window art has mild generation pixel variation; geometry visually retained, not bit-identical pixels.",
+        "Native width1977px differs1px from1978px base; uniformly register full plate to same logical scene, never crop/stretch individual regions."
+      ],
+      "qa_status": "accepted",
+      "qa_evidence": {
+        "visual_compare": "Each full PNG opened against regenerated room-base; window/panes/sill, posts/rails, seam, floor perspective and light patch silhouettes retained; no props or UI.",
+        "floor_roi_rgb_mean_absolute_difference": [
+          4.742,
+          4.607,
+          3.49
+        ],
+        "window_roi_rgb_mean_absolute_difference": [
+          7.365,
+          5.325,
+          6.501
+        ],
+        "difference_units": "0to255; measures mild pixel variation, not a geometry metric",
+        "exact_embedded_prompt_verified": true
+      },
+      "sha256": "d7998a2b8a761176e30a7edab5572720ff4e4cb6610bc8acd6945d2e5ceb80b3"
+    }
+  ],
+  "direct": [
+    {
+      "id": "wall-plain-cream",
+      "category": "walls",
+      "source_crop": "architecture/assets/room-base.png",
+      "output_path": "architecture/assets/room-base.png",
+      "file": "architecture/assets/room-base.png",
+      "strategy": "reuse parent regenerated standalone production room plate",
+      "dimensions": [
+        1978,
+        795
+      ],
+      "logical_scene_dimensions": [
+        1448,
+        582
+      ],
+      "registration": {
+        "origin": [
+          0,
+          0
+        ],
+        "logical_scene_wh": [
+          1448,
+          582
+        ],
+        "scale_policy": "uniform full-frame fit"
+      },
+      "format": "png",
+      "transparency": false,
+      "deviations": [],
+      "qa_status": "accepted"
+    }
+  ],
+  "semantic": [
+    {
+      "id": "wall-plate-composition",
+      "implementation": "One native Image/WPF Canvas background layer or HTML image positioned at scene origin0,0. Uniformly map selected whole opaque room plate into logical1448x582 scene. All furniture, cabinet lips/trophies, rugs, curtains, plants, framed paintings and live pet compose as independent upper layers using existing scene anchors. UI/navigation/rounded clipping remain native components.",
+      "notes": "Opaque full room plates include fixed beams/window/floor by explicit architecture exception. They are not separate alpha plaster masks. Do not double-render mismatched architectural raster layers over them.",
+      "qa_status": "accepted"
+    }
+  ],
+  "execution_order": [
+    "plain-sage/blue",
+    "panels-honey/cream/walnut",
+    "floral-cream/sage/blue",
+    "stars-cream/sage/blue",
+    "whole-frame visual comparison",
+    "exact prompt/dimension validation"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "Parent base-room corresponds to plain-cream, completing12wall variants.",
+    "All11 requested edits made with built-in imagegen and copied whole; no old approved comp crops ship.",
+    "Native aspect approximately2.49 preserved;1977/1978pixel width difference is negligible raw registration variation.",
+    "No app code, source room-base or other category edited. No all-decor-combination validation claimed."
+  ]
+}

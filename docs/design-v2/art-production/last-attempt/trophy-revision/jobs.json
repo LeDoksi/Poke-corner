@@ -1,0 +1,182 @@
+[
+  {
+    "id": "species",
+    "ids": [
+      "trophy-species-1",
+      "trophy-species-2",
+      "trophy-species-3",
+      "trophy-species-4"
+    ],
+    "prompt": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Pokemon field-catalogue award in four tiers: (1) closed green notebook with large Pokeball emblem, (2) open field notebook showing colorful Pikachu and Bulbasaur observation sketches on the two pages, (3) same open creature catalogue plus magnifying glass and a small Squirtle observation card, (4) ornate open creature encyclopedia displaying those sketches framed by a gold arch and small Pokeball seal. Each book represents Pokemon observations, never herbarium plant specimens; no plants growing from pages. Make the four tiers progressively more splendid.",
+    "cells": [
+      [
+        0,
+        0,
+        615,
+        612
+      ],
+      [
+        615,
+        0,
+        1254,
+        612
+      ],
+      [
+        0,
+        612,
+        619,
+        1254
+      ],
+      [
+        619,
+        612,
+        1254,
+        1254
+      ]
+    ]
+  },
+  {
+    "id": "evolution",
+    "ids": [
+      "trophy-evolution-1",
+      "trophy-evolution-2",
+      "trophy-evolution-3",
+      "trophy-evolution-4"
+    ],
+    "prompt": "Draw a transparent atlas of four friendly game achievement statuettes, 2 columns by 2 rows. Warm detailed illustrated pixel art, upper-left light, oval honey-wood pedestals with gold rims, same style/camera as reference. No background, no text, no grid. Generous transparent padding around each separate trophy. These trophies symbolize evolution: ONE creature changing through stages, not a group of independent creatures and not breeding. Represent the stages as clear large gold-rimmed enamel medallions with friendly abstract creature-profile silhouettes: small round head with short ears, medium head with longer ears and a crest, mature head with a larger crest. Top-left trophy: two different stage medallions connected by a gold directional arrow. Top-right: three stage medallions linked by arrows. Bottom-left: those three stage medallions in an elegant gold transformation-arrow arch. Bottom-right: three stage medallions inside a splendid circular gold-arrow frame with a few enamel sparkles. Consistent green enamel shapes for the SAME creature line, distinct growth stages. No plants, no berries, no jars, no eggs, no combat. Readable simple silhouettes at 94 pixels tall. Each whole composition fits its own cell, with its own wood base. True transparent alpha outside all objects.",
+    "cells": [
+      [
+        0,
+        0,
+        615,
+        510
+      ],
+      [
+        615,
+        0,
+        1331,
+        510
+      ],
+      [
+        0,
+        510,
+        711,
+        1181
+      ],
+      [
+        711,
+        510,
+        1331,
+        1181
+      ]
+    ]
+  },
+  {
+    "id": "team",
+    "ids": [
+      "trophy-team-1",
+      "trophy-team-2",
+      "trophy-team-3",
+      "trophy-team-4"
+    ],
+    "prompt": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Team experience trophy tiers: (1) one ochre hiking backpack with a brass rank chevron; (2) THREE distinct backpacks in green, ochre and rust with a single gold chevron badge in front; (3) the SAME THREE backpacks with double-chevron badge and richer gold trim; (4) the SAME THREE backpacks with triple-chevron badge and gold laurel frame. Exactly one backpack in first cell and three in every other cell. Rank increases without changing number of team members. Keep badge large and obvious, not intricate tiny camp clutter.",
+    "cells": [
+      [
+        0,
+        0,
+        603,
+        631
+      ],
+      [
+        603,
+        0,
+        1254,
+        631
+      ],
+      [
+        0,
+        631,
+        620,
+        1254
+      ],
+      [
+        620,
+        631,
+        1254,
+        1254
+      ]
+    ]
+  },
+  {
+    "id": "nursery",
+    "ids": [
+      "trophy-nursery-1",
+      "trophy-nursery-2",
+      "trophy-nursery-3",
+      "trophy-nursery-4"
+    ],
+    "prompt": "Create FOUR separate collectible nursery-diversity trophies in a 2x2 transparent atlas, 1024x1024. Match reference: warm detailed illustrated pixel clusters, sculpted enamel ornaments, oval honey-wood plinth with gold rim, upper-left light. No text, no grid, no background, no glass greenhouse. Readable at 94 pixels tall, large simple forms. Top-left: one cream egg with green speckles in a woven nest on its plinth. Top-right: a partly hatched cream egg with one tiny gold paw-print emblem appearing between the shell halves, in a nursery nest. Bottom-left: a larger woven nursery nest containing three distinctly patterned eggs, one cream with green spots, one pale blue with stripes, one pale pink with dots; a cracked shell and small gold paw emblem in front symbolize successful hatching. Bottom-right: elegant OPEN gold-and-wood cradle frame over a woven nursery nest containing the same distinct three egg designs, a cracked eggshell and a larger gold paw emblem, with a simple star finial. The open cradle is NOT a terrarium or plant house; no glass walls, no plants as the main subject. Differences among eggs symbolize different kinds of offspring, not three simultaneous births. Match the same base proportions, add finish gradually across the tiers. All objects fully separated in their cells by substantial transparent padding, true alpha outside them.",
+    "cells": [
+      [
+        0,
+        0,
+        639,
+        576
+      ],
+      [
+        639,
+        0,
+        1254,
+        576
+      ],
+      [
+        0,
+        576,
+        636,
+        1254
+      ],
+      [
+        636,
+        576,
+        1254,
+        1254
+      ]
+    ]
+  },
+  {
+    "id": "specials",
+    "ids": [
+      "trophy-special-type-team",
+      "trophy-special-evolved-expedition",
+      "trophy-special-all-berries",
+      "trophy-special-berry-evolution"
+    ],
+    "prompt": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Four standalone awards: (1) three DIFFERENT elemental emblems red flame, blue water droplet, green leaf around a terrain map and compass, denoting every member helps chosen terrain; (2) hiking backpack with prominent transformation medallion, small Bulbasaur and Ivysaur silhouettes linked by arrow, no book; (3) basket with EXACT SIX distinct berry forms from reference 2: red Cheri cherries, round blue Oran, round yellow Aspear, pink Pecha peach, pointed purple Chesto with cream base, serrated green Rawst; (4) red Cheri, blue Oran, green Rawst below a large circular gold transformation arrow and two different Pokemon-stage medallions, Bulbasaur bulb and Ivysaur bud. No evolution stone, no fruit tree. Emphasize large clear motifs on shared wood-gold bases.",
+    "cells": [
+      [
+        0,
+        0,
+        652,
+        645
+      ],
+      [
+        652,
+        0,
+        1254,
+        645
+      ],
+      [
+        0,
+        645,
+        642,
+        1254
+      ],
+      [
+        642,
+        645,
+        1254,
+        1254
+      ]
+    ]
+  }
+]

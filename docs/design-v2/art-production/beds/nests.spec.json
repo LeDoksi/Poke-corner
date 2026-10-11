@@ -1,0 +1,37 @@
+{
+  "source": "_sources/nests-atlas-v1.png",
+  "promptFile": "_sources/nests-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "bed-nest-cream",
+      "name": "Гнездо сливочное",
+      "category": "beds",
+      "cellRect": [0, 0, 887, 600],
+      "row": 0,
+      "col": 0,
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ]
+    },
+    {
+      "id": "bed-nest-sage",
+      "name": "Гнездо шалфейное",
+      "category": "beds",
+      "cellRect": [887, 0, 1774, 600],
+      "row": 0,
+      "col": 1,
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ]
+    }
+  ]
+}

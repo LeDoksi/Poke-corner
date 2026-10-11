@@ -1,0 +1,1477 @@
+{
+  "produce": [
+    {
+      "id": "trophy-species-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-species-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/species-prompt.txt",
+      "dimensions": [
+        464,
+        407
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        42.1
+      ],
+      "footAnchor": [
+        0.5,
+        0.98034
+      ]
+    },
+    {
+      "id": "trophy-species-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-species-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/species-prompt.txt",
+      "dimensions": [
+        527,
+        403
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        42.82
+      ],
+      "footAnchor": [
+        0.5,
+        0.97519
+      ]
+    },
+    {
+      "id": "trophy-species-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-species-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/species-prompt.txt",
+      "dimensions": [
+        563,
+        367
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        41.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.9782
+      ]
+    },
+    {
+      "id": "trophy-species-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-species-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/species-prompt.txt",
+      "dimensions": [
+        560,
+        471
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        60.56
+      ],
+      "footAnchor": [
+        0.5,
+        0.98301
+      ]
+    },
+    {
+      "id": "trophy-population-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-population-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/population-prompt.txt",
+      "dimensions": [
+        354,
+        341
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        46.24
+      ],
+      "footAnchor": [
+        0.5,
+        0.97654
+      ]
+    },
+    {
+      "id": "trophy-population-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-population-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/population-prompt.txt",
+      "dimensions": [
+        482,
+        345
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        40.08
+      ],
+      "footAnchor": [
+        0.5,
+        0.97101
+      ]
+    },
+    {
+      "id": "trophy-population-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-population-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/population-prompt.txt",
+      "dimensions": [
+        524,
+        453
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        55.33
+      ],
+      "footAnchor": [
+        0.5,
+        0.98234
+      ]
+    },
+    {
+      "id": "trophy-population-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-population-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/population-prompt.txt",
+      "dimensions": [
+        557,
+        510
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        65.92
+      ],
+      "footAnchor": [
+        0.5,
+        0.98431
+      ]
+    },
+    {
+      "id": "trophy-catches-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-catches-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/catches-prompt.txt",
+      "dimensions": [
+        373,
+        332
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        42.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ]
+    },
+    {
+      "id": "trophy-catches-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-catches-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/catches-prompt.txt",
+      "dimensions": [
+        482,
+        332
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        38.57
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ]
+    },
+    {
+      "id": "trophy-catches-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-catches-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/catches-prompt.txt",
+      "dimensions": [
+        581,
+        432
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        47.59
+      ],
+      "footAnchor": [
+        0.5,
+        0.98148
+      ]
+    },
+    {
+      "id": "trophy-catches-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-catches-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/catches-prompt.txt",
+      "dimensions": [
+        579,
+        446
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        55.46
+      ],
+      "footAnchor": [
+        0.5,
+        0.98206
+      ]
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-expeditions-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/expeditions-prompt.txt",
+      "dimensions": [
+        441,
+        357
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        38.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.97479
+      ]
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-expeditions-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/expeditions-prompt.txt",
+      "dimensions": [
+        466,
+        426
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        51.19
+      ],
+      "footAnchor": [
+        0.5,
+        0.97653
+      ]
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-expeditions-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/expeditions-prompt.txt",
+      "dimensions": [
+        545,
+        426
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        50.03
+      ],
+      "footAnchor": [
+        0.5,
+        0.97887
+      ]
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-expeditions-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/expeditions-prompt.txt",
+      "dimensions": [
+        541,
+        518
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        68.94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98069
+      ]
+    },
+    {
+      "id": "trophy-regions-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-regions-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/regions-prompt.txt",
+      "dimensions": [
+        431,
+        339
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        37.75
+      ],
+      "footAnchor": [
+        0.5,
+        0.9705
+      ]
+    },
+    {
+      "id": "trophy-regions-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-regions-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/regions-prompt.txt",
+      "dimensions": [
+        548,
+        417
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        42.61
+      ],
+      "footAnchor": [
+        0.5,
+        0.97602
+      ]
+    },
+    {
+      "id": "trophy-regions-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-regions-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/regions-prompt.txt",
+      "dimensions": [
+        497,
+        427
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        54.99
+      ],
+      "footAnchor": [
+        0.5,
+        0.98126
+      ]
+    },
+    {
+      "id": "trophy-regions-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-regions-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/regions-prompt.txt",
+      "dimensions": [
+        574,
+        476
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        59.71
+      ],
+      "footAnchor": [
+        0.5,
+        0.97899
+      ]
+    },
+    {
+      "id": "trophy-team-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-team-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/team-prompt.txt",
+      "dimensions": [
+        425,
+        380
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        42.92
+      ],
+      "footAnchor": [
+        0.5,
+        0.97368
+      ]
+    },
+    {
+      "id": "trophy-team-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-team-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/team-prompt.txt",
+      "dimensions": [
+        566,
+        417
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        41.26
+      ],
+      "footAnchor": [
+        0.5,
+        0.97842
+      ]
+    },
+    {
+      "id": "trophy-team-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-team-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/team-prompt.txt",
+      "dimensions": [
+        577,
+        444
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        49.25
+      ],
+      "footAnchor": [
+        0.5,
+        0.97523
+      ]
+    },
+    {
+      "id": "trophy-team-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-team-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/team-prompt.txt",
+      "dimensions": [
+        602,
+        491
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        58.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.98167
+      ]
+    },
+    {
+      "id": "trophy-care-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-care-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/care-prompt.txt",
+      "dimensions": [
+        387,
+        414
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        51.35
+      ],
+      "footAnchor": [
+        0.5,
+        0.97585
+      ]
+    },
+    {
+      "id": "trophy-care-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-care-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/care-prompt.txt",
+      "dimensions": [
+        415,
+        415
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        56.0
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ]
+    },
+    {
+      "id": "trophy-care-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-care-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/care-prompt.txt",
+      "dimensions": [
+        474,
+        461
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        62.24
+      ],
+      "footAnchor": [
+        0.5,
+        0.97831
+      ]
+    },
+    {
+      "id": "trophy-care-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-care-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/care-prompt.txt",
+      "dimensions": [
+        539,
+        504
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        67.32
+      ],
+      "footAnchor": [
+        0.5,
+        0.98016
+      ]
+    },
+    {
+      "id": "trophy-nursery-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-nursery-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/nursery-prompt.txt",
+      "dimensions": [
+        451,
+        382
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        40.66
+      ],
+      "footAnchor": [
+        0.5,
+        0.97382
+      ]
+    },
+    {
+      "id": "trophy-nursery-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-nursery-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/nursery-prompt.txt",
+      "dimensions": [
+        459,
+        416
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        50.75
+      ],
+      "footAnchor": [
+        0.5,
+        0.97596
+      ]
+    },
+    {
+      "id": "trophy-nursery-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-nursery-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/nursery-prompt.txt",
+      "dimensions": [
+        489,
+        531
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        69.5
+      ],
+      "footAnchor": [
+        0.5,
+        0.98117
+      ]
+    },
+    {
+      "id": "trophy-nursery-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-nursery-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/nursery-prompt.txt",
+      "dimensions": [
+        560,
+        552
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        70.97
+      ],
+      "footAnchor": [
+        0.5,
+        0.98188
+      ]
+    },
+    {
+      "id": "trophy-evolution-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-evolution-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/evolution-prompt.txt",
+      "dimensions": [
+        350,
+        372
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        51.02
+      ],
+      "footAnchor": [
+        0.5,
+        0.97312
+      ]
+    },
+    {
+      "id": "trophy-evolution-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-evolution-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/evolution-prompt.txt",
+      "dimensions": [
+        464,
+        496
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        59.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.98185
+      ]
+    },
+    {
+      "id": "trophy-evolution-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-evolution-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/evolution-prompt.txt",
+      "dimensions": [
+        503,
+        513
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        65.27
+      ],
+      "footAnchor": [
+        0.5,
+        0.98051
+      ]
+    },
+    {
+      "id": "trophy-evolution-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-evolution-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/evolution-prompt.txt",
+      "dimensions": [
+        528,
+        528
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        72.0
+      ],
+      "footAnchor": [
+        0.5,
+        0.98295
+      ]
+    },
+    {
+      "id": "trophy-shiny-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-shiny-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/shiny-prompt.txt",
+      "dimensions": [
+        417,
+        445
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        51.22
+      ],
+      "footAnchor": [
+        0.5,
+        0.97753
+      ]
+    },
+    {
+      "id": "trophy-shiny-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-shiny-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/shiny-prompt.txt",
+      "dimensions": [
+        461,
+        441
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        53.57
+      ],
+      "footAnchor": [
+        0.5,
+        0.97732
+      ]
+    },
+    {
+      "id": "trophy-shiny-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-shiny-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/shiny-prompt.txt",
+      "dimensions": [
+        489,
+        504
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        65.96
+      ],
+      "footAnchor": [
+        0.5,
+        0.98016
+      ]
+    },
+    {
+      "id": "trophy-shiny-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-shiny-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/shiny-prompt.txt",
+      "dimensions": [
+        551,
+        545
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        71.22
+      ],
+      "footAnchor": [
+        0.5,
+        0.98165
+      ]
+    },
+    {
+      "id": "trophy-decor-1",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-decor-1.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/decor-prompt.txt",
+      "dimensions": [
+        404,
+        378
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        48,
+        44.91
+      ],
+      "footAnchor": [
+        0.5,
+        0.97619
+      ]
+    },
+    {
+      "id": "trophy-decor-2",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-decor-2.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/decor-prompt.txt",
+      "dimensions": [
+        427,
+        387
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        56,
+        50.75
+      ],
+      "footAnchor": [
+        0.5,
+        0.97416
+      ]
+    },
+    {
+      "id": "trophy-decor-3",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-decor-3.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/decor-prompt.txt",
+      "dimensions": [
+        492,
+        419
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        64,
+        54.5
+      ],
+      "footAnchor": [
+        0.5,
+        0.98091
+      ]
+    },
+    {
+      "id": "trophy-decor-4",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-decor-4.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/decor-prompt.txt",
+      "dimensions": [
+        554,
+        465
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        72,
+        60.43
+      ],
+      "footAnchor": [
+        0.5,
+        0.9828
+      ]
+    },
+    {
+      "id": "trophy-special-nick",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-nick.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-1-prompt.txt",
+      "dimensions": [
+        484,
+        458
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        58.67
+      ],
+      "footAnchor": [
+        0.5,
+        0.98035
+      ]
+    },
+    {
+      "id": "trophy-special-favorite",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-favorite.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-1-prompt.txt",
+      "dimensions": [
+        434,
+        454
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        64.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.98238
+      ]
+    },
+    {
+      "id": "trophy-special-type-team",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-type-team.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-1-prompt.txt",
+      "dimensions": [
+        526,
+        423
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        49.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.97872
+      ]
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-bonus-find.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-1-prompt.txt",
+      "dimensions": [
+        476,
+        449
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        58.48
+      ],
+      "footAnchor": [
+        0.5,
+        0.98218
+      ]
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-nursery-expedition.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-2-prompt.txt",
+      "dimensions": [
+        514,
+        483
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        58.26
+      ],
+      "footAnchor": [
+        0.5,
+        0.9793
+      ]
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-family-expedition.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-2-prompt.txt",
+      "dimensions": [
+        587,
+        537
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        56.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.98138
+      ]
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-evolved-expedition.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-2-prompt.txt",
+      "dimensions": [
+        570,
+        523
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        56.89
+      ],
+      "footAnchor": [
+        0.5,
+        0.98279
+      ]
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-all-berries.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-2-prompt.txt",
+      "dimensions": [
+        555,
+        526
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        58.76
+      ],
+      "footAnchor": [
+        0.5,
+        0.98099
+      ]
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-berry-evolution.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-3-prompt.txt",
+      "dimensions": [
+        450,
+        503
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        69.3
+      ],
+      "footAnchor": [
+        0.5,
+        0.98211
+      ]
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-branch-choice.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-3-prompt.txt",
+      "dimensions": [
+        491,
+        491
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        62.0
+      ],
+      "footAnchor": [
+        0.5,
+        0.97963
+      ]
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-offspring-choice.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-3-prompt.txt",
+      "dimensions": [
+        536,
+        407
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        47.08
+      ],
+      "footAnchor": [
+        0.5,
+        0.98034
+      ]
+    },
+    {
+      "id": "trophy-special-all-plants",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-all-plants.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-3-prompt.txt",
+      "dimensions": [
+        502,
+        472
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        58.29
+      ],
+      "footAnchor": [
+        0.5,
+        0.98305
+      ]
+    },
+    {
+      "id": "trophy-special-three-pictures",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-three-pictures.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-4-prompt.txt",
+      "dimensions": [
+        543,
+        422
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        48.18
+      ],
+      "footAnchor": [
+        0.5,
+        0.9763
+      ]
+    },
+    {
+      "id": "trophy-special-mixed-furniture",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-mixed-furniture.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-4-prompt.txt",
+      "dimensions": [
+        543,
+        500
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        57.09
+      ],
+      "footAnchor": [
+        0.5,
+        0.98
+      ]
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-all-legends.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-4-prompt.txt",
+      "dimensions": [
+        527,
+        535
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        62.94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98131
+      ]
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-second-trait.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-4-prompt.txt",
+      "dimensions": [
+        525,
+        487
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        57.51
+      ],
+      "footAnchor": [
+        0.5,
+        0.97947
+      ]
+    },
+    {
+      "id": "trophy-special-retrain",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-retrain.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-5-prompt.txt",
+      "dimensions": [
+        468,
+        466
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        61.74
+      ],
+      "footAnchor": [
+        0.5,
+        0.98283
+      ]
+    },
+    {
+      "id": "trophy-special-rehome",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-rehome.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-5-prompt.txt",
+      "dimensions": [
+        517,
+        471
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        56.48
+      ],
+      "footAnchor": [
+        0.5,
+        0.98301
+      ]
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "source_crop": "room-layout-v2.png; achievements.png",
+      "output_path": "assets/trophy-special-xp-potion.png",
+      "strategy": "transparent 2x2 atlas generation; alpha-only technical crop",
+      "prompt_used": "_sources/special-5-prompt.txt",
+      "dimensions": [
+        472,
+        503
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "None material in contact review.",
+      "qa_status": "needs_parent_review",
+      "logicalSize": [
+        62,
+        66.07
+      ],
+      "footAnchor": [
+        0.5,
+        0.98012
+      ]
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "shelf-composition",
+      "implementation": "Use independent trophy alpha layers, logical width from manifest, base anchor aligned to the selected cabinet shelf surface; separate contact shadow underneath, cabinet foreground shelf edge above. Keep three logical slots. Locked album silhouettes derive from alpha in code.",
+      "notes": "Static room placement and all four cabinet combinations remain parent review.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "atlas generation",
+    "copy source and embed exact prompt",
+    "technical alpha crop",
+    "contact sheet review",
+    "parent shelf placement review"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "Visual contract uses small material trophies, no living creature sprites.",
+    "Approved team theme variation uses backpacks.",
+    "Individual per-atlas manifests preserve dimensions, crop rectangles and alpha bounds.",
+    "Foot anchor updated from nominal 0.92 to measured opaque bottom of each cut asset; parent must use manifest anchor."
+  ],
+  "count": 63
+}

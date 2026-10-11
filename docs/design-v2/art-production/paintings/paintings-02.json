@@ -1,0 +1,99 @@
+{
+  "source": "_sources/paintings-02.png",
+  "promptFile": "_sources/paintings-02-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "painting-ecruteak-lanterns",
+      "row": 0,
+      "col": 0,
+      "name": "ecruteak-lanterns",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-lake",
+      "row": 0,
+      "col": 1,
+      "name": "lake",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-pikachu-berries",
+      "row": 1,
+      "col": 0,
+      "name": "pikachu-berries",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-eevee-forest",
+      "row": 1,
+      "col": 1,
+      "name": "eevee-forest",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    }
+  ]
+}

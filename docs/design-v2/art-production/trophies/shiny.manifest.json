@@ -1,0 +1,225 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "trophy-shiny-1",
+      "row": 0,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 48,
+      "footAnchor": [
+        0.5,
+        0.97753
+      ],
+      "file": "trophies/assets/trophy-shiny-1.png",
+      "size": [
+        417,
+        445
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "alphaBoundsInCell": [
+        126,
+        144,
+        527,
+        573
+      ],
+      "cropInCell": [
+        118,
+        136,
+        535,
+        581
+      ],
+      "sha256": "36aa11a8ec5c7a26416665c580117ca6d5b56ce3152a4fd684a3ef24c976fdc3",
+      "source": "trophies/_sources/shiny.png",
+      "promptFile": "trophies/_sources/shiny-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        8,
+        8,
+        407,
+        435
+      ],
+      "logicalSize": [
+        48,
+        51.22
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-shiny-2",
+      "row": 0,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 56,
+      "footAnchor": [
+        0.5,
+        0.97732
+      ],
+      "file": "trophies/assets/trophy-shiny-2.png",
+      "size": [
+        461,
+        441
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "alphaBoundsInCell": [
+        70,
+        148,
+        515,
+        573
+      ],
+      "cropInCell": [
+        62,
+        140,
+        523,
+        581
+      ],
+      "sha256": "e348e44242b92a42273a2dbbc37bced97f185470e76b7dd9effa537bde2b4be7",
+      "source": "trophies/_sources/shiny.png",
+      "promptFile": "trophies/_sources/shiny-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        9,
+        453,
+        431
+      ],
+      "logicalSize": [
+        56,
+        53.57
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-shiny-3",
+      "row": 1,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 64,
+      "footAnchor": [
+        0.5,
+        0.98016
+      ],
+      "file": "trophies/assets/trophy-shiny-3.png",
+      "size": [
+        489,
+        504
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        96,
+        53,
+        569,
+        541
+      ],
+      "cropInCell": [
+        88,
+        45,
+        577,
+        549
+      ],
+      "sha256": "007bc41b6189d9ffc8dbeb01de77b1d327ff183b23797c74cde443c1e972cbbb",
+      "source": "trophies/_sources/shiny.png",
+      "promptFile": "trophies/_sources/shiny-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        8,
+        10,
+        479,
+        494
+      ],
+      "logicalSize": [
+        64,
+        65.96
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-shiny-4",
+      "row": 1,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 72,
+      "footAnchor": [
+        0.5,
+        0.98165
+      ],
+      "file": "trophies/assets/trophy-shiny-4.png",
+      "size": [
+        551,
+        545
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        33,
+        12,
+        568,
+        541
+      ],
+      "cropInCell": [
+        25,
+        4,
+        576,
+        549
+      ],
+      "sha256": "2115b9bb50dca9cb646c4cfcce78447882fcbb7967f11b07e98ea54cab72ec57",
+      "source": "trophies/_sources/shiny.png",
+      "promptFile": "trophies/_sources/shiny-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        8,
+        8,
+        541,
+        535
+      ],
+      "logicalSize": [
+        72,
+        71.22
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    }
+  ]
+}

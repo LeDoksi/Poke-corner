@@ -1,0 +1,143 @@
+{
+  "source": "_sources/rugs-blue-spaced.png",
+  "promptFile": "_sources/rugs-blue-spaced-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "rug-woven-blue",
+      "row": 0,
+      "col": 0,
+      "name": "woven-blue",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.504075,
+        0.959276
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "backEdgeAnchor": [
+        0.504075,
+        0.054299
+      ],
+      "backEdgeAnchorPixels": [
+        433.0,
+        12
+      ],
+      "actualAspect": 4.218905,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ]
+    },
+    {
+      "id": "rug-checkered-blue",
+      "row": 0,
+      "col": 1,
+      "name": "checkered-blue",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.501206,
+        0.959641
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "backEdgeAnchor": [
+        0.501206,
+        0.049327
+      ],
+      "backEdgeAnchorPixels": [
+        415.5,
+        11
+      ],
+      "actualAspect": 3.965686,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ]
+    },
+    {
+      "id": "rug-oval-blue",
+      "row": 1,
+      "col": 0,
+      "name": "oval-blue",
+      "category": "rugs",
+      "displayWidth": 720,
+      "footAnchor": [
+        0.5,
+        0.965909
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "backEdgeAnchor": [
+        0.5,
+        0.037879
+      ],
+      "backEdgeAnchorPixels": [
+        410.5,
+        10
+      ],
+      "actualAspect": 3.264228,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ]
+    },
+    {
+      "id": "rug-pokeball-blue",
+      "row": 1,
+      "col": 1,
+      "name": "pokeball-blue",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.5,
+        0.960784
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "backEdgeAnchor": [
+        0.5,
+        0.039216
+      ],
+      "backEdgeAnchorPixels": [
+        424.0,
+        10
+      ],
+      "actualAspect": 3.516949,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ]
+    }
+  ]
+}

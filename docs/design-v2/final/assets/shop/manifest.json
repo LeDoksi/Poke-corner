@@ -1,0 +1,204 @@
+{
+  "sourceSize": [
+    1448,
+    1086
+  ],
+  "iconSize": [
+    160,
+    160
+  ],
+  "items": [
+    {
+      "id": "treats",
+      "file": "treats.png",
+      "sourceCell": [
+        0,
+        0,
+        402,
+        386
+      ],
+      "sourceBounds": [
+        71,
+        53,
+        370,
+        372
+      ]
+    },
+    {
+      "id": "care-booster",
+      "file": "care-booster.png",
+      "sourceCell": [
+        402,
+        0,
+        752,
+        386
+      ],
+      "sourceBounds": [
+        68,
+        49,
+        256,
+        368
+      ]
+    },
+    {
+      "id": "lucky-charm",
+      "file": "lucky-charm.png",
+      "sourceCell": [
+        752,
+        0,
+        1090,
+        386
+      ],
+      "sourceBounds": [
+        50,
+        55,
+        269,
+        368
+      ]
+    },
+    {
+      "id": "evolution-stone",
+      "file": "evolution-stone.png",
+      "sourceCell": [
+        1090,
+        0,
+        1448,
+        386
+      ],
+      "sourceBounds": [
+        39,
+        89,
+        282,
+        368
+      ]
+    },
+    {
+      "id": "offspring-charm",
+      "file": "offspring-charm.png",
+      "sourceCell": [
+        0,
+        386,
+        402,
+        723
+      ],
+      "sourceBounds": [
+        73,
+        16,
+        354,
+        318
+      ]
+    },
+    {
+      "id": "xp-potion",
+      "file": "xp-potion.png",
+      "sourceCell": [
+        402,
+        386,
+        752,
+        723
+      ],
+      "sourceBounds": [
+        40,
+        16,
+        287,
+        323
+      ]
+    },
+    {
+      "id": "cheri",
+      "file": "cheri.png",
+      "sourceCell": [
+        752,
+        386,
+        1090,
+        723
+      ],
+      "sourceBounds": [
+        20,
+        24,
+        301,
+        326
+      ]
+    },
+    {
+      "id": "oran",
+      "file": "oran.png",
+      "sourceCell": [
+        1090,
+        386,
+        1448,
+        723
+      ],
+      "sourceBounds": [
+        40,
+        58,
+        288,
+        318
+      ]
+    },
+    {
+      "id": "aspear",
+      "file": "aspear.png",
+      "sourceCell": [
+        0,
+        723,
+        402,
+        1086
+      ],
+      "sourceBounds": [
+        74,
+        14,
+        335,
+        297
+      ]
+    },
+    {
+      "id": "pecha",
+      "file": "pecha.png",
+      "sourceCell": [
+        402,
+        723,
+        752,
+        1086
+      ],
+      "sourceBounds": [
+        23,
+        43,
+        324,
+        286
+      ]
+    },
+    {
+      "id": "chesto",
+      "file": "chesto.png",
+      "sourceCell": [
+        752,
+        723,
+        1090,
+        1086
+      ],
+      "sourceBounds": [
+        34,
+        35,
+        291,
+        303
+      ]
+    },
+    {
+      "id": "rawst",
+      "file": "rawst.png",
+      "sourceCell": [
+        1090,
+        723,
+        1448,
+        1086
+      ],
+      "sourceBounds": [
+        66,
+        0,
+        318,
+        311
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "source": "_sources/pillows-atlas-v1.png",
+  "promptFile": "_sources/pillows-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "bed-pillow-cream",
+      "name": "Подушка сливочная",
+      "category": "beds",
+      "row": 0,
+      "col": 0,
+      "cellRect": [
+        0,
+        0,
+        768,
+        650
+      ],
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ]
+    },
+    {
+      "id": "bed-pillow-sage",
+      "name": "Подушка шалфейная",
+      "category": "beds",
+      "row": 0,
+      "col": 1,
+      "cellRect": [
+        768,
+        0,
+        1536,
+        650
+      ],
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ]
+    }
+  ]
+}

@@ -19,6 +19,83 @@ public class BackgroundSaveWriterTests : IDisposable
 
     private int CoinsOnDisk() => new JsonSaveStore(SavePath).Load()!.ShopCoins;
 
+    private static Task Commit(BackgroundSaveWriter writer, SaveData snapshot) => writer.CommitAsync(snapshot);
+
+    [Fact]
+    public async Task Commit_CompletesOnlyAfterSnapshotIsOnDisk()
+    {
+        var writer = MakeWriter();
+        var task = Commit(writer, Snapshot(2));
+        Assert.False(task.IsCompleted);
+        Assert.False(File.Exists(SavePath));
+        _pending[0]();
+        await task;
+        Assert.Equal(2, CoinsOnDisk());
+    }
+
+    [Fact]
+    public async Task Commit_LaterPostRunsFirst_CommitsBeforeLaterWrite()
+    {
+        var writer = MakeWriter();
+        writer.Post(Snapshot(1));
+        var task = Commit(writer, Snapshot(2));
+        writer.Post(Snapshot(3));
+        _pending[2]();
+        await task;
+        _pending[1]();
+        _pending[0]();
+        Assert.Equal(3, CoinsOnDisk());
+    }
+
+    [Fact]
+    public async Task Commit_FlushRunsFirst_DoesNotLoseCommit()
+    {
+        var writer = MakeWriter();
+        var task = Commit(writer, Snapshot(2));
+        writer.Flush(Snapshot(3));
+        await task;
+        _pending[0]();
+        Assert.Equal(3, CoinsOnDisk());
+    }
+
+    [Fact]
+    public async Task Commit_DiskFailureIsReportedAndExistingFileIsUntouched()
+    {
+        var writer = MakeWriter();
+        writer.Flush(Snapshot(1));
+        Directory.CreateDirectory(SavePath + ".tmp");
+        var task = Commit(writer, Snapshot(2));
+        _pending[0]();
+        await Assert.ThrowsAnyAsync<Exception>(() => task);
+        Assert.Equal(1, CoinsOnDisk());
+    }
+
+    [Fact]
+    public async Task Commit_DeleteCancelsAcknowledgementAndQueuedWrite()
+    {
+        var writer = MakeWriter();
+        var task = Commit(writer, Snapshot(2));
+        writer.Delete();
+        _pending[0]();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => task);
+        Assert.False(File.Exists(SavePath));
+    }
+
+    [Fact]
+    public async Task Commit_DrainedFailure_LateCallbackDoesNotRetryFailedTransaction()
+    {
+        var writer = MakeWriter();
+        writer.Flush(Snapshot(1));
+        Directory.CreateDirectory(SavePath + ".tmp");
+        var task = Commit(writer, Snapshot(2));
+        writer.Post(Snapshot(3));
+        _pending[1]();
+        await Assert.ThrowsAnyAsync<Exception>(() => task);
+        Directory.Delete(SavePath + ".tmp");
+        _pending[0]();
+        Assert.Equal(1, CoinsOnDisk());
+    }
+
     /// The autosave is posted from the growth tick, whose thread owns the low-level input hooks;
     /// a disk stall there freezes the cursor system-wide, so the write must not happen inline.
     [Fact]

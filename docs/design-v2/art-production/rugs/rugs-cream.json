@@ -1,0 +1,163 @@
+{
+  "source": "_sources/rugs-cream-v2.png",
+  "promptFile": "_sources/rugs-cream-v2-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "rug-woven-cream",
+      "row": 0,
+      "col": 0,
+      "name": "woven-cream",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.502242,
+        0.956731
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        0,
+        895,
+        443
+      ],
+      "backEdgeAnchor": [
+        0.502242,
+        0.057692
+      ],
+      "backEdgeAnchorPixels": [
+        448.0,
+        12
+      ],
+      "actualAspect": 4.670213,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-checkered-cream",
+      "row": 0,
+      "col": 1,
+      "name": "checkered-cream",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498276,
+        0.956311
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        895,
+        0,
+        1774,
+        443
+      ],
+      "backEdgeAnchor": [
+        0.498276,
+        0.053398
+      ],
+      "backEdgeAnchorPixels": [
+        433.5,
+        11
+      ],
+      "actualAspect": 4.596774,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-oval-cream",
+      "row": 1,
+      "col": 0,
+      "name": "oval-cream",
+      "category": "rugs",
+      "displayWidth": 720,
+      "footAnchor": [
+        0.501746,
+        0.964143
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        443,
+        873,
+        887
+      ],
+      "backEdgeAnchor": [
+        0.501746,
+        0.047809
+      ],
+      "backEdgeAnchorPixels": [
+        431.0,
+        12
+      ],
+      "actualAspect": 3.636364,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-pokeball-cream",
+      "row": 1,
+      "col": 1,
+      "name": "pokeball-cream",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498885,
+        0.959091
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        873,
+        443,
+        1774,
+        887
+      ],
+      "backEdgeAnchor": [
+        0.498885,
+        0.045455
+      ],
+      "backEdgeAnchorPixels": [
+        447.5,
+        10
+      ],
+      "actualAspect": 4.383085,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    }
+  ]
+}

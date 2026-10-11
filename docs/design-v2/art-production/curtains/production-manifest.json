@@ -1,0 +1,530 @@
+{
+  "produce": [
+    {
+      "id": "curtain-short-blue",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-blue-v2.png",
+      "output_path": "curtains/assets/curtain-short-blue.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Image1 is exact edit target; image2 cream curtainatlas is constructionand clothpatternreference. Preserve image1 THREEcurtainsets positions, rodslope, rodendpoints, short vs long vs tied silhouettes, overall dustyblue colorpalette, lightandtransparentopening. Onlyrestore consistentmodel textiles to matchimage2: shortpair delicatelightfabric withsubtle palechecks; longlinenpair plain texturedlinen with NOprintedflowers,NOdecorativehemband,NOcrossmotifs; tiedbackpair subtle samepalechecks asshortmodel, NOleafsprigs orflowers orpictorialprint. Keep matchingfabric tiebackbands. Render instrongcrispvisiblepixelclusters with steppixel outlinesmatchingPokeCornerroom, avoidfinephoto grain orvectorgradients. Do notaddroom/wall/window/plant/text. Keep entireframe/gapbackground true alpha0 and fullyincludeeveryrodend/fabrichem. No changes to geometry orconcept.\n",
+      "dimensions": [
+        702,
+        307
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 2.366782,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.5,
+        0.970684
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.037037,
+          0.094463
+        ],
+        [
+          0.960114,
+          0.198697
+        ]
+      ],
+      "mountingAnchor": [
+        0.037037,
+        0.094463
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        185,
+        73,
+        339,
+        226
+      ],
+      "openingRect": [
+        0.263533,
+        0.237785,
+        0.482906,
+        0.736156
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-linen-blue",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-blue-v2.png",
+      "output_path": "curtains/assets/curtain-linen-blue.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Image1 is exact edit target; image2 cream curtainatlas is constructionand clothpatternreference. Preserve image1 THREEcurtainsets positions, rodslope, rodendpoints, short vs long vs tied silhouettes, overall dustyblue colorpalette, lightandtransparentopening. Onlyrestore consistentmodel textiles to matchimage2: shortpair delicatelightfabric withsubtle palechecks; longlinenpair plain texturedlinen with NOprintedflowers,NOdecorativehemband,NOcrossmotifs; tiedbackpair subtle samepalechecks asshortmodel, NOleafsprigs orflowers orpictorialprint. Keep matchingfabric tiebackbands. Render instrongcrispvisiblepixelclusters with steppixel outlinesmatchingPokeCornerroom, avoidfinephoto grain orvectorgradients. Do notaddroom/wall/window/plant/text. Keep entireframe/gapbackground true alpha0 and fullyincludeeveryrodend/fabrichem. No changes to geometry orconcept.\n",
+      "dimensions": [
+        695,
+        516
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 1.364185,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500719,
+        0.978682
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.040288,
+          0.052326
+        ],
+        [
+          0.959712,
+          0.120155
+        ]
+      ],
+      "mountingAnchor": [
+        0.040288,
+        0.052326
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        203,
+        83,
+        312,
+        425
+      ],
+      "openingRect": [
+        0.292086,
+        0.160853,
+        0.448921,
+        0.823643
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-tied-blue",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-blue-v2.png",
+      "output_path": "curtains/assets/curtain-tied-blue.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Image1 is exact edit target; image2 cream curtainatlas is constructionand clothpatternreference. Preserve image1 THREEcurtainsets positions, rodslope, rodendpoints, short vs long vs tied silhouettes, overall dustyblue colorpalette, lightandtransparentopening. Onlyrestore consistentmodel textiles to matchimage2: shortpair delicatelightfabric withsubtle palechecks; longlinenpair plain texturedlinen with NOprintedflowers,NOdecorativehemband,NOcrossmotifs; tiedbackpair subtle samepalechecks asshortmodel, NOleafsprigs orflowers orpictorialprint. Keep matchingfabric tiebackbands. Render instrongcrispvisiblepixelclusters with steppixel outlinesmatchingPokeCornerroom, avoidfinephoto grain orvectorgradients. Do notaddroom/wall/window/plant/text. Keep entireframe/gapbackground true alpha0 and fullyincludeeveryrodend/fabrichem. No changes to geometry orconcept.\n",
+      "dimensions": [
+        765,
+        522
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 1.480159,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500654,
+        0.982759
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.064052,
+          0.061303
+        ],
+        [
+          0.926797,
+          0.132184
+        ]
+      ],
+      "mountingAnchor": [
+        0.064052,
+        0.061303
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        216,
+        90,
+        342,
+        424
+      ],
+      "openingRect": [
+        0.282353,
+        0.172414,
+        0.447059,
+        0.812261
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-short-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-cream.png",
+      "output_path": "curtains/assets/curtain-short-cream.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate a NEW clean highresolution transparent spriteatlas of exactly THREE curtain SETS for approvedPokeCorner room. Use referenceimageonly forstyle/camera, no pixelcrops.2x2arrangement with top-left,top-right,bottom-left occupied, bottom-right COMPLETELYEMPTYtransparent. Eachset includes ONE warmwood hangingrod with simple roundendcaps plus TWO matching fabric panels, left andright. No background, no window, no outdoor, no wall, no plant, no labels, no grid, no text, no ringsfloatingelsewhere. Openingbetweenpanels is true alpha0, generous empty clearcentralspace, no sheerfabric spanningopening. Rod is identicallogical400pxwidth acrossallmodels; fullyinclude endpoints andfabricends. Reproduce LEFTWALL angleofapprovedroom: uprightfabricfallsvertical, rodtopline slopesgently DOWNtoRIGHT (~7degrees), rightpanel starts a littlelowerthanleft. Slightroomangle only, notisometric. Entirelongset logicalwidth400height365, broadcentralopening ~70percentwidth; narrowpanels stay atouterwindowedges, leavewindow-sillplantclear. Shortmodel genuinelyends MUCHHIGHER, totalheight~200withsamerodwidth, notshrunklongcurtains. Warm upper-leftdaylight ONfabric, crispclusteredpixelshading, cream/sage/dustybluecozyroommaterial, darkwarmbrownselectiveoutline, detailedbutnotphoto. No shadows outsideobjects, no glow or wall. Request3072x2048 productionatlasifavailable; identicalrodwidth and pixel densityfor3sets. All3sets in warm oatmeal cream, soft muted honey shadows; companion checks and borders warm taupe fabricpalette; rodwarmwoodunchanged. Top-left:lightSHORTcurtainpair, thinairyfabric in straightverticalfolds, hemsatabout55percentofthefullwindowheight, BOTHshortpanels endsaboveplants, no ties, samefullrodwidth. Top-right:LONGlinenpair, naturaltexturedlinen, severalnarrowstraightverticalfolds, fullwindowheight, hangs atfarouteredges leavingcenterwideopen, no ties, no floorpuddling. Bottom-left:TIEDBACKpair, full-length panelswithphysicalmatchingfabricbands gatheredoutward atmiddleheight, visible sweptcurvingfolds aboveband and flaredlowerhems, narrowcenteropening keptclear. Bottom-rightemptytransparent. Models mustdifferin silhouette/construction, notmerely recoloredsamepanels.\n",
+      "dimensions": [
+        674,
+        314
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 2.205387,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500742,
+        0.974522
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.034125,
+          0.076433
+        ],
+        [
+          0.965875,
+          0.232484
+        ]
+      ],
+      "mountingAnchor": [
+        0.034125,
+        0.076433
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        159,
+        86,
+        370,
+        220
+      ],
+      "openingRect": [
+        0.235905,
+        0.273885,
+        0.548961,
+        0.700637
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-linen-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-cream.png",
+      "output_path": "curtains/assets/curtain-linen-cream.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate a NEW clean highresolution transparent spriteatlas of exactly THREE curtain SETS for approvedPokeCorner room. Use referenceimageonly forstyle/camera, no pixelcrops.2x2arrangement with top-left,top-right,bottom-left occupied, bottom-right COMPLETELYEMPTYtransparent. Eachset includes ONE warmwood hangingrod with simple roundendcaps plus TWO matching fabric panels, left andright. No background, no window, no outdoor, no wall, no plant, no labels, no grid, no text, no ringsfloatingelsewhere. Openingbetweenpanels is true alpha0, generous empty clearcentralspace, no sheerfabric spanningopening. Rod is identicallogical400pxwidth acrossallmodels; fullyinclude endpoints andfabricends. Reproduce LEFTWALL angleofapprovedroom: uprightfabricfallsvertical, rodtopline slopesgently DOWNtoRIGHT (~7degrees), rightpanel starts a littlelowerthanleft. Slightroomangle only, notisometric. Entirelongset logicalwidth400height365, broadcentralopening ~70percentwidth; narrowpanels stay atouterwindowedges, leavewindow-sillplantclear. Shortmodel genuinelyends MUCHHIGHER, totalheight~200withsamerodwidth, notshrunklongcurtains. Warm upper-leftdaylight ONfabric, crispclusteredpixelshading, cream/sage/dustybluecozyroommaterial, darkwarmbrownselectiveoutline, detailedbutnotphoto. No shadows outsideobjects, no glow or wall. Request3072x2048 productionatlasifavailable; identicalrodwidth and pixel densityfor3sets. All3sets in warm oatmeal cream, soft muted honey shadows; companion checks and borders warm taupe fabricpalette; rodwarmwoodunchanged. Top-left:lightSHORTcurtainpair, thinairyfabric in straightverticalfolds, hemsatabout55percentofthefullwindowheight, BOTHshortpanels endsaboveplants, no ties, samefullrodwidth. Top-right:LONGlinenpair, naturaltexturedlinen, severalnarrowstraightverticalfolds, fullwindowheight, hangs atfarouteredges leavingcenterwideopen, no ties, no floorpuddling. Bottom-left:TIEDBACKpair, full-length panelswithphysicalmatchingfabricbands gatheredoutward atmiddleheight, visible sweptcurvingfolds aboveband and flaredlowerhems, narrowcenteropening keptclear. Bottom-rightemptytransparent. Models mustdifferin silhouette/construction, notmerely recoloredsamepanels.\n",
+      "dimensions": [
+        674,
+        507
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 1.339468,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500742,
+        0.982249
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.038576,
+          0.047337
+        ],
+        [
+          0.962908,
+          0.143984
+        ]
+      ],
+      "mountingAnchor": [
+        0.038576,
+        0.047337
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        169,
+        93,
+        352,
+        406
+      ],
+      "openingRect": [
+        0.250742,
+        0.183432,
+        0.522255,
+        0.800789
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-tied-cream",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-cream.png",
+      "output_path": "curtains/assets/curtain-tied-cream.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate a NEW clean highresolution transparent spriteatlas of exactly THREE curtain SETS for approvedPokeCorner room. Use referenceimageonly forstyle/camera, no pixelcrops.2x2arrangement with top-left,top-right,bottom-left occupied, bottom-right COMPLETELYEMPTYtransparent. Eachset includes ONE warmwood hangingrod with simple roundendcaps plus TWO matching fabric panels, left andright. No background, no window, no outdoor, no wall, no plant, no labels, no grid, no text, no ringsfloatingelsewhere. Openingbetweenpanels is true alpha0, generous empty clearcentralspace, no sheerfabric spanningopening. Rod is identicallogical400pxwidth acrossallmodels; fullyinclude endpoints andfabricends. Reproduce LEFTWALL angleofapprovedroom: uprightfabricfallsvertical, rodtopline slopesgently DOWNtoRIGHT (~7degrees), rightpanel starts a littlelowerthanleft. Slightroomangle only, notisometric. Entirelongset logicalwidth400height365, broadcentralopening ~70percentwidth; narrowpanels stay atouterwindowedges, leavewindow-sillplantclear. Shortmodel genuinelyends MUCHHIGHER, totalheight~200withsamerodwidth, notshrunklongcurtains. Warm upper-leftdaylight ONfabric, crispclusteredpixelshading, cream/sage/dustybluecozyroommaterial, darkwarmbrownselectiveoutline, detailedbutnotphoto. No shadows outsideobjects, no glow or wall. Request3072x2048 productionatlasifavailable; identicalrodwidth and pixel densityfor3sets. All3sets in warm oatmeal cream, soft muted honey shadows; companion checks and borders warm taupe fabricpalette; rodwarmwoodunchanged. Top-left:lightSHORTcurtainpair, thinairyfabric in straightverticalfolds, hemsatabout55percentofthefullwindowheight, BOTHshortpanels endsaboveplants, no ties, samefullrodwidth. Top-right:LONGlinenpair, naturaltexturedlinen, severalnarrowstraightverticalfolds, fullwindowheight, hangs atfarouteredges leavingcenterwideopen, no ties, no floorpuddling. Bottom-left:TIEDBACKpair, full-length panelswithphysicalmatchingfabricbands gatheredoutward atmiddleheight, visible sweptcurvingfolds aboveband and flaredlowerhems, narrowcenteropening keptclear. Bottom-rightemptytransparent. Models mustdifferin silhouette/construction, notmerely recoloredsamepanels.\n",
+      "dimensions": [
+        694,
+        494
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 1.418067,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.49928,
+        0.981781
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.048991,
+          0.052632
+        ],
+        [
+          0.95389,
+          0.147773
+        ]
+      ],
+      "mountingAnchor": [
+        0.048991,
+        0.052632
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        179,
+        93,
+        358,
+        393
+      ],
+      "openingRect": [
+        0.257925,
+        0.188259,
+        0.51585,
+        0.795547
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-short-sage",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-sage-v2.png",
+      "output_path": "curtains/assets/curtain-short-sage.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Image1 is exact edit target; image2 cream curtainatlas is constructionand clothpatternreference. Preserve image1 THREEcurtainsets positions, rodslope, rodendpoints, short vs long vs tied silhouettes, overall sagegreen colorpalette, lightandtransparentopening. Onlyrestore consistentmodel textiles to matchimage2: shortpair delicatelightfabric withsubtle palechecks; longlinenpair plain texturedlinen with NOprintedflowers,NOdecorativehemband,NOcrossmotifs; tiedbackpair subtle samepalechecks asshortmodel, NOleafsprigs orflowers orpictorialprint. Keep matchingfabric tiebackbands. Render instrongcrispvisiblepixelclusters with steppixel outlinesmatchingPokeCornerroom, avoidfinephoto grain orvectorgradients. Do notaddroom/wall/window/plant/text. Keep entireframe/gapbackground true alpha0 and fullyincludeeveryrodend/fabrichem. No changes to geometry orconcept.\n",
+      "dimensions": [
+        712,
+        334
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 2.192429,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.499298,
+        0.973054
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.033708,
+          0.071856
+        ],
+        [
+          0.962079,
+          0.206587
+        ]
+      ],
+      "mountingAnchor": [
+        0.033708,
+        0.071856
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        190,
+        82,
+        343,
+        244
+      ],
+      "openingRect": [
+        0.266854,
+        0.245509,
+        0.481742,
+        0.730539
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-linen-sage",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-sage-v2.png",
+      "output_path": "curtains/assets/curtain-linen-sage.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Image1 is exact edit target; image2 cream curtainatlas is constructionand clothpatternreference. Preserve image1 THREEcurtainsets positions, rodslope, rodendpoints, short vs long vs tied silhouettes, overall sagegreen colorpalette, lightandtransparentopening. Onlyrestore consistentmodel textiles to matchimage2: shortpair delicatelightfabric withsubtle palechecks; longlinenpair plain texturedlinen with NOprintedflowers,NOdecorativehemband,NOcrossmotifs; tiedbackpair subtle samepalechecks asshortmodel, NOleafsprigs orflowers orpictorialprint. Keep matchingfabric tiebackbands. Render instrongcrispvisiblepixelclusters with steppixel outlinesmatchingPokeCornerroom, avoidfinephoto grain orvectorgradients. Do notaddroom/wall/window/plant/text. Keep entireframe/gapbackground true alpha0 and fullyincludeeveryrodend/fabrichem. No changes to geometry orconcept.\n",
+      "dimensions": [
+        698,
+        536
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 1.312741,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.5,
+        0.983209
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.035817,
+          0.048507
+        ],
+        [
+          0.971347,
+          0.134328
+        ]
+      ],
+      "mountingAnchor": [
+        0.035817,
+        0.048507
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        194,
+        93,
+        322,
+        435
+      ],
+      "openingRect": [
+        0.277937,
+        0.173507,
+        0.461318,
+        0.811567
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-tied-sage",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved style/camera reference only, no mock pixels shipped)",
+      "source_atlas": "curtains/_sources/curtains-sage-v2.png",
+      "output_path": "curtains/assets/curtain-tied-sage.png",
+      "strategy": "standalone native transparent generation; one bounded cleanup; shared technical alpha slicing",
+      "prompt_used": "Image1 is exact edit target; image2 cream curtainatlas is constructionand clothpatternreference. Preserve image1 THREEcurtainsets positions, rodslope, rodendpoints, short vs long vs tied silhouettes, overall sagegreen colorpalette, lightandtransparentopening. Onlyrestore consistentmodel textiles to matchimage2: shortpair delicatelightfabric withsubtle palechecks; longlinenpair plain texturedlinen with NOprintedflowers,NOdecorativehemband,NOcrossmotifs; tiedbackpair subtle samepalechecks asshortmodel, NOleafsprigs orflowers orpictorialprint. Keep matchingfabric tiebackbands. Render instrongcrispvisiblepixelclusters with steppixel outlinesmatchingPokeCornerroom, avoidfinephoto grain orvectorgradients. Do notaddroom/wall/window/plant/text. Keep entireframe/gapbackground true alpha0 and fullyincludeeveryrodend/fabrichem. No changes to geometry orconcept.\n",
+      "dimensions": [
+        746,
+        473
+      ],
+      "format": "png",
+      "transparency": "true RGBA; native alpha preserved",
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "actualAspect": 1.598684,
+      "displayWidth": 275,
+      "footAnchor": [
+        0.50067,
+        0.980973
+      ],
+      "backEdgeAnchor": null,
+      "rodEndpoints": [
+        [
+          0.053619,
+          0.061311
+        ],
+        [
+          0.955764,
+          0.145877
+        ]
+      ],
+      "mountingAnchor": [
+        0.053619,
+        0.061311
+      ],
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "placement_qa": "pending parent static full-room and swap combinations",
+      "openingRectPixels": [
+        228,
+        88,
+        306,
+        377
+      ],
+      "openingRect": [
+        0.30563,
+        0.186047,
+        0.410188,
+        0.79704
+      ],
+      "openingVerificationAlphaThreshold": 8
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "curtains-composition",
+      "implementation": "Separate rod-and-panel RGBA image layer on left-window plane. Mount rodEndpoints on fixed window anchors, uniformly scale all models by rod span so short model stays short. Architecture/window/outdoors/plant are separate layers. Transparent opening reveals window. Check curtain/plant alpha intersections; no baked caption or control.",
+      "notes": "Scale whole room and anchored children together responsively. Parent owns app implementation; static composites still required.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "Generate bounded transparent category atlases",
+    "One cleanup for unrequested motifs/style/geometry",
+    "Inspect white alpha plates and complete native outlines",
+    "Shared split-atlas.py cut at real empty gaps",
+    "Record back edges / rod mounts and parent composite checks"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "No software implementation or final room-copy edits.",
+    "Preserve native pixels; no nonuniform stretching or background painting.",
+    "Files in _sources are references/retries/QA only; assets directory contains deliverables."
+  ]
+}

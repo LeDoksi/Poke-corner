@@ -1,0 +1,7323 @@
+{
+  "status": "feasibility-audit-not-recipes",
+  "dataRevision": "c80757193bd0889054e36f4209762360bdaa4b95",
+  "additionalDraftCriterion": "Every child shares at least one common parent type. This thematic selection criterion is stricter than the accepted parent compatibility rule, not a newly accepted rule.",
+  "potentialSharedTypePairs": 71225,
+  "activeSharedTypePairs": 50685,
+  "withoutCandidate": [],
+  "activeWithoutActiveParents": [],
+  "legendsWithoutActiveRarePair": [],
+  "rarePairCountsByType": {
+    "bug": 28,
+    "dark": 36,
+    "dragon": 351,
+    "electric": 21,
+    "fairy": 6,
+    "fighting": 55,
+    "fire": 28,
+    "flying": 105,
+    "ghost": 91,
+    "grass": 6,
+    "ground": 28,
+    "ice": 21,
+    "normal": 231,
+    "poison": 10,
+    "psychic": 45,
+    "rock": 55,
+    "steel": 66,
+    "water": 28
+  },
+  "candidates": [
+    {
+      "id": 1,
+      "name": "bulbasaur",
+      "rarity": "Uncommon",
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "available": true,
+      "full": 11118,
+      "activeParents": 6693,
+      "rareOnlyParents": 30,
+      "activeRareOnlyParents": 16
+    },
+    {
+      "id": 4,
+      "name": "charmander",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 7,
+      "name": "squirtle",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 10,
+      "name": "caterpie",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 13,
+      "name": "weedle",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "poison"
+      ],
+      "available": true,
+      "full": 7361,
+      "activeParents": 5159,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 16,
+      "name": "pidgey",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 19,
+      "name": "rattata",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 21,
+      "name": "spearow",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 23,
+      "name": "ekans",
+      "rarity": "Common",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 27,
+      "name": "sandshrew",
+      "rarity": "Common",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 29,
+      "name": "nidoran-f",
+      "rarity": "Common",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 32,
+      "name": "nidoran-m",
+      "rarity": "Common",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 37,
+      "name": "vulpix",
+      "rarity": "Common",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 41,
+      "name": "zubat",
+      "rarity": "Common",
+      "types": [
+        "poison",
+        "flying"
+      ],
+      "available": true,
+      "full": 9098,
+      "activeParents": 6963,
+      "rareOnlyParents": 168,
+      "activeRareOnlyParents": 115
+    },
+    {
+      "id": 43,
+      "name": "oddish",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "available": true,
+      "full": 11118,
+      "activeParents": 6693,
+      "rareOnlyParents": 30,
+      "activeRareOnlyParents": 16
+    },
+    {
+      "id": 46,
+      "name": "paras",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "grass"
+      ],
+      "available": true,
+      "full": 11960,
+      "activeParents": 7553,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 34
+    },
+    {
+      "id": 48,
+      "name": "venonat",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "poison"
+      ],
+      "available": true,
+      "full": 7361,
+      "activeParents": 5159,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 50,
+      "name": "diglett",
+      "rarity": "Common",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 52,
+      "name": "meowth",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 54,
+      "name": "psyduck",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 56,
+      "name": "mankey",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 58,
+      "name": "growlithe",
+      "rarity": "Common",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 60,
+      "name": "poliwag",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 63,
+      "name": "abra",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 66,
+      "name": "machop",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 69,
+      "name": "bellsprout",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "available": true,
+      "full": 11118,
+      "activeParents": 6693,
+      "rareOnlyParents": 30,
+      "activeRareOnlyParents": 16
+    },
+    {
+      "id": 72,
+      "name": "tentacool",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "poison"
+      ],
+      "available": true,
+      "full": 14939,
+      "activeParents": 11388,
+      "rareOnlyParents": 70,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 74,
+      "name": "geodude",
+      "rarity": "Common",
+      "types": [
+        "rock",
+        "ground"
+      ],
+      "available": true,
+      "full": 5301,
+      "activeParents": 4398,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 80
+    },
+    {
+      "id": 77,
+      "name": "ponyta",
+      "rarity": "Common",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 79,
+      "name": "slowpoke",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "psychic"
+      ],
+      "available": true,
+      "full": 16668,
+      "activeParents": 12577,
+      "rareOnlyParents": 160,
+      "activeRareOnlyParents": 73
+    },
+    {
+      "id": 81,
+      "name": "magnemite",
+      "rarity": "Common",
+      "types": [
+        "electric",
+        "steel"
+      ],
+      "available": true,
+      "full": 4291,
+      "activeParents": 2863,
+      "rareOnlyParents": 156,
+      "activeRareOnlyParents": 87
+    },
+    {
+      "id": 83,
+      "name": "farfetchd",
+      "rarity": "Rare",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 1810,
+      "activeParents": 1444,
+      "rareOnlyParents": 367,
+      "activeRareOnlyParents": 301
+    },
+    {
+      "id": 84,
+      "name": "doduo",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 86,
+      "name": "seel",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 88,
+      "name": "grimer",
+      "rarity": "Common",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 90,
+      "name": "shellder",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 92,
+      "name": "gastly",
+      "rarity": "Common",
+      "types": [
+        "ghost",
+        "poison"
+      ],
+      "available": true,
+      "full": 5334,
+      "activeParents": 3291,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 101
+    },
+    {
+      "id": 95,
+      "name": "onix",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "ground"
+      ],
+      "available": true,
+      "full": 1536,
+      "activeParents": 1216,
+      "rareOnlyParents": 101,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 96,
+      "name": "drowzee",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 98,
+      "name": "krabby",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 100,
+      "name": "voltorb",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 102,
+      "name": "exeggcute",
+      "rarity": "Uncommon",
+      "types": [
+        "grass",
+        "psychic"
+      ],
+      "available": true,
+      "full": 12919,
+      "activeParents": 7960,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 104,
+      "name": "cubone",
+      "rarity": "Common",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 108,
+      "name": "lickitung",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 109,
+      "name": "koffing",
+      "rarity": "Common",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 111,
+      "name": "rhyhorn",
+      "rarity": "Uncommon",
+      "types": [
+        "ground",
+        "rock"
+      ],
+      "available": true,
+      "full": 5301,
+      "activeParents": 4398,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 80
+    },
+    {
+      "id": 114,
+      "name": "tangela",
+      "rarity": "Rare",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 1431,
+      "activeParents": 741,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 3
+    },
+    {
+      "id": 115,
+      "name": "kangaskhan",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 116,
+      "name": "horsea",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 118,
+      "name": "goldeen",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 120,
+      "name": "staryu",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 123,
+      "name": "scyther",
+      "rarity": "Rare",
+      "types": [
+        "bug",
+        "flying"
+      ],
+      "available": true,
+      "full": 1233,
+      "activeParents": 883,
+      "rareOnlyParents": 172,
+      "activeRareOnlyParents": 112
+    },
+    {
+      "id": 127,
+      "name": "pinsir",
+      "rarity": "Rare",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 253,
+      "activeParents": 190,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 128,
+      "name": "tauros",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 129,
+      "name": "magikarp",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 131,
+      "name": "lapras",
+      "rarity": "Rare",
+      "types": [
+        "water",
+        "ice"
+      ],
+      "available": true,
+      "full": 2535,
+      "activeParents": 1771,
+      "rareOnlyParents": 73,
+      "activeRareOnlyParents": 36
+    },
+    {
+      "id": 132,
+      "name": "ditto",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 133,
+      "name": "eevee",
+      "rarity": "Uncommon",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 137,
+      "name": "porygon",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 138,
+      "name": "omanyte",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "water"
+      ],
+      "available": true,
+      "full": 14211,
+      "activeParents": 11224,
+      "rareOnlyParents": 133,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 140,
+      "name": "kabuto",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "water"
+      ],
+      "available": true,
+      "full": 14211,
+      "activeParents": 11224,
+      "rareOnlyParents": 133,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 142,
+      "name": "aerodactyl",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "flying"
+      ],
+      "available": true,
+      "full": 8403,
+      "activeParents": 6830,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 160
+    },
+    {
+      "id": 144,
+      "name": "articuno",
+      "rarity": "Legendary",
+      "types": [
+        "ice",
+        "flying"
+      ],
+      "available": true,
+      "full": 456,
+      "activeParents": 331,
+      "rareOnlyParents": 189,
+      "activeRareOnlyParents": 126
+    },
+    {
+      "id": 145,
+      "name": "zapdos",
+      "rarity": "Legendary",
+      "types": [
+        "electric",
+        "flying"
+      ],
+      "available": true,
+      "full": 498,
+      "activeParents": 354,
+      "rareOnlyParents": 189,
+      "activeRareOnlyParents": 126
+    },
+    {
+      "id": 146,
+      "name": "moltres",
+      "rarity": "Legendary",
+      "types": [
+        "fire",
+        "flying"
+      ],
+      "available": true,
+      "full": 497,
+      "activeParents": 381,
+      "rareOnlyParents": 189,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 147,
+      "name": "dratini",
+      "rarity": "Rare",
+      "types": [
+        "dragon"
+      ],
+      "available": true,
+      "full": 1540,
+      "activeParents": 1176,
+      "rareOnlyParents": 496,
+      "activeRareOnlyParents": 325
+    },
+    {
+      "id": 150,
+      "name": "mewtwo",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 151,
+      "name": "mew",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 152,
+      "name": "chikorita",
+      "rarity": "Uncommon",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 155,
+      "name": "cyndaquil",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 158,
+      "name": "totodile",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 161,
+      "name": "sentret",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 163,
+      "name": "hoothoot",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 165,
+      "name": "ledyba",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "flying"
+      ],
+      "available": true,
+      "full": 9807,
+      "activeParents": 7690,
+      "rareOnlyParents": 198,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 167,
+      "name": "spinarak",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "poison"
+      ],
+      "available": true,
+      "full": 7361,
+      "activeParents": 5159,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 170,
+      "name": "chinchou",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "electric"
+      ],
+      "available": true,
+      "full": 13906,
+      "activeParents": 10720,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 172,
+      "name": "pichu",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 173,
+      "name": "cleffa",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 174,
+      "name": "igglybuff",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "fairy"
+      ],
+      "available": true,
+      "full": 10335,
+      "activeParents": 7539,
+      "rareOnlyParents": 263,
+      "activeRareOnlyParents": 237
+    },
+    {
+      "id": 175,
+      "name": "togepi",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 177,
+      "name": "natu",
+      "rarity": "Common",
+      "types": [
+        "psychic",
+        "flying"
+      ],
+      "available": true,
+      "full": 10818,
+      "activeParents": 8146,
+      "rareOnlyParents": 258,
+      "activeRareOnlyParents": 150
+    },
+    {
+      "id": 179,
+      "name": "mareep",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 187,
+      "name": "hoppip",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "flying"
+      ],
+      "available": true,
+      "full": 13643,
+      "activeParents": 9307,
+      "rareOnlyParents": 168,
+      "activeRareOnlyParents": 111
+    },
+    {
+      "id": 190,
+      "name": "aipom",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 191,
+      "name": "sunkern",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 193,
+      "name": "yanma",
+      "rarity": "Uncommon",
+      "types": [
+        "bug",
+        "flying"
+      ],
+      "available": true,
+      "full": 9807,
+      "activeParents": 7690,
+      "rareOnlyParents": 198,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 194,
+      "name": "wooper",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "ground"
+      ],
+      "available": true,
+      "full": 14301,
+      "activeParents": 11498,
+      "rareOnlyParents": 100,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 198,
+      "name": "murkrow",
+      "rarity": "Rare",
+      "types": [
+        "dark",
+        "flying"
+      ],
+      "available": true,
+      "full": 1614,
+      "activeParents": 1053,
+      "rareOnlyParents": 211,
+      "activeRareOnlyParents": 119
+    },
+    {
+      "id": 200,
+      "name": "misdreavus",
+      "rarity": "Rare",
+      "types": [
+        "ghost"
+      ],
+      "available": true,
+      "full": 703,
+      "activeParents": 300,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 78
+    },
+    {
+      "id": 201,
+      "name": "unown",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 203,
+      "name": "girafarig",
+      "rarity": "Uncommon",
+      "types": [
+        "normal",
+        "psychic"
+      ],
+      "available": true,
+      "full": 13425,
+      "activeParents": 9616,
+      "rareOnlyParents": 355,
+      "activeRareOnlyParents": 275
+    },
+    {
+      "id": 204,
+      "name": "pineco",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 206,
+      "name": "dunsparce",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 207,
+      "name": "gligar",
+      "rarity": "Uncommon",
+      "types": [
+        "ground",
+        "flying"
+      ],
+      "available": true,
+      "full": 8478,
+      "activeParents": 7098,
+      "rareOnlyParents": 198,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 209,
+      "name": "snubbull",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 211,
+      "name": "qwilfish",
+      "rarity": "Rare",
+      "types": [
+        "water",
+        "poison"
+      ],
+      "available": true,
+      "full": 2511,
+      "activeParents": 1660,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 27
+    },
+    {
+      "id": 213,
+      "name": "shuckle",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "rock"
+      ],
+      "available": true,
+      "full": 6713,
+      "activeParents": 5077,
+      "rareOnlyParents": 123,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 214,
+      "name": "heracross",
+      "rarity": "Rare",
+      "types": [
+        "bug",
+        "fighting"
+      ],
+      "available": true,
+      "full": 1196,
+      "activeParents": 717,
+      "rareOnlyParents": 111,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 215,
+      "name": "sneasel",
+      "rarity": "Uncommon",
+      "types": [
+        "dark",
+        "ice"
+      ],
+      "available": true,
+      "full": 3358,
+      "activeParents": 2197,
+      "rareOnlyParents": 127,
+      "activeRareOnlyParents": 57
+    },
+    {
+      "id": 216,
+      "name": "teddiursa",
+      "rarity": "Uncommon",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 218,
+      "name": "slugma",
+      "rarity": "Common",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 220,
+      "name": "swinub",
+      "rarity": "Common",
+      "types": [
+        "ice",
+        "ground"
+      ],
+      "available": true,
+      "full": 3781,
+      "activeParents": 3165,
+      "rareOnlyParents": 81,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 222,
+      "name": "corsola",
+      "rarity": "Uncommon",
+      "types": [
+        "water",
+        "rock"
+      ],
+      "available": true,
+      "full": 14211,
+      "activeParents": 11224,
+      "rareOnlyParents": 133,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 223,
+      "name": "remoraid",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 225,
+      "name": "delibird",
+      "rarity": "Rare",
+      "types": [
+        "ice",
+        "flying"
+      ],
+      "available": true,
+      "full": 1315,
+      "activeParents": 934,
+      "rareOnlyParents": 164,
+      "activeRareOnlyParents": 106
+    },
+    {
+      "id": 227,
+      "name": "skarmory",
+      "rarity": "Rare",
+      "types": [
+        "steel",
+        "flying"
+      ],
+      "available": true,
+      "full": 1693,
+      "activeParents": 1231,
+      "rareOnlyParents": 241,
+      "activeRareOnlyParents": 146
+    },
+    {
+      "id": 228,
+      "name": "houndour",
+      "rarity": "Uncommon",
+      "types": [
+        "dark",
+        "fire"
+      ],
+      "available": true,
+      "full": 5435,
+      "activeParents": 3455,
+      "rareOnlyParents": 127,
+      "activeRareOnlyParents": 64
+    },
+    {
+      "id": 231,
+      "name": "phanpy",
+      "rarity": "Uncommon",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 234,
+      "name": "stantler",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 235,
+      "name": "smeargle",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 236,
+      "name": "tyrogue",
+      "rarity": "Uncommon",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 238,
+      "name": "smoochum",
+      "rarity": "Rare",
+      "types": [
+        "ice",
+        "psychic"
+      ],
+      "available": true,
+      "full": 1809,
+      "activeParents": 1133,
+      "rareOnlyParents": 119,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 239,
+      "name": "elekid",
+      "rarity": "Rare",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 300,
+      "activeParents": 210,
+      "rareOnlyParents": 28,
+      "activeRareOnlyParents": 15
+    },
+    {
+      "id": 240,
+      "name": "magby",
+      "rarity": "Rare",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 1540,
+      "activeParents": 946,
+      "rareOnlyParents": 28,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 241,
+      "name": "miltank",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 243,
+      "name": "raikou",
+      "rarity": "Legendary",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 120,
+      "activeParents": 78,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 244,
+      "name": "entei",
+      "rarity": "Legendary",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 120,
+      "activeParents": 105,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 245,
+      "name": "suicune",
+      "rarity": "Legendary",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 153,
+      "activeParents": 91,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 246,
+      "name": "larvitar",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "ground"
+      ],
+      "available": true,
+      "full": 1536,
+      "activeParents": 1216,
+      "rareOnlyParents": 101,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 249,
+      "name": "lugia",
+      "rarity": "Legendary",
+      "types": [
+        "psychic",
+        "flying"
+      ],
+      "available": true,
+      "full": 1044,
+      "activeParents": 741,
+      "rareOnlyParents": 258,
+      "activeRareOnlyParents": 150
+    },
+    {
+      "id": 250,
+      "name": "ho-oh",
+      "rarity": "Legendary",
+      "types": [
+        "fire",
+        "flying"
+      ],
+      "available": true,
+      "full": 497,
+      "activeParents": 381,
+      "rareOnlyParents": 189,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 251,
+      "name": "celebi",
+      "rarity": "Legendary",
+      "types": [
+        "psychic",
+        "grass"
+      ],
+      "available": true,
+      "full": 743,
+      "activeParents": 501,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 252,
+      "name": "treecko",
+      "rarity": "Uncommon",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 255,
+      "name": "torchic",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 258,
+      "name": "mudkip",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 261,
+      "name": "poochyena",
+      "rarity": "Common",
+      "types": [
+        "dark"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1378,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 36
+    },
+    {
+      "id": 263,
+      "name": "zigzagoon",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 265,
+      "name": "wurmple",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 270,
+      "name": "lotad",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "grass"
+      ],
+      "available": true,
+      "full": 19502,
+      "activeParents": 13739,
+      "rareOnlyParents": 70,
+      "activeRareOnlyParents": 34
+    },
+    {
+      "id": 273,
+      "name": "seedot",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 276,
+      "name": "taillow",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 278,
+      "name": "wingull",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "flying"
+      ],
+      "available": true,
+      "full": 17385,
+      "activeParents": 13912,
+      "rareOnlyParents": 205,
+      "activeRareOnlyParents": 130
+    },
+    {
+      "id": 280,
+      "name": "ralts",
+      "rarity": "Common",
+      "types": [
+        "psychic",
+        "fairy"
+      ],
+      "available": true,
+      "full": 6982,
+      "activeParents": 4714,
+      "rareOnlyParents": 115,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 283,
+      "name": "surskit",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "water"
+      ],
+      "available": true,
+      "full": 15717,
+      "activeParents": 12180,
+      "rareOnlyParents": 100,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 285,
+      "name": "shroomish",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 287,
+      "name": "slakoth",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 290,
+      "name": "nincada",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "ground"
+      ],
+      "available": true,
+      "full": 6796,
+      "activeParents": 5349,
+      "rareOnlyParents": 90,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 293,
+      "name": "whismur",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 296,
+      "name": "makuhita",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 298,
+      "name": "azurill",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "fairy"
+      ],
+      "available": true,
+      "full": 10335,
+      "activeParents": 7539,
+      "rareOnlyParents": 263,
+      "activeRareOnlyParents": 237
+    },
+    {
+      "id": 299,
+      "name": "nosepass",
+      "rarity": "Common",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 300,
+      "name": "skitty",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 302,
+      "name": "sableye",
+      "rarity": "Rare",
+      "types": [
+        "dark",
+        "ghost"
+      ],
+      "available": true,
+      "full": 1333,
+      "activeParents": 651,
+      "rareOnlyParents": 156,
+      "activeRareOnlyParents": 106
+    },
+    {
+      "id": 303,
+      "name": "mawile",
+      "rarity": "Rare",
+      "types": [
+        "steel",
+        "fairy"
+      ],
+      "available": true,
+      "full": 912,
+      "activeParents": 663,
+      "rareOnlyParents": 111,
+      "activeRareOnlyParents": 58
+    },
+    {
+      "id": 304,
+      "name": "aron",
+      "rarity": "Common",
+      "types": [
+        "steel",
+        "rock"
+      ],
+      "available": true,
+      "full": 4629,
+      "activeParents": 3391,
+      "rareOnlyParents": 198,
+      "activeRareOnlyParents": 121
+    },
+    {
+      "id": 307,
+      "name": "meditite",
+      "rarity": "Common",
+      "types": [
+        "fighting",
+        "psychic"
+      ],
+      "available": true,
+      "full": 7605,
+      "activeParents": 4998,
+      "rareOnlyParents": 196,
+      "activeRareOnlyParents": 100
+    },
+    {
+      "id": 309,
+      "name": "electrike",
+      "rarity": "Uncommon",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 311,
+      "name": "plusle",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 312,
+      "name": "minun",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 313,
+      "name": "volbeat",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 314,
+      "name": "illumise",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 316,
+      "name": "gulpin",
+      "rarity": "Common",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 318,
+      "name": "carvanha",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "dark"
+      ],
+      "available": true,
+      "full": 13903,
+      "activeParents": 10555,
+      "rareOnlyParents": 146,
+      "activeRareOnlyParents": 64
+    },
+    {
+      "id": 320,
+      "name": "wailmer",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 322,
+      "name": "numel",
+      "rarity": "Common",
+      "types": [
+        "fire",
+        "ground"
+      ],
+      "available": true,
+      "full": 5861,
+      "activeParents": 4426,
+      "rareOnlyParents": 81,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 324,
+      "name": "torkoal",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 325,
+      "name": "spoink",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 327,
+      "name": "spinda",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 328,
+      "name": "trapinch",
+      "rarity": "Common",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 331,
+      "name": "cacnea",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 333,
+      "name": "swablu",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 335,
+      "name": "zangoose",
+      "rarity": "Uncommon",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 336,
+      "name": "seviper",
+      "rarity": "Uncommon",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 337,
+      "name": "lunatone",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "psychic"
+      ],
+      "available": true,
+      "full": 2565,
+      "activeParents": 1723,
+      "rareOnlyParents": 156,
+      "activeRareOnlyParents": 81
+    },
+    {
+      "id": 338,
+      "name": "solrock",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "psychic"
+      ],
+      "available": true,
+      "full": 2565,
+      "activeParents": 1723,
+      "rareOnlyParents": 156,
+      "activeRareOnlyParents": 81
+    },
+    {
+      "id": 339,
+      "name": "barboach",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "ground"
+      ],
+      "available": true,
+      "full": 14301,
+      "activeParents": 11498,
+      "rareOnlyParents": 100,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 341,
+      "name": "corphish",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 343,
+      "name": "baltoy",
+      "rarity": "Common",
+      "types": [
+        "ground",
+        "psychic"
+      ],
+      "available": true,
+      "full": 7751,
+      "activeParents": 5749,
+      "rareOnlyParents": 150,
+      "activeRareOnlyParents": 73
+    },
+    {
+      "id": 345,
+      "name": "lileep",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "grass"
+      ],
+      "available": true,
+      "full": 10503,
+      "activeParents": 6640,
+      "rareOnlyParents": 93,
+      "activeRareOnlyParents": 61
+    },
+    {
+      "id": 347,
+      "name": "anorith",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "bug"
+      ],
+      "available": true,
+      "full": 6713,
+      "activeParents": 5077,
+      "rareOnlyParents": 123,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 349,
+      "name": "feebas",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 351,
+      "name": "castform",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 352,
+      "name": "kecleon",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 353,
+      "name": "shuppet",
+      "rarity": "Common",
+      "types": [
+        "ghost"
+      ],
+      "available": true,
+      "full": 2016,
+      "activeParents": 1081,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 91
+    },
+    {
+      "id": 355,
+      "name": "duskull",
+      "rarity": "Common",
+      "types": [
+        "ghost"
+      ],
+      "available": true,
+      "full": 2016,
+      "activeParents": 1081,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 91
+    },
+    {
+      "id": 357,
+      "name": "tropius",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "flying"
+      ],
+      "available": true,
+      "full": 13643,
+      "activeParents": 9307,
+      "rareOnlyParents": 168,
+      "activeRareOnlyParents": 111
+    },
+    {
+      "id": 359,
+      "name": "absol",
+      "rarity": "Rare",
+      "types": [
+        "dark"
+      ],
+      "available": true,
+      "full": 630,
+      "activeParents": 351,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 360,
+      "name": "wynaut",
+      "rarity": "Uncommon",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 361,
+      "name": "snorunt",
+      "rarity": "Common",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 1081,
+      "activeParents": 820,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 363,
+      "name": "spheal",
+      "rarity": "Common",
+      "types": [
+        "ice",
+        "water"
+      ],
+      "available": true,
+      "full": 12688,
+      "activeParents": 9985,
+      "rareOnlyParents": 90,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 366,
+      "name": "clamperl",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 369,
+      "name": "relicanth",
+      "rarity": "Rare",
+      "types": [
+        "water",
+        "rock"
+      ],
+      "available": true,
+      "full": 3256,
+      "activeParents": 2332,
+      "rareOnlyParents": 111,
+      "activeRareOnlyParents": 66
+    },
+    {
+      "id": 370,
+      "name": "luvdisc",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 371,
+      "name": "bagon",
+      "rarity": "Rare",
+      "types": [
+        "dragon"
+      ],
+      "available": true,
+      "full": 1540,
+      "activeParents": 1176,
+      "rareOnlyParents": 496,
+      "activeRareOnlyParents": 325
+    },
+    {
+      "id": 374,
+      "name": "beldum",
+      "rarity": "Rare",
+      "types": [
+        "steel",
+        "psychic"
+      ],
+      "available": true,
+      "full": 2178,
+      "activeParents": 1425,
+      "rareOnlyParents": 193,
+      "activeRareOnlyParents": 90
+    },
+    {
+      "id": 377,
+      "name": "regirock",
+      "rarity": "Legendary",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 105,
+      "activeParents": 78,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 378,
+      "name": "regice",
+      "rarity": "Legendary",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 78,
+      "activeParents": 55,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 379,
+      "name": "registeel",
+      "rarity": "Legendary",
+      "types": [
+        "steel"
+      ],
+      "available": true,
+      "full": 300,
+      "activeParents": 210,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 66
+    },
+    {
+      "id": 380,
+      "name": "latias",
+      "rarity": "Legendary",
+      "types": [
+        "dragon",
+        "psychic"
+      ],
+      "available": true,
+      "full": 1701,
+      "activeParents": 1206,
+      "rareOnlyParents": 633,
+      "activeRareOnlyParents": 396
+    },
+    {
+      "id": 381,
+      "name": "latios",
+      "rarity": "Legendary",
+      "types": [
+        "dragon",
+        "psychic"
+      ],
+      "available": true,
+      "full": 1701,
+      "activeParents": 1206,
+      "rareOnlyParents": 633,
+      "activeRareOnlyParents": 396
+    },
+    {
+      "id": 382,
+      "name": "kyogre",
+      "rarity": "Legendary",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 153,
+      "activeParents": 91,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 383,
+      "name": "groudon",
+      "rarity": "Legendary",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 78,
+      "activeParents": 55,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 384,
+      "name": "rayquaza",
+      "rarity": "Legendary",
+      "types": [
+        "dragon",
+        "flying"
+      ],
+      "available": true,
+      "full": 1412,
+      "activeParents": 1016,
+      "rareOnlyParents": 680,
+      "activeRareOnlyParents": 455
+    },
+    {
+      "id": 385,
+      "name": "jirachi",
+      "rarity": "Legendary",
+      "types": [
+        "steel",
+        "psychic"
+      ],
+      "available": true,
+      "full": 956,
+      "activeParents": 669,
+      "rareOnlyParents": 219,
+      "activeRareOnlyParents": 108
+    },
+    {
+      "id": 386,
+      "name": "deoxys",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 387,
+      "name": "turtwig",
+      "rarity": "Uncommon",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 390,
+      "name": "chimchar",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 393,
+      "name": "piplup",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 396,
+      "name": "starly",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 399,
+      "name": "bidoof",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 401,
+      "name": "kricketot",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 403,
+      "name": "shinx",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 406,
+      "name": "budew",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "available": true,
+      "full": 11118,
+      "activeParents": 6693,
+      "rareOnlyParents": 30,
+      "activeRareOnlyParents": 16
+    },
+    {
+      "id": 408,
+      "name": "cranidos",
+      "rarity": "Uncommon",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 410,
+      "name": "shieldon",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "steel"
+      ],
+      "available": true,
+      "full": 4629,
+      "activeParents": 3391,
+      "rareOnlyParents": 198,
+      "activeRareOnlyParents": 121
+    },
+    {
+      "id": 412,
+      "name": "burmy",
+      "rarity": "Uncommon",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 415,
+      "name": "combee",
+      "rarity": "Uncommon",
+      "types": [
+        "bug",
+        "flying"
+      ],
+      "available": true,
+      "full": 9807,
+      "activeParents": 7690,
+      "rareOnlyParents": 198,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 417,
+      "name": "pachirisu",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 418,
+      "name": "buizel",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 420,
+      "name": "cherubi",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 422,
+      "name": "shellos",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 425,
+      "name": "drifloon",
+      "rarity": "Uncommon",
+      "types": [
+        "ghost",
+        "flying"
+      ],
+      "available": true,
+      "full": 7794,
+      "activeParents": 5834,
+      "rareOnlyParents": 244,
+      "activeRareOnlyParents": 196
+    },
+    {
+      "id": 427,
+      "name": "buneary",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 431,
+      "name": "glameow",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 433,
+      "name": "chingling",
+      "rarity": "Uncommon",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 434,
+      "name": "stunky",
+      "rarity": "Common",
+      "types": [
+        "poison",
+        "dark"
+      ],
+      "available": true,
+      "full": 5596,
+      "activeParents": 3586,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 46
+    },
+    {
+      "id": 436,
+      "name": "bronzor",
+      "rarity": "Common",
+      "types": [
+        "steel",
+        "psychic"
+      ],
+      "available": true,
+      "full": 7045,
+      "activeParents": 4714,
+      "rareOnlyParents": 219,
+      "activeRareOnlyParents": 108
+    },
+    {
+      "id": 438,
+      "name": "bonsly",
+      "rarity": "Common",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 439,
+      "name": "mime-jr",
+      "rarity": "Uncommon",
+      "types": [
+        "psychic",
+        "fairy"
+      ],
+      "available": true,
+      "full": 6982,
+      "activeParents": 4714,
+      "rareOnlyParents": 115,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 440,
+      "name": "happiny",
+      "rarity": "Uncommon",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 441,
+      "name": "chatot",
+      "rarity": "Rare",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 1810,
+      "activeParents": 1444,
+      "rareOnlyParents": 367,
+      "activeRareOnlyParents": 301
+    },
+    {
+      "id": 442,
+      "name": "spiritomb",
+      "rarity": "Uncommon",
+      "types": [
+        "ghost",
+        "dark"
+      ],
+      "available": true,
+      "full": 4294,
+      "activeParents": 2459,
+      "rareOnlyParents": 182,
+      "activeRareOnlyParents": 127
+    },
+    {
+      "id": 443,
+      "name": "gible",
+      "rarity": "Rare",
+      "types": [
+        "dragon",
+        "ground"
+      ],
+      "available": true,
+      "full": 2002,
+      "activeParents": 1579,
+      "rareOnlyParents": 531,
+      "activeRareOnlyParents": 345
+    },
+    {
+      "id": 446,
+      "name": "munchlax",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 447,
+      "name": "riolu",
+      "rarity": "Uncommon",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 449,
+      "name": "hippopotas",
+      "rarity": "Uncommon",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 451,
+      "name": "skorupi",
+      "rarity": "Uncommon",
+      "types": [
+        "poison",
+        "bug"
+      ],
+      "available": true,
+      "full": 7361,
+      "activeParents": 5159,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 453,
+      "name": "croagunk",
+      "rarity": "Uncommon",
+      "types": [
+        "poison",
+        "fighting"
+      ],
+      "available": true,
+      "full": 5874,
+      "activeParents": 3807,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 455,
+      "name": "carnivine",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 456,
+      "name": "finneon",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 458,
+      "name": "mantyke",
+      "rarity": "Rare",
+      "types": [
+        "water",
+        "flying"
+      ],
+      "available": true,
+      "full": 3200,
+      "activeParents": 2242,
+      "rareOnlyParents": 180,
+      "activeRareOnlyParents": 111
+    },
+    {
+      "id": 459,
+      "name": "snover",
+      "rarity": "Uncommon",
+      "types": [
+        "grass",
+        "ice"
+      ],
+      "available": true,
+      "full": 8956,
+      "activeParents": 5380,
+      "rareOnlyParents": 51,
+      "activeRareOnlyParents": 27
+    },
+    {
+      "id": 479,
+      "name": "rotom",
+      "rarity": "Rare",
+      "types": [
+        "electric",
+        "ghost"
+      ],
+      "available": true,
+      "full": 1003,
+      "activeParents": 510,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 93
+    },
+    {
+      "id": 480,
+      "name": "uxie",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 481,
+      "name": "mesprit",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 482,
+      "name": "azelf",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 483,
+      "name": "dialga",
+      "rarity": "Legendary",
+      "types": [
+        "steel",
+        "dragon"
+      ],
+      "available": true,
+      "full": 1334,
+      "activeParents": 951,
+      "rareOnlyParents": 647,
+      "activeRareOnlyParents": 417
+    },
+    {
+      "id": 484,
+      "name": "palkia",
+      "rarity": "Legendary",
+      "types": [
+        "water",
+        "dragon"
+      ],
+      "available": true,
+      "full": 1188,
+      "activeParents": 832,
+      "rareOnlyParents": 583,
+      "activeRareOnlyParents": 379
+    },
+    {
+      "id": 485,
+      "name": "heatran",
+      "rarity": "Legendary",
+      "types": [
+        "fire",
+        "steel"
+      ],
+      "available": true,
+      "full": 420,
+      "activeParents": 315,
+      "rareOnlyParents": 156,
+      "activeRareOnlyParents": 94
+    },
+    {
+      "id": 486,
+      "name": "regigigas",
+      "rarity": "Legendary",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 378,
+      "activeParents": 351,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 487,
+      "name": "giratina",
+      "rarity": "Legendary",
+      "types": [
+        "ghost",
+        "dragon"
+      ],
+      "available": true,
+      "full": 1203,
+      "activeParents": 874,
+      "rareOnlyParents": 616,
+      "activeRareOnlyParents": 439
+    },
+    {
+      "id": 488,
+      "name": "cresselia",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 489,
+      "name": "phione",
+      "rarity": "Legendary",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 153,
+      "activeParents": 91,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 490,
+      "name": "manaphy",
+      "rarity": "Legendary",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 153,
+      "activeParents": 91,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 491,
+      "name": "darkrai",
+      "rarity": "Legendary",
+      "types": [
+        "dark"
+      ],
+      "available": true,
+      "full": 210,
+      "activeParents": 91,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 36
+    },
+    {
+      "id": 492,
+      "name": "shaymin",
+      "rarity": "Legendary",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 78,
+      "activeParents": 36,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 493,
+      "name": "arceus",
+      "rarity": "Legendary",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 378,
+      "activeParents": 351,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 494,
+      "name": "victini",
+      "rarity": "Legendary",
+      "types": [
+        "psychic",
+        "fire"
+      ],
+      "available": true,
+      "full": 786,
+      "activeParents": 570,
+      "rareOnlyParents": 141,
+      "activeRareOnlyParents": 73
+    },
+    {
+      "id": 495,
+      "name": "snivy",
+      "rarity": "Uncommon",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 498,
+      "name": "tepig",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 501,
+      "name": "oshawott",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 504,
+      "name": "patrat",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 506,
+      "name": "lillipup",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 509,
+      "name": "purrloin",
+      "rarity": "Common",
+      "types": [
+        "dark"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1378,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 36
+    },
+    {
+      "id": 511,
+      "name": "pansage",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 513,
+      "name": "pansear",
+      "rarity": "Common",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 515,
+      "name": "panpour",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 517,
+      "name": "munna",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 519,
+      "name": "pidove",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 522,
+      "name": "blitzle",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 524,
+      "name": "roggenrola",
+      "rarity": "Common",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 527,
+      "name": "woobat",
+      "rarity": "Common",
+      "types": [
+        "psychic",
+        "flying"
+      ],
+      "available": true,
+      "full": 10818,
+      "activeParents": 8146,
+      "rareOnlyParents": 258,
+      "activeRareOnlyParents": 150
+    },
+    {
+      "id": 529,
+      "name": "drilbur",
+      "rarity": "Uncommon",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 531,
+      "name": "audino",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 532,
+      "name": "timburr",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 535,
+      "name": "tympole",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 538,
+      "name": "throh",
+      "rarity": "Rare",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 946,
+      "activeParents": 528,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 539,
+      "name": "sawk",
+      "rarity": "Rare",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 946,
+      "activeParents": 528,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 540,
+      "name": "sewaddle",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "grass"
+      ],
+      "available": true,
+      "full": 11960,
+      "activeParents": 7553,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 34
+    },
+    {
+      "id": 543,
+      "name": "venipede",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "poison"
+      ],
+      "available": true,
+      "full": 7361,
+      "activeParents": 5159,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 546,
+      "name": "cottonee",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "fairy"
+      ],
+      "available": true,
+      "full": 9822,
+      "activeParents": 5880,
+      "rareOnlyParents": 25,
+      "activeRareOnlyParents": 12
+    },
+    {
+      "id": 548,
+      "name": "petilil",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 550,
+      "name": "basculin",
+      "rarity": "Rare",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 2211,
+      "activeParents": 1540,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 551,
+      "name": "sandile",
+      "rarity": "Common",
+      "types": [
+        "ground",
+        "dark"
+      ],
+      "available": true,
+      "full": 4976,
+      "activeParents": 3721,
+      "rareOnlyParents": 136,
+      "activeRareOnlyParents": 64
+    },
+    {
+      "id": 554,
+      "name": "darumaka",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 556,
+      "name": "maractus",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 557,
+      "name": "dwebble",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "rock"
+      ],
+      "available": true,
+      "full": 6713,
+      "activeParents": 5077,
+      "rareOnlyParents": 123,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 559,
+      "name": "scraggy",
+      "rarity": "Common",
+      "types": [
+        "dark",
+        "fighting"
+      ],
+      "available": true,
+      "full": 4831,
+      "activeParents": 2973,
+      "rareOnlyParents": 182,
+      "activeRareOnlyParents": 91
+    },
+    {
+      "id": 561,
+      "name": "sigilyph",
+      "rarity": "Rare",
+      "types": [
+        "psychic",
+        "flying"
+      ],
+      "available": true,
+      "full": 2475,
+      "activeParents": 1606,
+      "rareOnlyParents": 227,
+      "activeRareOnlyParents": 127
+    },
+    {
+      "id": 562,
+      "name": "yamask",
+      "rarity": "Common",
+      "types": [
+        "ghost"
+      ],
+      "available": true,
+      "full": 2016,
+      "activeParents": 1081,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 91
+    },
+    {
+      "id": 564,
+      "name": "tirtouga",
+      "rarity": "Uncommon",
+      "types": [
+        "water",
+        "rock"
+      ],
+      "available": true,
+      "full": 14211,
+      "activeParents": 11224,
+      "rareOnlyParents": 133,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 566,
+      "name": "archen",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "flying"
+      ],
+      "available": true,
+      "full": 8403,
+      "activeParents": 6830,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 160
+    },
+    {
+      "id": 568,
+      "name": "trubbish",
+      "rarity": "Common",
+      "types": [
+        "poison"
+      ],
+      "available": true,
+      "full": 3321,
+      "activeParents": 2211,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 570,
+      "name": "zorua",
+      "rarity": "Uncommon",
+      "types": [
+        "dark"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1378,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 36
+    },
+    {
+      "id": 572,
+      "name": "minccino",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 574,
+      "name": "gothita",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 577,
+      "name": "solosis",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 580,
+      "name": "ducklett",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "flying"
+      ],
+      "available": true,
+      "full": 17385,
+      "activeParents": 13912,
+      "rareOnlyParents": 205,
+      "activeRareOnlyParents": 130
+    },
+    {
+      "id": 582,
+      "name": "vanillite",
+      "rarity": "Common",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 1081,
+      "activeParents": 820,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 585,
+      "name": "deerling",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "grass"
+      ],
+      "available": true,
+      "full": 16254,
+      "activeParents": 10776,
+      "rareOnlyParents": 268,
+      "activeRareOnlyParents": 237
+    },
+    {
+      "id": 587,
+      "name": "emolga",
+      "rarity": "Common",
+      "types": [
+        "electric",
+        "flying"
+      ],
+      "available": true,
+      "full": 8050,
+      "activeParents": 6292,
+      "rareOnlyParents": 189,
+      "activeRareOnlyParents": 126
+    },
+    {
+      "id": 588,
+      "name": "karrablast",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 590,
+      "name": "foongus",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "available": true,
+      "full": 11118,
+      "activeParents": 6693,
+      "rareOnlyParents": 30,
+      "activeRareOnlyParents": 16
+    },
+    {
+      "id": 592,
+      "name": "frillish",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "ghost"
+      ],
+      "available": true,
+      "full": 13643,
+      "activeParents": 10260,
+      "rareOnlyParents": 146,
+      "activeRareOnlyParents": 119
+    },
+    {
+      "id": 594,
+      "name": "alomomola",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 595,
+      "name": "joltik",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "electric"
+      ],
+      "available": true,
+      "full": 6370,
+      "activeParents": 4540,
+      "rareOnlyParents": 81,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 597,
+      "name": "ferroseed",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "steel"
+      ],
+      "available": true,
+      "full": 9890,
+      "activeParents": 5885,
+      "rareOnlyParents": 135,
+      "activeRareOnlyParents": 72
+    },
+    {
+      "id": 599,
+      "name": "klink",
+      "rarity": "Uncommon",
+      "types": [
+        "steel"
+      ],
+      "available": true,
+      "full": 2016,
+      "activeParents": 1326,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 66
+    },
+    {
+      "id": 602,
+      "name": "tynamo",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 605,
+      "name": "elgyem",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 607,
+      "name": "litwick",
+      "rarity": "Common",
+      "types": [
+        "ghost",
+        "fire"
+      ],
+      "available": true,
+      "full": 5166,
+      "activeParents": 3158,
+      "rareOnlyParents": 127,
+      "activeRareOnlyParents": 119
+    },
+    {
+      "id": 610,
+      "name": "axew",
+      "rarity": "Uncommon",
+      "types": [
+        "dragon"
+      ],
+      "available": true,
+      "full": 2346,
+      "activeParents": 1653,
+      "rareOnlyParents": 528,
+      "activeRareOnlyParents": 351
+    },
+    {
+      "id": 613,
+      "name": "cubchoo",
+      "rarity": "Uncommon",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 1081,
+      "activeParents": 820,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 615,
+      "name": "cryogonal",
+      "rarity": "Rare",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 325,
+      "activeParents": 231,
+      "rareOnlyParents": 28,
+      "activeRareOnlyParents": 15
+    },
+    {
+      "id": 616,
+      "name": "shelmet",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 618,
+      "name": "stunfisk",
+      "rarity": "Uncommon",
+      "types": [
+        "ground",
+        "electric"
+      ],
+      "available": true,
+      "full": 4979,
+      "activeParents": 3886,
+      "rareOnlyParents": 81,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 619,
+      "name": "mienfoo",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 621,
+      "name": "druddigon",
+      "rarity": "Rare",
+      "types": [
+        "dragon"
+      ],
+      "available": true,
+      "full": 1540,
+      "activeParents": 1176,
+      "rareOnlyParents": 496,
+      "activeRareOnlyParents": 325
+    },
+    {
+      "id": 622,
+      "name": "golett",
+      "rarity": "Common",
+      "types": [
+        "ground",
+        "ghost"
+      ],
+      "available": true,
+      "full": 4711,
+      "activeParents": 3421,
+      "rareOnlyParents": 136,
+      "activeRareOnlyParents": 119
+    },
+    {
+      "id": 624,
+      "name": "pawniard",
+      "rarity": "Uncommon",
+      "types": [
+        "dark",
+        "steel"
+      ],
+      "available": true,
+      "full": 4293,
+      "activeParents": 2704,
+      "rareOnlyParents": 211,
+      "activeRareOnlyParents": 102
+    },
+    {
+      "id": 626,
+      "name": "bouffalant",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 627,
+      "name": "rufflet",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 629,
+      "name": "vullaby",
+      "rarity": "Common",
+      "types": [
+        "dark",
+        "flying"
+      ],
+      "available": true,
+      "full": 8041,
+      "activeParents": 6125,
+      "rareOnlyParents": 238,
+      "activeRareOnlyParents": 140
+    },
+    {
+      "id": 631,
+      "name": "heatmor",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 632,
+      "name": "durant",
+      "rarity": "Uncommon",
+      "types": [
+        "bug",
+        "steel"
+      ],
+      "available": true,
+      "full": 6105,
+      "activeParents": 4323,
+      "rareOnlyParents": 165,
+      "activeRareOnlyParents": 94
+    },
+    {
+      "id": 633,
+      "name": "deino",
+      "rarity": "Rare",
+      "types": [
+        "dark",
+        "dragon"
+      ],
+      "available": true,
+      "full": 2164,
+      "activeParents": 1526,
+      "rareOnlyParents": 568,
+      "activeRareOnlyParents": 352
+    },
+    {
+      "id": 636,
+      "name": "larvesta",
+      "rarity": "Rare",
+      "types": [
+        "bug",
+        "fire"
+      ],
+      "available": true,
+      "full": 1793,
+      "activeParents": 1136,
+      "rareOnlyParents": 64,
+      "activeRareOnlyParents": 42
+    },
+    {
+      "id": 638,
+      "name": "cobalion",
+      "rarity": "Legendary",
+      "types": [
+        "steel",
+        "fighting"
+      ],
+      "available": true,
+      "full": 553,
+      "activeParents": 330,
+      "rareOnlyParents": 211,
+      "activeRareOnlyParents": 121
+    },
+    {
+      "id": 639,
+      "name": "terrakion",
+      "rarity": "Legendary",
+      "types": [
+        "rock",
+        "fighting"
+      ],
+      "available": true,
+      "full": 358,
+      "activeParents": 198,
+      "rareOnlyParents": 169,
+      "activeRareOnlyParents": 110
+    },
+    {
+      "id": 640,
+      "name": "virizion",
+      "rarity": "Legendary",
+      "types": [
+        "grass",
+        "fighting"
+      ],
+      "available": true,
+      "full": 331,
+      "activeParents": 156,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 61
+    },
+    {
+      "id": 641,
+      "name": "tornadus",
+      "rarity": "Legendary",
+      "types": [
+        "flying"
+      ],
+      "available": true,
+      "full": 378,
+      "activeParents": 276,
+      "rareOnlyParents": 153,
+      "activeRareOnlyParents": 105
+    },
+    {
+      "id": 642,
+      "name": "thundurus",
+      "rarity": "Legendary",
+      "types": [
+        "electric",
+        "flying"
+      ],
+      "available": true,
+      "full": 498,
+      "activeParents": 354,
+      "rareOnlyParents": 189,
+      "activeRareOnlyParents": 126
+    },
+    {
+      "id": 643,
+      "name": "reshiram",
+      "rarity": "Legendary",
+      "types": [
+        "dragon",
+        "fire"
+      ],
+      "available": true,
+      "full": 1155,
+      "activeParents": 846,
+      "rareOnlyParents": 564,
+      "activeRareOnlyParents": 379
+    },
+    {
+      "id": 644,
+      "name": "zekrom",
+      "rarity": "Legendary",
+      "types": [
+        "dragon",
+        "electric"
+      ],
+      "available": true,
+      "full": 1154,
+      "activeParents": 819,
+      "rareOnlyParents": 564,
+      "activeRareOnlyParents": 372
+    },
+    {
+      "id": 645,
+      "name": "landorus",
+      "rarity": "Legendary",
+      "types": [
+        "ground",
+        "flying"
+      ],
+      "available": true,
+      "full": 456,
+      "activeParents": 331,
+      "rareOnlyParents": 198,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 646,
+      "name": "kyurem",
+      "rarity": "Legendary",
+      "types": [
+        "dragon",
+        "ice"
+      ],
+      "available": true,
+      "full": 1110,
+      "activeParents": 795,
+      "rareOnlyParents": 561,
+      "activeRareOnlyParents": 371
+    },
+    {
+      "id": 647,
+      "name": "keldeo",
+      "rarity": "Legendary",
+      "types": [
+        "water",
+        "fighting"
+      ],
+      "available": true,
+      "full": 406,
+      "activeParents": 211,
+      "rareOnlyParents": 146,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 648,
+      "name": "meloetta",
+      "rarity": "Legendary",
+      "types": [
+        "normal",
+        "psychic"
+      ],
+      "available": true,
+      "full": 1041,
+      "activeParents": 815,
+      "rareOnlyParents": 355,
+      "activeRareOnlyParents": 275
+    },
+    {
+      "id": 649,
+      "name": "genesect",
+      "rarity": "Legendary",
+      "types": [
+        "bug",
+        "steel"
+      ],
+      "available": true,
+      "full": 345,
+      "activeParents": 238,
+      "rareOnlyParents": 165,
+      "activeRareOnlyParents": 94
+    },
+    {
+      "id": 650,
+      "name": "chespin",
+      "rarity": "Uncommon",
+      "types": [
+        "grass"
+      ],
+      "available": false,
+      "full": 7875,
+      "activeParents": 4656,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 653,
+      "name": "fennekin",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 656,
+      "name": "froakie",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 659,
+      "name": "bunnelby",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": false,
+      "full": 8385,
+      "activeParents": 6328,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 661,
+      "name": "fletchling",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 664,
+      "name": "scatterbug",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 667,
+      "name": "litleo",
+      "rarity": "Common",
+      "types": [
+        "fire",
+        "normal"
+      ],
+      "available": true,
+      "full": 11545,
+      "activeParents": 8296,
+      "rareOnlyParents": 289,
+      "activeRareOnlyParents": 259
+    },
+    {
+      "id": 669,
+      "name": "flabebe",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 672,
+      "name": "skiddo",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 674,
+      "name": "pancham",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 676,
+      "name": "furfrou",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": false,
+      "full": 8385,
+      "activeParents": 6328,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 677,
+      "name": "espurr",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": false,
+      "full": 5050,
+      "activeParents": 3486,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 679,
+      "name": "honedge",
+      "rarity": "Common",
+      "types": [
+        "steel",
+        "ghost"
+      ],
+      "available": true,
+      "full": 4029,
+      "activeParents": 2406,
+      "rareOnlyParents": 211,
+      "activeRareOnlyParents": 157
+    },
+    {
+      "id": 682,
+      "name": "spritzee",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 684,
+      "name": "swirlix",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 686,
+      "name": "inkay",
+      "rarity": "Common",
+      "types": [
+        "dark",
+        "psychic"
+      ],
+      "available": true,
+      "full": 7328,
+      "activeParents": 4781,
+      "rareOnlyParents": 196,
+      "activeRareOnlyParents": 81
+    },
+    {
+      "id": 688,
+      "name": "binacle",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "water"
+      ],
+      "available": true,
+      "full": 14211,
+      "activeParents": 11224,
+      "rareOnlyParents": 133,
+      "activeRareOnlyParents": 83
+    },
+    {
+      "id": 690,
+      "name": "skrelp",
+      "rarity": "Common",
+      "types": [
+        "poison",
+        "water"
+      ],
+      "available": false,
+      "full": 14939,
+      "activeParents": 11588,
+      "rareOnlyParents": 70,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 692,
+      "name": "clauncher",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 694,
+      "name": "helioptile",
+      "rarity": "Common",
+      "types": [
+        "electric",
+        "normal"
+      ],
+      "available": true,
+      "full": 10663,
+      "activeParents": 7756,
+      "rareOnlyParents": 289,
+      "activeRareOnlyParents": 252
+    },
+    {
+      "id": 696,
+      "name": "tyrunt",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "dragon"
+      ],
+      "available": true,
+      "full": 4974,
+      "activeParents": 3733,
+      "rareOnlyParents": 606,
+      "activeRareOnlyParents": 406
+    },
+    {
+      "id": 698,
+      "name": "amaura",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "ice"
+      ],
+      "available": true,
+      "full": 3709,
+      "activeParents": 2900,
+      "rareOnlyParents": 114,
+      "activeRareOnlyParents": 76
+    },
+    {
+      "id": 701,
+      "name": "hawlucha",
+      "rarity": "Uncommon",
+      "types": [
+        "fighting",
+        "flying"
+      ],
+      "available": false,
+      "full": 8334,
+      "activeParents": 6504,
+      "rareOnlyParents": 244,
+      "activeRareOnlyParents": 160
+    },
+    {
+      "id": 702,
+      "name": "dedenne",
+      "rarity": "Common",
+      "types": [
+        "electric",
+        "fairy"
+      ],
+      "available": true,
+      "full": 4231,
+      "activeParents": 2866,
+      "rareOnlyParents": 46,
+      "activeRareOnlyParents": 27
+    },
+    {
+      "id": 703,
+      "name": "carbink",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "fairy"
+      ],
+      "available": true,
+      "full": 4581,
+      "activeParents": 3406,
+      "rareOnlyParents": 88,
+      "activeRareOnlyParents": 61
+    },
+    {
+      "id": 704,
+      "name": "goomy",
+      "rarity": "Rare",
+      "types": [
+        "dragon"
+      ],
+      "available": true,
+      "full": 1540,
+      "activeParents": 1176,
+      "rareOnlyParents": 496,
+      "activeRareOnlyParents": 325
+    },
+    {
+      "id": 707,
+      "name": "klefki",
+      "rarity": "Uncommon",
+      "types": [
+        "steel",
+        "fairy"
+      ],
+      "available": true,
+      "full": 3959,
+      "activeParents": 2651,
+      "rareOnlyParents": 130,
+      "activeRareOnlyParents": 72
+    },
+    {
+      "id": 708,
+      "name": "phantump",
+      "rarity": "Uncommon",
+      "types": [
+        "ghost",
+        "grass"
+      ],
+      "available": true,
+      "full": 9855,
+      "activeParents": 5640,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 97
+    },
+    {
+      "id": 710,
+      "name": "pumpkaboo",
+      "rarity": "Uncommon",
+      "types": [
+        "ghost",
+        "grass"
+      ],
+      "available": false,
+      "full": 9855,
+      "activeParents": 5781,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 97
+    },
+    {
+      "id": 712,
+      "name": "bergmite",
+      "rarity": "Common",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 1081,
+      "activeParents": 820,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 714,
+      "name": "noibat",
+      "rarity": "Common",
+      "types": [
+        "flying",
+        "dragon"
+      ],
+      "available": true,
+      "full": 8114,
+      "activeParents": 6396,
+      "rareOnlyParents": 680,
+      "activeRareOnlyParents": 455
+    },
+    {
+      "id": 716,
+      "name": "xerneas",
+      "rarity": "Legendary",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 91,
+      "activeParents": 45,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 717,
+      "name": "yveltal",
+      "rarity": "Legendary",
+      "types": [
+        "dark",
+        "flying"
+      ],
+      "available": true,
+      "full": 582,
+      "activeParents": 366,
+      "rareOnlyParents": 238,
+      "activeRareOnlyParents": 140
+    },
+    {
+      "id": 718,
+      "name": "zygarde",
+      "rarity": "Legendary",
+      "types": [
+        "dragon",
+        "ground"
+      ],
+      "available": true,
+      "full": 1110,
+      "activeParents": 793,
+      "rareOnlyParents": 570,
+      "activeRareOnlyParents": 376
+    },
+    {
+      "id": 719,
+      "name": "diancie",
+      "rarity": "Legendary",
+      "types": [
+        "rock",
+        "fairy"
+      ],
+      "available": true,
+      "full": 196,
+      "activeParents": 123,
+      "rareOnlyParents": 88,
+      "activeRareOnlyParents": 61
+    },
+    {
+      "id": 720,
+      "name": "hoopa",
+      "rarity": "Legendary",
+      "types": [
+        "psychic",
+        "ghost"
+      ],
+      "available": true,
+      "full": 837,
+      "activeParents": 601,
+      "rareOnlyParents": 196,
+      "activeRareOnlyParents": 136
+    },
+    {
+      "id": 721,
+      "name": "volcanion",
+      "rarity": "Legendary",
+      "types": [
+        "fire",
+        "water"
+      ],
+      "available": true,
+      "full": 273,
+      "activeParents": 196,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 722,
+      "name": "rowlet",
+      "rarity": "Uncommon",
+      "types": [
+        "grass",
+        "flying"
+      ],
+      "available": true,
+      "full": 13643,
+      "activeParents": 9307,
+      "rareOnlyParents": 168,
+      "activeRareOnlyParents": 111
+    },
+    {
+      "id": 725,
+      "name": "litten",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 728,
+      "name": "popplio",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 731,
+      "name": "pikipek",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": true,
+      "full": 13838,
+      "activeParents": 10669,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 734,
+      "name": "yungoos",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 736,
+      "name": "grubbin",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 739,
+      "name": "crabrawler",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 741,
+      "name": "oricorio",
+      "rarity": "Rare",
+      "types": [
+        "fire",
+        "flying"
+      ],
+      "available": false,
+      "full": 2527,
+      "activeParents": 1728,
+      "rareOnlyParents": 164,
+      "activeRareOnlyParents": 133
+    },
+    {
+      "id": 742,
+      "name": "cutiefly",
+      "rarity": "Common",
+      "types": [
+        "bug",
+        "fairy"
+      ],
+      "available": true,
+      "full": 6048,
+      "activeParents": 4329,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 34
+    },
+    {
+      "id": 744,
+      "name": "rockruff",
+      "rarity": "Common",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 746,
+      "name": "wishiwashi",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 747,
+      "name": "mareanie",
+      "rarity": "Common",
+      "types": [
+        "poison",
+        "water"
+      ],
+      "available": false,
+      "full": 14939,
+      "activeParents": 11588,
+      "rareOnlyParents": 70,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 749,
+      "name": "mudbray",
+      "rarity": "Common",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 751,
+      "name": "dewpider",
+      "rarity": "Common",
+      "types": [
+        "water",
+        "bug"
+      ],
+      "available": true,
+      "full": 15717,
+      "activeParents": 12180,
+      "rareOnlyParents": 100,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 753,
+      "name": "fomantis",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 755,
+      "name": "morelull",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "fairy"
+      ],
+      "available": true,
+      "full": 9822,
+      "activeParents": 5880,
+      "rareOnlyParents": 25,
+      "activeRareOnlyParents": 12
+    },
+    {
+      "id": 757,
+      "name": "salandit",
+      "rarity": "Uncommon",
+      "types": [
+        "poison",
+        "fire"
+      ],
+      "available": false,
+      "full": 6480,
+      "activeParents": 4423,
+      "rareOnlyParents": 51,
+      "activeRareOnlyParents": 38
+    },
+    {
+      "id": 759,
+      "name": "stufful",
+      "rarity": "Uncommon",
+      "types": [
+        "normal",
+        "fighting"
+      ],
+      "available": true,
+      "full": 10941,
+      "activeParents": 7812,
+      "rareOnlyParents": 344,
+      "activeRareOnlyParents": 286
+    },
+    {
+      "id": 761,
+      "name": "bounsweet",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 764,
+      "name": "comfey",
+      "rarity": "Uncommon",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 765,
+      "name": "oranguru",
+      "rarity": "Rare",
+      "types": [
+        "normal",
+        "psychic"
+      ],
+      "available": false,
+      "full": 2295,
+      "activeParents": 1720,
+      "rareOnlyParents": 321,
+      "activeRareOnlyParents": 275
+    },
+    {
+      "id": 766,
+      "name": "passimian",
+      "rarity": "Rare",
+      "types": [
+        "fighting"
+      ],
+      "available": false,
+      "full": 946,
+      "activeParents": 561,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 767,
+      "name": "wimpod",
+      "rarity": "Uncommon",
+      "types": [
+        "bug",
+        "water"
+      ],
+      "available": true,
+      "full": 15717,
+      "activeParents": 12180,
+      "rareOnlyParents": 100,
+      "activeRareOnlyParents": 56
+    },
+    {
+      "id": 769,
+      "name": "sandygast",
+      "rarity": "Uncommon",
+      "types": [
+        "ghost",
+        "ground"
+      ],
+      "available": true,
+      "full": 4711,
+      "activeParents": 3421,
+      "rareOnlyParents": 136,
+      "activeRareOnlyParents": 119
+    },
+    {
+      "id": 771,
+      "name": "pyukumuku",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 772,
+      "name": "type-null",
+      "rarity": "Legendary",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 378,
+      "activeParents": 351,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 774,
+      "name": "minior",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "flying"
+      ],
+      "available": true,
+      "full": 2068,
+      "activeParents": 1520,
+      "rareOnlyParents": 202,
+      "activeRareOnlyParents": 136
+    },
+    {
+      "id": 775,
+      "name": "komala",
+      "rarity": "Rare",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 820,
+      "activeParents": 741,
+      "rareOnlyParents": 231,
+      "activeRareOnlyParents": 210
+    },
+    {
+      "id": 776,
+      "name": "turtonator",
+      "rarity": "Uncommon",
+      "types": [
+        "fire",
+        "dragon"
+      ],
+      "available": true,
+      "full": 5505,
+      "activeParents": 3732,
+      "rareOnlyParents": 564,
+      "activeRareOnlyParents": 379
+    },
+    {
+      "id": 777,
+      "name": "togedemaru",
+      "rarity": "Common",
+      "types": [
+        "electric",
+        "steel"
+      ],
+      "available": true,
+      "full": 4291,
+      "activeParents": 2863,
+      "rareOnlyParents": 156,
+      "activeRareOnlyParents": 87
+    },
+    {
+      "id": 778,
+      "name": "mimikyu",
+      "rarity": "Rare",
+      "types": [
+        "ghost",
+        "fairy"
+      ],
+      "available": true,
+      "full": 913,
+      "activeParents": 436,
+      "rareOnlyParents": 84,
+      "activeRareOnlyParents": 81
+    },
+    {
+      "id": 779,
+      "name": "bruxish",
+      "rarity": "Uncommon",
+      "types": [
+        "water",
+        "psychic"
+      ],
+      "available": true,
+      "full": 16668,
+      "activeParents": 12577,
+      "rareOnlyParents": 160,
+      "activeRareOnlyParents": 73
+    },
+    {
+      "id": 780,
+      "name": "drampa",
+      "rarity": "Uncommon",
+      "types": [
+        "normal",
+        "dragon"
+      ],
+      "available": true,
+      "full": 10731,
+      "activeParents": 7869,
+      "rareOnlyParents": 781,
+      "activeRareOnlyParents": 582
+    },
+    {
+      "id": 781,
+      "name": "dhelmise",
+      "rarity": "Rare",
+      "types": [
+        "ghost",
+        "grass"
+      ],
+      "available": true,
+      "full": 2113,
+      "activeParents": 1040,
+      "rareOnlyParents": 88,
+      "activeRareOnlyParents": 81
+    },
+    {
+      "id": 782,
+      "name": "jangmo-o",
+      "rarity": "Rare",
+      "types": [
+        "dragon"
+      ],
+      "available": true,
+      "full": 1540,
+      "activeParents": 1176,
+      "rareOnlyParents": 496,
+      "activeRareOnlyParents": 325
+    },
+    {
+      "id": 785,
+      "name": "tapu-koko",
+      "rarity": "Legendary",
+      "types": [
+        "electric",
+        "fairy"
+      ],
+      "available": true,
+      "full": 211,
+      "activeParents": 123,
+      "rareOnlyParents": 46,
+      "activeRareOnlyParents": 27
+    },
+    {
+      "id": 786,
+      "name": "tapu-lele",
+      "rarity": "Legendary",
+      "types": [
+        "psychic",
+        "fairy"
+      ],
+      "available": true,
+      "full": 757,
+      "activeParents": 510,
+      "rareOnlyParents": 115,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 787,
+      "name": "tapu-bulu",
+      "rarity": "Legendary",
+      "types": [
+        "grass",
+        "fairy"
+      ],
+      "available": true,
+      "full": 169,
+      "activeParents": 81,
+      "rareOnlyParents": 25,
+      "activeRareOnlyParents": 12
+    },
+    {
+      "id": 788,
+      "name": "tapu-fini",
+      "rarity": "Legendary",
+      "types": [
+        "water",
+        "fairy"
+      ],
+      "available": false,
+      "full": 244,
+      "activeParents": 160,
+      "rareOnlyParents": 65,
+      "activeRareOnlyParents": 34
+    },
+    {
+      "id": 789,
+      "name": "cosmog",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 793,
+      "name": "nihilego",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "poison"
+      ],
+      "available": true,
+      "full": 1380,
+      "activeParents": 940,
+      "rareOnlyParents": 76,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 794,
+      "name": "buzzwole",
+      "rarity": "Rare",
+      "types": [
+        "bug",
+        "fighting"
+      ],
+      "available": true,
+      "full": 1196,
+      "activeParents": 717,
+      "rareOnlyParents": 111,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 795,
+      "name": "pheromosa",
+      "rarity": "Rare",
+      "types": [
+        "bug",
+        "fighting"
+      ],
+      "available": true,
+      "full": 1196,
+      "activeParents": 717,
+      "rareOnlyParents": 111,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 796,
+      "name": "xurkitree",
+      "rarity": "Rare",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 300,
+      "activeParents": 210,
+      "rareOnlyParents": 28,
+      "activeRareOnlyParents": 15
+    },
+    {
+      "id": 797,
+      "name": "celesteela",
+      "rarity": "Rare",
+      "types": [
+        "steel",
+        "flying"
+      ],
+      "available": true,
+      "full": 1693,
+      "activeParents": 1231,
+      "rareOnlyParents": 241,
+      "activeRareOnlyParents": 146
+    },
+    {
+      "id": 798,
+      "name": "kartana",
+      "rarity": "Rare",
+      "types": [
+        "grass",
+        "steel"
+      ],
+      "available": true,
+      "full": 2134,
+      "activeParents": 1269,
+      "rareOnlyParents": 115,
+      "activeRareOnlyParents": 58
+    },
+    {
+      "id": 799,
+      "name": "guzzlord",
+      "rarity": "Rare",
+      "types": [
+        "dark",
+        "dragon"
+      ],
+      "available": false,
+      "full": 2164,
+      "activeParents": 1600,
+      "rareOnlyParents": 568,
+      "activeRareOnlyParents": 384
+    },
+    {
+      "id": 800,
+      "name": "necrozma",
+      "rarity": "Legendary",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 666,
+      "activeParents": 465,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 801,
+      "name": "magearna",
+      "rarity": "Legendary",
+      "types": [
+        "steel",
+        "fairy"
+      ],
+      "available": true,
+      "full": 391,
+      "activeParents": 255,
+      "rareOnlyParents": 130,
+      "activeRareOnlyParents": 72
+    },
+    {
+      "id": 802,
+      "name": "marshadow",
+      "rarity": "Legendary",
+      "types": [
+        "fighting",
+        "ghost"
+      ],
+      "available": true,
+      "full": 424,
+      "activeParents": 256,
+      "rareOnlyParents": 182,
+      "activeRareOnlyParents": 146
+    },
+    {
+      "id": 803,
+      "name": "poipole",
+      "rarity": "Rare",
+      "types": [
+        "poison"
+      ],
+      "available": false,
+      "full": 300,
+      "activeParents": 136,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 10
+    },
+    {
+      "id": 805,
+      "name": "stakataka",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "steel"
+      ],
+      "available": true,
+      "full": 1783,
+      "activeParents": 1347,
+      "rareOnlyParents": 171,
+      "activeRareOnlyParents": 100
+    },
+    {
+      "id": 806,
+      "name": "blacephalon",
+      "rarity": "Rare",
+      "types": [
+        "fire",
+        "ghost"
+      ],
+      "available": true,
+      "full": 2242,
+      "activeParents": 1246,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 99
+    },
+    {
+      "id": 807,
+      "name": "zeraora",
+      "rarity": "Legendary",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 120,
+      "activeParents": 78,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 808,
+      "name": "meltan",
+      "rarity": "Legendary",
+      "types": [
+        "steel"
+      ],
+      "available": true,
+      "full": 300,
+      "activeParents": 210,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 66
+    },
+    {
+      "id": 810,
+      "name": "grookey",
+      "rarity": "Uncommon",
+      "types": [
+        "grass"
+      ],
+      "available": true,
+      "full": 7875,
+      "activeParents": 4560,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 813,
+      "name": "scorbunny",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": true,
+      "full": 3160,
+      "activeParents": 2080,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 816,
+      "name": "sobble",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 819,
+      "name": "skwovet",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": false,
+      "full": 8385,
+      "activeParents": 6328,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 821,
+      "name": "rookidee",
+      "rarity": "Common",
+      "types": [
+        "flying"
+      ],
+      "available": true,
+      "full": 5778,
+      "activeParents": 4753,
+      "rareOnlyParents": 153,
+      "activeRareOnlyParents": 105
+    },
+    {
+      "id": 824,
+      "name": "blipbug",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": true,
+      "full": 4095,
+      "activeParents": 3003,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 827,
+      "name": "nickit",
+      "rarity": "Common",
+      "types": [
+        "dark"
+      ],
+      "available": false,
+      "full": 2278,
+      "activeParents": 1431,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 36
+    },
+    {
+      "id": 829,
+      "name": "gossifleur",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": false,
+      "full": 7875,
+      "activeParents": 4656,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 831,
+      "name": "wooloo",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 833,
+      "name": "chewtle",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 835,
+      "name": "yamper",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 837,
+      "name": "rolycoly",
+      "rarity": "Common",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 840,
+      "name": "applin",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "dragon"
+      ],
+      "available": true,
+      "full": 10215,
+      "activeParents": 6213,
+      "rareOnlyParents": 543,
+      "activeRareOnlyParents": 357
+    },
+    {
+      "id": 843,
+      "name": "silicobra",
+      "rarity": "Common",
+      "types": [
+        "ground"
+      ],
+      "available": true,
+      "full": 2701,
+      "activeParents": 2346,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 845,
+      "name": "cramorant",
+      "rarity": "Rare",
+      "types": [
+        "flying",
+        "water"
+      ],
+      "available": true,
+      "full": 3200,
+      "activeParents": 2242,
+      "rareOnlyParents": 180,
+      "activeRareOnlyParents": 111
+    },
+    {
+      "id": 846,
+      "name": "arrokuda",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": true,
+      "full": 11628,
+      "activeParents": 9180,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 848,
+      "name": "toxel",
+      "rarity": "Uncommon",
+      "types": [
+        "electric",
+        "poison"
+      ],
+      "available": true,
+      "full": 5599,
+      "activeParents": 3751,
+      "rareOnlyParents": 51,
+      "activeRareOnlyParents": 31
+    },
+    {
+      "id": 850,
+      "name": "sizzlipede",
+      "rarity": "Common",
+      "types": [
+        "fire",
+        "bug"
+      ],
+      "available": false,
+      "full": 7252,
+      "activeParents": 5225,
+      "rareOnlyParents": 80,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 852,
+      "name": "clobbopus",
+      "rarity": "Common",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 2556,
+      "activeParents": 1596,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 854,
+      "name": "sinistea",
+      "rarity": "Uncommon",
+      "types": [
+        "ghost"
+      ],
+      "available": false,
+      "full": 2016,
+      "activeParents": 1128,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 91
+    },
+    {
+      "id": 856,
+      "name": "hatenna",
+      "rarity": "Common",
+      "types": [
+        "psychic"
+      ],
+      "available": true,
+      "full": 5050,
+      "activeParents": 3403,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 859,
+      "name": "impidimp",
+      "rarity": "Common",
+      "types": [
+        "dark",
+        "fairy"
+      ],
+      "available": true,
+      "full": 4230,
+      "activeParents": 2704,
+      "rareOnlyParents": 101,
+      "activeRareOnlyParents": 42
+    },
+    {
+      "id": 868,
+      "name": "milcery",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 1953,
+      "activeParents": 1326,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 870,
+      "name": "falinks",
+      "rarity": "Rare",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 946,
+      "activeParents": 528,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 871,
+      "name": "pincurchin",
+      "rarity": "Uncommon",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 872,
+      "name": "snom",
+      "rarity": "Common",
+      "types": [
+        "ice",
+        "bug"
+      ],
+      "available": true,
+      "full": 5176,
+      "activeParents": 3823,
+      "rareOnlyParents": 81,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 874,
+      "name": "stonjourner",
+      "rarity": "Uncommon",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 875,
+      "name": "eiscue",
+      "rarity": "Uncommon",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 1081,
+      "activeParents": 820,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 876,
+      "name": "indeedee",
+      "rarity": "Rare",
+      "types": [
+        "psychic",
+        "normal"
+      ],
+      "available": true,
+      "full": 2295,
+      "activeParents": 1641,
+      "rareOnlyParents": 321,
+      "activeRareOnlyParents": 246
+    },
+    {
+      "id": 877,
+      "name": "morpeko",
+      "rarity": "Common",
+      "types": [
+        "electric",
+        "dark"
+      ],
+      "available": true,
+      "full": 4556,
+      "activeParents": 2918,
+      "rareOnlyParents": 127,
+      "activeRareOnlyParents": 57
+    },
+    {
+      "id": 878,
+      "name": "cufant",
+      "rarity": "Common",
+      "types": [
+        "steel"
+      ],
+      "available": true,
+      "full": 2016,
+      "activeParents": 1326,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 66
+    },
+    {
+      "id": 880,
+      "name": "dracozolt",
+      "rarity": "Uncommon",
+      "types": [
+        "electric",
+        "dragon"
+      ],
+      "available": true,
+      "full": 4621,
+      "activeParents": 3192,
+      "rareOnlyParents": 564,
+      "activeRareOnlyParents": 372
+    },
+    {
+      "id": 881,
+      "name": "arctozolt",
+      "rarity": "Uncommon",
+      "types": [
+        "electric",
+        "ice"
+      ],
+      "available": false,
+      "full": 3359,
+      "activeParents": 2457,
+      "rareOnlyParents": 72,
+      "activeRareOnlyParents": 42
+    },
+    {
+      "id": 882,
+      "name": "dracovish",
+      "rarity": "Uncommon",
+      "types": [
+        "water",
+        "dragon"
+      ],
+      "available": true,
+      "full": 13968,
+      "activeParents": 10830,
+      "rareOnlyParents": 583,
+      "activeRareOnlyParents": 379
+    },
+    {
+      "id": 883,
+      "name": "arctovish",
+      "rarity": "Uncommon",
+      "types": [
+        "water",
+        "ice"
+      ],
+      "available": true,
+      "full": 12688,
+      "activeParents": 9985,
+      "rareOnlyParents": 90,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 884,
+      "name": "duraludon",
+      "rarity": "Rare",
+      "types": [
+        "steel",
+        "dragon"
+      ],
+      "available": true,
+      "full": 2242,
+      "activeParents": 1704,
+      "rareOnlyParents": 601,
+      "activeRareOnlyParents": 380
+    },
+    {
+      "id": 885,
+      "name": "dreepy",
+      "rarity": "Rare",
+      "types": [
+        "dragon",
+        "ghost"
+      ],
+      "available": true,
+      "full": 2240,
+      "activeParents": 1473,
+      "rareOnlyParents": 573,
+      "activeRareOnlyParents": 402
+    },
+    {
+      "id": 888,
+      "name": "zacian",
+      "rarity": "Legendary",
+      "types": [
+        "fairy"
+      ],
+      "available": true,
+      "full": 91,
+      "activeParents": 45,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 889,
+      "name": "zamazenta",
+      "rarity": "Legendary",
+      "types": [
+        "fighting"
+      ],
+      "available": true,
+      "full": 253,
+      "activeParents": 120,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 890,
+      "name": "eternatus",
+      "rarity": "Legendary",
+      "types": [
+        "poison",
+        "dragon"
+      ],
+      "available": true,
+      "full": 1080,
+      "activeParents": 751,
+      "rareOnlyParents": 543,
+      "activeRareOnlyParents": 361
+    },
+    {
+      "id": 891,
+      "name": "kubfu",
+      "rarity": "Legendary",
+      "types": [
+        "fighting"
+      ],
+      "available": false,
+      "full": 253,
+      "activeParents": 136,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 893,
+      "name": "zarude",
+      "rarity": "Legendary",
+      "types": [
+        "dark",
+        "grass"
+      ],
+      "available": false,
+      "full": 287,
+      "activeParents": 150,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 42
+    },
+    {
+      "id": 894,
+      "name": "regieleki",
+      "rarity": "Legendary",
+      "types": [
+        "electric"
+      ],
+      "available": false,
+      "full": 120,
+      "activeParents": 91,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 895,
+      "name": "regidrago",
+      "rarity": "Legendary",
+      "types": [
+        "dragon"
+      ],
+      "available": true,
+      "full": 1035,
+      "activeParents": 741,
+      "rareOnlyParents": 528,
+      "activeRareOnlyParents": 351
+    },
+    {
+      "id": 896,
+      "name": "glastrier",
+      "rarity": "Legendary",
+      "types": [
+        "ice"
+      ],
+      "available": true,
+      "full": 78,
+      "activeParents": 55,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 897,
+      "name": "spectrier",
+      "rarity": "Legendary",
+      "types": [
+        "ghost"
+      ],
+      "available": false,
+      "full": 171,
+      "activeParents": 153,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 91
+    },
+    {
+      "id": 898,
+      "name": "calyrex",
+      "rarity": "Legendary",
+      "types": [
+        "psychic",
+        "grass"
+      ],
+      "available": true,
+      "full": 743,
+      "activeParents": 501,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 905,
+      "name": "enamorus",
+      "rarity": "Legendary",
+      "types": [
+        "fairy",
+        "flying"
+      ],
+      "available": false,
+      "full": 469,
+      "activeParents": 355,
+      "rareOnlyParents": 163,
+      "activeRareOnlyParents": 111
+    },
+    {
+      "id": 906,
+      "name": "sprigatito",
+      "rarity": "Uncommon",
+      "types": [
+        "grass"
+      ],
+      "available": false,
+      "full": 7875,
+      "activeParents": 4656,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 909,
+      "name": "fuecoco",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": false,
+      "full": 3160,
+      "activeParents": 2145,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 912,
+      "name": "quaxly",
+      "rarity": "Uncommon",
+      "types": [
+        "water"
+      ],
+      "available": false,
+      "full": 11628,
+      "activeParents": 9316,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 915,
+      "name": "lechonk",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": false,
+      "full": 8385,
+      "activeParents": 6328,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 917,
+      "name": "tarountula",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": false,
+      "full": 4095,
+      "activeParents": 3081,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 919,
+      "name": "nymble",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": false,
+      "full": 4095,
+      "activeParents": 3081,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 921,
+      "name": "pawmi",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": false,
+      "full": 2278,
+      "activeParents": 1596,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 924,
+      "name": "tandemaus",
+      "rarity": "Common",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 8385,
+      "activeParents": 6216,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 926,
+      "name": "fidough",
+      "rarity": "Common",
+      "types": [
+        "fairy"
+      ],
+      "available": false,
+      "full": 1953,
+      "activeParents": 1378,
+      "rareOnlyParents": 10,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 928,
+      "name": "smoliv",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "normal"
+      ],
+      "available": false,
+      "full": 16254,
+      "activeParents": 10983,
+      "rareOnlyParents": 268,
+      "activeRareOnlyParents": 237
+    },
+    {
+      "id": 931,
+      "name": "squawkabilly",
+      "rarity": "Common",
+      "types": [
+        "normal",
+        "flying"
+      ],
+      "available": false,
+      "full": 13838,
+      "activeParents": 10854,
+      "rareOnlyParents": 405,
+      "activeRareOnlyParents": 335
+    },
+    {
+      "id": 932,
+      "name": "nacli",
+      "rarity": "Common",
+      "types": [
+        "rock"
+      ],
+      "available": true,
+      "full": 2628,
+      "activeParents": 2080,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 935,
+      "name": "charcadet",
+      "rarity": "Uncommon",
+      "types": [
+        "fire"
+      ],
+      "available": false,
+      "full": 3160,
+      "activeParents": 2145,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 938,
+      "name": "tadbulb",
+      "rarity": "Common",
+      "types": [
+        "electric"
+      ],
+      "available": true,
+      "full": 2278,
+      "activeParents": 1540,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 940,
+      "name": "wattrel",
+      "rarity": "Common",
+      "types": [
+        "electric",
+        "flying"
+      ],
+      "available": false,
+      "full": 8050,
+      "activeParents": 6444,
+      "rareOnlyParents": 189,
+      "activeRareOnlyParents": 126
+    },
+    {
+      "id": 942,
+      "name": "maschiff",
+      "rarity": "Common",
+      "types": [
+        "dark"
+      ],
+      "available": false,
+      "full": 2278,
+      "activeParents": 1431,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 36
+    },
+    {
+      "id": 944,
+      "name": "shroodle",
+      "rarity": "Common",
+      "types": [
+        "poison",
+        "normal"
+      ],
+      "available": false,
+      "full": 11706,
+      "activeParents": 8606,
+      "rareOnlyParents": 268,
+      "activeRareOnlyParents": 241
+    },
+    {
+      "id": 946,
+      "name": "bramblin",
+      "rarity": "Common",
+      "types": [
+        "grass",
+        "ghost"
+      ],
+      "available": false,
+      "full": 9855,
+      "activeParents": 5781,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 97
+    },
+    {
+      "id": 948,
+      "name": "toedscool",
+      "rarity": "Common",
+      "types": [
+        "ground",
+        "grass"
+      ],
+      "available": false,
+      "full": 10575,
+      "activeParents": 7071,
+      "rareOnlyParents": 60,
+      "activeRareOnlyParents": 34
+    },
+    {
+      "id": 950,
+      "name": "klawf",
+      "rarity": "Uncommon",
+      "types": [
+        "rock"
+      ],
+      "available": false,
+      "full": 2628,
+      "activeParents": 2145,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 951,
+      "name": "capsakid",
+      "rarity": "Common",
+      "types": [
+        "grass"
+      ],
+      "available": false,
+      "full": 7875,
+      "activeParents": 4656,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 953,
+      "name": "rellor",
+      "rarity": "Common",
+      "types": [
+        "bug"
+      ],
+      "available": false,
+      "full": 4095,
+      "activeParents": 3081,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 955,
+      "name": "flittle",
+      "rarity": "Uncommon",
+      "types": [
+        "psychic"
+      ],
+      "available": false,
+      "full": 5050,
+      "activeParents": 3486,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 45
+    },
+    {
+      "id": 957,
+      "name": "tinkatink",
+      "rarity": "Common",
+      "types": [
+        "fairy",
+        "steel"
+      ],
+      "available": false,
+      "full": 3959,
+      "activeParents": 2753,
+      "rareOnlyParents": 130,
+      "activeRareOnlyParents": 72
+    },
+    {
+      "id": 960,
+      "name": "wiglett",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": false,
+      "full": 11628,
+      "activeParents": 9316,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 962,
+      "name": "bombirdier",
+      "rarity": "Rare",
+      "types": [
+        "flying",
+        "dark"
+      ],
+      "available": false,
+      "full": 1614,
+      "activeParents": 1116,
+      "rareOnlyParents": 211,
+      "activeRareOnlyParents": 140
+    },
+    {
+      "id": 963,
+      "name": "finizen",
+      "rarity": "Common",
+      "types": [
+        "water"
+      ],
+      "available": false,
+      "full": 11628,
+      "activeParents": 9316,
+      "rareOnlyParents": 55,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 965,
+      "name": "varoom",
+      "rarity": "Common",
+      "types": [
+        "steel",
+        "poison"
+      ],
+      "available": false,
+      "full": 5337,
+      "activeParents": 3656,
+      "rareOnlyParents": 135,
+      "activeRareOnlyParents": 76
+    },
+    {
+      "id": 967,
+      "name": "cyclizar",
+      "rarity": "Common",
+      "types": [
+        "dragon",
+        "normal"
+      ],
+      "available": false,
+      "full": 10731,
+      "activeParents": 8039,
+      "rareOnlyParents": 781,
+      "activeRareOnlyParents": 582
+    },
+    {
+      "id": 968,
+      "name": "orthworm",
+      "rarity": "Rare",
+      "types": [
+        "steel"
+      ],
+      "available": false,
+      "full": 703,
+      "activeParents": 561,
+      "rareOnlyParents": 105,
+      "activeRareOnlyParents": 66
+    },
+    {
+      "id": 969,
+      "name": "glimmet",
+      "rarity": "Uncommon",
+      "types": [
+        "rock",
+        "poison"
+      ],
+      "available": true,
+      "full": 5948,
+      "activeParents": 4291,
+      "rareOnlyParents": 93,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 971,
+      "name": "greavard",
+      "rarity": "Uncommon",
+      "types": [
+        "ghost"
+      ],
+      "available": false,
+      "full": 2016,
+      "activeParents": 1128,
+      "rareOnlyParents": 91,
+      "activeRareOnlyParents": 91
+    },
+    {
+      "id": 973,
+      "name": "flamigo",
+      "rarity": "Uncommon",
+      "types": [
+        "flying",
+        "fighting"
+      ],
+      "available": false,
+      "full": 8334,
+      "activeParents": 6504,
+      "rareOnlyParents": 244,
+      "activeRareOnlyParents": 160
+    },
+    {
+      "id": 974,
+      "name": "cetoddle",
+      "rarity": "Common",
+      "types": [
+        "ice"
+      ],
+      "available": false,
+      "full": 1081,
+      "activeParents": 861,
+      "rareOnlyParents": 36,
+      "activeRareOnlyParents": 21
+    },
+    {
+      "id": 976,
+      "name": "veluza",
+      "rarity": "Uncommon",
+      "types": [
+        "water",
+        "psychic"
+      ],
+      "available": false,
+      "full": 16668,
+      "activeParents": 12792,
+      "rareOnlyParents": 160,
+      "activeRareOnlyParents": 73
+    },
+    {
+      "id": 977,
+      "name": "dondozo",
+      "rarity": "Rare",
+      "types": [
+        "water"
+      ],
+      "available": false,
+      "full": 2211,
+      "activeParents": 1596,
+      "rareOnlyParents": 45,
+      "activeRareOnlyParents": 28
+    },
+    {
+      "id": 978,
+      "name": "tatsugiri",
+      "rarity": "Uncommon",
+      "types": [
+        "dragon",
+        "water"
+      ],
+      "available": true,
+      "full": 13968,
+      "activeParents": 10830,
+      "rareOnlyParents": 583,
+      "activeRareOnlyParents": 379
+    },
+    {
+      "id": 984,
+      "name": "great-tusk",
+      "rarity": "Rare",
+      "types": [
+        "ground",
+        "fighting"
+      ],
+      "available": true,
+      "full": 1411,
+      "activeParents": 934,
+      "rareOnlyParents": 114,
+      "activeRareOnlyParents": 66
+    },
+    {
+      "id": 985,
+      "name": "scream-tail",
+      "rarity": "Rare",
+      "types": [
+        "fairy",
+        "psychic"
+      ],
+      "available": false,
+      "full": 1692,
+      "activeParents": 1096,
+      "rareOnlyParents": 97,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 986,
+      "name": "brute-bonnet",
+      "rarity": "Rare",
+      "types": [
+        "grass",
+        "dark"
+      ],
+      "available": false,
+      "full": 2058,
+      "activeParents": 1158,
+      "rareOnlyParents": 88,
+      "activeRareOnlyParents": 42
+    },
+    {
+      "id": 987,
+      "name": "flutter-mane",
+      "rarity": "Rare",
+      "types": [
+        "ghost",
+        "fairy"
+      ],
+      "available": true,
+      "full": 913,
+      "activeParents": 436,
+      "rareOnlyParents": 84,
+      "activeRareOnlyParents": 81
+    },
+    {
+      "id": 988,
+      "name": "slither-wing",
+      "rarity": "Rare",
+      "types": [
+        "bug",
+        "fighting"
+      ],
+      "available": false,
+      "full": 1196,
+      "activeParents": 768,
+      "rareOnlyParents": 111,
+      "activeRareOnlyParents": 80
+    },
+    {
+      "id": 989,
+      "name": "sandy-shocks",
+      "rarity": "Rare",
+      "types": [
+        "electric",
+        "ground"
+      ],
+      "available": false,
+      "full": 765,
+      "activeParents": 666,
+      "rareOnlyParents": 64,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 990,
+      "name": "iron-treads",
+      "rarity": "Rare",
+      "types": [
+        "ground",
+        "steel"
+      ],
+      "available": false,
+      "full": 1167,
+      "activeParents": 995,
+      "rareOnlyParents": 141,
+      "activeRareOnlyParents": 94
+    },
+    {
+      "id": 991,
+      "name": "iron-bundle",
+      "rarity": "Rare",
+      "types": [
+        "ice",
+        "water"
+      ],
+      "available": false,
+      "full": 2535,
+      "activeParents": 1848,
+      "rareOnlyParents": 73,
+      "activeRareOnlyParents": 49
+    },
+    {
+      "id": 992,
+      "name": "iron-hands",
+      "rarity": "Rare",
+      "types": [
+        "fighting",
+        "electric"
+      ],
+      "available": true,
+      "full": 1246,
+      "activeParents": 738,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 60
+    },
+    {
+      "id": 993,
+      "name": "iron-jugulis",
+      "rarity": "Rare",
+      "types": [
+        "dark",
+        "flying"
+      ],
+      "available": false,
+      "full": 1614,
+      "activeParents": 1116,
+      "rareOnlyParents": 211,
+      "activeRareOnlyParents": 140
+    },
+    {
+      "id": 994,
+      "name": "iron-moth",
+      "rarity": "Rare",
+      "types": [
+        "fire",
+        "poison"
+      ],
+      "available": true,
+      "full": 1839,
+      "activeParents": 1066,
+      "rareOnlyParents": 38,
+      "activeRareOnlyParents": 27
+    },
+    {
+      "id": 995,
+      "name": "iron-thorns",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "electric"
+      ],
+      "available": true,
+      "full": 1381,
+      "activeParents": 1030,
+      "rareOnlyParents": 94,
+      "activeRareOnlyParents": 60
+    },
+    {
+      "id": 996,
+      "name": "frigibax",
+      "rarity": "Rare",
+      "types": [
+        "dragon",
+        "ice"
+      ],
+      "available": true,
+      "full": 1862,
+      "activeParents": 1406,
+      "rareOnlyParents": 523,
+      "activeRareOnlyParents": 340
+    },
+    {
+      "id": 999,
+      "name": "gimmighoul",
+      "rarity": "Rare",
+      "types": [
+        "ghost"
+      ],
+      "available": true,
+      "full": 703,
+      "activeParents": 300,
+      "rareOnlyParents": 78,
+      "activeRareOnlyParents": 78
+    },
+    {
+      "id": 1001,
+      "name": "wo-chien",
+      "rarity": "Legendary",
+      "types": [
+        "dark",
+        "grass"
+      ],
+      "available": true,
+      "full": 287,
+      "activeParents": 127,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 42
+    },
+    {
+      "id": 1002,
+      "name": "chien-pao",
+      "rarity": "Legendary",
+      "types": [
+        "dark",
+        "ice"
+      ],
+      "available": true,
+      "full": 288,
+      "activeParents": 146,
+      "rareOnlyParents": 127,
+      "activeRareOnlyParents": 57
+    },
+    {
+      "id": 1003,
+      "name": "ting-lu",
+      "rarity": "Legendary",
+      "types": [
+        "dark",
+        "ground"
+      ],
+      "available": true,
+      "full": 288,
+      "activeParents": 146,
+      "rareOnlyParents": 136,
+      "activeRareOnlyParents": 64
+    },
+    {
+      "id": 1004,
+      "name": "chi-yu",
+      "rarity": "Legendary",
+      "types": [
+        "dark",
+        "fire"
+      ],
+      "available": true,
+      "full": 330,
+      "activeParents": 196,
+      "rareOnlyParents": 127,
+      "activeRareOnlyParents": 64
+    },
+    {
+      "id": 1005,
+      "name": "roaring-moon",
+      "rarity": "Rare",
+      "types": [
+        "dragon",
+        "dark"
+      ],
+      "available": false,
+      "full": 2164,
+      "activeParents": 1600,
+      "rareOnlyParents": 568,
+      "activeRareOnlyParents": 384
+    },
+    {
+      "id": 1006,
+      "name": "iron-valiant",
+      "rarity": "Rare",
+      "types": [
+        "fairy",
+        "fighting"
+      ],
+      "available": true,
+      "full": 1156,
+      "activeParents": 664,
+      "rareOnlyParents": 84,
+      "activeRareOnlyParents": 48
+    },
+    {
+      "id": 1007,
+      "name": "koraidon",
+      "rarity": "Legendary",
+      "types": [
+        "fighting",
+        "dragon"
+      ],
+      "available": false,
+      "full": 1287,
+      "activeParents": 915,
+      "rareOnlyParents": 618,
+      "activeRareOnlyParents": 405
+    },
+    {
+      "id": 1008,
+      "name": "miraidon",
+      "rarity": "Legendary",
+      "types": [
+        "electric",
+        "dragon"
+      ],
+      "available": true,
+      "full": 1154,
+      "activeParents": 819,
+      "rareOnlyParents": 564,
+      "activeRareOnlyParents": 372
+    },
+    {
+      "id": 1009,
+      "name": "walking-wake",
+      "rarity": "Rare",
+      "types": [
+        "water",
+        "dragon"
+      ],
+      "available": false,
+      "full": 3748,
+      "activeParents": 2818,
+      "rareOnlyParents": 541,
+      "activeRareOnlyParents": 379
+    },
+    {
+      "id": 1010,
+      "name": "iron-leaves",
+      "rarity": "Rare",
+      "types": [
+        "grass",
+        "psychic"
+      ],
+      "available": false,
+      "full": 2910,
+      "activeParents": 1720,
+      "rareOnlyParents": 101,
+      "activeRareOnlyParents": 51
+    },
+    {
+      "id": 1012,
+      "name": "poltchageist",
+      "rarity": "Uncommon",
+      "types": [
+        "grass",
+        "ghost"
+      ],
+      "available": false,
+      "full": 9855,
+      "activeParents": 5781,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 97
+    },
+    {
+      "id": 1014,
+      "name": "okidogi",
+      "rarity": "Legendary",
+      "types": [
+        "poison",
+        "fighting"
+      ],
+      "available": false,
+      "full": 298,
+      "activeParents": 151,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 65
+    },
+    {
+      "id": 1015,
+      "name": "munkidori",
+      "rarity": "Legendary",
+      "types": [
+        "poison",
+        "psychic"
+      ],
+      "available": false,
+      "full": 711,
+      "activeParents": 511,
+      "rareOnlyParents": 120,
+      "activeRareOnlyParents": 55
+    },
+    {
+      "id": 1016,
+      "name": "fezandipiti",
+      "rarity": "Legendary",
+      "types": [
+        "poison",
+        "fairy"
+      ],
+      "available": false,
+      "full": 136,
+      "activeParents": 70,
+      "rareOnlyParents": 25,
+      "activeRareOnlyParents": 16
+    },
+    {
+      "id": 1017,
+      "name": "ogerpon",
+      "rarity": "Legendary",
+      "types": [
+        "grass"
+      ],
+      "available": false,
+      "full": 78,
+      "activeParents": 45,
+      "rareOnlyParents": 15,
+      "activeRareOnlyParents": 6
+    },
+    {
+      "id": 1020,
+      "name": "gouging-fire",
+      "rarity": "Rare",
+      "types": [
+        "fire",
+        "dragon"
+      ],
+      "available": true,
+      "full": 3079,
+      "activeParents": 2121,
+      "rareOnlyParents": 524,
+      "activeRareOnlyParents": 346
+    },
+    {
+      "id": 1021,
+      "name": "raging-bolt",
+      "rarity": "Rare",
+      "types": [
+        "electric",
+        "dragon"
+      ],
+      "available": false,
+      "full": 1837,
+      "activeParents": 1453,
+      "rareOnlyParents": 524,
+      "activeRareOnlyParents": 372
+    },
+    {
+      "id": 1022,
+      "name": "iron-boulder",
+      "rarity": "Rare",
+      "types": [
+        "rock",
+        "psychic"
+      ],
+      "available": false,
+      "full": 2565,
+      "activeParents": 1806,
+      "rareOnlyParents": 156,
+      "activeRareOnlyParents": 99
+    },
+    {
+      "id": 1023,
+      "name": "iron-crown",
+      "rarity": "Rare",
+      "types": [
+        "steel",
+        "psychic"
+      ],
+      "available": false,
+      "full": 2178,
+      "activeParents": 1497,
+      "rareOnlyParents": 193,
+      "activeRareOnlyParents": 108
+    },
+    {
+      "id": 1024,
+      "name": "terapagos",
+      "rarity": "Legendary",
+      "types": [
+        "normal"
+      ],
+      "available": true,
+      "full": 378,
+      "activeParents": 351,
+      "rareOnlyParents": 253,
+      "activeRareOnlyParents": 231
+    },
+    {
+      "id": 1025,
+      "name": "pecharunt",
+      "rarity": "Legendary",
+      "types": [
+        "poison",
+        "ghost"
+      ],
+      "available": false,
+      "full": 216,
+      "activeParents": 168,
+      "rareOnlyParents": 106,
+      "activeRareOnlyParents": 101
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "game_versions": [
+    "1.21.1"
+  ],
+  "loaders": [
+    "neoforge"
+  ],
+  "environment": "client_and_server",
+  "id": "tY57GRtu",
+  "project_id": "59ZceYlU",
+  "author_id": "yDIJMMci",
+  "featured": false,
+  "name": "Pixelmon 9.4.1",
+  "version_number": "9.4.1",
+  "changelog": "#### Additions\n\n- Added a crafting recipe for the Fruit Bunch curry ingredient, made from any three Pixelmon berries.\n\n\n#### Fixes\n\n- [23437](https://pixelmonmod.com/tracker.php?p=2&t=23437) Fixed a crash when a Pixelmon ore was broken by something carrying no tool, such as another mod's automated block breaker.\n- [23503](https://pixelmonmod.com/tracker.php?p=2&t=23503) Fixed the Fossil Revival research crashing on its \"Catch a Wild Fossil Pokémon\" objective, which relied on a `fossil` Pokémon specification that did not exist.\n- [23499](https://pixelmonmod.com/tracker.php?p=2&t=23499) Fixed the Psychic Tera Shard using the Poison Tera Shard's texture.\n- [23498](https://pixelmonmod.com/tracker.php?p=2&t=23498) Fixed the attack animation registry failing to sync when Sinytra Connector and the Forgified Fabric API are installed.\n- [23488](https://pixelmonmod.com/tracker.php?p=2&t=23488) Fixed research that triggers on picking an item up off the ground never registering, which stopped the Psychic Storm chain from starting when an Orb was picked up. The Relic Maniac trigger was broken in the same way and is fixed with it.\n- [23474](https://pixelmonmod.com/tracker.php?p=2&t=23474) Fixed a Pokémon's faint events firing more than once, which made using an Exp. Candy after whiting out in Ultra Space replay the last battle's UI and send the player back to their bed.\n- [23407](https://pixelmonmod.com/tracker.php?p=2&t=23407) Fixed cancelling a breeding attempt in the Day Care incrementing the Pixelmon Bred statistic.\n- [23318](https://pixelmonmod.com/tracker.php?p=2&t=23318) Fixed the Infuser's bottom slot accepting any item, which let a hopper overflow fuel into it. It now only takes items that are a valid ingredient for an infusing recipe.\n- Fixed NPCs given a Pokémon appearance standing completely still. They now play their configured animation, and walk while they are moving.\n- Fixed NPC AI providers being read from the removed `goals` NBT key instead of the `aiProvider` key.\n- Fixed every Dragonite dropping the Christmas palette's drops, including Christmas Balls, on top of its own. Those drops are now limited to the Christmas palette.\n- Fixed Minior's Meteor and Core Forms giving the same EVs on defeat. The Meteor Form now yields Defense and Special Defense, and the Core Form Attack and Special Attack.\n- Fixed the Pixelmon Camera keybind category being misspelt as \"Pixemlon Camera\".\n\n\n#### Battle Fixes\n\n- [23491](https://pixelmonmod.com/tracker.php?p=2&t=23491) Fixed Rollout and Ice Ball taking their PP on the second turn of the combo rather than the first, so no PP was spent at all when the first hit knocked the target out.\n- [23380](https://pixelmonmod.com/tracker.php?p=2&t=23380) Fixed Burmy always changing into its Trash Cloak after a battle instead of the cloak matching the terrain it battled on.\n- Fixed a crash when using the arrow keybinds to pick a target in battle.\n- Fixed a Pokémon being put back on full health at the end of every turn in NPC and PvP battles. Each following hit was then worked out from full health, so the Pokémon appeared to take almost no damage, or to heal.\n- Fixed a Max raid trainer never returning to the battle after fainting, which left them with no ally or boss health bars, no move to pick, and the raid playing out without them. Cheering while downed works again as well.\n- Fixed Memento working in Max and Tera raid battles. Moves that faint the user now fail in raids.\n\n\n## Datapack\n\n- Added the `fossil` and `isfossil` Pokémon specs, which match Fossil Pokémon and their evolutionary lines. The `fossil` tag has been added to those species, and to Mega Aerodactyl.\n- An unparseable Pokémon spec in an interaction condition now fails that condition and logs the error, instead of interrupting the interaction or research it belongs to.\n\n\n#### Developer\n\n- `NPCEvent.EndBattle` is no longer fired twice when a player's battle against a Trainer NPC ends.\n",
+  "changelog_url": null,
+  "date_published": "2026-09-17T08:34:26.795223Z",
+  "downloads": 134043,
+  "version_type": "release",
+  "status": "listed",
+  "requested_status": null,
+  "files": [
+    {
+      "id": "YrNcwSeb",
+      "hashes": {
+        "sha512": "c7e53630100857e3b3d48d2abe4b19658d8649c50d4ea8e04ce43dee3ec850a2e5bb8a06f75c2728cbd08d7cc8c0d2188730b40ef46341f924416197d1546bba",
+        "sha1": "21ee5b13cfb5e387069dfc9d9f3772125471a820"
+      },
+      "url": "https://cdn.modrinth.com/data/59ZceYlU/versions/tY57GRtu/Pixelmon-1.21.1-9.4.1-universal.jar",
+      "filename": "Pixelmon-1.21.1-9.4.1-universal.jar",
+      "primary": true,
+      "size": 400171869,
+      "file_type": null
+    }
+  ],
+  "dependencies": []
+}

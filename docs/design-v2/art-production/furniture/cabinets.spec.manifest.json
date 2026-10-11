@@ -1,0 +1,181 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "cabinet-c1",
+      "name": "Дубовый",
+      "displayWidth": 303.867,
+      "category": "cabinets",
+      "row": 0,
+      "col": 0,
+      "footAnchor": [
+        0.498276,
+        0.957958
+      ],
+      "file": "furniture/assets/cabinet-c1.png",
+      "size": [
+        580,
+        333
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "alphaBoundsInCell": [
+        45,
+        253,
+        609,
+        570
+      ],
+      "cropInCell": [
+        37,
+        245,
+        617,
+        578
+      ],
+      "sha256": "b68103269812cbc4eb938f19da565f558da3099ac44faba20986a9b89138d6e2",
+      "source": "furniture/_sources/cabinets-wide-atlas-v2.png",
+      "promptFile": "furniture/_sources/cabinets-wide-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "cabinet-c2",
+      "name": "Мастерская",
+      "displayWidth": 313.536,
+      "category": "cabinets",
+      "row": 0,
+      "col": 1,
+      "footAnchor": [
+        0.496575,
+        0.955224
+      ],
+      "file": "furniture/assets/cabinet-c2.png",
+      "size": [
+        584,
+        335
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "alphaBoundsInCell": [
+        19,
+        252,
+        587,
+        571
+      ],
+      "cropInCell": [
+        11,
+        244,
+        595,
+        579
+      ],
+      "sha256": "892b7dcecd6a8159d225298b8a31ceee72d059c00d4acaea5b52b16dd0ff9e70",
+      "source": "furniture/_sources/cabinets-wide-atlas-v2.png",
+      "promptFile": "furniture/_sources/cabinets-wide-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "cabinet-c3",
+      "name": "Книжный",
+      "displayWidth": 312.845,
+      "category": "cabinets",
+      "row": 1,
+      "col": 0,
+      "footAnchor": [
+        0.496564,
+        0.961194
+      ],
+      "file": "furniture/assets/cabinet-c3.png",
+      "size": [
+        582,
+        335
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        43,
+        94,
+        609,
+        413
+      ],
+      "cropInCell": [
+        35,
+        86,
+        617,
+        421
+      ],
+      "sha256": "1ce714db7ba1259759e30000790834a631717df3e6e77a0cc52ed9bb300ee9d8",
+      "source": "furniture/_sources/cabinets-wide-atlas-v2.png",
+      "promptFile": "furniture/_sources/cabinets-wide-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "cabinet-c4",
+      "name": "Светлый",
+      "displayWidth": 308.011,
+      "category": "cabinets",
+      "row": 1,
+      "col": 1,
+      "footAnchor": [
+        0.496575,
+        0.961194
+      ],
+      "file": "furniture/assets/cabinet-c4.png",
+      "size": [
+        584,
+        335
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        19,
+        94,
+        587,
+        413
+      ],
+      "cropInCell": [
+        11,
+        86,
+        595,
+        421
+      ],
+      "sha256": "b90af477323663e5f586f2d8617c0118f4d51e048bd62f7454f3b9544a79b125",
+      "source": "furniture/_sources/cabinets-wide-atlas-v2.png",
+      "promptFile": "furniture/_sources/cabinets-wide-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    }
+  ]
+}

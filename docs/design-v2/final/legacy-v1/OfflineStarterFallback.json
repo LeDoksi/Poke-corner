@@ -1,0 +1,7465 @@
+[
+  {
+    "ChainId": 1,
+    "StarterSpeciesId": 1,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Bulbasaur",
+      "Ivysaur",
+      "Venusaur"
+    ],
+    "StageSpeciesIds": [
+      1,
+      2,
+      3
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 2,
+    "StarterSpeciesId": 4,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Charmander",
+      "Charmeleon",
+      "Charizard"
+    ],
+    "StageSpeciesIds": [
+      4,
+      5,
+      6
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 3,
+    "StarterSpeciesId": 7,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Squirtle",
+      "Wartortle",
+      "Blastoise"
+    ],
+    "StageSpeciesIds": [
+      7,
+      8,
+      9
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 4,
+    "StarterSpeciesId": 10,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Caterpie",
+      "Metapod",
+      "Butterfree"
+    ],
+    "StageSpeciesIds": [
+      10,
+      11,
+      12
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 5,
+    "StarterSpeciesId": 13,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Weedle",
+      "Kakuna",
+      "Beedrill"
+    ],
+    "StageSpeciesIds": [
+      13,
+      14,
+      15
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 6,
+    "StarterSpeciesId": 16,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Pidgey",
+      "Pidgeotto",
+      "Pidgeot"
+    ],
+    "StageSpeciesIds": [
+      16,
+      17,
+      18
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 7,
+    "StarterSpeciesId": 19,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Rattata",
+      "Raticate"
+    ],
+    "StageSpeciesIds": [
+      19,
+      20
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 8,
+    "StarterSpeciesId": 21,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Spearow",
+      "Fearow"
+    ],
+    "StageSpeciesIds": [
+      21,
+      22
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 9,
+    "StarterSpeciesId": 23,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Ekans",
+      "Arbok"
+    ],
+    "StageSpeciesIds": [
+      23,
+      24
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 10,
+    "StarterSpeciesId": 172,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Pichu",
+      "Pikachu",
+      "Raichu"
+    ],
+    "StageSpeciesIds": [
+      172,
+      25,
+      26
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 11,
+    "StarterSpeciesId": 27,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Sandshrew",
+      "Sandslash"
+    ],
+    "StageSpeciesIds": [
+      27,
+      28
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 12,
+    "StarterSpeciesId": 29,
+    "CaptureRate": 235,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Nidoran F",
+      "Nidorina",
+      "Nidoqueen"
+    ],
+    "StageSpeciesIds": [
+      29,
+      30,
+      31
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ],
+      [
+        "poison",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 13,
+    "StarterSpeciesId": 32,
+    "CaptureRate": 235,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Nidoran M",
+      "Nidorino",
+      "Nidoking"
+    ],
+    "StageSpeciesIds": [
+      32,
+      33,
+      34
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ],
+      [
+        "poison",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 14,
+    "StarterSpeciesId": 173,
+    "CaptureRate": 150,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Cleffa",
+      "Clefairy",
+      "Clefable"
+    ],
+    "StageSpeciesIds": [
+      173,
+      35,
+      36
+    ],
+    "StageTypes": [
+      [
+        "fairy"
+      ],
+      [
+        "fairy"
+      ],
+      [
+        "fairy"
+      ]
+    ]
+  },
+  {
+    "ChainId": 15,
+    "StarterSpeciesId": 37,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Vulpix",
+      "Ninetales"
+    ],
+    "StageSpeciesIds": [
+      37,
+      38
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 16,
+    "StarterSpeciesId": 174,
+    "CaptureRate": 170,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Igglybuff",
+      "Jigglypuff",
+      "Wigglytuff"
+    ],
+    "StageSpeciesIds": [
+      174,
+      39,
+      40
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "fairy"
+      ],
+      [
+        "normal",
+        "fairy"
+      ],
+      [
+        "normal",
+        "fairy"
+      ]
+    ]
+  },
+  {
+    "ChainId": 17,
+    "StarterSpeciesId": 41,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Zubat",
+      "Golbat",
+      "Crobat"
+    ],
+    "StageSpeciesIds": [
+      41,
+      42,
+      169
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "flying"
+      ],
+      [
+        "poison",
+        "flying"
+      ],
+      [
+        "poison",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 18,
+    "StarterSpeciesId": 43,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Oddish",
+      "Gloom",
+      "Vileplume"
+    ],
+    "StageSpeciesIds": [
+      43,
+      44,
+      45
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 19,
+    "StarterSpeciesId": 46,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Paras",
+      "Parasect"
+    ],
+    "StageSpeciesIds": [
+      46,
+      47
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "grass"
+      ],
+      [
+        "bug",
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 20,
+    "StarterSpeciesId": 48,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Venonat",
+      "Venomoth"
+    ],
+    "StageSpeciesIds": [
+      48,
+      49
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 21,
+    "StarterSpeciesId": 50,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Diglett",
+      "Dugtrio"
+    ],
+    "StageSpeciesIds": [
+      50,
+      51
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 22,
+    "StarterSpeciesId": 52,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Meowth",
+      "Persian"
+    ],
+    "StageSpeciesIds": [
+      52,
+      53
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 23,
+    "StarterSpeciesId": 54,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Psyduck",
+      "Golduck"
+    ],
+    "StageSpeciesIds": [
+      54,
+      55
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 24,
+    "StarterSpeciesId": 56,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Mankey",
+      "Primeape",
+      "Annihilape"
+    ],
+    "StageSpeciesIds": [
+      56,
+      57,
+      979
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ],
+      [
+        "fighting",
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 25,
+    "StarterSpeciesId": 58,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Growlithe",
+      "Arcanine"
+    ],
+    "StageSpeciesIds": [
+      58,
+      59
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 26,
+    "StarterSpeciesId": 60,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Poliwag",
+      "Poliwhirl",
+      "Poliwrath"
+    ],
+    "StageSpeciesIds": [
+      60,
+      61,
+      62
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 27,
+    "StarterSpeciesId": 63,
+    "CaptureRate": 200,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Abra",
+      "Kadabra",
+      "Alakazam"
+    ],
+    "StageSpeciesIds": [
+      63,
+      64,
+      65
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 28,
+    "StarterSpeciesId": 66,
+    "CaptureRate": 180,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Machop",
+      "Machoke",
+      "Machamp"
+    ],
+    "StageSpeciesIds": [
+      66,
+      67,
+      68
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 29,
+    "StarterSpeciesId": 69,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Bellsprout",
+      "Weepinbell",
+      "Victreebel"
+    ],
+    "StageSpeciesIds": [
+      69,
+      70,
+      71
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 30,
+    "StarterSpeciesId": 72,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Tentacool",
+      "Tentacruel"
+    ],
+    "StageSpeciesIds": [
+      72,
+      73
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "poison"
+      ],
+      [
+        "water",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 31,
+    "StarterSpeciesId": 74,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Geodude",
+      "Graveler",
+      "Golem"
+    ],
+    "StageSpeciesIds": [
+      74,
+      75,
+      76
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 32,
+    "StarterSpeciesId": 77,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Ponyta",
+      "Rapidash"
+    ],
+    "StageSpeciesIds": [
+      77,
+      78
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 33,
+    "StarterSpeciesId": 79,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Slowpoke",
+      "Slowbro"
+    ],
+    "StageSpeciesIds": [
+      79,
+      80
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "psychic"
+      ],
+      [
+        "water",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 34,
+    "StarterSpeciesId": 81,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Magnemite",
+      "Magneton",
+      "Magnezone"
+    ],
+    "StageSpeciesIds": [
+      81,
+      82,
+      462
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "steel"
+      ],
+      [
+        "electric",
+        "steel"
+      ],
+      [
+        "electric",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 35,
+    "StarterSpeciesId": 83,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Farfetchd",
+      "Sirfetchd"
+    ],
+    "StageSpeciesIds": [
+      83,
+      865
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 36,
+    "StarterSpeciesId": 84,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Doduo",
+      "Dodrio"
+    ],
+    "StageSpeciesIds": [
+      84,
+      85
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 37,
+    "StarterSpeciesId": 86,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Seel",
+      "Dewgong"
+    ],
+    "StageSpeciesIds": [
+      86,
+      87
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 38,
+    "StarterSpeciesId": 88,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Grimer",
+      "Muk"
+    ],
+    "StageSpeciesIds": [
+      88,
+      89
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 39,
+    "StarterSpeciesId": 90,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Shellder",
+      "Cloyster"
+    ],
+    "StageSpeciesIds": [
+      90,
+      91
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 40,
+    "StarterSpeciesId": 92,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Gastly",
+      "Haunter",
+      "Gengar"
+    ],
+    "StageSpeciesIds": [
+      92,
+      93,
+      94
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "poison"
+      ],
+      [
+        "ghost",
+        "poison"
+      ],
+      [
+        "ghost",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 41,
+    "StarterSpeciesId": 95,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Onix",
+      "Steelix"
+    ],
+    "StageSpeciesIds": [
+      95,
+      208
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "steel",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 42,
+    "StarterSpeciesId": 96,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Drowzee",
+      "Hypno"
+    ],
+    "StageSpeciesIds": [
+      96,
+      97
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 43,
+    "StarterSpeciesId": 98,
+    "CaptureRate": 225,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Krabby",
+      "Kingler"
+    ],
+    "StageSpeciesIds": [
+      98,
+      99
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 44,
+    "StarterSpeciesId": 100,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Voltorb",
+      "Electrode"
+    ],
+    "StageSpeciesIds": [
+      100,
+      101
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 45,
+    "StarterSpeciesId": 102,
+    "CaptureRate": 90,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Exeggcute",
+      "Exeggutor"
+    ],
+    "StageSpeciesIds": [
+      102,
+      103
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "psychic"
+      ],
+      [
+        "grass",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 46,
+    "StarterSpeciesId": 104,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Cubone",
+      "Marowak"
+    ],
+    "StageSpeciesIds": [
+      104,
+      105
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 47,
+    "StarterSpeciesId": 236,
+    "CaptureRate": 75,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Tyrogue",
+      "Hitmonlee"
+    ],
+    "StageSpeciesIds": [
+      236,
+      106
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 48,
+    "StarterSpeciesId": 108,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Lickitung",
+      "Lickilicky"
+    ],
+    "StageSpeciesIds": [
+      108,
+      463
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 49,
+    "StarterSpeciesId": 109,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Koffing",
+      "Weezing"
+    ],
+    "StageSpeciesIds": [
+      109,
+      110
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 50,
+    "StarterSpeciesId": 111,
+    "CaptureRate": 120,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Rhyhorn",
+      "Rhydon",
+      "Rhyperior"
+    ],
+    "StageSpeciesIds": [
+      111,
+      112,
+      464
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "rock"
+      ],
+      [
+        "ground",
+        "rock"
+      ],
+      [
+        "ground",
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 51,
+    "StarterSpeciesId": 440,
+    "CaptureRate": 130,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Happiny",
+      "Chansey",
+      "Blissey"
+    ],
+    "StageSpeciesIds": [
+      440,
+      113,
+      242
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 52,
+    "StarterSpeciesId": 114,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Tangela",
+      "Tangrowth"
+    ],
+    "StageSpeciesIds": [
+      114,
+      465
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 53,
+    "StarterSpeciesId": 115,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Kangaskhan"
+    ],
+    "StageSpeciesIds": [
+      115
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 54,
+    "StarterSpeciesId": 116,
+    "CaptureRate": 225,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Horsea",
+      "Seadra",
+      "Kingdra"
+    ],
+    "StageSpeciesIds": [
+      116,
+      117,
+      230
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water",
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 55,
+    "StarterSpeciesId": 118,
+    "CaptureRate": 225,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Goldeen",
+      "Seaking"
+    ],
+    "StageSpeciesIds": [
+      118,
+      119
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 56,
+    "StarterSpeciesId": 120,
+    "CaptureRate": 225,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Staryu",
+      "Starmie"
+    ],
+    "StageSpeciesIds": [
+      120,
+      121
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 57,
+    "StarterSpeciesId": 439,
+    "CaptureRate": 145,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Mime Jr",
+      "Mr Mime",
+      "Mr Rime"
+    ],
+    "StageSpeciesIds": [
+      439,
+      122,
+      866
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "ice",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 58,
+    "StarterSpeciesId": 123,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Scyther",
+      "Scizor"
+    ],
+    "StageSpeciesIds": [
+      123,
+      212
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 59,
+    "StarterSpeciesId": 238,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Smoochum",
+      "Jynx"
+    ],
+    "StageSpeciesIds": [
+      238,
+      124
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "psychic"
+      ],
+      [
+        "ice",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 60,
+    "StarterSpeciesId": 239,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Elekid",
+      "Electabuzz",
+      "Electivire"
+    ],
+    "StageSpeciesIds": [
+      239,
+      125,
+      466
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 61,
+    "StarterSpeciesId": 240,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Magby",
+      "Magmar",
+      "Magmortar"
+    ],
+    "StageSpeciesIds": [
+      240,
+      126,
+      467
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 62,
+    "StarterSpeciesId": 127,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Pinsir"
+    ],
+    "StageSpeciesIds": [
+      127
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ]
+    ]
+  },
+  {
+    "ChainId": 63,
+    "StarterSpeciesId": 128,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Tauros"
+    ],
+    "StageSpeciesIds": [
+      128
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 64,
+    "StarterSpeciesId": 129,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Magikarp",
+      "Gyarados"
+    ],
+    "StageSpeciesIds": [
+      129,
+      130
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 65,
+    "StarterSpeciesId": 131,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Lapras"
+    ],
+    "StageSpeciesIds": [
+      131
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 66,
+    "StarterSpeciesId": 132,
+    "CaptureRate": 35,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Ditto"
+    ],
+    "StageSpeciesIds": [
+      132
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 67,
+    "StarterSpeciesId": 133,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Eevee",
+      "Vaporeon"
+    ],
+    "StageSpeciesIds": [
+      133,
+      134
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 68,
+    "StarterSpeciesId": 137,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Porygon",
+      "Porygon2",
+      "Porygon Z"
+    ],
+    "StageSpeciesIds": [
+      137,
+      233,
+      474
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 69,
+    "StarterSpeciesId": 138,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Omanyte",
+      "Omastar"
+    ],
+    "StageSpeciesIds": [
+      138,
+      139
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "water"
+      ],
+      [
+        "rock",
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 70,
+    "StarterSpeciesId": 140,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Kabuto",
+      "Kabutops"
+    ],
+    "StageSpeciesIds": [
+      140,
+      141
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "water"
+      ],
+      [
+        "rock",
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 71,
+    "StarterSpeciesId": 142,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Aerodactyl"
+    ],
+    "StageSpeciesIds": [
+      142
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 72,
+    "StarterSpeciesId": 446,
+    "CaptureRate": 50,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Munchlax",
+      "Snorlax"
+    ],
+    "StageSpeciesIds": [
+      446,
+      143
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 73,
+    "StarterSpeciesId": 144,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Articuno"
+    ],
+    "StageSpeciesIds": [
+      144
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 74,
+    "StarterSpeciesId": 145,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Zapdos"
+    ],
+    "StageSpeciesIds": [
+      145
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 75,
+    "StarterSpeciesId": 146,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Moltres"
+    ],
+    "StageSpeciesIds": [
+      146
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 76,
+    "StarterSpeciesId": 147,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Dratini",
+      "Dragonair",
+      "Dragonite"
+    ],
+    "StageSpeciesIds": [
+      147,
+      148,
+      149
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ],
+      [
+        "dragon",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 77,
+    "StarterSpeciesId": 150,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Mewtwo"
+    ],
+    "StageSpeciesIds": [
+      150
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 78,
+    "StarterSpeciesId": 151,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Mew"
+    ],
+    "StageSpeciesIds": [
+      151
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 79,
+    "StarterSpeciesId": 152,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Chikorita",
+      "Bayleef",
+      "Meganium"
+    ],
+    "StageSpeciesIds": [
+      152,
+      153,
+      154
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 80,
+    "StarterSpeciesId": 155,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Cyndaquil",
+      "Quilava",
+      "Typhlosion"
+    ],
+    "StageSpeciesIds": [
+      155,
+      156,
+      157
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 81,
+    "StarterSpeciesId": 158,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Totodile",
+      "Croconaw",
+      "Feraligatr"
+    ],
+    "StageSpeciesIds": [
+      158,
+      159,
+      160
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 82,
+    "StarterSpeciesId": 161,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Sentret",
+      "Furret"
+    ],
+    "StageSpeciesIds": [
+      161,
+      162
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 83,
+    "StarterSpeciesId": 163,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Hoothoot",
+      "Noctowl"
+    ],
+    "StageSpeciesIds": [
+      163,
+      164
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 84,
+    "StarterSpeciesId": 165,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Ledyba",
+      "Ledian"
+    ],
+    "StageSpeciesIds": [
+      165,
+      166
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 85,
+    "StarterSpeciesId": 167,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Spinarak",
+      "Ariados"
+    ],
+    "StageSpeciesIds": [
+      167,
+      168
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 86,
+    "StarterSpeciesId": 170,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Chinchou",
+      "Lanturn"
+    ],
+    "StageSpeciesIds": [
+      170,
+      171
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "electric"
+      ],
+      [
+        "water",
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 87,
+    "StarterSpeciesId": 175,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Togepi",
+      "Togetic",
+      "Togekiss"
+    ],
+    "StageSpeciesIds": [
+      175,
+      176,
+      468
+    ],
+    "StageTypes": [
+      [
+        "fairy"
+      ],
+      [
+        "fairy",
+        "flying"
+      ],
+      [
+        "fairy",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 88,
+    "StarterSpeciesId": 177,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Natu",
+      "Xatu"
+    ],
+    "StageSpeciesIds": [
+      177,
+      178
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ],
+      [
+        "psychic",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 89,
+    "StarterSpeciesId": 179,
+    "CaptureRate": 235,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Mareep",
+      "Flaaffy",
+      "Ampharos"
+    ],
+    "StageSpeciesIds": [
+      179,
+      180,
+      181
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 90,
+    "StarterSpeciesId": 298,
+    "CaptureRate": 150,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Azurill",
+      "Marill",
+      "Azumarill"
+    ],
+    "StageSpeciesIds": [
+      298,
+      183,
+      184
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "fairy"
+      ],
+      [
+        "water",
+        "fairy"
+      ],
+      [
+        "water",
+        "fairy"
+      ]
+    ]
+  },
+  {
+    "ChainId": 91,
+    "StarterSpeciesId": 438,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Bonsly",
+      "Sudowoodo"
+    ],
+    "StageSpeciesIds": [
+      438,
+      185
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 92,
+    "StarterSpeciesId": 187,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Hoppip",
+      "Skiploom",
+      "Jumpluff"
+    ],
+    "StageSpeciesIds": [
+      187,
+      188,
+      189
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "flying"
+      ],
+      [
+        "grass",
+        "flying"
+      ],
+      [
+        "grass",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 93,
+    "StarterSpeciesId": 190,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Aipom",
+      "Ambipom"
+    ],
+    "StageSpeciesIds": [
+      190,
+      424
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 94,
+    "StarterSpeciesId": 191,
+    "CaptureRate": 235,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Sunkern",
+      "Sunflora"
+    ],
+    "StageSpeciesIds": [
+      191,
+      192
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 95,
+    "StarterSpeciesId": 193,
+    "CaptureRate": 75,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Yanma",
+      "Yanmega"
+    ],
+    "StageSpeciesIds": [
+      193,
+      469
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 96,
+    "StarterSpeciesId": 194,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Wooper",
+      "Quagsire"
+    ],
+    "StageSpeciesIds": [
+      194,
+      195
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 97,
+    "StarterSpeciesId": 198,
+    "CaptureRate": 30,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Murkrow",
+      "Honchkrow"
+    ],
+    "StageSpeciesIds": [
+      198,
+      430
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "flying"
+      ],
+      [
+        "dark",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 98,
+    "StarterSpeciesId": 200,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Misdreavus",
+      "Mismagius"
+    ],
+    "StageSpeciesIds": [
+      200,
+      429
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 99,
+    "StarterSpeciesId": 201,
+    "CaptureRate": 225,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Unown"
+    ],
+    "StageSpeciesIds": [
+      201
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 100,
+    "StarterSpeciesId": 360,
+    "CaptureRate": 125,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Wynaut",
+      "Wobbuffet"
+    ],
+    "StageSpeciesIds": [
+      360,
+      202
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 101,
+    "StarterSpeciesId": 203,
+    "CaptureRate": 60,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Girafarig",
+      "Farigiraf"
+    ],
+    "StageSpeciesIds": [
+      203,
+      981
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "psychic"
+      ],
+      [
+        "normal",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 102,
+    "StarterSpeciesId": 204,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Pineco",
+      "Forretress"
+    ],
+    "StageSpeciesIds": [
+      204,
+      205
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 103,
+    "StarterSpeciesId": 206,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Dunsparce",
+      "Dudunsparce"
+    ],
+    "StageSpeciesIds": [
+      206,
+      982
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 104,
+    "StarterSpeciesId": 207,
+    "CaptureRate": 60,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Gligar",
+      "Gliscor"
+    ],
+    "StageSpeciesIds": [
+      207,
+      472
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "flying"
+      ],
+      [
+        "ground",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 105,
+    "StarterSpeciesId": 209,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Snubbull",
+      "Granbull"
+    ],
+    "StageSpeciesIds": [
+      209,
+      210
+    ],
+    "StageTypes": [
+      [
+        "fairy"
+      ],
+      [
+        "fairy"
+      ]
+    ]
+  },
+  {
+    "ChainId": 106,
+    "StarterSpeciesId": 211,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Qwilfish",
+      "Overqwil"
+    ],
+    "StageSpeciesIds": [
+      211,
+      904
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "poison"
+      ],
+      [
+        "dark",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 107,
+    "StarterSpeciesId": 213,
+    "CaptureRate": 190,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Shuckle"
+    ],
+    "StageSpeciesIds": [
+      213
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 108,
+    "StarterSpeciesId": 214,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Heracross"
+    ],
+    "StageSpeciesIds": [
+      214
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 109,
+    "StarterSpeciesId": 215,
+    "CaptureRate": 60,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Sneasel",
+      "Weavile"
+    ],
+    "StageSpeciesIds": [
+      215,
+      461
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "ice"
+      ],
+      [
+        "dark",
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 110,
+    "StarterSpeciesId": 216,
+    "CaptureRate": 120,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Teddiursa",
+      "Ursaring",
+      "Ursaluna"
+    ],
+    "StageSpeciesIds": [
+      216,
+      217,
+      901
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "ground",
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 111,
+    "StarterSpeciesId": 218,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Slugma",
+      "Magcargo"
+    ],
+    "StageSpeciesIds": [
+      218,
+      219
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 112,
+    "StarterSpeciesId": 220,
+    "CaptureRate": 225,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Swinub",
+      "Piloswine",
+      "Mamoswine"
+    ],
+    "StageSpeciesIds": [
+      220,
+      221,
+      473
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "ground"
+      ],
+      [
+        "ice",
+        "ground"
+      ],
+      [
+        "ice",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 113,
+    "StarterSpeciesId": 222,
+    "CaptureRate": 60,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Corsola",
+      "Cursola"
+    ],
+    "StageSpeciesIds": [
+      222,
+      864
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "rock"
+      ],
+      [
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 114,
+    "StarterSpeciesId": 223,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Remoraid",
+      "Octillery"
+    ],
+    "StageSpeciesIds": [
+      223,
+      224
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 115,
+    "StarterSpeciesId": 225,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Delibird"
+    ],
+    "StageSpeciesIds": [
+      225
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 116,
+    "StarterSpeciesId": 458,
+    "CaptureRate": 25,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Mantyke",
+      "Mantine"
+    ],
+    "StageSpeciesIds": [
+      458,
+      226
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "flying"
+      ],
+      [
+        "water",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 117,
+    "StarterSpeciesId": 227,
+    "CaptureRate": 25,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Skarmory"
+    ],
+    "StageSpeciesIds": [
+      227
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 118,
+    "StarterSpeciesId": 228,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Houndour",
+      "Houndoom"
+    ],
+    "StageSpeciesIds": [
+      228,
+      229
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "fire"
+      ],
+      [
+        "dark",
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 119,
+    "StarterSpeciesId": 231,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Phanpy",
+      "Donphan"
+    ],
+    "StageSpeciesIds": [
+      231,
+      232
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 120,
+    "StarterSpeciesId": 234,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Stantler",
+      "Wyrdeer"
+    ],
+    "StageSpeciesIds": [
+      234,
+      899
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 121,
+    "StarterSpeciesId": 235,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Smeargle"
+    ],
+    "StageSpeciesIds": [
+      235
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 122,
+    "StarterSpeciesId": 241,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Miltank"
+    ],
+    "StageSpeciesIds": [
+      241
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 123,
+    "StarterSpeciesId": 243,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Raikou"
+    ],
+    "StageSpeciesIds": [
+      243
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 124,
+    "StarterSpeciesId": 244,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Entei"
+    ],
+    "StageSpeciesIds": [
+      244
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 125,
+    "StarterSpeciesId": 245,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Suicune"
+    ],
+    "StageSpeciesIds": [
+      245
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 126,
+    "StarterSpeciesId": 246,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Larvitar",
+      "Pupitar",
+      "Tyranitar"
+    ],
+    "StageSpeciesIds": [
+      246,
+      247,
+      248
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "ground"
+      ],
+      [
+        "rock",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 127,
+    "StarterSpeciesId": 249,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Lugia"
+    ],
+    "StageSpeciesIds": [
+      249
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 128,
+    "StarterSpeciesId": 250,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Ho Oh"
+    ],
+    "StageSpeciesIds": [
+      250
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 129,
+    "StarterSpeciesId": 251,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Celebi"
+    ],
+    "StageSpeciesIds": [
+      251
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 130,
+    "StarterSpeciesId": 252,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Treecko",
+      "Grovyle",
+      "Sceptile"
+    ],
+    "StageSpeciesIds": [
+      252,
+      253,
+      254
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 131,
+    "StarterSpeciesId": 255,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Torchic",
+      "Combusken",
+      "Blaziken"
+    ],
+    "StageSpeciesIds": [
+      255,
+      256,
+      257
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "fighting"
+      ],
+      [
+        "fire",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 132,
+    "StarterSpeciesId": 258,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Mudkip",
+      "Marshtomp",
+      "Swampert"
+    ],
+    "StageSpeciesIds": [
+      258,
+      259,
+      260
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 133,
+    "StarterSpeciesId": 261,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Poochyena",
+      "Mightyena"
+    ],
+    "StageSpeciesIds": [
+      261,
+      262
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ],
+      [
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 134,
+    "StarterSpeciesId": 263,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Zigzagoon",
+      "Linoone",
+      "Obstagoon"
+    ],
+    "StageSpeciesIds": [
+      263,
+      264,
+      862
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "dark",
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 135,
+    "StarterSpeciesId": 265,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Wurmple",
+      "Silcoon",
+      "Beautifly"
+    ],
+    "StageSpeciesIds": [
+      265,
+      266,
+      267
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 136,
+    "StarterSpeciesId": 270,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Lotad",
+      "Lombre",
+      "Ludicolo"
+    ],
+    "StageSpeciesIds": [
+      270,
+      271,
+      272
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "grass"
+      ],
+      [
+        "water",
+        "grass"
+      ],
+      [
+        "water",
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 137,
+    "StarterSpeciesId": 273,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Seedot",
+      "Nuzleaf",
+      "Shiftry"
+    ],
+    "StageSpeciesIds": [
+      273,
+      274,
+      275
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "dark"
+      ],
+      [
+        "grass",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 138,
+    "StarterSpeciesId": 276,
+    "CaptureRate": 200,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Taillow",
+      "Swellow"
+    ],
+    "StageSpeciesIds": [
+      276,
+      277
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 139,
+    "StarterSpeciesId": 278,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Wingull",
+      "Pelipper"
+    ],
+    "StageSpeciesIds": [
+      278,
+      279
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "flying"
+      ],
+      [
+        "water",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 140,
+    "StarterSpeciesId": 280,
+    "CaptureRate": 235,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Ralts",
+      "Kirlia",
+      "Gardevoir"
+    ],
+    "StageSpeciesIds": [
+      280,
+      281,
+      282
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "psychic",
+        "fairy"
+      ],
+      [
+        "psychic",
+        "fairy"
+      ]
+    ]
+  },
+  {
+    "ChainId": 141,
+    "StarterSpeciesId": 283,
+    "CaptureRate": 200,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Surskit",
+      "Masquerain"
+    ],
+    "StageSpeciesIds": [
+      283,
+      284
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "water"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 142,
+    "StarterSpeciesId": 285,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Shroomish",
+      "Breloom"
+    ],
+    "StageSpeciesIds": [
+      285,
+      286
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 143,
+    "StarterSpeciesId": 287,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Slakoth",
+      "Vigoroth",
+      "Slaking"
+    ],
+    "StageSpeciesIds": [
+      287,
+      288,
+      289
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 144,
+    "StarterSpeciesId": 290,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Nincada",
+      "Ninjask"
+    ],
+    "StageSpeciesIds": [
+      290,
+      291
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "ground"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 145,
+    "StarterSpeciesId": 293,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Whismur",
+      "Loudred",
+      "Exploud"
+    ],
+    "StageSpeciesIds": [
+      293,
+      294,
+      295
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 146,
+    "StarterSpeciesId": 296,
+    "CaptureRate": 180,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Makuhita",
+      "Hariyama"
+    ],
+    "StageSpeciesIds": [
+      296,
+      297
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 147,
+    "StarterSpeciesId": 299,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Nosepass",
+      "Probopass"
+    ],
+    "StageSpeciesIds": [
+      299,
+      476
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 148,
+    "StarterSpeciesId": 300,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Skitty",
+      "Delcatty"
+    ],
+    "StageSpeciesIds": [
+      300,
+      301
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 149,
+    "StarterSpeciesId": 302,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Sableye"
+    ],
+    "StageSpeciesIds": [
+      302
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 150,
+    "StarterSpeciesId": 303,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Mawile"
+    ],
+    "StageSpeciesIds": [
+      303
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "fairy"
+      ]
+    ]
+  },
+  {
+    "ChainId": 151,
+    "StarterSpeciesId": 304,
+    "CaptureRate": 180,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Aron",
+      "Lairon",
+      "Aggron"
+    ],
+    "StageSpeciesIds": [
+      304,
+      305,
+      306
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "rock"
+      ],
+      [
+        "steel",
+        "rock"
+      ],
+      [
+        "steel",
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 152,
+    "StarterSpeciesId": 307,
+    "CaptureRate": 180,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Meditite",
+      "Medicham"
+    ],
+    "StageSpeciesIds": [
+      307,
+      308
+    ],
+    "StageTypes": [
+      [
+        "fighting",
+        "psychic"
+      ],
+      [
+        "fighting",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 153,
+    "StarterSpeciesId": 309,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Electrike",
+      "Manectric"
+    ],
+    "StageSpeciesIds": [
+      309,
+      310
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 154,
+    "StarterSpeciesId": 311,
+    "CaptureRate": 200,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Plusle"
+    ],
+    "StageSpeciesIds": [
+      311
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 155,
+    "StarterSpeciesId": 312,
+    "CaptureRate": 200,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Minun"
+    ],
+    "StageSpeciesIds": [
+      312
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 156,
+    "StarterSpeciesId": 313,
+    "CaptureRate": 150,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Volbeat"
+    ],
+    "StageSpeciesIds": [
+      313
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ]
+    ]
+  },
+  {
+    "ChainId": 157,
+    "StarterSpeciesId": 314,
+    "CaptureRate": 150,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Illumise"
+    ],
+    "StageSpeciesIds": [
+      314
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ]
+    ]
+  },
+  {
+    "ChainId": 158,
+    "StarterSpeciesId": 406,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Budew",
+      "Roselia",
+      "Roserade"
+    ],
+    "StageSpeciesIds": [
+      406,
+      315,
+      407
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 159,
+    "StarterSpeciesId": 316,
+    "CaptureRate": 225,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Gulpin",
+      "Swalot"
+    ],
+    "StageSpeciesIds": [
+      316,
+      317
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 160,
+    "StarterSpeciesId": 318,
+    "CaptureRate": 225,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Carvanha",
+      "Sharpedo"
+    ],
+    "StageSpeciesIds": [
+      318,
+      319
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "dark"
+      ],
+      [
+        "water",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 161,
+    "StarterSpeciesId": 320,
+    "CaptureRate": 125,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Wailmer",
+      "Wailord"
+    ],
+    "StageSpeciesIds": [
+      320,
+      321
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 162,
+    "StarterSpeciesId": 322,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Numel",
+      "Camerupt"
+    ],
+    "StageSpeciesIds": [
+      322,
+      323
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "ground"
+      ],
+      [
+        "fire",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 163,
+    "StarterSpeciesId": 324,
+    "CaptureRate": 90,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Torkoal"
+    ],
+    "StageSpeciesIds": [
+      324
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 164,
+    "StarterSpeciesId": 325,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Spoink",
+      "Grumpig"
+    ],
+    "StageSpeciesIds": [
+      325,
+      326
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 165,
+    "StarterSpeciesId": 327,
+    "CaptureRate": 255,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Spinda"
+    ],
+    "StageSpeciesIds": [
+      327
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 166,
+    "StarterSpeciesId": 328,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Trapinch",
+      "Vibrava",
+      "Flygon"
+    ],
+    "StageSpeciesIds": [
+      328,
+      329,
+      330
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground",
+        "dragon"
+      ],
+      [
+        "ground",
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 167,
+    "StarterSpeciesId": 331,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Cacnea",
+      "Cacturne"
+    ],
+    "StageSpeciesIds": [
+      331,
+      332
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 168,
+    "StarterSpeciesId": 333,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Swablu",
+      "Altaria"
+    ],
+    "StageSpeciesIds": [
+      333,
+      334
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "dragon",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 169,
+    "StarterSpeciesId": 335,
+    "CaptureRate": 90,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Zangoose"
+    ],
+    "StageSpeciesIds": [
+      335
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 170,
+    "StarterSpeciesId": 336,
+    "CaptureRate": 90,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Seviper"
+    ],
+    "StageSpeciesIds": [
+      336
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 171,
+    "StarterSpeciesId": 337,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Lunatone"
+    ],
+    "StageSpeciesIds": [
+      337
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 172,
+    "StarterSpeciesId": 338,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Solrock"
+    ],
+    "StageSpeciesIds": [
+      338
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 173,
+    "StarterSpeciesId": 339,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Barboach",
+      "Whiscash"
+    ],
+    "StageSpeciesIds": [
+      339,
+      340
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 174,
+    "StarterSpeciesId": 341,
+    "CaptureRate": 205,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Corphish",
+      "Crawdaunt"
+    ],
+    "StageSpeciesIds": [
+      341,
+      342
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 175,
+    "StarterSpeciesId": 343,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Baltoy",
+      "Claydol"
+    ],
+    "StageSpeciesIds": [
+      343,
+      344
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "psychic"
+      ],
+      [
+        "ground",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 176,
+    "StarterSpeciesId": 345,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Lileep",
+      "Cradily"
+    ],
+    "StageSpeciesIds": [
+      345,
+      346
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "grass"
+      ],
+      [
+        "rock",
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 177,
+    "StarterSpeciesId": 347,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Anorith",
+      "Armaldo"
+    ],
+    "StageSpeciesIds": [
+      347,
+      348
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "bug"
+      ],
+      [
+        "rock",
+        "bug"
+      ]
+    ]
+  },
+  {
+    "ChainId": 178,
+    "StarterSpeciesId": 349,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Feebas",
+      "Milotic"
+    ],
+    "StageSpeciesIds": [
+      349,
+      350
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 179,
+    "StarterSpeciesId": 351,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Castform"
+    ],
+    "StageSpeciesIds": [
+      351
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 180,
+    "StarterSpeciesId": 352,
+    "CaptureRate": 200,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Kecleon"
+    ],
+    "StageSpeciesIds": [
+      352
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 181,
+    "StarterSpeciesId": 353,
+    "CaptureRate": 225,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Shuppet",
+      "Banette"
+    ],
+    "StageSpeciesIds": [
+      353,
+      354
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 182,
+    "StarterSpeciesId": 355,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Duskull",
+      "Dusclops",
+      "Dusknoir"
+    ],
+    "StageSpeciesIds": [
+      355,
+      356,
+      477
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 183,
+    "StarterSpeciesId": 357,
+    "CaptureRate": 200,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Tropius"
+    ],
+    "StageSpeciesIds": [
+      357
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 184,
+    "StarterSpeciesId": 433,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Chingling",
+      "Chimecho"
+    ],
+    "StageSpeciesIds": [
+      433,
+      358
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 185,
+    "StarterSpeciesId": 359,
+    "CaptureRate": 30,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Absol"
+    ],
+    "StageSpeciesIds": [
+      359
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 186,
+    "StarterSpeciesId": 361,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Snorunt",
+      "Glalie"
+    ],
+    "StageSpeciesIds": [
+      361,
+      362
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 187,
+    "StarterSpeciesId": 363,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Spheal",
+      "Sealeo",
+      "Walrein"
+    ],
+    "StageSpeciesIds": [
+      363,
+      364,
+      365
+    ],
+    "StageTypes": [
+      [
+        "ice",
+        "water"
+      ],
+      [
+        "ice",
+        "water"
+      ],
+      [
+        "ice",
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 188,
+    "StarterSpeciesId": 366,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Clamperl",
+      "Huntail"
+    ],
+    "StageSpeciesIds": [
+      366,
+      367
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 189,
+    "StarterSpeciesId": 369,
+    "CaptureRate": 25,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Relicanth"
+    ],
+    "StageSpeciesIds": [
+      369
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 190,
+    "StarterSpeciesId": 370,
+    "CaptureRate": 225,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Luvdisc"
+    ],
+    "StageSpeciesIds": [
+      370
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 191,
+    "StarterSpeciesId": 371,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Bagon",
+      "Shelgon",
+      "Salamence"
+    ],
+    "StageSpeciesIds": [
+      371,
+      372,
+      373
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ],
+      [
+        "dragon",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 192,
+    "StarterSpeciesId": 374,
+    "CaptureRate": 3,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Beldum",
+      "Metang",
+      "Metagross"
+    ],
+    "StageSpeciesIds": [
+      374,
+      375,
+      376
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "psychic"
+      ],
+      [
+        "steel",
+        "psychic"
+      ],
+      [
+        "steel",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 193,
+    "StarterSpeciesId": 377,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Regirock"
+    ],
+    "StageSpeciesIds": [
+      377
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 194,
+    "StarterSpeciesId": 378,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Regice"
+    ],
+    "StageSpeciesIds": [
+      378
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 195,
+    "StarterSpeciesId": 379,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Registeel"
+    ],
+    "StageSpeciesIds": [
+      379
+    ],
+    "StageTypes": [
+      [
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 196,
+    "StarterSpeciesId": 380,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Latias"
+    ],
+    "StageSpeciesIds": [
+      380
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 197,
+    "StarterSpeciesId": 381,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Latios"
+    ],
+    "StageSpeciesIds": [
+      381
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 198,
+    "StarterSpeciesId": 382,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Kyogre"
+    ],
+    "StageSpeciesIds": [
+      382
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 199,
+    "StarterSpeciesId": 383,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Groudon"
+    ],
+    "StageSpeciesIds": [
+      383
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 200,
+    "StarterSpeciesId": 384,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Rayquaza"
+    ],
+    "StageSpeciesIds": [
+      384
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 201,
+    "StarterSpeciesId": 385,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Jirachi"
+    ],
+    "StageSpeciesIds": [
+      385
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 202,
+    "StarterSpeciesId": 386,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Deoxys"
+    ],
+    "StageSpeciesIds": [
+      386
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 203,
+    "StarterSpeciesId": 387,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Turtwig",
+      "Grotle",
+      "Torterra"
+    ],
+    "StageSpeciesIds": [
+      387,
+      388,
+      389
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 204,
+    "StarterSpeciesId": 390,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Chimchar",
+      "Monferno",
+      "Infernape"
+    ],
+    "StageSpeciesIds": [
+      390,
+      391,
+      392
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "fighting"
+      ],
+      [
+        "fire",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 205,
+    "StarterSpeciesId": 393,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Piplup",
+      "Prinplup",
+      "Empoleon"
+    ],
+    "StageSpeciesIds": [
+      393,
+      394,
+      395
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 206,
+    "StarterSpeciesId": 396,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Starly",
+      "Staravia",
+      "Staraptor"
+    ],
+    "StageSpeciesIds": [
+      396,
+      397,
+      398
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 207,
+    "StarterSpeciesId": 399,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Bidoof",
+      "Bibarel"
+    ],
+    "StageSpeciesIds": [
+      399,
+      400
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal",
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 208,
+    "StarterSpeciesId": 401,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Kricketot",
+      "Kricketune"
+    ],
+    "StageSpeciesIds": [
+      401,
+      402
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ]
+    ]
+  },
+  {
+    "ChainId": 209,
+    "StarterSpeciesId": 403,
+    "CaptureRate": 235,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Shinx",
+      "Luxio",
+      "Luxray"
+    ],
+    "StageSpeciesIds": [
+      403,
+      404,
+      405
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 211,
+    "StarterSpeciesId": 408,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Cranidos",
+      "Rampardos"
+    ],
+    "StageSpeciesIds": [
+      408,
+      409
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 212,
+    "StarterSpeciesId": 410,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Shieldon",
+      "Bastiodon"
+    ],
+    "StageSpeciesIds": [
+      410,
+      411
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "steel"
+      ],
+      [
+        "rock",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 213,
+    "StarterSpeciesId": 412,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Burmy",
+      "Wormadam"
+    ],
+    "StageSpeciesIds": [
+      412,
+      413
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 214,
+    "StarterSpeciesId": 415,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Combee",
+      "Vespiquen"
+    ],
+    "StageSpeciesIds": [
+      415,
+      416
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "flying"
+      ],
+      [
+        "bug",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 215,
+    "StarterSpeciesId": 417,
+    "CaptureRate": 200,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Pachirisu"
+    ],
+    "StageSpeciesIds": [
+      417
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 216,
+    "StarterSpeciesId": 418,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Buizel",
+      "Floatzel"
+    ],
+    "StageSpeciesIds": [
+      418,
+      419
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 217,
+    "StarterSpeciesId": 420,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Cherubi",
+      "Cherrim"
+    ],
+    "StageSpeciesIds": [
+      420,
+      421
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 218,
+    "StarterSpeciesId": 422,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Shellos",
+      "Gastrodon"
+    ],
+    "StageSpeciesIds": [
+      422,
+      423
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 219,
+    "StarterSpeciesId": 425,
+    "CaptureRate": 125,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Drifloon",
+      "Drifblim"
+    ],
+    "StageSpeciesIds": [
+      425,
+      426
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "flying"
+      ],
+      [
+        "ghost",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 220,
+    "StarterSpeciesId": 427,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Buneary",
+      "Lopunny"
+    ],
+    "StageSpeciesIds": [
+      427,
+      428
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 221,
+    "StarterSpeciesId": 431,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Glameow",
+      "Purugly"
+    ],
+    "StageSpeciesIds": [
+      431,
+      432
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 223,
+    "StarterSpeciesId": 434,
+    "CaptureRate": 225,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Stunky",
+      "Skuntank"
+    ],
+    "StageSpeciesIds": [
+      434,
+      435
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "dark"
+      ],
+      [
+        "poison",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 224,
+    "StarterSpeciesId": 436,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Bronzor",
+      "Bronzong"
+    ],
+    "StageSpeciesIds": [
+      436,
+      437
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "psychic"
+      ],
+      [
+        "steel",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 228,
+    "StarterSpeciesId": 441,
+    "CaptureRate": 30,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Chatot"
+    ],
+    "StageSpeciesIds": [
+      441
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 229,
+    "StarterSpeciesId": 442,
+    "CaptureRate": 100,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Spiritomb"
+    ],
+    "StageSpeciesIds": [
+      442
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 230,
+    "StarterSpeciesId": 443,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Gible",
+      "Gabite",
+      "Garchomp"
+    ],
+    "StageSpeciesIds": [
+      443,
+      444,
+      445
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "ground"
+      ],
+      [
+        "dragon",
+        "ground"
+      ],
+      [
+        "dragon",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 232,
+    "StarterSpeciesId": 447,
+    "CaptureRate": 75,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Riolu",
+      "Lucario"
+    ],
+    "StageSpeciesIds": [
+      447,
+      448
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 233,
+    "StarterSpeciesId": 449,
+    "CaptureRate": 140,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Hippopotas",
+      "Hippowdon"
+    ],
+    "StageSpeciesIds": [
+      449,
+      450
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 234,
+    "StarterSpeciesId": 451,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Skorupi",
+      "Drapion"
+    ],
+    "StageSpeciesIds": [
+      451,
+      452
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "bug"
+      ],
+      [
+        "poison",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 235,
+    "StarterSpeciesId": 453,
+    "CaptureRate": 140,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Croagunk",
+      "Toxicroak"
+    ],
+    "StageSpeciesIds": [
+      453,
+      454
+    ],
+    "StageTypes": [
+      [
+        "poison",
+        "fighting"
+      ],
+      [
+        "poison",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 236,
+    "StarterSpeciesId": 455,
+    "CaptureRate": 200,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Carnivine"
+    ],
+    "StageSpeciesIds": [
+      455
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 237,
+    "StarterSpeciesId": 456,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Finneon",
+      "Lumineon"
+    ],
+    "StageSpeciesIds": [
+      456,
+      457
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 239,
+    "StarterSpeciesId": 459,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Snover",
+      "Abomasnow"
+    ],
+    "StageSpeciesIds": [
+      459,
+      460
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "ice"
+      ],
+      [
+        "grass",
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 240,
+    "StarterSpeciesId": 479,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Rotom"
+    ],
+    "StageSpeciesIds": [
+      479
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 241,
+    "StarterSpeciesId": 480,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Uxie"
+    ],
+    "StageSpeciesIds": [
+      480
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 242,
+    "StarterSpeciesId": 481,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Mesprit"
+    ],
+    "StageSpeciesIds": [
+      481
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 243,
+    "StarterSpeciesId": 482,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Azelf"
+    ],
+    "StageSpeciesIds": [
+      482
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 244,
+    "StarterSpeciesId": 483,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Dialga"
+    ],
+    "StageSpeciesIds": [
+      483
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 245,
+    "StarterSpeciesId": 484,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Palkia"
+    ],
+    "StageSpeciesIds": [
+      484
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 246,
+    "StarterSpeciesId": 485,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Heatran"
+    ],
+    "StageSpeciesIds": [
+      485
+    ],
+    "StageTypes": [
+      [
+        "fire",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 247,
+    "StarterSpeciesId": 486,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Regigigas"
+    ],
+    "StageSpeciesIds": [
+      486
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 248,
+    "StarterSpeciesId": 487,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Giratina"
+    ],
+    "StageSpeciesIds": [
+      487
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 249,
+    "StarterSpeciesId": 488,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Cresselia"
+    ],
+    "StageSpeciesIds": [
+      488
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 250,
+    "StarterSpeciesId": 489,
+    "CaptureRate": 30,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Phione",
+      "Manaphy"
+    ],
+    "StageSpeciesIds": [
+      489,
+      490
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 252,
+    "StarterSpeciesId": 491,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Darkrai"
+    ],
+    "StageSpeciesIds": [
+      491
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 253,
+    "StarterSpeciesId": 492,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Shaymin"
+    ],
+    "StageSpeciesIds": [
+      492
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 254,
+    "StarterSpeciesId": 493,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Arceus"
+    ],
+    "StageSpeciesIds": [
+      493
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 255,
+    "StarterSpeciesId": 494,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Victini"
+    ],
+    "StageSpeciesIds": [
+      494
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 256,
+    "StarterSpeciesId": 495,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Snivy",
+      "Servine",
+      "Serperior"
+    ],
+    "StageSpeciesIds": [
+      495,
+      496,
+      497
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 257,
+    "StarterSpeciesId": 498,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Tepig",
+      "Pignite",
+      "Emboar"
+    ],
+    "StageSpeciesIds": [
+      498,
+      499,
+      500
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire",
+        "fighting"
+      ],
+      [
+        "fire",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 258,
+    "StarterSpeciesId": 501,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Oshawott",
+      "Dewott",
+      "Samurott"
+    ],
+    "StageSpeciesIds": [
+      501,
+      502,
+      503
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 259,
+    "StarterSpeciesId": 504,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Patrat",
+      "Watchog"
+    ],
+    "StageSpeciesIds": [
+      504,
+      505
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 260,
+    "StarterSpeciesId": 506,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Lillipup",
+      "Herdier",
+      "Stoutland"
+    ],
+    "StageSpeciesIds": [
+      506,
+      507,
+      508
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 261,
+    "StarterSpeciesId": 509,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Purrloin",
+      "Liepard"
+    ],
+    "StageSpeciesIds": [
+      509,
+      510
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ],
+      [
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 262,
+    "StarterSpeciesId": 511,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Pansage",
+      "Simisage"
+    ],
+    "StageSpeciesIds": [
+      511,
+      512
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 263,
+    "StarterSpeciesId": 513,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Pansear",
+      "Simisear"
+    ],
+    "StageSpeciesIds": [
+      513,
+      514
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 264,
+    "StarterSpeciesId": 515,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Panpour",
+      "Simipour"
+    ],
+    "StageSpeciesIds": [
+      515,
+      516
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 265,
+    "StarterSpeciesId": 517,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Munna",
+      "Musharna"
+    ],
+    "StageSpeciesIds": [
+      517,
+      518
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 266,
+    "StarterSpeciesId": 519,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Pidove",
+      "Tranquill",
+      "Unfezant"
+    ],
+    "StageSpeciesIds": [
+      519,
+      520,
+      521
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 267,
+    "StarterSpeciesId": 522,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Blitzle",
+      "Zebstrika"
+    ],
+    "StageSpeciesIds": [
+      522,
+      523
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 268,
+    "StarterSpeciesId": 524,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Roggenrola",
+      "Boldore",
+      "Gigalith"
+    ],
+    "StageSpeciesIds": [
+      524,
+      525,
+      526
+    ],
+    "StageTypes": [
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ],
+      [
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 269,
+    "StarterSpeciesId": 527,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Woobat",
+      "Swoobat"
+    ],
+    "StageSpeciesIds": [
+      527,
+      528
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ],
+      [
+        "psychic",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 270,
+    "StarterSpeciesId": 529,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Drilbur",
+      "Excadrill"
+    ],
+    "StageSpeciesIds": [
+      529,
+      530
+    ],
+    "StageTypes": [
+      [
+        "ground"
+      ],
+      [
+        "ground",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 271,
+    "StarterSpeciesId": 531,
+    "CaptureRate": 255,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Audino"
+    ],
+    "StageSpeciesIds": [
+      531
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 272,
+    "StarterSpeciesId": 532,
+    "CaptureRate": 180,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Timburr",
+      "Gurdurr",
+      "Conkeldurr"
+    ],
+    "StageSpeciesIds": [
+      532,
+      533,
+      534
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 273,
+    "StarterSpeciesId": 535,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Tympole",
+      "Palpitoad",
+      "Seismitoad"
+    ],
+    "StageSpeciesIds": [
+      535,
+      536,
+      537
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ground"
+      ],
+      [
+        "water",
+        "ground"
+      ]
+    ]
+  },
+  {
+    "ChainId": 274,
+    "StarterSpeciesId": 538,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Throh"
+    ],
+    "StageSpeciesIds": [
+      538
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 275,
+    "StarterSpeciesId": 539,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Sawk"
+    ],
+    "StageSpeciesIds": [
+      539
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 276,
+    "StarterSpeciesId": 540,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Sewaddle",
+      "Swadloon",
+      "Leavanny"
+    ],
+    "StageSpeciesIds": [
+      540,
+      541,
+      542
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "grass"
+      ],
+      [
+        "bug",
+        "grass"
+      ],
+      [
+        "bug",
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 277,
+    "StarterSpeciesId": 543,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Venipede",
+      "Whirlipede",
+      "Scolipede"
+    ],
+    "StageSpeciesIds": [
+      543,
+      544,
+      545
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ],
+      [
+        "bug",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 278,
+    "StarterSpeciesId": 546,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Cottonee",
+      "Whimsicott"
+    ],
+    "StageSpeciesIds": [
+      546,
+      547
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "fairy"
+      ],
+      [
+        "grass",
+        "fairy"
+      ]
+    ]
+  },
+  {
+    "ChainId": 279,
+    "StarterSpeciesId": 548,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Petilil",
+      "Lilligant"
+    ],
+    "StageSpeciesIds": [
+      548,
+      549
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ],
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 280,
+    "StarterSpeciesId": 550,
+    "CaptureRate": 25,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Basculin",
+      "Basculegion"
+    ],
+    "StageSpeciesIds": [
+      550,
+      902
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ],
+      [
+        "water",
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 281,
+    "StarterSpeciesId": 551,
+    "CaptureRate": 180,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Sandile",
+      "Krokorok",
+      "Krookodile"
+    ],
+    "StageSpeciesIds": [
+      551,
+      552,
+      553
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "dark"
+      ],
+      [
+        "ground",
+        "dark"
+      ],
+      [
+        "ground",
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 282,
+    "StarterSpeciesId": 554,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Darumaka",
+      "Darmanitan"
+    ],
+    "StageSpeciesIds": [
+      554,
+      555
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ],
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 283,
+    "StarterSpeciesId": 556,
+    "CaptureRate": 255,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Maractus"
+    ],
+    "StageSpeciesIds": [
+      556
+    ],
+    "StageTypes": [
+      [
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 284,
+    "StarterSpeciesId": 557,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Dwebble",
+      "Crustle"
+    ],
+    "StageSpeciesIds": [
+      557,
+      558
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "rock"
+      ],
+      [
+        "bug",
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 285,
+    "StarterSpeciesId": 559,
+    "CaptureRate": 180,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Scraggy",
+      "Scrafty"
+    ],
+    "StageSpeciesIds": [
+      559,
+      560
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "fighting"
+      ],
+      [
+        "dark",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 286,
+    "StarterSpeciesId": 561,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Sigilyph"
+    ],
+    "StageSpeciesIds": [
+      561
+    ],
+    "StageTypes": [
+      [
+        "psychic",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 287,
+    "StarterSpeciesId": 562,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Yamask",
+      "Cofagrigus"
+    ],
+    "StageSpeciesIds": [
+      562,
+      563
+    ],
+    "StageTypes": [
+      [
+        "ghost"
+      ],
+      [
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 288,
+    "StarterSpeciesId": 564,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Tirtouga",
+      "Carracosta"
+    ],
+    "StageSpeciesIds": [
+      564,
+      565
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "rock"
+      ],
+      [
+        "water",
+        "rock"
+      ]
+    ]
+  },
+  {
+    "ChainId": 289,
+    "StarterSpeciesId": 566,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Archen",
+      "Archeops"
+    ],
+    "StageSpeciesIds": [
+      566,
+      567
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "flying"
+      ],
+      [
+        "rock",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 290,
+    "StarterSpeciesId": 568,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Trubbish",
+      "Garbodor"
+    ],
+    "StageSpeciesIds": [
+      568,
+      569
+    ],
+    "StageTypes": [
+      [
+        "poison"
+      ],
+      [
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 291,
+    "StarterSpeciesId": 570,
+    "CaptureRate": 75,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Zorua",
+      "Zoroark"
+    ],
+    "StageSpeciesIds": [
+      570,
+      571
+    ],
+    "StageTypes": [
+      [
+        "dark"
+      ],
+      [
+        "dark"
+      ]
+    ]
+  },
+  {
+    "ChainId": 292,
+    "StarterSpeciesId": 572,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Minccino",
+      "Cinccino"
+    ],
+    "StageSpeciesIds": [
+      572,
+      573
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ],
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 293,
+    "StarterSpeciesId": 574,
+    "CaptureRate": 200,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Gothita",
+      "Gothorita",
+      "Gothitelle"
+    ],
+    "StageSpeciesIds": [
+      574,
+      575,
+      576
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 294,
+    "StarterSpeciesId": 577,
+    "CaptureRate": 200,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Solosis",
+      "Duosion",
+      "Reuniclus"
+    ],
+    "StageSpeciesIds": [
+      577,
+      578,
+      579
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 295,
+    "StarterSpeciesId": 580,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Ducklett",
+      "Swanna"
+    ],
+    "StageSpeciesIds": [
+      580,
+      581
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "flying"
+      ],
+      [
+        "water",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 296,
+    "StarterSpeciesId": 582,
+    "CaptureRate": 255,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Vanillite",
+      "Vanillish",
+      "Vanilluxe"
+    ],
+    "StageSpeciesIds": [
+      582,
+      583,
+      584
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 297,
+    "StarterSpeciesId": 585,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Deerling",
+      "Sawsbuck"
+    ],
+    "StageSpeciesIds": [
+      585,
+      586
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "grass"
+      ],
+      [
+        "normal",
+        "grass"
+      ]
+    ]
+  },
+  {
+    "ChainId": 298,
+    "StarterSpeciesId": 587,
+    "CaptureRate": 200,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Emolga"
+    ],
+    "StageSpeciesIds": [
+      587
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 299,
+    "StarterSpeciesId": 588,
+    "CaptureRate": 200,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Karrablast",
+      "Escavalier"
+    ],
+    "StageSpeciesIds": [
+      588,
+      589
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 300,
+    "StarterSpeciesId": 590,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Foongus",
+      "Amoonguss"
+    ],
+    "StageSpeciesIds": [
+      590,
+      591
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "poison"
+      ],
+      [
+        "grass",
+        "poison"
+      ]
+    ]
+  },
+  {
+    "ChainId": 301,
+    "StarterSpeciesId": 592,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Frillish",
+      "Jellicent"
+    ],
+    "StageSpeciesIds": [
+      592,
+      593
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "ghost"
+      ],
+      [
+        "water",
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 302,
+    "StarterSpeciesId": 594,
+    "CaptureRate": 75,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Alomomola"
+    ],
+    "StageSpeciesIds": [
+      594
+    ],
+    "StageTypes": [
+      [
+        "water"
+      ]
+    ]
+  },
+  {
+    "ChainId": 303,
+    "StarterSpeciesId": 595,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Joltik",
+      "Galvantula"
+    ],
+    "StageSpeciesIds": [
+      595,
+      596
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "electric"
+      ],
+      [
+        "bug",
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 304,
+    "StarterSpeciesId": 597,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Ferroseed",
+      "Ferrothorn"
+    ],
+    "StageSpeciesIds": [
+      597,
+      598
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "steel"
+      ],
+      [
+        "grass",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 305,
+    "StarterSpeciesId": 599,
+    "CaptureRate": 130,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Klink",
+      "Klang",
+      "Klinklang"
+    ],
+    "StageSpeciesIds": [
+      599,
+      600,
+      601
+    ],
+    "StageTypes": [
+      [
+        "steel"
+      ],
+      [
+        "steel"
+      ],
+      [
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 306,
+    "StarterSpeciesId": 602,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Tynamo",
+      "Eelektrik",
+      "Eelektross"
+    ],
+    "StageSpeciesIds": [
+      602,
+      603,
+      604
+    ],
+    "StageTypes": [
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ],
+      [
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 307,
+    "StarterSpeciesId": 605,
+    "CaptureRate": 255,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Elgyem",
+      "Beheeyem"
+    ],
+    "StageSpeciesIds": [
+      605,
+      606
+    ],
+    "StageTypes": [
+      [
+        "psychic"
+      ],
+      [
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 308,
+    "StarterSpeciesId": 607,
+    "CaptureRate": 190,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Litwick",
+      "Lampent",
+      "Chandelure"
+    ],
+    "StageSpeciesIds": [
+      607,
+      608,
+      609
+    ],
+    "StageTypes": [
+      [
+        "ghost",
+        "fire"
+      ],
+      [
+        "ghost",
+        "fire"
+      ],
+      [
+        "ghost",
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 309,
+    "StarterSpeciesId": 610,
+    "CaptureRate": 75,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Axew",
+      "Fraxure",
+      "Haxorus"
+    ],
+    "StageSpeciesIds": [
+      610,
+      611,
+      612
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ],
+      [
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 310,
+    "StarterSpeciesId": 613,
+    "CaptureRate": 120,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Cubchoo",
+      "Beartic"
+    ],
+    "StageSpeciesIds": [
+      613,
+      614
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ],
+      [
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 311,
+    "StarterSpeciesId": 615,
+    "CaptureRate": 25,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Cryogonal"
+    ],
+    "StageSpeciesIds": [
+      615
+    ],
+    "StageTypes": [
+      [
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 312,
+    "StarterSpeciesId": 616,
+    "CaptureRate": 200,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Shelmet",
+      "Accelgor"
+    ],
+    "StageSpeciesIds": [
+      616,
+      617
+    ],
+    "StageTypes": [
+      [
+        "bug"
+      ],
+      [
+        "bug"
+      ]
+    ]
+  },
+  {
+    "ChainId": 313,
+    "StarterSpeciesId": 618,
+    "CaptureRate": 75,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Stunfisk"
+    ],
+    "StageSpeciesIds": [
+      618
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 314,
+    "StarterSpeciesId": 619,
+    "CaptureRate": 180,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Mienfoo",
+      "Mienshao"
+    ],
+    "StageSpeciesIds": [
+      619,
+      620
+    ],
+    "StageTypes": [
+      [
+        "fighting"
+      ],
+      [
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 315,
+    "StarterSpeciesId": 621,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Druddigon"
+    ],
+    "StageSpeciesIds": [
+      621
+    ],
+    "StageTypes": [
+      [
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 316,
+    "StarterSpeciesId": 622,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Golett",
+      "Golurk"
+    ],
+    "StageSpeciesIds": [
+      622,
+      623
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "ghost"
+      ],
+      [
+        "ground",
+        "ghost"
+      ]
+    ]
+  },
+  {
+    "ChainId": 317,
+    "StarterSpeciesId": 624,
+    "CaptureRate": 120,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Pawniard",
+      "Bisharp",
+      "Kingambit"
+    ],
+    "StageSpeciesIds": [
+      624,
+      625,
+      983
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "steel"
+      ],
+      [
+        "dark",
+        "steel"
+      ],
+      [
+        "dark",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 318,
+    "StarterSpeciesId": 626,
+    "CaptureRate": 45,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Bouffalant"
+    ],
+    "StageSpeciesIds": [
+      626
+    ],
+    "StageTypes": [
+      [
+        "normal"
+      ]
+    ]
+  },
+  {
+    "ChainId": 319,
+    "StarterSpeciesId": 627,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Rufflet",
+      "Braviary"
+    ],
+    "StageSpeciesIds": [
+      627,
+      628
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "flying"
+      ],
+      [
+        "normal",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 320,
+    "StarterSpeciesId": 629,
+    "CaptureRate": 190,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Vullaby",
+      "Mandibuzz"
+    ],
+    "StageSpeciesIds": [
+      629,
+      630
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "flying"
+      ],
+      [
+        "dark",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 321,
+    "StarterSpeciesId": 631,
+    "CaptureRate": 90,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Heatmor"
+    ],
+    "StageSpeciesIds": [
+      631
+    ],
+    "StageTypes": [
+      [
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 322,
+    "StarterSpeciesId": 632,
+    "CaptureRate": 90,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Durant"
+    ],
+    "StageSpeciesIds": [
+      632
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "steel"
+      ]
+    ]
+  },
+  {
+    "ChainId": 323,
+    "StarterSpeciesId": 633,
+    "CaptureRate": 45,
+    "ChainLength": 3,
+    "StageSpeciesNames": [
+      "Deino",
+      "Zweilous",
+      "Hydreigon"
+    ],
+    "StageSpeciesIds": [
+      633,
+      634,
+      635
+    ],
+    "StageTypes": [
+      [
+        "dark",
+        "dragon"
+      ],
+      [
+        "dark",
+        "dragon"
+      ],
+      [
+        "dark",
+        "dragon"
+      ]
+    ]
+  },
+  {
+    "ChainId": 324,
+    "StarterSpeciesId": 636,
+    "CaptureRate": 45,
+    "ChainLength": 2,
+    "StageSpeciesNames": [
+      "Larvesta",
+      "Volcarona"
+    ],
+    "StageSpeciesIds": [
+      636,
+      637
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "fire"
+      ],
+      [
+        "bug",
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 325,
+    "StarterSpeciesId": 638,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Cobalion"
+    ],
+    "StageSpeciesIds": [
+      638
+    ],
+    "StageTypes": [
+      [
+        "steel",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 326,
+    "StarterSpeciesId": 639,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Terrakion"
+    ],
+    "StageSpeciesIds": [
+      639
+    ],
+    "StageTypes": [
+      [
+        "rock",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 327,
+    "StarterSpeciesId": 640,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Virizion"
+    ],
+    "StageSpeciesIds": [
+      640
+    ],
+    "StageTypes": [
+      [
+        "grass",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 328,
+    "StarterSpeciesId": 641,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Tornadus"
+    ],
+    "StageSpeciesIds": [
+      641
+    ],
+    "StageTypes": [
+      [
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 329,
+    "StarterSpeciesId": 642,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Thundurus"
+    ],
+    "StageSpeciesIds": [
+      642
+    ],
+    "StageTypes": [
+      [
+        "electric",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 330,
+    "StarterSpeciesId": 643,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Reshiram"
+    ],
+    "StageSpeciesIds": [
+      643
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "fire"
+      ]
+    ]
+  },
+  {
+    "ChainId": 331,
+    "StarterSpeciesId": 644,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Zekrom"
+    ],
+    "StageSpeciesIds": [
+      644
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "electric"
+      ]
+    ]
+  },
+  {
+    "ChainId": 332,
+    "StarterSpeciesId": 645,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Landorus"
+    ],
+    "StageSpeciesIds": [
+      645
+    ],
+    "StageTypes": [
+      [
+        "ground",
+        "flying"
+      ]
+    ]
+  },
+  {
+    "ChainId": 333,
+    "StarterSpeciesId": 646,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Kyurem"
+    ],
+    "StageSpeciesIds": [
+      646
+    ],
+    "StageTypes": [
+      [
+        "dragon",
+        "ice"
+      ]
+    ]
+  },
+  {
+    "ChainId": 334,
+    "StarterSpeciesId": 647,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Keldeo"
+    ],
+    "StageSpeciesIds": [
+      647
+    ],
+    "StageTypes": [
+      [
+        "water",
+        "fighting"
+      ]
+    ]
+  },
+  {
+    "ChainId": 335,
+    "StarterSpeciesId": 648,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Meloetta"
+    ],
+    "StageSpeciesIds": [
+      648
+    ],
+    "StageTypes": [
+      [
+        "normal",
+        "psychic"
+      ]
+    ]
+  },
+  {
+    "ChainId": 336,
+    "StarterSpeciesId": 649,
+    "CaptureRate": 3,
+    "ChainLength": 1,
+    "StageSpeciesNames": [
+      "Genesect"
+    ],
+    "StageSpeciesIds": [
+      649
+    ],
+    "StageTypes": [
+      [
+        "bug",
+        "steel"
+      ]
+    ]
+  }
+]

@@ -1,0 +1,4856 @@
+{
+  "status": "export-checks-passed-user-visual-acceptance-not-inferred",
+  "counts": {
+    "activeTrophies": 56,
+    "chainAppearances": 40,
+    "chains": 10,
+    "specials": 16,
+    "masks": 56,
+    "albumCards": 26,
+    "retiredAppearances": 7
+  },
+  "exportedRoomRGBAExact": true,
+  "lipPixelsExact": true,
+  "canonicalTrophyRGBAExact": true,
+  "whiteMasksAlphaExact": true,
+  "activePlacementsChecked": 168,
+  "retiredIdsAbsentFromExport": true,
+  "originalBankStill63": true,
+  "lockedAlbumUsesOnlyFirstTierAndSpecials": true,
+  "masterSha256": "de14c63c411515ae7a6952d9b761d347988d478c673b870f0f224238f56a7791",
+  "assetChecks": [
+    {
+      "id": "trophy-species-1",
+      "sourceId": "trophy-species-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-species-2",
+      "sourceId": "trophy-species-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-species-3",
+      "sourceId": "trophy-species-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-species-4",
+      "sourceId": "trophy-species-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-population-1",
+      "sourceId": "trophy-population-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-population-2",
+      "sourceId": "trophy-population-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-population-3",
+      "sourceId": "trophy-population-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-population-4",
+      "sourceId": "trophy-population-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-catches-1",
+      "sourceId": "trophy-catches-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-catches-2",
+      "sourceId": "trophy-catches-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-catches-3",
+      "sourceId": "trophy-catches-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-catches-4",
+      "sourceId": "trophy-catches-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "sourceId": "trophy-expeditions-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "sourceId": "trophy-expeditions-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "sourceId": "trophy-expeditions-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "sourceId": "trophy-expeditions-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-regions-1",
+      "sourceId": "trophy-regions-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-regions-2",
+      "sourceId": "trophy-regions-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-regions-3",
+      "sourceId": "trophy-regions-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-regions-4",
+      "sourceId": "trophy-regions-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-team-1",
+      "sourceId": "trophy-team-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-team-2",
+      "sourceId": "trophy-team-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-team-3",
+      "sourceId": "trophy-team-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-team-4",
+      "sourceId": "trophy-team-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-care-1",
+      "sourceId": "trophy-care-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-care-2",
+      "sourceId": "trophy-care-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-care-3",
+      "sourceId": "trophy-care-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-care-4",
+      "sourceId": "trophy-care-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-nursery-1",
+      "sourceId": "trophy-nursery-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-nursery-2",
+      "sourceId": "trophy-nursery-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-nursery-3",
+      "sourceId": "trophy-nursery-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-nursery-4",
+      "sourceId": "trophy-nursery-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-evolution-1",
+      "sourceId": "trophy-evolution-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-evolution-2",
+      "sourceId": "trophy-evolution-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-evolution-3",
+      "sourceId": "trophy-evolution-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-evolution-4",
+      "sourceId": "trophy-evolution-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-shiny-1",
+      "sourceId": "trophy-shiny-1",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-shiny-2",
+      "sourceId": "trophy-shiny-2",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-shiny-3",
+      "sourceId": "trophy-shiny-3",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-shiny-4",
+      "sourceId": "trophy-shiny-4",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-nick",
+      "sourceId": "trophy-special-nick",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-favorite",
+      "sourceId": "trophy-special-favorite",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-type-team",
+      "sourceId": "trophy-special-type-team",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "sourceId": "trophy-special-bonus-find",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "sourceId": "trophy-special-nursery-expedition",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "sourceId": "trophy-special-family-expedition",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "sourceId": "trophy-special-evolved-expedition",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "sourceId": "trophy-special-all-berries",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "sourceId": "trophy-special-berry-evolution",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "sourceId": "trophy-special-branch-choice",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "sourceId": "trophy-special-offspring-choice",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "sourceId": "trophy-special-all-legends",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "sourceId": "trophy-special-second-trait",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-retrain",
+      "sourceId": "trophy-special-retrain",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-rehome",
+      "sourceId": "trophy-special-rehome",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "sourceId": "trophy-special-xp-potion",
+      "rgbaPixelIdentity": true,
+      "whiteMaskRGB": true,
+      "maskAlphaIdentity": true
+    }
+  ],
+  "placements": [
+    {
+      "id": "trophy-species-1",
+      "sourceId": "trophy-species-1",
+      "slot": 1,
+      "position": [
+        620,
+        187
+      ],
+      "actualAlphaBounds": [
+        620,
+        187,
+        707,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-1",
+      "sourceId": "trophy-species-1",
+      "slot": 2,
+      "position": [
+        766,
+        187
+      ],
+      "actualAlphaBounds": [
+        766,
+        187,
+        853,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-1",
+      "sourceId": "trophy-species-1",
+      "slot": 3,
+      "position": [
+        912,
+        187
+      ],
+      "actualAlphaBounds": [
+        912,
+        187,
+        999,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-2",
+      "sourceId": "trophy-species-2",
+      "slot": 1,
+      "position": [
+        612,
+        187
+      ],
+      "actualAlphaBounds": [
+        612,
+        187,
+        717,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-2",
+      "sourceId": "trophy-species-2",
+      "slot": 2,
+      "position": [
+        758,
+        187
+      ],
+      "actualAlphaBounds": [
+        758,
+        187,
+        863,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-2",
+      "sourceId": "trophy-species-2",
+      "slot": 3,
+      "position": [
+        904,
+        187
+      ],
+      "actualAlphaBounds": [
+        904,
+        187,
+        1009,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-3",
+      "sourceId": "trophy-species-3",
+      "slot": 1,
+      "position": [
+        614,
+        187
+      ],
+      "actualAlphaBounds": [
+        614,
+        187,
+        715,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-3",
+      "sourceId": "trophy-species-3",
+      "slot": 2,
+      "position": [
+        760,
+        187
+      ],
+      "actualAlphaBounds": [
+        760,
+        187,
+        861,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-3",
+      "sourceId": "trophy-species-3",
+      "slot": 3,
+      "position": [
+        906,
+        187
+      ],
+      "actualAlphaBounds": [
+        906,
+        187,
+        1007,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-4",
+      "sourceId": "trophy-species-4",
+      "slot": 1,
+      "position": [
+        616,
+        187
+      ],
+      "actualAlphaBounds": [
+        616,
+        187,
+        713,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-4",
+      "sourceId": "trophy-species-4",
+      "slot": 2,
+      "position": [
+        762,
+        187
+      ],
+      "actualAlphaBounds": [
+        762,
+        187,
+        859,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-species-4",
+      "sourceId": "trophy-species-4",
+      "slot": 3,
+      "position": [
+        908,
+        187
+      ],
+      "actualAlphaBounds": [
+        908,
+        187,
+        1005,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-1",
+      "sourceId": "trophy-population-1",
+      "slot": 1,
+      "position": [
+        615,
+        188
+      ],
+      "actualAlphaBounds": [
+        615,
+        188,
+        713,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-1",
+      "sourceId": "trophy-population-1",
+      "slot": 2,
+      "position": [
+        761,
+        188
+      ],
+      "actualAlphaBounds": [
+        761,
+        188,
+        859,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-1",
+      "sourceId": "trophy-population-1",
+      "slot": 3,
+      "position": [
+        907,
+        188
+      ],
+      "actualAlphaBounds": [
+        907,
+        188,
+        1005,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-2",
+      "sourceId": "trophy-population-2",
+      "slot": 1,
+      "position": [
+        598,
+        189
+      ],
+      "actualAlphaBounds": [
+        598,
+        189,
+        729,
+        283
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-2",
+      "sourceId": "trophy-population-2",
+      "slot": 2,
+      "position": [
+        744,
+        189
+      ],
+      "actualAlphaBounds": [
+        744,
+        189,
+        875,
+        283
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-2",
+      "sourceId": "trophy-population-2",
+      "slot": 3,
+      "position": [
+        890,
+        189
+      ],
+      "actualAlphaBounds": [
+        890,
+        189,
+        1021,
+        283
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-3",
+      "sourceId": "trophy-population-3",
+      "slot": 1,
+      "position": [
+        610,
+        188
+      ],
+      "actualAlphaBounds": [
+        610,
+        188,
+        719,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-3",
+      "sourceId": "trophy-population-3",
+      "slot": 2,
+      "position": [
+        756,
+        188
+      ],
+      "actualAlphaBounds": [
+        756,
+        188,
+        865,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-3",
+      "sourceId": "trophy-population-3",
+      "slot": 3,
+      "position": [
+        902,
+        188
+      ],
+      "actualAlphaBounds": [
+        902,
+        188,
+        1011,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-4",
+      "sourceId": "trophy-population-4",
+      "slot": 1,
+      "position": [
+        612,
+        187
+      ],
+      "actualAlphaBounds": [
+        612,
+        187,
+        715,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-4",
+      "sourceId": "trophy-population-4",
+      "slot": 2,
+      "position": [
+        758,
+        187
+      ],
+      "actualAlphaBounds": [
+        758,
+        187,
+        861,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-population-4",
+      "sourceId": "trophy-population-4",
+      "slot": 3,
+      "position": [
+        904,
+        187
+      ],
+      "actualAlphaBounds": [
+        904,
+        187,
+        1007,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-1",
+      "sourceId": "trophy-catches-1",
+      "slot": 1,
+      "position": [
+        611,
+        188
+      ],
+      "actualAlphaBounds": [
+        611,
+        188,
+        717,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-1",
+      "sourceId": "trophy-catches-1",
+      "slot": 2,
+      "position": [
+        757,
+        188
+      ],
+      "actualAlphaBounds": [
+        757,
+        188,
+        863,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-1",
+      "sourceId": "trophy-catches-1",
+      "slot": 3,
+      "position": [
+        903,
+        188
+      ],
+      "actualAlphaBounds": [
+        903,
+        188,
+        1009,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-2",
+      "sourceId": "trophy-catches-2",
+      "slot": 1,
+      "position": [
+        598,
+        191
+      ],
+      "actualAlphaBounds": [
+        598,
+        191,
+        730,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-2",
+      "sourceId": "trophy-catches-2",
+      "slot": 2,
+      "position": [
+        744,
+        191
+      ],
+      "actualAlphaBounds": [
+        744,
+        191,
+        876,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-2",
+      "sourceId": "trophy-catches-2",
+      "slot": 3,
+      "position": [
+        890,
+        191
+      ],
+      "actualAlphaBounds": [
+        890,
+        191,
+        1022,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-3",
+      "sourceId": "trophy-catches-3",
+      "slot": 1,
+      "position": [
+        601,
+        188
+      ],
+      "actualAlphaBounds": [
+        601,
+        188,
+        727,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-3",
+      "sourceId": "trophy-catches-3",
+      "slot": 2,
+      "position": [
+        747,
+        188
+      ],
+      "actualAlphaBounds": [
+        747,
+        188,
+        873,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-3",
+      "sourceId": "trophy-catches-3",
+      "slot": 3,
+      "position": [
+        893,
+        188
+      ],
+      "actualAlphaBounds": [
+        893,
+        188,
+        1019,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-4",
+      "sourceId": "trophy-catches-4",
+      "slot": 1,
+      "position": [
+        603,
+        188
+      ],
+      "actualAlphaBounds": [
+        603,
+        188,
+        725,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-4",
+      "sourceId": "trophy-catches-4",
+      "slot": 2,
+      "position": [
+        749,
+        188
+      ],
+      "actualAlphaBounds": [
+        749,
+        188,
+        871,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-catches-4",
+      "sourceId": "trophy-catches-4",
+      "slot": 3,
+      "position": [
+        895,
+        188
+      ],
+      "actualAlphaBounds": [
+        895,
+        188,
+        1017,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "sourceId": "trophy-expeditions-1",
+      "slot": 1,
+      "position": [
+        606,
+        188
+      ],
+      "actualAlphaBounds": [
+        606,
+        188,
+        722,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "sourceId": "trophy-expeditions-1",
+      "slot": 2,
+      "position": [
+        752,
+        188
+      ],
+      "actualAlphaBounds": [
+        752,
+        188,
+        868,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "sourceId": "trophy-expeditions-1",
+      "slot": 3,
+      "position": [
+        898,
+        188
+      ],
+      "actualAlphaBounds": [
+        898,
+        188,
+        1014,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "sourceId": "trophy-expeditions-2",
+      "slot": 1,
+      "position": [
+        612,
+        188
+      ],
+      "actualAlphaBounds": [
+        612,
+        188,
+        715,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "sourceId": "trophy-expeditions-2",
+      "slot": 2,
+      "position": [
+        758,
+        188
+      ],
+      "actualAlphaBounds": [
+        758,
+        188,
+        861,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "sourceId": "trophy-expeditions-2",
+      "slot": 3,
+      "position": [
+        904,
+        188
+      ],
+      "actualAlphaBounds": [
+        904,
+        188,
+        1007,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "sourceId": "trophy-expeditions-3",
+      "slot": 1,
+      "position": [
+        604,
+        188
+      ],
+      "actualAlphaBounds": [
+        604,
+        189,
+        724,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "sourceId": "trophy-expeditions-3",
+      "slot": 2,
+      "position": [
+        750,
+        188
+      ],
+      "actualAlphaBounds": [
+        750,
+        189,
+        870,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "sourceId": "trophy-expeditions-3",
+      "slot": 3,
+      "position": [
+        896,
+        188
+      ],
+      "actualAlphaBounds": [
+        896,
+        189,
+        1016,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "sourceId": "trophy-expeditions-4",
+      "slot": 1,
+      "position": [
+        615,
+        188
+      ],
+      "actualAlphaBounds": [
+        615,
+        188,
+        713,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "sourceId": "trophy-expeditions-4",
+      "slot": 2,
+      "position": [
+        761,
+        188
+      ],
+      "actualAlphaBounds": [
+        761,
+        188,
+        859,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "sourceId": "trophy-expeditions-4",
+      "slot": 3,
+      "position": [
+        907,
+        188
+      ],
+      "actualAlphaBounds": [
+        907,
+        188,
+        1005,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-1",
+      "sourceId": "trophy-regions-1",
+      "slot": 1,
+      "position": [
+        604,
+        189
+      ],
+      "actualAlphaBounds": [
+        604,
+        189,
+        724,
+        283
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-1",
+      "sourceId": "trophy-regions-1",
+      "slot": 2,
+      "position": [
+        750,
+        189
+      ],
+      "actualAlphaBounds": [
+        750,
+        189,
+        870,
+        283
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-1",
+      "sourceId": "trophy-regions-1",
+      "slot": 3,
+      "position": [
+        896,
+        189
+      ],
+      "actualAlphaBounds": [
+        896,
+        189,
+        1016,
+        283
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-2",
+      "sourceId": "trophy-regions-2",
+      "slot": 1,
+      "position": [
+        602,
+        188
+      ],
+      "actualAlphaBounds": [
+        602,
+        188,
+        726,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-2",
+      "sourceId": "trophy-regions-2",
+      "slot": 2,
+      "position": [
+        748,
+        188
+      ],
+      "actualAlphaBounds": [
+        748,
+        188,
+        872,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-2",
+      "sourceId": "trophy-regions-2",
+      "slot": 3,
+      "position": [
+        894,
+        188
+      ],
+      "actualAlphaBounds": [
+        894,
+        188,
+        1018,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-3",
+      "sourceId": "trophy-regions-3",
+      "slot": 1,
+      "position": [
+        610,
+        188
+      ],
+      "actualAlphaBounds": [
+        610,
+        188,
+        719,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-3",
+      "sourceId": "trophy-regions-3",
+      "slot": 2,
+      "position": [
+        756,
+        188
+      ],
+      "actualAlphaBounds": [
+        756,
+        188,
+        865,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-3",
+      "sourceId": "trophy-regions-3",
+      "slot": 3,
+      "position": [
+        902,
+        188
+      ],
+      "actualAlphaBounds": [
+        902,
+        188,
+        1011,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-4",
+      "sourceId": "trophy-regions-4",
+      "slot": 1,
+      "position": [
+        608,
+        188
+      ],
+      "actualAlphaBounds": [
+        608,
+        188,
+        721,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-4",
+      "sourceId": "trophy-regions-4",
+      "slot": 2,
+      "position": [
+        754,
+        188
+      ],
+      "actualAlphaBounds": [
+        754,
+        188,
+        867,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-regions-4",
+      "sourceId": "trophy-regions-4",
+      "slot": 3,
+      "position": [
+        900,
+        188
+      ],
+      "actualAlphaBounds": [
+        900,
+        188,
+        1013,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-1",
+      "sourceId": "trophy-team-1",
+      "slot": 1,
+      "position": [
+        610,
+        187
+      ],
+      "actualAlphaBounds": [
+        610,
+        187,
+        719,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-1",
+      "sourceId": "trophy-team-1",
+      "slot": 2,
+      "position": [
+        756,
+        187
+      ],
+      "actualAlphaBounds": [
+        756,
+        187,
+        865,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-1",
+      "sourceId": "trophy-team-1",
+      "slot": 3,
+      "position": [
+        902,
+        187
+      ],
+      "actualAlphaBounds": [
+        902,
+        187,
+        1011,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-2",
+      "sourceId": "trophy-team-2",
+      "slot": 1,
+      "position": [
+        601,
+        187
+      ],
+      "actualAlphaBounds": [
+        601,
+        187,
+        727,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-2",
+      "sourceId": "trophy-team-2",
+      "slot": 2,
+      "position": [
+        747,
+        187
+      ],
+      "actualAlphaBounds": [
+        747,
+        187,
+        873,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-2",
+      "sourceId": "trophy-team-2",
+      "slot": 3,
+      "position": [
+        893,
+        187
+      ],
+      "actualAlphaBounds": [
+        893,
+        187,
+        1019,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-3",
+      "sourceId": "trophy-team-3",
+      "slot": 1,
+      "position": [
+        603,
+        187
+      ],
+      "actualAlphaBounds": [
+        603,
+        187,
+        725,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-3",
+      "sourceId": "trophy-team-3",
+      "slot": 2,
+      "position": [
+        749,
+        187
+      ],
+      "actualAlphaBounds": [
+        749,
+        187,
+        871,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-3",
+      "sourceId": "trophy-team-3",
+      "slot": 3,
+      "position": [
+        895,
+        187
+      ],
+      "actualAlphaBounds": [
+        895,
+        187,
+        1017,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-4",
+      "sourceId": "trophy-team-4",
+      "slot": 1,
+      "position": [
+        602,
+        187
+      ],
+      "actualAlphaBounds": [
+        602,
+        187,
+        727,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-4",
+      "sourceId": "trophy-team-4",
+      "slot": 2,
+      "position": [
+        748,
+        187
+      ],
+      "actualAlphaBounds": [
+        748,
+        187,
+        873,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-team-4",
+      "sourceId": "trophy-team-4",
+      "slot": 3,
+      "position": [
+        894,
+        187
+      ],
+      "actualAlphaBounds": [
+        894,
+        187,
+        1019,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-1",
+      "sourceId": "trophy-care-1",
+      "slot": 1,
+      "position": [
+        620,
+        188
+      ],
+      "actualAlphaBounds": [
+        620,
+        189,
+        708,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-1",
+      "sourceId": "trophy-care-1",
+      "slot": 2,
+      "position": [
+        766,
+        188
+      ],
+      "actualAlphaBounds": [
+        766,
+        189,
+        854,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-1",
+      "sourceId": "trophy-care-1",
+      "slot": 3,
+      "position": [
+        912,
+        188
+      ],
+      "actualAlphaBounds": [
+        912,
+        189,
+        1000,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-2",
+      "sourceId": "trophy-care-2",
+      "slot": 1,
+      "position": [
+        617,
+        188
+      ],
+      "actualAlphaBounds": [
+        618,
+        188,
+        711,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-2",
+      "sourceId": "trophy-care-2",
+      "slot": 2,
+      "position": [
+        763,
+        188
+      ],
+      "actualAlphaBounds": [
+        764,
+        188,
+        857,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-2",
+      "sourceId": "trophy-care-2",
+      "slot": 3,
+      "position": [
+        909,
+        188
+      ],
+      "actualAlphaBounds": [
+        910,
+        188,
+        1003,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-3",
+      "sourceId": "trophy-care-3",
+      "slot": 1,
+      "position": [
+        616,
+        188
+      ],
+      "actualAlphaBounds": [
+        616,
+        188,
+        712,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-3",
+      "sourceId": "trophy-care-3",
+      "slot": 2,
+      "position": [
+        762,
+        188
+      ],
+      "actualAlphaBounds": [
+        762,
+        188,
+        858,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-3",
+      "sourceId": "trophy-care-3",
+      "slot": 3,
+      "position": [
+        908,
+        188
+      ],
+      "actualAlphaBounds": [
+        908,
+        188,
+        1004,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-4",
+      "sourceId": "trophy-care-4",
+      "slot": 1,
+      "position": [
+        614,
+        188
+      ],
+      "actualAlphaBounds": [
+        614,
+        188,
+        715,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-4",
+      "sourceId": "trophy-care-4",
+      "slot": 2,
+      "position": [
+        760,
+        188
+      ],
+      "actualAlphaBounds": [
+        760,
+        188,
+        861,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-care-4",
+      "sourceId": "trophy-care-4",
+      "slot": 3,
+      "position": [
+        906,
+        188
+      ],
+      "actualAlphaBounds": [
+        906,
+        188,
+        1007,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-1",
+      "sourceId": "trophy-nursery-1",
+      "slot": 1,
+      "position": [
+        606,
+        187
+      ],
+      "actualAlphaBounds": [
+        606,
+        187,
+        722,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-1",
+      "sourceId": "trophy-nursery-1",
+      "slot": 2,
+      "position": [
+        752,
+        187
+      ],
+      "actualAlphaBounds": [
+        752,
+        187,
+        868,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-1",
+      "sourceId": "trophy-nursery-1",
+      "slot": 3,
+      "position": [
+        898,
+        187
+      ],
+      "actualAlphaBounds": [
+        898,
+        187,
+        1014,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-2",
+      "sourceId": "trophy-nursery-2",
+      "slot": 1,
+      "position": [
+        614,
+        187
+      ],
+      "actualAlphaBounds": [
+        614,
+        187,
+        713,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-2",
+      "sourceId": "trophy-nursery-2",
+      "slot": 2,
+      "position": [
+        760,
+        187
+      ],
+      "actualAlphaBounds": [
+        760,
+        187,
+        859,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-2",
+      "sourceId": "trophy-nursery-2",
+      "slot": 3,
+      "position": [
+        906,
+        187
+      ],
+      "actualAlphaBounds": [
+        906,
+        187,
+        1005,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-3",
+      "sourceId": "trophy-nursery-3",
+      "slot": 1,
+      "position": [
+        610,
+        187
+      ],
+      "actualAlphaBounds": [
+        610,
+        187,
+        717,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-3",
+      "sourceId": "trophy-nursery-3",
+      "slot": 2,
+      "position": [
+        756,
+        187
+      ],
+      "actualAlphaBounds": [
+        756,
+        187,
+        863,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-3",
+      "sourceId": "trophy-nursery-3",
+      "slot": 3,
+      "position": [
+        902,
+        187
+      ],
+      "actualAlphaBounds": [
+        902,
+        187,
+        1009,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-4",
+      "sourceId": "trophy-nursery-4",
+      "slot": 1,
+      "position": [
+        620,
+        187
+      ],
+      "actualAlphaBounds": [
+        620,
+        187,
+        708,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-4",
+      "sourceId": "trophy-nursery-4",
+      "slot": 2,
+      "position": [
+        766,
+        187
+      ],
+      "actualAlphaBounds": [
+        766,
+        187,
+        854,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-nursery-4",
+      "sourceId": "trophy-nursery-4",
+      "slot": 3,
+      "position": [
+        912,
+        187
+      ],
+      "actualAlphaBounds": [
+        912,
+        187,
+        1000,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-1",
+      "sourceId": "trophy-evolution-1",
+      "slot": 1,
+      "position": [
+        600,
+        187
+      ],
+      "actualAlphaBounds": [
+        600,
+        187,
+        728,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-1",
+      "sourceId": "trophy-evolution-1",
+      "slot": 2,
+      "position": [
+        746,
+        187
+      ],
+      "actualAlphaBounds": [
+        746,
+        187,
+        874,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-1",
+      "sourceId": "trophy-evolution-1",
+      "slot": 3,
+      "position": [
+        892,
+        187
+      ],
+      "actualAlphaBounds": [
+        892,
+        187,
+        1020,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-2",
+      "sourceId": "trophy-evolution-2",
+      "slot": 1,
+      "position": [
+        598,
+        202
+      ],
+      "actualAlphaBounds": [
+        598,
+        202,
+        730,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-2",
+      "sourceId": "trophy-evolution-2",
+      "slot": 2,
+      "position": [
+        744,
+        202
+      ],
+      "actualAlphaBounds": [
+        744,
+        202,
+        876,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-2",
+      "sourceId": "trophy-evolution-2",
+      "slot": 3,
+      "position": [
+        890,
+        202
+      ],
+      "actualAlphaBounds": [
+        890,
+        202,
+        1022,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-3",
+      "sourceId": "trophy-evolution-3",
+      "slot": 1,
+      "position": [
+        606,
+        187
+      ],
+      "actualAlphaBounds": [
+        606,
+        187,
+        722,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-3",
+      "sourceId": "trophy-evolution-3",
+      "slot": 2,
+      "position": [
+        752,
+        187
+      ],
+      "actualAlphaBounds": [
+        752,
+        187,
+        868,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-3",
+      "sourceId": "trophy-evolution-3",
+      "slot": 3,
+      "position": [
+        898,
+        187
+      ],
+      "actualAlphaBounds": [
+        898,
+        187,
+        1014,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-4",
+      "sourceId": "trophy-evolution-4",
+      "slot": 1,
+      "position": [
+        623,
+        187
+      ],
+      "actualAlphaBounds": [
+        623,
+        187,
+        705,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-4",
+      "sourceId": "trophy-evolution-4",
+      "slot": 2,
+      "position": [
+        769,
+        187
+      ],
+      "actualAlphaBounds": [
+        769,
+        187,
+        851,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-evolution-4",
+      "sourceId": "trophy-evolution-4",
+      "slot": 3,
+      "position": [
+        915,
+        187
+      ],
+      "actualAlphaBounds": [
+        915,
+        187,
+        997,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-1",
+      "sourceId": "trophy-shiny-1",
+      "slot": 1,
+      "position": [
+        620,
+        188
+      ],
+      "actualAlphaBounds": [
+        620,
+        188,
+        708,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-1",
+      "sourceId": "trophy-shiny-1",
+      "slot": 2,
+      "position": [
+        766,
+        188
+      ],
+      "actualAlphaBounds": [
+        766,
+        188,
+        854,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-1",
+      "sourceId": "trophy-shiny-1",
+      "slot": 3,
+      "position": [
+        912,
+        188
+      ],
+      "actualAlphaBounds": [
+        912,
+        188,
+        1000,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-2",
+      "sourceId": "trophy-shiny-2",
+      "slot": 1,
+      "position": [
+        615,
+        188
+      ],
+      "actualAlphaBounds": [
+        615,
+        188,
+        713,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-2",
+      "sourceId": "trophy-shiny-2",
+      "slot": 2,
+      "position": [
+        761,
+        188
+      ],
+      "actualAlphaBounds": [
+        761,
+        188,
+        859,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-2",
+      "sourceId": "trophy-shiny-2",
+      "slot": 3,
+      "position": [
+        907,
+        188
+      ],
+      "actualAlphaBounds": [
+        907,
+        188,
+        1005,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-3",
+      "sourceId": "trophy-shiny-3",
+      "slot": 1,
+      "position": [
+        618,
+        188
+      ],
+      "actualAlphaBounds": [
+        618,
+        188,
+        709,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-3",
+      "sourceId": "trophy-shiny-3",
+      "slot": 2,
+      "position": [
+        764,
+        188
+      ],
+      "actualAlphaBounds": [
+        764,
+        188,
+        855,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-3",
+      "sourceId": "trophy-shiny-3",
+      "slot": 3,
+      "position": [
+        910,
+        188
+      ],
+      "actualAlphaBounds": [
+        910,
+        188,
+        1001,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-4",
+      "sourceId": "trophy-shiny-4",
+      "slot": 1,
+      "position": [
+        616,
+        188
+      ],
+      "actualAlphaBounds": [
+        616,
+        188,
+        711,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-4",
+      "sourceId": "trophy-shiny-4",
+      "slot": 2,
+      "position": [
+        762,
+        188
+      ],
+      "actualAlphaBounds": [
+        762,
+        188,
+        857,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-shiny-4",
+      "sourceId": "trophy-shiny-4",
+      "slot": 3,
+      "position": [
+        908,
+        188
+      ],
+      "actualAlphaBounds": [
+        908,
+        188,
+        1003,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-nick",
+      "sourceId": "trophy-special-nick",
+      "slot": 1,
+      "position": [
+        614,
+        188
+      ],
+      "actualAlphaBounds": [
+        614,
+        188,
+        713,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-nick",
+      "sourceId": "trophy-special-nick",
+      "slot": 2,
+      "position": [
+        760,
+        188
+      ],
+      "actualAlphaBounds": [
+        760,
+        188,
+        859,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-nick",
+      "sourceId": "trophy-special-nick",
+      "slot": 3,
+      "position": [
+        906,
+        188
+      ],
+      "actualAlphaBounds": [
+        906,
+        188,
+        1005,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-favorite",
+      "sourceId": "trophy-special-favorite",
+      "slot": 1,
+      "position": [
+        619,
+        188
+      ],
+      "actualAlphaBounds": [
+        619,
+        188,
+        709,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-favorite",
+      "sourceId": "trophy-special-favorite",
+      "slot": 2,
+      "position": [
+        765,
+        188
+      ],
+      "actualAlphaBounds": [
+        765,
+        188,
+        855,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-favorite",
+      "sourceId": "trophy-special-favorite",
+      "slot": 3,
+      "position": [
+        911,
+        188
+      ],
+      "actualAlphaBounds": [
+        911,
+        188,
+        1001,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-type-team",
+      "sourceId": "trophy-special-type-team",
+      "slot": 1,
+      "position": [
+        622,
+        187
+      ],
+      "actualAlphaBounds": [
+        622,
+        187,
+        707,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-type-team",
+      "sourceId": "trophy-special-type-team",
+      "slot": 2,
+      "position": [
+        768,
+        187
+      ],
+      "actualAlphaBounds": [
+        768,
+        187,
+        853,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-type-team",
+      "sourceId": "trophy-special-type-team",
+      "slot": 3,
+      "position": [
+        914,
+        187
+      ],
+      "actualAlphaBounds": [
+        914,
+        187,
+        999,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "sourceId": "trophy-special-bonus-find",
+      "slot": 1,
+      "position": [
+        614,
+        188
+      ],
+      "actualAlphaBounds": [
+        614,
+        188,
+        714,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "sourceId": "trophy-special-bonus-find",
+      "slot": 2,
+      "position": [
+        760,
+        188
+      ],
+      "actualAlphaBounds": [
+        760,
+        188,
+        860,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "sourceId": "trophy-special-bonus-find",
+      "slot": 3,
+      "position": [
+        906,
+        188
+      ],
+      "actualAlphaBounds": [
+        906,
+        188,
+        1006,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "sourceId": "trophy-special-nursery-expedition",
+      "slot": 1,
+      "position": [
+        614,
+        188
+      ],
+      "actualAlphaBounds": [
+        614,
+        188,
+        714,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "sourceId": "trophy-special-nursery-expedition",
+      "slot": 2,
+      "position": [
+        760,
+        188
+      ],
+      "actualAlphaBounds": [
+        760,
+        188,
+        860,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "sourceId": "trophy-special-nursery-expedition",
+      "slot": 3,
+      "position": [
+        906,
+        188
+      ],
+      "actualAlphaBounds": [
+        906,
+        188,
+        1006,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "sourceId": "trophy-special-family-expedition",
+      "slot": 1,
+      "position": [
+        612,
+        188
+      ],
+      "actualAlphaBounds": [
+        612,
+        188,
+        715,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "sourceId": "trophy-special-family-expedition",
+      "slot": 2,
+      "position": [
+        758,
+        188
+      ],
+      "actualAlphaBounds": [
+        758,
+        188,
+        861,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "sourceId": "trophy-special-family-expedition",
+      "slot": 3,
+      "position": [
+        904,
+        188
+      ],
+      "actualAlphaBounds": [
+        904,
+        188,
+        1007,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "sourceId": "trophy-special-evolved-expedition",
+      "slot": 1,
+      "position": [
+        618,
+        187
+      ],
+      "actualAlphaBounds": [
+        618,
+        187,
+        711,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "sourceId": "trophy-special-evolved-expedition",
+      "slot": 2,
+      "position": [
+        764,
+        187
+      ],
+      "actualAlphaBounds": [
+        764,
+        187,
+        857,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "sourceId": "trophy-special-evolved-expedition",
+      "slot": 3,
+      "position": [
+        910,
+        187
+      ],
+      "actualAlphaBounds": [
+        910,
+        187,
+        1003,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "sourceId": "trophy-special-all-berries",
+      "slot": 1,
+      "position": [
+        618,
+        187
+      ],
+      "actualAlphaBounds": [
+        618,
+        187,
+        711,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "sourceId": "trophy-special-all-berries",
+      "slot": 2,
+      "position": [
+        764,
+        187
+      ],
+      "actualAlphaBounds": [
+        764,
+        187,
+        857,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "sourceId": "trophy-special-all-berries",
+      "slot": 3,
+      "position": [
+        910,
+        187
+      ],
+      "actualAlphaBounds": [
+        910,
+        187,
+        1003,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "sourceId": "trophy-special-berry-evolution",
+      "slot": 1,
+      "position": [
+        618,
+        187
+      ],
+      "actualAlphaBounds": [
+        618,
+        187,
+        711,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "sourceId": "trophy-special-berry-evolution",
+      "slot": 2,
+      "position": [
+        764,
+        187
+      ],
+      "actualAlphaBounds": [
+        764,
+        187,
+        857,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "sourceId": "trophy-special-berry-evolution",
+      "slot": 3,
+      "position": [
+        910,
+        187
+      ],
+      "actualAlphaBounds": [
+        910,
+        187,
+        1003,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "sourceId": "trophy-special-branch-choice",
+      "slot": 1,
+      "position": [
+        617,
+        188
+      ],
+      "actualAlphaBounds": [
+        617,
+        188,
+        711,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "sourceId": "trophy-special-branch-choice",
+      "slot": 2,
+      "position": [
+        763,
+        188
+      ],
+      "actualAlphaBounds": [
+        763,
+        188,
+        857,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "sourceId": "trophy-special-branch-choice",
+      "slot": 3,
+      "position": [
+        909,
+        188
+      ],
+      "actualAlphaBounds": [
+        909,
+        188,
+        1003,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "sourceId": "trophy-special-offspring-choice",
+      "slot": 1,
+      "position": [
+        602,
+        188
+      ],
+      "actualAlphaBounds": [
+        602,
+        188,
+        726,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "sourceId": "trophy-special-offspring-choice",
+      "slot": 2,
+      "position": [
+        748,
+        188
+      ],
+      "actualAlphaBounds": [
+        748,
+        188,
+        872,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "sourceId": "trophy-special-offspring-choice",
+      "slot": 3,
+      "position": [
+        894,
+        188
+      ],
+      "actualAlphaBounds": [
+        894,
+        188,
+        1018,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "sourceId": "trophy-special-all-legends",
+      "slot": 1,
+      "position": [
+        618,
+        188
+      ],
+      "actualAlphaBounds": [
+        618,
+        188,
+        711,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "sourceId": "trophy-special-all-legends",
+      "slot": 2,
+      "position": [
+        764,
+        188
+      ],
+      "actualAlphaBounds": [
+        764,
+        188,
+        857,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "sourceId": "trophy-special-all-legends",
+      "slot": 3,
+      "position": [
+        910,
+        188
+      ],
+      "actualAlphaBounds": [
+        910,
+        188,
+        1003,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "sourceId": "trophy-special-second-trait",
+      "slot": 1,
+      "position": [
+        614,
+        188
+      ],
+      "actualAlphaBounds": [
+        614,
+        188,
+        715,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "sourceId": "trophy-special-second-trait",
+      "slot": 2,
+      "position": [
+        760,
+        188
+      ],
+      "actualAlphaBounds": [
+        760,
+        188,
+        861,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "sourceId": "trophy-special-second-trait",
+      "slot": 3,
+      "position": [
+        906,
+        188
+      ],
+      "actualAlphaBounds": [
+        906,
+        188,
+        1007,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-retrain",
+      "sourceId": "trophy-special-retrain",
+      "slot": 1,
+      "position": [
+        617,
+        188
+      ],
+      "actualAlphaBounds": [
+        617,
+        188,
+        711,
+        282
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-retrain",
+      "sourceId": "trophy-special-retrain",
+      "slot": 2,
+      "position": [
+        763,
+        188
+      ],
+      "actualAlphaBounds": [
+        763,
+        188,
+        857,
+        282
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-retrain",
+      "sourceId": "trophy-special-retrain",
+      "slot": 3,
+      "position": [
+        909,
+        188
+      ],
+      "actualAlphaBounds": [
+        909,
+        188,
+        1003,
+        282
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-rehome",
+      "sourceId": "trophy-special-rehome",
+      "slot": 1,
+      "position": [
+        612,
+        188
+      ],
+      "actualAlphaBounds": [
+        612,
+        188,
+        715,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-rehome",
+      "sourceId": "trophy-special-rehome",
+      "slot": 2,
+      "position": [
+        758,
+        188
+      ],
+      "actualAlphaBounds": [
+        758,
+        188,
+        861,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-rehome",
+      "sourceId": "trophy-special-rehome",
+      "slot": 3,
+      "position": [
+        904,
+        188
+      ],
+      "actualAlphaBounds": [
+        904,
+        188,
+        1007,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "sourceId": "trophy-special-xp-potion",
+      "slot": 1,
+      "position": [
+        620,
+        188
+      ],
+      "actualAlphaBounds": [
+        620,
+        188,
+        708,
+        281
+      ],
+      "slotBounds": [
+        592,
+        183,
+        735,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "sourceId": "trophy-special-xp-potion",
+      "slot": 2,
+      "position": [
+        766,
+        188
+      ],
+      "actualAlphaBounds": [
+        766,
+        188,
+        854,
+        281
+      ],
+      "slotBounds": [
+        737,
+        183,
+        883,
+        284
+      ],
+      "fits": true
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "sourceId": "trophy-special-xp-potion",
+      "slot": 3,
+      "position": [
+        912,
+        188
+      ],
+      "actualAlphaBounds": [
+        912,
+        188,
+        1000,
+        281
+      ],
+      "slotBounds": [
+        885,
+        183,
+        1028,
+        284
+      ],
+      "fits": true
+    }
+  ],
+  "metadataChecks": [
+    {
+      "file": "assets/room-master.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "8165205927e69036306b74d687f1ef8105b0952bf90a9c6b493f80eb4b69f155"
+    },
+    {
+      "file": "assets/shelf-frontlip.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "e04413049ed2392d9c4cc8bcaa96ccb3b7007f43366f198832fe35b439ce80e1"
+    },
+    {
+      "file": "assets/trophies/trophy-species-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "7e6ff1baa279d369c3f7d20f8b73414331e16d548bccf603fcc153f123aca4b8"
+    },
+    {
+      "file": "assets/masks/trophy-species-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "336059ae53953d2bd6ffc6645f3bab06957563fedd4488245b21e80f134b587f"
+    },
+    {
+      "file": "assets/trophies/trophy-species-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "2ca73a9e069a2ca8536d95e56e91c9fc6d63fa014566d3504b664b01611b0c28"
+    },
+    {
+      "file": "assets/masks/trophy-species-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "cfea8e293cf91745a65c332e5013df2d0e46c0181929f2e718cd0fd415fa62a0"
+    },
+    {
+      "file": "assets/trophies/trophy-species-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "39987063f5ad4643c621a62f8fd647248c5dd9a0557ec74f39dc3908c13b8ada"
+    },
+    {
+      "file": "assets/masks/trophy-species-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "d92179089438f2f7a7068f105463d2d02b157e2bdf9612f5c92fb817b89eb6d5"
+    },
+    {
+      "file": "assets/trophies/trophy-species-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "a609670ae9f6922882c20284f2bd2e2baed1023b2187490c6ffebee1af1cc16b"
+    },
+    {
+      "file": "assets/masks/trophy-species-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "c05b0e1d3379a43668e708a975be05ee1974221a1c844472d19f27bc5a9354e4"
+    },
+    {
+      "file": "assets/trophies/trophy-population-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "6510ca697ed24b806702fe73b149e4c5fa3f5392c6eeeffed197a7b271b8048d"
+    },
+    {
+      "file": "assets/masks/trophy-population-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "72e941e62e60e1bd092d23bc7ae0d8bf90265b1643432eedd5f909f9acf75215"
+    },
+    {
+      "file": "assets/trophies/trophy-population-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "f0e098fab9582ce8e9e5f34a2402aa755aa5df990773e643f6208352a6341241"
+    },
+    {
+      "file": "assets/masks/trophy-population-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "d9fa75c95797385a6cce7e002af910774cb615f47e4f8490e4b4cc103a47649d"
+    },
+    {
+      "file": "assets/trophies/trophy-population-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "09c77ae952b7387dbea8d63b43ec5cb1ef34643f04797ec1e46ca6fdeac68d1b"
+    },
+    {
+      "file": "assets/masks/trophy-population-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "2943f800e471beeefa9301a0fa68873d18f0bf43c924c6be11711db713a3ca6f"
+    },
+    {
+      "file": "assets/trophies/trophy-population-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "2f09ab9971cea3297ec53554b0358448c36a740a1e7f014a553272086d0709f4"
+    },
+    {
+      "file": "assets/masks/trophy-population-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "6539d43ef6e216f15ece24e4b7440ed76acc8b2e7e44913f27c0831b5e0afb08"
+    },
+    {
+      "file": "assets/trophies/trophy-catches-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "474208fc561a468696e5c618dd938d727ba5227d0d6d3900d7ad57de6005795d"
+    },
+    {
+      "file": "assets/masks/trophy-catches-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "d3915706cc6698a1369f4f227141966412c72f5e7c78ddcf756623fabf554d4e"
+    },
+    {
+      "file": "assets/trophies/trophy-catches-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "d3c784ddb3586c4b514eee7cb156c7bc2023cb0ef1fe514127ce0698f3733ee1"
+    },
+    {
+      "file": "assets/masks/trophy-catches-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "dcc4bb017b91f1a37e54cc15578c7f40014de7a9a0ab199502b93436f66efb74"
+    },
+    {
+      "file": "assets/trophies/trophy-catches-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "e9cdff63df77e2ebd84c66dbc81636720d814aeef1bfc3f8bc8f9f1606cbee08"
+    },
+    {
+      "file": "assets/masks/trophy-catches-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "87e18056ef87e2e0a8e3a139535eed1f8edde65be95e7d3d30ee259475ddf34f"
+    },
+    {
+      "file": "assets/trophies/trophy-catches-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "7c6a0bc04276a9547597aad03b9f436c28eb512300e2c5a360c9ba83e43c8396"
+    },
+    {
+      "file": "assets/masks/trophy-catches-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "517af74ef79a60559340d168836058fe3a0127a9bc09d3f7acf2151a6388cb9f"
+    },
+    {
+      "file": "assets/trophies/trophy-expeditions-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "d7f6dc32dc06b6401004e4082e39c804e82c77443c80d26e585ec7b3682497b1"
+    },
+    {
+      "file": "assets/masks/trophy-expeditions-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "29327fad66cb3cc348d38fdbaf3ea8dc02a422f7d1057cedc098f472b39f6a8a"
+    },
+    {
+      "file": "assets/trophies/trophy-expeditions-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "f9bab2ebc5a34846ad9fbba9c6fa0be6964ca1e55835c4ae58baa4b1fd4a057b"
+    },
+    {
+      "file": "assets/masks/trophy-expeditions-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "06987feee1562582b39e74fe2879419a356ca0f05954d6bde1ab96b9e34deace"
+    },
+    {
+      "file": "assets/trophies/trophy-expeditions-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "4fec9bc7965604019fb45155fbf82bab231108843567a5258c3ac0c97f8136ba"
+    },
+    {
+      "file": "assets/masks/trophy-expeditions-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "032562ff51fcde566020db9a46f26c7ed2e55f3a1073d696cc4d3791b5ad19ca"
+    },
+    {
+      "file": "assets/trophies/trophy-expeditions-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "fcb0bfcafbabc5adfefca460cacce07c9d646ad6c9d2899685472f7db654d221"
+    },
+    {
+      "file": "assets/masks/trophy-expeditions-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0ccfbca65d46106e01b74326d5f83a7ed27a88a4b5f5ad070e9f433743950eb3"
+    },
+    {
+      "file": "assets/trophies/trophy-regions-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "ddea867c047caf303e7bba6d7482c2887735aecda79b085917dea6f69e30d81e"
+    },
+    {
+      "file": "assets/masks/trophy-regions-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "02be010683c4b93dab86242f98039a00432e0f9e0f60b201351eb716d26765b8"
+    },
+    {
+      "file": "assets/trophies/trophy-regions-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "e3856909f829e62e65a0c2060fc5e2ae2f113e6fc58cb46d8dbaba13fcbb3b18"
+    },
+    {
+      "file": "assets/masks/trophy-regions-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "8407f2c1e5df020d63bc5450939217d86c533c6be0e9663780d2b1bf65da068d"
+    },
+    {
+      "file": "assets/trophies/trophy-regions-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "d880482f7e583a1155d8df94ddba48b530ec9494cd8d1db190a1846f106d8d4d"
+    },
+    {
+      "file": "assets/masks/trophy-regions-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0c14db1dad0353fdf119c35bde04adfcc89ac694ccbc1c6279c7816427ae9e88"
+    },
+    {
+      "file": "assets/trophies/trophy-regions-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "5d192ab9707ec208a1a5eaee720b5050710f9a1b21336296f1ce289df9f0f318"
+    },
+    {
+      "file": "assets/masks/trophy-regions-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "eca64f2236916fd4c53010bcaa3d5680e4cb733a7e02dbb7e70c0834688b7047"
+    },
+    {
+      "file": "assets/trophies/trophy-team-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "1b692dc7bce8455e98bd8f6dee761c9c14a31b05a658bdc92937dcb61f2dc548"
+    },
+    {
+      "file": "assets/masks/trophy-team-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "800a36cc364de9bef3006e66f15d74d0652468bec9d56664c8195864da541430"
+    },
+    {
+      "file": "assets/trophies/trophy-team-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "1a4f0c64eecd66669cdd0da89ae4c5687a86f15071804dd68249af8717225f12"
+    },
+    {
+      "file": "assets/masks/trophy-team-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "fe2708eb696caef6a4088ae481d4e4e6323764a7cfd97076345869e7c4fd746e"
+    },
+    {
+      "file": "assets/trophies/trophy-team-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "a04a27c9230187957ac456c7a08eba27c0a1346ab4cf195eca503123c81dd851"
+    },
+    {
+      "file": "assets/masks/trophy-team-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "9fec16e0e5b5a5cc9f56db0cac792d61a4fbc9102b5d0114306d2f0ba00f4e71"
+    },
+    {
+      "file": "assets/trophies/trophy-team-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "ce9f11775aa5ad54f7e972bd6ad74b9d37d7f3da4f980aeb38d76b6b9bf47379"
+    },
+    {
+      "file": "assets/masks/trophy-team-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "2802f3e6d845594cdd12352a0efa35920b9262fe35ba33ff0fa2716f96d649cd"
+    },
+    {
+      "file": "assets/trophies/trophy-care-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "eff23608c5d6647b7897873647e68ab9379dcbf3e6c12c26659aa89e21f38cef"
+    },
+    {
+      "file": "assets/masks/trophy-care-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "ae815ad8c56604d28bccd6ef77cf00967b9ce960a3bcbc08f0e102e8ffed2003"
+    },
+    {
+      "file": "assets/trophies/trophy-care-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "4a5dff01c33ce0cb66c83f3985c924f58ae2abde5fbb88b2c00fd5e1f55c03ef"
+    },
+    {
+      "file": "assets/masks/trophy-care-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0458aa1827b4e7c2a73243fc5bb2a8a8981c65238b578a5c3d3675c383e7255a"
+    },
+    {
+      "file": "assets/trophies/trophy-care-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "230b4497bc31cc16be7e98cde8cd4f60cd47722f4a26641047ce934c83511340"
+    },
+    {
+      "file": "assets/masks/trophy-care-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "c3191dff8f4fa0b9a49fa562f0bddc6e9ed85600ff3a15a01281ff9c55371d4c"
+    },
+    {
+      "file": "assets/trophies/trophy-care-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "2777762dec6af67e9a57595f5404eca1be0ca05432d03425b6955077266c18a8"
+    },
+    {
+      "file": "assets/masks/trophy-care-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "362aeb4a6c0be231436790f66a787258fbacc9f2109413d172a8993155eb548a"
+    },
+    {
+      "file": "assets/trophies/trophy-nursery-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0d1a2bc42f49e777f43faa18327c07e37a5e1b49d33ae7ec44a6567349fea5a2"
+    },
+    {
+      "file": "assets/masks/trophy-nursery-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "eec56e2e5827715bf304a3fddf6537ab8934683463f0d918a376c90813e36955"
+    },
+    {
+      "file": "assets/trophies/trophy-nursery-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0543cc3769b0804ee8c41773d8b731b4915424dcf7180ffca55b6be7d06f3c68"
+    },
+    {
+      "file": "assets/masks/trophy-nursery-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "002a15ace100de2c40922b40951ae7ceb68b0fa1ca7d7b7bdbd44037382510a6"
+    },
+    {
+      "file": "assets/trophies/trophy-nursery-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "37df5057bf90f25ac1d450f84016628ea808ae2548375197e7616c4b1c6bc1c3"
+    },
+    {
+      "file": "assets/masks/trophy-nursery-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "a6f1c8cc2275c51ac3fa25bf0e058873d0b521b56d17d1f7620ada8fa070e035"
+    },
+    {
+      "file": "assets/trophies/trophy-nursery-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "91356b12bd7ad2020a3302119846cc7fe72c4f5448d9cefaaa4621f2864d75d0"
+    },
+    {
+      "file": "assets/masks/trophy-nursery-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "e6bd9b6e98c82c31ad34522b2bf11dec22ea28537b278fd9fbfc88a2b48a4642"
+    },
+    {
+      "file": "assets/trophies/trophy-evolution-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "9514f7efafcd0d0ef11aa69052899907a76a8ddda57ca0528d505ceb1276bfd9"
+    },
+    {
+      "file": "assets/masks/trophy-evolution-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "b1978be4e8b7fa2bab96c100e728a5272d0fc970eec995c138ead142a07e79a7"
+    },
+    {
+      "file": "assets/trophies/trophy-evolution-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "20385f506cd25bcac7eb116753b15fae022776b1b0b761d166025239b53ed314"
+    },
+    {
+      "file": "assets/masks/trophy-evolution-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "b287223bff7c7ec693bcbb4fc7b3c2c1550451b1600ac86b2c43adf44d0701df"
+    },
+    {
+      "file": "assets/trophies/trophy-evolution-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "5edc75f7d6f22fb54a2575f94b15605ab9ab771897765598dc99d15c8a4dc70a"
+    },
+    {
+      "file": "assets/masks/trophy-evolution-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "c7dc408d91f54eb4dc56a10152f20af2fa2753a1d89a952201bbd55e3f8c2e19"
+    },
+    {
+      "file": "assets/trophies/trophy-evolution-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "bec7d57ad843d75f9324df0f21c74adafecfba877970adb6c95c4e2ad61c47a0"
+    },
+    {
+      "file": "assets/masks/trophy-evolution-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "a026f1e1deebe45e0e789074bb4152386f5831bcc04b8a8bcc09b13013a7048d"
+    },
+    {
+      "file": "assets/trophies/trophy-shiny-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "4b6fa0f6654e3c4d452996274e55646a591b4a3a6af4495eb7539a6c77c780e1"
+    },
+    {
+      "file": "assets/masks/trophy-shiny-1.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "b7f3a956f1f3381aae3e07e12a6c91e9faab82ac3ff1e447a3cd4897cd26027f"
+    },
+    {
+      "file": "assets/trophies/trophy-shiny-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "c43292f4e471f850d0ae55e95edfed6b34540f48d62d70ba0be7ce2ca37cfb38"
+    },
+    {
+      "file": "assets/masks/trophy-shiny-2.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "e7dc928e08019f7d5abbf8cc38a07997ee077f8348a32bbd3d52e4aaebcb46e2"
+    },
+    {
+      "file": "assets/trophies/trophy-shiny-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "00489c04353e4e38393d8e88f5aa6ece035b817e1396d8ba524209a5dc0627e6"
+    },
+    {
+      "file": "assets/masks/trophy-shiny-3.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0bddb8952caac03bb723fb45139547e5aa756ad3be63e00d9c2dcd364de1affa"
+    },
+    {
+      "file": "assets/trophies/trophy-shiny-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "339a7f7994999c5273efb247ed372953d4b8489e8f1f1b5ab759d0ee64ed1940"
+    },
+    {
+      "file": "assets/masks/trophy-shiny-4.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "46c5dd6fe61b6b3cc6376b44fef1d868ab61feabd69322a7fb381d22c42a51e5"
+    },
+    {
+      "file": "assets/trophies/trophy-special-nick.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "25b4030c702fec43b328d65ec583ae9bd25ae473f1f4a6e49964b0dc77c9234d"
+    },
+    {
+      "file": "assets/masks/trophy-special-nick.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "64408950571323ef56a2118db837aae62bcf5ccc42ad1a347ecacbf8af9d899a"
+    },
+    {
+      "file": "assets/trophies/trophy-special-favorite.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "7ff54019b6db27734a9648bed7f11b945a9c5fd7f56484a695dd5cf0f2138318"
+    },
+    {
+      "file": "assets/masks/trophy-special-favorite.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "e53cd12d0ef4525e9e816d35fa0449218a3c8ef94fcca1bd32a583921f20afd0"
+    },
+    {
+      "file": "assets/trophies/trophy-special-type-team.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "3bb75cbe36c4c12304567b4362546dc96552f8607e85d177584a732e9a700af3"
+    },
+    {
+      "file": "assets/masks/trophy-special-type-team.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "85ff25a30ead033915a7d18882b6fcc3a5173fb42b3c0c0d3b22d3d3103df2a6"
+    },
+    {
+      "file": "assets/trophies/trophy-special-bonus-find.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "3fbfcac1f8747ef06c1e09a620f0172d26410b786eadae572f07734358e27dbc"
+    },
+    {
+      "file": "assets/masks/trophy-special-bonus-find.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "e5ef82f6f8bf625d066ac537631484301ef75ae295853890d472137d2cd6b84e"
+    },
+    {
+      "file": "assets/trophies/trophy-special-nursery-expedition.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "ccfae60c20b2b916ad7192d231bac3af777e11b1c5965cb1b4709e47277a39e9"
+    },
+    {
+      "file": "assets/masks/trophy-special-nursery-expedition.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "738cfb8ab83a9343c30a6770d3afa795a53bc71af50fbc84bc73039178d3ecfa"
+    },
+    {
+      "file": "assets/trophies/trophy-special-family-expedition.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "076202a7e73dfc377e6bd1fa6da5f9beda0ceda765265b4f9b15cc1523686b92"
+    },
+    {
+      "file": "assets/masks/trophy-special-family-expedition.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "f5f519145a904e72f94042bfb2d21c5c5dd2173fac9bfb08b2c383f859b0dac1"
+    },
+    {
+      "file": "assets/trophies/trophy-special-evolved-expedition.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "6bd77a508df70b716a50fcbe95328ebbd0c8fd8d383b6cec2be30ff280713c7d"
+    },
+    {
+      "file": "assets/masks/trophy-special-evolved-expedition.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "3eb6ed73b014ee1b3481adecd4381f474a6f96a8edb0527cd4839b84e80a8700"
+    },
+    {
+      "file": "assets/trophies/trophy-special-all-berries.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "28ddd3299568b8bb76a34991bd5f84d77fae1402d8e2a869ad9a31b81770d2e1"
+    },
+    {
+      "file": "assets/masks/trophy-special-all-berries.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "8483b1ef8a61f24d548db6c59ae0ff08116e6d1d929843be13e7ca95134a8e35"
+    },
+    {
+      "file": "assets/trophies/trophy-special-berry-evolution.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "3d30a59774d4505137e0a1ee0e3eb8a5bf206a9aad3b4919425e6a07d3176996"
+    },
+    {
+      "file": "assets/masks/trophy-special-berry-evolution.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "1bd2ad33f0f2ac8b2ba25807e2dac13038b1214bd450b6e0383da50be4903418"
+    },
+    {
+      "file": "assets/trophies/trophy-special-branch-choice.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "7589ce3947cec0767b54b2267ce3c9f1678e40b75658985fbe7c7ed0563c619f"
+    },
+    {
+      "file": "assets/masks/trophy-special-branch-choice.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "6de25c51041dc11621d4c8fda98d7bdf1d584f7e172401f6fcc7546a9d049f6b"
+    },
+    {
+      "file": "assets/trophies/trophy-special-offspring-choice.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0dd505bffb3e04573882c4caa9faf973cad6588d6e7f6eef9fe33cdbc0a37035"
+    },
+    {
+      "file": "assets/masks/trophy-special-offspring-choice.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "781cf63a53294ff8e641ea7c04677451d4aea066cde650b313f87cc93b5cdb72"
+    },
+    {
+      "file": "assets/trophies/trophy-special-all-legends.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "3aa719c84f935e43797be2c1968af1b570f740a6dd09df5609b82f54049c8d8a"
+    },
+    {
+      "file": "assets/masks/trophy-special-all-legends.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "129e3aadc42c58d74b09c1bf3fd25c955b2a8ebb0f51611a660272bec25d33db"
+    },
+    {
+      "file": "assets/trophies/trophy-special-second-trait.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "1137f6d0c7733ae33908bd1c6e07d91c223faad8c8485cb3cba0dcf0ecf9dd73"
+    },
+    {
+      "file": "assets/masks/trophy-special-second-trait.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "2841aa416f4f4b11e7ae6f4220a1f383e27568200a7aa29f676bc9ad0c5bccac"
+    },
+    {
+      "file": "assets/trophies/trophy-special-retrain.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "1eb5fe571d010b5e5737d238c6b7608a6e9e38eb9c356733869796c81bccdb6d"
+    },
+    {
+      "file": "assets/masks/trophy-special-retrain.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "cc632d0e7eb0846cd92dc66aa3748327f9f5f7e66cd2083dffc13f344d8ed8ad"
+    },
+    {
+      "file": "assets/trophies/trophy-special-rehome.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "61e2e1b6d95450d582bb59ea3df2239e3cca8d62c6859df2f34800dd2592631e"
+    },
+    {
+      "file": "assets/masks/trophy-special-rehome.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "ac2b53f95e16421df299c1f2f8c018e6f51f591801a45d4f93fedeedf2d950f6"
+    },
+    {
+      "file": "assets/trophies/trophy-special-xp-potion.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "bc973830606f98d5ca6ffe98bd91b02a2fed9826f69f1837531d0d39a518c716"
+    },
+    {
+      "file": "assets/masks/trophy-special-xp-potion.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "9e8752982225ed2df6ad92290d2e340f096c27efd4439200a75fd8ca68023962"
+    },
+    {
+      "file": "previews/room-empty.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "9cf0542c738bb61194ecc91cfa0d613cec91745fa2b926c06e946ada4f3fbc7f"
+    },
+    {
+      "file": "previews/room-one-trophy.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "21bbb6dfae95a32a219a8c4958cdf2539aac7b7a2d7fc9900927f98a524e5035"
+    },
+    {
+      "file": "previews/room-first-tiers.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "0b32f165b6523cde36079f1b78da6cb9210100480aa1dd927590e1123e9abfc9"
+    },
+    {
+      "file": "previews/room-last-tiers.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "cfb8bfa6d0a2f7b94fb1e2e065c47766566fe993ace6bcc5fc5812cc076c6e1b"
+    },
+    {
+      "file": "previews/album-open.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "96245cdb9395cf089daed64e712e790ee0158e2db0133f5960fff2d58d5386c4"
+    },
+    {
+      "file": "previews/album-locked.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "9ae048742aa486b2e9b15b515e0cc422f2131de7f75c0400d64faf709bd56bdf"
+    },
+    {
+      "file": "previews/first-tiers-open.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "7429b60b6b2a64f133d55be66e59926816b7b9203bbe21987d33ff94457a4de7"
+    },
+    {
+      "file": "previews/late-tiers-review-only.png",
+      "rgbaDecodedExact": true,
+      "promptAndOriginReadable": true,
+      "sha256": "602f81eff88efb328b835b46b200fee27e6825d1aa0abeb01721af694ab147b5"
+    }
+  ],
+  "visualInspection": {
+    "files": [
+      "previews/room-first-tiers.png",
+      "previews/album-open.png",
+      "previews/album-locked.png"
+    ],
+    "observed": "Population uses original growing companion group;20revised sources replace ambiguous botanical/camp art. Locked cards retain exact-alpha first-tier/special silhouettes.",
+    "userVisualApprovalClaimed": false
+  }
+}

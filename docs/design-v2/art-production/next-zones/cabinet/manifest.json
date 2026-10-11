@@ -1,0 +1,87 @@
+{
+  "produce": [
+    {
+      "id": "c1-zone",
+      "source_crop": "_sources/c1-context.png",
+      "output_path": "assets/c1-zone.png",
+      "strategy": "contextual fullscene edit then bounded technical mask",
+      "prompt_used": "_sources\\c1-correction-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Actual cabinet is lower than initial y57 target; measured top y72, within assigned scene region. Cabinet center x262.5.",
+      "qa_status": "needs_parent_review"
+    },
+    {
+      "id": "c1-frontlip",
+      "source_crop": "_sources/c1-context.png",
+      "output_path": "assets/c1-frontlip.png",
+      "strategy": "contextual fullscene edit, bounded technical mask; intrinsic front shelf edge split from source",
+      "prompt_used": "_sources\\c1-correction-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Actual cabinet is lower than initial y57 target; measured top y72, within assigned scene region. Cabinet center x262.5.",
+      "qa_status": "needs_parent_review"
+    },
+    {
+      "id": "c3-zone",
+      "source_crop": "_sources/c3-context.png",
+      "output_path": "assets/c3-zone.png",
+      "strategy": "contextual fullscene edit then bounded technical mask",
+      "prompt_used": "_sources\\c3-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Actual cabinet is lower than initial y57 target; measured top y72, within assigned scene region. Cabinet center x262.5.",
+      "qa_status": "needs_parent_review"
+    },
+    {
+      "id": "c3-frontlip",
+      "source_crop": "_sources/c3-context.png",
+      "output_path": "assets/c3-frontlip.png",
+      "strategy": "contextual fullscene edit, bounded technical mask; intrinsic front shelf edge split from source",
+      "prompt_used": "_sources\\c3-prompt.txt",
+      "dimensions": [
+        150,
+        77
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": "Actual cabinet is lower than initial y57 target; measured top y72, within assigned scene region. Cabinet center x262.5.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "cabinet-three-slot-composition",
+      "implementation": "Compose common 480x193 master then cabinet-zone patch at zoneRect origin; resize each existing trophy by per-model trophyScale, place by source footAnchor at shelfAnchors, then draw independent cabinet-frontlip at same zoneRect origin. Add separate plant using topPlantAnchor and keep original BW pet above room layers. Use integer displayScale3 and nearest/pixelated sampling; no UI raster.",
+      "notes": "One shared set of anchors deliberately calibrated from actual two cabinet sources; source figures remain separate and interchangeable.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "C1 contextual edit",
+    "one C1 shelf correction",
+    "C3 contextual edit from common master + C1 geometry reference",
+    "bounded technical masks",
+    "63x3x2 alpha pixel-bounds checks",
+    "empty and full showcase previews"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "Only C1 and C3 small batch; no app code changes.",
+    "Two empty niches generated, trophies independently reused.",
+    "Catalog fidelity and common assembled review remain parent responsibility."
+  ]
+}

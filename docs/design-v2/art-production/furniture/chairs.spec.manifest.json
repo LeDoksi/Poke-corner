@@ -1,0 +1,181 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "armchair-a1",
+      "name": "Клетчатое",
+      "category": "armchairs",
+      "row": 0,
+      "col": 0,
+      "displayWidth": 197.514,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "file": "furniture/assets/armchair-a1.png",
+      "size": [
+        470,
+        401
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "alphaBoundsInCell": [
+        132,
+        176,
+        586,
+        561
+      ],
+      "cropInCell": [
+        124,
+        168,
+        594,
+        569
+      ],
+      "sha256": "1262ad08c24111f32b3967d1663acb10a489c7fdd0a8205203b76dd921a4a398",
+      "source": "furniture/_sources/chairs-atlas-v2.png",
+      "promptFile": "furniture/_sources/chairs-repair-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "armchair-a2",
+      "name": "Тёплое",
+      "category": "armchairs",
+      "row": 0,
+      "col": 1,
+      "displayWidth": 186.464,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "file": "furniture/assets/armchair-a2.png",
+      "size": [
+        452,
+        405
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "alphaBoundsInCell": [
+        102,
+        174,
+        538,
+        563
+      ],
+      "cropInCell": [
+        94,
+        166,
+        546,
+        571
+      ],
+      "sha256": "9dcf7e1c7223b571e7f95dbf7bcb70a9bc6274107302a2efb40336ed9405c510",
+      "source": "furniture/_sources/chairs-atlas-v2.png",
+      "promptFile": "furniture/_sources/chairs-repair-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "armchair-a3",
+      "name": "Плетёное",
+      "category": "armchairs",
+      "row": 1,
+      "col": 0,
+      "displayWidth": 183.011,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "file": "furniture/assets/armchair-a3.png",
+      "size": [
+        446,
+        405
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        139,
+        99,
+        569,
+        488
+      ],
+      "cropInCell": [
+        131,
+        91,
+        577,
+        496
+      ],
+      "sha256": "0eca41501a0d9378748a7a5e9fc8bc0dd00aa2d52b8d9d878903507da5e93a3a",
+      "source": "furniture/_sources/chairs-atlas-v2.png",
+      "promptFile": "furniture/_sources/chairs-repair-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "armchair-a4",
+      "name": "Облачко",
+      "category": "armchairs",
+      "row": 1,
+      "col": 1,
+      "displayWidth": 200.276,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "file": "furniture/assets/armchair-a4.png",
+      "size": [
+        477,
+        402
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        97,
+        107,
+        558,
+        493
+      ],
+      "cropInCell": [
+        89,
+        99,
+        566,
+        501
+      ],
+      "sha256": "689b89055543e8156fc44962777e99cf54c15772d901f93c38addc7912ac6bd6",
+      "source": "furniture/_sources/chairs-atlas-v2.png",
+      "promptFile": "furniture/_sources/chairs-repair-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    }
+  ]
+}

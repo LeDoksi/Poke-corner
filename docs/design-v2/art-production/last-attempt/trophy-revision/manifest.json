@@ -1,0 +1,605 @@
+{
+  "direct": [
+    {
+      "id": "trophy-species-1",
+      "output_path": "assets/trophy-species-1.png",
+      "dimensions": [
+        87,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Pokemon field-catalogue award in four tiers: (1) closed green notebook with large Pokeball emblem, (2) open field notebook showing colorful Pikachu and Bulbasaur observation sketches on the two pages, (3) same open creature catalogue plus magnifying glass and a small Squirtle observation card, (4) ornate open creature encyclopedia displaying those sketches framed by a gold arch and small Pokeball seal. Each book represents Pokemon observations, never herbarium plant specimens; no plants growing from pages. Make the four tiers progressively more splendid.",
+      "source": {
+        "sourceFile": "sources/species.png",
+        "sourceSha256": "7b274a3781b5408878ff5c8340a100d70b8410d052925593a451f056cb93c871",
+        "sourceCell": [
+          0,
+          0,
+          615,
+          612
+        ],
+        "cropBounds": [
+          121,
+          126,
+          544,
+          585
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-species-2",
+      "output_path": "assets/trophy-species-2.png",
+      "dimensions": [
+        105,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Pokemon field-catalogue award in four tiers: (1) closed green notebook with large Pokeball emblem, (2) open field notebook showing colorful Pikachu and Bulbasaur observation sketches on the two pages, (3) same open creature catalogue plus magnifying glass and a small Squirtle observation card, (4) ornate open creature encyclopedia displaying those sketches framed by a gold arch and small Pokeball seal. Each book represents Pokemon observations, never herbarium plant specimens; no plants growing from pages. Make the four tiers progressively more splendid.",
+      "source": {
+        "sourceFile": "sources/species.png",
+        "sourceSha256": "7b274a3781b5408878ff5c8340a100d70b8410d052925593a451f056cb93c871",
+        "sourceCell": [
+          615,
+          0,
+          1254,
+          612
+        ],
+        "cropBounds": [
+          73,
+          168,
+          544,
+          590
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-species-3",
+      "output_path": "assets/trophy-species-3.png",
+      "dimensions": [
+        101,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Pokemon field-catalogue award in four tiers: (1) closed green notebook with large Pokeball emblem, (2) open field notebook showing colorful Pikachu and Bulbasaur observation sketches on the two pages, (3) same open creature catalogue plus magnifying glass and a small Squirtle observation card, (4) ornate open creature encyclopedia displaying those sketches framed by a gold arch and small Pokeball seal. Each book represents Pokemon observations, never herbarium plant specimens; no plants growing from pages. Make the four tiers progressively more splendid.",
+      "source": {
+        "sourceFile": "sources/species.png",
+        "sourceSha256": "7b274a3781b5408878ff5c8340a100d70b8410d052925593a451f056cb93c871",
+        "sourceCell": [
+          0,
+          612,
+          619,
+          1254
+        ],
+        "cropBounds": [
+          97,
+          104,
+          587,
+          562
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-species-4",
+      "output_path": "assets/trophy-species-4.png",
+      "dimensions": [
+        97,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Pokemon field-catalogue award in four tiers: (1) closed green notebook with large Pokeball emblem, (2) open field notebook showing colorful Pikachu and Bulbasaur observation sketches on the two pages, (3) same open creature catalogue plus magnifying glass and a small Squirtle observation card, (4) ornate open creature encyclopedia displaying those sketches framed by a gold arch and small Pokeball seal. Each book represents Pokemon observations, never herbarium plant specimens; no plants growing from pages. Make the four tiers progressively more splendid.",
+      "source": {
+        "sourceFile": "sources/species.png",
+        "sourceSha256": "7b274a3781b5408878ff5c8340a100d70b8410d052925593a451f056cb93c871",
+        "sourceCell": [
+          619,
+          612,
+          1254,
+          1254
+        ],
+        "cropBounds": [
+          34,
+          23,
+          594,
+          563
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-evolution-1",
+      "output_path": "assets/trophy-evolution-1.png",
+      "dimensions": [
+        128,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Draw a transparent atlas of four friendly game achievement statuettes, 2 columns by 2 rows. Warm detailed illustrated pixel art, upper-left light, oval honey-wood pedestals with gold rims, same style/camera as reference. No background, no text, no grid. Generous transparent padding around each separate trophy. These trophies symbolize evolution: ONE creature changing through stages, not a group of independent creatures and not breeding. Represent the stages as clear large gold-rimmed enamel medallions with friendly abstract creature-profile silhouettes: small round head with short ears, medium head with longer ears and a crest, mature head with a larger crest. Top-left trophy: two different stage medallions connected by a gold directional arrow. Top-right: three stage medallions linked by arrows. Bottom-left: those three stage medallions in an elegant gold transformation-arrow arch. Bottom-right: three stage medallions inside a splendid circular gold-arrow frame with a few enamel sparkles. Consistent green enamel shapes for the SAME creature line, distinct growth stages. No plants, no berries, no jars, no eggs, no combat. Readable simple silhouettes at 94 pixels tall. Each whole composition fits its own cell, with its own wood base. True transparent alpha outside all objects.",
+      "source": {
+        "sourceFile": "sources/evolution.png",
+        "sourceSha256": "6a34372499795efb022f9a289913f7e69693e185f9cac3ccd886f39e2d0826ce",
+        "sourceCell": [
+          0,
+          0,
+          615,
+          510
+        ],
+        "cropBounds": [
+          51,
+          90,
+          586,
+          483
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-evolution-2",
+      "output_path": "assets/trophy-evolution-2.png",
+      "dimensions": [
+        132,
+        79
+      ],
+      "footAnchor": [
+        0.5,
+        0.9873417721518988
+      ],
+      "prompt_used": "Draw a transparent atlas of four friendly game achievement statuettes, 2 columns by 2 rows. Warm detailed illustrated pixel art, upper-left light, oval honey-wood pedestals with gold rims, same style/camera as reference. No background, no text, no grid. Generous transparent padding around each separate trophy. These trophies symbolize evolution: ONE creature changing through stages, not a group of independent creatures and not breeding. Represent the stages as clear large gold-rimmed enamel medallions with friendly abstract creature-profile silhouettes: small round head with short ears, medium head with longer ears and a crest, mature head with a larger crest. Top-left trophy: two different stage medallions connected by a gold directional arrow. Top-right: three stage medallions linked by arrows. Bottom-left: those three stage medallions in an elegant gold transformation-arrow arch. Bottom-right: three stage medallions inside a splendid circular gold-arrow frame with a few enamel sparkles. Consistent green enamel shapes for the SAME creature line, distinct growth stages. No plants, no berries, no jars, no eggs, no combat. Readable simple silhouettes at 94 pixels tall. Each whole composition fits its own cell, with its own wood base. True transparent alpha outside all objects.",
+      "source": {
+        "sourceFile": "sources/evolution.png",
+        "sourceSha256": "6a34372499795efb022f9a289913f7e69693e185f9cac3ccd886f39e2d0826ce",
+        "sourceCell": [
+          615,
+          0,
+          1331,
+          510
+        ],
+        "cropBounds": [
+          30,
+          98,
+          682,
+          486
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-evolution-3",
+      "output_path": "assets/trophy-evolution-3.png",
+      "dimensions": [
+        116,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Draw a transparent atlas of four friendly game achievement statuettes, 2 columns by 2 rows. Warm detailed illustrated pixel art, upper-left light, oval honey-wood pedestals with gold rims, same style/camera as reference. No background, no text, no grid. Generous transparent padding around each separate trophy. These trophies symbolize evolution: ONE creature changing through stages, not a group of independent creatures and not breeding. Represent the stages as clear large gold-rimmed enamel medallions with friendly abstract creature-profile silhouettes: small round head with short ears, medium head with longer ears and a crest, mature head with a larger crest. Top-left trophy: two different stage medallions connected by a gold directional arrow. Top-right: three stage medallions linked by arrows. Bottom-left: those three stage medallions in an elegant gold transformation-arrow arch. Bottom-right: three stage medallions inside a splendid circular gold-arrow frame with a few enamel sparkles. Consistent green enamel shapes for the SAME creature line, distinct growth stages. No plants, no berries, no jars, no eggs, no combat. Readable simple silhouettes at 94 pixels tall. Each whole composition fits its own cell, with its own wood base. True transparent alpha outside all objects.",
+      "source": {
+        "sourceFile": "sources/evolution.png",
+        "sourceSha256": "6a34372499795efb022f9a289913f7e69693e185f9cac3ccd886f39e2d0826ce",
+        "sourceCell": [
+          0,
+          510,
+          711,
+          1181
+        ],
+        "cropBounds": [
+          51,
+          96,
+          672,
+          600
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-evolution-4",
+      "output_path": "assets/trophy-evolution-4.png",
+      "dimensions": [
+        82,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Draw a transparent atlas of four friendly game achievement statuettes, 2 columns by 2 rows. Warm detailed illustrated pixel art, upper-left light, oval honey-wood pedestals with gold rims, same style/camera as reference. No background, no text, no grid. Generous transparent padding around each separate trophy. These trophies symbolize evolution: ONE creature changing through stages, not a group of independent creatures and not breeding. Represent the stages as clear large gold-rimmed enamel medallions with friendly abstract creature-profile silhouettes: small round head with short ears, medium head with longer ears and a crest, mature head with a larger crest. Top-left trophy: two different stage medallions connected by a gold directional arrow. Top-right: three stage medallions linked by arrows. Bottom-left: those three stage medallions in an elegant gold transformation-arrow arch. Bottom-right: three stage medallions inside a splendid circular gold-arrow frame with a few enamel sparkles. Consistent green enamel shapes for the SAME creature line, distinct growth stages. No plants, no berries, no jars, no eggs, no combat. Readable simple silhouettes at 94 pixels tall. Each whole composition fits its own cell, with its own wood base. True transparent alpha outside all objects.",
+      "source": {
+        "sourceFile": "sources/evolution.png",
+        "sourceSha256": "6a34372499795efb022f9a289913f7e69693e185f9cac3ccd886f39e2d0826ce",
+        "sourceCell": [
+          711,
+          510,
+          1331,
+          1181
+        ],
+        "cropBounds": [
+          40,
+          26,
+          538,
+          600
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-team-1",
+      "output_path": "assets/trophy-team-1.png",
+      "dimensions": [
+        109,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Team experience trophy tiers: (1) one ochre hiking backpack with a brass rank chevron; (2) THREE distinct backpacks in green, ochre and rust with a single gold chevron badge in front; (3) the SAME THREE backpacks with double-chevron badge and richer gold trim; (4) the SAME THREE backpacks with triple-chevron badge and gold laurel frame. Exactly one backpack in first cell and three in every other cell. Rank increases without changing number of team members. Keep badge large and obvious, not intricate tiny camp clutter.",
+      "source": {
+        "sourceFile": "sources/team.png",
+        "sourceSha256": "b1dac351790f02fbc4efdf3e8399b4270ff46a2cc3e1bb5878b9950281b22835",
+        "sourceCell": [
+          0,
+          0,
+          603,
+          631
+        ],
+        "cropBounds": [
+          97,
+          153,
+          535,
+          532
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-team-2",
+      "output_path": "assets/trophy-team-2.png",
+      "dimensions": [
+        126,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Team experience trophy tiers: (1) one ochre hiking backpack with a brass rank chevron; (2) THREE distinct backpacks in green, ochre and rust with a single gold chevron badge in front; (3) the SAME THREE backpacks with double-chevron badge and richer gold trim; (4) the SAME THREE backpacks with triple-chevron badge and gold laurel frame. Exactly one backpack in first cell and three in every other cell. Rank increases without changing number of team members. Keep badge large and obvious, not intricate tiny camp clutter.",
+      "source": {
+        "sourceFile": "sources/team.png",
+        "sourceSha256": "b1dac351790f02fbc4efdf3e8399b4270ff46a2cc3e1bb5878b9950281b22835",
+        "sourceCell": [
+          603,
+          0,
+          1254,
+          631
+        ],
+        "cropBounds": [
+          70,
+          158,
+          578,
+          537
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-team-3",
+      "output_path": "assets/trophy-team-3.png",
+      "dimensions": [
+        122,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Team experience trophy tiers: (1) one ochre hiking backpack with a brass rank chevron; (2) THREE distinct backpacks in green, ochre and rust with a single gold chevron badge in front; (3) the SAME THREE backpacks with double-chevron badge and richer gold trim; (4) the SAME THREE backpacks with triple-chevron badge and gold laurel frame. Exactly one backpack in first cell and three in every other cell. Rank increases without changing number of team members. Keep badge large and obvious, not intricate tiny camp clutter.",
+      "source": {
+        "sourceFile": "sources/team.png",
+        "sourceSha256": "b1dac351790f02fbc4efdf3e8399b4270ff46a2cc3e1bb5878b9950281b22835",
+        "sourceCell": [
+          0,
+          631,
+          620,
+          1254
+        ],
+        "cropBounds": [
+          60,
+          97,
+          571,
+          491
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-team-4",
+      "output_path": "assets/trophy-team-4.png",
+      "dimensions": [
+        125,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Team experience trophy tiers: (1) one ochre hiking backpack with a brass rank chevron; (2) THREE distinct backpacks in green, ochre and rust with a single gold chevron badge in front; (3) the SAME THREE backpacks with double-chevron badge and richer gold trim; (4) the SAME THREE backpacks with triple-chevron badge and gold laurel frame. Exactly one backpack in first cell and three in every other cell. Rank increases without changing number of team members. Keep badge large and obvious, not intricate tiny camp clutter.",
+      "source": {
+        "sourceFile": "sources/team.png",
+        "sourceSha256": "b1dac351790f02fbc4efdf3e8399b4270ff46a2cc3e1bb5878b9950281b22835",
+        "sourceCell": [
+          620,
+          631,
+          1254,
+          1254
+        ],
+        "cropBounds": [
+          51,
+          96,
+          573,
+          490
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-nursery-1",
+      "output_path": "assets/trophy-nursery-1.png",
+      "dimensions": [
+        116,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create FOUR separate collectible nursery-diversity trophies in a 2x2 transparent atlas, 1024x1024. Match reference: warm detailed illustrated pixel clusters, sculpted enamel ornaments, oval honey-wood plinth with gold rim, upper-left light. No text, no grid, no background, no glass greenhouse. Readable at 94 pixels tall, large simple forms. Top-left: one cream egg with green speckles in a woven nest on its plinth. Top-right: a partly hatched cream egg with one tiny gold paw-print emblem appearing between the shell halves, in a nursery nest. Bottom-left: a larger woven nursery nest containing three distinctly patterned eggs, one cream with green spots, one pale blue with stripes, one pale pink with dots; a cracked shell and small gold paw emblem in front symbolize successful hatching. Bottom-right: elegant OPEN gold-and-wood cradle frame over a woven nursery nest containing the same distinct three egg designs, a cracked eggshell and a larger gold paw emblem, with a simple star finial. The open cradle is NOT a terrarium or plant house; no glass walls, no plants as the main subject. Differences among eggs symbolize different kinds of offspring, not three simultaneous births. Match the same base proportions, add finish gradually across the tiers. All objects fully separated in their cells by substantial transparent padding, true alpha outside them.",
+      "source": {
+        "sourceFile": "sources/nursery.png",
+        "sourceSha256": "0a0626eaca9e5c7c8eb1ba5fd4e168fbc7cf9e2b26296396624f4d67931cd604",
+        "sourceCell": [
+          0,
+          0,
+          639,
+          576
+        ],
+        "cropBounds": [
+          94,
+          155,
+          587,
+          553
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-nursery-2",
+      "output_path": "assets/trophy-nursery-2.png",
+      "dimensions": [
+        99,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create FOUR separate collectible nursery-diversity trophies in a 2x2 transparent atlas, 1024x1024. Match reference: warm detailed illustrated pixel clusters, sculpted enamel ornaments, oval honey-wood plinth with gold rim, upper-left light. No text, no grid, no background, no glass greenhouse. Readable at 94 pixels tall, large simple forms. Top-left: one cream egg with green speckles in a woven nest on its plinth. Top-right: a partly hatched cream egg with one tiny gold paw-print emblem appearing between the shell halves, in a nursery nest. Bottom-left: a larger woven nursery nest containing three distinctly patterned eggs, one cream with green spots, one pale blue with stripes, one pale pink with dots; a cracked shell and small gold paw emblem in front symbolize successful hatching. Bottom-right: elegant OPEN gold-and-wood cradle frame over a woven nursery nest containing the same distinct three egg designs, a cracked eggshell and a larger gold paw emblem, with a simple star finial. The open cradle is NOT a terrarium or plant house; no glass walls, no plants as the main subject. Differences among eggs symbolize different kinds of offspring, not three simultaneous births. Match the same base proportions, add finish gradually across the tiers. All objects fully separated in their cells by substantial transparent padding, true alpha outside them.",
+      "source": {
+        "sourceFile": "sources/nursery.png",
+        "sourceSha256": "0a0626eaca9e5c7c8eb1ba5fd4e168fbc7cf9e2b26296396624f4d67931cd604",
+        "sourceCell": [
+          639,
+          0,
+          1254,
+          576
+        ],
+        "cropBounds": [
+          54,
+          84,
+          550,
+          556
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-nursery-3",
+      "output_path": "assets/trophy-nursery-3.png",
+      "dimensions": [
+        107,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create FOUR separate collectible nursery-diversity trophies in a 2x2 transparent atlas, 1024x1024. Match reference: warm detailed illustrated pixel clusters, sculpted enamel ornaments, oval honey-wood plinth with gold rim, upper-left light. No text, no grid, no background, no glass greenhouse. Readable at 94 pixels tall, large simple forms. Top-left: one cream egg with green speckles in a woven nest on its plinth. Top-right: a partly hatched cream egg with one tiny gold paw-print emblem appearing between the shell halves, in a nursery nest. Bottom-left: a larger woven nursery nest containing three distinctly patterned eggs, one cream with green spots, one pale blue with stripes, one pale pink with dots; a cracked shell and small gold paw emblem in front symbolize successful hatching. Bottom-right: elegant OPEN gold-and-wood cradle frame over a woven nursery nest containing the same distinct three egg designs, a cracked eggshell and a larger gold paw emblem, with a simple star finial. The open cradle is NOT a terrarium or plant house; no glass walls, no plants as the main subject. Differences among eggs symbolize different kinds of offspring, not three simultaneous births. Match the same base proportions, add finish gradually across the tiers. All objects fully separated in their cells by substantial transparent padding, true alpha outside them.",
+      "source": {
+        "sourceFile": "sources/nursery.png",
+        "sourceSha256": "0a0626eaca9e5c7c8eb1ba5fd4e168fbc7cf9e2b26296396624f4d67931cd604",
+        "sourceCell": [
+          0,
+          576,
+          636,
+          1254
+        ],
+        "cropBounds": [
+          60,
+          126,
+          614,
+          614
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-nursery-4",
+      "output_path": "assets/trophy-nursery-4.png",
+      "dimensions": [
+        88,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create FOUR separate collectible nursery-diversity trophies in a 2x2 transparent atlas, 1024x1024. Match reference: warm detailed illustrated pixel clusters, sculpted enamel ornaments, oval honey-wood plinth with gold rim, upper-left light. No text, no grid, no background, no glass greenhouse. Readable at 94 pixels tall, large simple forms. Top-left: one cream egg with green speckles in a woven nest on its plinth. Top-right: a partly hatched cream egg with one tiny gold paw-print emblem appearing between the shell halves, in a nursery nest. Bottom-left: a larger woven nursery nest containing three distinctly patterned eggs, one cream with green spots, one pale blue with stripes, one pale pink with dots; a cracked shell and small gold paw emblem in front symbolize successful hatching. Bottom-right: elegant OPEN gold-and-wood cradle frame over a woven nursery nest containing the same distinct three egg designs, a cracked eggshell and a larger gold paw emblem, with a simple star finial. The open cradle is NOT a terrarium or plant house; no glass walls, no plants as the main subject. Differences among eggs symbolize different kinds of offspring, not three simultaneous births. Match the same base proportions, add finish gradually across the tiers. All objects fully separated in their cells by substantial transparent padding, true alpha outside them.",
+      "source": {
+        "sourceFile": "sources/nursery.png",
+        "sourceSha256": "0a0626eaca9e5c7c8eb1ba5fd4e168fbc7cf9e2b26296396624f4d67931cd604",
+        "sourceCell": [
+          636,
+          576,
+          1254,
+          1254
+        ],
+        "cropBounds": [
+          23,
+          21,
+          582,
+          617
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-special-type-team",
+      "output_path": "assets/trophy-special-type-team.png",
+      "dimensions": [
+        85,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Four standalone awards: (1) three DIFFERENT elemental emblems red flame, blue water droplet, green leaf around a terrain map and compass, denoting every member helps chosen terrain; (2) hiking backpack with prominent transformation medallion, small Bulbasaur and Ivysaur silhouettes linked by arrow, no book; (3) basket with EXACT SIX distinct berry forms from reference 2: red Cheri cherries, round blue Oran, round yellow Aspear, pink Pecha peach, pointed purple Chesto with cream base, serrated green Rawst; (4) red Cheri, blue Oran, green Rawst below a large circular gold transformation arrow and two different Pokemon-stage medallions, Bulbasaur bulb and Ivysaur bud. No evolution stone, no fruit tree. Emphasize large clear motifs on shared wood-gold bases.",
+      "source": {
+        "sourceFile": "sources/specials.png",
+        "sourceSha256": "f05a89b10a9955156f5bcda175faef441da989b85e02f7817d7db7d0b708ead7",
+        "sourceCell": [
+          0,
+          0,
+          652,
+          645
+        ],
+        "cropBounds": [
+          63,
+          20,
+          613,
+          625
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "output_path": "assets/trophy-special-evolved-expedition.png",
+      "dimensions": [
+        93,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Four standalone awards: (1) three DIFFERENT elemental emblems red flame, blue water droplet, green leaf around a terrain map and compass, denoting every member helps chosen terrain; (2) hiking backpack with prominent transformation medallion, small Bulbasaur and Ivysaur silhouettes linked by arrow, no book; (3) basket with EXACT SIX distinct berry forms from reference 2: red Cheri cherries, round blue Oran, round yellow Aspear, pink Pecha peach, pointed purple Chesto with cream base, serrated green Rawst; (4) red Cheri, blue Oran, green Rawst below a large circular gold transformation arrow and two different Pokemon-stage medallions, Bulbasaur bulb and Ivysaur bud. No evolution stone, no fruit tree. Emphasize large clear motifs on shared wood-gold bases.",
+      "source": {
+        "sourceFile": "sources/specials.png",
+        "sourceSha256": "f05a89b10a9955156f5bcda175faef441da989b85e02f7817d7db7d0b708ead7",
+        "sourceCell": [
+          652,
+          0,
+          1254,
+          645
+        ],
+        "cropBounds": [
+          41,
+          96,
+          563,
+          625
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "output_path": "assets/trophy-special-all-berries.png",
+      "dimensions": [
+        93,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Four standalone awards: (1) three DIFFERENT elemental emblems red flame, blue water droplet, green leaf around a terrain map and compass, denoting every member helps chosen terrain; (2) hiking backpack with prominent transformation medallion, small Bulbasaur and Ivysaur silhouettes linked by arrow, no book; (3) basket with EXACT SIX distinct berry forms from reference 2: red Cheri cherries, round blue Oran, round yellow Aspear, pink Pecha peach, pointed purple Chesto with cream base, serrated green Rawst; (4) red Cheri, blue Oran, green Rawst below a large circular gold transformation arrow and two different Pokemon-stage medallions, Bulbasaur bulb and Ivysaur bud. No evolution stone, no fruit tree. Emphasize large clear motifs on shared wood-gold bases.",
+      "source": {
+        "sourceFile": "sources/specials.png",
+        "sourceSha256": "f05a89b10a9955156f5bcda175faef441da989b85e02f7817d7db7d0b708ead7",
+        "sourceCell": [
+          0,
+          645,
+          642,
+          1254
+        ],
+        "cropBounds": [
+          73,
+          31,
+          604,
+          565
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "output_path": "assets/trophy-special-berry-evolution.png",
+      "dimensions": [
+        93,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9893617021276596
+      ],
+      "prompt_used": "Create a transparent 1024x1024 atlas of FOUR collectible game trophy miniatures, 2 columns and 2 rows, one complete separate object in each cell with wide empty gutters. Reference image shows the exact existing art style and wooden oval plinth: match that camera, warm gold timber, upper-left light, detailed crisp illustrated pixel clusters. Clear silhouettes at 94px tall. No text, no numbers, no labels, no grid, no backgrounds, no outer glow. True alpha outside objects. Each miniature has a wooden oval pedestal. Order top-left, top-right, bottom-left, bottom-right. Four standalone awards: (1) three DIFFERENT elemental emblems red flame, blue water droplet, green leaf around a terrain map and compass, denoting every member helps chosen terrain; (2) hiking backpack with prominent transformation medallion, small Bulbasaur and Ivysaur silhouettes linked by arrow, no book; (3) basket with EXACT SIX distinct berry forms from reference 2: red Cheri cherries, round blue Oran, round yellow Aspear, pink Pecha peach, pointed purple Chesto with cream base, serrated green Rawst; (4) red Cheri, blue Oran, green Rawst below a large circular gold transformation arrow and two different Pokemon-stage medallions, Bulbasaur bulb and Ivysaur bud. No evolution stone, no fruit tree. Emphasize large clear motifs on shared wood-gold bases.",
+      "source": {
+        "sourceFile": "sources/specials.png",
+        "sourceSha256": "f05a89b10a9955156f5bcda175faef441da989b85e02f7817d7db7d0b708ead7",
+        "sourceCell": [
+          642,
+          645,
+          1254,
+          1254
+        ],
+        "cropBounds": [
+          39,
+          22,
+          577,
+          565
+        ],
+        "method": "Technical crop and uniform LANCZOS fit only; no repaint"
+      }
+    }
+  ],
+  "originalBankPreserved": true
+}

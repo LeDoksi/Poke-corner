@@ -1,0 +1,111 @@
+{
+  "source": "_sources/plants-floor-02.png",
+  "promptFile": "_sources/plants-floor-02-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "plant-palm-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "palm terracotta",
+      "category": "plants",
+      "displayWidth": 101,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        0,
+        0,
+        644,
+        578
+      ]
+    },
+    {
+      "id": "plant-palm-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "palm woven cream",
+      "category": "plants",
+      "displayWidth": 101,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        644,
+        0,
+        1287,
+        578
+      ]
+    },
+    {
+      "id": "plant-dracaena-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "dracaena terracotta",
+      "category": "plants",
+      "displayWidth": 78,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        0,
+        578,
+        644,
+        1222
+      ]
+    },
+    {
+      "id": "plant-dracaena-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "dracaena woven cream",
+      "category": "plants",
+      "displayWidth": 78,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "cellRect": [
+        644,
+        578,
+        1287,
+        1222
+      ]
+    }
+  ]
+}

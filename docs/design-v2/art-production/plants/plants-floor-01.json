@@ -1,0 +1,53 @@
+{
+  "source": "_sources/plants-floor-01.png",
+  "promptFile": "_sources/plants-floor-01-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "plant-ficus-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "ficus terracotta",
+      "category": "plants",
+      "displayWidth": 87,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-ficus-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "ficus woven cream",
+      "category": "plants",
+      "displayWidth": 87,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    }
+  ],
+  "supersededAssets": {
+    "plant-monstera-terracotta": "plants-monstera-tall-v2.manifest.json",
+    "plant-monstera-woven-cream": "plants-monstera-tall-v2.manifest.json"
+  }
+}

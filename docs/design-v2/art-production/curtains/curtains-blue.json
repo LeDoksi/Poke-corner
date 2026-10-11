@@ -1,0 +1,215 @@
+{
+  "source": "_sources/curtains-blue-v2.png",
+  "promptFile": "_sources/curtains-blue-v2-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "curtain-short-blue",
+      "row": 0,
+      "col": 0,
+      "name": "short-blue",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.5,
+        0.970684
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        0,
+        790,
+        450
+      ],
+      "rodEndpoints": [
+        [
+          0.037037,
+          0.094463
+        ],
+        [
+          0.960114,
+          0.198697
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          65,
+          38
+        ],
+        [
+          713,
+          70
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.037037,
+        0.094463
+      ],
+      "openingRectPixels": [
+        185,
+        73,
+        339,
+        226
+      ],
+      "openingRect": [
+        0.263533,
+        0.237785,
+        0.482906,
+        0.736156
+      ],
+      "openingVerificationAlphaThreshold": 8,
+      "actualAspect": 2.366782,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ]
+    },
+    {
+      "id": "curtain-linen-blue",
+      "row": 0,
+      "col": 1,
+      "name": "linen-blue",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500719,
+        0.978682
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        790,
+        0,
+        1536,
+        570
+      ],
+      "rodEndpoints": [
+        [
+          0.040288,
+          0.052326
+        ],
+        [
+          0.959712,
+          0.120155
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          832,
+          36
+        ],
+        [
+          1471,
+          71
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.040288,
+        0.052326
+      ],
+      "openingRectPixels": [
+        203,
+        83,
+        312,
+        425
+      ],
+      "openingRect": [
+        0.292086,
+        0.160853,
+        0.448921,
+        0.823643
+      ],
+      "openingVerificationAlphaThreshold": 8,
+      "actualAspect": 1.364185,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ]
+    },
+    {
+      "id": "curtain-tied-blue",
+      "row": 1,
+      "col": 0,
+      "name": "tied-blue",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500654,
+        0.982759
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        450,
+        790,
+        1024
+      ],
+      "rodEndpoints": [
+        [
+          0.064052,
+          0.061303
+        ],
+        [
+          0.926797,
+          0.132184
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          65,
+          508
+        ],
+        [
+          725,
+          545
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.064052,
+        0.061303
+      ],
+      "openingRectPixels": [
+        216,
+        90,
+        342,
+        424
+      ],
+      "openingRect": [
+        0.282353,
+        0.172414,
+        0.447059,
+        0.812261
+      ],
+      "openingVerificationAlphaThreshold": 8,
+      "actualAspect": 1.480159,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ]
+    }
+  ]
+}

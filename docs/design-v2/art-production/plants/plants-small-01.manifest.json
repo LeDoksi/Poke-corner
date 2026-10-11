@@ -1,0 +1,237 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "plant-cactus-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "cactus terracotta",
+      "category": "plants",
+      "displayWidth": 39,
+      "footAnchor": [
+        0.474114,
+        0.99569
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-cactus-terracotta.png",
+      "size": [
+        367,
+        464
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "alphaBoundsInCell": [
+        355,
+        56,
+        706,
+        511
+      ],
+      "cropInCell": [
+        347,
+        48,
+        714,
+        512
+      ],
+      "sha256": "94978017f21a338356e5c8eecfd520415d2a4811f2bae91a732f1a24b2c63e4a",
+      "source": "plants/_sources/plants-small-01.png",
+      "promptFile": "plants/_sources/plants-small-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        174.0,
+        462
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-cactus-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "cactus woven cream",
+      "category": "plants",
+      "displayWidth": 39,
+      "footAnchor": [
+        0.485488,
+        0.997845
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-cactus-woven-cream.png",
+      "size": [
+        379,
+        464
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "alphaBoundsInCell": [
+        86,
+        56,
+        449,
+        512
+      ],
+      "cropInCell": [
+        78,
+        48,
+        457,
+        512
+      ],
+      "sha256": "7b77dd66f3b691a8e4034ed94283f5dc14a2ad23f2e6392960523ff7626318e9",
+      "source": "plants/_sources/plants-small-01.png",
+      "promptFile": "plants/_sources/plants-small-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        184.0,
+        463
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-succulent-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "succulent terracotta",
+      "category": "plants",
+      "displayWidth": 37,
+      "footAnchor": [
+        0.495575,
+        0.978049
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-succulent-terracotta.png",
+      "size": [
+        339,
+        410
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        352,
+        56,
+        675,
+        450
+      ],
+      "cropInCell": [
+        344,
+        48,
+        683,
+        458
+      ],
+      "sha256": "1b3b08855e98210621c68176a54102a7a5e9c823aea904b52713ba946b8b6aea",
+      "source": "plants/_sources/plants-small-01.png",
+      "promptFile": "plants/_sources/plants-small-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        168.0,
+        401
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-succulent-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "succulent woven cream",
+      "category": "plants",
+      "displayWidth": 37,
+      "footAnchor": [
+        0.487106,
+        0.980535
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-succulent-woven-cream.png",
+      "size": [
+        349,
+        411
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        95,
+        56,
+        428,
+        451
+      ],
+      "cropInCell": [
+        87,
+        48,
+        436,
+        459
+      ],
+      "sha256": "a34bc661cde6dc5524fa259839ac6e956ad78595da5f540eab4789be83f8548c",
+      "source": "plants/_sources/plants-small-01.png",
+      "promptFile": "plants/_sources/plants-small-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        170.0,
+        403
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ]
+}

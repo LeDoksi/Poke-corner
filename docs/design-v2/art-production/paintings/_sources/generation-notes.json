@@ -1,0 +1,7 @@
+{
+  "paintings-02": {
+    "failedAttempt": "Native image generator rejected benign lantern/lake/Pikachu/Eevee output with moderation category other; request 20a51b47-02c4-415b-8d20-dd8dd329a5aa",
+    "recovery": "A concise ordinary art prompt succeeded. Exact successful prompt is paintings-02-prompt.txt and is embedded in source and outputs.",
+    "remainingVisualVariation": "Frames are lighter and thicker than paintings-01/03; all are front-facing landscape wood frames. Parent composite review pending."
+  }
+}

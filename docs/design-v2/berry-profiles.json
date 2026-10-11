@@ -1,0 +1,21 @@
+{
+  "status": "draft-for-balance",
+  "berries": [
+    {"id":"cheri","label":"Чери","colorHint":"красная"},
+    {"id":"oran","label":"Оран","colorHint":"синяя"},
+    {"id":"aspear","label":"Аспир","colorHint":"жёлтая"},
+    {"id":"pecha","label":"Печа","colorHint":"розовая"},
+    {"id":"chesto","label":"Често","colorHint":"фиолетовая"},
+    {"id":"rawst","label":"Роуст","colorHint":"зелёная"}
+  ],
+  "locations": [
+    {"id":"grove","primary":"rawst","additional":["pecha","cheri"]},
+    {"id":"lake","primary":"oran","additional":["rawst","pecha"]},
+    {"id":"coast","primary":"pecha","additional":["oran","aspear"]},
+    {"id":"mountains","primary":"chesto","additional":["cheri","aspear"]},
+    {"id":"desert","primary":"aspear","additional":["cheri","chesto"]},
+    {"id":"volcano","primary":"cheri","additional":["aspear","rawst"]},
+    {"id":"snow","primary":"oran","additional":["aspear","chesto"]},
+    {"id":"ruins","primary":"chesto","additional":["rawst","pecha"]}
+  ]
+}

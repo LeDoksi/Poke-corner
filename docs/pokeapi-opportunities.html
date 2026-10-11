@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Полевой справочник PokéAPI — PokéCorner</title>
+  <style>
+    :root {
+      --night: #101b24;
+      --panel: #172630;
+      --panel-hi: #203540;
+      --line: #39515a;
+      --paper: #ecf0df;
+      --muted: #a4b5ad;
+      --yellow: #f3d05c;
+      --mint: #8ed5bd;
+      --coral: #ff987e;
+      --blue: #8fc6ed;
+      --mono: "Cascadia Code", Consolas, monospace;
+      --sans: "Segoe UI", Arial, sans-serif;
+      --display: "Arial Narrow", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background: var(--night);
+      font: 16px/1.58 var(--sans);
+      background-image: radial-gradient(ellipse at 85% 2%, #244351 0, transparent 34%),
+        linear-gradient(135deg, transparent 49.7%, #20313a 50%, transparent 50.3%);
+      background-size: auto, 38px 38px;
+    }
+    a { color: var(--mint); text-underline-offset: 3px; }
+    a:hover { color: var(--yellow); }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    header { padding: 56px 0 36px; border-bottom: 1px solid var(--line); }
+    .eyebrow, .label, .resource, .tag, .stamp, .nav a, .meta { font-family: var(--mono); letter-spacing: .045em; }
+    .eyebrow { color: var(--yellow); font-size: 12px; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 850px; margin: 16px 0 20px; font: 750 clamp(42px, 7vw, 80px)/.98 var(--display);
+      letter-spacing: -.045em; text-transform: uppercase;
+    }
+    h1 em { color: var(--yellow); font-style: normal; }
+    .lede { max-width: 720px; color: #cfdbcf; font-size: clamp(18px, 2.2vw, 22px); }
+    .topline { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+    .stamp { border: 1px solid var(--yellow); padding: 7px 11px; color: var(--yellow); font-size: 11px; white-space: nowrap; transform: rotate(-2deg); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, .8fr); gap: 38px; align-items: end; }
+    .hero-note { border-left: 3px solid var(--yellow); padding: 12px 0 12px 18px; color: var(--muted); font-size: 14px; }
+    .hero-note strong { color: var(--paper); }
+    .nav { position: sticky; top: 0; z-index: 5; background: #101b24ed; border-bottom: 1px solid var(--line); backdrop-filter: blur(12px); }
+    .nav .wrap { display: flex; gap: 20px; overflow-x: auto; padding-block: 13px; }
+    .nav a { color: #ccdad1; font-size: 12px; text-decoration: none; white-space: nowrap; }
+    main { padding: 40px 0 70px; }
+    section { scroll-margin-top: 66px; margin-bottom: 60px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 20px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+    h2 { margin: 0; font: 700 clamp(26px, 4vw, 40px)/1.04 var(--display); letter-spacing: -.025em; text-transform: uppercase; }
+    h3 { margin-bottom: 8px; font-size: 18px; line-height: 1.2; }
+    .section-kicker { color: var(--yellow); font: 11px var(--mono); text-transform: uppercase; }
+    .muted { color: var(--muted); }
+    .callout { background: var(--panel); border: 1px solid var(--line); padding: 20px 22px; }
+    .snapshot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .snapshot > div { background: var(--panel); padding: 17px; }
+    .snapshot b { display: block; color: var(--yellow); font: 700 26px/1 var(--display); }
+    .snapshot span { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+    .list { margin: 0; padding-left: 20px; color: #d4ded6; }
+    .list li + li { margin-top: 6px; }
+    .pillrow { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { display: inline-block; border: 1px solid var(--line); background: #10212a; padding: 4px 8px; color: #c3d5cb; font-size: 11px; }
+    .tag.current { border-color: #538f7e; color: var(--mint); }
+    .tag.new { border-color: #8a6f29; color: var(--yellow); }
+    .tag.fit-high { border-color: #538f7e; color: var(--mint); }
+    .tag.fit-mid { border-color: #557792; color: var(--blue); }
+    .tag.fit-low { border-color: #7e6660; color: #e4ad9c; }
+    .idea-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .idea { position: relative; background: var(--panel); border: 1px solid var(--line); padding: 21px; }
+    .idea::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--mint); }
+    .idea[data-fit="medium"]::before { background: var(--blue); }
+    .idea[data-fit="low"]::before { background: var(--coral); }
+    .idea-top { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .idea p { color: #c4d1c9; margin-bottom: 12px; }
+    .idea .resource { color: var(--yellow); font-size: 11px; }
+    .idea .fit { flex: none; }
+    .tradeoff { color: #9eafa7 !important; font-size: 13px; border-top: 1px dashed var(--line); padding-top: 10px; }
+    .matrix { width: 100%; border-collapse: collapse; background: var(--panel); font-size: 14px; }
+    .matrix th, .matrix td { border-bottom: 1px solid var(--line); padding: 12px 13px; text-align: left; vertical-align: top; }
+    .matrix th { color: var(--yellow); font: 11px var(--mono); text-transform: uppercase; }
+    .matrix td:first-child { color: var(--paper); font-weight: 650; min-width: 145px; }
+    .matrix td { color: #c4d1c9; }
+    .matrix code, code { color: #f3d887; font: .92em var(--mono); }
+    .api-group { border: 1px solid var(--line); background: var(--panel); margin-bottom: 10px; }
+    .api-group summary { cursor: pointer; padding: 13px 16px; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+    .api-group summary::-webkit-details-marker { display: none; }
+    .api-group summary::after { content: "+"; color: var(--yellow); font: 20px var(--mono); }
+    .api-group[open] summary::after { content: "−"; }
+    .api-group summary strong { font: 700 17px var(--display); text-transform: uppercase; }
+    .api-group summary span { color: var(--muted); font-size: 13px; text-align: right; }
+    .api-body { padding: 0 16px 16px; border-top: 1px solid var(--line); }
+    .api-body p { color: #c4d1c9; margin: 12px 0; font-size: 14px; }
+    .resource { display: inline-block; margin: 4px 5px 2px 0; color: #b5c7bf; font-size: 11px; }
+    .resource::before { content: "/"; color: #67847c; }
+    .resource code { color: inherit; }
+    .api-use { margin-top: 10px !important; padding: 10px 12px; background: #10212a; border-left: 2px solid var(--mint); }
+    .recommend { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 1px solid var(--line); background: var(--line); }
+    .recommend article { background: var(--panel); padding: 22px; }
+    .recommend .rank { color: var(--yellow); font: 12px var(--mono); }
+    .recommend h3 { margin-top: 9px; }
+    .risk { border-left: 3px solid var(--coral); }
+    footer { border-top: 1px solid var(--line); padding: 25px 0 46px; color: var(--muted); font-size: 13px; }
+    .sources { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 10px; }
+    .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .problem-tabs { display: flex; gap: 7px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+    .problem-tab { color: #ccdad1; background: transparent; border: 0; border-bottom: 3px solid transparent; padding: 11px 13px; font: 13px var(--mono); cursor: pointer; }
+    .problem-tab[aria-selected="true"] { color: var(--yellow); border-color: var(--yellow); }
+    .problem-panel { background: var(--panel); border: 1px solid var(--line); padding: clamp(18px, 3vw, 28px); }
+    .problem-panel[hidden] { display: none; }
+    .source-path { overflow-wrap: anywhere; }
+    .filter { color: var(--paper); background: #172630; border: 1px solid var(--line); padding: 7px 10px; font: 11px var(--mono); cursor: pointer; }
+    .filter[aria-pressed="true"] { color: var(--night); background: var(--yellow); border-color: var(--yellow); }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 28px, 680px); }
+      header { padding-top: 32px; }
+      .hero-grid, .split, .idea-grid, .recommend { grid-template-columns: 1fr; }
+      .snapshot { grid-template-columns: repeat(2, 1fr); }
+      .section-head { align-items: start; flex-direction: column; }
+      .matrix { font-size: 12px; }
+      .matrix th, .matrix td { padding: 9px 7px; }
+      .matrix td:first-child { min-width: 105px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topline"><span class="eyebrow">PokeCorner · исследовательская заметка · 02 октября 2026</span><span class="stamp">POKE-11 / HOLD</span></div>
+      <div class="hero-grid">
+        <div>
+          <h1>Что ещё можно <em>взять</em> из PokéAPI?</h1>
+          <p class="lede">Карта данных и идей для настольного покемона: что API умеет отдавать, что уже использует проект и какие новые механики из этого действительно складываются.</p>
+        </div>
+        <aside class="hero-note"><strong>Короткий вывод</strong><br>Больше всего пользы дадут «личность» покемона (ягоды, вкусы, характеры), Покедекс-профили и формы. Локации, бои и игровые справочники богаты данными, но потребуют отдельной игровой системы.</aside>
+      </div>
+    </div>
+  </header>
+  <nav class="nav" aria-label="Разделы отчёта"><div class="wrap">
+    <a href="#audit">Проект сейчас</a><a href="#ideas">Идеи</a><a href="#fixes">Проблемы и решения</a><a href="#catalog">Полный каталог API</a><a href="#plan">С чего начать</a><a href="#limits">Ограничения</a>
+  </div></nav>
+  <main class="wrap">
+    <section id="audit">
+      <div class="section-head"><div><div class="section-kicker">Перед тем как расширять</div><h2>Что уже умеет PokéCorner</h2></div><span class="muted">Сверка с кодом проекта</span></div>
+      <div class="snapshot">
+        <div><b>649</b><span>видов сейчас охватывает каталог проекта: поколения I–V</span></div>
+        <div><b>3</b><span>текущих вида данных API: цепь, типы, спрайт/анимация</span></div>
+        <div><b>∞</b><span>игра работает офлайн после получения данных</span></div>
+        <div><b>1</b><span>уже есть Nature и её можно раскрыть</span></div>
+      </div>
+      <div class="split">
+        <article class="callout"><h3>Уже подключено</h3><ul class="list">
+          <li><code>pokemon-species</code>: шанс поимки и ссылка на цепь эволюции.</li>
+          <li><code>evolution-chain</code>: виды на стадиях; сейчас выбирается самый длинный путь ветвящейся цепи.</li>
+          <li><code>pokemon</code>: типы и статический/анимированный спрайт.</li>
+          <li>Каталог и файлы спрайтов хранятся локально; есть офлайн-запасной набор.</li>
+        </ul></article>
+        <article class="callout"><h3>Игровая основа</h3><div class="pillrow">
+          <span class="tag current">активность → поимка</span><span class="tag current">коллекция</span><span class="tag current">яйца</span><span class="tag current">эволюция</span><span class="tag current">кормление</span><span class="tag current">магазин</span><span class="tag current">Nature</span><span class="tag current">Shiny</span><span class="tag current">клички</span><span class="tag current">крики</span><span class="tag current">избранное</span>
+        </div><p class="muted" style="margin:14px 0 0">Это не пустая оболочка: новые данные стоит встраивать в заботу, коллекцию и простые реакции питомца, а не автоматически превращать приложение в RPG.</p></article>
+      </div>
+    </section>
+
+    <section id="fixes">
+      <div class="section-head"><div><div class="section-kicker">Отдельная вкладка · конкретные замечания</div><h2>Проблемы данных и как их закрыть</h2></div><span class="muted">Диагноз по текущей реализации + источники решения</span></div>
+      <div class="problem-tabs" role="tablist" aria-label="Проблемы проекта">
+        <button class="problem-tab" id="tab-species" role="tab" aria-selected="true" aria-controls="panel-species">Покемоны после №649</button>
+        <button class="problem-tab" id="tab-cries" role="tab" aria-selected="false" aria-controls="panel-cries" tabindex="-1">Старые крики</button>
+        <button class="problem-tab" id="tab-branches" role="tab" aria-selected="false" aria-controls="panel-branches" tabindex="-1">Ветки эволюции</button>
+        <button class="problem-tab" id="tab-shiny" role="tab" aria-selected="false" aria-controls="panel-shiny" tabindex="-1">Shiny-вид</button>
+      </div>
+      <article class="problem-panel" id="panel-species" role="tabpanel" aria-labelledby="tab-species">
+        <div class="section-kicker">Да — текущий охват намеренно ограничен</div><h3>Приложение обходит только 1–649</h3>
+        <p><b>Проверил live endpoint:</b> <code>/pokemon-species/</code> возвращает <code>count: 1025</code>. Запись <code>/pokemon-species/1025/</code> тоже существует — это Pecharunt, поколение IX. В проекте же <code>SpeciesCatalog.RefreshFromNetworkAsync</code> по умолчанию обходит только ID 1–649, а fallback и seed-пакет собраны для Gen I–V. Значит, проект охватывает первые 649 из 1025 видов API; ещё <b>376 видов</b> сейчас отсечены границей проекта, не отсутствуют в PokéAPI.</p>
+        <div class="split"><div><h3>Как расширить правильно</h3><ol class="list"><li>Брать список через <code>/pokemon-species?limit=…&amp;offset=…</code>, а не оставлять магическую константу 649.</li><li>Собирать виды и цепи с дедупликацией по ID цепочки; для новых видов загружать имена, типы и спрайты.</li><li>Добавить регион/поколение в модель каталога, чтобы можно было включать новые регионы постепенно.</li><li>Решить, когда новый вид становится доступен в catch/egg-пулах; обновить редкость и экономику.</li><li>Пересобрать стартовый офлайн-пакет и проверить размеры MSI/первый запуск без сети.</li></ol></div>
+          <div><h3>Варианты охвата</h3><ul class="list"><li><b>Лёгкий:</b> все species доступны как данные Покедекса, но поимка остаётся Gen I–V.</li><li><b>Региональный:</b> выбрать Gen VI–IX и включить по одному региону за раз.</li><li><b>Полный:</b> все species/формы из API в Покедексе, а доступность видов в игре контролируется отдельным флагом/кампанией.</li></ul><p class="tradeoff">Совет: не смешивать «API знает» и «игра выдаёт». Так новые формы можно исследовать до того, как они попадут в баланс поимки.</p></div></div>
+        <p><b>Проверяемые источники:</b> <a href="https://pokeapi.co/api/v2/pokemon-species/">листинг API (count: 1025)</a> · <a href="https://pokeapi.co/api/v2/pokemon-species/1025/">вид №1025 — Pecharunt</a> · <a href="https://pokeapi.co/docs/v2">документация PokéAPI</a> · локальный код: <code class="source-path">src/PokeCorner.Core/PokeApi/SpeciesCatalog.cs</code>, <code>SpriteCache.cs</code>.</p>
+      </article>
+      <article class="problem-panel" id="panel-cries" role="tabpanel" aria-labelledby="tab-cries" hidden>
+        <div class="section-kicker">Похоже, старые не только на слух</div><h3>Крик сейчас берётся из заранее вложенного WAV</h3>
+        <p>Приложение проигрывает <code>Data\cries\{speciesId}.wav</code>. Загрузка выполняется заранее, а при клике приложение только читает локальный файл — свежей проверки или скачивания в runtime нет. В коде не хранится метка <em>latest</em>/<em>legacy</em>, поэтому точный вариант источника старого файла нельзя надёжно подтвердить по самому runtime-коду; обновить и зафиксировать происхождение нужно на этапе seed-сборки.</p>
+        <div class="split"><div><h3>Самый простой путь</h3><ol class="list"><li>В seed-генераторе брать <code>pokemon/{id}.cries.latest</code>, а если отсутствует — <code>legacy</code>.</li><li>Конвертировать OGG в совместимый WAV, как уже делает проект, и записывать выбранный вариант в manifest.</li><li>Пересобрать офлайн-пакет; при желании сначала проверить несколько разных поколений на слух.</li><li>Отсутствующий cry оставлять нормальным состоянием, а не ошибкой запуска.</li></ol></div>
+          <div><h3>Откуда взять</h3><ul class="list"><li><a href="https://github.com/PokeAPI/cries">PokeAPI/cries</a> — официальный репозиторий файлов latest и legacy в OGG; в README заявлены поколения I–IX.</li><li>Папка <code>latest/</code> для более современных записей; <code>legacy/</code> — исторические cry до №649.</li><li>Данные в репозитории загружены из Pokémon Showdown и Veekun, поэтому «latest» означает актуальный доступный набор, а не оригинальную запись из каждой последней игры.</li></ul></div></div>
+        <p class="tradeoff">Для проекта лучший компромисс: latest при сборке + конвертация в WAV + локальный кэш. Не скачивать звук при каждом поглаживании: приложение остаётся офлайн-дружелюбным и не зависит от сети. Источник проекта: <code class="source-path">installer/README.md</code>, <code>src/PokeCorner.App/App.xaml.cs</code>, <code>src/PokeCorner.App/AppPaths.cs</code>.</p>
+      </article>
+      <article class="problem-panel" id="panel-branches" role="tabpanel" aria-labelledby="tab-branches" hidden>
+        <div class="section-kicker">Да — API отдаёт дерево, но приложение его сплющивает</div><h3>Альтернативная ветка теряется при импорте</h3>
+        <p>PokéAPI присылает рекурсивное дерево <code>evolves_to</code> с несколькими детьми и условиями перехода. Однако <code>CollectStages</code> в <code>PokeApiClient.cs</code> выбирает только самый длинный дочерний путь. Модель <code>SpeciesEvolutionChain</code> хранит линейные списки <code>StageSpeciesIds</code>/<code>StageTypes</code>. Поэтому UI и логика стадий не могут показать/выбрать оставшиеся ветви, хотя источник уже их содержит.</p>
+        <div class="split"><div><h3>Вариант 1 · только показать дерево</h3><p>Сохранить каждую ветку и условия как дерево, отобразить его в профиле. Текущий уход и эволюция остаются без изменений.</p><p class="muted">Малый риск, хорошая справочная ценность; в коллекции всё ещё нужен выбранный вид.</p></div><div><h3>Вариант 2 · разблокировать выбором</h3><p>Care Points открывают эволюцию как сейчас, но на развилке игрок выбирает целевую ветку. Предмет, характер или биом могут быть дополнительными опциональными условиями.</p><p class="muted">Сохраняет философию «растёт от заботы» и использует реальные варианты видов, не притворяясь точной боевой RPG.</p></div></div>
+        <h3 style="margin-top:18px">Что хранить</h3><p>Вместо массива стадий — дерево узлов «species ID + дети», а на рёбрах — поля условий из evolution details (предмет, уровень счастья, время суток, локация, известная атака и версия). Для уже сохранённых Pokémon можно мигрировать существующий stage-путь в выбранную ветку; ничего из старых сохранений не должно случайно менять вид.</p>
+        <p><b>Источники:</b> <a href="https://pokeapi.co/api/v2/evolution-chain/1/">пример цепи PokéAPI</a> · <a href="https://pokeapi.co/docs/v2#evolution">документация эволюции</a> · локально: <code>src/PokeCorner.Core/PokeApi/PokeApiClient.cs</code>, <code>src/PokeCorner.Core/Domain/SpeciesEvolutionChain.cs</code>.</p>
+      </article>
+      <article class="problem-panel" id="panel-shiny" role="tabpanel" aria-labelledby="tab-shiny" hidden>
+        <div class="section-kicker">Да — сейчас загрузчик запрашивает только обычный спрайт</div><h3>Shiny-флаг в сохранении не выбирает shiny-файл</h3>
+        <p><code>PokemonIndividual.IsShiny</code> уже сохраняется, но <code>FetchSpriteAsync(speciesId)</code> строит один URL вида <code>…/pokemon/{id}.png</code>. У этого метода нет аргумента shiny/form, а SpriteCache использует ключ только <code>{speciesId}.png</code>. Поэтому возможность получить shiny есть в API, но текущий путь загрузки/кэша её не выбирает. Для отдельных Pokémon и форм отличия shiny могут быть очень тонкими — полезно проверять оба варианта рядом.</p>
+        <div class="split"><div><h3>Базовое исправление</h3><ol class="list"><li>Получать JSON <code>/pokemon/{id}</code> и брать URL <code>sprites.front_default</code> или <code>sprites.front_shiny</code> по сохранённому флагу.</li><li>Добавить отдельные ключи кэша для normal/shiny; не позволять обычному PNG перезаписывать shiny.</li><li>Если shiny sprite для вида отсутствует — явно fallback на обычный спрайт и показать/сохранить статус без аварии.</li><li>Проверить, что оверлей, карточка коллекции и экран поимки используют один resolver изображения.</li></ol></div>
+          <div><h3>Другие источники изображений</h3><ul class="list"><li><a href="https://github.com/PokeAPI/sprites">PokeAPI/sprites</a> и поля URL самого PokéAPI — самый прямой путь для статических normal/shiny и части форм.</li><li><a href="https://play.pokemonshowdown.com/sprites/ani/">Pokémon Showdown animated sprites</a> — вариант для пиксельной анимации; для shiny есть отдельные наборы.</li><li><a href="https://github.com/smogon/pokemon-showdown">Данные Showdown</a> — актуальная структурированная информация о видах, формах, поколениях и эволюционных правилах.</li></ul></div></div>
+        <p class="tradeoff">У форм нужен ключ изображения из нескольких частей: вид/форма + shiny (и при необходимости пол). Автоматическое раскрашивание обычного спрайта не заменяет настоящий shiny sprite: палитры отличаются по-разному. Массовые игровые изображения — чужие IP; перед распространением новых asset-паков проверить условия использования/распространения. Текущие локальные точки: <code>src/PokeCorner.Core/PokeApi/PokeApiClient.cs</code>, <code>SpriteCache.cs</code>, вызовы обновления оверлея.</p>
+      </article>
+    </section>
+
+    <section id="ideas">
+      <div class="section-head"><div><div class="section-kicker">Практическая часть</div><h2>Варианты для игры</h2></div>
+        <div class="toolbar" role="group" aria-label="Фильтр идей по применимости"><button class="filter" data-filter="all" aria-pressed="true">Все</button><button class="filter" data-filter="high" aria-pressed="false">Хорошо ложится</button><button class="filter" data-filter="medium" aria-pressed="false">Нужна механика</button><button class="filter" data-filter="low" aria-pressed="false">Слабое совпадение</button></div>
+      </div>
+      <div class="idea-grid" id="idea-grid">
+        <article class="idea" data-fit="high"><div class="idea-top"><div><span class="section-kicker">Карточка / Покедекс</span><h3>Профиль питомца с историей вида</h3></div><span class="tag fit-high fit">Хорошо ложится</span></div><p>В карточке коллекции показывать категорию, цвет, среду обитания, записи Покедекса, номер в региональном списке и варианты вида. Дать переключать текст записи между играми или языками, если нужная локализация присутствует.</p><span class="resource">pokemon-species</span><span class="resource">pokemon-color</span><span class="resource">pokemon-habitat</span><span class="resource">pokedex</span><p class="tradeoff">Почему подходит: использует уже существующий вид и коллекцию; не меняет баланс и может работать офлайн из кэша. Данные описаний по версиям нужно выбирать аккуратно.</p></article>
+        <article class="idea" data-fit="high"><div class="idea-top"><div><span class="section-kicker">Кормление / персональность</span><h3>Ягоды и вкусовые предпочтения</h3></div><span class="tag fit-high fit">Лучший кандидат</span></div><p>Разделить лакомства на ягоды с вкусами и эффектами. Связать вкус с Nature: любимая ягода даёт немного больше Care Points или особую реакцию; нелюбимая остаётся съедобной, но без бонуса. Можно выращивать ягоды за активность и ждать созревания.</p><span class="resource">berry</span><span class="resource">berry-flavor</span><span class="resource">nature</span><span class="resource">item</span><p class="tradeoff">Особенно удачно: проект уже хранит Nature, лакомства, остаток активности и магазин. Нужны собственные правила цен/бонусов; API описывает игровые параметры ягод, а не баланс десктопного питомца.</p></article>
+        <article class="idea" data-fit="high"><div class="idea-top"><div><span class="section-kicker">Визуальная коллекция</span><h3>Формы, пол и Shiny-спрайты</h3></div><span class="tag fit-high fit">Хорошо ложится</span></div><p>Показывать альтернативные формы одного вида, отличия самца/самки там, где они есть, и настоящий shiny-спрайт. Добавить формы как вариации записи Покедекса либо как отдельные коллекционные экземпляры.</p><span class="resource">pokemon</span><span class="resource">pokemon-form</span><span class="resource">pokemon-species.varieties</span><p class="tradeoff">У Shiny уже есть игровой флаг, поэтому вариант спрайта — естественное визуальное улучшение. Разные формы глубже затронут идентификаторы коллекции и правила дублей.</p></article>
+        <article class="idea" data-fit="high"><div class="idea-top"><div><span class="section-kicker">Реакции питомца</span><h3>Больше звука и характера</h3></div><span class="tag fit-high fit">Быстрый эффект</span></div><p>Показывать название/описание способности и иногда учитывать её в реакции на клик, заботу или находку. В качестве альтернативы — брать latest/legacy cry по виду или дать выбрать крик, если в проекте уже есть подходящие локальные файлы.</p><span class="resource">ability</span><span class="resource">pokemon.abilities</span><span class="resource">pokemon.cries</span><p class="tradeoff">Крики в приложении уже предусмотрены, значит API-вариант может дополнить текущий набор. Для пассивных эффектов нужны безопасные, понятные правила — игровые способности часто рассчитаны на сражения.</p></article>
+        <article class="idea" data-fit="medium"><div class="idea-top"><div><span class="section-kicker">Активность / Поимка</span><h3>Экспедиции по биомам</h3></div><span class="tag fit-mid fit">Нужна механика</span></div><p>Игрок выбирает «лес», «пещеру» или «побережье»; активность за компьютером продвигает вылазку и открывает тематические встречи. Можно сделать ежедневные маршруты или короткие события вместо постоянной новой карты.</p><span class="resource">location-area</span><span class="resource">pokemon.encounters</span><span class="resource">pokemon-habitat</span><span class="resource">region</span><p class="tradeoff">Данные встреч привязаны к версии игры, методам и условиям. Их придётся нормализовать и превратить в стабильные игровые пулы, сохранив существующий каталог Gen I–V или отдельно согласовав расширение.</p></article>
+        <article class="idea" data-fit="medium"><div class="idea-top"><div><span class="section-kicker">Покедекс / Долгие цели</span><h3>Региональные коллекции и задания</h3></div><span class="tag fit-mid fit">Нужна механика</span></div><p>Добавить страницы региональных Покедексов, процент завершения, награды за набор типов/цветов/сред обитания и «покемона дня». Уже имеющаяся коллекция становится не просто списком, а прогрессом в исследовании.</p><span class="resource">pokedex</span><span class="resource">generation</span><span class="resource">region</span><span class="resource">pokemon-species</span><p class="tradeoff">Дешёвый первый шаг — только прогресс и значки. Награды с валютой и вероятность встреч повлияют на экономику и повторные поимки.</p></article>
+        <article class="idea" data-fit="medium"><div class="idea-top"><div><span class="section-kicker">Эволюция / Справка</span><h3>Ветка и оригинальные условия эволюции</h3></div><span class="tag fit-mid fit">Справка — да</span></div><p>Показать семейное дерево и как вид эволюционирует в оригинальных играх: уровень, счастье, предмет, время дня, локация, атака или погода. Можно подсвечивать будущие стадии, не меняя текущую эволюцию за Care Points.</p><span class="resource">evolution-chain</span><span class="resource">evolution-trigger</span><span class="resource">item</span><span class="resource">version-group</span><p class="tradeoff">Хорошая справка для коллекции. Полное перенесение условий конфликтует с нынешней простой системой заботы и требует обработки многих исключений и ветвлений.</p></article>
+        <article class="idea" data-fit="medium"><div class="idea-top"><div><span class="section-kicker">Мини-игра / Стиль</span><h3>Конкурсы и «витрина» питомца</h3></div><span class="tag fit-mid fit">Нужна механика</span></div><p>Небоевая цель: раз в день выбрать стиль — Cool, Cute, Beautiful, Smart или Tough — подготовить ягоду/украшение и получить оценку. Можно применять выбранные атаки как темы для карточки или анимации.</p><span class="resource">contest-type</span><span class="resource">contest-effect</span><span class="resource">move.contest-type</span><span class="resource">berry-flavor</span><p class="tradeoff">Данные легко превращаются в коллекционную мини-активность, но рейтинги и призы придётся проектировать самим. Полная оригинальная система конкурсов будет слишком большой для питомца в трее.</p></article>
+        <article class="idea" data-fit="low"><div class="idea-top"><div><span class="section-kicker">Боевой справочник</span><h3>Атаки, статы и таблица типов</h3></div><span class="tag fit-low fit">Слабое совпадение</span></div><p>Можно показать характеристики, типовые взаимодействия, набор изучаемых атак и способности; позже на этом построить дуэли питомцев или пошаговые бои.</p><span class="resource">move</span><span class="resource">type</span><span class="resource">stat</span><span class="resource">move-learn-method</span><p class="tradeoff">Как энциклопедический экран — просто. Как боевая система — крупный отдельный продукт, который меняет фокус с фонового питомца на RPG. Не рекомендую брать без явного желания добавить бои.</p></article>
+        <article class="idea" data-fit="low"><div class="idea-top"><div><span class="section-kicker">Служебная / Игровая эрудиция</span><h3>Машины, валюты и старые игровые справочники</h3></div><span class="tag fit-low fit">Низкий приоритет</span></div><p>TM/HM и соответствия атак по версиям, внутриигровые валюты, методы изучения атак, гендерные категории, характеристики и Pal Park-встречи можно вывести в подробную энциклопедию или использовать как исходники для тематических событий.</p><span class="resource">machine</span><span class="resource">currency</span><span class="resource">move-learn-method</span><span class="resource">characteristic</span><span class="resource">gender</span><span class="resource">pal-park-area</span><p class="tradeoff">Данные существуют, но напрямую не улучшают питомца. Имеют смысл как дополнительная Pokédex-вкладка или если проект сознательно расширится в сторону игры по канонам.</p></article>
+      </div>
+    </section>
+
+    <section id="catalog">
+      <div class="section-head"><div><div class="section-kicker">Карта возможностей</div><h2>Полный обзор ресурсов PokéAPI v2</h2></div><span class="muted">Раскрой группу, чтобы посмотреть ресурсы и применимость</span></div>
+      <details class="api-group"><summary><strong>Ягоды · Berries</strong><span>еда, вкус, выращивание</span></summary><div class="api-body"><div><span class="resource">berry</span><span class="resource">berry-firmness</span><span class="resource">berry-flavor</span></div><p>Рост, урожайность, твёрдость, вкус и сила каждого вкуса. Хорошая база для еды, предпочтений Nature, выращивания и небольшой экономической петли.</p><p class="api-use"><b>Для проекта:</b> высокий потенциал — напрямую расширяет существующие лакомства/магазин.</p></div></details>
+      <details class="api-group"><summary><strong>Конкурсы · Contests</strong><span>пять стилей, оценки атак</span></summary><div class="api-body"><div><span class="resource">contest-type</span><span class="resource">contest-effect</span><span class="resource">super-contest-effect</span></div><p>Стили конкурсов (Cool, Beauty и другие), очки привлекательности/помехи и эффекты атак на конкурсной сцене.</p><p class="api-use"><b>Для проекта:</b> пригодно для мини-игры-витрины или коллекционных титулов; мало смысла без такого игрового слоя.</p></div></details>
+      <details class="api-group"><summary><strong>Валюты · Currencies</strong><span>названия игровых денег</span></summary><div class="api-body"><div><span class="resource">currency</span></div><p>Справочник валют оригинальных игр и локализованные названия.</p><p class="api-use"><b>Для проекта:</b> почти только лор; валюту PokéCorner лучше балансировать своей экономикой, а не тянуть цены из игр.</p></div></details>
+      <details class="api-group"><summary><strong>Встречи · Encounters</strong><span>как и где появляются покемоны</span></summary><div class="api-body"><div><span class="resource">encounter-method</span><span class="resource">encounter-condition</span><span class="resource">encounter-condition-value</span><span class="resource">pokemon/{id}/encounters</span></div><p>Способы встреч, условия появления и список областей/игр/уровней, где вид встречается.</p><p class="api-use"><b>Для проекта:</b> высокое тематическое совпадение с поимкой, но средняя сложность из-за версионных различий и громоздкости данных.</p></div></details>
+      <details class="api-group"><summary><strong>Эволюция · Evolution</strong><span>деревья и триггеры</span></summary><div class="api-body"><div><span class="resource">evolution-chain</span><span class="resource">evolution-trigger</span><span class="resource">evolution-variable</span></div><p>Ветви семей, предметы и много условий эволюции: уровень/счастье/время/локация/погода/атака/партнёр и другие триггеры.</p><p class="api-use"><b>Для проекта:</b> отличный справочник и визуализация семей; полная замена текущей Care-эволюции будет дорогой и конфликтной.</p></div></details>
+      <details class="api-group"><summary><strong>Игры · Games</strong><span>поколения, Pokédex, версии</span></summary><div class="api-body"><div><span class="resource">generation</span><span class="resource">pokedex</span><span class="resource">version</span><span class="resource">version-group</span></div><p>Состав поколений и региональных Pokédex, версии игр, группы версий и связи между ними.</p><p class="api-use"><b>Для проекта:</b> региональная коллекция, фильтры по версии и объяснение, откуда данные. Уже поддержанный охват I–V можно оформить как кампании/альбомы.</p></div></details>
+      <details class="api-group"><summary><strong>Предметы · Items</strong><span>иконки, категории, эффекты</span></summary><div class="api-body"><div><span class="resource">item</span><span class="resource">item-attribute</span><span class="resource">item-category</span><span class="resource">item-fling-effect</span><span class="resource">item-pocket</span><span class="resource">item-price</span></div><p>Имена, описания, спрайты, внутриигровая цена и категории предметов; часть данных относится к старым/служебным механикам.</p><p class="api-use"><b>Для проекта:</b> иконки/описания для магазина, ягоды, предметы для событий. Не переносить оригинальные цены напрямую в текущую экономику.</p></div></details>
+      <details class="api-group"><summary><strong>Места · Locations</strong><span>локации, области, регионы</span></summary><div class="api-body"><div><span class="resource">location</span><span class="resource">location-area</span><span class="resource">pal-park-area</span><span class="resource">region</span></div><p>Игровые города/маршруты, подзоны и встречающиеся там виды; также области Pal Park.</p><p class="api-use"><b>Для проекта:</b> основа тематических походов, событий и фоновой смены окружения.</p></div></details>
+      <details class="api-group"><summary><strong>Машины · Machines</strong><span>TM/HM и изучаемые атаки</span></summary><div class="api-body"><div><span class="resource">machine</span></div><p>Связь конкретной машины (TM/HM) с атакой и группой версий, для которой она действует.</p><p class="api-use"><b>Для проекта:</b> узкий справочник; полезнее только при появлении атак/боёв или коллекционных предметов.</p></div></details>
+      <details class="api-group"><summary><strong>Атаки · Moves</strong><span>эффекты, типы, обучение, конкурсы</span></summary><div class="api-body"><div><span class="resource">move</span><span class="resource">move-ailment</span><span class="resource">move-battle-style</span><span class="resource">move-category</span><span class="resource">move-damage-class</span><span class="resource">move-learn-method</span><span class="resource">move-target</span></div><p>Сила/точность/тип, описание, эффект в бою и конкурсах, цели, статусные эффекты, способ и версии изучения.</p><p class="api-use"><b>Для проекта:</b> детали Покедекса, коллекция изученных атак, названия для реакций/анимаций; полноценная симуляция атак — большая отдельная система.</p></div></details>
+      <details class="api-group"><summary><strong>Pokémon · Pokémon</strong><span>виды, формы, способности, характеристики</span></summary><div class="api-body"><div><span class="resource">ability</span><span class="resource">characteristic</span><span class="resource">egg-group</span><span class="resource">gender</span><span class="resource">growth-rate</span><span class="resource">nature</span><span class="resource">pokeathlon-stat</span><span class="resource">pokemon</span><span class="resource">pokemon/{id}/encounters</span><span class="resource">pokemon-color</span><span class="resource">pokemon-form</span><span class="resource">pokemon-habitat</span><span class="resource">pokemon-shape</span><span class="resource">pokemon-species</span><span class="resource">stat</span><span class="resource">type</span></div><p>Самая богатая группа: свойства конкретной формы, виды, названия/описания, типы, способности, пол/яйца, характеры, рост и базовые характеристики, цвет/форма/среда обитания. У ресурса <code>pokemon</code> также есть поля спрайтов и cry — это данные внутри ответа, а не отдельные endpoint-группы.</p><p class="api-use"><b>Для проекта:</b> максимальный потенциал для профиля питомца и декоративной индивидуальности; статы/характеристики не обязаны становиться игровыми числами.</p></div></details>
+      <details class="api-group"><summary><strong>Общее · Utility</strong><span>языки и типы ссылок</span></summary><div class="api-body"><div><span class="resource">language</span><span class="resource">common models</span></div><p>Список языков и общие форматы ссылок/ответов API.</p><p class="api-use"><b>Для проекта:</b> поддержка локализованных имён и текстов с надёжным fallback на английский; общие модели — помощь при написании клиента, не игровой контент.</p></div></details>
+    </section>
+
+    <section id="plan">
+      <div class="section-head"><div><div class="section-kicker">Предлагаемая последовательность</div><h2>Три пути развития</h2></div></div>
+      <div class="recommend">
+        <article><span class="rank">ПУТЬ A · МИНИМАЛЬНЫЙ</span><h3>Покедекс-карточка</h3><p>Локализованное имя (если доступно), категория, цвет, среда обитания, короткая запись, оригинальная ветка эволюции. Всё справочное, почти без влияния на баланс.</p><p class="muted">Подходит, если хочется сделать коллекцию более живой без новых циклов активности.</p></article>
+        <article><span class="rank">ПУТЬ B · РЕКОМЕНДУЮ</span><h3>Индивидуальный питомец</h3><p>Nature + вкусы ягод + реакции + небольшие косметические/заботные бонусы. Питомец запоминается не только именем и спрайтом, а привычками.</p><p class="muted">Самый прямой мост между API и текущими Feed, Treats, Care Points и Nature.</p></article>
+        <article><span class="rank">ПУТЬ C · БОЛЬШЕ ИГРЫ</span><h3>Экспедиции и Покедекс</h3><p>Регионы и места задают темы; активность продвигает вылазки; встречи дают записи и региональный прогресс.</p><p class="muted">Хорошо, если хочется превратить фоновую активность в приключение и расширить коллекционный слой.</p></article>
+        <article class="risk"><span class="rank">ОТДЕЛЬНОЕ РЕШЕНИЕ</span><h3>Сражения и сложная эволюция</h3><p>Атаки, типы, статы и условия эволюции позволяют реализовать оригинальные игровые правила, но это уже крупный поворот продукта, а не «подтянуть ещё данные».</p><p class="muted">Сначала стоит отдельно подтвердить, что проект хочет стать RPG.</p></article>
+      </div>
+      <h3 style="margin-top:25px">Сводка по новым областям</h3>
+      <div style="overflow-x:auto"><table class="matrix"><thead><tr><th>Направление</th><th>Совпадение с проектом</th><th>Затраты</th><th>Зачем</th></tr></thead><tbody>
+        <tr><td>Покедекс-профили</td><td>Высокое</td><td>Низкие</td><td>Контекст и ценность коллекции</td></tr>
+        <tr><td>Ягоды / вкусы / Nature</td><td>Очень высокое</td><td>Низкие–средние</td><td>Разнообразие уже существующего кормления</td></tr>
+        <tr><td>Shiny и формы</td><td>Высокое</td><td>Низкие для спрайта; средние для учёта форм</td><td>Использовать уже имеющийся Shiny и расширить коллекционирование</td></tr>
+        <tr><td>Способности и реакции</td><td>Высокое</td><td>Средние</td><td>Уникальные черты и поведение питомца</td></tr>
+        <tr><td>Места / экспедиции</td><td>Среднее–высокое</td><td>Высокие</td><td>Новая цель для фоновой активности</td></tr>
+        <tr><td>Конкурсы</td><td>Среднее</td><td>Средние</td><td>Небоевой способ показывать покемонов</td></tr>
+        <tr><td>Бои и набор атак</td><td>Низкое без смены фокуса</td><td>Очень высокие</td><td>Только если сознательно делать RPG</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <section id="limits">
+      <div class="section-head"><div><div class="section-kicker">Чтобы не получить неприятный сюрприз</div><h2>Ограничения и оговорки</h2></div></div>
+      <div class="split">
+        <article class="callout"><h3>Технические</h3><ul class="list">
+          <li>API read-only, без входа. Ответы могут ссылаться на другие ресурсы; для одного экрана иногда потребуется несколько запросов.</li>
+          <li>Документация просит локально кэшировать ресурсы. Проект уже имеет кэш спрайтов и каталог — новые данные стоит класть туда же по текущему офлайн-принципу.</li>
+          <li>Списки разбиваются на страницы, обычно по 20 элементов. Полный crawl требует прохода по страницам и аккуратной обработки ошибок/неполных данных.</li>
+          <li>Условные поля бывают null, локализация присутствует не для каждого ресурса/версии. Нужны fallback и скрытие отсутствующих сведений.</li>
+        </ul></article>
+        <article class="callout"><h3>Продуктовые</h3><ul class="list">
+          <li>PokéAPI — справочник игровых данных, не генератор игровых механик. Значения лечения/атаки/цен не следует напрямую переносить в Care Points и монеты.</li>
+          <li>Локации и условия встреч относятся к конкретным версиям игр; нужен выбор канона или простая нормализация.</li>
+          <li>Полные ветвящиеся эволюции сложнее текущего пути «самая длинная линия». Текущий каталог уже теряет альтернативные ветви для логики стадий.</li>
+          <li>Текущий каталог ограничен Gen I–V. Доступность данных новых поколений в API не означает автоматического расширения проекта: нужны спрайты, баланс редкости, яйца и правила появления.</li>
+        </ul></article>
+      </div>
+      <div class="callout" style="margin-top:18px"><strong>Рекомендация:</strong> сначала профиль Покедекса и интеграция ягод/вкусов с Nature. Это использует уже существующую структуру проекта, добавляет новые решения игроку и сохраняет приложение питомцем, а не превращает его в симулятор боёв.</div>
+    </section>
+  </main>
+  <footer><div class="wrap"><div class="section-kicker">Источники</div><div class="sources"><a href="https://pokeapi.co/docs/v2">Официальная документация PokéAPI v2</a><a href="https://pokeapi.co/api/v2/pokemon-species/25/">Пример: вид Pikachu</a><a href="https://pokeapi.co/api/v2/pokemon/25/">Пример: данные Pokémon Pikachu</a></div><p style="margin:14px 0 0">Оценки применимости — продуктовый анализ текущего проекта PokéCorner. Идеи не являются уже принятыми требованиями POKE-11.</p></div></footer>
+  <script>
+    const buttons = document.querySelectorAll('.filter');
+    const ideas = document.querySelectorAll('.idea');
+    buttons.forEach(button => button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      ideas.forEach(card => { card.hidden = filter !== 'all' && card.dataset.fit !== filter; });
+    }));
+    const tabs = [...document.querySelectorAll('.problem-tab')];
+    const panels = [...document.querySelectorAll('.problem-panel')];
+    function selectTab(tab) {
+      tabs.forEach(item => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+      });
+      panels.forEach(panel => { panel.hidden = panel.id !== tab.getAttribute('aria-controls'); });
+      tab.focus();
+    }
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1
+          : (index + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+        selectTab(tabs[next]);
+      });
+    });
+  </script>
+</body>
+</html>

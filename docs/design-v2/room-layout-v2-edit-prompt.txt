@@ -1,0 +1,9 @@
+Use case: precise-object-edit.
+Image 1 is the EDIT TARGET, the already composed PokeCorner room screen. Image 2 furniture-models-v1.png is a supporting cabinet-model reference only.
+Make a precise correction batch to IMAGE 1, keeping the entire room architecture, all furniture/plant anchor positions, four potted plants, exactly three wall paintings, exactly three trophy figurines, standing awake Eevee center and EMPTY side bed, camera, warm pixel-art style, UI dimensions and typography unchanged.
+Correct ONLY these material defects:
+1. In the top "Встречи · 2" button, replace the paw-print icon with a clear red-white-black POKEBALL icon. Keep the label and button.
+2. In the "Лакомства" progress indicator, replace the GOLD COIN icon with a clearly recognizable pixel COOKIE / TREAT icon with brown crumbs, matching the feeding action. Keep the bar and label. The actual top currency icon stays a gold coin.
+3. In the profile area below the room at lower-left, REMOVE the duplicate Eevee portrait and REMOVE the green smiley icon plus the text "Настроение хорошее". Keep just a clean modest label "Иви · #0133", with ample breathing space. There is one Eevee in the room, no second portrait, and no separate mood feature.
+4. The back cabinet should match the "Книжный" model in image2 row2 col3. Preserve its current room footprint, top plant and EXACTLY THREE existing trophies on the same shelf. Add the model's lower BOOK CUBBY between two small lower wooden doors directly below the trophy display, with a few neatly fitted books. Do not add a second trophy shelf, fourth trophy, extra plant, or change wall art. Match dark warm walnut material.
+Everything else is invariant. Avoid redesigning the scene, recoloring furniture, moving pet or bed, adding controls or text, changing navigation, increasing clutter, reintroducing sleep. Deliver ONE polished corrected static screen.

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Immutable v1 bundled lookup and resolver evidence for v2 migration; not the v2 encounter pool. User cache not accessed.",
+  "baselineCommit": "b254109d8d877e4afaf11bbc73ebc6a72026f8d7",
+  "bundledChainCount": 328,
+  "reservedLegacyChainCount": 9,
+  "cachePrerequisite": "Before v2 installation/catalog refresh, back up the existing user catalog.json byte-for-byte alongside v1 state.json; migration resolves against that backup when usable, otherwise this frozen fallback plus LegacyOfflineChains. No cache was read for preparation.",
+  "files": [
+    {
+      "path": "OfflineStarterFallback.json",
+      "source": "src/PokeCorner.Core/PokeApi/OfflineStarterFallback.json",
+      "bytes": 115497,
+      "sha256": "eafc201518e7c0c3f8c3b233fd0facbcc14fd605ce4734af7284a47fb3cf198d"
+    },
+    {
+      "path": "LegacyOfflineChains.cs",
+      "source": "src/PokeCorner.Core/Domain/LegacyOfflineChains.cs",
+      "bytes": 5234,
+      "sha256": "b6f8efef8c751ef823c263ae75491a13b9c89f6596adbb32c01adbbf5aae3017"
+    },
+    {
+      "path": "SpeciesEvolutionChain.cs",
+      "source": "src/PokeCorner.Core/Domain/SpeciesEvolutionChain.cs",
+      "bytes": 5263,
+      "sha256": "6dcf60f537199df5daf71c6083163333f67c302739be375516f60f398fd23d8f"
+    },
+    {
+      "path": "PokeApiClient.cs",
+      "source": "src/PokeCorner.Core/PokeApi/PokeApiClient.cs",
+      "bytes": 7515,
+      "sha256": "a287ef879eeb72f071680ab8cee78f8af5ac56188a4bcefbca46ff3b4697f90e"
+    },
+    {
+      "path": "SpeciesCatalog.cs",
+      "source": "src/PokeCorner.Core/PokeApi/SpeciesCatalog.cs",
+      "bytes": 5604,
+      "sha256": "4d310c65a98a39e08e5b33beec95c55e6dd4d0a9bbff486fe1474166c7abc7a0"
+    }
+  ]
+}

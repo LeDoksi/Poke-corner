@@ -1,0 +1,285 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "rug-woven-cream",
+      "row": 0,
+      "col": 0,
+      "name": "woven-cream",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.502242,
+        0.956731
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        0,
+        895,
+        443
+      ],
+      "file": "rugs/assets/rug-woven-cream.png",
+      "size": [
+        892,
+        208
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        11,
+        199,
+        895,
+        391
+      ],
+      "cropInCell": [
+        3,
+        191,
+        895,
+        399
+      ],
+      "sha256": "173d8a0922e5842aedb7fdd6910a95951b09286190d12255a3273556922e94dc",
+      "source": "rugs/_sources/rugs-cream-v2.png",
+      "promptFile": "rugs/_sources/rugs-cream-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        9,
+        11,
+        887,
+        199
+      ],
+      "actualAspect": 4.670213,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.502242,
+        0.057692
+      ],
+      "backEdgeAnchorPixels": [
+        448.0,
+        12
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-checkered-cream",
+      "row": 0,
+      "col": 1,
+      "name": "checkered-cream",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498276,
+        0.956311
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        895,
+        0,
+        1774,
+        443
+      ],
+      "file": "rugs/assets/rug-checkered-cream.png",
+      "size": [
+        870,
+        206
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        0,
+        199,
+        862,
+        389
+      ],
+      "cropInCell": [
+        0,
+        191,
+        870,
+        397
+      ],
+      "sha256": "f675b3f73452cd25542e9577a89675aafade42529147275e7e383ea581660510",
+      "source": "rugs/_sources/rugs-cream-v2.png",
+      "promptFile": "rugs/_sources/rugs-cream-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        6,
+        11,
+        861,
+        197
+      ],
+      "actualAspect": 4.596774,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.498276,
+        0.053398
+      ],
+      "backEdgeAnchorPixels": [
+        433.5,
+        11
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-oval-cream",
+      "row": 1,
+      "col": 0,
+      "name": "oval-cream",
+      "category": "rugs",
+      "displayWidth": 720,
+      "footAnchor": [
+        0.501746,
+        0.964143
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        443,
+        873,
+        887
+      ],
+      "file": "rugs/assets/rug-oval-cream.png",
+      "size": [
+        859,
+        251
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        22,
+        116,
+        868,
+        351
+      ],
+      "cropInCell": [
+        14,
+        108,
+        873,
+        359
+      ],
+      "sha256": "217c98d337e52fed75a061e8d5a9ea96161d840a388eb8894d6fe23a8d595913",
+      "source": "rugs/_sources/rugs-cream-v2.png",
+      "promptFile": "rugs/_sources/rugs-cream-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        11,
+        11,
+        851,
+        242
+      ],
+      "actualAspect": 3.636364,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.501746,
+        0.047809
+      ],
+      "backEdgeAnchorPixels": [
+        431.0,
+        12
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-pokeball-cream",
+      "row": 1,
+      "col": 1,
+      "name": "pokeball-cream",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498885,
+        0.959091
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        873,
+        443,
+        1774,
+        887
+      ],
+      "file": "rugs/assets/rug-pokeball-cream.png",
+      "size": [
+        897,
+        220
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        6,
+        132,
+        889,
+        336
+      ],
+      "cropInCell": [
+        0,
+        124,
+        897,
+        344
+      ],
+      "sha256": "053cb15bdd7e4143239ad6813fa7dfa74886c3dfda0378e88172fecd5abe891e",
+      "source": "rugs/_sources/rugs-cream-v2.png",
+      "promptFile": "rugs/_sources/rugs-cream-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        7,
+        10,
+        888,
+        211
+      ],
+      "actualAspect": 4.383085,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.498885,
+        0.045455
+      ],
+      "backEdgeAnchorPixels": [
+        447.5,
+        10
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    }
+  ]
+}

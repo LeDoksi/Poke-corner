@@ -1,0 +1,309 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "curtain-short-sage",
+      "row": 0,
+      "col": 0,
+      "name": "short-sage",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.499298,
+        0.973054
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        0,
+        790,
+        450
+      ],
+      "file": "curtains/assets/curtain-short-sage.png",
+      "size": [
+        712,
+        334
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        54,
+        32,
+        750,
+        350
+      ],
+      "cropInCell": [
+        46,
+        24,
+        758,
+        358
+      ],
+      "sha256": "122edc892b850bfe2449bb447c887a4c516efd938b5dd5a750d9ea69beea0363",
+      "source": "curtains/_sources/curtains-sage-v2.png",
+      "promptFile": "curtains/_sources/curtains-sage-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        8,
+        8,
+        703,
+        325
+      ],
+      "actualAspect": 2.192429,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.033708,
+          0.071856
+        ],
+        [
+          0.962079,
+          0.206587
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          70,
+          48
+        ],
+        [
+          731,
+          93
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.033708,
+        0.071856
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        190,
+        82,
+        343,
+        244
+      ],
+      "openingRect": [
+        0.266854,
+        0.245509,
+        0.481742,
+        0.730539
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-linen-sage",
+      "row": 0,
+      "col": 1,
+      "name": "linen-sage",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.5,
+        0.983209
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        790,
+        0,
+        1536,
+        570
+      ],
+      "file": "curtains/assets/curtain-linen-sage.png",
+      "size": [
+        698,
+        536
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        14,
+        23,
+        696,
+        543
+      ],
+      "cropInCell": [
+        6,
+        15,
+        704,
+        551
+      ],
+      "sha256": "5c1a082ada1f531f6210422b24a712ca96d0d75e486308f97bfdafcfd8507eca",
+      "source": "curtains/_sources/curtains-sage-v2.png",
+      "promptFile": "curtains/_sources/curtains-sage-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        9,
+        9,
+        689,
+        527
+      ],
+      "actualAspect": 1.312741,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.035817,
+          0.048507
+        ],
+        [
+          0.971347,
+          0.134328
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          821,
+          41
+        ],
+        [
+          1474,
+          87
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.035817,
+        0.048507
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        194,
+        93,
+        322,
+        435
+      ],
+      "openingRect": [
+        0.277937,
+        0.173507,
+        0.461318,
+        0.811567
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-tied-sage",
+      "row": 1,
+      "col": 0,
+      "name": "tied-sage",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.50067,
+        0.980973
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        450,
+        790,
+        1024
+      ],
+      "file": "curtains/assets/curtain-tied-sage.png",
+      "size": [
+        746,
+        473
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        44,
+        69,
+        774,
+        526
+      ],
+      "cropInCell": [
+        36,
+        61,
+        782,
+        534
+      ],
+      "sha256": "bb5bd051b2b808d876c3e449cfcfeb1fec85d2a1009b3763f1045205a5966cb1",
+      "source": "curtains/_sources/curtains-sage-v2.png",
+      "promptFile": "curtains/_sources/curtains-sage-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        9,
+        8,
+        738,
+        464
+      ],
+      "actualAspect": 1.598684,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.053619,
+          0.061311
+        ],
+        [
+          0.955764,
+          0.145877
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          76,
+          540
+        ],
+        [
+          749,
+          580
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.053619,
+        0.061311
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        228,
+        88,
+        306,
+        377
+      ],
+      "openingRect": [
+        0.30563,
+        0.186047,
+        0.410188,
+        0.79704
+      ],
+      "openingVerificationAlphaThreshold": 8
+    }
+  ]
+}

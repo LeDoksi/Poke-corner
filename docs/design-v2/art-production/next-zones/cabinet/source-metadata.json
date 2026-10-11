@@ -1,0 +1,41 @@
+[
+  {
+    "tool": "builtin image_gen.imagegen",
+    "generatedOriginal": "C:/Users/Georgy/.codex/generated_images/01a127e2-a882-78a0-b552-7bb0c81dc54c/exec-7893cfff-ee5f-48ec-bbae-bd369b2d57cd.png",
+    "editTarget": "../../pilot-zones/master.png",
+    "nativeDimensions": [
+      1977,
+      795
+    ],
+    "promptFile": "c1-prompt.txt",
+    "nonDestructive": true,
+    "workspaceFile": "_sources/c1-first.png",
+    "sha256": "882de14957ff610551896a0d34688e17c6ae0865600063637db5dd85c5d6bf32"
+  },
+  {
+    "tool": "builtin image_gen.imagegen",
+    "generatedOriginal": "C:/Users/Georgy/.codex/generated_images/01a127e2-a882-78a0-b552-7bb0c81dc54c/exec-68d96df9-3317-4a97-8d8b-913eadd7c26a.png",
+    "editTarget": "c1-first.png",
+    "nativeDimensions": [
+      1976,
+      796
+    ],
+    "promptFile": "c1-correction-prompt.txt",
+    "nonDestructive": true,
+    "workspaceFile": "_sources/c1-context.png",
+    "sha256": "80208ad552ec29016927f0696852b3500fbfcb2e1d773d07a3169ac546049924"
+  },
+  {
+    "tool": "builtin image_gen.imagegen",
+    "generatedOriginal": "C:/Users/Georgy/.codex/generated_images/01a127e2-a882-78a0-b552-7bb0c81dc54c/exec-c53aaf0f-0746-49c2-9299-eeec9cf6f88a.png",
+    "editTarget": "../../pilot-zones/master.png; c1-context.png geometry reference",
+    "nativeDimensions": [
+      1976,
+      796
+    ],
+    "promptFile": "c3-prompt.txt",
+    "nonDestructive": true,
+    "workspaceFile": "_sources/c3-context.png",
+    "sha256": "a04703e1572023724f0c01ebe24eb08b2be091d070cfa6e8b63f744abb0c7732"
+  }
+]

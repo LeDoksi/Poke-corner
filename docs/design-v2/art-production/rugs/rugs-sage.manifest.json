@@ -1,0 +1,285 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "rug-woven-sage",
+      "row": 0,
+      "col": 0,
+      "name": "woven-sage",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.503885,
+        0.935185
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        0,
+        906,
+        443
+      ],
+      "file": "rugs/assets/rug-woven-sage.png",
+      "size": [
+        901,
+        216
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        13,
+        185,
+        906,
+        385
+      ],
+      "cropInCell": [
+        5,
+        177,
+        906,
+        393
+      ],
+      "sha256": "c330ec9662c660c5e141d92ed4016b97c3041e8c8285315908dfce32b1ea3a10",
+      "source": "rugs/_sources/rugs-sage-v2.png",
+      "promptFile": "rugs/_sources/rugs-sage-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        9,
+        11,
+        899,
+        202
+      ],
+      "actualAspect": 4.659686,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.503885,
+        0.055556
+      ],
+      "backEdgeAnchorPixels": [
+        454.0,
+        12
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-checkered-sage",
+      "row": 0,
+      "col": 1,
+      "name": "checkered-sage",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.497696,
+        0.953917
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        906,
+        0,
+        1774,
+        443
+      ],
+      "file": "rugs/assets/rug-checkered-sage.png",
+      "size": [
+        868,
+        217
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        0,
+        185,
+        864,
+        386
+      ],
+      "cropInCell": [
+        0,
+        177,
+        868,
+        394
+      ],
+      "sha256": "70abc04e457e4ea5a97ab49b69bdaa9b5cfb541d73a596fa75509d91cfad8e28",
+      "source": "rugs/_sources/rugs-sage-v2.png",
+      "promptFile": "rugs/_sources/rugs-sage-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        2,
+        11,
+        862,
+        207
+      ],
+      "actualAspect": 4.387755,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.497696,
+        0.050691
+      ],
+      "backEdgeAnchorPixels": [
+        432.0,
+        11
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-oval-sage",
+      "row": 1,
+      "col": 0,
+      "name": "oval-sage",
+      "category": "rugs",
+      "displayWidth": 720,
+      "footAnchor": [
+        0.503468,
+        0.96139
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        443,
+        882,
+        887
+      ],
+      "file": "rugs/assets/rug-oval-sage.png",
+      "size": [
+        865,
+        259
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        25,
+        88,
+        881,
+        331
+      ],
+      "cropInCell": [
+        17,
+        80,
+        882,
+        339
+      ],
+      "sha256": "d29807fd5854eda485aec614d74d64eb746233f911e66d9f3a975dc4e7709116",
+      "source": "rugs/_sources/rugs-sage-v2.png",
+      "promptFile": "rugs/_sources/rugs-sage-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        10,
+        9,
+        861,
+        249
+      ],
+      "actualAspect": 3.545833,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.503468,
+        0.03861
+      ],
+      "backEdgeAnchorPixels": [
+        435.5,
+        10
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    },
+    {
+      "id": "rug-pokeball-sage",
+      "row": 1,
+      "col": 1,
+      "name": "pokeball-sage",
+      "category": "rugs",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.5,
+        0.948617
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "rug-floor"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        882,
+        443,
+        1774,
+        887
+      ],
+      "file": "rugs/assets/rug-pokeball-sage.png",
+      "size": [
+        892,
+        253
+      ],
+      "atlasSize": [
+        1774,
+        887
+      ],
+      "alphaBoundsInCell": [
+        2,
+        91,
+        892,
+        328
+      ],
+      "cropInCell": [
+        0,
+        83,
+        892,
+        336
+      ],
+      "sha256": "b394961e29ba284a2a6324da381f1e2c335e9c0693241b70eac3cca43a1adbd7",
+      "source": "rugs/_sources/rugs-sage-v2.png",
+      "promptFile": "rugs/_sources/rugs-sage-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        3,
+        9,
+        889,
+        240
+      ],
+      "actualAspect": 3.835498,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "backEdgeAnchor": [
+        0.5,
+        0.035573
+      ],
+      "backEdgeAnchorPixels": [
+        446.0,
+        9
+      ],
+      "placement_rule": "Uniformly fit full native rug width, align backEdgeAnchor to room source y~664; allow front to extend below viewport. Full-source aspect differs from front-cropped reference; do not stretch/squash/crop master.",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ]
+    }
+  ]
+}

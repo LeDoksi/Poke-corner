@@ -1,0 +1,229 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "painting-bulbasaur-plants",
+      "row": 0,
+      "col": 0,
+      "name": "bulbasaur-plants",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.498322,
+        0.498886
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-bulbasaur-plants.png",
+      "size": [
+        596,
+        449
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        0,
+        0,
+        701,
+        561
+      ],
+      "alphaBoundsInCell": [
+        76,
+        106,
+        656,
+        539
+      ],
+      "cropInCell": [
+        68,
+        98,
+        664,
+        547
+      ],
+      "sha256": "c16265d241887cf859578be6c7666adec7918c3e2745674a8925cd137018df2b",
+      "source": "paintings/_sources/paintings-03.png",
+      "promptFile": "paintings/_sources/paintings-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3458,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-dragonite-postman",
+      "row": 0,
+      "col": 1,
+      "name": "dragonite-postman",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.501684,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-dragonite-postman.png",
+      "size": [
+        594,
+        448
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        701,
+        0,
+        1402,
+        561
+      ],
+      "alphaBoundsInCell": [
+        47,
+        106,
+        625,
+        538
+      ],
+      "cropInCell": [
+        39,
+        98,
+        633,
+        546
+      ],
+      "sha256": "1933cdbdabe4cc0ccce1ff10d830c311875760d46980be0a8fe21b217c6da8ef",
+      "source": "paintings/_sources/paintings-03.png",
+      "promptFile": "paintings/_sources/paintings-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3458,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-snorlax-meadow",
+      "row": 1,
+      "col": 0,
+      "name": "snorlax-meadow",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.498322,
+        0.498894
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-snorlax-meadow.png",
+      "size": [
+        596,
+        452
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        0,
+        561,
+        701,
+        1122
+      ],
+      "alphaBoundsInCell": [
+        76,
+        24,
+        656,
+        460
+      ],
+      "cropInCell": [
+        68,
+        16,
+        664,
+        468
+      ],
+      "sha256": "a9a2feb21a17118a8eab712bf410ae97e39f3dcd73e9f6fedfe003194276dee9",
+      "source": "paintings/_sources/paintings-03.png",
+      "promptFile": "paintings/_sources/paintings-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3303,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-mew-stars",
+      "row": 1,
+      "col": 1,
+      "name": "mew-stars",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.501684,
+        0.501101
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-mew-stars.png",
+      "size": [
+        594,
+        454
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        701,
+        561,
+        1402,
+        1122
+      ],
+      "alphaBoundsInCell": [
+        47,
+        22,
+        625,
+        460
+      ],
+      "cropInCell": [
+        39,
+        14,
+        633,
+        468
+      ],
+      "sha256": "7481c09f816fe373683896bf18b0b8b50807528d4bb211064c6c868dd1e3229b",
+      "source": "paintings/_sources/paintings-03.png",
+      "promptFile": "paintings/_sources/paintings-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3303,
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ]
+}

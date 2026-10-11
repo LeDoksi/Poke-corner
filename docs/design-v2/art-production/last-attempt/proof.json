@@ -1,0 +1,51 @@
+{
+  "status": "fixed-room-design-packet-ready",
+  "roomSize": [
+    1448,
+    582
+  ],
+  "roomCoarsenedToBWGrid": false,
+  "displayedRoomStates": 1,
+  "modularityStatus": "Full decor customization retired; independent earned awards only.",
+  "masterSource": "corrected-source.png",
+  "trophyAppearances": 56,
+  "archivedSourceAppearances": 63,
+  "trophyMaxSize": [
+    132,
+    94
+  ],
+  "trophyAnchors": [
+    [
+      664,
+      280
+    ],
+    [
+      810,
+      280
+    ],
+    [
+      956,
+      280
+    ]
+  ],
+  "shelfLipRect": [
+    590,
+    281,
+    1031,
+    288
+  ],
+  "originalPetFrames": 67,
+  "petScale": 3,
+  "petOpaqueSourcePixelsUnchanged": true,
+  "decodedAnimationExactlyMatchesEverySourceTimestamp": true,
+  "encodedFrames": 63,
+  "animationMs": 6700.0,
+  "animationBytes": 2300393,
+  "finalMode": "One coherent fixed room with independently interchangeable earned awards.",
+  "limits": [
+    "Earlier150-item decor catalogue is historical.",
+    "Earlier four rightcorner combinations are historical and not approved for the corrected master.",
+    "Small faces in crowded final trophy groups remain limited even at larger room scale.",
+    "No WPF integration."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "status": "complete-interior-art-catalogue",
+  "reviewDocument": "QA.md",
+  "expected": 150,
+  "registered": 150,
+  "counts": {
+    "curtains": 9,
+    "rugs": 12,
+    "walls": 12,
+    "plants": 20,
+    "paintings": 12,
+    "trophies": 63,
+    "furniture": 16,
+    "beds": 6
+  },
+  "nativeCanvas": [
+    480,
+    193
+  ],
+  "displayScale": 3,
+  "furnitureCombinationsChecked": 256,
+  "plantSlotChecks": 80,
+  "actualItemRoomPreviews": 150,
+  "sourcePetFrames": 67,
+  "tourOriginalTimestampFrames": 268,
+  "tourEncodedFrames": 252,
+  "tourDurationMs": 26800.0,
+  "tourBytes": 1295495,
+  "tourDecodedExact": true,
+  "opaquePetSourceExact": true,
+  "renderOrder": [
+    "wall",
+    "rug",
+    "curtains",
+    "windowPlant",
+    "paintings",
+    "chair",
+    "table",
+    "cabinet",
+    "dresser",
+    "trophies",
+    "shelfLip",
+    "surfacePlants",
+    "floorPlant",
+    "bed",
+    "pet"
+  ],
+  "limits": [
+    "No WPF/app integration.",
+    "Finite catalogue,slot and256furniture checks do not exhaust all decor combinations.",
+    "Small native map/trophy artwork preserves silhouette/color but not every source microdetail."
+  ],
+  "canonicalItemFiles": 150,
+  "technicalBaseAndLips": 5,
+  "lockedTrophyMasks": 63
+}

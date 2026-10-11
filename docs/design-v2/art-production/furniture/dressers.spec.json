@@ -1,0 +1,83 @@
+{
+  "source": "_sources/dressers-atlas-v3.png",
+  "promptFile": "_sources/dressers-fresh-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "dresser-d1",
+      "name": "Классический",
+      "category": "dressers",
+      "row": 0,
+      "col": 0,
+      "displayWidth": 164.365,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        0,
+        0,
+        684,
+        575
+      ]
+    },
+    {
+      "id": "dresser-d2",
+      "name": "Низкий",
+      "category": "dressers",
+      "row": 0,
+      "col": 1,
+      "displayWidth": 213.398,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        684,
+        0,
+        1367,
+        575
+      ]
+    },
+    {
+      "id": "dresser-d3",
+      "name": "Узкий",
+      "category": "dressers",
+      "row": 1,
+      "col": 0,
+      "displayWidth": 95.304,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        0,
+        575,
+        550,
+        1150
+      ]
+    },
+    {
+      "id": "dresser-d4",
+      "name": "Раздвижной",
+      "category": "dressers",
+      "row": 1,
+      "col": 1,
+      "displayWidth": 215.47,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "cellRect": [
+        550,
+        575,
+        1367,
+        1150
+      ]
+    }
+  ]
+}

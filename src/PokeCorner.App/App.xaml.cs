@@ -72,6 +72,7 @@ public partial class App : System.Windows.Application
     /// Set once by ResetSaveDataAndRestart; makes PersistState a no-op for the rest of this
     /// process's life so nothing writes the save file back after it has been deleted.
     private bool _isWipingSaveData;
+    private bool _hasLoadedState;
 
     /// Decoded PNG frames per display species id (null = no usable animation), in front of the
     /// on-disk GIF cache. A GIF costs ~22 ms to decode, so each species is decoded once.
@@ -131,7 +132,26 @@ public partial class App : System.Windows.Application
         _feedingService = new FeedingService();
         _shopService = new ShopService();
 
-        var loaded = _saveStore.Load();
+        SaveData? loaded;
+        while (true)
+        {
+            try
+            {
+                loaded = _saveStore.Load();
+                break;
+            }
+            catch (SaveLoadException ex)
+            {
+                var choice = System.Windows.MessageBox.Show(
+                    ex.Message + "\n\nВосстановите файл из резервной копии или исправьте причину ошибки. "
+                    + "Затем нажмите OK для повторной загрузки. Отмена закроет приложение.",
+                    "PokéCorner — сохранение недоступно", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (choice == MessageBoxResult.OK) continue;
+                _singleInstance.Dispose();
+                Shutdown();
+                return;
+            }
+        }
         _appState = new AppState();
         if (loaded is not null) _appState.Hydrate(loaded);
         _catchReadyCount = Math.Clamp(loaded?.PendingCatchCount ?? 0, 0, MaxPendingCatches);
@@ -165,6 +185,7 @@ public partial class App : System.Windows.Application
             new OnboardingWindow().ShowDialog();
         }
 
+        _hasLoadedState = true;
         _appState.CatchRollDue += OnCatchRollDue; // now just flips "ready" state — see OnCatchRollDue
 
         _inputCounter = new InputEventCounter();
@@ -907,7 +928,7 @@ public partial class App : System.Windows.Application
     private void PersistState(bool flush = false)
     {
         // ResetSaveDataAndRestart deleted state.json; writing now would bring it straight back.
-        if (_isWipingSaveData) return;
+        if (_isWipingSaveData || !_hasLoadedState) return;
 
         var data = _appState.ToSaveData(_catchReadyCount);
         if (flush) _saveWriter.Flush(data);

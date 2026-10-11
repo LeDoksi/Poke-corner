@@ -1,0 +1,225 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "trophy-expeditions-1",
+      "row": 0,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 48,
+      "footAnchor": [
+        0.5,
+        0.97479
+      ],
+      "file": "trophies/assets/trophy-expeditions-1.png",
+      "size": [
+        441,
+        357
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "alphaBoundsInCell": [
+        121,
+        221,
+        546,
+        562
+      ],
+      "cropInCell": [
+        113,
+        213,
+        554,
+        570
+      ],
+      "sha256": "6e0f69203aa23d0e103662fe2e03674ab9bb5c3461d3fc765683ce304f28dacf",
+      "source": "trophies/_sources/expeditions.png",
+      "promptFile": "trophies/_sources/expeditions-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        8,
+        8,
+        433,
+        348
+      ],
+      "logicalSize": [
+        48,
+        38.86
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "row": 0,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 56,
+      "footAnchor": [
+        0.5,
+        0.97653
+      ],
+      "file": "trophies/assets/trophy-expeditions-2.png",
+      "size": [
+        466,
+        426
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "alphaBoundsInCell": [
+        75,
+        157,
+        525,
+        567
+      ],
+      "cropInCell": [
+        67,
+        149,
+        533,
+        575
+      ],
+      "sha256": "75d0dded1f61effd47e7824709111e6af8a734871aeb9441d3c5f7fc3bf7509f",
+      "source": "trophies/_sources/expeditions.png",
+      "promptFile": "trophies/_sources/expeditions-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        9,
+        456,
+        416
+      ],
+      "logicalSize": [
+        56,
+        51.19
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "row": 1,
+      "col": 0,
+      "category": "trophies",
+      "displayWidth": 64,
+      "footAnchor": [
+        0.5,
+        0.97887
+      ],
+      "file": "trophies/assets/trophy-expeditions-3.png",
+      "size": [
+        545,
+        426
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        82,
+        151,
+        611,
+        561
+      ],
+      "cropInCell": [
+        74,
+        143,
+        619,
+        569
+      ],
+      "sha256": "1c94930f923b4a26f3c2d1e8855f26d2d16235334cd7348872e1d75917ae2d98",
+      "source": "trophies/_sources/expeditions.png",
+      "promptFile": "trophies/_sources/expeditions-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        9,
+        9,
+        537,
+        417
+      ],
+      "logicalSize": [
+        64,
+        50.03
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "row": 1,
+      "col": 1,
+      "category": "trophies",
+      "displayWidth": 72,
+      "footAnchor": [
+        0.5,
+        0.98069
+      ],
+      "file": "trophies/assets/trophy-expeditions-4.png",
+      "size": [
+        541,
+        518
+      ],
+      "atlasSize": [
+        1254,
+        1254
+      ],
+      "cellRect": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "alphaBoundsInCell": [
+        51,
+        62,
+        576,
+        564
+      ],
+      "cropInCell": [
+        43,
+        54,
+        584,
+        572
+      ],
+      "sha256": "dc9f98020ab9079eab1b0dd5f196c02fd4adade4ddd87d4c55ae9e99ce032f14",
+      "source": "trophies/_sources/expeditions.png",
+      "promptFile": "trophies/_sources/expeditions-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBoundsInOutput": [
+        10,
+        8,
+        533,
+        508
+      ],
+      "logicalSize": [
+        72,
+        68.94
+      ],
+      "qaStatus": "needs_parent_review",
+      "visualReview": "Contact sheet passes isolated material/silhouette/palette check; cabinet placement pending."
+    }
+  ]
+}

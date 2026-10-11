@@ -1,0 +1,637 @@
+[
+  {
+    "id": 670,
+    "name": "floette",
+    "path": "assets/pixelmon/sounds/pixelmon/floette.ogg"
+  },
+  {
+    "id": 679,
+    "name": "honedge",
+    "path": "assets/pixelmon/sounds/pixelmon/honedge.ogg"
+  },
+  {
+    "id": 681,
+    "name": "aegislash",
+    "path": "assets/pixelmon/sounds/pixelmon/aegislash.ogg"
+  },
+  {
+    "id": 688,
+    "name": "binacle",
+    "path": "assets/pixelmon/sounds/pixelmon/binacle.ogg"
+  },
+  {
+    "id": 708,
+    "name": "phantump",
+    "path": "assets/pixelmon/sounds/pixelmon/phantump.ogg"
+  },
+  {
+    "id": 712,
+    "name": "bergmite",
+    "path": "assets/pixelmon/sounds/pixelmon/bergmite.ogg"
+  },
+  {
+    "id": 713,
+    "name": "avalugg",
+    "path": "assets/pixelmon/sounds/pixelmon/avalugg.ogg"
+  },
+  {
+    "id": 715,
+    "name": "noivern",
+    "path": "assets/pixelmon/sounds/pixelmon/noivern.ogg"
+  },
+  {
+    "id": 719,
+    "name": "diancie",
+    "path": "assets/pixelmon/sounds/pixelmon/diancie.ogg"
+  },
+  {
+    "id": 721,
+    "name": "volcanion",
+    "path": "assets/pixelmon/sounds/pixelmon/volcanion.ogg"
+  },
+  {
+    "id": 727,
+    "name": "incineroar",
+    "path": "assets/pixelmon/sounds/pixelmon/incineroar.ogg"
+  },
+  {
+    "id": 730,
+    "name": "primarina",
+    "path": "assets/pixelmon/sounds/pixelmon/primarina.ogg"
+  },
+  {
+    "id": 733,
+    "name": "toucannon",
+    "path": "assets/pixelmon/sounds/pixelmon/toucannon.ogg"
+  },
+  {
+    "id": 739,
+    "name": "crabrawler",
+    "path": "assets/pixelmon/sounds/pixelmon/crabrawler.ogg"
+  },
+  {
+    "id": 740,
+    "name": "crabominable",
+    "path": "assets/pixelmon/sounds/pixelmon/crabominable.ogg"
+  },
+  {
+    "id": 746,
+    "name": "wishiwashi",
+    "path": "assets/pixelmon/sounds/pixelmon/wishiwashi.ogg"
+  },
+  {
+    "id": 754,
+    "name": "lurantis",
+    "path": "assets/pixelmon/sounds/pixelmon/lurantis.ogg"
+  },
+  {
+    "id": 770,
+    "name": "palossand",
+    "path": "assets/pixelmon/sounds/pixelmon/palossand.ogg"
+  },
+  {
+    "id": 771,
+    "name": "pyukumuku",
+    "path": "assets/pixelmon/sounds/pixelmon/pyukumuku.ogg"
+  },
+  {
+    "id": 774,
+    "name": "minior",
+    "path": "assets/pixelmon/sounds/pixelmon/minior.ogg"
+  },
+  {
+    "id": 779,
+    "name": "bruxish",
+    "path": "assets/pixelmon/sounds/pixelmon/bruxish.ogg"
+  },
+  {
+    "id": 782,
+    "name": "jangmo-o",
+    "path": "assets/pixelmon/sounds/pixelmon/jangmo-o.ogg"
+  },
+  {
+    "id": 783,
+    "name": "hakamo-o",
+    "path": "assets/pixelmon/sounds/pixelmon/hakamo-o.ogg"
+  },
+  {
+    "id": 784,
+    "name": "kommo-o",
+    "path": "assets/pixelmon/sounds/pixelmon/kommo-o.ogg"
+  },
+  {
+    "id": 785,
+    "name": "tapu-koko",
+    "path": "assets/pixelmon/sounds/pixelmon/tapukoko.ogg"
+  },
+  {
+    "id": 786,
+    "name": "tapu-lele",
+    "path": "assets/pixelmon/sounds/pixelmon/tapulele.ogg"
+  },
+  {
+    "id": 787,
+    "name": "tapu-bulu",
+    "path": "assets/pixelmon/sounds/pixelmon/tapubulu.ogg"
+  },
+  {
+    "id": 789,
+    "name": "cosmog",
+    "path": "assets/pixelmon/sounds/pixelmon/cosmog.ogg"
+  },
+  {
+    "id": 791,
+    "name": "solgaleo",
+    "path": "assets/pixelmon/sounds/pixelmon/solgaleo.ogg"
+  },
+  {
+    "id": 792,
+    "name": "lunala",
+    "path": "assets/pixelmon/sounds/pixelmon/lunala.ogg"
+  },
+  {
+    "id": 794,
+    "name": "buzzwole",
+    "path": "assets/pixelmon/sounds/pixelmon/buzzwole.ogg"
+  },
+  {
+    "id": 795,
+    "name": "pheromosa",
+    "path": "assets/pixelmon/sounds/pixelmon/pheromosa.ogg"
+  },
+  {
+    "id": 796,
+    "name": "xurkitree",
+    "path": "assets/pixelmon/sounds/pixelmon/xurkitree.ogg"
+  },
+  {
+    "id": 797,
+    "name": "celesteela",
+    "path": "assets/pixelmon/sounds/pixelmon/celesteela.ogg"
+  },
+  {
+    "id": 798,
+    "name": "kartana",
+    "path": "assets/pixelmon/sounds/pixelmon/kartana.ogg"
+  },
+  {
+    "id": 800,
+    "name": "necrozma",
+    "path": "assets/pixelmon/sounds/pixelmon/necrozma.ogg"
+  },
+  {
+    "id": 801,
+    "name": "magearna",
+    "path": "assets/pixelmon/sounds/pixelmon/magearna.ogg"
+  },
+  {
+    "id": 802,
+    "name": "marshadow",
+    "path": "assets/pixelmon/sounds/pixelmon/marshadow.ogg"
+  },
+  {
+    "id": 804,
+    "name": "naganadel",
+    "path": "assets/pixelmon/sounds/pixelmon/naganadel.ogg"
+  },
+  {
+    "id": 805,
+    "name": "stakataka",
+    "path": "assets/pixelmon/sounds/pixelmon/stakataka.ogg"
+  },
+  {
+    "id": 806,
+    "name": "blacephalon",
+    "path": "assets/pixelmon/sounds/pixelmon/blacephalon.ogg"
+  },
+  {
+    "id": 807,
+    "name": "zeraora",
+    "path": "assets/pixelmon/sounds/pixelmon/zeraora.ogg"
+  },
+  {
+    "id": 808,
+    "name": "meltan",
+    "path": "assets/pixelmon/sounds/pixelmon/meltan.ogg"
+  },
+  {
+    "id": 809,
+    "name": "melmetal",
+    "path": "assets/pixelmon/sounds/pixelmon/melmetal.ogg"
+  },
+  {
+    "id": 810,
+    "name": "grookey",
+    "path": "assets/pixelmon/sounds/pixelmon/grookey.ogg"
+  },
+  {
+    "id": 811,
+    "name": "thwackey",
+    "path": "assets/pixelmon/sounds/pixelmon/thwackey.ogg"
+  },
+  {
+    "id": 813,
+    "name": "scorbunny",
+    "path": "assets/pixelmon/sounds/pixelmon/scorbunny.ogg"
+  },
+  {
+    "id": 814,
+    "name": "raboot",
+    "path": "assets/pixelmon/sounds/pixelmon/raboot.ogg"
+  },
+  {
+    "id": 816,
+    "name": "sobble",
+    "path": "assets/pixelmon/sounds/pixelmon/sobble.ogg"
+  },
+  {
+    "id": 817,
+    "name": "drizzile",
+    "path": "assets/pixelmon/sounds/pixelmon/drizzile.ogg"
+  },
+  {
+    "id": 818,
+    "name": "inteleon",
+    "path": "assets/pixelmon/sounds/pixelmon/inteleon.ogg"
+  },
+  {
+    "id": 821,
+    "name": "rookidee",
+    "path": "assets/pixelmon/sounds/pixelmon/rookidee.ogg"
+  },
+  {
+    "id": 822,
+    "name": "corvisquire",
+    "path": "assets/pixelmon/sounds/pixelmon/corvisquire.ogg"
+  },
+  {
+    "id": 823,
+    "name": "corviknight",
+    "path": "assets/pixelmon/sounds/pixelmon/corviknight.ogg"
+  },
+  {
+    "id": 824,
+    "name": "blipbug",
+    "path": "assets/pixelmon/sounds/pixelmon/blipbug.ogg"
+  },
+  {
+    "id": 830,
+    "name": "eldegoss",
+    "path": "assets/pixelmon/sounds/pixelmon/eldegoss.ogg"
+  },
+  {
+    "id": 831,
+    "name": "wooloo",
+    "path": "assets/pixelmon/sounds/pixelmon/wooloo.ogg"
+  },
+  {
+    "id": 832,
+    "name": "dubwool",
+    "path": "assets/pixelmon/sounds/pixelmon/dubwool.ogg"
+  },
+  {
+    "id": 833,
+    "name": "chewtle",
+    "path": "assets/pixelmon/sounds/pixelmon/chewtle.ogg"
+  },
+  {
+    "id": 834,
+    "name": "drednaw",
+    "path": "assets/pixelmon/sounds/pixelmon/drednaw.ogg"
+  },
+  {
+    "id": 835,
+    "name": "yamper",
+    "path": "assets/pixelmon/sounds/pixelmon/yamper.ogg"
+  },
+  {
+    "id": 837,
+    "name": "rolycoly",
+    "path": "assets/pixelmon/sounds/pixelmon/rolycoly.ogg"
+  },
+  {
+    "id": 838,
+    "name": "carkol",
+    "path": "assets/pixelmon/sounds/pixelmon/carkol.ogg"
+  },
+  {
+    "id": 839,
+    "name": "coalossal",
+    "path": "assets/pixelmon/sounds/pixelmon/coalossal.ogg"
+  },
+  {
+    "id": 840,
+    "name": "applin",
+    "path": "assets/pixelmon/sounds/pixelmon/applin.ogg"
+  },
+  {
+    "id": 843,
+    "name": "silicobra",
+    "path": "assets/pixelmon/sounds/pixelmon/silicobra.ogg"
+  },
+  {
+    "id": 844,
+    "name": "sandaconda",
+    "path": "assets/pixelmon/sounds/pixelmon/sandaconda.ogg"
+  },
+  {
+    "id": 845,
+    "name": "cramorant",
+    "path": "assets/pixelmon/sounds/pixelmon/cramorant.ogg"
+  },
+  {
+    "id": 846,
+    "name": "arrokuda",
+    "path": "assets/pixelmon/sounds/pixelmon/arrokuda.ogg"
+  },
+  {
+    "id": 848,
+    "name": "toxel",
+    "path": "assets/pixelmon/sounds/pixelmon/toxel.ogg"
+  },
+  {
+    "id": 849,
+    "name": "toxtricity",
+    "path": "assets/pixelmon/sounds/pixelmon/toxtricity.ogg"
+  },
+  {
+    "id": 852,
+    "name": "clobbopus",
+    "path": "assets/pixelmon/sounds/pixelmon/clobbopus.ogg"
+  },
+  {
+    "id": 856,
+    "name": "hatenna",
+    "path": "assets/pixelmon/sounds/pixelmon/hatenna.ogg"
+  },
+  {
+    "id": 859,
+    "name": "impidimp",
+    "path": "assets/pixelmon/sounds/pixelmon/impidimp.ogg"
+  },
+  {
+    "id": 861,
+    "name": "grimmsnarl",
+    "path": "assets/pixelmon/sounds/pixelmon/grimmsnarl.ogg"
+  },
+  {
+    "id": 862,
+    "name": "obstagoon",
+    "path": "assets/pixelmon/sounds/pixelmon/obstagoon.ogg"
+  },
+  {
+    "id": 863,
+    "name": "perrserker",
+    "path": "assets/pixelmon/sounds/pixelmon/perrserker.ogg"
+  },
+  {
+    "id": 864,
+    "name": "cursola",
+    "path": "assets/pixelmon/sounds/pixelmon/cursola.ogg"
+  },
+  {
+    "id": 866,
+    "name": "mr-rime",
+    "path": "assets/pixelmon/sounds/pixelmon/mrrime.ogg"
+  },
+  {
+    "id": 867,
+    "name": "runerigus",
+    "path": "assets/pixelmon/sounds/pixelmon/runerigus.ogg"
+  },
+  {
+    "id": 868,
+    "name": "milcery",
+    "path": "assets/pixelmon/sounds/pixelmon/milcery.ogg"
+  },
+  {
+    "id": 869,
+    "name": "alcremie",
+    "path": "assets/pixelmon/sounds/pixelmon/alcremie.ogg"
+  },
+  {
+    "id": 870,
+    "name": "falinks",
+    "path": "assets/pixelmon/sounds/pixelmon/falinks.ogg"
+  },
+  {
+    "id": 871,
+    "name": "pincurchin",
+    "path": "assets/pixelmon/sounds/pixelmon/pincurchin.ogg"
+  },
+  {
+    "id": 872,
+    "name": "snom",
+    "path": "assets/pixelmon/sounds/pixelmon/snom.ogg"
+  },
+  {
+    "id": 873,
+    "name": "frosmoth",
+    "path": "assets/pixelmon/sounds/pixelmon/frosmoth.ogg"
+  },
+  {
+    "id": 874,
+    "name": "stonjourner",
+    "path": "assets/pixelmon/sounds/pixelmon/stonjourner.ogg"
+  },
+  {
+    "id": 875,
+    "name": "eiscue",
+    "path": "assets/pixelmon/sounds/pixelmon/eiscue.ogg"
+  },
+  {
+    "id": 876,
+    "name": "indeedee",
+    "path": "assets/pixelmon/sounds/pixelmon/indeedee.ogg"
+  },
+  {
+    "id": 877,
+    "name": "morpeko",
+    "path": "assets/pixelmon/sounds/pixelmon/morpeko.ogg"
+  },
+  {
+    "id": 878,
+    "name": "cufant",
+    "path": "assets/pixelmon/sounds/pixelmon/cufant.ogg"
+  },
+  {
+    "id": 880,
+    "name": "dracozolt",
+    "path": "assets/pixelmon/sounds/pixelmon/dracozolt.ogg"
+  },
+  {
+    "id": 882,
+    "name": "dracovish",
+    "path": "assets/pixelmon/sounds/pixelmon/dracovish.ogg"
+  },
+  {
+    "id": 883,
+    "name": "arctovish",
+    "path": "assets/pixelmon/sounds/pixelmon/arctovish.ogg"
+  },
+  {
+    "id": 884,
+    "name": "duraludon",
+    "path": "assets/pixelmon/sounds/pixelmon/duraludon.ogg"
+  },
+  {
+    "id": 885,
+    "name": "dreepy",
+    "path": "assets/pixelmon/sounds/pixelmon/dreepy.ogg"
+  },
+  {
+    "id": 886,
+    "name": "drakloak",
+    "path": "assets/pixelmon/sounds/pixelmon/drakloak.ogg"
+  },
+  {
+    "id": 887,
+    "name": "dragapult",
+    "path": "assets/pixelmon/sounds/pixelmon/dragapult.ogg"
+  },
+  {
+    "id": 888,
+    "name": "zacian",
+    "path": "assets/pixelmon/sounds/pixelmon/zacian.ogg"
+  },
+  {
+    "id": 890,
+    "name": "eternatus",
+    "path": "assets/pixelmon/sounds/pixelmon/eternatus.ogg"
+  },
+  {
+    "id": 895,
+    "name": "regidrago",
+    "path": "assets/pixelmon/sounds/pixelmon/regidrago.ogg"
+  },
+  {
+    "id": 896,
+    "name": "glastrier",
+    "path": "assets/pixelmon/sounds/pixelmon/glastrier.ogg"
+  },
+  {
+    "id": 898,
+    "name": "calyrex",
+    "path": "assets/pixelmon/sounds/pixelmon/calyrex.ogg"
+  },
+  {
+    "id": 901,
+    "name": "ursaluna",
+    "path": "assets/pixelmon/sounds/pixelmon/ursaluna.ogg"
+  },
+  {
+    "id": 902,
+    "name": "basculegion",
+    "path": "assets/pixelmon/sounds/pixelmon/basculegion-male.ogg"
+  },
+  {
+    "id": 904,
+    "name": "overqwil",
+    "path": "assets/pixelmon/sounds/pixelmon/overqwil.ogg"
+  },
+  {
+    "id": 924,
+    "name": "tandemaus",
+    "path": "assets/pixelmon/sounds/pixelmon/tandemaus.ogg"
+  },
+  {
+    "id": 925,
+    "name": "maushold",
+    "path": "assets/pixelmon/sounds/pixelmon/maushold.ogg"
+  },
+  {
+    "id": 932,
+    "name": "nacli",
+    "path": "assets/pixelmon/sounds/pixelmon/nacli.ogg"
+  },
+  {
+    "id": 938,
+    "name": "tadbulb",
+    "path": "assets/pixelmon/sounds/pixelmon/tadbulb.ogg"
+  },
+  {
+    "id": 969,
+    "name": "glimmet",
+    "path": "assets/pixelmon/sounds/pixelmon/glimmet.ogg"
+  },
+  {
+    "id": 978,
+    "name": "tatsugiri",
+    "path": "assets/pixelmon/sounds/pixelmon/tatsugiri.ogg"
+  },
+  {
+    "id": 980,
+    "name": "clodsire",
+    "path": "assets/pixelmon/sounds/pixelmon/clodsire.ogg"
+  },
+  {
+    "id": 984,
+    "name": "great-tusk",
+    "path": "assets/pixelmon/sounds/pixelmon/greattusk.ogg"
+  },
+  {
+    "id": 987,
+    "name": "flutter-mane",
+    "path": "assets/pixelmon/sounds/pixelmon/fluttermane.ogg"
+  },
+  {
+    "id": 992,
+    "name": "iron-hands",
+    "path": "assets/pixelmon/sounds/pixelmon/ironhands.ogg"
+  },
+  {
+    "id": 994,
+    "name": "iron-moth",
+    "path": "assets/pixelmon/sounds/pixelmon/ironmoth.ogg"
+  },
+  {
+    "id": 995,
+    "name": "iron-thorns",
+    "path": "assets/pixelmon/sounds/pixelmon/ironthorns.ogg"
+  },
+  {
+    "id": 996,
+    "name": "frigibax",
+    "path": "assets/pixelmon/sounds/pixelmon/frigibax.ogg"
+  },
+  {
+    "id": 997,
+    "name": "arctibax",
+    "path": "assets/pixelmon/sounds/pixelmon/arctibax.ogg"
+  },
+  {
+    "id": 999,
+    "name": "gimmighoul",
+    "path": "assets/pixelmon/sounds/pixelmon/gimmighoul.ogg"
+  },
+  {
+    "id": 1000,
+    "name": "gholdengo",
+    "path": "assets/pixelmon/sounds/pixelmon/gholdengo.ogg"
+  },
+  {
+    "id": 1001,
+    "name": "wo-chien",
+    "path": "assets/pixelmon/sounds/pixelmon/wo-chien.ogg"
+  },
+  {
+    "id": 1002,
+    "name": "chien-pao",
+    "path": "assets/pixelmon/sounds/pixelmon/chienpao.ogg"
+  },
+  {
+    "id": 1003,
+    "name": "ting-lu",
+    "path": "assets/pixelmon/sounds/pixelmon/tinglu.ogg"
+  },
+  {
+    "id": 1004,
+    "name": "chi-yu",
+    "path": "assets/pixelmon/sounds/pixelmon/chi-yu.ogg"
+  },
+  {
+    "id": 1008,
+    "name": "miraidon",
+    "path": "assets/pixelmon/sounds/pixelmon/miraidon.ogg"
+  }
+]

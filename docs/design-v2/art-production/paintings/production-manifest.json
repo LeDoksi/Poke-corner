@@ -1,0 +1,477 @@
+{
+  "produce": [
+    {
+      "id": "painting-kanto-map",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-01.png",
+      "output_path": "paintings/assets/painting-kanto-map.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: pictorial Kanto region map art, forests, mountain ridge, turquoise coastline and small connected town dots and routes, no words. Top-right: pictorial Johto region map art, autumn wooded valleys, connected villages, lakes and eastern mountain ridge, no words. Bottom-left: pictorial Hoenn region map art, a green island region amid deep dusty turquoise ocean, volcano landform and scattered small islands, no words. These are decorative artistic Pokémon region map illustrations, not cartographic documentation. Bottom-right: Pallet Town sunset landscape, a few small quiet cream cottages with red and slate roofs, green hedges beside an orange golden horizon over a distant sea, calm nostalgic warm light.\n",
+      "dimensions": [
+        607,
+        445
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        10,
+        597,
+        436
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.499176,
+        0.501124
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-johto-map",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-01.png",
+      "output_path": "paintings/assets/painting-johto-map.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: pictorial Kanto region map art, forests, mountain ridge, turquoise coastline and small connected town dots and routes, no words. Top-right: pictorial Johto region map art, autumn wooded valleys, connected villages, lakes and eastern mountain ridge, no words. Bottom-left: pictorial Hoenn region map art, a green island region amid deep dusty turquoise ocean, volcano landform and scattered small islands, no words. These are decorative artistic Pokémon region map illustrations, not cartographic documentation. Bottom-right: Pallet Town sunset landscape, a few small quiet cream cottages with red and slate roofs, green hedges beside an orange golden horizon over a distant sea, calm nostalgic warm light.\n",
+      "dimensions": [
+        607,
+        445
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        11,
+        10,
+        598,
+        436
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.501647,
+        0.501124
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-hoenn-map",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-01.png",
+      "output_path": "paintings/assets/painting-hoenn-map.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: pictorial Kanto region map art, forests, mountain ridge, turquoise coastline and small connected town dots and routes, no words. Top-right: pictorial Johto region map art, autumn wooded valleys, connected villages, lakes and eastern mountain ridge, no words. Bottom-left: pictorial Hoenn region map art, a green island region amid deep dusty turquoise ocean, volcano landform and scattered small islands, no words. These are decorative artistic Pokémon region map illustrations, not cartographic documentation. Bottom-right: Pallet Town sunset landscape, a few small quiet cream cottages with red and slate roofs, green hedges beside an orange golden horizon over a distant sea, calm nostalgic warm light.\n",
+      "dimensions": [
+        607,
+        449
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        12,
+        597,
+        439
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.499176,
+        0.502227
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-pallet-sunset",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-01.png",
+      "output_path": "paintings/assets/painting-pallet-sunset.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: pictorial Kanto region map art, forests, mountain ridge, turquoise coastline and small connected town dots and routes, no words. Top-right: pictorial Johto region map art, autumn wooded valleys, connected villages, lakes and eastern mountain ridge, no words. Bottom-left: pictorial Hoenn region map art, a green island region amid deep dusty turquoise ocean, volcano landform and scattered small islands, no words. These are decorative artistic Pokémon region map illustrations, not cartographic documentation. Bottom-right: Pallet Town sunset landscape, a few small quiet cream cottages with red and slate roofs, green hedges beside an orange golden horizon over a distant sea, calm nostalgic warm light.\n",
+      "dimensions": [
+        607,
+        449
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        11,
+        12,
+        598,
+        439
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.501647,
+        0.502227
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-ecruteak-lanterns",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-02.png",
+      "output_path": "paintings/assets/painting-ecruteak-lanterns.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Create exactly four original cozy PIXEL ART landscape wall pictures in identical warm oak wooden frames, arranged in2rows2columns with transparent margins and transparent gaps. Background outside frames trulytransparent. No writing, no UI, no room, no walls. Allframes fullyvisible, horizontal rectangular5:4, almoststraightfrontview, golden lightfromupperleft. Match approved PokeCorner room reference square-pixel detail and warmwood/sagegreen/dustybluepalette. Top-left: Ecruteak City evening wooden village street with softly glowing paper lanterns and distant pagoda. Top-right: peaceful blue lake with forested hills and reeds. Bottom-left: friendly Pikachu holding colorful berries beside a leafy bush. Bottom-right: friendly Eevee on a green woodland path among ferns. Pictures are reusable small-game wall art assets; frame is partofeachobject. Four separate images, no extra objects outside frames.\n",
+      "dimensions": [
+        673,
+        493
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        10,
+        9,
+        664,
+        484
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.500743,
+        0.5
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-lake",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-02.png",
+      "output_path": "paintings/assets/painting-lake.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Create exactly four original cozy PIXEL ART landscape wall pictures in identical warm oak wooden frames, arranged in2rows2columns with transparent margins and transparent gaps. Background outside frames trulytransparent. No writing, no UI, no room, no walls. Allframes fullyvisible, horizontal rectangular5:4, almoststraightfrontview, golden lightfromupperleft. Match approved PokeCorner room reference square-pixel detail and warmwood/sagegreen/dustybluepalette. Top-left: Ecruteak City evening wooden village street with softly glowing paper lanterns and distant pagoda. Top-right: peaceful blue lake with forested hills and reeds. Bottom-left: friendly Pikachu holding colorful berries beside a leafy bush. Bottom-right: friendly Eevee on a green woodland path among ferns. Pictures are reusable small-game wall art assets; frame is partofeachobject. Four separate images, no extra objects outside frames.\n",
+      "dimensions": [
+        672,
+        494
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        663,
+        484
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.5,
+        0.498988
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-pikachu-berries",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-02.png",
+      "output_path": "paintings/assets/painting-pikachu-berries.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Create exactly four original cozy PIXEL ART landscape wall pictures in identical warm oak wooden frames, arranged in2rows2columns with transparent margins and transparent gaps. Background outside frames trulytransparent. No writing, no UI, no room, no walls. Allframes fullyvisible, horizontal rectangular5:4, almoststraightfrontview, golden lightfromupperleft. Match approved PokeCorner room reference square-pixel detail and warmwood/sagegreen/dustybluepalette. Top-left: Ecruteak City evening wooden village street with softly glowing paper lanterns and distant pagoda. Top-right: peaceful blue lake with forested hills and reeds. Bottom-left: friendly Pikachu holding colorful berries beside a leafy bush. Bottom-right: friendly Eevee on a green woodland path among ferns. Pictures are reusable small-game wall art assets; frame is partofeachobject. Four separate images, no extra objects outside frames.\n",
+      "dimensions": [
+        673,
+        489
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        10,
+        9,
+        664,
+        481
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.500743,
+        0.501022
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-eevee-forest",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-02.png",
+      "output_path": "paintings/assets/painting-eevee-forest.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Create exactly four original cozy PIXEL ART landscape wall pictures in identical warm oak wooden frames, arranged in2rows2columns with transparent margins and transparent gaps. Background outside frames trulytransparent. No writing, no UI, no room, no walls. Allframes fullyvisible, horizontal rectangular5:4, almoststraightfrontview, golden lightfromupperleft. Match approved PokeCorner room reference square-pixel detail and warmwood/sagegreen/dustybluepalette. Top-left: Ecruteak City evening wooden village street with softly glowing paper lanterns and distant pagoda. Top-right: peaceful blue lake with forested hills and reeds. Bottom-left: friendly Pikachu holding colorful berries beside a leafy bush. Bottom-right: friendly Eevee on a green woodland path among ferns. Pictures are reusable small-game wall art assets; frame is partofeachobject. Four separate images, no extra objects outside frames.\n",
+      "dimensions": [
+        673,
+        489
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        10,
+        9,
+        664,
+        481
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.500743,
+        0.501022
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-bulbasaur-plants",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-03.png",
+      "output_path": "paintings/assets/painting-bulbasaur-plants.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: recognizable Bulbasaur among lush broad green leaves and small coral flowers, blue-green squat quadruped, darker body markings, big green bulb on back, warm friendly expression, match Bulbasaur painting role in approved room. Top-right: recognizable Dragonite as cheerful postman, orange rounded dragon with antennae and small green wings, carrying a simple brown cross-body mail satchel and one plain cream envelope, no writing or logos. Bottom-left: recognizable Snorlax resting on a sunny meadow among little cream wildflowers, round navy blue body and cream belly and face, gentle smile, leafy tree in distance. Bottom-right: recognizable pink Mew floating amid a deep dusty blue starry sky with small warm golden stars, thin long curved tail and rounded paws, match Mew painting role in approved room.\n",
+      "dimensions": [
+        596,
+        449
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        10,
+        585,
+        438
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.498322,
+        0.498886
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-dragonite-postman",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-03.png",
+      "output_path": "paintings/assets/painting-dragonite-postman.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: recognizable Bulbasaur among lush broad green leaves and small coral flowers, blue-green squat quadruped, darker body markings, big green bulb on back, warm friendly expression, match Bulbasaur painting role in approved room. Top-right: recognizable Dragonite as cheerful postman, orange rounded dragon with antennae and small green wings, carrying a simple brown cross-body mail satchel and one plain cream envelope, no writing or logos. Bottom-left: recognizable Snorlax resting on a sunny meadow among little cream wildflowers, round navy blue body and cream belly and face, gentle smile, leafy tree in distance. Bottom-right: recognizable pink Mew floating amid a deep dusty blue starry sky with small warm golden stars, thin long curved tail and rounded paws, match Mew painting role in approved room.\n",
+      "dimensions": [
+        594,
+        448
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        10,
+        10,
+        586,
+        438
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.501684,
+        0.5
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-snorlax-meadow",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-03.png",
+      "output_path": "paintings/assets/painting-snorlax-meadow.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: recognizable Bulbasaur among lush broad green leaves and small coral flowers, blue-green squat quadruped, darker body markings, big green bulb on back, warm friendly expression, match Bulbasaur painting role in approved room. Top-right: recognizable Dragonite as cheerful postman, orange rounded dragon with antennae and small green wings, carrying a simple brown cross-body mail satchel and one plain cream envelope, no writing or logos. Bottom-left: recognizable Snorlax resting on a sunny meadow among little cream wildflowers, round navy blue body and cream belly and face, gentle smile, leafy tree in distance. Bottom-right: recognizable pink Mew floating amid a deep dusty blue starry sky with small warm golden stars, thin long curved tail and rounded paws, match Mew painting role in approved room.\n",
+      "dimensions": [
+        596,
+        452
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        9,
+        9,
+        585,
+        442
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.498322,
+        0.498894
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    },
+    {
+      "id": "painting-mew-stars",
+      "source_crop": "docs/design-v2/room-layout-v2.png (approved full-room style reference, not shipping crop)",
+      "source_atlas": "paintings/_sources/paintings-03.png",
+      "output_path": "paintings/assets/painting-mew-stars.png",
+      "strategy": "standalone transparent generation followed by approved technical alpha slicing",
+      "prompt_used": "Use case: stylized-concept. Generate clean reusable standalone pixel-art wall painting assets for the APPROVED PokeCorner cozy pixel room, use references ONLY for visual style. Exactly FOUR separate small FRAMED PICTURES in spacious 2x2 arrangement, one whole frame per quadrant, large transparent margins and clear transparent gaps. All frames identical LANDSCAPE 5:4 outer aspect ratio, thin honey oak and dark walnut stepped molding, warm upper-left highlight, gently shaded bottom/right bevel. View almost straight-on like pictures on room BACK WALL, vertical edges straight, nearly horizontal top, tiny right-edge frame thickness only, NOT rotated isometric. Each painting has physical wooden rectangular frame as part of asset. NO wall, background, glow, floor, shadows outside frame, title, labels, letters, prices, captions, branding, watermarks, grid lines. All exterior pixels truly alpha0. Frame fully contains illustrated subject; every frame fully inside quadrant with at least12percent empty margin. Art itself matches detailed square-pixel clusters, warm brown outlines, sage greens, muted dusty blue and warm golden accents of reference. One distinct scene per frame, expressive beautiful pixel art with readable silhouettes at small room scale, not photorealistic or vector, NOT a UI design. Top-left: recognizable Bulbasaur among lush broad green leaves and small coral flowers, blue-green squat quadruped, darker body markings, big green bulb on back, warm friendly expression, match Bulbasaur painting role in approved room. Top-right: recognizable Dragonite as cheerful postman, orange rounded dragon with antennae and small green wings, carrying a simple brown cross-body mail satchel and one plain cream envelope, no writing or logos. Bottom-left: recognizable Snorlax resting on a sunny meadow among little cream wildflowers, round navy blue body and cream belly and face, gentle smile, leafy tree in distance. Bottom-right: recognizable pink Mew floating amid a deep dusty blue starry sky with small warm golden stars, thin long curved tail and rounded paws, match Mew painting role in approved room.\n",
+      "dimensions": [
+        594,
+        454
+      ],
+      "format": "png",
+      "transparency": "true RGBA alpha preserved",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "qa_status": "needs_parent_review",
+      "visual_qa": "content-and-alpha-inspected",
+      "alphaBounds128": [
+        10,
+        11,
+        586,
+        444
+      ],
+      "displayWidth": 106,
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "anchor": [
+        0.501684,
+        0.501101
+      ],
+      "anchorPixels": null,
+      "placement_qa": "pending parent composite scene checks"
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "paintings-placement",
+      "implementation": "Place separate framed RGBA image layers centered on three back-wall anchors; uniformly scale inside each frame slot maximum without stretching. Physical frame stays in raster; room surface, optional contact shadow and layer ordering remain code-owned.",
+      "notes": "Use scene-contract.json. No drag-anywhere flow or baked labels. Responsive transform scales the whole room and its anchors together. Parent owns implementation.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "Generate bounded transparent atlases",
+    "Inspect reference fidelity and composite over white to verify actual alpha",
+    "Slice with shared split-atlas.py preserving pixels",
+    "Record native dimensions and measured anchors",
+    "Parent reviews static composed scene combinations"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "No application code or pet sprites are part of this handoff.",
+    "displayWidth is in 1000-wide scene units, scale uniformly per scene-contract limits.",
+    "Source atlases, rejected cleanup and QA white plates remain _sources only; consume assets only."
+  ]
+}

@@ -1,0 +1,232 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "painting-kanto-map",
+      "row": 0,
+      "col": 0,
+      "name": "kanto-map",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.499176,
+        0.501124
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-kanto-map.png",
+      "size": [
+        607,
+        445
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        0,
+        0,
+        701,
+        561
+      ],
+      "alphaBoundsInCell": [
+        79,
+        108,
+        670,
+        537
+      ],
+      "cropInCell": [
+        71,
+        100,
+        678,
+        545
+      ],
+      "sha256": "fa658407c8320b5d31daa79ec0742021b2d53138a59df3bfd8cda9881d1009d5",
+      "source": "paintings/_sources/paintings-01.png",
+      "promptFile": "paintings/_sources/paintings-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3803,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-johto-map",
+      "row": 0,
+      "col": 1,
+      "name": "johto-map",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.501647,
+        0.501124
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-johto-map.png",
+      "size": [
+        607,
+        445
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        701,
+        0,
+        1402,
+        561
+      ],
+      "alphaBoundsInCell": [
+        32,
+        108,
+        623,
+        537
+      ],
+      "cropInCell": [
+        24,
+        100,
+        631,
+        545
+      ],
+      "sha256": "42348d92bdc4e5564e3bf3092ac07103c6f4b59852a96f59db8e315dc4d7a2a7",
+      "source": "paintings/_sources/paintings-01.png",
+      "promptFile": "paintings/_sources/paintings-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3779,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-hoenn-map",
+      "row": 1,
+      "col": 0,
+      "name": "hoenn-map",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.499176,
+        0.502227
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-hoenn-map.png",
+      "size": [
+        607,
+        449
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        0,
+        561,
+        701,
+        1122
+      ],
+      "alphaBoundsInCell": [
+        79,
+        18,
+        670,
+        451
+      ],
+      "cropInCell": [
+        71,
+        10,
+        678,
+        459
+      ],
+      "sha256": "c4c3869353b5a03d350d3cd3ed53fdbbaebcad98f5aff68db70e1fc5910b629a",
+      "source": "paintings/_sources/paintings-01.png",
+      "promptFile": "paintings/_sources/paintings-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.377,
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "painting-pallet-sunset",
+      "row": 1,
+      "col": 1,
+      "name": "pallet-sunset",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.501647,
+        0.502227
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.35 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation",
+      "file": "paintings/assets/painting-pallet-sunset.png",
+      "size": [
+        607,
+        449
+      ],
+      "atlasSize": [
+        1402,
+        1122
+      ],
+      "cellRect": [
+        701,
+        561,
+        1402,
+        1122
+      ],
+      "alphaBoundsInCell": [
+        32,
+        18,
+        623,
+        451
+      ],
+      "cropInCell": [
+        24,
+        10,
+        631,
+        459
+      ],
+      "sha256": "5c85c058f61a78ee7721503adc30fb353a2c59851a4f79a8370a6ad0b17b23a5",
+      "source": "paintings/_sources/paintings-01.png",
+      "promptFile": "paintings/_sources/paintings-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "outerAspect": 1.3747,
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ]
+}

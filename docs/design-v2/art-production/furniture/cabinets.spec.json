@@ -1,0 +1,59 @@
+{
+  "source": "_sources/cabinets-wide-atlas-v2.png",
+  "promptFile": "_sources/cabinets-wide-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "cabinet-c1",
+      "name": "Дубовый",
+      "displayWidth": 303.867,
+      "category": "cabinets",
+      "row": 0,
+      "col": 0,
+      "footAnchor": [
+        0.498276,
+        0.957958
+      ]
+    },
+    {
+      "id": "cabinet-c2",
+      "name": "Мастерская",
+      "displayWidth": 313.536,
+      "category": "cabinets",
+      "row": 0,
+      "col": 1,
+      "footAnchor": [
+        0.496575,
+        0.955224
+      ]
+    },
+    {
+      "id": "cabinet-c3",
+      "name": "Книжный",
+      "displayWidth": 312.845,
+      "category": "cabinets",
+      "row": 1,
+      "col": 0,
+      "footAnchor": [
+        0.496564,
+        0.961194
+      ]
+    },
+    {
+      "id": "cabinet-c4",
+      "name": "Светлый",
+      "displayWidth": 308.011,
+      "category": "cabinets",
+      "row": 1,
+      "col": 1,
+      "footAnchor": [
+        0.496575,
+        0.961194
+      ]
+    }
+  ]
+}

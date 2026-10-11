@@ -1,0 +1,95 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "bed-pillow-cream",
+      "name": "Подушка сливочная",
+      "category": "beds",
+      "row": 0,
+      "col": 0,
+      "cellRect": [
+        0,
+        0,
+        768,
+        650
+      ],
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "file": "beds/assets/bed-pillow-cream.png",
+      "size": [
+        687,
+        321
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        62,
+        180,
+        733,
+        485
+      ],
+      "cropInCell": [
+        54,
+        172,
+        741,
+        493
+      ],
+      "sha256": "5df410e9583f97da3acccacb5cad6dd6f3e75989d9fa3e123578048cd9d80bf6",
+      "source": "beds/_sources/pillows-atlas-v1.png",
+      "promptFile": "beds/_sources/pillows-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    },
+    {
+      "id": "bed-pillow-sage",
+      "name": "Подушка шалфейная",
+      "category": "beds",
+      "row": 0,
+      "col": 1,
+      "cellRect": [
+        768,
+        0,
+        1536,
+        650
+      ],
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "file": "beds/assets/bed-pillow-sage.png",
+      "size": [
+        687,
+        323
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        39,
+        178,
+        710,
+        485
+      ],
+      "cropInCell": [
+        31,
+        170,
+        718,
+        493
+      ],
+      "sha256": "a34fe4d63b1100c6684348489676074ed8c504b465fbd012e6cdab8bcadfc045",
+      "source": "beds/_sources/pillows-atlas-v1.png",
+      "promptFile": "beds/_sources/pillows-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending"
+    }
+  ]
+}

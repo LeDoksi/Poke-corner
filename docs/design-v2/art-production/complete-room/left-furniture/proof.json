@@ -1,0 +1,68 @@
+{
+  "canvas": [
+    480,
+    193
+  ],
+  "displayScale": 3,
+  "outsideZoneEquality": {
+    "t3": true,
+    "t4": true,
+    "a3": true,
+    "a4": true,
+    "c2": true,
+    "c4": true
+  },
+  "chairTableProtection": {
+    "a3": true,
+    "a4": true
+  },
+  "alphaBounds": {
+    "t3": [
+      0,
+      0,
+      60,
+      61
+    ],
+    "t4": [
+      0,
+      0,
+      60,
+      61
+    ],
+    "a3": [
+      31,
+      8,
+      128,
+      112
+    ],
+    "a4": [
+      31,
+      8,
+      128,
+      112
+    ],
+    "c2": [
+      0,
+      7,
+      148,
+      77
+    ],
+    "c4": [
+      0,
+      7,
+      148,
+      77
+    ]
+  },
+  "petFramesChecked": 402,
+  "cabinetTrophyPlacementsChecked": 378,
+  "masterDimensions": [
+    480,
+    193
+  ],
+  "sourcePetFrames": 67,
+  "trophyScale": 0.3,
+  "status": "accepted-after-source-crop-and-final-patch-visual-comparison",
+  "allExactPromptsEmbeddedAndVerified": true,
+  "consumableAssets": 8
+}

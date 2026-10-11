@@ -1,0 +1,63 @@
+{
+  "client_side": "required",
+  "server_side": "unsupported",
+  "game_versions": [
+    "1.20",
+    "1.20.1"
+  ],
+  "environment": [],
+  "id": "CrjptjUY",
+  "slug": "original-anime-cries-for-cobblemon",
+  "project_type": "resourcepack",
+  "team": "Cd3sq17J",
+  "organization": null,
+  "title": "Original Anime Cries for Cobblemon",
+  "description": "Bring your Cobblemon world to life with the iconic sounds of the Pokémon anime! This resource pack replaces the default cries with high-quality, Original Anime Cries for the first 649 Pokémon (Generations 1 through 5). Whether it's the roar of a Charizard",
+  "body": "📄 Resource Pack Description\nTitle: Original Anime Cries for Cobblemon (Generations 1-5)\nOverview\nBring your Cobblemon world to life with the iconic sounds of the Pokémon anime! This resource pack replaces the default cries with high-quality, Original Anime Cries for the first 649 Pokémon (Generations 1 through 5). Whether it's the roar of a Charizard or the mysterious call of Lugia, every encounter will now feel like a scene straight out of the show.\n\n✨ Key Features\nComplete Coverage: Includes all 649 Pokémon from the Kanto, Johto, Hoenn, Sinnoh, and Unova regions.\n\nAnime Authenticity: Every sound is sourced and optimized to match the classic anime experience.\n\nSeamless Integration: Fully compatible with the latest versions of the Cobblemon mod.\n\nHigh-Quality Audio: All files are converted to professional .ogg format for clear sound without lagging your game.\n\n🛠 Installation Guide\nDownload the .zip file.\n\nOpen Minecraft and go to Options > Resource Packs.\n\nClick Open Pack Folder.\n\nDrag and drop the downloaded file into the folder.\n\nSelect the pack in-game and move it to the Selected column.\n\nEnjoy the nostalgia!\n\n⚠️ Technical Note\nThis pack is a dedicated sound expansion. It is designed specifically to work alongside Cobblemon's folder structure. If you encounter any issues with specific Pokémon sounds, please ensure you are using the correct version of the mod.\n\nCredits & Support\nAudio Source: Pokémon Anime Series.\n\nPack Creator: Developed using custom automation scripts to ensure 100% accuracy in file mapping and JSON configuration.",
+  "body_url": null,
+  "published": "2026-04-11T18:14:44.295516Z",
+  "updated": "2026-04-11T18:23:15.526022Z",
+  "approved": "2026-04-11T19:18:04.270075Z",
+  "queued": "2026-04-11T18:53:25.933425Z",
+  "status": "approved",
+  "requested_status": "approved",
+  "moderator_message": null,
+  "license": {
+    "id": "LicenseRef-All-Rights-Reserved",
+    "name": "",
+    "url": null
+  },
+  "downloads": 409,
+  "followers": 1,
+  "categories": [
+    "audio"
+  ],
+  "additional_categories": [],
+  "loaders": [
+    "minecraft"
+  ],
+  "versions": [
+    "iclAZqex"
+  ],
+  "icon_url": "https://cdn.modrinth.com/data/CrjptjUY/632170d496b5904520e6c20c45fff9c720258d1f_96.webp",
+  "raw_icon_url": "https://cdn.modrinth.com/data/CrjptjUY/632170d496b5904520e6c20c45fff9c720258d1f.png",
+  "issues_url": null,
+  "source_url": null,
+  "wiki_url": null,
+  "discord_url": null,
+  "donation_urls": [],
+  "gallery": [
+    {
+      "url": "https://cdn.modrinth.com/data/CrjptjUY/images/632170d496b5904520e6c20c45fff9c720258d1f_350.webp",
+      "raw_url": "https://cdn.modrinth.com/data/CrjptjUY/images/632170d496b5904520e6c20c45fff9c720258d1f.png",
+      "featured": false,
+      "title": "Original Anime Cries for Cobblemon",
+      "description": "# ✨ Original Anime Cries for Cobblemon",
+      "created": "2026-04-11T18:26:47.917497Z",
+      "ordering": 0
+    }
+  ],
+  "color": 3747910,
+  "thread_id": "nXzDlxZc",
+  "monetization_status": "monetized"
+}

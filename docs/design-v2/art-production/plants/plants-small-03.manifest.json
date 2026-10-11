@@ -1,0 +1,237 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "plant-pilea-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "pilea terracotta",
+      "category": "plants",
+      "displayWidth": 47,
+      "footAnchor": [
+        0.515625,
+        0.978022
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-pilea-terracotta.png",
+      "size": [
+        480,
+        455
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "alphaBoundsInCell": [
+        266,
+        64,
+        730,
+        503
+      ],
+      "cropInCell": [
+        258,
+        56,
+        738,
+        511
+      ],
+      "sha256": "44a1ab4d3552d87bcb079d98b15392d37b0f5f412d7db9232194592c648025de",
+      "source": "plants/_sources/plants-small-03.png",
+      "promptFile": "plants/_sources/plants-small-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        247.5,
+        445
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-pilea-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "pilea woven cream",
+      "category": "plants",
+      "displayWidth": 47,
+      "footAnchor": [
+        0.526096,
+        0.982456
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-pilea-woven-cream.png",
+      "size": [
+        479,
+        456
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "alphaBoundsInCell": [
+        63,
+        64,
+        526,
+        505
+      ],
+      "cropInCell": [
+        55,
+        56,
+        534,
+        512
+      ],
+      "sha256": "43944283628ff58f83b9198d37776329b555db19ab4cdcd65dccbf873d9e83de",
+      "source": "plants/_sources/plants-small-03.png",
+      "promptFile": "plants/_sources/plants-small-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        252.0,
+        448
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-flowering-shrub-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "flowering-shrub terracotta",
+      "category": "plants",
+      "displayWidth": 45,
+      "footAnchor": [
+        0.489933,
+        0.979021
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-flowering-shrub-terracotta.png",
+      "size": [
+        447,
+        429
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        297,
+        35,
+        728,
+        448
+      ],
+      "cropInCell": [
+        289,
+        27,
+        736,
+        456
+      ],
+      "sha256": "5e071df2f0fafcd91a0c0fc41f700f7ffd2990617fb7453ea86dd8c785bb0fdb",
+      "source": "plants/_sources/plants-small-03.png",
+      "promptFile": "plants/_sources/plants-small-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        219.0,
+        420
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-flowering-shrub-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "flowering-shrub woven cream",
+      "category": "plants",
+      "displayWidth": 45,
+      "footAnchor": [
+        0.502247,
+        0.97907
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-flowering-shrub-woven-cream.png",
+      "size": [
+        445,
+        430
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        94,
+        34,
+        523,
+        448
+      ],
+      "cropInCell": [
+        86,
+        26,
+        531,
+        456
+      ],
+      "sha256": "2f1d7e105f80d562f9d2e9657d2d60a3ad4546a396fa313e9834fef64fd80002",
+      "source": "plants/_sources/plants-small-03.png",
+      "promptFile": "plants/_sources/plants-small-03-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        223.5,
+        421
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ]
+}

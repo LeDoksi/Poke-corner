@@ -1,0 +1,10 @@
+{
+  "approved": true,
+  "approvedAt": "2026-10-11",
+  "approval": "ощущается, норм, давай, работаем",
+  "scope": "Displayed assembled two-chair pilot with fixed table/plant and genuine BW Eevee",
+  "masterSource": "state-a.png",
+  "exactSourcePrompt": "state-a-prompt.txt",
+  "approvedArtifact": "pilot-swap.png",
+  "notImplied": "All decor combinations or app integration"
+}

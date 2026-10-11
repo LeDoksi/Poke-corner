@@ -1,0 +1,99 @@
+{
+  "source": "_sources/paintings-03.png",
+  "promptFile": "_sources/paintings-03-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "painting-bulbasaur-plants",
+      "row": 0,
+      "col": 0,
+      "name": "bulbasaur-plants",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-dragonite-postman",
+      "row": 0,
+      "col": 1,
+      "name": "dragonite-postman",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-snorlax-meadow",
+      "row": 1,
+      "col": 0,
+      "name": "snorlax-meadow",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-mew-stars",
+      "row": 1,
+      "col": 1,
+      "name": "mew-stars",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    }
+  ]
+}

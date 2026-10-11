@@ -1,0 +1,123 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "plant-ficus-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "ficus terracotta",
+      "category": "plants",
+      "displayWidth": 87,
+      "footAnchor": [
+        0.54881,
+        0.984483
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-ficus-terracotta.png",
+      "size": [
+        420,
+        580
+      ],
+      "atlasSize": [
+        1312,
+        1199
+      ],
+      "cellRect": [
+        0,
+        0,
+        656,
+        600
+      ],
+      "alphaBoundsInCell": [
+        130,
+        20,
+        534,
+        584
+      ],
+      "cropInCell": [
+        122,
+        12,
+        542,
+        592
+      ],
+      "sha256": "6b55f99ccab467a3974597f255c33f23e12a33762c15887705ebe45bb3383706",
+      "source": "plants/_sources/plants-floor-01.png",
+      "promptFile": "plants/_sources/plants-floor-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        230.5,
+        571
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-ficus-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "ficus woven cream",
+      "category": "plants",
+      "displayWidth": 87,
+      "footAnchor": [
+        0.541866,
+        0.984563
+      ],
+      "sizeFamily": "floor",
+      "slots": [
+        "floor-left"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-ficus-woven-cream.png",
+      "size": [
+        418,
+        583
+      ],
+      "atlasSize": [
+        1312,
+        1199
+      ],
+      "cellRect": [
+        656,
+        0,
+        1312,
+        600
+      ],
+      "alphaBoundsInCell": [
+        125,
+        19,
+        527,
+        586
+      ],
+      "cropInCell": [
+        117,
+        11,
+        535,
+        594
+      ],
+      "sha256": "27171de8c321866091266c4be5aaca28f7941029eff32e475e6fe4f9288f7292",
+      "source": "plants/_sources/plants-floor-01.png",
+      "promptFile": "plants/_sources/plants-floor-01-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        226.5,
+        574
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ],
+  "supersededAssets": {
+    "plant-monstera-terracotta": "plants-monstera-tall-v2.manifest.json",
+    "plant-monstera-woven-cream": "plants-monstera-tall-v2.manifest.json"
+  }
+}

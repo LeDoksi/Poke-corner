@@ -1,0 +1,99 @@
+{
+  "source": "_sources/paintings-01.png",
+  "promptFile": "_sources/paintings-01-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "painting-kanto-map",
+      "row": 0,
+      "col": 0,
+      "name": "kanto-map",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-johto-map",
+      "row": 0,
+      "col": 1,
+      "name": "johto-map",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-hoenn-map",
+      "row": 1,
+      "col": 0,
+      "name": "hoenn-map",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    },
+    {
+      "id": "painting-pallet-sunset",
+      "row": 1,
+      "col": 1,
+      "name": "pallet-sunset",
+      "category": "paintings",
+      "displayWidth": 106,
+      "centerAnchor": [
+        0.5,
+        0.5
+      ],
+      "slots": [
+        "picture-left",
+        "picture-center",
+        "picture-right"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Generated frame aspect may be wider than requested 5:4; preserve uniform scale, never stretch."
+      ],
+      "strategy": "faithful standalone transparent framed painting generation"
+    }
+  ]
+}

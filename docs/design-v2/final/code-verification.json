@@ -1,0 +1,39 @@
+{
+  "command": "rtk proxy dotnet test PokeCorner.sln --no-restore --verbosity minimal --logger trx;LogFileName=global-update-final.trx",
+  "exitCode": 0,
+  "total": 485,
+  "passed": 485,
+  "failed": 0,
+  "suites": [
+    {
+      "suite": "Core",
+      "total": 223,
+      "passed": 223,
+      "failed": 0,
+      "finishedAt": "2026-10-11T23:58:56.7570348+03:00",
+      "localResult": "tests/PokeCorner.Core.Tests/TestResults/global-update-final.trx",
+      "resultSha256": "0492c9a1fc796c68116d43ffe86fc24d8afcd18de7919b26395e5319b97aac2f"
+    },
+    {
+      "suite": "App",
+      "total": 262,
+      "passed": 262,
+      "failed": 0,
+      "finishedAt": "2026-10-11T23:59:01.5584962+03:00",
+      "localResult": "tests/PokeCorner.App.Tests/TestResults/global-update-final.trx",
+      "resultSha256": "2d1903fbff7fd5cd0385de294baa6405057116881352ca1bc93d27813df6a4da"
+    }
+  ],
+  "testedSourceHashes": {
+    "src/PokeCorner.App/App.xaml.cs": "0f306cf0a9616d6670ecd443e99e46d215bcc5d9f26eb46304f1a1847191e2a8",
+    "src/PokeCorner.Core/Domain/CareModeService.cs": "9134a5a00b81aee677e694ab242cd6cf1cbecf9150a431ebcc782b8894b8cb46",
+    "src/PokeCorner.Core/Persistence/BackgroundSaveWriter.cs": "eb6f80b5ce76486bfeb9f815ffffae552dcdc92c3cf8645a586059633d9f369f",
+    "src/PokeCorner.Core/Persistence/JsonSaveStore.cs": "c32168d6ed190fb9d5f30248d1196be6cfafbefd8a799a390ac9a11307f933c9",
+    "src/PokeCorner.Core/Persistence/SaveLoadException.cs": "93e2e8afea39649d4510a5245943685c9170809cd9262d11f7b413d2b64aa789",
+    "tests/PokeCorner.App.Tests/PersistenceStartupTests.cs": "a8906559e33610a7c2f870b43539836f839b40483493c68459b64dd9b219c025",
+    "tests/PokeCorner.Core.Tests/Domain/CareModeServiceTests.cs": "25adf00c49901565efad51420150f530b05d2882880e8e37faffcfab69333df7",
+    "tests/PokeCorner.Core.Tests/Persistence/BackgroundSaveWriterTests.cs": "332b455ea18e9d02ce5f215c1e54453fe5083769771672b507d753f15e2f6aa4",
+    "tests/PokeCorner.Core.Tests/Persistence/JsonSaveStoreTests.cs": "7df034ddc29da4dfc848c705dd610d382cf05556bb669af597849d8ca6aaa1b4"
+  },
+  "scope": "Existing Core/App with persistence fixes; synthetic tests. Global update runtime, real saves, live DPI/MSI and listening are not verified."
+}

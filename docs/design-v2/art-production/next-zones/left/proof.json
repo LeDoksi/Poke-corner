@@ -1,0 +1,78 @@
+{
+  "status": "technical-checks-passed-visual-review-pending",
+  "canvas": [
+    480,
+    193
+  ],
+  "displayScale": 3,
+  "combinations": 12,
+  "chairModels": [
+    "A1",
+    "A2"
+  ],
+  "tableModels": [
+    "T1",
+    "T2"
+  ],
+  "plantModels": [
+    "none",
+    "succulent",
+    "pilea"
+  ],
+  "outsideLeftZoneUnchanged": true,
+  "plantSwapPreservesOtherFurniture": true,
+  "opaqueSourcePetPixelsUnchanged": true,
+  "tableContacts": [
+    [
+      151,
+      119
+    ],
+    [
+      151,
+      116
+    ]
+  ],
+  "plantSourceContacts": [
+    null,
+    [
+      151,
+      119
+    ],
+    [
+      151,
+      120
+    ]
+  ],
+  "tableZoneRect": [
+    124,
+    107,
+    184,
+    168
+  ],
+  "plantSourceBounds": [
+    null,
+    [
+      139,
+      96,
+      164,
+      122
+    ],
+    [
+      137,
+      92,
+      166,
+      122
+    ]
+  ],
+  "origins": [
+    "../../pilot-zones/master.png",
+    "empty-t1.png",
+    "empty-t2.png",
+    "pilea-context.png"
+  ],
+  "limits": [
+    "Only two tables and two plant silhouettes registered.",
+    "Other table/pot contact combinations require registration.",
+    "This new swap APNG uses the first original pet frame; original pet motion remains in pilot-swap.png."
+  ]
+}

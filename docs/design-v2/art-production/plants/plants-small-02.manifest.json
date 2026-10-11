@@ -1,0 +1,237 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "plant-fern-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "fern terracotta",
+      "category": "plants",
+      "displayWidth": 53,
+      "footAnchor": [
+        0.487352,
+        0.980851
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-fern-terracotta.png",
+      "size": [
+        593,
+        470
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "alphaBoundsInCell": [
+        157,
+        25,
+        734,
+        479
+      ],
+      "cropInCell": [
+        149,
+        17,
+        742,
+        487
+      ],
+      "sha256": "9a054cd108b5137647e237451d29d066ba0b41e330feef9ed56db28ccd3bb152",
+      "source": "plants/_sources/plants-small-02.png",
+      "promptFile": "plants/_sources/plants-small-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        289.0,
+        461
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-fern-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "fern woven cream",
+      "category": "plants",
+      "displayWidth": 53,
+      "footAnchor": [
+        0.492424,
+        0.980973
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-fern-woven-cream.png",
+      "size": [
+        594,
+        473
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        768,
+        0,
+        1536,
+        512
+      ],
+      "alphaBoundsInCell": [
+        60,
+        25,
+        638,
+        482
+      ],
+      "cropInCell": [
+        52,
+        17,
+        646,
+        490
+      ],
+      "sha256": "e8276373a977b32438386534a89735b26825edce2f6067afcbfab3a6323d0d1f",
+      "source": "plants/_sources/plants-small-02.png",
+      "promptFile": "plants/_sources/plants-small-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        292.5,
+        464
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-orchid-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "orchid terracotta",
+      "category": "plants",
+      "displayWidth": 35,
+      "footAnchor": [
+        0.534722,
+        0.980603
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-orchid-terracotta.png",
+      "size": [
+        432,
+        464
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        0,
+        512,
+        768,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        240,
+        16,
+        656,
+        464
+      ],
+      "cropInCell": [
+        232,
+        8,
+        664,
+        472
+      ],
+      "sha256": "a58bb15c88e3cc93477ec9cab9ecd8eda4ef8752dda9edffddab36ee0a16e4f3",
+      "source": "plants/_sources/plants-small-02.png",
+      "promptFile": "plants/_sources/plants-small-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        231.0,
+        455
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    },
+    {
+      "id": "plant-orchid-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "orchid woven cream",
+      "category": "plants",
+      "displayWidth": 35,
+      "footAnchor": [
+        0.522727,
+        0.980562
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style",
+      "file": "plants/assets/plant-orchid-woven-cream.png",
+      "size": [
+        418,
+        463
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "cellRect": [
+        768,
+        512,
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        137,
+        17,
+        539,
+        464
+      ],
+      "cropInCell": [
+        129,
+        9,
+        547,
+        472
+      ],
+      "sha256": "e429de15692d5ce5c22897a2ffa2a26ddbb380058fff93cadcda640cad893509",
+      "source": "plants/_sources/plants-small-02.png",
+      "promptFile": "plants/_sources/plants-small-02-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "footAnchorPixels": [
+        218.5,
+        454
+      ],
+      "visual_qa": "content-and-alpha-inspected"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "authority": "Measured visually on corrected low-wide cabinet masters after shared helper alpha crop; approximate +/-5 master pixels. Not final trophy stress acceptance.",
+  "coordinateSpace": "master PNG pixels; origin top-left; uniform scaling only",
+  "models": [
+    {
+      "id": "cabinet-c1",
+      "size": [
+        580,
+        333
+      ],
+      "groundAnchor": [
+        289,
+        319
+      ],
+      "topPlantSupport": [
+        87,
+        40
+      ],
+      "shelfSupportAnchors": [
+        [
+          128,
+          160
+        ],
+        [
+          275,
+          160
+        ],
+        [
+          422,
+          160
+        ]
+      ],
+      "shelfSafeRect": [
+        63,
+        146,
+        426,
+        14
+      ],
+      "lipRect": [
+        46,
+        162,
+        458,
+        21
+      ],
+      "emptyBayRect": [
+        47,
+        61,
+        455,
+        82
+      ],
+      "opaqueAspect": 1.787,
+      "source": "assets/cabinet-c1.png",
+      "frontLipOutput": "assets/cabinet-c1-lip.png",
+      "qa_status": "needs_parent_review"
+    },
+    {
+      "id": "cabinet-c2",
+      "size": [
+        584,
+        335
+      ],
+      "groundAnchor": [
+        290,
+        320
+      ],
+      "topPlantSupport": [
+        89,
+        42
+      ],
+      "shelfSupportAnchors": [
+        [
+          130,
+          162
+        ],
+        [
+          277,
+          162
+        ],
+        [
+          424,
+          162
+        ]
+      ],
+      "shelfSafeRect": [
+        65,
+        148,
+        426,
+        14
+      ],
+      "lipRect": [
+        47,
+        164,
+        458,
+        22
+      ],
+      "emptyBayRect": [
+        48,
+        62,
+        456,
+        82
+      ],
+      "opaqueAspect": 1.79,
+      "source": "assets/cabinet-c2.png",
+      "frontLipOutput": "assets/cabinet-c2-lip.png",
+      "qa_status": "needs_parent_review"
+    },
+    {
+      "id": "cabinet-c3",
+      "size": [
+        582,
+        335
+      ],
+      "groundAnchor": [
+        289,
+        322
+      ],
+      "topPlantSupport": [
+        88,
+        41
+      ],
+      "shelfSupportAnchors": [
+        [
+          129,
+          159
+        ],
+        [
+          276,
+          159
+        ],
+        [
+          423,
+          159
+        ]
+      ],
+      "shelfSafeRect": [
+        64,
+        146,
+        426,
+        13
+      ],
+      "lipRect": [
+        46,
+        162,
+        459,
+        21
+      ],
+      "emptyBayRect": [
+        47,
+        61,
+        456,
+        81
+      ],
+      "opaqueAspect": 1.773,
+      "source": "assets/cabinet-c3.png",
+      "frontLipOutput": "assets/cabinet-c3-lip.png",
+      "qa_status": "needs_parent_review"
+    },
+    {
+      "id": "cabinet-c4",
+      "size": [
+        584,
+        335
+      ],
+      "groundAnchor": [
+        290,
+        322
+      ],
+      "topPlantSupport": [
+        89,
+        42
+      ],
+      "shelfSupportAnchors": [
+        [
+          130,
+          161
+        ],
+        [
+          277,
+          161
+        ],
+        [
+          424,
+          161
+        ]
+      ],
+      "shelfSafeRect": [
+        65,
+        148,
+        426,
+        13
+      ],
+      "lipRect": [
+        47,
+        163,
+        458,
+        21
+      ],
+      "emptyBayRect": [
+        49,
+        74,
+        454,
+        71
+      ],
+      "opaqueAspect": 1.773,
+      "source": "assets/cabinet-c4.png",
+      "frontLipOutput": "assets/cabinet-c4-lip.png",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "implementation": "Extract each lipRect exact existing pixels to transparent overlay through parent shared helper; retain full master registration or explicit sourceOffset. Draw empty body, separate trophy contact shadows, trophy bases at support anchors, exact lip overlay, independent top plant. Never stretch furniture vertically.",
+  "deviations": [
+    "Opaque aspect1.773..1.790 remains below requested1.9..2.0; roughly9..10percent taller than ROOM contract at target width, despite targeted fresh generation.",
+    "Native width561..562px below preferred2x453px room width.",
+    "Empty display bay at uniform room width projects about58..66px tall, below80px maximum trophy envelope; final largest trophy stress preview needed."
+  ],
+  "blockers": [],
+  "assumptions": [
+    "One requested fresh proportion repair generated; no additional generation without parent direction.",
+    "No all-stage trophy/plant compatibility claimed."
+  ]
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "game_versions": [
+      "1.20",
+      "1.20.1"
+    ],
+    "loaders": [
+      "minecraft"
+    ],
+    "environment": "unknown",
+    "id": "iclAZqex",
+    "project_id": "CrjptjUY",
+    "author_id": "zGGwHi05",
+    "featured": false,
+    "name": "The Original Anime Sound Update",
+    "version_number": "1.0.0",
+    "changelog": "Changelog - v1.0.0 (Initial Release)\nWhat's New:\n\nComplete Audio Overhaul: Replaced default cries with authentic anime-inspired sounds for Pokémon #001 to #649.\n\nGenerations 1-5 Support: Full coverage for Kanto, Johto, Hoenn, Sinnoh, and Unova regions.\n\nOptimized File Structure: All sounds are mapped correctly to Cobblemon's internal folder system using automated naming scripts.\n\nHigh-Quality Formats: All audio files are converted to .ogg at a balanced bitrate to ensure high fidelity without increasing game memory usage.\n\nJSON Integration: Includes a custom sounds.json that links all cry variations to their respective Pokémon.\n\nFixes:\n\nFixed naming inconsistencies for multiple Pokémon (e.g., Articuno, Gligar, Nidoran).\n\nCorrected file paths for legendary Pokémon sounds to ensure they trigger during encounters",
+    "changelog_url": null,
+    "date_published": "2026-04-11T18:23:15.526022Z",
+    "downloads": 409,
+    "version_type": "release",
+    "status": "listed",
+    "requested_status": null,
+    "files": [
+      {
+        "id": "GSBbfTgy",
+        "hashes": {
+          "sha1": "996ab19ffb4d21c8ab45d2857a6781a5c04e46f0",
+          "sha512": "7aefda0603a156ac39515b3a51ff3e87d4998899f1128428b1faeac8fa1e3eea0c5b6789259b7ec68d6cfda2f8a390fae06ff35b87a523b9acc81199f5463534"
+        },
+        "url": "https://cdn.modrinth.com/data/CrjptjUY/versions/iclAZqex/Cobblemon_Sounds.zip",
+        "filename": "Cobblemon_Sounds.zip",
+        "primary": true,
+        "size": 11864753,
+        "file_type": null
+      }
+    ],
+    "dependencies": [
+      {
+        "version_id": null,
+        "project_id": "MdwFAVRL",
+        "file_name": null,
+        "dependency_type": "required"
+      }
+    ]
+  }
+]

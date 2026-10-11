@@ -1,0 +1,95 @@
+{
+  "source": "_sources/plants-small-03.png",
+  "promptFile": "_sources/plants-small-03-prompt.txt",
+  "outputDir": "assets",
+  "grid": [
+    2,
+    2
+  ],
+  "cells": [
+    {
+      "id": "plant-pilea-terracotta",
+      "row": 0,
+      "col": 0,
+      "name": "pilea terracotta",
+      "category": "plants",
+      "displayWidth": 47,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-pilea-woven-cream",
+      "row": 0,
+      "col": 1,
+      "name": "pilea woven cream",
+      "category": "plants",
+      "displayWidth": 47,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-flowering-shrub-terracotta",
+      "row": 1,
+      "col": 0,
+      "name": "flowering-shrub terracotta",
+      "category": "plants",
+      "displayWidth": 45,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    },
+    {
+      "id": "plant-flowering-shrub-woven-cream",
+      "row": 1,
+      "col": 1,
+      "name": "flowering-shrub woven cream",
+      "category": "plants",
+      "displayWidth": 45,
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "sizeFamily": "small",
+      "slots": [
+        "windowsill",
+        "table",
+        "cabinet-top"
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [],
+      "strategy": "faithful standalone transparent atlas generation from approved room style"
+    }
+  ]
+}

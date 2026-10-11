@@ -1,0 +1,104 @@
+{
+  "status": "technical-checks-passed-visual-review-pending",
+  "combinationsChecked": 48,
+  "choices": {
+    "chairs": 2,
+    "tables": 2,
+    "plantsIncludingEmpty": 3,
+    "cabinets": 2,
+    "trophyShelfStates": 2
+  },
+  "outsideZonesUnchanged": true,
+  "cabinetPreservesLeftCorner": true,
+  "sourcePetOpaquePixelsUnchanged": true,
+  "animationDecodedAtEverySourceTimestamp": true,
+  "sourcePetFrames": 67,
+  "renderedTimestampFrames": 220,
+  "encodedAPNGFrames": 206,
+  "animationDurationMs": 22000.0,
+  "animationBytes": 948044,
+  "sequence": [
+    [
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      2,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "limits": [
+    "Only the current two cabinet models and three representative trophies shown.",
+    "378 trophy-size tests do not prove every trophy silhouette is visually legible.",
+    "No app or WPF integration."
+  ]
+}

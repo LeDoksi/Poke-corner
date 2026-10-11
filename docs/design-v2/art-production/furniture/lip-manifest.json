@@ -1,0 +1,62 @@
+[
+  {
+    "id": "cabinet-c1-lip",
+    "file": "furniture/assets/cabinet-c1-lip.png",
+    "size": [
+      580,
+      333
+    ],
+    "rect": [
+      46,
+      162,
+      458,
+      21
+    ],
+    "status": "technical-extraction-verified"
+  },
+  {
+    "id": "cabinet-c2-lip",
+    "file": "furniture/assets/cabinet-c2-lip.png",
+    "size": [
+      584,
+      335
+    ],
+    "rect": [
+      47,
+      164,
+      458,
+      22
+    ],
+    "status": "technical-extraction-verified"
+  },
+  {
+    "id": "cabinet-c3-lip",
+    "file": "furniture/assets/cabinet-c3-lip.png",
+    "size": [
+      582,
+      335
+    ],
+    "rect": [
+      46,
+      162,
+      459,
+      21
+    ],
+    "status": "technical-extraction-verified"
+  },
+  {
+    "id": "cabinet-c4-lip",
+    "file": "furniture/assets/cabinet-c4-lip.png",
+    "size": [
+      584,
+      335
+    ],
+    "rect": [
+      47,
+      163,
+      458,
+      21
+    ],
+    "status": "technical-extraction-verified"
+  }
+]

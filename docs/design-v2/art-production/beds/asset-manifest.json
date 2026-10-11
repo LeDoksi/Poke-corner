@@ -1,0 +1,264 @@
+{
+  "produce": [
+    {
+      "id": "bed-pillow-cream",
+      "source_crop": {
+        "reference": "docs/design-v2/room-layout-v2.png",
+        "rect": [
+          1288,
+          608,
+          195,
+          95
+        ]
+      },
+      "output_path": "beds/assets/bed-pillow-cream.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Two plain FLAT OVAL PILLOW pet beds, original clean production pixel illustration for cozy PokeCorner. Style, warm upper-left light and shallow room camera match approved room. Genuine alpha-zero transparent background, no background/floor/glow/haze. Two invisible equal TOP cells in2x2 grid, bottom cells empty transparent. TOP LEFT one solid warm cream oval floor pillow. TOP RIGHT exactly SAME pillow silhouette in muted sage green. A pillow is ONE low plump stuffed fabric cushion, domed upper surface, softly rounded perimeter, discrete seam around outer edge, small tuft stitches optional. Absolutely NO raised ring/bolster/rim/walls, NO sunken bowl, NO nest or donut, NO basket or wicker. No second interior cushion: single continuous solid pillow. Low wide oval in shallow front-facing floor perspective, short vertical thickness, visible top and front stitched edge. Warm crisp stepped pixel clusters and dark warm outline, textile texture, no plastic or photorealism. All empty, no pets/Pokemon/blanket/accessories. Each full pillow contained in top cell with at least60px clear transparent margin all around. No shadow; all shading confined within pillow silhouette. No text/grid/UI/frame/watermark. Transparent PNG atlas.",
+      "prompt_file": "beds/_sources/pillows-prompt.txt",
+      "dimensions": [
+        687,
+        321
+      ],
+      "atlas_dimensions": [
+        1536,
+        1024
+      ],
+      "opaque_bounds": [
+        8,
+        9,
+        677,
+        313
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "bed-pillow-sage",
+      "source_crop": {
+        "reference": "docs/design-v2/room-layout-v2.png",
+        "rect": [
+          1288,
+          608,
+          195,
+          95
+        ]
+      },
+      "output_path": "beds/assets/bed-pillow-sage.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Two plain FLAT OVAL PILLOW pet beds, original clean production pixel illustration for cozy PokeCorner. Style, warm upper-left light and shallow room camera match approved room. Genuine alpha-zero transparent background, no background/floor/glow/haze. Two invisible equal TOP cells in2x2 grid, bottom cells empty transparent. TOP LEFT one solid warm cream oval floor pillow. TOP RIGHT exactly SAME pillow silhouette in muted sage green. A pillow is ONE low plump stuffed fabric cushion, domed upper surface, softly rounded perimeter, discrete seam around outer edge, small tuft stitches optional. Absolutely NO raised ring/bolster/rim/walls, NO sunken bowl, NO nest or donut, NO basket or wicker. No second interior cushion: single continuous solid pillow. Low wide oval in shallow front-facing floor perspective, short vertical thickness, visible top and front stitched edge. Warm crisp stepped pixel clusters and dark warm outline, textile texture, no plastic or photorealism. All empty, no pets/Pokemon/blanket/accessories. Each full pillow contained in top cell with at least60px clear transparent margin all around. No shadow; all shading confined within pillow silhouette. No text/grid/UI/frame/watermark. Transparent PNG atlas.",
+      "prompt_file": "beds/_sources/pillows-prompt.txt",
+      "dimensions": [
+        687,
+        323
+      ],
+      "atlas_dimensions": [
+        1536,
+        1024
+      ],
+      "opaque_bounds": [
+        9,
+        11,
+        677,
+        314
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "bed-basket-cream",
+      "source_crop": {
+        "reference": "docs/design-v2/room-layout-v2.png",
+        "rect": [
+          1288,
+          608,
+          195,
+          95
+        ]
+      },
+      "output_path": "beds/assets/bed-basket-cream.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: four empty pet beds as original clean pixel-art production sprite atlas for approved PokeCorner room. Approved room reference supplies warm pixel world, shallow elevated camera and basket bed proportions. Recreate original art, no crop pixels. Four invisible equal square2x2 cells, one COMPLETE empty bed centred in each. True alpha zero background, NO ambient haze, NO floor, NO background colour, NO glow. At least50px clear alpha around EACH cell edge, object and tiny minimal contact shadow occupy maximum80percent cell width. Low broad oval silhouettes in the room's shallow perspective, sides shorter than width, top visible, not overhead icons. Crisp warm detailed pixel clusters, warm outlines, warm sunlight upper left, cooler lower/right shading. TOP LEFT plain soft oval cream pillow bed, low plump stitched padded pillow with softly rounded edge. TOP RIGHT SAME pillow model in muted sage fabric. BOTTOM LEFT honey wicker low oval basket pet bed with plain cream thick cushion inset, faithful basket model to approved room, low braided raised rim, no handles. BOTTOM RIGHT SAME honey wicker basket model with muted sage cushion. Matching pair silhouettes and dimensions, palettes only differ for variants. Whole beds EMPTY, no pets, no Pokémon, no loose pillows, no blankets, no accessories. No text, grid, labels, border, UI, floor, watermark. Transparent PNG atlas, high-fidelity reusable isolated sprites.",
+      "prompt_file": "beds/_sources/pillow-basket-prompt.txt",
+      "dimensions": [
+        695,
+        382
+      ],
+      "atlas_dimensions": [
+        1536,
+        1024
+      ],
+      "opaque_bounds": [
+        9,
+        10,
+        684,
+        373
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "bed-basket-sage",
+      "source_crop": {
+        "reference": "docs/design-v2/room-layout-v2.png",
+        "rect": [
+          1288,
+          608,
+          195,
+          95
+        ]
+      },
+      "output_path": "beds/assets/bed-basket-sage.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: four empty pet beds as original clean pixel-art production sprite atlas for approved PokeCorner room. Approved room reference supplies warm pixel world, shallow elevated camera and basket bed proportions. Recreate original art, no crop pixels. Four invisible equal square2x2 cells, one COMPLETE empty bed centred in each. True alpha zero background, NO ambient haze, NO floor, NO background colour, NO glow. At least50px clear alpha around EACH cell edge, object and tiny minimal contact shadow occupy maximum80percent cell width. Low broad oval silhouettes in the room's shallow perspective, sides shorter than width, top visible, not overhead icons. Crisp warm detailed pixel clusters, warm outlines, warm sunlight upper left, cooler lower/right shading. TOP LEFT plain soft oval cream pillow bed, low plump stitched padded pillow with softly rounded edge. TOP RIGHT SAME pillow model in muted sage fabric. BOTTOM LEFT honey wicker low oval basket pet bed with plain cream thick cushion inset, faithful basket model to approved room, low braided raised rim, no handles. BOTTOM RIGHT SAME honey wicker basket model with muted sage cushion. Matching pair silhouettes and dimensions, palettes only differ for variants. Whole beds EMPTY, no pets, no Pokémon, no loose pillows, no blankets, no accessories. No text, grid, labels, border, UI, floor, watermark. Transparent PNG atlas, high-fidelity reusable isolated sprites.",
+      "prompt_file": "beds/_sources/pillow-basket-prompt.txt",
+      "dimensions": [
+        695,
+        382
+      ],
+      "atlas_dimensions": [
+        1536,
+        1024
+      ],
+      "opaque_bounds": [
+        9,
+        9,
+        686,
+        373
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "bed-nest-cream",
+      "source_crop": {
+        "reference": "docs/design-v2/room-layout-v2.png",
+        "rect": [
+          1288,
+          608,
+          195,
+          95
+        ]
+      },
+      "output_path": "beds/assets/bed-nest-cream.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: two original production pixel-art soft nest pet bed sprites for PokeCorner. Approved ROOM is style/light/camera reference only. Genuine completely transparent alpha zero background. Canvas square with invisible equal2x2 cells: TOP LEFT one cream soft nest bed, TOP RIGHT one sage soft nest bed, bottom2cells entirely empty transparent. Each complete object and tiny semitransparent contact shadow centred well within its own cell, at least60px fully clear alpha around cell boundaries, object occupies max75percent cell width. Do not fill canvas. Model: soft fabric low oval nest bed with continuous plush rounded raised bolster rim and shallow inset cushioned centre, small inward notch at front rim, no wicker, no handles. Cream variant has warm ivory upholstery and subtle stitched seams; sage variant exact same shape/dimensions in muted sage green upholstery. Whole empty beds, no pets or Pokémon or extra pillows. Room shallow slightly elevated camera, low broad ellipse, front exterior rim visible and back rim behind hollow centre, warm upper-left sunlight, darker under/right, crisp warm stepped pixel illustration matching approved room and honey furniture. No haze or glow outside actual silhouette. NO opaque scene, floor, background, checkerboard painting, grid, text, labels, border, props, blanket or watermark. Return transparent PNG atlas.",
+      "prompt_file": "beds/_sources/nests-prompt.txt",
+      "dimensions": [
+        681,
+        382
+      ],
+      "atlas_dimensions": [
+        1774,
+        887
+      ],
+      "opaque_bounds": [
+        9,
+        11,
+        665,
+        353
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    },
+    {
+      "id": "bed-nest-sage",
+      "source_crop": {
+        "reference": "docs/design-v2/room-layout-v2.png",
+        "rect": [
+          1288,
+          608,
+          195,
+          95
+        ]
+      },
+      "output_path": "beds/assets/bed-nest-sage.png",
+      "strategy": "faithful original regeneration in true-alpha atlas, shared technical crop retaining native pixels",
+      "prompt_used": "Use case: stylized-concept. Asset type: two original production pixel-art soft nest pet bed sprites for PokeCorner. Approved ROOM is style/light/camera reference only. Genuine completely transparent alpha zero background. Canvas square with invisible equal2x2 cells: TOP LEFT one cream soft nest bed, TOP RIGHT one sage soft nest bed, bottom2cells entirely empty transparent. Each complete object and tiny semitransparent contact shadow centred well within its own cell, at least60px fully clear alpha around cell boundaries, object occupies max75percent cell width. Do not fill canvas. Model: soft fabric low oval nest bed with continuous plush rounded raised bolster rim and shallow inset cushioned centre, small inward notch at front rim, no wicker, no handles. Cream variant has warm ivory upholstery and subtle stitched seams; sage variant exact same shape/dimensions in muted sage green upholstery. Whole empty beds, no pets or Pokémon or extra pillows. Room shallow slightly elevated camera, low broad ellipse, front exterior rim visible and back rim behind hollow centre, warm upper-left sunlight, darker under/right, crisp warm stepped pixel illustration matching approved room and honey furniture. No haze or glow outside actual silhouette. NO opaque scene, floor, background, checkerboard painting, grid, text, labels, border, props, blanket or watermark. Return transparent PNG atlas.",
+      "prompt_file": "beds/_sources/nests-prompt.txt",
+      "dimensions": [
+        681,
+        380
+      ],
+      "atlas_dimensions": [
+        1774,
+        887
+      ],
+      "opaque_bounds": [
+        9,
+        9,
+        666,
+        351
+      ],
+      "format": "png",
+      "transparency": true,
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "deviations": [],
+      "qa_status": "accepted",
+      "qa_notes": "Visual silhouette/material/palette/alpha comparison passed as isolated object; scene combination validation pending."
+    }
+  ],
+  "direct": [],
+  "semantic": [
+    {
+      "id": "beds-composition",
+      "implementation": "Use one uniformly scaled fixed scene layer container (WPF Canvas or equivalent HTML positioned scene). Draw independent PNG object sprites at slot ground anchors; preserve image aspect ratio and recompute surface children on model swap. Compose separate contact shadows where absent, then attached objects and foreground lip. Room clipping, navigation, labels and shop controls stay native components. For cabinet use cabinet-surface-registration.json measured per-master3anchors and front-lip geometry. Empty beds remain behind central live pet at side ground anchor.",
+      "notes": "Parent owns scene integration and final static stress previews. No implementation code edited.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "pillows",
+    "pillow-basket",
+    "nests"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "Original clean art generated with built-in image_gen; transparent_background true. Only shared splitter performs shipping technical cuts.",
+    "All PNG files visually inspected by workspace-relative path. No all-combination room validation claimed.",
+    "Requested atlas size 2048 where stated; actual native dimensions retained without upscaling."
+  ]
+}

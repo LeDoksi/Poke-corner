@@ -1,0 +1,54 @@
+{
+  "status": "passed-document-source-trace-not-migration-execution",
+  "fields": {
+    "src/PokeCorner.Core/Persistence/SaveData.cs": [
+      "Individuals",
+      "ActiveIndividualId",
+      "Settings",
+      "FeedingTreats",
+      "CatchAccumulatorUnits",
+      "FeedingRemainderUnits",
+      "ShopCoins",
+      "ShopRemainderUnits",
+      "ShopCatchLuckyCharmActive",
+      "CareStates",
+      "PendingEggs",
+      "PendingCatchCount"
+    ],
+    "src/PokeCorner.Core/AppSettings.cs": [
+      "CareMode",
+      "AutoHideInFullscreen",
+      "StartWithWindows",
+      "ScreenCorner",
+      "MonitorIndex",
+      "PetSizePixels",
+      "ShowProgressPanel",
+      "PetPositionX",
+      "PetPositionY",
+      "CrySoundVolume",
+      "SuperHardcoreEnabled"
+    ],
+    "src/PokeCorner.Core/Domain/PokemonIndividual.cs": [
+      "Id",
+      "SpeciesId",
+      "EvolutionChainId",
+      "ChainLength",
+      "Nature",
+      "IsShiny",
+      "CaughtAtUtc",
+      "AccumulatedCarePoints",
+      "CurrentStage",
+      "IsFavorite",
+      "DisplayStageOverride",
+      "Nickname"
+    ],
+    "src/PokeCorner.Core/Domain/CareState.cs": [
+      "LastInteractionUtc",
+      "RanAwayUntilUtc",
+      "LastNeglectCheckUtc",
+      "LastPetUtc"
+    ]
+  },
+  "realSaveRead": false,
+  "realSaveChanged": false
+}

@@ -1,0 +1,205 @@
+{
+  "version": 1,
+  "status": "production_geometry_contract_not_final_asset_acceptance",
+  "authority": "User approval of room-layout-v2.png and furniture-models-v1.png; room-facing orientation wins over catalogue presentation",
+  "reference": {
+    "room": "docs/design-v2/room-layout-v2.png",
+    "room_image_px": [1536, 1024],
+    "furniture": "docs/design-v2/furniture-models-v1.png",
+    "furniture_image_px": [1448, 1086],
+    "scene_source_rect_xywh": [44, 231, 1448, 582],
+    "logical_scene_px": [1448, 582],
+    "preferred_master_px": [2896, 1164],
+    "measurement_error_px": 8,
+    "rect_convention": "x,y,width,height; right and bottom exclusive; all source_px coordinates below are in the full approved room image unless named furniture_sheet",
+    "crop_policy": "Reference crops only; regenerate clean components. Never ship a mock crop. Approved rug extends beyond lower scene edge; produce its whole silhouette."
+  },
+  "camera": {
+    "projection": "shallow front-facing illustrative 2.5D, approximately orthographic; not isometric and not a mathematically consistent one-point perspective",
+    "visual_axis": "verticals stay vertical, back-wall horizontal rails stay nearly horizontal, tops visible, left-side chair sees its LEFT exterior side, central and right furniture see shallow RIGHT exterior sides",
+    "effective_downward_pitch_deg_range": [12, 20],
+    "pitch_is_inferred_not_measured": true,
+    "floor_origin_source_px": [44, 610],
+    "floor_depth_span_px": 203,
+    "world_axes": "X horizontal normalized room width; Z projected floor depth normalized from rear floor y=610 to front y=813; H height in the same 203-pixel projected unit. This is an art placement coordinate system, not metres or reconstructed physical 3D.",
+    "world_to_source": "x=44+1448*X; y=610+203*Z-203*H",
+    "source_to_scene_uv": "u=(x-44)/1448; v=(y-231)/582",
+    "global_light": "warm daylight from upper left window; cooler ambient shadow on right/underneath; keep contact shadows separable from object art",
+    "pixel_language": "crisp clustered pixel illustration, warm timber/cream/sage/dusty blue. No photo texture, vector simplification, blur or new outlines. Preserve source pixel grouping when normalizing; resample once, nearest-neighbour."
+  },
+  "composition": {
+    "floor_wall_seam_source_y": 610,
+    "central_pet_floor_polygon_source_px": [[605,654],[1120,654],[1235,813],[480,813]],
+    "central_pet_floor_polygon_world_xz": [[0.387431,0.216749],[0.743094,0.216749],[0.822514,1],[0.301105,1]],
+    "pet_ground_anchor_source_px": [839,757],
+    "pet_ground_anchor_world": [0.549033,0.724138,0],
+    "approved_pet_visual_source_rect": [746,601,182,163],
+    "pet_policy": "Pet is a live separate sprite; scene plate, rug and bed contain no Pokemon. Ground polygon excludes furniture/pot/bed contact footprints, not pet heads or alpha silhouette bounding rectangles. Pet may visually overlap background cabinet.",
+    "rug_source_rect": [365,664,1037,149],
+    "rug_full_logical_max_wh": [1040,170],
+    "bed_empty": true,
+    "bed_ground_anchor_source_px": [1385,697],
+    "bed_ground_anchor_world": [0.926105,0.428571,0],
+    "bed_source_rect": [1288,608,195,95],
+    "bed_max_logical_wh": [200,105]
+  },
+  "furniture_slots": [
+    {
+      "id": "table", "approved_model": "T1", "ground_anchor_source_px": [475,716], "ground_anchor_world": [0.297652,0.522167,0],
+      "approved_source_rect": [405,586,148,130], "soft_contact_footprint_source_rect": [412,679,135,37], "max_opaque_draw_wh": [225,165],
+      "orientation": "nearly frontal, shallow visible top; right side on non-round variants; do not rotate table into catalogue diagonal",
+      "models": [
+        {"id":"T1","name":"Круглый","furniture_sheet_rect":[150,141,153,133],"logical_draw_wh":[148,130],"plant_support_source_px":[457,590],"plant_support_local_px":[52,4],"surface_safe_source_rect":[421,586,115,17]},
+        {"id":"T2","name":"С ящиком","furniture_sheet_rect":[477,126,172,149],"logical_draw_wh":[165,160],"plant_support_source_px":[457,563],"plant_support_local_px":[64,7],"surface_safe_source_rect":[408,557,130,20]},
+        {"id":"T3","name":"Сундук","furniture_sheet_rect":[783,141,253,135],"logical_draw_wh":[210,122],"plant_support_source_px":[457,606],"plant_support_local_px":[87,12],"surface_safe_source_rect":[388,595,172,21]},
+        {"id":"T4","name":"Овальный","furniture_sheet_rect":[1142,144,253,131],"logical_draw_wh":[225,123],"plant_support_source_px":[457,605],"plant_support_local_px":[94,12],"surface_safe_source_rect":[382,595,185,21]}
+      ],
+      "swap_rule":"Keep ground anchor, recompute support from selected model. Plant follows tabletop height; no world-fixed hovering pot. The approved mug is not part of reusable furniture."
+    },
+    {
+      "id":"cabinet", "approved_model":"C3", "ground_anchor_source_px":[851,632], "ground_anchor_world":[0.55732,0.108374,0],
+      "approved_source_rect":[626,400,453,234], "soft_contact_footprint_source_rect":[629,611,448,23], "max_opaque_draw_wh":[454,250],
+      "orientation":"front face almost square to viewer, narrow visible RIGHT side, shallow top. No catalogue three-quarter exaggeration.",
+      "logical_draw_origin_source_px":[624,382],
+      "canonical_logical_canvas_wh":[454,250],
+      "all_models_keep_shared_trophy_envelope":true,
+      "models":[
+        {"id":"C1","name":"Дубовый","furniture_sheet_rect":[139,344,246,187],"logical_draw_wh":[440,234],"top_plant_support_source_px":[661,405],"shelf_support_source_y":510,"shelf_safe_source_rect":[689,493,328,17],"lip_source_y_range":[512,528]},
+        {"id":"C2","name":"Мастерская","furniture_sheet_rect":[443,340,283,190],"logical_draw_wh":[454,242],"top_plant_support_source_px":[661,401],"shelf_support_source_y":506,"shelf_safe_source_rect":[689,489,328,17],"lip_source_y_range":[508,524]},
+        {"id":"C3","name":"Книжный","furniture_sheet_rect":[785,340,285,192],"logical_draw_wh":[453,234],"top_plant_support_source_px":[661,405],"shelf_support_source_y":510,"shelf_safe_source_rect":[689,493,328,17],"lip_source_y_range":[512,529]},
+        {"id":"C4","name":"Светлый","furniture_sheet_rect":[1133,339,266,195],"logical_draw_wh":[446,244],"top_plant_support_source_px":[661,398],"shelf_support_source_y":504,"shelf_safe_source_rect":[689,487,328,17],"lip_source_y_range":[506,523]}
+      ],
+      "proposed_surfaces_need_final_alpha_validation":true,
+      "layers":["empty_body_with_shelf_and_intrinsic_books","separate_trophy_contact_shadows","three_separate_trophies","separate_front_shelf_lip","separate_top_plant"],
+      "swap_rule":"Three trophy IDs survive all C1-C4 swaps. Shelf baseline and top plant support come from that model. Lower books are intrinsic C3 art; trophy, plant and trophy shadow pixels must never be baked into body/lip."
+    },
+    {
+      "id":"armchair", "approved_model":"A1", "ground_anchor_source_px":[294,765], "ground_anchor_world":[0.172652,0.763547,0],
+      "approved_source_rect":[151,529,286,240], "soft_contact_footprint_source_rect":[154,704,279,65], "max_opaque_draw_wh":[290,245],
+      "orientation":"Faces inward toward centre/right. LEFT outer side visible in approved room. All A variants must be drawn at this same placement angle; do not use catalogue right-side views or mirror lighting blindly.",
+      "models":[
+        {"id":"A1","name":"Клетчатое","furniture_sheet_rect":[115,580,218,188],"logical_draw_wh":[286,240]},
+        {"id":"A2","name":"Тёплое","furniture_sheet_rect":[462,579,218,190],"logical_draw_wh":[270,242]},
+        {"id":"A3","name":"Плетёное","furniture_sheet_rect":[801,580,214,192],"logical_draw_wh":[265,242]},
+        {"id":"A4","name":"Облачко","furniture_sheet_rect":[1155,582,231,190],"logical_draw_wh":[290,235]}
+      ],
+      "swap_rule":"Preserve seat height around scene y=654 and ground anchor. Optional cushion/throw shown in model sheet belongs to that model, not a fifth decor slot."
+    },
+    {
+      "id":"dresser", "approved_model":"D2", "ground_anchor_source_px":[1245,640], "ground_anchor_world":[0.82942,0.147783,0],
+      "approved_source_rect":[1092,510,309,129], "soft_contact_footprint_source_rect":[1096,620,299,20], "max_opaque_draw_wh":[312,220],
+      "orientation":"near-frontal, shallow visible RIGHT side, top recedes up/right. Tall D3 remains visibly narrower; never scale all models to equal widths.",
+      "models":[
+        {"id":"D1","name":"Классический","furniture_sheet_rect":[159,825,213,177],"logical_draw_wh":[238,196]},
+        {"id":"D2","name":"Низкий","furniture_sheet_rect":[443,845,280,159],"logical_draw_wh":[309,129]},
+        {"id":"D3","name":"Узкий","furniture_sheet_rect":[869,813,122,191],"logical_draw_wh":[138,220]},
+        {"id":"D4","name":"Раздвижной","furniture_sheet_rect":[1127,839,284,160],"logical_draw_wh":[312,137]}
+      ],
+      "swap_rule":"Keep ground anchor, preserve characteristic heights/widths. Dresser books from room demonstration are separate optional set dressing, not intrinsic D2 or a user-configurable inventory model."
+    }
+  ],
+  "trophy_slots": {
+    "count":3, "ids":["left","centre","right"], "approved_sources":[[703,437,80,75],[813,436,85,77],[929,441,65,71]],
+    "C3_support_anchors_source_px":[[744,510],[853,510],[960,510]],
+    "C3_support_world":[[0.483425,0.108374,0.600985],[0.558702,0.108374,0.600985],[0.632597,0.108374,0.600985]],
+    "max_opaque_draw_wh":[86,80], "base_width_range_px":[42,76], "base_depth_range_px":[8,16],
+    "normal_trophy_draw_wh":[80,76], "logical_canvas_wh":[96,96], "preferred_master_wh":[384,384],
+    "logical_base_anchor_px":[48,88], "alpha_padding_min_logical_px":8,
+    "body_has_no_trophies":true, "front_lip_separate":true,
+    "placement":"Bottom centre of trophy base sits on model shelf support, not sprite canvas bottom. Keep feet behind front shelf lip. Per-model support delta: C1=0, C2=-4, C3=0, C4=-6 relative to y=510.",
+    "lighting":"Do not recolour trophies when changing cabinet. Contact shadow sits on shelf plane below base, clipped to shelf interior. Glass/metal highlight remains consistent with left window.",
+    "library_target_appearances":63,
+    "library_breakdown":{"chains":11,"stages_per_chain":4,"independent":19},
+    "catalogue_scope_note":"Parent supplies 63-appearance production inventory. ACHIEVEMENTS.md alone still enumerates 16 independent goals; do not invent the other three visual identities from geometry."
+  },
+  "plant_slots":[
+    {"id":"windowsill","compatible_class":"small","approved_source_rect":[131,410,142,118],"support_source_px":[187,522],"support_world":[0.098757,0,0.433498],"max_opaque_draw_wh":[145,135],"pot_base_wh_range":[32,52],"safe_support_source_rect":[145,509,98,16],"order":"window then plant then near sill edge; curtain silhouette must not obscure pot or full canopy"},
+    {"id":"table","compatible_class":"small","approved_source_rect":[432,532,52,60],"support_source_px":[457,590],"support_world":[0.285221,0.522167,0.62069],"max_opaque_draw_wh":[86,96],"pot_base_wh_range":[28,42],"safe_support":"selected table model surface_safe_source_rect","order":"table top then plant; support follows selected model"},
+    {"id":"cabinet_top","compatible_class":"small","approved_source_rect":[583,347,159,198],"support_source_px":[661,405],"support_world":[0.426105,0.108374,1.118227],"max_upright_opaque_draw_wh":[145,95],"max_trailing_opaque_draw_wh":[159,198],"pot_base_wh_range":[30,48],"safe_support_source_rect":[633,399,89,16],"order":"cabinet then pot/canopy; approved vine may trail down LEFT outer stile only, never over trophy cells or paintings","note":"The approved room has a trailing vine although DECOR.md lists six small species. Treat its placement as canopy/occlusion evidence; do not invent an eleventh purchasable plant."},
+    {"id":"floor_left","compatible_class":"floor","approved_source_rect":[44,475,155,284],"support_source_px":[105,754],"support_world":[0.042127,0.70936,0],"max_opaque_draw_wh":[165,285],"pot_base_wh_range":[68,100],"safe_contact_source_rect":[49,701,108,59],"order":"after chair because contact depth and approved overlap place plant leaves in front of chair's left edge; retain natural alpha gaps"}
+  ],
+  "picture_slots":[
+    {"id":"left","approved_subject":"region-map","source_rect":[628,262,154,122],"centre_source_px":[705,323],"centre_scene_uv":[0.456492,0.158076],"centre_world":[0.456492,0,1.413793],"max_frame_logical_wh":[154,122]},
+    {"id":"centre","approved_subject":"bulbasaur-plants","source_rect":[814,262,142,124],"centre_source_px":[885,324],"centre_scene_uv":[0.580801,0.159794],"centre_world":[0.580801,0,1.408867],"max_frame_logical_wh":[154,124]},
+    {"id":"right","approved_subject":"mew-stars","source_rect":[995,262,181,125],"centre_source_px":[1085.5,324.5],"centre_scene_uv":[0.719268,0.160653],"centre_world":[0.719268,0,1.406404],"max_frame_logical_wh":[181,125]}
+  ],
+  "picture_policy":"All 12 pictures fit any of the three wall slots with uniform scaling to slot envelope, never stretch. Frame is physical scene object and may be raster with artwork; UI card border is not. Vertical paintings letterbox in room using clear wall pixels, never opaque padding within asset.",
+  "window": {"source_rect":[135,234,264,298],"curtain_source_rect":[55,231,394,360],"rod_source_y":236,"sill_support_source_y":522,"curtain_logical_canvas_wh":[400,365],"curtain_safe_opening_source_rect":[137,252,256,255],"curtain_rule":"Pair plus rod is one independent replaceable layer, or pair/rod split if intrinsic edge clipping requires it. Preserve an open centre and plant-safe sill. No window scenery/plant baked into curtains."},
+  "layer_order":[
+    {"z":0,"id":"wall_finish_back_left_right","policy":"12 switchable room-registered wall plates, structural beam/window holes aligned"},
+    {"z":10,"id":"floor_base","policy":"timber floor; no furniture, rug, pet or furniture shadows"},
+    {"z":20,"id":"structural_trim_and_window","policy":"fixed timber posts/baseboards/window frame/outdoor scene; illumination overlay separable where floor/wall changes"},
+    {"z":30,"id":"pictures"},
+    {"z":40,"id":"curtains"},
+    {"z":45,"id":"windowsill_plant"},
+    {"z":46,"id":"windowsill_foreground_edge"},
+    {"z":50,"id":"rug"},
+    {"z":60,"id":"rear_furniture_contact_shadows"},
+    {"z":61,"id":"cabinet_empty_body"},
+    {"z":62,"id":"trophy_contact_shadows"},
+    {"z":63,"id":"three_trophies"},
+    {"z":64,"id":"cabinet_shelf_front_lip"},
+    {"z":65,"id":"cabinet_top_plant"},
+    {"z":66,"id":"dresser"},
+    {"z":70,"id":"empty_bed_shadow_and_body"},
+    {"z":80,"id":"table_shadow_and_body"},
+    {"z":81,"id":"table_plant"},
+    {"z":90,"id":"chair_shadow_and_body"},
+    {"z":95,"id":"floor_plant_shadow_and_body"},
+    {"z":100,"id":"pet_contact_shadow"},
+    {"z":101,"id":"live_pet"}
+  ],
+  "production_manifest_opinion": {
+    "produce":[
+      {"id":"furniture","count":16,"source_crop":"furniture_slots.models.furniture_sheet_rect; approved_source_rect for T1/C3/A1/D2","strategy":"faithful regeneration at room-facing angle into true-alpha small atlases then technical cutting","format":"png","transparency":true,"dimensions":"logical_draw_wh per model; preferred >=4x logical master for small cutouts; actual emitted atlas size measured","qa_status":"needs_parent_review","deviations":"Catalogue chair orientation corrected to approved room orientation. Mug/dresser demonstration books omitted as independent incidental props."},
+      {"id":"rugs","count":12,"source_crop":[365,664,1037,149],"strategy":"whole floor-plane clean artwork, faithful shape/pattern with approved 4 models x3 palettes","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[1060,190],"preferred_master_wh":[2120,380]},"qa_status":"needs_parent_review","deviations":"Complete lower edge missing in mock must be reconstructed, not cropped."},
+      {"id":"curtains","count":9,"source_crop":[55,231,394,360],"strategy":"3 models x3 palettes, true-alpha pair at fixed window geometry","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[400,365],"preferred_master_wh":[1600,1460]},"qa_status":"needs_parent_review"},
+      {"id":"small_plants","count":12,"source_crop":"plant_slots for three elevated supports","strategy":"six species x two pot treatments, one reusable view; placement scale follows support. No source mock pixels ship","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[160,160],"preferred_master_wh":[640,640]},"qa_status":"needs_parent_review"},
+      {"id":"floor_plants","count":8,"source_crop":[44,475,155,284],"strategy":"four floor species x two pot treatments, scene-facing silhouette","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[185,305],"preferred_master_wh":[740,1220]},"qa_status":"needs_parent_review"},
+      {"id":"wall_finishes","count":12,"source_crop":"entire scene rect, excluding window and beam/trim areas","strategy":"four finishes x3 palettes as registered wall plates. Generate clean walls without furniture, paintings, window, UI; architecture composes separately","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[1448,582],"preferred_master_wh":[2896,1164]},"qa_status":"needs_parent_review"},
+      {"id":"beds","count":6,"source_crop":[1288,608,195,95],"strategy":"three models x2 palettes, whole empty bed, scene-facing angle","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[220,125],"preferred_master_wh":[880,500]},"qa_status":"needs_parent_review"},
+      {"id":"pictures","count":12,"source_crop":"picture_slots.source_rect","strategy":"12 subjects, physical frame included, front-facing true-alpha clean art. One original per subject reusable in three slots","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[192,144],"preferred_master_wh":[768,576]},"qa_status":"needs_parent_review"},
+      {"id":"trophy_appearances","count":63,"source_crop":"trophy_slots.approved_sources plus approved achievements visual brief","strategy":"11 x4 staged compositions and19 independent miniatures, all separate from cabinets","format":"png","transparency":true,"dimensions":{"logical_canvas_wh":[96,96],"preferred_master_wh":[384,384]},"qa_status":"needs_parent_review"},
+      {"id":"architecture","count":"production layers, not inventory models","source_crop":"scene_source_rect_xywh","strategy":"empty clean plate plus floor, trim/window and optional daylight layers separated by technical masks/cutting, never repainting","format":"png","transparency":"floor can be opaque; upper scene/trim/window require alpha where composited","dimensions":{"logical_canvas_wh":[1448,582],"preferred_master_wh":[2896,1164]},"qa_status":"needs_parent_review"},
+      {"id":"cabinet_lips","count":4,"source_crop":"per-model shelf front lip","strategy":"production body-matched exact overlay, technical split from each clean cabinet master","format":"png","transparency":true,"dimensions":"same registration as cabinet canvas, or cropped with explicit offset","qa_status":"needs_parent_review"}
+    ],
+    "direct":[],
+    "semantic":[
+      {"id":"room_registration","implementation":"Fixed logical scene canvas with uniformly scaled composition container; one origin and one scale applied to all layers. Do not reflow furniture individually or stretch room to viewport.","notes":"HTML/CSS or WPF scene composition owns placement and alpha-independent draw bounds.","qa_status":"accepted"},
+      {"id":"ui_chrome","implementation":"Keep application navigation, status bars, labels, buttons, wallets and scene rounded clipping in component/layout code outside raster plate.","notes":"Approved mock UI is not production image content.","qa_status":"accepted"},
+      {"id":"pet","implementation":"Existing animated species sprite plus independent floor contact shadow at pet ground anchor, above decor layers.","notes":"No pet baked into rug or bed; preserve awake central pet.","qa_status":"accepted"},
+      {"id":"trophy_locked_silhouette","implementation":"Render current relevant trophy alpha as solid single-colour silhouette in album using mask; no internal details and no additional raster per locked state.","notes":"Do not expose future chain art before unlock.","qa_status":"accepted"},
+      {"id":"surface_composition","implementation":"Model metadata supplies top/shelf anchors, trophy scale, front-lip overlay and support mask. Draw object then support contact shadow then attached item then edge overlay; child positions recompute on furniture swap.","notes":"CSS/WPF owns stacking and shadow registration; raster owns intrinsic perspective/material.","qa_status":"accepted"}
+    ],
+    "inventory_variant_total":87,
+    "trophy_appearance_total":63,
+    "inventory_total_excludes_architecture_and_lips":true,
+    "output_path_policy":"Parent production manifest owns final filenames. Assets stay in docs/design-v2/art-production/assets; raw atlases, references and masks in sibling sources/review. This geometry file does not claim raster files already exist."
+  },
+  "asset_registration": {
+    "distinguish":["actual_master_file_wh","atlas_cell_rect","nonzero_alpha_bounds","logical_draw_wh","local_ground_or_surface_anchor","scene_world_anchor"],
+    "rule":"Measure generated dimensions and alpha bounds. Uniformly map the opaque subject to logical_draw_wh and preserve aspect; do not derive scene scale from atlas-cell size or transparent padding. Never stretch an image to satisfy requested master dimensions.",
+    "alpha_padding":"Small cutouts: >=8 logical pixels clear on each side, except natural intrinsic trailing leaves. Floor plants >=10; frames >=4; rugs/beds >=10. At 4x scale these are32/40/16/40 master pixels. Actual generator padding may differ and must be measured.",
+    "shadow_padding":"Contact shadow is separate or explicitly registered companion, up to12 logical pixels around ground footprint; never fill whole atlas cell with grey cast shadow.",
+    "atlases":"User allows small transparent atlases and Python cutting/alignment/scaling without repainting. Equal cells are packaging only; retain per-sprite alpha bounds and support anchors, and reject any cell collision or cut subject."
+  },
+  "qa_requirements":[
+    "Compare every object silhouette/material/palette with its approved furniture/model/room reference; no baked trophies/plants/text/UI.",
+    "Check all four cabinet bodies with the three largest trophy stages simultaneously plus maximum allowed upper plant; shelf lip hides base edge only, not trophy details.",
+    "Check each T model with tallest allowable small plant; table surface and plant bottom remain in contact and outside central pet ground polygon.",
+    "Check each chair with each floor species; alpha gaps and contact footprints decide collisions, not overlapping broad bounding boxes.",
+    "Check tallest D3 with bed and right picture; dresser must not crowd Mew frame or side bed, and narrow form remains narrow.",
+    "Check all curtains with biggest allowed windowsill plant; retain complete canopy/visible pot and enough outdoor opening.",
+    "Render empty starter, maximum-fill room and swap contact-sheet composites on the same scene coordinates; static previews only.",
+    "Record actual master dimensions, alpha bounds, local anchors and scale factors for every cut PNG. No fake transparent checkerboard or opaque margin accepted."
+  ],
+  "execution_order":["canonical architecture clean plate and masks","T1-T4,C1-C4,A1-A4,D1-D4 with measured supports","cabinet front lips and contact shadow registration","three largest trophy stress samples and cabinet-top plant","remaining63 trophy appearance library","all20 plant variants","all12 rugs,9 curtains,6 beds,12 pictures,12 wall finishes","technical cuts and per-file alpha geometry","static starter/full/swap comparison composites"],
+  "blockers":[],
+  "assumptions":[
+    "All approved source rectangles measured by visual inspection are approximate within8px; production alpha/support points replace them after generation.",
+    "Master dimensions are preferred resolution targets, not promises from imagegen. Logical draw sizes and world anchors are the actual placement contract.",
+    "Non-reference decor variants follow agreed model taxonomy and palette family; geometry does not invent palette names or new purchasable species.",
+    "Per-model cabinet surface deltas and non-approved furniture scene sizes are production constraints derived from approved proportions, requiring final static validation.",
+    "No implementation or pet sprite production is included in this geometry assignment."
+  ]
+}

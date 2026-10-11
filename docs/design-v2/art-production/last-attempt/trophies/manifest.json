@@ -1,0 +1,2168 @@
+{
+  "produce": [],
+  "direct": [
+    {
+      "id": "trophy-species-1",
+      "source_crop": "trophies/assets/trophy-species-1.png",
+      "sourceSha256": "4ddac75e853f4887959dab32e231549e6c2cedcf70222bcaf69b209f0775ff13",
+      "originalRGBASha256": "544056b1fc837bf22d32da1abe11f7a73d6dd72e154321e772b85deddba548f4",
+      "output_path": "assets/trophy-species-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: closed green field guide book with leaf emblem; TOP RIGHT: open illustrated field guide on small book stand; BOTTOM LEFT: open guide plus magnifier and pressed leaf; BOTTOM RIGHT: open guide with miniature branching specimen tree and magnifier.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        107,
+        94
+      ],
+      "logicalSize": [
+        107,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98034
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Book covers/open pages, leaf marks and magnifying-glass motifs visible; page micro-marks are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-species-2",
+      "source_crop": "trophies/assets/trophy-species-2.png",
+      "sourceSha256": "d22db9d7b38744dde7729666671c53e88ded571877af72b0568c517f59c49d37",
+      "originalRGBASha256": "73de2d21113e64a00a1680808cab1219b2aee55c7b2108c328c37a5054c5cc47",
+      "output_path": "assets/trophy-species-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: closed green field guide book with leaf emblem; TOP RIGHT: open illustrated field guide on small book stand; BOTTOM LEFT: open guide plus magnifier and pressed leaf; BOTTOM RIGHT: open guide with miniature branching specimen tree and magnifier.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        123,
+        94
+      ],
+      "logicalSize": [
+        123,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97519
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Book covers/open pages, leaf marks and magnifying-glass motifs visible; page micro-marks are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-species-3",
+      "source_crop": "trophies/assets/trophy-species-3.png",
+      "sourceSha256": "c4608de95ac05e209843e84d33200d9d373d252f7b14fe1529baeef81c385545",
+      "originalRGBASha256": "db3986bfbb497c5d0da2bc9cf7cbb8e8a72978b981cbcb8f6d2a22f8f5f21311",
+      "output_path": "assets/trophy-species-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: closed green field guide book with leaf emblem; TOP RIGHT: open illustrated field guide on small book stand; BOTTOM LEFT: open guide plus magnifier and pressed leaf; BOTTOM RIGHT: open guide with miniature branching specimen tree and magnifier.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        132,
+        86
+      ],
+      "logicalSize": [
+        132,
+        86
+      ],
+      "footAnchor": [
+        0.5,
+        0.9782
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Book covers/open pages, leaf marks and magnifying-glass motifs visible; page micro-marks are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-species-4",
+      "source_crop": "trophies/assets/trophy-species-4.png",
+      "sourceSha256": "c286b7bad34a6b93062872b02ea44cf4b0a6f4b13f2f966a7119ae831a38a9ae",
+      "originalRGBASha256": "00d9d9c60a92381f44f7082ad3dd86c9ed0b984ab9c61cc7c7918550e9d79d1b",
+      "output_path": "assets/trophy-species-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: closed green field guide book with leaf emblem; TOP RIGHT: open illustrated field guide on small book stand; BOTTOM LEFT: open guide plus magnifier and pressed leaf; BOTTOM RIGHT: open guide with miniature branching specimen tree and magnifier.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        112,
+        94
+      ],
+      "logicalSize": [
+        112,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98301
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Book covers/open pages, leaf marks and magnifying-glass motifs visible; page micro-marks are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-population-1",
+      "source_crop": "trophies/assets/trophy-population-1.png",
+      "sourceSha256": "21b1b3f0f1d86842087225cb05b042c92cc7fb6bc27ad4a03d90228859759b46",
+      "originalRGBASha256": "9e9d1c6cd3dae27ba43ce78de51f4817883ee8268cac99a0667ec1aeaf4a93a2",
+      "output_path": "assets/trophy-population-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: two small ceramic woodland creature figures; TOP RIGHT: three varied ceramic woodland creature figures; BOTTOM LEFT: five grouped creature figures on stepped pedestal; BOTTOM RIGHT: large tight group of varied tiny creature figures on two-tier pedestal.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        98,
+        94
+      ],
+      "logicalSize": [
+        98,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97654
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Eevee/evolution silhouettes and colors visible; larger groups crowd individual small faces.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-population-2",
+      "source_crop": "trophies/assets/trophy-population-2.png",
+      "sourceSha256": "934bd4cd6a3430370cff4cf4b5daf2f6471f9d3bf912c67abc8103a028d6cbad",
+      "originalRGBASha256": "88ae34d414ce8185c95bf13c7cc6d4aa5aa3dee32c66ea7f092e2bf4cfc73cf3",
+      "output_path": "assets/trophy-population-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: two small ceramic woodland creature figures; TOP RIGHT: three varied ceramic woodland creature figures; BOTTOM LEFT: five grouped creature figures on stepped pedestal; BOTTOM RIGHT: large tight group of varied tiny creature figures on two-tier pedestal.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        131,
+        94
+      ],
+      "logicalSize": [
+        131,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97101
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Eevee/evolution silhouettes and colors visible; larger groups crowd individual small faces.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-population-3",
+      "source_crop": "trophies/assets/trophy-population-3.png",
+      "sourceSha256": "226cadecaf4d6922008cf2c56c2ca4eab909f632ef3e8d0e893d0b8e1049bc0d",
+      "originalRGBASha256": "81409bf97bcc24917675d6a2eb3c1a67e937972bb478c563425e89bcf3e12f46",
+      "output_path": "assets/trophy-population-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: two small ceramic woodland creature figures; TOP RIGHT: three varied ceramic woodland creature figures; BOTTOM LEFT: five grouped creature figures on stepped pedestal; BOTTOM RIGHT: large tight group of varied tiny creature figures on two-tier pedestal.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        109,
+        94
+      ],
+      "logicalSize": [
+        109,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98234
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Eevee/evolution silhouettes and colors visible; larger groups crowd individual small faces.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-population-4",
+      "source_crop": "trophies/assets/trophy-population-4.png",
+      "sourceSha256": "e682989990b8c55e4f71627df8bcad2cbf50759a47d27664b3ad8d5ff078b581",
+      "originalRGBASha256": "9acf46ccb2c2f51a18ee8bfa924beef5033643bd1e51168d94165a3fd80a7471",
+      "output_path": "assets/trophy-population-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: two small ceramic woodland creature figures; TOP RIGHT: three varied ceramic woodland creature figures; BOTTOM LEFT: five grouped creature figures on stepped pedestal; BOTTOM RIGHT: large tight group of varied tiny creature figures on two-tier pedestal.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        103,
+        94
+      ],
+      "logicalSize": [
+        103,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98431
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Eevee/evolution silhouettes and colors visible; larger groups crowd individual small faces.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-catches-1",
+      "source_crop": "trophies/assets/trophy-catches-1.png",
+      "sourceSha256": "1f37e3e76bcc3315e6c0bebc71be088b5deb6edf754a566cfe775cdacc32fc80",
+      "originalRGBASha256": "ee66461bb5d0114dbee0e939560a7cebc888a56eb6df174777efcc211ce9331f",
+      "output_path": "assets/trophy-catches-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single red white pokeball; TOP RIGHT: pokeball with small grass tuft; BOTTOM LEFT: pokeball with fern and two miniature balls; BOTTOM RIGHT: central pokeball flanked by two balls and leafy laurel.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        106,
+        94
+      ],
+      "logicalSize": [
+        106,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Pokeball red/white division, surrounding greenery and tier ornament differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-catches-2",
+      "source_crop": "trophies/assets/trophy-catches-2.png",
+      "sourceSha256": "601ad911f14bac902dba937488c7117f25f8600116cdd62d45deba2b4987c425",
+      "originalRGBASha256": "f64e7d153133c0aed80b03e651ef492e6524c57c739451932ff36c5417d844f3",
+      "output_path": "assets/trophy-catches-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single red white pokeball; TOP RIGHT: pokeball with small grass tuft; BOTTOM LEFT: pokeball with fern and two miniature balls; BOTTOM RIGHT: central pokeball flanked by two balls and leafy laurel.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        132,
+        91
+      ],
+      "logicalSize": [
+        132,
+        91
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Pokeball red/white division, surrounding greenery and tier ornament differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-catches-3",
+      "source_crop": "trophies/assets/trophy-catches-3.png",
+      "sourceSha256": "d7a7972b9f72cb4a38dc5e35dcbae7f62ec0e3c473bd2fa774c28d93e702a6a7",
+      "originalRGBASha256": "8093df4a06c5bfa495c8efb4f578010b4af790f3774df441e2b9cc5b2d1b037d",
+      "output_path": "assets/trophy-catches-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single red white pokeball; TOP RIGHT: pokeball with small grass tuft; BOTTOM LEFT: pokeball with fern and two miniature balls; BOTTOM RIGHT: central pokeball flanked by two balls and leafy laurel.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        126,
+        94
+      ],
+      "logicalSize": [
+        126,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98148
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Pokeball red/white division, surrounding greenery and tier ornament differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-catches-4",
+      "source_crop": "trophies/assets/trophy-catches-4.png",
+      "sourceSha256": "34b27436da3c52695fff9d9a35ae9a8d83522f5be2127415049804ef80731f2a",
+      "originalRGBASha256": "65b17b8650a8cf070c783845cee499065e3799d34c9556a8df00e26056730ab6",
+      "output_path": "assets/trophy-catches-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single red white pokeball; TOP RIGHT: pokeball with small grass tuft; BOTTOM LEFT: pokeball with fern and two miniature balls; BOTTOM RIGHT: central pokeball flanked by two balls and leafy laurel.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        122,
+        94
+      ],
+      "logicalSize": [
+        122,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98206
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Pokeball red/white division, surrounding greenery and tier ornament differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "source_crop": "trophies/assets/trophy-expeditions-1.png",
+      "sourceSha256": "6e0f69203aa23d0e103662fe2e03674ab9bb5c3461d3fc765683ce304f28dacf",
+      "originalRGBASha256": "d5a5404a67fd7d49d920968d938f54a26755d6b6edc6fbbdb28b726bf12e5e5b",
+      "output_path": "assets/trophy-expeditions-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small single mountain peak; TOP RIGHT: mountain with tent at foot; BOTTOM LEFT: two mountains with tent and pine; BOTTOM RIGHT: mountain camp with two peaks tent pine and little flag.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        116,
+        94
+      ],
+      "logicalSize": [
+        116,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97479
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Mountain snow, trees, tent and summit flag differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "source_crop": "trophies/assets/trophy-expeditions-2.png",
+      "sourceSha256": "75d0dded1f61effd47e7824709111e6af8a734871aeb9441d3c5f7fc3bf7509f",
+      "originalRGBASha256": "15c07b316cc927ad9078e8a7e1cb84ad91c2243898fe50df4099655747afbb6a",
+      "output_path": "assets/trophy-expeditions-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small single mountain peak; TOP RIGHT: mountain with tent at foot; BOTTOM LEFT: two mountains with tent and pine; BOTTOM RIGHT: mountain camp with two peaks tent pine and little flag.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        103,
+        94
+      ],
+      "logicalSize": [
+        103,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97653
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Mountain snow, trees, tent and summit flag differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "source_crop": "trophies/assets/trophy-expeditions-3.png",
+      "sourceSha256": "1c94930f923b4a26f3c2d1e8855f26d2d16235334cd7348872e1d75917ae2d98",
+      "originalRGBASha256": "9554eb36e5947f4d6acd9ab3397f2bb1048aecdeed945aca0cdaf586cc79c2c1",
+      "output_path": "assets/trophy-expeditions-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small single mountain peak; TOP RIGHT: mountain with tent at foot; BOTTOM LEFT: two mountains with tent and pine; BOTTOM RIGHT: mountain camp with two peaks tent pine and little flag.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        120,
+        94
+      ],
+      "logicalSize": [
+        120,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97887
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Mountain snow, trees, tent and summit flag differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "source_crop": "trophies/assets/trophy-expeditions-4.png",
+      "sourceSha256": "dc9f98020ab9079eab1b0dd5f196c02fd4adade4ddd87d4c55ae9e99ce032f14",
+      "originalRGBASha256": "b4340ed093959949807bd3df3a28537ee9407bfa6542a6c7b878bf1cb48dbada",
+      "output_path": "assets/trophy-expeditions-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small single mountain peak; TOP RIGHT: mountain with tent at foot; BOTTOM LEFT: two mountains with tent and pine; BOTTOM RIGHT: mountain camp with two peaks tent pine and little flag.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        98,
+        94
+      ],
+      "logicalSize": [
+        98,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98069
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Mountain snow, trees, tent and summit flag differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-regions-1",
+      "source_crop": "trophies/assets/trophy-regions-1.png",
+      "sourceSha256": "b5a9a11ef7d28dea8057c93a6e25bdf9e1aabd10664dd49c092008e267a18c08",
+      "originalRGBASha256": "24c9e6952fe5718b3fa8de87035e1d41511a11e3275dc1e770aa057d4af62516",
+      "output_path": "assets/trophy-regions-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: folded map with compass; TOP RIGHT: unfolded map and upright compass; BOTTOM LEFT: map compass and tiny landmark; BOTTOM RIGHT: map compass with three tiny varied regional landmarks.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        120,
+        94
+      ],
+      "logicalSize": [
+        120,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9705
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Map shape, compass and landscape additions visible; map micro-markings are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-regions-2",
+      "source_crop": "trophies/assets/trophy-regions-2.png",
+      "sourceSha256": "a11442404d0a10fe74ff246418ff7503252556a26077c537712fe1b4861e961b",
+      "originalRGBASha256": "5324ff801d4f183a9f51bdb6e9fd9b3b29531d0d1d2b5a6a6b758af8f46ca1f8",
+      "output_path": "assets/trophy-regions-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: folded map with compass; TOP RIGHT: unfolded map and upright compass; BOTTOM LEFT: map compass and tiny landmark; BOTTOM RIGHT: map compass with three tiny varied regional landmarks.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        124,
+        94
+      ],
+      "logicalSize": [
+        124,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97602
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Map shape, compass and landscape additions visible; map micro-markings are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-regions-3",
+      "source_crop": "trophies/assets/trophy-regions-3.png",
+      "sourceSha256": "27ffe7d8ae444aad213bd02b1b682210bbdb68b92d09f94ff0c1f750baa1f21f",
+      "originalRGBASha256": "c4b584833e6ffa37b4c954d48820303054264d4387ade3b4aaab100673e29a93",
+      "output_path": "assets/trophy-regions-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: folded map with compass; TOP RIGHT: unfolded map and upright compass; BOTTOM LEFT: map compass and tiny landmark; BOTTOM RIGHT: map compass with three tiny varied regional landmarks.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        109,
+        94
+      ],
+      "logicalSize": [
+        109,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98126
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Map shape, compass and landscape additions visible; map micro-markings are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-regions-4",
+      "source_crop": "trophies/assets/trophy-regions-4.png",
+      "sourceSha256": "5a916055e2ce0b2b4ec0ca433907b8c579d504da246a239c3107c53926a0a3f3",
+      "originalRGBASha256": "9b40dd0b092c3112ea23b4f577f030160e80a0b5a3f15e9d4c319c14ed54e89e",
+      "output_path": "assets/trophy-regions-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: folded map with compass; TOP RIGHT: unfolded map and upright compass; BOTTOM LEFT: map compass and tiny landmark; BOTTOM RIGHT: map compass with three tiny varied regional landmarks.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        113,
+        94
+      ],
+      "logicalSize": [
+        113,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97899
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Map shape, compass and landscape additions visible; map micro-markings are decorative.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-team-1",
+      "source_crop": "trophies/assets/trophy-team-1.png",
+      "sourceSha256": "c8aea3084a4efd7800162f275d6b60825256e4d87b1bb701789ee901c33ab500",
+      "originalRGBASha256": "f8abf47b19c3428643425d153f67fe6a0882ac8d3cdd42089cbafe8c50dfecf1",
+      "output_path": "assets/trophy-team-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: one small hiking backpack and compass; TOP RIGHT: three small hiking backpacks grouped; BOTTOM LEFT: three backpacks with folded map and lantern; BOTTOM RIGHT: three detailed backpacks plus tiny campsite flag on shared base. No people or creatures. These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        105,
+        94
+      ],
+      "logicalSize": [
+        105,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97368
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Backpacks, rolled blankets and increasing travel props visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-team-2",
+      "source_crop": "trophies/assets/trophy-team-2.png",
+      "sourceSha256": "56e89f2d8dda580a79dde43ebbde2d08c5ecef6fae81a0b8ec64ebb6c7d2168f",
+      "originalRGBASha256": "ab9a3815104168dbe28527bb5abee8a663eb39f9954389f06bfd44961a987c12",
+      "output_path": "assets/trophy-team-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: one small hiking backpack and compass; TOP RIGHT: three small hiking backpacks grouped; BOTTOM LEFT: three backpacks with folded map and lantern; BOTTOM RIGHT: three detailed backpacks plus tiny campsite flag on shared base. No people or creatures. These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        128,
+        94
+      ],
+      "logicalSize": [
+        128,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97842
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Backpacks, rolled blankets and increasing travel props visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-team-3",
+      "source_crop": "trophies/assets/trophy-team-3.png",
+      "sourceSha256": "2d06cc491caa222ef9742ab0a3e9c8e4ebbff37aa630a33d929fabdce3bc76c1",
+      "originalRGBASha256": "4faf3391b9443e2100a65c48c6c7987c337fecfe0469436b3cc2a9d5e34f755c",
+      "output_path": "assets/trophy-team-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: one small hiking backpack and compass; TOP RIGHT: three small hiking backpacks grouped; BOTTOM LEFT: three backpacks with folded map and lantern; BOTTOM RIGHT: three detailed backpacks plus tiny campsite flag on shared base. No people or creatures. These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        122,
+        94
+      ],
+      "logicalSize": [
+        122,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97523
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Backpacks, rolled blankets and increasing travel props visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-team-4",
+      "source_crop": "trophies/assets/trophy-team-4.png",
+      "sourceSha256": "a8725834385071d63d97be6192e5648e87d6a546a589667eb554d2bd6848844b",
+      "originalRGBASha256": "aa850fb3292375783c04c37624d7d217daf428cb8b0e2cc443de628d301ca73d",
+      "output_path": "assets/trophy-team-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: one small hiking backpack and compass; TOP RIGHT: three small hiking backpacks grouped; BOTTOM LEFT: three backpacks with folded map and lantern; BOTTOM RIGHT: three detailed backpacks plus tiny campsite flag on shared base. No people or creatures. These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        115,
+        94
+      ],
+      "logicalSize": [
+        115,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98167
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Backpacks, rolled blankets and increasing travel props visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-care-1",
+      "source_crop": "trophies/assets/trophy-care-1.png",
+      "sourceSha256": "d6ee875936a9f75cd367d86cdc532904a907ada5fa4d34943a9b40a3782d9d23",
+      "originalRGBASha256": "dfa435232004cd889295108be841d69b8c04258ce324acd06f8dee355c23b93d",
+      "output_path": "assets/trophy-care-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: pink enamel heart on brass stem; TOP RIGHT: heart cupped by two leaves; BOTTOM LEFT: heart surrounded by ceramic flower petals; BOTTOM RIGHT: heart held in curved leafy arch with two small hearts.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        88,
+        94
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97585
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Heart silhouette, leaves, flower and wreath progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-care-2",
+      "source_crop": "trophies/assets/trophy-care-2.png",
+      "sourceSha256": "a74644f941d2c0e46c001bc428deea40b8521d2710b570725584c265b9254bd8",
+      "originalRGBASha256": "dd75c7c8454e80d10a2a0c2a2682fc3410203a8f684e4382c78861ba032d1bf3",
+      "output_path": "assets/trophy-care-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: pink enamel heart on brass stem; TOP RIGHT: heart cupped by two leaves; BOTTOM LEFT: heart surrounded by ceramic flower petals; BOTTOM RIGHT: heart held in curved leafy arch with two small hearts.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        94,
+        94
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Heart silhouette, leaves, flower and wreath progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-care-3",
+      "source_crop": "trophies/assets/trophy-care-3.png",
+      "sourceSha256": "948c8a10678c8687170da6259115e68c98b8cce5153f538a22b8909eb6f64136",
+      "originalRGBASha256": "988ab5cfb0c31ccdee0fc5270583d3a274f5e61ba9e9813a9a0c0e9f6c13a369",
+      "output_path": "assets/trophy-care-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: pink enamel heart on brass stem; TOP RIGHT: heart cupped by two leaves; BOTTOM LEFT: heart surrounded by ceramic flower petals; BOTTOM RIGHT: heart held in curved leafy arch with two small hearts.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        97,
+        94
+      ],
+      "logicalSize": [
+        97,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97831
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Heart silhouette, leaves, flower and wreath progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-care-4",
+      "source_crop": "trophies/assets/trophy-care-4.png",
+      "sourceSha256": "2de55ece83f5823847ecd3bd28c0e3865f07e61cbbfe09fb6bf7c1b22fdc2309",
+      "originalRGBASha256": "9a9640505807df42a229b9067e63e953e156d6b35ef625fecb38e9e83ceff1f6",
+      "output_path": "assets/trophy-care-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: pink enamel heart on brass stem; TOP RIGHT: heart cupped by two leaves; BOTTOM LEFT: heart surrounded by ceramic flower petals; BOTTOM RIGHT: heart held in curved leafy arch with two small hearts.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        101,
+        94
+      ],
+      "logicalSize": [
+        101,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98016
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Heart silhouette, leaves, flower and wreath progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-nursery-1",
+      "source_crop": "trophies/assets/trophy-nursery-1.png",
+      "sourceSha256": "8d74738a77d72e0903f1515688442825c12959a624d5eca9ca276171b39ee48a",
+      "originalRGBASha256": "732bd9cd40b3b3bd00f7d7f895d8076d094cc74ba35c71c85bd4e29f85853369",
+      "output_path": "assets/trophy-nursery-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: ceramic speckled egg in woven nest; TOP RIGHT: egg with tiny hatchling in nest; BOTTOM LEFT: nest under small open greenhouse frame; BOTTOM RIGHT: two nests with eggs under ornate miniature greenhouse frame.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        111,
+        94
+      ],
+      "logicalSize": [
+        111,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97382
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Egg/nest/chick and greenhouse differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-nursery-2",
+      "source_crop": "trophies/assets/trophy-nursery-2.png",
+      "sourceSha256": "ebcead40931d9f09c259daa813073e6991862468f885d1af59f0f5611d95a140",
+      "originalRGBASha256": "12b9539be18436c617c08b5ca463d150a23c734529aa45e4d6df216f78695887",
+      "output_path": "assets/trophy-nursery-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: ceramic speckled egg in woven nest; TOP RIGHT: egg with tiny hatchling in nest; BOTTOM LEFT: nest under small open greenhouse frame; BOTTOM RIGHT: two nests with eggs under ornate miniature greenhouse frame.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        104,
+        94
+      ],
+      "logicalSize": [
+        104,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97596
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Egg/nest/chick and greenhouse differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-nursery-3",
+      "source_crop": "trophies/assets/trophy-nursery-3.png",
+      "sourceSha256": "7fca13d71d558f38773d18862b87de74ac7527a552c037c08c891e559d0a300b",
+      "originalRGBASha256": "d43844c8a85be0fa035f02a1965025c29f48aa8bbbef7fc4903eae5cd44271f5",
+      "output_path": "assets/trophy-nursery-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: ceramic speckled egg in woven nest; TOP RIGHT: egg with tiny hatchling in nest; BOTTOM LEFT: nest under small open greenhouse frame; BOTTOM RIGHT: two nests with eggs under ornate miniature greenhouse frame.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        87,
+        94
+      ],
+      "logicalSize": [
+        87,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98117
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Egg/nest/chick and greenhouse differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-nursery-4",
+      "source_crop": "trophies/assets/trophy-nursery-4.png",
+      "sourceSha256": "c10f382182886586fa9a0510aa9a22a87ec0900a6173aad8c01e03a6af2d0807",
+      "originalRGBASha256": "87ff6fd88b1d463066eb4d496987ad3fc259f66fa1288d5168bb0c81505645c6",
+      "output_path": "assets/trophy-nursery-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: ceramic speckled egg in woven nest; TOP RIGHT: egg with tiny hatchling in nest; BOTTOM LEFT: nest under small open greenhouse frame; BOTTOM RIGHT: two nests with eggs under ornate miniature greenhouse frame.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        95,
+        94
+      ],
+      "logicalSize": [
+        95,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98188
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Egg/nest/chick and greenhouse differences visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-evolution-1",
+      "source_crop": "trophies/assets/trophy-evolution-1.png",
+      "sourceSha256": "a4beb5224b6fa71e5903ee0c07229378b199c5d14c7e305d895a72750a7dab9a",
+      "originalRGBASha256": "b869c8fcbc8738f835f7461a86ccd3a4d17f0bcb54f8aa965aa9d7f478185391",
+      "output_path": "assets/trophy-evolution-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: young branching tree with two buds; TOP RIGHT: tree with three leafy branches; BOTTOM LEFT: branching tree with differently shaped leaf clusters; BOTTOM RIGHT: full branching tree with three jewel fruits and curled roots.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        88,
+        94
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97312
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Branch/leaf/tree/berry progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-evolution-2",
+      "source_crop": "trophies/assets/trophy-evolution-2.png",
+      "sourceSha256": "a4f5d1428f9fd02d16d10726c12931f31a2ec1873ebeb81765fe5ccb48f3c52c",
+      "originalRGBASha256": "b66e0d4d54242bd8dbe1f8283e19da98688cbc7e3f4a8095f8c935c645cf44bf",
+      "output_path": "assets/trophy-evolution-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: young branching tree with two buds; TOP RIGHT: tree with three leafy branches; BOTTOM LEFT: branching tree with differently shaped leaf clusters; BOTTOM RIGHT: full branching tree with three jewel fruits and curled roots.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        88,
+        94
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98185
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Branch/leaf/tree/berry progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-evolution-3",
+      "source_crop": "trophies/assets/trophy-evolution-3.png",
+      "sourceSha256": "81c1b7105b66253d9846d31fcb42b73e007b7f3f4e255b782918970a315529b2",
+      "originalRGBASha256": "820bfa8a4a35c21c10bed9c58cbdcdde5cf15dacb9db1a3ce2c66ea8cd0a3071",
+      "output_path": "assets/trophy-evolution-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: young branching tree with two buds; TOP RIGHT: tree with three leafy branches; BOTTOM LEFT: branching tree with differently shaped leaf clusters; BOTTOM RIGHT: full branching tree with three jewel fruits and curled roots.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        92,
+        94
+      ],
+      "logicalSize": [
+        92,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98051
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Branch/leaf/tree/berry progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-evolution-4",
+      "source_crop": "trophies/assets/trophy-evolution-4.png",
+      "sourceSha256": "7b7af3a6627d9584940f288dea08863d0991cc1ccd0188ec1abb42e6fff3c43f",
+      "originalRGBASha256": "766472ed1a2824b3a591eb662be2c11e751a8e06d39585d24a74b305a1068dc0",
+      "output_path": "assets/trophy-evolution-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: young branching tree with two buds; TOP RIGHT: tree with three leafy branches; BOTTOM LEFT: branching tree with differently shaped leaf clusters; BOTTOM RIGHT: full branching tree with three jewel fruits and curled roots.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        94,
+        94
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98295
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Branch/leaf/tree/berry progression visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-shiny-1",
+      "source_crop": "trophies/assets/trophy-shiny-1.png",
+      "sourceSha256": "36aa11a8ec5c7a26416665c580117ca6d5b56ce3152a4fd684a3ef24c976fdc3",
+      "originalRGBASha256": "613c6b64327685a8afd470b238b49a18f5df40a86e2ddf47e1e2655598755b85",
+      "output_path": "assets/trophy-shiny-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single golden star crystal; TOP RIGHT: star crystal with two small crystals; BOTTOM LEFT: star crystal cluster with crescent support; BOTTOM RIGHT: large central star crystal with radiating smaller star crystals.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        88,
+        94
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97753
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Single/multiple star, crescent and star-crown silhouettes visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-shiny-2",
+      "source_crop": "trophies/assets/trophy-shiny-2.png",
+      "sourceSha256": "e348e44242b92a42273a2dbbc37bced97f185470e76b7dd9effa537bde2b4be7",
+      "originalRGBASha256": "24ff6369304f20408dcee5e39cb778460bc0d2c5408d4eee60b0596aa6d694a7",
+      "output_path": "assets/trophy-shiny-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single golden star crystal; TOP RIGHT: star crystal with two small crystals; BOTTOM LEFT: star crystal cluster with crescent support; BOTTOM RIGHT: large central star crystal with radiating smaller star crystals.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        98,
+        94
+      ],
+      "logicalSize": [
+        98,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97732
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Single/multiple star, crescent and star-crown silhouettes visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-shiny-3",
+      "source_crop": "trophies/assets/trophy-shiny-3.png",
+      "sourceSha256": "007bc41b6189d9ffc8dbeb01de77b1d327ff183b23797c74cde443c1e972cbbb",
+      "originalRGBASha256": "8f457384b7a323b63e39b09bce75599cf75d8565dcb8c69557af3edcdb66a1e7",
+      "output_path": "assets/trophy-shiny-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single golden star crystal; TOP RIGHT: star crystal with two small crystals; BOTTOM LEFT: star crystal cluster with crescent support; BOTTOM RIGHT: large central star crystal with radiating smaller star crystals.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        91,
+        94
+      ],
+      "logicalSize": [
+        91,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98016
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Single/multiple star, crescent and star-crown silhouettes visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-shiny-4",
+      "source_crop": "trophies/assets/trophy-shiny-4.png",
+      "sourceSha256": "2115b9bb50dca9cb646c4cfcce78447882fcbb7967f11b07e98ea54cab72ec57",
+      "originalRGBASha256": "f01ab946b27342b5545a4fedf2760bb208fa9934b61b75fbb5164a12ebbc5a85",
+      "output_path": "assets/trophy-shiny-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: single golden star crystal; TOP RIGHT: star crystal with two small crystals; BOTTOM LEFT: star crystal cluster with crescent support; BOTTOM RIGHT: large central star crystal with radiating smaller star crystals.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        95,
+        94
+      ],
+      "logicalSize": [
+        95,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98165
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Single/multiple star, crescent and star-crown silhouettes visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-decor-1",
+      "source_crop": "trophies/assets/trophy-decor-1.png",
+      "sourceSha256": "97d493f5a4f504d6158abe115f6a2d1be56f22e072aaf5149a042b6940dd441c",
+      "originalRGBASha256": "d505261eda13c80c310b01438b8080a1ef81ff184c2394ad5d1c01fd69dc41a3",
+      "output_path": "assets/trophy-decor-1.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: simple miniature cream cottage red roof; TOP RIGHT: cottage with tiny doorstep plant; BOTTOM LEFT: cottage with garden fence and tree; BOTTOM RIGHT: cottage with lush miniature garden and porch.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        100,
+        94
+      ],
+      "logicalSize": [
+        100,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97619
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "House roof, door and increasing garden ornament visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-decor-2",
+      "source_crop": "trophies/assets/trophy-decor-2.png",
+      "sourceSha256": "8e29005657e195d319bdd8963153f95903986b421490f274aff5e72e9767c7c1",
+      "originalRGBASha256": "5bcefeee362d5027debb4563dce9ac797d731335ebc5d103c6a303455f3876d7",
+      "output_path": "assets/trophy-decor-2.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: simple miniature cream cottage red roof; TOP RIGHT: cottage with tiny doorstep plant; BOTTOM LEFT: cottage with garden fence and tree; BOTTOM RIGHT: cottage with lush miniature garden and porch.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        104,
+        94
+      ],
+      "logicalSize": [
+        104,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97416
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "House roof, door and increasing garden ornament visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-decor-3",
+      "source_crop": "trophies/assets/trophy-decor-3.png",
+      "sourceSha256": "c2672e47dace36a9c080d1df0c66546b1fda19fca19dee89a26ea7f1d82d0e70",
+      "originalRGBASha256": "52c1166de04642b868569a2f9ef3cafab0019deb25e817acfc62c689521ac578",
+      "output_path": "assets/trophy-decor-3.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: simple miniature cream cottage red roof; TOP RIGHT: cottage with tiny doorstep plant; BOTTOM LEFT: cottage with garden fence and tree; BOTTOM RIGHT: cottage with lush miniature garden and porch.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        110,
+        94
+      ],
+      "logicalSize": [
+        110,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98091
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "House roof, door and increasing garden ornament visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-decor-4",
+      "source_crop": "trophies/assets/trophy-decor-4.png",
+      "sourceSha256": "f46992dce0dd7c0970c0d0798f1b43633da2df1b626e1b26c3c8c00ff000215b",
+      "originalRGBASha256": "622d42257735cf258263ecc1b01f9729aa1015b68677e3e75369180d80d474fb",
+      "output_path": "assets/trophy-decor-4.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: simple miniature cream cottage red roof; TOP RIGHT: cottage with tiny doorstep plant; BOTTOM LEFT: cottage with garden fence and tree; BOTTOM RIGHT: cottage with lush miniature garden and porch.  These are four progression stages of the same recognizable award; each stage adds real composition and silhouette details, never mere recoloring. Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        112,
+        94
+      ],
+      "logicalSize": [
+        112,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9828
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "House roof, door and increasing garden ornament visible.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-nick",
+      "source_crop": "trophies/assets/trophy-special-nick.png",
+      "sourceSha256": "f8a629ee07a7113b0ba73769e55c95845d9b0b6a324cd2cab97525bd8f8a63e6",
+      "originalRGBASha256": "41cd96c1f002da053180942b2b5f5a092d82c4cbd91f284ec60b02d8ec1fef81",
+      "output_path": "assets/trophy-special-nick.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small blank name tag pendant and carved pencil; TOP RIGHT: golden star held by a pink heart; BOTTOM LEFT: three blue water-drop enamel travellers on one base; BOTTOM RIGHT: open tiny treasure chest with berry and crystal.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        99,
+        94
+      ],
+      "logicalSize": [
+        99,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98035
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-favorite",
+      "source_crop": "trophies/assets/trophy-special-favorite.png",
+      "sourceSha256": "2ab1eaabfe91f7a2d4a36ea003bb80c762e518432912585fcac05ac64cee1a9e",
+      "originalRGBASha256": "30d083d7455f5b7717bda6cd222e5e303053b2e5dbe83cc49175574e6fdaf978",
+      "output_path": "assets/trophy-special-favorite.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small blank name tag pendant and carved pencil; TOP RIGHT: golden star held by a pink heart; BOTTOM LEFT: three blue water-drop enamel travellers on one base; BOTTOM RIGHT: open tiny treasure chest with berry and crystal.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        90,
+        94
+      ],
+      "logicalSize": [
+        90,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98238
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-type-team",
+      "source_crop": "trophies/assets/trophy-special-type-team.png",
+      "sourceSha256": "8dc970cda54cec0b1c4371bb12d60c1e51987548135b0156d9dbab62f6b7ac4e",
+      "originalRGBASha256": "32861fd62b5792e1560c6934a025e0031e508d1b5ce4677b5f2c1327169a8b20",
+      "output_path": "assets/trophy-special-type-team.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small blank name tag pendant and carved pencil; TOP RIGHT: golden star held by a pink heart; BOTTOM LEFT: three blue water-drop enamel travellers on one base; BOTTOM RIGHT: open tiny treasure chest with berry and crystal.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        117,
+        94
+      ],
+      "logicalSize": [
+        117,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97872
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "source_crop": "trophies/assets/trophy-special-bonus-find.png",
+      "sourceSha256": "3889ff1143757c38be417e1d0f3b4473f1b832a88b1dc38ea89a9f8a3a2ccede",
+      "originalRGBASha256": "90ddd994a8ff20eb3737283561c2c22b45f21f519128ae1e3aa8135d828c52ce",
+      "output_path": "assets/trophy-special-bonus-find.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: small blank name tag pendant and carved pencil; TOP RIGHT: golden star held by a pink heart; BOTTOM LEFT: three blue water-drop enamel travellers on one base; BOTTOM RIGHT: open tiny treasure chest with berry and crystal.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        100,
+        94
+      ],
+      "logicalSize": [
+        100,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98218
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "source_crop": "trophies/assets/trophy-special-nursery-expedition.png",
+      "sourceSha256": "27c3c8852b1f54a5f302ec031e7133d6cd9b8f0847122451dc6465621f0395f2",
+      "originalRGBASha256": "6481b6bab52b904d6f3066f19386cdcab5bc883b1ac7d4c481286928301f08d3",
+      "output_path": "assets/trophy-special-nursery-expedition.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Transparent 2x2 asset atlas of FOUR fully separate miniature wood and enamel souvenir trophies. Use reference image for cozy crisp pixel-art technique, warm upper-left sunlight and shallow near-frontal shelf perspective only. No room, shelves, cabinet, labels, letters, numerals, grid, background, people, animals or living figures. Each isolated object has its own shallow oval walnut pedestal with brass rim. TOP LEFT: a small hiking backpack containing one decorative ceramic speckled egg. TOP RIGHT: two hiking backpacks, one large and one small, standing with a tiny compass on one pedestal. BOTTOM LEFT: an open botanical book with a curved brass arrow above its pages, no text. BOTTOM RIGHT: woven basket containing six different colorful berries. Keep each whole object centered in its quadrant with wide transparent gutters; target 1024x1024. Squat silhouettes suited to 86x80 logical pixels, base 42–76 wide. Detailed pixel clusters, muted honey wood, cream, sage green, terracotta and blue enamel. These are nonliving collectible objects, not characters. Real alpha transparency.\n",
+      "dimensions": [
+        100,
+        94
+      ],
+      "logicalSize": [
+        100,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9793
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "source_crop": "trophies/assets/trophy-special-family-expedition.png",
+      "sourceSha256": "98ef59d138fa7a639cd15ebf5ba65454c00e68720401f26a7dae0a4af51024ff",
+      "originalRGBASha256": "4a7a13cf444d94f356105a4f868e6f47c58bdade8836e33f5be8d14fd3f5e7c3",
+      "output_path": "assets/trophy-special-family-expedition.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Transparent 2x2 asset atlas of FOUR fully separate miniature wood and enamel souvenir trophies. Use reference image for cozy crisp pixel-art technique, warm upper-left sunlight and shallow near-frontal shelf perspective only. No room, shelves, cabinet, labels, letters, numerals, grid, background, people, animals or living figures. Each isolated object has its own shallow oval walnut pedestal with brass rim. TOP LEFT: a small hiking backpack containing one decorative ceramic speckled egg. TOP RIGHT: two hiking backpacks, one large and one small, standing with a tiny compass on one pedestal. BOTTOM LEFT: an open botanical book with a curved brass arrow above its pages, no text. BOTTOM RIGHT: woven basket containing six different colorful berries. Keep each whole object centered in its quadrant with wide transparent gutters; target 1024x1024. Squat silhouettes suited to 86x80 logical pixels, base 42–76 wide. Detailed pixel clusters, muted honey wood, cream, sage green, terracotta and blue enamel. These are nonliving collectible objects, not characters. Real alpha transparency.\n",
+      "dimensions": [
+        103,
+        94
+      ],
+      "logicalSize": [
+        103,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98138
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "source_crop": "trophies/assets/trophy-special-evolved-expedition.png",
+      "sourceSha256": "95d8fc25cbaaa610dbf567f33de772e0e867891590f6e8fe8aa06767c2a692d7",
+      "originalRGBASha256": "de30513c3e41a959224de54115681e0700b37b6fa30abcb4aec63bbe41c6840b",
+      "output_path": "assets/trophy-special-evolved-expedition.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Transparent 2x2 asset atlas of FOUR fully separate miniature wood and enamel souvenir trophies. Use reference image for cozy crisp pixel-art technique, warm upper-left sunlight and shallow near-frontal shelf perspective only. No room, shelves, cabinet, labels, letters, numerals, grid, background, people, animals or living figures. Each isolated object has its own shallow oval walnut pedestal with brass rim. TOP LEFT: a small hiking backpack containing one decorative ceramic speckled egg. TOP RIGHT: two hiking backpacks, one large and one small, standing with a tiny compass on one pedestal. BOTTOM LEFT: an open botanical book with a curved brass arrow above its pages, no text. BOTTOM RIGHT: woven basket containing six different colorful berries. Keep each whole object centered in its quadrant with wide transparent gutters; target 1024x1024. Squat silhouettes suited to 86x80 logical pixels, base 42–76 wide. Detailed pixel clusters, muted honey wood, cream, sage green, terracotta and blue enamel. These are nonliving collectible objects, not characters. Real alpha transparency.\n",
+      "dimensions": [
+        102,
+        94
+      ],
+      "logicalSize": [
+        102,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98279
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "source_crop": "trophies/assets/trophy-special-all-berries.png",
+      "sourceSha256": "4d447233d541ce4e18afaf1cc12498f5fcb309a28c2fdd74df9ba3191430cc57",
+      "originalRGBASha256": "3b5edaa010fc11c784932314c9015629c296e84b5d17b1d5f59075107ae852d9",
+      "output_path": "assets/trophy-special-all-berries.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "﻿Transparent 2x2 asset atlas of FOUR fully separate miniature wood and enamel souvenir trophies. Use reference image for cozy crisp pixel-art technique, warm upper-left sunlight and shallow near-frontal shelf perspective only. No room, shelves, cabinet, labels, letters, numerals, grid, background, people, animals or living figures. Each isolated object has its own shallow oval walnut pedestal with brass rim. TOP LEFT: a small hiking backpack containing one decorative ceramic speckled egg. TOP RIGHT: two hiking backpacks, one large and one small, standing with a tiny compass on one pedestal. BOTTOM LEFT: an open botanical book with a curved brass arrow above its pages, no text. BOTTOM RIGHT: woven basket containing six different colorful berries. Keep each whole object centered in its quadrant with wide transparent gutters; target 1024x1024. Squat silhouettes suited to 86x80 logical pixels, base 42–76 wide. Detailed pixel clusters, muted honey wood, cream, sage green, terracotta and blue enamel. These are nonliving collectible objects, not characters. Real alpha transparency.\n",
+      "dimensions": [
+        99,
+        94
+      ],
+      "logicalSize": [
+        99,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98099
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "source_crop": "trophies/assets/trophy-special-berry-evolution.png",
+      "sourceSha256": "d7e57f2027bbd2f6c21ac1904fc1a2ac7acbc2dc895667047b95f5adda05d7dc",
+      "originalRGBASha256": "bde1c0f555e125af288af47a34ad34ec738e382057cc5f24a0ba84f224a0cbc9",
+      "output_path": "assets/trophy-special-berry-evolution.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: berry beside branching tree with bright fruit; TOP RIGHT: two-way branching path sign with two leaf emblems no letters; BOTTOM LEFT: two distinct speckled eggs in a small nest; BOTTOM RIGHT: miniature botanical arrangement with fern cactus and flower.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        84,
+        94
+      ],
+      "logicalSize": [
+        84,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98211
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "source_crop": "trophies/assets/trophy-special-branch-choice.png",
+      "sourceSha256": "6559806437f4eb7cf0b55330c419531d7feb3d00eecdb01c8d93272d7e36de0b",
+      "originalRGBASha256": "c729c97d00450136f88f5c62ced6300a3fe776d09717717496deae14dfb06668",
+      "output_path": "assets/trophy-special-branch-choice.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: berry beside branching tree with bright fruit; TOP RIGHT: two-way branching path sign with two leaf emblems no letters; BOTTOM LEFT: two distinct speckled eggs in a small nest; BOTTOM RIGHT: miniature botanical arrangement with fern cactus and flower.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        94,
+        94
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97963
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "source_crop": "trophies/assets/trophy-special-offspring-choice.png",
+      "sourceSha256": "3668e724d8bcd5b7a28e544db38d27ed6b6ff389a64e2a6f6b9dbe39d080a60e",
+      "originalRGBASha256": "d42fe4a5f4d6e99084aeeae636695e32ef037c4ac2217c46dc7c640db448283c",
+      "output_path": "assets/trophy-special-offspring-choice.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: berry beside branching tree with bright fruit; TOP RIGHT: two-way branching path sign with two leaf emblems no letters; BOTTOM LEFT: two distinct speckled eggs in a small nest; BOTTOM RIGHT: miniature botanical arrangement with fern cactus and flower.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        124,
+        94
+      ],
+      "logicalSize": [
+        124,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98034
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-all-plants",
+      "source_crop": "trophies/assets/trophy-special-all-plants.png",
+      "sourceSha256": "0e369b9c151b702fbae6230baf8866449d41c505c2e06b47c783a33a03a29e6c",
+      "originalRGBASha256": "1151b6fcae592da439f026aebf22862e5f77f73df1b93f9a1c5b5dd62c696427",
+      "output_path": "assets/trophy-special-all-plants.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: berry beside branching tree with bright fruit; TOP RIGHT: two-way branching path sign with two leaf emblems no letters; BOTTOM LEFT: two distinct speckled eggs in a small nest; BOTTOM RIGHT: miniature botanical arrangement with fern cactus and flower.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        100,
+        94
+      ],
+      "logicalSize": [
+        100,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98305
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-three-pictures",
+      "source_crop": "trophies/assets/trophy-special-three-pictures.png",
+      "sourceSha256": "89c182413db9d197bbd8d748b4a1da1aa8860f33473380b721ec5eb2e1da6415",
+      "originalRGBASha256": "15000f05807dc128d39026b33bc8a688975b34408c97d8392f737fbcd85d867d",
+      "output_path": "assets/trophy-special-three-pictures.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: three tiny standing framed pictures of leaf mountain and star; TOP RIGHT: miniature wooden chair table and cabinet grouped; BOTTOM LEFT: small elegant winged mythical creature silhouette cast in brass; BOTTOM RIGHT: two contrasting enamel leaf and star charms joined.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        121,
+        94
+      ],
+      "logicalSize": [
+        121,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.9763
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-mixed-furniture",
+      "source_crop": "trophies/assets/trophy-special-mixed-furniture.png",
+      "sourceSha256": "b1487ea5c04580235972b820e659d2089c1e6da4ab89b8a294dc747c467436f0",
+      "originalRGBASha256": "9f2e417b3e120e82c387f79fef6266aadda456b0994cef0930543c789b82e9b3",
+      "output_path": "assets/trophy-special-mixed-furniture.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: three tiny standing framed pictures of leaf mountain and star; TOP RIGHT: miniature wooden chair table and cabinet grouped; BOTTOM LEFT: small elegant winged mythical creature silhouette cast in brass; BOTTOM RIGHT: two contrasting enamel leaf and star charms joined.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        102,
+        94
+      ],
+      "logicalSize": [
+        102,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "source_crop": "trophies/assets/trophy-special-all-legends.png",
+      "sourceSha256": "dcf54e37a892f03e7ee532c7e0eb730281df04390ed1ba79bc7c39ee109a806d",
+      "originalRGBASha256": "fcf6e310615643180763e2f7b12fd3e32e1805ea3936af82ef338d4b1db6ad11",
+      "output_path": "assets/trophy-special-all-legends.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: three tiny standing framed pictures of leaf mountain and star; TOP RIGHT: miniature wooden chair table and cabinet grouped; BOTTOM LEFT: small elegant winged mythical creature silhouette cast in brass; BOTTOM RIGHT: two contrasting enamel leaf and star charms joined.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        93,
+        94
+      ],
+      "logicalSize": [
+        93,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98131
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "source_crop": "trophies/assets/trophy-special-second-trait.png",
+      "sourceSha256": "b18fbbdfd246f9e5fa265e4325c80b39d149159cbcd3d37b4822f16881d807aa",
+      "originalRGBASha256": "b5d91f66238f2648148ce36907966b18bb12aa6a01c5d5de6200919cf6f61ff5",
+      "output_path": "assets/trophy-special-second-trait.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 4 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: three tiny standing framed pictures of leaf mountain and star; TOP RIGHT: miniature wooden chair table and cabinet grouped; BOTTOM LEFT: small elegant winged mythical creature silhouette cast in brass; BOTTOM RIGHT: two contrasting enamel leaf and star charms joined.   Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        101,
+        94
+      ],
+      "logicalSize": [
+        101,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.97947
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-retrain",
+      "source_crop": "trophies/assets/trophy-special-retrain.png",
+      "sourceSha256": "87ba01c5ff23c8de8c3b64fa96beeab0709c42b9fb9b3c93cc74206ffec17832",
+      "originalRGBASha256": "745537a2dc1cbcd58da22777e7849a40ceaac441e7e7d86ae36d12277c3d27b3",
+      "output_path": "assets/trophy-special-retrain.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 3 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: curved circular arrow surrounding a small leaf emblem; TOP RIGHT: small cottage with open door and heart; BOTTOM LEFT: small glass amber potion bottle with star-shaped stopper. BOTTOM RIGHT completely empty transparent.  Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        94,
+        94
+      ],
+      "logicalSize": [
+        94,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98283
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-rehome",
+      "source_crop": "trophies/assets/trophy-special-rehome.png",
+      "sourceSha256": "f888b0aeb81c244c65f858a0de2a8c42d7df98221a46331a43bd88bbbdc663aa",
+      "originalRGBASha256": "41bc52e6b996fb1cf31a5264bd89a29712413f214ccc41e8dd9e832e9ce06fe7",
+      "output_path": "assets/trophy-special-rehome.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 3 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: curved circular arrow surrounding a small leaf emblem; TOP RIGHT: small cottage with open door and heart; BOTTOM LEFT: small glass amber potion bottle with star-shaped stopper. BOTTOM RIGHT completely empty transparent.  Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        103,
+        94
+      ],
+      "logicalSize": [
+        103,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98301
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "source_crop": "trophies/assets/trophy-special-xp-potion.png",
+      "sourceSha256": "37d4afbcb4bb83089196a3899444670c61293c7574a130f8e3ec00df46be60b1",
+      "originalRGBASha256": "2f5c66111835ac9f336287a5b0d3b95cc14ec0f4560fd2b11fefbf67cc50f210",
+      "output_path": "assets/trophy-special-xp-potion.png",
+      "strategy": "Single LANCZOS uniform fit of original detailed source RGBA",
+      "prompt_used": "Production asset atlas, true transparent alpha background. Use attached room and achievements references ONLY for the exact cozy pixel-art collectible trophy material and light style. Make 3 FULLY SEPARATE tiny shelf trophies in a 2 by 2 atlas, generous completely transparent gutters and margins, each object entirely inside its quadrant. No drawn grid, no background, no shelf, no cabinet, no room, no labels, no letters or numbers, no plaques with writing. Each is a distinct small physical wood/ceramic/enamel statuette on its own shallow oval walnut base with a small brass rim. Almost frontal camera with slightly visible top, warm light from upper left; crisp deliberate pixel clusters, warm muted cream sage wood and enamel accents, no smooth vector look. Keep silhouettes squat enough to fit logical 86x80, bases 42–76 wide and 8–16 deep; isolated trophy only. Objects in reading order: TOP LEFT: curved circular arrow surrounding a small leaf emblem; TOP RIGHT: small cottage with open door and heart; BOTTOM LEFT: small glass amber potion bottle with star-shaped stopper. BOTTOM RIGHT completely empty transparent.  Target atlas 1024x1024, all objects similar visual scale and ample separation.\n",
+      "dimensions": [
+        88,
+        94
+      ],
+      "logicalSize": [
+        88,
+        94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98012
+      ],
+      "useSlots": [
+        "trophy-left",
+        "trophy-center",
+        "trophy-right"
+      ],
+      "format": "png",
+      "transparency": true,
+      "deviations": [
+        "Source colors/alpha interpolated by LANCZOS only; fine detail retained at a materially larger displayed size than rejected480-grid derivatives."
+      ],
+      "qa_status": "needs_parent_review",
+      "readability": "Main special-object motifs visible; semantic inventory names still identify fine distinctions.",
+      "visualDecision": "User decides final acceptance; observations describe the rendered contact/shelf views."
+    }
+  ],
+  "semantic": [
+    {
+      "id": "independent-three-trophy-shelf",
+      "implementation": "Use three distinct RGBA images with the recorded footAnchor at [664,280],[810,280],[956,280] in1448x582room coordinates. Overlay exact master frontlip crop [590,281,1031,288] after figures. Root adds pet and semantic controls; scale whole scene uniformly.",
+      "notes": "Native display sizes up to132x94 from original high-detail source, no rejected480-grid derivative. One coherent detailed room plus interchangeable awards; full-room modularity not claimed.",
+      "qa_status": "needs_parent_review"
+    }
+  ],
+  "execution_order": [
+    "Inspect detailed master",
+    "Fit63original standalone RGBA sources once with LANCZOS",
+    "Place all63 in three slots and record189actual bounds",
+    "Compose21real shelves and tier1/tier4/mixed examples",
+    "Visual review once with at most one correction"
+  ],
+  "blockers": [],
+  "assumptions": [
+    "This is the single final attempt; no150catalog redo.",
+    "User decides visual acceptance.",
+    "Original prompts/sourceRGBA preserved; resampling interpolation explicitly allowed."
+  ]
+}

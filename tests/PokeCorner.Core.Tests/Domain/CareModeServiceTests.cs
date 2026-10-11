@@ -138,7 +138,7 @@ public class CareModeServiceTests
     }
 
     [Fact]
-    public void DiscountIdleGap_FirstEverPoll_LeavesNeglectClockAloneAndRecordsPoll()
+    public void DiscountIdleGap_MissingCheckpoint_DiscountsUnobservedTimeAndRecordsPoll()
     {
         var service = new CareModeService();
         var now = DateTimeOffset.UtcNow;
@@ -147,8 +147,9 @@ public class CareModeServiceTests
 
         service.DiscountIdleGap(state, now);
 
-        Assert.Equal(lastInteraction, state.LastInteractionUtc);
+        Assert.Equal(now - CareModeTuning.NeglectIdleGrace, state.LastInteractionUtc);
         Assert.Equal(now, state.LastNeglectCheckUtc);
+        Assert.False(service.ShouldRunAway(state, now, CareMode.Hardcore));
     }
 
     [Fact]

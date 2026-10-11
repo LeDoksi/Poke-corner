@@ -1,0 +1,112 @@
+{
+  "status": "technical-checks-passed-visual-review-required",
+  "canvas": [
+    480,
+    193
+  ],
+  "displayScale": 3,
+  "nativeMasterSizes": [
+    [
+      1953,
+      805
+    ],
+    [
+      1953,
+      805
+    ]
+  ],
+  "nativeCrops": [
+    [
+      0,
+      0,
+      1953,
+      785
+    ],
+    [
+      0,
+      0,
+      1953,
+      785
+    ]
+  ],
+  "zoneRect": [
+    0,
+    72,
+    225,
+    193
+  ],
+  "protectedTablePlantRect": [
+    128,
+    92,
+    187,
+    167
+  ],
+  "changedPixelBox": [
+    17,
+    72,
+    161,
+    193
+  ],
+  "petSource": "catalog-package/assets/normal/133.gif",
+  "petPixelsUnchanged": true,
+  "sourcePetFrames": 67,
+  "renderedPreviewFrames": 134,
+  "animatedPreviewFrames": 126,
+  "decodedAnimationMatchesEverySourceTimestamp": true,
+  "animatedPreviewTotalMs": 13400.0,
+  "outsideZoneIdenticalForEveryPairedFrame": true,
+  "method": "Shared master + context-painted chair zone with feathered technical mask; no global room reroll during swap.",
+  "maskPolygon": [
+    [
+      27,
+      77
+    ],
+    [
+      105,
+      76
+    ],
+    [
+      132,
+      86
+    ],
+    [
+      138,
+      132
+    ],
+    [
+      141,
+      155
+    ],
+    [
+      154,
+      164
+    ],
+    [
+      157,
+      177
+    ],
+    [
+      133,
+      186
+    ],
+    [
+      37,
+      185
+    ],
+    [
+      22,
+      172
+    ],
+    [
+      22,
+      109
+    ]
+  ],
+  "maskFeatherNativePx": 3,
+  "limitations": [
+    "Only two chairs and one fixed table/plant tested.",
+    "Other zone boundaries/masks not designed.",
+    "Table/plant are explicitly protected from incidental generation changes.",
+    "Pixel grid and contact shadow do not prove artistic coherence."
+  ]
+}

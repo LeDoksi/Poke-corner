@@ -1,0 +1,3644 @@
+{
+  "status": "art-generated-placement-review-in-progress",
+  "expected": 150,
+  "generated": 150,
+  "summary": {
+    "beds": {
+      "expected": 6,
+      "generated": 6
+    },
+    "curtains": {
+      "expected": 9,
+      "generated": 9
+    },
+    "furniture": {
+      "expected": 16,
+      "generated": 16
+    },
+    "paintings": {
+      "expected": 12,
+      "generated": 12
+    },
+    "plants": {
+      "expected": 20,
+      "generated": 20
+    },
+    "rugs": {
+      "expected": 12,
+      "generated": 12
+    },
+    "trophies": {
+      "expected": 63,
+      "generated": 63
+    },
+    "walls": {
+      "expected": 12,
+      "generated": 12
+    }
+  },
+  "technicalShelfLips": 4,
+  "items": [
+    {
+      "id": "table-t1",
+      "category": "furniture",
+      "file": "furniture/assets/table-t1.png",
+      "displayWidth": 102.21,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        464,
+        380
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "table-t2",
+      "category": "furniture",
+      "file": "furniture/assets/table-t2.png",
+      "displayWidth": 113.95,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        534,
+        429
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "table-t3",
+      "category": "furniture",
+      "file": "furniture/assets/table-t3.png",
+      "displayWidth": 145.028,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        621,
+        348
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "table-t4",
+      "category": "furniture",
+      "file": "furniture/assets/table-t4.png",
+      "displayWidth": 155.387,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        585,
+        323
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "cabinet-c1",
+      "category": "furniture",
+      "file": "furniture/assets/cabinet-c1.png",
+      "displayWidth": 303.867,
+      "footAnchor": [
+        0.498276,
+        0.957958
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "status": "generated",
+      "size": [
+        580,
+        333
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "cabinet-c2",
+      "category": "furniture",
+      "file": "furniture/assets/cabinet-c2.png",
+      "displayWidth": 313.536,
+      "footAnchor": [
+        0.496575,
+        0.955224
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "status": "generated",
+      "size": [
+        584,
+        335
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "cabinet-c3",
+      "category": "furniture",
+      "file": "furniture/assets/cabinet-c3.png",
+      "displayWidth": 312.845,
+      "footAnchor": [
+        0.496564,
+        0.961194
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "status": "generated",
+      "size": [
+        582,
+        335
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "cabinet-c4",
+      "category": "furniture",
+      "file": "furniture/assets/cabinet-c4.png",
+      "displayWidth": 308.011,
+      "footAnchor": [
+        0.496575,
+        0.961194
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Targeted low-wide regeneration improved opaqueaspect to1.773..1.790; still below requested1.9..2.0, approx9..10percent taller than ROOM contract at uniform target width.",
+        "Native opaque width561..562px below preferred2x453px room width.",
+        "Empty bay projects58..66logicalpx tall, below80px largest trophy envelope; static stress review required."
+      ],
+      "status": "generated",
+      "size": [
+        584,
+        335
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "armchair-a1",
+      "category": "furniture",
+      "file": "furniture/assets/armchair-a1.png",
+      "displayWidth": 197.514,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "status": "generated",
+      "size": [
+        470,
+        401
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "armchair-a2",
+      "category": "furniture",
+      "file": "furniture/assets/armchair-a2.png",
+      "displayWidth": 186.464,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "status": "generated",
+      "size": [
+        452,
+        405
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "armchair-a3",
+      "category": "furniture",
+      "file": "furniture/assets/armchair-a3.png",
+      "displayWidth": 183.011,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "status": "generated",
+      "size": [
+        446,
+        405
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "armchair-a4",
+      "category": "furniture",
+      "file": "furniture/assets/armchair-a4.png",
+      "displayWidth": 200.276,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Loose decorative pillows/throw omitted under no-props production brief; integral cushions preserved.",
+        "Native master below preferred2x room width; review crispness at final room scale."
+      ],
+      "status": "generated",
+      "size": [
+        477,
+        402
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "dresser-d1",
+      "category": "furniture",
+      "file": "furniture/assets/dresser-d1.png",
+      "displayWidth": 164.365,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "accepted",
+      "deviations": [
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "status": "generated",
+      "size": [
+        567,
+        456
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "dresser-d2",
+      "category": "furniture",
+      "file": "furniture/assets/dresser-d2.png",
+      "displayWidth": 213.398,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native opaque width593px is slightly below2x309px room width. Generated model taller than room contract; preserve aspect.",
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "status": "generated",
+      "size": [
+        610,
+        364
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "dresser-d3",
+      "category": "furniture",
+      "file": "furniture/assets/dresser-d3.png",
+      "displayWidth": 95.304,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "accepted",
+      "deviations": [
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "status": "generated",
+      "size": [
+        326,
+        488
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "dresser-d4",
+      "category": "furniture",
+      "file": "furniture/assets/dresser-d4.png",
+      "displayWidth": 215.47,
+      "footAnchor": [
+        0.5,
+        0.94
+      ],
+      "qa_status": "accepted",
+      "deviations": [
+        "No baked contact shadow in final clean regeneration; scene should compose separate contact shadow."
+      ],
+      "status": "generated",
+      "size": [
+        773,
+        391
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "bed-pillow-cream",
+      "category": "beds",
+      "file": "beds/assets/bed-pillow-cream.png",
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        687,
+        321
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "bed-pillow-sage",
+      "category": "beds",
+      "file": "beds/assets/bed-pillow-sage.png",
+      "displayWidth": 124.309,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        687,
+        323
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "bed-basket-cream",
+      "category": "beds",
+      "file": "beds/assets/bed-basket-cream.png",
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        695,
+        382
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "bed-basket-sage",
+      "category": "beds",
+      "file": "beds/assets/bed-basket-sage.png",
+      "displayWidth": 134.669,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        695,
+        382
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "bed-nest-cream",
+      "category": "beds",
+      "file": "beds/assets/bed-nest-cream.png",
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        681,
+        382
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "bed-nest-sage",
+      "category": "beds",
+      "file": "beds/assets/bed-nest-sage.png",
+      "displayWidth": 131.215,
+      "footAnchor": [
+        0.5,
+        0.9
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        681,
+        380
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "plant-cactus-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-cactus-terracotta.png",
+      "displayWidth": 39,
+      "footAnchor": [
+        0.474114,
+        0.99569
+      ],
+      "anchor": [
+        0.474114,
+        0.99569
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        367,
+        464
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-cactus-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-cactus-woven-cream.png",
+      "displayWidth": 39,
+      "footAnchor": [
+        0.485488,
+        0.997845
+      ],
+      "anchor": [
+        0.485488,
+        0.997845
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        379,
+        464
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-succulent-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-succulent-terracotta.png",
+      "displayWidth": 37,
+      "footAnchor": [
+        0.495575,
+        0.978049
+      ],
+      "anchor": [
+        0.495575,
+        0.978049
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        339,
+        410
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-succulent-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-succulent-woven-cream.png",
+      "displayWidth": 37,
+      "footAnchor": [
+        0.487106,
+        0.980535
+      ],
+      "anchor": [
+        0.487106,
+        0.980535
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        349,
+        411
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-fern-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-fern-terracotta.png",
+      "displayWidth": 53,
+      "footAnchor": [
+        0.487352,
+        0.980851
+      ],
+      "anchor": [
+        0.487352,
+        0.980851
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        593,
+        470
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-fern-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-fern-woven-cream.png",
+      "displayWidth": 53,
+      "footAnchor": [
+        0.492424,
+        0.980973
+      ],
+      "anchor": [
+        0.492424,
+        0.980973
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        594,
+        473
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-orchid-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-orchid-terracotta.png",
+      "displayWidth": 35,
+      "footAnchor": [
+        0.534722,
+        0.980603
+      ],
+      "anchor": [
+        0.534722,
+        0.980603
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        432,
+        464
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-orchid-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-orchid-woven-cream.png",
+      "displayWidth": 35,
+      "footAnchor": [
+        0.522727,
+        0.980562
+      ],
+      "anchor": [
+        0.522727,
+        0.980562
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        418,
+        463
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-pilea-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-pilea-terracotta.png",
+      "displayWidth": 47,
+      "footAnchor": [
+        0.515625,
+        0.978022
+      ],
+      "anchor": [
+        0.515625,
+        0.978022
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        480,
+        455
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-pilea-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-pilea-woven-cream.png",
+      "displayWidth": 47,
+      "footAnchor": [
+        0.526096,
+        0.982456
+      ],
+      "anchor": [
+        0.526096,
+        0.982456
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        479,
+        456
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-flowering-shrub-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-flowering-shrub-terracotta.png",
+      "displayWidth": 45,
+      "footAnchor": [
+        0.489933,
+        0.979021
+      ],
+      "anchor": [
+        0.489933,
+        0.979021
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        447,
+        429
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-flowering-shrub-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-flowering-shrub-woven-cream.png",
+      "displayWidth": 45,
+      "footAnchor": [
+        0.502247,
+        0.97907
+      ],
+      "anchor": [
+        0.502247,
+        0.97907
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        445,
+        430
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-ficus-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-ficus-terracotta.png",
+      "displayWidth": 87,
+      "footAnchor": [
+        0.54881,
+        0.984483
+      ],
+      "anchor": [
+        0.54881,
+        0.984483
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        420,
+        580
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "plant-ficus-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-ficus-woven-cream.png",
+      "displayWidth": 87,
+      "footAnchor": [
+        0.541866,
+        0.984563
+      ],
+      "anchor": [
+        0.541866,
+        0.984563
+      ],
+      "qa_status": "accepted",
+      "deviations": [],
+      "status": "generated",
+      "size": [
+        418,
+        583
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "plant-monstera-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-monstera-terracotta.png",
+      "displayWidth": 101.257332,
+      "footAnchor": [
+        0.495108,
+        0.991649
+      ],
+      "anchor": [
+        0.495108,
+        0.991649
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Measured height/width 1.91 rather than nominal 1.8; uniform270px height yields141.2px width, fitting150x270 target and165x285 maximum."
+      ],
+      "status": "generated",
+      "size": [
+        511,
+        958
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-monstera-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-monstera-woven-cream.png",
+      "displayWidth": 101.059176,
+      "footAnchor": [
+        0.488235,
+        0.990615
+      ],
+      "anchor": [
+        0.488235,
+        0.990615
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Measured height/width 1.91 rather than nominal 1.8; uniform270px height yields141.2px width, fitting150x270 target and165x285 maximum."
+      ],
+      "status": "generated",
+      "size": [
+        510,
+        959
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "plant-palm-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-palm-terracotta.png",
+      "displayWidth": 101,
+      "footAnchor": [
+        0.480695,
+        0.9839
+      ],
+      "anchor": [
+        0.480695,
+        0.9839
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "status": "generated",
+      "size": [
+        518,
+        559
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "plant-palm-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-palm-woven-cream.png",
+      "displayWidth": 101,
+      "footAnchor": [
+        0.488462,
+        0.982238
+      ],
+      "anchor": [
+        0.488462,
+        0.982238
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "status": "generated",
+      "size": [
+        520,
+        563
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "plant-dracaena-terracotta",
+      "category": "plants",
+      "file": "plants/assets/plant-dracaena-terracotta.png",
+      "displayWidth": 78,
+      "footAnchor": [
+        0.498925,
+        0.984076
+      ],
+      "anchor": [
+        0.498925,
+        0.984076
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "status": "generated",
+      "size": [
+        465,
+        628
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "plant-dracaena-woven-cream",
+      "category": "plants",
+      "file": "plants/assets/plant-dracaena-woven-cream.png",
+      "displayWidth": 78,
+      "footAnchor": [
+        0.493658,
+        0.982595
+      ],
+      "anchor": [
+        0.493658,
+        0.982595
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Palm and dracaena have finer pixel texture than first plant atlases; room-scale consistency requires parent review."
+      ],
+      "status": "generated",
+      "size": [
+        473,
+        632
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-kanto-map",
+      "category": "paintings",
+      "file": "paintings/assets/painting-kanto-map.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.499176,
+        0.501124
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "status": "generated",
+      "size": [
+        607,
+        445
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-johto-map",
+      "category": "paintings",
+      "file": "paintings/assets/painting-johto-map.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.501647,
+        0.501124
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "status": "generated",
+      "size": [
+        607,
+        445
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-hoenn-map",
+      "category": "paintings",
+      "file": "paintings/assets/painting-hoenn-map.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.499176,
+        0.502227
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Decorative pictorial region art only; cartographic accuracy not verified."
+      ],
+      "status": "generated",
+      "size": [
+        607,
+        449
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-pallet-sunset",
+      "category": "paintings",
+      "file": "paintings/assets/painting-pallet-sunset.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.501647,
+        0.502227
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "status": "generated",
+      "size": [
+        607,
+        449
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-ecruteak-lanterns",
+      "category": "paintings",
+      "file": "paintings/assets/painting-ecruteak-lanterns.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.500743,
+        0.5
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "status": "generated",
+      "size": [
+        673,
+        493
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-lake",
+      "category": "paintings",
+      "file": "paintings/assets/painting-lake.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.5,
+        0.498988
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "status": "generated",
+      "size": [
+        672,
+        494
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-pikachu-berries",
+      "category": "paintings",
+      "file": "paintings/assets/painting-pikachu-berries.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.500743,
+        0.501022
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "status": "generated",
+      "size": [
+        673,
+        489
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-eevee-forest",
+      "category": "paintings",
+      "file": "paintings/assets/painting-eevee-forest.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.500743,
+        0.501022
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only.",
+        "Frames lighter and thicker than paintings-01/03; content and transparency passed."
+      ],
+      "status": "generated",
+      "size": [
+        673,
+        489
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-bulbasaur-plants",
+      "category": "paintings",
+      "file": "paintings/assets/painting-bulbasaur-plants.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.498322,
+        0.498886
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "status": "generated",
+      "size": [
+        596,
+        449
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-dragonite-postman",
+      "category": "paintings",
+      "file": "paintings/assets/painting-dragonite-postman.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.501684,
+        0.5
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "status": "generated",
+      "size": [
+        594,
+        448
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-snorlax-meadow",
+      "category": "paintings",
+      "file": "paintings/assets/painting-snorlax-meadow.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.498322,
+        0.498894
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "status": "generated",
+      "size": [
+        596,
+        452
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "painting-mew-stars",
+      "category": "paintings",
+      "file": "paintings/assets/painting-mew-stars.png",
+      "displayWidth": 106,
+      "anchor": [
+        0.501684,
+        0.501101
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Landscape frame aspect approximately 1.34 to 1.39 rather than exact requested 5:4; use uniform scale only."
+      ],
+      "status": "generated",
+      "size": [
+        594,
+        454
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-woven-cream",
+      "category": "rugs",
+      "file": "rugs/assets/rug-woven-cream.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.502242,
+        0.956731
+      ],
+      "backEdgeAnchor": [
+        0.502242,
+        0.057692
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        892,
+        208
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-woven-sage",
+      "category": "rugs",
+      "file": "rugs/assets/rug-woven-sage.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.503885,
+        0.935185
+      ],
+      "backEdgeAnchor": [
+        0.503885,
+        0.055556
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        901,
+        216
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-woven-blue",
+      "category": "rugs",
+      "file": "rugs/assets/rug-woven-blue.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.504075,
+        0.959276
+      ],
+      "backEdgeAnchor": [
+        0.504075,
+        0.054299
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "status": "generated",
+      "size": [
+        859,
+        221
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-checkered-cream",
+      "category": "rugs",
+      "file": "rugs/assets/rug-checkered-cream.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498276,
+        0.956311
+      ],
+      "backEdgeAnchor": [
+        0.498276,
+        0.053398
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        870,
+        206
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-checkered-sage",
+      "category": "rugs",
+      "file": "rugs/assets/rug-checkered-sage.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.497696,
+        0.953917
+      ],
+      "backEdgeAnchor": [
+        0.497696,
+        0.050691
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        868,
+        217
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-checkered-blue",
+      "category": "rugs",
+      "file": "rugs/assets/rug-checkered-blue.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.501206,
+        0.959641
+      ],
+      "backEdgeAnchor": [
+        0.501206,
+        0.049327
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "status": "generated",
+      "size": [
+        829,
+        223
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-oval-cream",
+      "category": "rugs",
+      "file": "rugs/assets/rug-oval-cream.png",
+      "displayWidth": 720,
+      "footAnchor": [
+        0.501746,
+        0.964143
+      ],
+      "backEdgeAnchor": [
+        0.501746,
+        0.047809
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        859,
+        251
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-oval-sage",
+      "category": "rugs",
+      "file": "rugs/assets/rug-oval-sage.png",
+      "displayWidth": 720,
+      "footAnchor": [
+        0.503468,
+        0.96139
+      ],
+      "backEdgeAnchor": [
+        0.503468,
+        0.03861
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        865,
+        259
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-oval-blue",
+      "category": "rugs",
+      "file": "rugs/assets/rug-oval-blue.png",
+      "displayWidth": 720,
+      "footAnchor": [
+        0.5,
+        0.965909
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.037879
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "status": "generated",
+      "size": [
+        821,
+        264
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-pokeball-cream",
+      "category": "rugs",
+      "file": "rugs/assets/rug-pokeball-cream.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.498885,
+        0.959091
+      ],
+      "backEdgeAnchor": [
+        0.498885,
+        0.045455
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        897,
+        220
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-pokeball-sage",
+      "category": "rugs",
+      "file": "rugs/assets/rug-pokeball-sage.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.5,
+        0.948617
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.035573
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending."
+      ],
+      "status": "generated",
+      "size": [
+        892,
+        253
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "rug-pokeball-blue",
+      "category": "rugs",
+      "file": "rugs/assets/rug-pokeball-blue.png",
+      "displayWidth": 730,
+      "footAnchor": [
+        0.5,
+        0.960784
+      ],
+      "backEdgeAnchor": [
+        0.5,
+        0.039216
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native width below requested 2x room-display master; preserve native pixels and assess final scene at actual size.",
+        "Initial full-rug 5.6 aspect assumption superseded by parent: approved comp crops frontedge. Full-item aspect is measured, composite placement pending.",
+        "One extra spacing-only cleanup separated accidentally touching upper objects; all4 complete outlines now pass shared slicer."
+      ],
+      "status": "generated",
+      "size": [
+        848,
+        255
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "curtain-short-cream",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-short-cream.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500742,
+        0.974522
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        674,
+        314
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-short-sage",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-short-sage.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.499298,
+        0.973054
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        712,
+        334
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-short-blue",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-short-blue.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.5,
+        0.970684
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        702,
+        307
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-linen-cream",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-linen-cream.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500742,
+        0.982249
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        674,
+        507
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-linen-sage",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-linen-sage.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.5,
+        0.983209
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        698,
+        536
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-linen-blue",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-linen-blue.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500719,
+        0.978682
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        695,
+        516
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-tied-cream",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-tied-cream.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.49928,
+        0.981781
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        694,
+        494
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-tied-sage",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-tied-sage.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.50067,
+        0.980973
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        746,
+        473
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "curtain-tied-blue",
+      "category": "curtains",
+      "file": "curtains/assets/curtain-tied-blue.png",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500654,
+        0.982759
+      ],
+      "backEdgeAnchor": null,
+      "qa_status": "needs_parent_review",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "status": "generated",
+      "size": [
+        765,
+        522
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "wall-plain-cream",
+      "category": "walls",
+      "file": "architecture/assets/room-base.png",
+      "status": "generated",
+      "size": [
+        1978,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-plain-sage",
+      "category": "walls",
+      "file": "walls/assets/wall-plain-sage.png",
+      "status": "generated",
+      "size": [
+        1978,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-plain-blue",
+      "category": "walls",
+      "file": "walls/assets/wall-plain-blue.png",
+      "status": "generated",
+      "size": [
+        1978,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-panels-honey",
+      "category": "walls",
+      "file": "walls/assets/wall-panels-honey.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-panels-cream",
+      "category": "walls",
+      "file": "walls/assets/wall-panels-cream.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-panels-walnut",
+      "category": "walls",
+      "file": "walls/assets/wall-panels-walnut.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-floral-cream",
+      "category": "walls",
+      "file": "walls/assets/wall-floral-cream.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-floral-sage",
+      "category": "walls",
+      "file": "walls/assets/wall-floral-sage.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-floral-blue",
+      "category": "walls",
+      "file": "walls/assets/wall-floral-blue.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-stars-cream",
+      "category": "walls",
+      "file": "walls/assets/wall-stars-cream.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-stars-sage",
+      "category": "walls",
+      "file": "walls/assets/wall-stars-sage.png",
+      "status": "generated",
+      "size": [
+        1978,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "wall-stars-blue",
+      "category": "walls",
+      "file": "walls/assets/wall-stars-blue.png",
+      "status": "generated",
+      "size": [
+        1977,
+        795
+      ],
+      "alphaExtrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "trophy-species-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-species-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        42.1
+      ],
+      "footAnchor": [
+        0.5,
+        0.98034
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        464,
+        407
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-species-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-species-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        42.82
+      ],
+      "footAnchor": [
+        0.5,
+        0.97519
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        527,
+        403
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-species-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-species-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        41.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.9782
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        563,
+        367
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-species-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-species-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        60.56
+      ],
+      "footAnchor": [
+        0.5,
+        0.98301
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        560,
+        471
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-population-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-population-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        46.24
+      ],
+      "footAnchor": [
+        0.5,
+        0.97654
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        354,
+        341
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-population-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-population-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        40.08
+      ],
+      "footAnchor": [
+        0.5,
+        0.97101
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        482,
+        345
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-population-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-population-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        55.33
+      ],
+      "footAnchor": [
+        0.5,
+        0.98234
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        524,
+        453
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-population-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-population-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        65.92
+      ],
+      "footAnchor": [
+        0.5,
+        0.98431
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        557,
+        510
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-catches-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-catches-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        42.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        373,
+        332
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-catches-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-catches-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        38.57
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        482,
+        332
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-catches-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-catches-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        47.59
+      ],
+      "footAnchor": [
+        0.5,
+        0.98148
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        581,
+        432
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-catches-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-catches-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        55.46
+      ],
+      "footAnchor": [
+        0.5,
+        0.98206
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        579,
+        446
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-expeditions-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-expeditions-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        38.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.97479
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        441,
+        357
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-expeditions-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-expeditions-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        51.19
+      ],
+      "footAnchor": [
+        0.5,
+        0.97653
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        466,
+        426
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-expeditions-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-expeditions-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        50.03
+      ],
+      "footAnchor": [
+        0.5,
+        0.97887
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        545,
+        426
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-expeditions-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-expeditions-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        68.94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98069
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        541,
+        518
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-regions-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-regions-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        37.75
+      ],
+      "footAnchor": [
+        0.5,
+        0.9705
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        431,
+        339
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-regions-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-regions-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        42.61
+      ],
+      "footAnchor": [
+        0.5,
+        0.97602
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        548,
+        417
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-regions-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-regions-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        54.99
+      ],
+      "footAnchor": [
+        0.5,
+        0.98126
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        497,
+        427
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-regions-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-regions-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        59.71
+      ],
+      "footAnchor": [
+        0.5,
+        0.97899
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        574,
+        476
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-team-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-team-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        42.92
+      ],
+      "footAnchor": [
+        0.5,
+        0.97368
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "status": "generated",
+      "size": [
+        425,
+        380
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-team-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-team-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        41.26
+      ],
+      "footAnchor": [
+        0.5,
+        0.97842
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "status": "generated",
+      "size": [
+        566,
+        417
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-team-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-team-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        49.25
+      ],
+      "footAnchor": [
+        0.5,
+        0.97523
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "status": "generated",
+      "size": [
+        577,
+        444
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-team-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-team-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        58.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.98167
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved alternate: expedition backpacks represent team participants.",
+      "status": "generated",
+      "size": [
+        602,
+        491
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-care-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-care-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        51.35
+      ],
+      "footAnchor": [
+        0.5,
+        0.97585
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        387,
+        414
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-care-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-care-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        56.0
+      ],
+      "footAnchor": [
+        0.5,
+        0.9759
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        415,
+        415
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-care-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-care-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        62.24
+      ],
+      "footAnchor": [
+        0.5,
+        0.97831
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        474,
+        461
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-care-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-care-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        67.32
+      ],
+      "footAnchor": [
+        0.5,
+        0.98016
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        539,
+        504
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-nursery-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-nursery-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        40.66
+      ],
+      "footAnchor": [
+        0.5,
+        0.97382
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        451,
+        382
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-nursery-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-nursery-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        50.75
+      ],
+      "footAnchor": [
+        0.5,
+        0.97596
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        459,
+        416
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-nursery-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-nursery-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        69.5
+      ],
+      "footAnchor": [
+        0.5,
+        0.98117
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        489,
+        531
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-nursery-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-nursery-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        70.97
+      ],
+      "footAnchor": [
+        0.5,
+        0.98188
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        560,
+        552
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-evolution-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-evolution-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        51.02
+      ],
+      "footAnchor": [
+        0.5,
+        0.97312
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        350,
+        372
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-evolution-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-evolution-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        59.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.98185
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        464,
+        496
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-evolution-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-evolution-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        65.27
+      ],
+      "footAnchor": [
+        0.5,
+        0.98051
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        503,
+        513
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-evolution-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-evolution-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        72.0
+      ],
+      "footAnchor": [
+        0.5,
+        0.98295
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        528,
+        528
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-shiny-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-shiny-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        51.22
+      ],
+      "footAnchor": [
+        0.5,
+        0.97753
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        417,
+        445
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-shiny-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-shiny-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        53.57
+      ],
+      "footAnchor": [
+        0.5,
+        0.97732
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        461,
+        441
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-shiny-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-shiny-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        65.96
+      ],
+      "footAnchor": [
+        0.5,
+        0.98016
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        489,
+        504
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-shiny-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-shiny-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        71.22
+      ],
+      "footAnchor": [
+        0.5,
+        0.98165
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        551,
+        545
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-decor-1",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-decor-1.png",
+      "displayWidth": 48,
+      "logicalSize": [
+        48,
+        44.91
+      ],
+      "footAnchor": [
+        0.5,
+        0.97619
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        404,
+        378
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-decor-2",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-decor-2.png",
+      "displayWidth": 56,
+      "logicalSize": [
+        56,
+        50.75
+      ],
+      "footAnchor": [
+        0.5,
+        0.97416
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        427,
+        387
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-decor-3",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-decor-3.png",
+      "displayWidth": 64,
+      "logicalSize": [
+        64,
+        54.5
+      ],
+      "footAnchor": [
+        0.5,
+        0.98091
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        492,
+        419
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-decor-4",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-decor-4.png",
+      "displayWidth": 72,
+      "logicalSize": [
+        72,
+        60.43
+      ],
+      "footAnchor": [
+        0.5,
+        0.9828
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        554,
+        465
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-nick",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-nick.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        58.67
+      ],
+      "footAnchor": [
+        0.5,
+        0.98035
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        484,
+        458
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-favorite",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-favorite.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        64.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.98238
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        434,
+        454
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-type-team",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-type-team.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        49.86
+      ],
+      "footAnchor": [
+        0.5,
+        0.97872
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        526,
+        423
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-bonus-find",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-bonus-find.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        58.48
+      ],
+      "footAnchor": [
+        0.5,
+        0.98218
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        476,
+        449
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-nursery-expedition",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-nursery-expedition.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        58.26
+      ],
+      "footAnchor": [
+        0.5,
+        0.9793
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "status": "generated",
+      "size": [
+        514,
+        483
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-family-expedition",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-family-expedition.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        56.72
+      ],
+      "footAnchor": [
+        0.5,
+        0.98138
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "status": "generated",
+      "size": [
+        587,
+        537
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-evolved-expedition",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-evolved-expedition.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        56.89
+      ],
+      "footAnchor": [
+        0.5,
+        0.98279
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "status": "generated",
+      "size": [
+        570,
+        523
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-all-berries",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-all-berries.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        58.76
+      ],
+      "footAnchor": [
+        0.5,
+        0.98099
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "Parent-approved nonliving motifs: egg in backpack, two matching backpacks, botanical book with arrow, berry basket; safety-rejected prior brief replaced.",
+      "status": "generated",
+      "size": [
+        555,
+        526
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-berry-evolution",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-berry-evolution.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        69.3
+      ],
+      "footAnchor": [
+        0.5,
+        0.98211
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        450,
+        503
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-branch-choice",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-branch-choice.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        62.0
+      ],
+      "footAnchor": [
+        0.5,
+        0.97963
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        491,
+        491
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-offspring-choice",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-offspring-choice.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        47.08
+      ],
+      "footAnchor": [
+        0.5,
+        0.98034
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        536,
+        407
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-all-plants",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-all-plants.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        58.29
+      ],
+      "footAnchor": [
+        0.5,
+        0.98305
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        502,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-three-pictures",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-three-pictures.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        48.18
+      ],
+      "footAnchor": [
+        0.5,
+        0.9763
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        543,
+        422
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-mixed-furniture",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-mixed-furniture.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        57.09
+      ],
+      "footAnchor": [
+        0.5,
+        0.98
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        543,
+        500
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-all-legends",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-all-legends.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        62.94
+      ],
+      "footAnchor": [
+        0.5,
+        0.98131
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        527,
+        535
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-second-trait",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-second-trait.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        57.51
+      ],
+      "footAnchor": [
+        0.5,
+        0.97947
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        525,
+        487
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-retrain",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-retrain.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        61.74
+      ],
+      "footAnchor": [
+        0.5,
+        0.98283
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        468,
+        466
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-rehome",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-rehome.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        56.48
+      ],
+      "footAnchor": [
+        0.5,
+        0.98301
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        517,
+        471
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "trophy-special-xp-potion",
+      "category": "trophies",
+      "file": "trophies/assets/trophy-special-xp-potion.png",
+      "displayWidth": 62,
+      "logicalSize": [
+        62,
+        66.07
+      ],
+      "footAnchor": [
+        0.5,
+        0.98012
+      ],
+      "qa_status": "needs_parent_review",
+      "deviations": "None material in contact review.",
+      "status": "generated",
+      "size": [
+        472,
+        503
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    }
+  ]
+}

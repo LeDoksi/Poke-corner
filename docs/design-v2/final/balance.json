@@ -1,0 +1,616 @@
+{
+  "schemaVersion": 1,
+  "status": "implementation-baseline-not-runtime",
+  "acceptedSource": "../BALANCE-REVIEW.md",
+  "completionDefaultsSource": "BALANCE.md",
+  "levels": [
+    {
+      "level": 1,
+      "totalXp": 0,
+      "baseHours": 0.0
+    },
+    {
+      "level": 2,
+      "totalXp": 134,
+      "baseHours": 1.34
+    },
+    {
+      "level": 3,
+      "totalXp": 267,
+      "baseHours": 2.67
+    },
+    {
+      "level": 4,
+      "totalXp": 400,
+      "baseHours": 4.0
+    },
+    {
+      "level": 5,
+      "totalXp": 534,
+      "baseHours": 5.34
+    },
+    {
+      "level": 6,
+      "totalXp": 667,
+      "baseHours": 6.67
+    },
+    {
+      "level": 7,
+      "totalXp": 800,
+      "baseHours": 8.0
+    },
+    {
+      "level": 8,
+      "totalXp": 934,
+      "baseHours": 9.34
+    },
+    {
+      "level": 9,
+      "totalXp": 1067,
+      "baseHours": 10.67
+    },
+    {
+      "level": 10,
+      "totalXp": 1200,
+      "baseHours": 12.0
+    },
+    {
+      "level": 11,
+      "totalXp": 1360,
+      "baseHours": 13.6
+    },
+    {
+      "level": 12,
+      "totalXp": 1520,
+      "baseHours": 15.2
+    },
+    {
+      "level": 13,
+      "totalXp": 1680,
+      "baseHours": 16.8
+    },
+    {
+      "level": 14,
+      "totalXp": 1840,
+      "baseHours": 18.4
+    },
+    {
+      "level": 15,
+      "totalXp": 2000,
+      "baseHours": 20.0
+    },
+    {
+      "level": 16,
+      "totalXp": 2160,
+      "baseHours": 21.6
+    },
+    {
+      "level": 17,
+      "totalXp": 2320,
+      "baseHours": 23.2
+    },
+    {
+      "level": 18,
+      "totalXp": 2480,
+      "baseHours": 24.8
+    },
+    {
+      "level": 19,
+      "totalXp": 2640,
+      "baseHours": 26.4
+    },
+    {
+      "level": 20,
+      "totalXp": 2800,
+      "baseHours": 28.0
+    },
+    {
+      "level": 21,
+      "totalXp": 3000,
+      "baseHours": 30.0
+    },
+    {
+      "level": 22,
+      "totalXp": 3200,
+      "baseHours": 32.0
+    },
+    {
+      "level": 23,
+      "totalXp": 3400,
+      "baseHours": 34.0
+    },
+    {
+      "level": 24,
+      "totalXp": 3600,
+      "baseHours": 36.0
+    },
+    {
+      "level": 25,
+      "totalXp": 3800,
+      "baseHours": 38.0
+    },
+    {
+      "level": 26,
+      "totalXp": 4000,
+      "baseHours": 40.0
+    },
+    {
+      "level": 27,
+      "totalXp": 4200,
+      "baseHours": 42.0
+    },
+    {
+      "level": 28,
+      "totalXp": 4400,
+      "baseHours": 44.0
+    },
+    {
+      "level": 29,
+      "totalXp": 4600,
+      "baseHours": 46.0
+    },
+    {
+      "level": 30,
+      "totalXp": 4800,
+      "baseHours": 48.0
+    },
+    {
+      "level": 31,
+      "totalXp": 4960,
+      "baseHours": 49.6
+    },
+    {
+      "level": 32,
+      "totalXp": 5120,
+      "baseHours": 51.2
+    },
+    {
+      "level": 33,
+      "totalXp": 5280,
+      "baseHours": 52.8
+    },
+    {
+      "level": 34,
+      "totalXp": 5440,
+      "baseHours": 54.4
+    },
+    {
+      "level": 35,
+      "totalXp": 5600,
+      "baseHours": 56.0
+    },
+    {
+      "level": 36,
+      "totalXp": 5760,
+      "baseHours": 57.6
+    },
+    {
+      "level": 37,
+      "totalXp": 5920,
+      "baseHours": 59.2
+    },
+    {
+      "level": 38,
+      "totalXp": 6080,
+      "baseHours": 60.8
+    },
+    {
+      "level": 39,
+      "totalXp": 6240,
+      "baseHours": 62.4
+    },
+    {
+      "level": 40,
+      "totalXp": 6400,
+      "baseHours": 64.0
+    }
+  ],
+  "traitTiersAt": [
+    1,
+    20,
+    30
+  ],
+  "secondTraitLevel": 10,
+  "traits": {
+    "gatherer": [
+      0.05,
+      0.1,
+      0.15
+    ],
+    "treasure-hunter": [
+      0.05,
+      0.1,
+      0.15
+    ],
+    "tracker": [
+      0.1,
+      0.15,
+      0.2
+    ],
+    "finder": [
+      0.1,
+      0.15,
+      0.2
+    ],
+    "mentor": [
+      0.05,
+      0.1,
+      0.15
+    ],
+    "collector": [
+      2,
+      3,
+      4
+    ],
+    "relic-finder": [
+      0.01,
+      0.02,
+      0.03
+    ],
+    "terrain-expert": [
+      0.05,
+      0.08,
+      0.12
+    ],
+    "fast-grower": [
+      0.05,
+      0.1,
+      0.15
+    ],
+    "rarity-expert": [
+      1.1,
+      1.2,
+      1.3
+    ],
+    "caring-parent": [
+      0.05,
+      0.08,
+      0.12
+    ]
+  },
+  "maxLevel": 40,
+  "maxXp": 6400,
+  "newIndividualLevel": 1,
+  "xpPerHour": 100,
+  "rarityOrder": [
+    "Common",
+    "Uncommon",
+    "Rare",
+    "Legendary"
+  ],
+  "difficultyOrder": [
+    "easy",
+    "normal",
+    "hard"
+  ],
+  "durationMinutes": [
+    30,
+    90,
+    180,
+    360
+  ],
+  "recommendedLevels": [
+    1,
+    10,
+    25
+  ],
+  "resourceCompositionByMembers": [
+    0.8,
+    1,
+    1
+  ],
+  "eventTeamSize": 3,
+  "maxActiveExpeditions": 1,
+  "maxActiveNests": 1,
+  "maxEncountersPerExpedition": 1,
+  "extraCheckMinutes": 30,
+  "coinsPerHour": [
+    6,
+    8,
+    12
+  ],
+  "primaryBerriesPerHour": [
+    2,
+    2,
+    3
+  ],
+  "minimumPrimaryBerriesPerHour": 2,
+  "primaryBerryFloorOrder": "after capped bonus, underlevel and composition; before duration",
+  "completionDecisionAuthority": "user-delegated-audit-finalization-2026-10-11",
+  "hourlyEncounterChance": [
+    0.03,
+    0.05,
+    0.07
+  ],
+  "extraChancePerHalfHour": [
+    0.1,
+    0.2,
+    0.3
+  ],
+  "expeditionRarityWeights": [
+    [
+      75,
+      22,
+      2.8,
+      0.2
+    ],
+    [
+      60,
+      30,
+      9,
+      1
+    ],
+    [
+      45,
+      35,
+      17,
+      3
+    ]
+  ],
+  "trackerAppliesTo": "relative multiplier of final encounter probability",
+  "encounterChanceCap": 0.95,
+  "extraLoot": {
+    "berry": {
+      "probability": 0.6,
+      "quantity": 1,
+      "source": "uniform-route-additional"
+    },
+    "coins": {
+      "probability": 0.4,
+      "quantityByDifficulty": [
+        3,
+        4,
+        6
+      ]
+    }
+  },
+  "relicLootWeights": {
+    "evolutionStone": 60,
+    "offspringCharm": 30,
+    "luckyCharm": 10
+  },
+  "eventChanceCap": 0.95,
+  "underlevelPenaltyPerLevel": 0.025,
+  "eventUnderlevelPenaltyPerLevel": 0.025,
+  "maxUnderlevelPenalty": 0.5,
+  "levelBonusPerLevel": 0.0025,
+  "matchingTypeBonusPerMember": 0.03,
+  "resourceBonusCap": 0.4,
+  "stackWeights": [
+    1,
+    0.5,
+    0.25
+  ],
+  "maxExpeditionTimeReduction": 0.25,
+  "maxNurseryTimeReduction": 0.2,
+  "activityAcceleration": {
+    "actionsPerStep": 500,
+    "reductionPerStep": 0.01,
+    "maxReduction": 0.1
+  },
+  "rounding": "duration-times-minimum-hourly-rate-then-floor-with-persisted-rational-remainder",
+  "expeditionStates": [
+    "running",
+    "ready",
+    "claimed"
+  ],
+  "expeditionRelease": "on-confirmed-claim",
+  "readyIsMonotonic": true,
+  "activityBallActions": 22500,
+  "activityCoinActions": 900,
+  "activityTreatActions": 3750,
+  "activityNewChance": 0.8,
+  "newAfterDuplicate": true,
+  "activityRarityWeights": [
+    60,
+    30,
+    9,
+    1
+  ],
+  "nurseryHours": [
+    2,
+    4,
+    6,
+    8
+  ],
+  "nurseryWeights": [
+    8,
+    4,
+    2,
+    0.5
+  ],
+  "nurseryBerries": 10,
+  "choiceExtraBerries": 4,
+  "evolutionBerries": 6,
+  "retrainBerries": 60,
+  "shinyBase": 0.001953125,
+  "nurseryShinyIncrement": 0.0025,
+  "nurseryShinyCap": 0.1,
+  "shinyCharmMultiplier": 4,
+  "shinyChanceCap": 1,
+  "unusableShinyPolicy": {
+    "chance": 0,
+    "consumeLuckyCharm": false,
+    "increaseNurseryLuck": false,
+    "mixedOutcomes": "preserve selected actual species; apply that species availability"
+  },
+  "shopPrices": {
+    "treats5": 20,
+    "careBooster7500": 20,
+    "luckyCharm": 30,
+    "evolutionStone": 20,
+    "offspringCharm": 50,
+    "xpPotion300": 40,
+    "berry1": 5
+  },
+  "treatPackQuantity": 5,
+  "careBoosterPoints": 7500,
+  "xpPotionXp": 300,
+  "startingResources": {
+    "coins": 20,
+    "treats": 5,
+    "compatibleGiftPokeballs": 2
+  },
+  "rehome": {
+    "coinsByRarity": [
+      6,
+      12,
+      24,
+      40
+    ],
+    "levelBonusEvery": 10,
+    "coinsPerLevelStep": 1,
+    "shinyBonus": 5
+  },
+  "care": {
+    "evolutionCarePoints": [
+      70000,
+      196000
+    ],
+    "feedingPoints": 2250,
+    "pettingPoints": 110,
+    "pettingCooldownSeconds": 3,
+    "hardcoreNeglectMinutes": 360,
+    "hardcoreReturnMinutes": 60,
+    "tangleStagesMinutes": [
+      180,
+      270,
+      345
+    ],
+    "reminderBeforeNeglectMinutes": 5,
+    "idleGraceMinutes": 60
+  },
+  "trophyShelfSlots": 3,
+  "achievementCoins": {
+    "chainTiers": [
+      5,
+      10,
+      20,
+      40
+    ],
+    "specialDefault": 5,
+    "hardSpecial": 10
+  },
+  "locations": [
+    {
+      "id": "grove",
+      "primary": "rawst",
+      "additional": [
+        "pecha",
+        "cheri"
+      ],
+      "bonusTypes": [
+        "grass",
+        "bug",
+        "poison"
+      ]
+    },
+    {
+      "id": "lake",
+      "primary": "oran",
+      "additional": [
+        "rawst",
+        "pecha"
+      ],
+      "bonusTypes": [
+        "water",
+        "normal"
+      ]
+    },
+    {
+      "id": "coast",
+      "primary": "pecha",
+      "additional": [
+        "oran",
+        "aspear"
+      ],
+      "bonusTypes": [
+        "water",
+        "flying",
+        "fairy"
+      ]
+    },
+    {
+      "id": "mountains",
+      "primary": "chesto",
+      "additional": [
+        "cheri",
+        "aspear"
+      ],
+      "bonusTypes": [
+        "rock",
+        "fighting",
+        "dragon"
+      ]
+    },
+    {
+      "id": "desert",
+      "primary": "aspear",
+      "additional": [
+        "cheri",
+        "chesto"
+      ],
+      "bonusTypes": [
+        "ground",
+        "dark"
+      ]
+    },
+    {
+      "id": "volcano",
+      "primary": "cheri",
+      "additional": [
+        "aspear",
+        "rawst"
+      ],
+      "bonusTypes": [
+        "fire",
+        "steel"
+      ]
+    },
+    {
+      "id": "snow",
+      "primary": "oran",
+      "additional": [
+        "aspear",
+        "chesto"
+      ],
+      "bonusTypes": [
+        "ice",
+        "normal"
+      ]
+    },
+    {
+      "id": "ruins",
+      "primary": "chesto",
+      "additional": [
+        "rawst",
+        "pecha"
+      ],
+      "bonusTypes": [
+        "ghost",
+        "psychic",
+        "electric"
+      ]
+    }
+  ],
+  "typeBerries": {
+    "grass": "rawst",
+    "bug": "rawst",
+    "poison": "pecha",
+    "water": "oran",
+    "normal": "oran",
+    "flying": "pecha",
+    "fairy": "pecha",
+    "rock": "chesto",
+    "fighting": "chesto",
+    "dragon": "chesto",
+    "ground": "aspear",
+    "dark": "aspear",
+    "fire": "cheri",
+    "steel": "cheri",
+    "ice": "aspear",
+    "ghost": "chesto",
+    "psychic": "chesto",
+    "electric": "oran"
+  }
+}

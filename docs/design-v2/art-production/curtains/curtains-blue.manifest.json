@@ -1,0 +1,309 @@
+{
+  "status": "generated-and-cut-not-yet-all-combinations-tested",
+  "grid": [
+    2,
+    2
+  ],
+  "assets": [
+    {
+      "id": "curtain-short-blue",
+      "row": 0,
+      "col": 0,
+      "name": "short-blue",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.5,
+        0.970684
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        0,
+        790,
+        450
+      ],
+      "file": "curtains/assets/curtain-short-blue.png",
+      "size": [
+        702,
+        307
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        47,
+        17,
+        733,
+        308
+      ],
+      "cropInCell": [
+        39,
+        9,
+        741,
+        316
+      ],
+      "sha256": "fee32a75d0e404d016e54c9aa047224462214617cd626eecced09473d84fd5a1",
+      "source": "curtains/_sources/curtains-blue-v2.png",
+      "promptFile": "curtains/_sources/curtains-blue-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        9,
+        9,
+        693,
+        298
+      ],
+      "actualAspect": 2.366782,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.037037,
+          0.094463
+        ],
+        [
+          0.960114,
+          0.198697
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          65,
+          38
+        ],
+        [
+          713,
+          70
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.037037,
+        0.094463
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        185,
+        73,
+        339,
+        226
+      ],
+      "openingRect": [
+        0.263533,
+        0.237785,
+        0.482906,
+        0.736156
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-linen-blue",
+      "row": 0,
+      "col": 1,
+      "name": "linen-blue",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500719,
+        0.978682
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        790,
+        0,
+        1536,
+        570
+      ],
+      "file": "curtains/assets/curtain-linen-blue.png",
+      "size": [
+        695,
+        516
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        22,
+        17,
+        701,
+        517
+      ],
+      "cropInCell": [
+        14,
+        9,
+        709,
+        525
+      ],
+      "sha256": "fdca437e8879d26a670be6380d0fe07aa39e40f8f968cf04c7cb5f29f5457203",
+      "source": "curtains/_sources/curtains-blue-v2.png",
+      "promptFile": "curtains/_sources/curtains-blue-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        9,
+        8,
+        687,
+        505
+      ],
+      "actualAspect": 1.364185,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.040288,
+          0.052326
+        ],
+        [
+          0.959712,
+          0.120155
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          832,
+          36
+        ],
+        [
+          1471,
+          71
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.040288,
+        0.052326
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        203,
+        83,
+        312,
+        425
+      ],
+      "openingRect": [
+        0.292086,
+        0.160853,
+        0.448921,
+        0.823643
+      ],
+      "openingVerificationAlphaThreshold": 8
+    },
+    {
+      "id": "curtain-tied-blue",
+      "row": 1,
+      "col": 0,
+      "name": "tied-blue",
+      "category": "curtains",
+      "displayWidth": 275,
+      "footAnchor": [
+        0.500654,
+        0.982759
+      ],
+      "qa_status": "needs_parent_review",
+      "slots": [
+        "left-window"
+      ],
+      "strategy": "standalone transparent generation and bounded correction; technical alpha slicing only",
+      "cellRect": [
+        0,
+        450,
+        790,
+        1024
+      ],
+      "file": "curtains/assets/curtain-tied-blue.png",
+      "size": [
+        765,
+        522
+      ],
+      "atlasSize": [
+        1536,
+        1024
+      ],
+      "alphaBoundsInCell": [
+        24,
+        34,
+        773,
+        540
+      ],
+      "cropInCell": [
+        16,
+        26,
+        781,
+        548
+      ],
+      "sha256": "972336db24520325ee3e3b377a0fff43d40635da10cdd355195ecee9e14d7cd9",
+      "source": "curtains/_sources/curtains-blue-v2.png",
+      "promptFile": "curtains/_sources/curtains-blue-v2-prompt.txt",
+      "status": "cut-alpha-verified-placement-review-pending",
+      "alphaBounds128": [
+        10,
+        9,
+        756,
+        513
+      ],
+      "actualAspect": 1.480159,
+      "visual_qa": "whole-silhouette-and-alpha-composite-inspected",
+      "rodEndpoints": [
+        [
+          0.064052,
+          0.061303
+        ],
+        [
+          0.926797,
+          0.132184
+        ]
+      ],
+      "rodEndpointAtlasPixels": [
+        [
+          65,
+          508
+        ],
+        [
+          725,
+          545
+        ]
+      ],
+      "rodEndpointMeasurementErrorPixels": 5,
+      "mountingAnchor": [
+        0.064052,
+        0.061303
+      ],
+      "openingCenterAlphaVerified": true,
+      "placement_rule": "Mount by measured rodEndpoints with uniform scale, left-wall sloping rod. footAnchor records hem baseline only. Short model keeps its shorter physical silhouette at same rod width. Recheck panels against plant alpha, never stretch.",
+      "deviations": [
+        "Native rod span about 650px below preferred 800px for a 400px slot at 2x; real file dimensions recorded.",
+        "Fabric microtexture finer than some approved pixel clusters; room-scale visual acceptance pending."
+      ],
+      "openingRectPixels": [
+        216,
+        90,
+        342,
+        424
+      ],
+      "openingRect": [
+        0.282353,
+        0.172414,
+        0.447059,
+        0.812261
+      ],
+      "openingVerificationAlphaThreshold": 8
+    }
+  ]
+}
