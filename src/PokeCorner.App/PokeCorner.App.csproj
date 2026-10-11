@@ -5,20 +5,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- The app's entire runtime state directory, shipped pre-populated: static sprite PNGs
-         and animated GIFs for every species in the bundled catalog. It lands at
-         <output>\Data\{sprites,animated} — exactly where AppPaths points SpriteCache and the
-         animated cache — so a fresh install is fully offline on first launch with no copy
-         step at all. Loose files on purpose: PublishSingleFile bundles managed assemblies,
-         not Content, so this stays a plain folder the MSI can install and grant write
-         access to. -->
-    <Content Include="Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Legacy v1 display assets remain until T02 migrates stored forms. -->
+    <Content Include="Data\sprites\*.png;Data\animated\*.gif;Data\cries\*.wav" CopyToOutputDirectory="PreserveNewest" />
 
-    <!-- Seeds Data\catalog.json from the same bundled catalog SpriteCache embeds as its
-         offline fallback. The two files are the identical shape (a serialized
-         List<SpeciesEvolutionChain>), so linking rather than copying keeps one source of
-         truth. Having it on disk at first launch is what stops OnStartup's staleness check
-         from firing a network crawl on a brand new install. -->
+    <!-- Frozen v1 chain lookup for existing saves; canonical eligibility comes from RuntimePackage.props. -->
     <Content Include="..\PokeCorner.Core\PokeApi\OfflineStarterFallback.json"
              Link="Data\catalog.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
@@ -40,4 +30,8 @@
     <ApplicationIcon>PokeCorner.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\docs\design-v2\final\runtime-package.json" Link="Data\final\runtime-package.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Import Project="RuntimePackage.props" />
 </Project>

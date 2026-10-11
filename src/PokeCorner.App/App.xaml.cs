@@ -28,6 +28,7 @@ public partial class App : System.Windows.Application
     private SpriteCache _spriteCache = null!;
     private PokeApiClient _pokeApiClient = null!;
     private SpeciesCatalog _speciesCatalog = null!;
+    private CatalogPackage _catalogPackage = null!;
     private GlobalInputHook? _inputHook;
     private GamepadInputHook? _gamepadHook;
     private InputEventCounter _inputCounter = null!;
@@ -107,25 +108,8 @@ public partial class App : System.Windows.Application
         _pokeApiClient = new PokeApiClient(new System.Net.Http.HttpClientHandler());
         var catalogPath = Path.Combine(AppPaths.GetAppDataDirectory(), "catalog.json");
         _speciesCatalog = new SpeciesCatalog(_pokeApiClient, _spriteCache, catalogPath);
+        _catalogPackage = CatalogPackage.Load(AppPaths.GetAppDataDirectory());
 
-        // The crawl is ~1600 requests against the free public PokeAPI, so it runs at most weekly —
-        // or when the cached file predates the current schema (names, types), which
-        // LoadCachedOrFallback refuses to serve and which would otherwise never be rewritten.
-        var catalogIsStale = !File.Exists(catalogPath)
-            || File.GetLastWriteTimeUtc(catalogPath) < DateTime.UtcNow.AddDays(-7)
-            || !_speciesCatalog.IsCacheSchemaCurrent();
-        if (catalogIsStale)
-        {
-            // On the thread pool: the responses are large JSON documents, and parsing ~1600 of them on
-            // the dispatcher stutters the UI for minutes. Delayed because the app autostarts with
-            // Windows, usually before the network is up.
-            // ponytail: one attempt per launch, no retry; add one if two minutes still loses to slow networks.
-            _ = Task.Run(async () =>
-            {
-                await Task.Delay(TimeSpan.FromMinutes(2));
-                await _speciesCatalog.RefreshFromNetworkAsync();
-            });
-        }
         _catchRoller = new CatchRoller();
         _eggIncubationService = new EggIncubationService();
         _careModeService = new CareModeService();
@@ -576,10 +560,9 @@ public partial class App : System.Windows.Application
         if (_decodedFramesCache.TryGetValue(speciesId, out var memoized)) return memoized;
 
         byte[]? animatedBytes = null;
-        // Disk before network, mirroring SpriteCache's static-PNG contract. This is what
-        // lets the GIFs the installer ships into Data\animated render on a fresh machine
-        // with no network at all, and it stops a re-download on every app launch.
-        var gifPath = Path.Combine(AppPaths.GetAnimatedSpriteCacheDirectory(), $"{speciesId}.gif");
+        // The selected package provides verified local GIFs; an unavailable species has no animation.
+        var gifPath = _catalogPackage.GetAssetPath(speciesId, false);
+        if (gifPath is null) return null;
         try
         {
             if (File.Exists(gifPath))
@@ -590,34 +573,6 @@ public partial class App : System.Windows.Application
         catch (IOException)
         {
             animatedBytes = null;
-        }
-
-        if (animatedBytes is null)
-        {
-            try
-            {
-                animatedBytes = await _pokeApiClient.FetchAnimatedSpriteAsync(speciesId);
-            }
-            catch
-            {
-                // Network errors already degrade to null inside PokeApiClient's normal paths;
-                // this guards the unexpected ones rather than letting them reach
-                // DispatcherUnhandledException, which deliberately doesn't suppress crashes.
-                animatedBytes = null;
-            }
-
-            // Persist a freshly fetched GIF so the next launch reads it off disk. Best-effort:
-            // a failed write only costs a re-fetch later, so it must never break rendering.
-            if (animatedBytes is { Length: > 0 })
-            {
-                try
-                {
-                    Directory.CreateDirectory(AppPaths.GetAnimatedSpriteCacheDirectory());
-                    await File.WriteAllBytesAsync(gifPath, animatedBytes);
-                }
-                catch (IOException) { }
-                catch (UnauthorizedAccessException) { }
-            }
         }
 
         IReadOnlyList<byte[]>? decoded = null;
@@ -733,7 +688,8 @@ public partial class App : System.Windows.Application
     {
         try
         {
-            var path = Path.Combine(AppPaths.GetCryDirectory(), $"{speciesId}.wav");
+            var path = _catalogPackage.GetVoicePath(speciesId);
+            if (path is null) return;
             if (!File.Exists(path)) return;
 
             if (_cryPlayer is null)
