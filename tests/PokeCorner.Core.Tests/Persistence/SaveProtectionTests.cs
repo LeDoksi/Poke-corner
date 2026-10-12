@@ -126,6 +126,29 @@ public sealed class SaveProtectionTests : IDisposable
     }
 
     [Fact]
+    public void SameDayPeakSurvivesPruningAndLatestPeakWinsTie()
+    {
+        var now = DateTimeOffset.Parse("2026-01-01T00:00:00Z");
+        var store = new JsonSaveStore(Primary, () => now);
+        store.Save(State(1));
+        now = now.AddSeconds(1); store.Save(State(100));
+        now = now.AddSeconds(1); store.Save(State(100, 5));
+        now = now.AddSeconds(1); var lastPeakCapture = now; store.Save(State(1));
+        for (var i = 0; i < 40; i++) { now = now.AddSeconds(1); store.Save(State(1, i + 10)); }
+
+        var day = Path.Combine(store.History.DirectoryPath, "day-2026-01-01.checkpoint");
+        var node = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllBytes(day))!;
+        var bytes = Convert.FromBase64String(node["Bytes"]!.GetValue<string>());
+        Assert.Equal(lastPeakCapture, node["SavedAtUtc"]!.GetValue<DateTimeOffset>());
+        Assert.Equal(Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(bytes)).ToLowerInvariant(), node["Sha256"]!.GetValue<string>());
+        var peak = Assert.Single(store.History.List().Where(e => e.CollectionCount == 100 && e.Coins == 5));
+        Assert.Equal(day, peak.Path);
+        Assert.Equal(20, Directory.GetFiles(store.History.DirectoryPath, "recent-*.checkpoint").Length);
+        store.RestoreBytes(store.History.ReadValidated(peak));
+        Assert.Equal(100, store.Load()!.Individuals.Count);
+    }
+
+    [Fact]
     public void IdenticalAutosavesDeduplicateCheckpoints()
     {
         var store = new JsonSaveStore(Primary); var snapshot = State();

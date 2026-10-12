@@ -29,13 +29,25 @@ public sealed class SaveHistory
 
     internal void Preserve(byte[] bytes, bool fromMemory = false)
     {
-        JsonSaveStore.Deserialize(bytes);
+        var data = JsonSaveStore.Deserialize(bytes);
         Directory.CreateDirectory(DirectoryPath);
         var now = _clock().ToUniversalTime();
         var hash = Hash(bytes);
         var checkpoint = JsonSerializer.SerializeToUtf8Bytes(new Checkpoint(now, hash, bytes, fromMemory));
         PreserveOnce(Path.Combine(DirectoryPath, "initial.checkpoint"), checkpoint);
-        PreserveOnce(Path.Combine(DirectoryPath, $"day-{now:yyyy-MM-dd}.checkpoint"), checkpoint);
+        var day = Path.Combine(DirectoryPath, $"day-{now:yyyy-MM-dd}.checkpoint");
+        if (!File.Exists(day)) PreserveOnce(day, checkpoint);
+        else
+        {
+            var previous = ReadCheckpoint(day);
+            var previousCount = JsonSaveStore.Deserialize(previous.Bytes).Individuals.Count;
+            if (data.Individuals.Count > previousCount || data.Individuals.Count == previousCount && now >= previous.SavedAtUtc)
+            {
+                var temp = day + ".tmp-" + Guid.NewGuid();
+                JsonSaveStore.WriteDurable(temp, checkpoint);
+                File.Move(temp, day, overwrite: true);
+            }
+        }
         var existingPath = Directory.EnumerateFiles(DirectoryPath, $"recent-*-{hash}.checkpoint").FirstOrDefault();
         if (existingPath is null)
             PreserveOnce(Path.Combine(DirectoryPath, $"recent-{now.UtcTicks:D19}-{hash}.checkpoint"), checkpoint);

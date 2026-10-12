@@ -240,7 +240,8 @@ public static class SaveMigration
             ValidateCatalog(v2, catalog, v2Path);
             return v2;
         }
-        if (Directory.Exists(Path.Combine(Path.GetDirectoryName(v1Path)!, "legacy-v1")))
+        var legacyRoot = Path.Combine(Path.GetDirectoryName(v1Path)!, "legacy-v1");
+        if (Directory.Exists(legacyRoot) && Directory.EnumerateFiles(legacyRoot, "manifest.json", SearchOption.AllDirectories).Any())
             throw new SaveLoadException(v2Path, "найдена предыдущая миграция; автоматический импорт старого v1 запрещён");
         var v1 = new JsonSaveStore(v1Path).Load(out var bytes);
         store.ObserveLegacyBeforeFirstWrite(v1Path, bytes);
@@ -250,7 +251,8 @@ public static class SaveMigration
         catch (Exception ex) when (ex is InvalidDataException or JsonException or OverflowException)
         { throw new SaveLoadException(v1Path, ex.Message, ex); }
         var hash = Convert.ToHexString(SHA256.HashData(bytes!)).ToLowerInvariant();
-        var backup = Path.Combine(Path.GetDirectoryName(v1Path)!, "legacy-v1", hash);
+        var backup = Path.Combine(legacyRoot, hash);
+        if (Directory.Exists(backup)) backup += "-retry-" + Guid.NewGuid().ToString("N");
         Directory.CreateDirectory(backup);
         Preserve(Path.Combine(backup, "state.json"), bytes!);
         Preserve(Path.Combine(backup, LegacyLookup.PreservedLookupFileName), lookup.OriginalBytes);
@@ -284,15 +286,16 @@ public static class SaveMigration
             bytes = System.Text.Encoding.UTF8.GetBytes(JsonSaveStore.Serialize(data));
         }
         ValidateCatalog(data, catalog, entry.Path);
-        store.RestoreBytes(bytes);
+        store.RestoreBytes(bytes, catalog);
     }
 
     private static void Preserve(string path, byte[] bytes)
     {
         try
         {
-            using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-            stream.Write(bytes); stream.Flush(flushToDisk: true);
+            var temp = path + ".tmp-" + Guid.NewGuid().ToString("N");
+            JsonSaveStore.WriteDurable(temp, bytes);
+            File.Move(temp, path);
         }
         catch (IOException) when (File.Exists(path))
         {

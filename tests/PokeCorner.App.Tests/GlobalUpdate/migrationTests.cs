@@ -182,6 +182,47 @@ public sealed class MigrationTests : IDisposable
     }
 
     [Fact]
+    public async Task InterruptedLegacyStagingBeforeManifestResumesFromIntactV1()
+    {
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var original = File.ReadAllBytes(V1);
+        var hash = Convert.ToHexString(SHA256.HashData(original)).ToLowerInvariant();
+        var partial = Path.Combine(root, "legacy-v1", hash);
+        Directory.CreateDirectory(partial);
+        File.WriteAllBytes(Path.Combine(partial, "state.json"), original);
+        File.WriteAllBytes(Path.Combine(partial, LegacyLookup.PreservedLookupFileName), Lookup.OriginalBytes);
+        Assert.False(File.Exists(Path.Combine(partial, "manifest.json")));
+
+        var recovered = await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        Assert.Single(recovered!.Individuals);
+        Assert.Equal(original, File.ReadAllBytes(V1));
+        Assert.Equal(original, File.ReadAllBytes(Path.Combine(partial, "state.json")));
+        Assert.False(File.Exists(Path.Combine(partial, "manifest.json")));
+        Assert.Contains(new JsonSaveStore(V2).History.List(), entry => entry.IsLegacy && entry.CollectionCount == 1 && !string.Equals(Path.GetDirectoryName(entry.Path), partial, StringComparison.OrdinalIgnoreCase));
+        File.Delete(V2);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+    }
+
+    [Fact]
+    public async Task CorruptManifestNeverAllowsAutomaticStaleV1Remigration()
+    {
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var original = File.ReadAllBytes(V1);
+        var hash = Convert.ToHexString(SHA256.HashData(original)).ToLowerInvariant();
+        var partial = Path.Combine(root, "legacy-v1", hash);
+        Directory.CreateDirectory(partial);
+        File.WriteAllBytes(Path.Combine(partial, "state.json"), original);
+        File.WriteAllBytes(Path.Combine(partial, LegacyLookup.PreservedLookupFileName), Lookup.OriginalBytes);
+        const string brokenManifest = "{interrupted manifest";
+        File.WriteAllText(Path.Combine(partial, "manifest.json"), brokenManifest);
+
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(original, File.ReadAllBytes(V1));
+        Assert.Equal(brokenManifest, File.ReadAllText(Path.Combine(partial, "manifest.json")));
+        Assert.False(File.Exists(V2));
+    }
+
+    [Fact]
     public async Task MissingV2AfterMigrationRefusesStaleV1()
     {
         var original = Old(Enumerable.Range(0, 100).Select(_ => Pet()).ToArray());
@@ -229,6 +270,26 @@ public sealed class MigrationTests : IDisposable
         File.WriteAllText(lookupPath, "[]"); var before = File.ReadAllBytes(V2);
         Assert.ThrowsAny<IOException>(() => SaveMigration.RestoreHistory(store, legacy, Package.Value, DataRoot));
         Assert.Equal(before, File.ReadAllBytes(V2));
+    }
+
+    [Fact]
+    public void RestoreQuarantinesCatalogInvalidDisplacedPrimary()
+    {
+        var store = new JsonSaveStore(V2);
+        store.Save(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
+        var selected = store.History.List().First(entry => entry.SchemaVersion == 2);
+        var node = JsonNode.Parse(File.ReadAllBytes(V2))!;
+        node["Individuals"]![0]!["CurrentSpeciesId"] = 99999;
+        node["Individuals"]![0]!["ReachedSpeciesIds"] = JsonNode.Parse("[99999]");
+        var invalid = System.Text.Encoding.UTF8.GetBytes(node.ToJsonString());
+        File.WriteAllBytes(V2, invalid);
+        var structurallyValid = new JsonSaveStore(V2).Load()!;
+        Assert.Throws<SaveLoadException>(() => SaveMigration.ValidateCatalog(structurallyValid, Package.Value, V2));
+
+        SaveMigration.RestoreHistory(store, selected, Package.Value, DataRoot);
+        Assert.Equal(invalid, File.ReadAllBytes(Assert.Single(Directory.GetFiles(root, "state-v2.json.rejected-*"))));
+        Assert.DoesNotContain(store.History.List(), entry => entry.Sha256 == Convert.ToHexString(SHA256.HashData(invalid)).ToLowerInvariant());
+        Assert.Single(new JsonSaveStore(V2).Load()!.Individuals);
     }
 
     [Fact]

@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text;
 using PokeCorner.Core.Activity;
 using PokeCorner.Core.Domain;
+using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.Core.Persistence;
 
@@ -101,15 +102,23 @@ public sealed class JsonSaveStore
     }
 
     /// Explicit, confirmed recovery only. Preserve even unreadable current bytes.
-    public void RestoreBytes(byte[] bytes)
+    public void RestoreBytes(byte[] bytes, CatalogPackage? catalog = null)
     {
         Deserialize(bytes);
         Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
         var current = ReadPrimary();
         if (current is not null)
         {
-            try { Deserialize(current); History.Preserve(current); }
-            catch (System.Text.Json.JsonException) { History.Quarantine(current, "rejected"); }
+            var valid = false;
+            try
+            {
+                var displaced = Deserialize(current);
+                if (catalog is not null) SaveMigration.ValidateCatalog(displaced, catalog, _filePath);
+                valid = true;
+            }
+            catch (Exception ex) when (ex is System.Text.Json.JsonException or SaveLoadException)
+            { History.Quarantine(current, "rejected"); }
+            if (valid) History.Preserve(current);
         }
         History.Preserve(bytes);
         if (File.Exists(_filePath + ".tmp"))
