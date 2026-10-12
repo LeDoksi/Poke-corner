@@ -8,7 +8,7 @@ namespace PokeCorner.App.Onboarding;
 public static class FirstRunFlow
 {
     public static bool NeedsOnboarding(SaveData? loaded) =>
-        loaded is null || loaded.Individuals.Count == 0;
+        loaded is null || loaded.StarterSelectionPending;
 
     public static PokemonIndividual HatchChosen(SpeciesEvolutionChain chosenChain, CatchRoller roller, DateTimeOffset nowUtc, CatalogPackage catalog)
     {

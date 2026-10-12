@@ -26,14 +26,14 @@ public sealed class AppState
         else mutation();
     }
 
-    public async Task CommitAsync(BackgroundSaveWriter writer, Action<SaveData> update, Func<int> pendingCatchCount, Action<SaveData>? afterPublish = null)
+    public async Task CommitAsync(BackgroundSaveWriter writer, Action<SaveData> update, Func<int> pendingCatchCount, Action<SaveData>? afterPublish = null, SaveData? replacement = null)
     {
         while (IsCommitting) await WhenIdle;
         IsCommitting = true;
         var idle = _idle = new(TaskCreationOptions.RunContinuationsAsynchronously);
         try
         {
-            var next = ToSaveData(pendingCatchCount());
+            var next = replacement is null ? ToSaveData(pendingCatchCount()) : JsonSaveStore.Clone(replacement);
             update(next);
             if (next.SchemaVersion == 2) next.Items["treats"] = next.FeedingTreats;
             JsonSaveStore.ValidateData(next);

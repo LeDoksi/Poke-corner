@@ -3,6 +3,11 @@ namespace PokeCorner.App.Tests;
 
 public class AppPathsTests
 {
+    [Theory]
+    [InlineData("")]
+    [InlineData("relative-profile")]
+    public void SaveProfileRejectsUnusableRoots(string root) => Assert.ThrowsAny<IOException>(() => AppPaths.GetSaveFilePath(root));
+
     [Fact]
     public void GetSaveFilePath_WithOverrideRoot_ReturnsStateJsonDirectlyUnderIt()
     {

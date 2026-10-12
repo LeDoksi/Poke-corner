@@ -20,14 +20,16 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     /// them; a null callback just makes the button inert, which is the right behaviour for
     /// a view rendered outside a running app.
     private readonly Action? _onResetSaveData;
+    private readonly Action? _onRecoverSaveData;
     private bool _isLoadingInitialState = true;
 
-    public SettingsView(SettingsViewModel viewModel, Action onPetSizeChanged, Action? onResetSaveData = null)
+    public SettingsView(SettingsViewModel viewModel, Action onPetSizeChanged, Action? onResetSaveData = null, Action? onRecoverSaveData = null)
     {
         InitializeComponent();
         _viewModel = viewModel;
         _onPetSizeChanged = onPetSizeChanged;
         _onResetSaveData = onResetSaveData;
+        _onRecoverSaveData = onRecoverSaveData;
         LoadFromSettings();
         _isLoadingInitialState = false;
     }
@@ -133,6 +135,8 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         new PokeCorner.App.Onboarding.OnboardingWindow().Show();
     }
 
+    private void RecoverDataButton_Click(object sender, System.Windows.RoutedEventArgs e) => _onRecoverSaveData?.Invoke();
+
     /// Two confirmations, not one: this throws away everything the player has, and the
     /// short-circuiting && means backing out of either one leaves the save file untouched.
     /// The second prompt is worded to make the finality explicit rather than just repeating
@@ -145,13 +149,13 @@ public partial class SettingsView : System.Windows.Controls.UserControl
 
         var confirmedOnce = ConfirmDialog.Ask(
             "Очистить сохранённые данные?",
-            "Удалить всю коллекцию и прогресс? Это нельзя отменить.",
+            "Начать заново с пустой коллекцией? Текущие данные останутся в истории сохранений.",
             "Удалить", owner);
         if (!confirmedOnce) return;
 
         var confirmedTwice = ConfirmDialog.Ask(
             "Последнее предупреждение",
-            "Точно? Все покемоны и прогресс будут потеряны навсегда. Приложение перезапустится и начнёт с выбора стартового покемона.",
+            "Точно начать новую игру? Текущая коллекция и прогресс будут заменены. Приложение перезапустится и начнёт с выбора стартового покемона.",
             "Да, удалить всё", owner);
         if (!confirmedTwice) return;
 

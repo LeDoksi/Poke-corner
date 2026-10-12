@@ -69,7 +69,7 @@ public sealed class MigrationTests : IDisposable
         var writes = new List<Action>(); var writer = new BackgroundSaveWriter(store, writes.Add);
         var task = state.CommitAsync(writer, next => next.ShopCoins = 50, () => 2);
         state.ApplyActivityUnits(7); writes[0]();
-        await Assert.ThrowsAnyAsync<UnauthorizedAccessException>(() => task);
+        await Assert.ThrowsAnyAsync<IOException>(() => task);
         Assert.Equal(17, state.Shop.Coins); Assert.Equal(17, store.Load()!.ShopCoins);
         Assert.Equal(200007, state.Collection.GetActive()!.AccumulatedCarePoints);
         Assert.False(state.IsCommitting);
@@ -180,14 +180,79 @@ public sealed class MigrationTests : IDisposable
     }
 
     [Fact]
+    public async Task MissingV2AfterMigrationRefusesStaleV1()
+    {
+        var original = Old(Enumerable.Range(0, 100).Select(_ => Pet()).ToArray());
+        File.WriteAllText(V1, JsonSaveStore.Serialize(original));
+        await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        File.Delete(V2);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.False(File.Exists(V2));
+        var recovery = new JsonSaveStore(V2);
+        var checkpoint = recovery.History.List().First(e => e.SchemaVersion == 2 && e.CollectionCount == 100);
+        SaveMigration.RestoreHistory(recovery, checkpoint, Package.Value, DataRoot);
+        var restored = await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        Assert.Equal(original.Individuals.Select(i => i.Id), restored!.Individuals.Select(i => i.Id));
+        Assert.All(restored.Individuals, pet => Assert.True(pet.IsShiny));
+    }
+
+    [Fact]
+    public async Task MissingV2WithOnlyImmutableMigrationEvidenceRefusesRemigration()
+    {
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        File.Delete(V2); Directory.Delete(V2 + ".history", true);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.False(File.Exists(V2));
+    }
+
+    [Fact]
+    public async Task LegacyHistoryRestoreValidatesLookupAndPreservesV2()
+    {
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var store = new JsonSaveStore(V2);
+        await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value, store);
+        var original = store.Load()!; original.ShopCoins += 10; store.Save(original);
+        var legacy = store.History.List().Single(e => e.IsLegacy);
+        SaveMigration.RestoreHistory(store, legacy, Package.Value, DataRoot);
+        Assert.Equal(2, store.Load()!.SchemaVersion);
+        Assert.Contains(store.History.List(), e => e.SchemaVersion == 2 && e.Coins == original.ShopCoins);
+        var lookupPath = Path.Combine(Path.GetDirectoryName(legacy.Path)!, LegacyLookup.PreservedLookupFileName);
+        File.WriteAllText(lookupPath, "[]"); var before = File.ReadAllBytes(V2);
+        Assert.ThrowsAny<IOException>(() => SaveMigration.RestoreHistory(store, legacy, Package.Value, DataRoot));
+        Assert.Equal(before, File.ReadAllBytes(V2));
+    }
+
+    [Fact]
+    public async Task ConfirmedResetCommitsPendingStarterAndKeepsPreviousHistory()
+    {
+        var store = new JsonSaveStore(V2); var writer = new BackgroundSaveWriter(store);
+        var state = new AppState(); state.Hydrate(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
+        await state.FlushAsync(writer, () => 0);
+        var reset = SaveMigration.Migrate(Old(), Lookup, Package.Value);
+        await state.CommitAsync(writer, next => next.StarterSelectionPending = true, () => 0, replacement: reset);
+        var restarted = await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        Assert.True(restarted!.StarterSelectionPending); Assert.Empty(restarted.Individuals);
+        Assert.Contains(store.History.List(), e => e.CollectionCount == 1);
+        await state.CommitAsync(writer, next => next.StarterSelectionPending = false, () => 0);
+        Assert.False(store.Load()!.StarterSelectionPending);
+    }
+
+    [Fact]
     public async Task FailedAtomicMigrationLeavesV1AndBackupExact()
     {
         File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
-        var original = File.ReadAllBytes(V1); Directory.CreateDirectory(V2 + ".tmp");
-        await Assert.ThrowsAnyAsync<UnauthorizedAccessException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        var original = File.ReadAllBytes(V1);
+        // Clock is reached after migration backup and before the durable temp commit.
+        var store = new JsonSaveStore(V2, () => { Directory.CreateDirectory(V2 + ".tmp"); return DateTimeOffset.UtcNow; });
+        await Assert.ThrowsAnyAsync<UnauthorizedAccessException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value, store));
         Assert.False(File.Exists(V2)); Assert.Equal(original, File.ReadAllBytes(V1));
         Assert.Contains(Directory.GetFiles(root, "state.json", SearchOption.AllDirectories), p => p != V1 && File.ReadAllBytes(p).SequenceEqual(original));
         Directory.Delete(V2 + ".tmp");
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        var recovery = new JsonSaveStore(V2);
+        var checkpoint = recovery.History.List().First(e => e.SchemaVersion == 2);
+        SaveMigration.RestoreHistory(recovery, checkpoint, Package.Value, DataRoot);
         Assert.NotNull(await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
     }
 
@@ -352,14 +417,15 @@ public sealed class MigrationTests : IDisposable
     {
         var valid = SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value);
         var backup = Path.Combine(root, "backup.json");
-        new JsonSaveStore(backup).Save(valid);
+        var backupStore = new JsonSaveStore(backup); backupStore.Save(valid);
         File.WriteAllText(V2, "{broken v2"); var rejected = File.ReadAllBytes(V2);
-        SaveMigration.RestoreBackup(backup, V2, 2);
+        var targetStore = new JsonSaveStore(V2);
+        SaveMigration.RestoreHistory(targetStore, backupStore.History.List().First(), Package.Value, DataRoot);
         Assert.Equal(File.ReadAllBytes(backup), File.ReadAllBytes(V2));
         Assert.Contains(Directory.GetFiles(root, "state-v2.json.rejected-*"), p => File.ReadAllBytes(p).SequenceEqual(rejected));
-        var wrong = Path.Combine(root, "v1backup.json"); new JsonSaveStore(wrong).Save(Old(Pet()));
+        var wrong = Path.Combine(root, "v1backup.json"); var wrongStore = new JsonSaveStore(wrong); wrongStore.Save(Old(Pet()));
         var current = File.ReadAllBytes(V2);
-        Assert.Throws<SaveLoadException>(() => SaveMigration.RestoreBackup(wrong, V2, 2));
+        Assert.Throws<SaveLoadException>(() => SaveMigration.RestoreHistory(targetStore, wrongStore.History.List().First(), Package.Value, DataRoot));
         Assert.Equal(current, File.ReadAllBytes(V2));
     }
 
@@ -384,7 +450,7 @@ public sealed class MigrationTests : IDisposable
     {
         var data = SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value);
         data.BerryRemainders["oran"] = new() { Numerator = numerator, Denominator = denominator };
-        new JsonSaveStore(V2).Save(data);
+        File.WriteAllText(V2, JsonSaveStore.Serialize(data));
         Assert.Throws<SaveLoadException>(() => new JsonSaveStore(V2).Load());
     }
 
@@ -565,4 +631,29 @@ public sealed class MigrationTests : IDisposable
         Assert.False(File.Exists(V2));
     }
 
+
+    [Fact]
+    public async Task FreshProfileDecisionRefusesLegacySaveThatAppearsBeforeFirstWrite()
+    {
+        var store = new JsonSaveStore(V2);
+        Assert.Null(await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value, store));
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var fresh = SaveMigration.Migrate(Old(), Lookup, Package.Value);
+        Assert.ThrowsAny<IOException>(() => store.Save(fresh));
+        Assert.False(File.Exists(V2));
+        Assert.Single(new JsonSaveStore(V1).Load()!.Individuals);
+    }
+    [Fact]
+    public async Task ResetPublishesClearedCatchCountBeforeDeferredActions()
+    {
+        var writes = new List<Action>(); var writer = new BackgroundSaveWriter(new JsonSaveStore(V2), writes.Add);
+        var state = new AppState(); state.Hydrate(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
+        var pendingCount = 2; var observed = -1;
+        var reset = SaveMigration.Migrate(Old(), Lookup, Package.Value);
+        var commit = state.CommitAsync(writer, next => next.StarterSelectionPending = true, () => 0,
+            afterPublish: _ => pendingCount = 0, replacement: reset);
+        state.RunWhenReady(() => observed = pendingCount);
+        writes[0](); await commit;
+        Assert.Equal(0, observed); Assert.Empty(state.Collection.Individuals);
+    }
 }

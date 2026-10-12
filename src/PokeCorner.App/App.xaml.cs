@@ -21,6 +21,9 @@ public partial class App : System.Windows.Application
 {
     private AppState _appState = null!;
     private JsonSaveStore _saveStore = null!;
+    private SaveProfileLease? _profileLease;
+    private string _profileDirectory = null!;
+
     private SingleInstance _singleInstance = null!;
     private const string SingleInstanceName = @"Local\PokeCorner.SingleInstance";
     private const string AfterRestartArg = "--after-restart";
@@ -66,14 +69,13 @@ public partial class App : System.Windows.Application
 
     /// POKE-9 diagnostics: %APPDATA%\PokeCorner\zorder.log, next to the save file, so a user can
     /// find and send it. Lines only on z-order state changes (see ZOrderLog).
-    private readonly ZOrderLog _zOrderLog = new(Path.Combine(Path.GetDirectoryName(AppPaths.GetSaveFilePath())!, "zorder.log"));
+    private ZOrderLog _zOrderLog = null!;
     private static readonly TimeSpan AutosaveInterval = TimeSpan.FromSeconds(5);
     private DateTimeOffset _lastAutosaveUtc = DateTimeOffset.MinValue;
     private Guid? _evolutionReadyNotifiedFor;
     private Guid? _neglectWarningNotifiedFor;
 
-    /// Set once by ResetSaveDataAndRestart; makes PersistState a no-op for the rest of this
-    /// process's life so nothing writes the save file back after it has been deleted.
+    /// Suppresses old-process writes after an explicit replacement and before restart.
     private bool _isWipingSaveData;
     private bool _hasLoadedState;
 
@@ -104,8 +106,20 @@ public partial class App : System.Windows.Application
             args.Handled = false; // still let it crash — we're not trying to keep a corrupted UI state running, just to not lose data
         };
 
-        _saveStore = new JsonSaveStore(AppPaths.GetV2SaveFilePath());
-        _saveWriter = new BackgroundSaveWriter(_saveStore);
+        try
+        {
+            WindowsProfile.EnsurePersistent();
+            _profileDirectory = Path.GetDirectoryName(AppPaths.GetSaveFilePath())!;
+            _profileLease = SaveProfileLease.Acquire(_profileDirectory);
+            _saveStore = new JsonSaveStore(AppPaths.GetV2SaveFilePath(_profileDirectory));
+            _saveWriter = CreateSaveWriter();
+            _zOrderLog = new ZOrderLog(Path.Combine(_profileDirectory, "zorder.log"));
+        }
+        catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+        {
+            System.Windows.MessageBox.Show(ex.Message + "\nПрофиль недоступен или уже открыт другим процессом. Игра не загружена.", "PokéCorner — профиль недоступен");
+            Shutdown(); return;
+        }
         _spriteCache = new SpriteCache(AppPaths.GetSpriteCacheDirectory());
         _pokeApiClient = new PokeApiClient(new System.Net.Http.HttpClientHandler());
         var catalogPath = Path.Combine(AppPaths.GetAppDataDirectory(), "catalog.json");
@@ -126,20 +140,21 @@ public partial class App : System.Windows.Application
             {
                 var dataRoot = AppPaths.GetAppDataDirectory();
                 var preserved = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PokeCorner", LegacyLookup.PreservedLookupFileName);
-                _legacyLookup = File.Exists(AppPaths.GetV2SaveFilePath())
+                _legacyLookup = File.Exists(AppPaths.GetV2SaveFilePath(_profileDirectory))
                     ? LegacyLookup.Load(dataRoot)
                     : LegacyLookup.Load(dataRoot, catalogPath, preserved);
-                loaded = await SaveMigration.LoadAsync(AppPaths.GetSaveFilePath(), AppPaths.GetV2SaveFilePath(), _legacyLookup, _catalogPackage);
-                isNewGame = loaded is null;
+                loaded = await SaveMigration.LoadAsync(AppPaths.GetSaveFilePath(_profileDirectory), AppPaths.GetV2SaveFilePath(_profileDirectory), _legacyLookup, _catalogPackage, _saveStore);
+                isNewGame = loaded is null || loaded.StarterSelectionPending;
                 if (loaded is null)
                 {
                     loaded = SaveMigration.Migrate(new SaveData { Individuals = [], Settings = new() }, _legacyLookup, _catalogPackage);
+                    loaded.StarterSelectionPending = true;
                 }
                 _appState = new AppState();
                 _appState.Hydrate(loaded);
                 break;
             }
-            catch (Exception ex) when (ex is IOException or System.Text.Json.JsonException or UnauthorizedAccessException)
+            catch (Exception ex) when (ex is IOException or InvalidDataException or System.Text.Json.JsonException or UnauthorizedAccessException)
             {
                 var choice = System.Windows.MessageBox.Show(
                     ex.Message + "\n\nДа — повторить загрузку. Нет — выбрать исправную резервную копию. Отмена — закрыть приложение.",
@@ -147,17 +162,11 @@ public partial class App : System.Windows.Application
                 if (choice == MessageBoxResult.Yes) continue;
                 if (choice == MessageBoxResult.No)
                 {
-                    var dialog = new Microsoft.Win32.OpenFileDialog { Title = "Выберите резервную копию PokéCorner", Filter = "Сохранение JSON|*.json" };
-                    if (dialog.ShowDialog() == true)
-                    {
-                        var target = File.Exists(AppPaths.GetV2SaveFilePath()) ? AppPaths.GetV2SaveFilePath() : AppPaths.GetSaveFilePath();
-                        try { SaveMigration.RestoreBackup(dialog.FileName, target, target == AppPaths.GetV2SaveFilePath() ? 2 : 1); }
-                        catch (Exception restoreError) when (restoreError is IOException or UnauthorizedAccessException)
-                        { System.Windows.MessageBox.Show(restoreError.Message, "PokéCorner — резервная копия недоступна"); }
-                    }
+                    try { RestoreFromHistory(); }
+                    catch (Exception restoreError) when (restoreError is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+                    { System.Windows.MessageBox.Show(restoreError.Message, "PokéCorner — резервная копия недоступна"); }
                     continue;
                 }
-                _singleInstance.Dispose();
                 Shutdown();
                 return;
             }
@@ -198,6 +207,12 @@ public partial class App : System.Windows.Application
             }
 
             new OnboardingWindow().ShowDialog();
+            try { await _appState.CommitAsync(_saveWriter, next => next.StarterSelectionPending = false, () => _catchReadyCount); }
+            catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+            {
+                System.Windows.MessageBox.Show(ex.Message + "\nНовая игра не записана. Данные защищены; при следующем запуске выберите восстановление.", "PokéCorner — ошибка сохранения");
+                Shutdown(); return;
+            }
         }
 
         _hasLoadedState = true;
@@ -279,11 +294,7 @@ public partial class App : System.Windows.Application
             if (_appState.IsCommitting) { args.Cancel = true; ShutdownApp(); }
             else AllowDeskWindowsToClose();
         };
-        Exit += (_, _) =>
-        {
-            SaveState();
-            _singleInstance.Dispose();
-        };
+
     }
 
     /// EVERYTHING ON THIS TICK MUST STAY CHEAP — a system-wide correctness constraint, not style.
@@ -860,7 +871,7 @@ public partial class App : System.Windows.Application
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, lookupChains, _appState.PendingEggs);
                 var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
-                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart);
+                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
                 var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
@@ -946,9 +957,12 @@ public partial class App : System.Windows.Application
         try
         {
             if (_hasLoadedState && !_isWipingSaveData)
-                await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+            {
+                if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveData(_catchReadyCount));
+                else await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+            }
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
         {
             System.Windows.MessageBox.Show(ex.Message + "\nПоследнее сохранение не записано. Закрытие отменено.",
                 "PokéCorner — ошибка сохранения", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -964,21 +978,101 @@ public partial class App : System.Windows.Application
         Shutdown();
     }
 
-    /// Deletes the save file and relaunches, so the new process runs first-run onboarding
-    /// as if freshly installed. Both active save files go; the immutable v1 backup remains: the sprite cache and catalog.json are
-    /// asset caches, and rebuilding the catalog would turn a reset into a multi-minute wait.
-    private void ResetSaveDataAndRestart()
+    private BackgroundSaveWriter CreateSaveWriter()
+    {
+        var writer = new BackgroundSaveWriter(_saveStore);
+        writer.SaveFailed += ex => Dispatcher.BeginInvoke(() => System.Windows.MessageBox.Show(
+            ex.Message + "\nАвтосохранение остановлено. Текущая игра остаётся в памяти. Откройте историю сохранений в настройках.",
+            "PokéCorner — ошибка сохранения", MessageBoxButton.OK, MessageBoxImage.Warning));
+        return writer;
+    }
+
+    private bool RestoreFromHistory()
+    {
+        var entries = _saveStore.History.List();
+        var dialog = new SaveHistoryWindow(entries, _saveStore.History.UnreadableCount);
+        if (_menuWindow is not null) { dialog.Owner = _menuWindow; dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner; }
+        if (dialog.ShowDialog() != true || dialog.SelectedEntry is null) return false;
+        SaveMigration.RestoreHistory(_saveStore, dialog.SelectedEntry, _catalogPackage, AppPaths.GetAppDataDirectory());
+        return true;
+    }
+
+    private async void RecoverSaveDataAndRestart()
+    {
+        if (_appState.IsCommitting) { _appState.RunWhenReady(RecoverSaveDataAndRestart); return; }
+        _growthTickTimer.Stop();
+        if (_menuWindow is not null) _menuWindow.IsEnabled = false;
+        if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
+        try
+        {
+            if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveData(_catchReadyCount));
+            else await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+            if (!RestoreFromHistory()) return;
+            RestartAfterReplacement();
+        }
+        catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+        { System.Windows.MessageBox.Show(ex.Message, "PokéCorner — восстановление не выполнено"); }
+        finally
+        {
+            if (!_isWipingSaveData)
+            {
+                if (_menuWindow is not null) _menuWindow.IsEnabled = true;
+                if (_overlayWindow is not null) _overlayWindow.IsEnabled = true;
+                _growthTickTimer.Start();
+            }
+        }
+    }
+
+    private async void ResetSaveDataAndRestart()
     {
         if (_appState.IsCommitting) { _appState.RunWhenReady(ResetSaveDataAndRestart); return; }
+        _growthTickTimer.Stop();
+        if (_menuWindow is not null) _menuWindow.IsEnabled = false;
+        if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
+        try
+        {
+            await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+            var reset = SaveMigration.Migrate(new SaveData { Individuals = [], Settings = new() }, _legacyLookup, _catalogPackage);
+            await _appState.CommitAsync(_saveWriter, next => next.StarterSelectionPending = true, () => 0, afterPublish: _ => _catchReadyCount = 0, replacement: reset);
+            _saveWriter.Stop();
+            RestartAfterReplacement();
+        }
+        catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+        { System.Windows.MessageBox.Show(ex.Message + "\nНовая игра не начата.", "PokéCorner — ошибка сохранения"); }
+        finally
+        {
+            if (!_isWipingSaveData)
+            {
+                if (_menuWindow is not null) _menuWindow.IsEnabled = true;
+                if (_overlayWindow is not null) _overlayWindow.IsEnabled = true;
+                _growthTickTimer.Start();
+            }
+        }
+    }
+
+    private void RestartAfterReplacement()
+    {
         _isWipingSaveData = true;
-        _saveWriter.Delete();
-        new JsonSaveStore(AppPaths.GetSaveFilePath()).Delete(); // explicit reset must not re-import v1 at restart
-
-        Process.Start(Environment.ProcessPath!, AfterRestartArg);
-
-        // Shutdown(), not Environment.Exit: it runs the Exit handler, which disposes the hooks and
-        // the tray icon; the save write in it is suppressed by _isWipingSaveData.
+        _hasLoadedState = false;
+        _saveWriter.Stop();
+        try { Process.Start(Environment.ProcessPath!, AfterRestartArg); }
+        catch (System.ComponentModel.Win32Exception ex)
+        { System.Windows.MessageBox.Show(ex.Message + "\nСохранение записано. Запустите PokéCorner снова вручную.", "PokéCorner — перезапуск недоступен"); }
         ShutdownApp();
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        try { SaveState(); }
+        catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+        { System.Windows.MessageBox.Show(ex.Message + "\nПоследнее сохранение не записано.", "PokéCorner — ошибка сохранения"); }
+        finally
+        {
+            _saveWriter?.Stop();
+            _profileLease?.Dispose();
+            _singleInstance?.Dispose();
+            base.OnExit(e);
+        }
     }
 
     private void SaveState()
@@ -996,8 +1090,8 @@ public partial class App : System.Windows.Application
     /// synchronously, so the process can't end before the final state is on disk.
     private void PersistState(bool flush = false)
     {
-        // ResetSaveDataAndRestart deleted state.json; writing now would bring it straight back.
-        if (_isWipingSaveData || !_hasLoadedState || _appState.IsCommitting) return;
+        // Never publish unresolved startup state or an old candidate after replacement/failure.
+        if (_isWipingSaveData || !_hasLoadedState || _appState.IsCommitting || _saveWriter.HasFailed) return;
 
         var data = _appState.ToSaveData(_catchReadyCount);
         if (flush) _saveWriter.Flush(data);

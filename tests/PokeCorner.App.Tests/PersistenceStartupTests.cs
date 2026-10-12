@@ -28,6 +28,22 @@ public class PersistenceStartupTests
         finally { File.Delete(path); }
     }
 
+    [Fact]
+    public void CrashExitSaveBeforeHydrationDoesNotOverwriteOriginal()
+    {
+        var path = Path.Combine(Path.GetTempPath(), "StartupCrash_" + Guid.NewGuid() + ".json");
+        try
+        {
+            File.WriteAllText(path, "original unknown save");
+            var app = (global::PokeCorner.App.App)RuntimeHelpers.GetUninitializedObject(typeof(global::PokeCorner.App.App));
+            SetField(app, "_appState", new AppState());
+            SetField(app, "_saveWriter", new BackgroundSaveWriter(new JsonSaveStore(path), write => write()));
+            typeof(global::PokeCorner.App.App).GetMethod("SaveState", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(app, null);
+            Assert.Equal("original unknown save", File.ReadAllText(path));
+        }
+        finally { File.Delete(path); }
+    }
+
     private static void SetField(object app, string name, object value) =>
         app.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(app, value);
 }

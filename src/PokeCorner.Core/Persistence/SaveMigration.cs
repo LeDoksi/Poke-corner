@@ -229,23 +229,20 @@ public static class SaveMigration
         next.AwardLedger.Add(id, new() { AwardedAtUtc = DateTimeOffset.UtcNow, CoinsGranted = coins, CatalogRevision = revision, AvailableSpeciesIds = available });
     }
 
-    public static async Task<SaveData?> LoadAsync(string v1Path, string v2Path, LegacyLookup lookup, CatalogPackage catalog)
+    public static async Task<SaveData?> LoadAsync(string v1Path, string v2Path, LegacyLookup lookup, CatalogPackage catalog, JsonSaveStore? store = null)
     {
+        store ??= new JsonSaveStore(v2Path);
         // Load never falls back after an existing v2 failed its read/validation.
-        var v2 = new JsonSaveStore(v2Path).Load();
+        var v2 = store.Load();
         if (v2 is not null)
         {
-            if (v2.SchemaVersion != 2) throw new SaveLoadException(v2Path, "ожидалась схема v2");
-            var species = catalog.Species.ToDictionary(s => s.Id);
-            foreach (var individual in v2.Individuals.Concat(v2.Gift.Gifts.Select(g => g.Individual)))
-                if (!species.TryGetValue(individual.CurrentSpeciesId, out var current) ||
-                    current.FamilyRootId != individual.FamilyRootId || individual.ReachedSpeciesIds.Any(id => !species.ContainsKey(id)))
-                    throw new SaveLoadException(v2Path, $"неверный вид/семья v2: {individual.Id}");
-            if (v2.DiscoveredSpeciesIds.Concat(v2.ShinySpeciesIds).Any(id => !species.ContainsKey(id)))
-                throw new SaveLoadException(v2Path, "неверный открытый вид v2");
+            ValidateCatalog(v2, catalog, v2Path);
             return v2;
         }
+        if (Directory.Exists(Path.Combine(Path.GetDirectoryName(v1Path)!, "legacy-v1")))
+            throw new SaveLoadException(v2Path, "найдена предыдущая миграция; автоматический импорт старого v1 запрещён");
         var v1 = new JsonSaveStore(v1Path).Load(out var bytes);
+        store.ObserveLegacyBeforeFirstWrite(v1Path, bytes);
         if (v1 is null) return null;
         SaveData migrated;
         try { migrated = Migrate(v1, lookup, catalog); }
@@ -258,27 +255,35 @@ public static class SaveMigration
         Preserve(Path.Combine(backup, LegacyLookup.PreservedLookupFileName), lookup.OriginalBytes);
         Preserve(Path.Combine(backup, "manifest.json"), System.Text.Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new
         { SchemaVersion = 1, StateSha256 = hash, LookupSha256 = lookup.Sha256, MigrationId })));
-        await new BackgroundSaveWriter(new JsonSaveStore(v2Path)).CommitAsync(migrated);
+        await new BackgroundSaveWriter(store).CommitAsync(migrated);
         return migrated;
     }
 
-    public static void RestoreBackup(string backupPath, string targetPath, int expectedSchemaVersion)
+    public static void ValidateCatalog(SaveData data, CatalogPackage catalog, string path)
     {
-        var data = new JsonSaveStore(backupPath).Load(out var bytes);
-        if (data is null || data.SchemaVersion != expectedSchemaVersion)
-            throw new SaveLoadException(backupPath, "неверная версия резервной копии");
-        if (File.Exists(targetPath))
+        if (data.SchemaVersion != 2) throw new SaveLoadException(path, "ожидалась схема v2");
+        var species = catalog.Species.ToDictionary(s => s.Id);
+        foreach (var individual in data.Individuals.Concat(data.Gift.Gifts.Select(g => g.Individual)))
+            if (!species.TryGetValue(individual.CurrentSpeciesId, out var current) ||
+                current.FamilyRootId != individual.FamilyRootId || individual.ReachedSpeciesIds.Any(id => !species.ContainsKey(id)))
+                throw new SaveLoadException(path, $"неверный вид/семья v2: {individual.Id}");
+        if (data.DiscoveredSpeciesIds.Concat(data.ShinySpeciesIds).Any(id => !species.ContainsKey(id)))
+            throw new SaveLoadException(path, "неверный открытый вид v2");
+    }
+
+    public static void RestoreHistory(JsonSaveStore store, SaveHistoryEntry entry, CatalogPackage catalog, string dataRoot)
+    {
+        var bytes = store.History.ReadValidated(entry);
+        var data = JsonSaveStore.Deserialize(bytes);
+        if (data.SchemaVersion == 1)
         {
-            var rejected = File.ReadAllBytes(targetPath);
-            var hash = Convert.ToHexString(SHA256.HashData(rejected)).ToLowerInvariant();
-            Preserve(targetPath + ".rejected-" + hash, rejected);
+            if (!entry.IsLegacy) throw new SaveLoadException(entry.Path, "v1 требует сохранённый lookup миграции");
+            var lookup = LegacyLookup.Load(dataRoot, preservedLookupPath: Path.Combine(Path.GetDirectoryName(entry.Path)!, LegacyLookup.PreservedLookupFileName));
+            data = Migrate(data, lookup, catalog);
+            bytes = System.Text.Encoding.UTF8.GetBytes(JsonSaveStore.Serialize(data));
         }
-        var temp = targetPath + ".tmp";
-        using (var stream = new FileStream(temp, FileMode.Create, FileAccess.Write, FileShare.None))
-        {
-            stream.Write(bytes!); stream.Flush(flushToDisk: true);
-        }
-        File.Move(temp, targetPath, overwrite: true);
+        ValidateCatalog(data, catalog, entry.Path);
+        store.RestoreBytes(bytes);
     }
 
     private static void Preserve(string path, byte[] bytes)

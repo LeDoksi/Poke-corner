@@ -9,6 +9,10 @@ public sealed class BackgroundSaveWriter
     private readonly Action<Action> _runWrite;
     private readonly object _writeLock = new();
     private bool _publicationPending;
+    private volatile Exception? _failure;
+    public event Action<Exception>? SaveFailed;
+    public bool HasFailed => _failure is not null;
+
     private long _lastPostedSequence;
     private long _lastWrittenSequence;
     private readonly SortedDictionary<long, (string Json, TaskCompletionSource Completion)> _commits = new();
@@ -23,7 +27,7 @@ public sealed class BackgroundSaveWriter
     /// Serializes now — the state objects keep changing on the UI thread — and writes later.
     public void Post(SaveData data)
     {
-        if (_publicationPending) return;
+        if (_publicationPending || HasFailed) return;
         var json = JsonSaveStore.Serialize(data);
         var sequence = ++_lastPostedSequence;
         _runWrite(() =>
@@ -32,9 +36,9 @@ public sealed class BackgroundSaveWriter
             {
                 Write(sequence, json);
             }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Text.Json.JsonException)
             {
-                // The next autosave, five seconds later, tries again.
+                // Failure is latched in Write; stale callbacks cannot retry it.
             }
         });
     }
@@ -84,7 +88,7 @@ public sealed class BackgroundSaveWriter
     }
 
     /// Deletes the save file and drops every write still queued, permanently: after this the
-    /// writer never writes again (the app is about to restart from a clean slate).
+    /// writer never writes again. Recoverable history remains on disk.
     public void Delete()
     {
         lock (_writeLock)
@@ -96,12 +100,36 @@ public sealed class BackgroundSaveWriter
         }
     }
 
+    public void Stop()
+    {
+        lock (_writeLock)
+        {
+            _lastWrittenSequence = long.MaxValue;
+            foreach (var commit in _commits.Values) commit.Completion.TrySetCanceled();
+            _commits.Clear();
+        }
+    }
+
+    private void Fail(Exception ex)
+    {
+        _failure = ex;
+        foreach (var commit in _commits.Values) commit.Completion.TrySetException(ex);
+        _commits.Clear();
+        SaveFailed?.Invoke(ex);
+    }
+
     /// A snapshot older than the one already on disk is dropped, so a queued autosave can never
     /// land on top of a newer one or of the exit flush.
     private void Write(long sequence, string json, bool commitCallback = false)
     {
         lock (_writeLock)
         {
+            if (_failure is not null)
+            {
+                if (_commits.Remove(sequence, out var failed)) failed.Completion.TrySetException(_failure);
+                if (!commitCallback) throw new IOException("Запись остановлена после ошибки сохранения.", _failure);
+                return;
+            }
             if (commitCallback && !_commits.ContainsKey(sequence)) return;
             var isCommit = _commits.ContainsKey(sequence);
             foreach (var pending in _commits.Where(pair => pair.Key <= sequence).ToArray())
@@ -116,12 +144,15 @@ public sealed class BackgroundSaveWriter
                 catch (Exception ex)
                 {
                     pending.Value.Completion.TrySetException(ex);
+                    Fail(ex);
+                    if (!commitCallback) throw;
+                    return;
                 }
             }
             if (isCommit) return;
             if (sequence <= _lastWrittenSequence) return;
-            _store.SaveSerialized(json);
-            _lastWrittenSequence = sequence;
+            try { _store.SaveSerialized(json); _lastWrittenSequence = sequence; }
+            catch (Exception ex) { Fail(ex); throw; }
         }
     }
 }

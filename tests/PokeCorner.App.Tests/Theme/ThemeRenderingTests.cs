@@ -22,6 +22,26 @@ namespace PokeCorner.App.Tests.Theme;
 /// layout pass over them.
 public class ThemeRenderingTests
 {
+    [Fact]
+    public void SaveHistoryWindowRendersWithExplicitSelectionAndSettingsEntry() => WpfTestHost.Run(() =>
+    {
+        var entry = new PokeCorner.Core.Persistence.SaveHistoryEntry("synthetic", DateTimeOffset.UtcNow, 2, 100, 20);
+        var window = new SaveHistoryWindow(new[] { entry }, 0);
+        try
+        {
+            WpfTestHost.Layout((FrameworkElement)window.Content, 600, 420);
+            var restore = (Button)window.FindName("RestoreButton");
+            Assert.False(restore.IsEnabled);
+            ((ListBox)window.FindName("HistoryList")).SelectedIndex = 0;
+            Assert.True(restore.IsEnabled);
+            Assert.Null(window.SelectedEntry);
+            Assert.Contains("100", entry.ToString()); Assert.Contains("v2", entry.ToString());
+            var settings = new SettingsView(new SettingsViewModel(new AppSettings()), () => { });
+            Assert.NotNull(settings.FindName("RecoverDataButton"));
+        }
+        finally { window.Close(); }
+    });
+
     [Theory]
     [InlineData("WindowBackgroundBrush")]
     [InlineData("SurfaceBackgroundBrush")]

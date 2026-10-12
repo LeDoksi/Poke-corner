@@ -4,6 +4,7 @@ namespace PokeCorner.Core.Persistence;
 
 public sealed class SaveData
 {
+    public bool StarterSelectionPending { get; set; }
     public int SchemaVersion { get; set; } = 1;
     public string? CatalogRevision { get; set; }
     public string? BalanceRevision { get; set; }

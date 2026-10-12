@@ -15,10 +15,17 @@ public class FirstRunFlowTests
     }
 
     [Fact]
-    public void NeedsOnboarding_EmptyIndividuals_ReturnsTrue()
+    public void NeedsOnboarding_EmptyIndividuals_ReturnsFalse()
     {
         var data = new SaveData { Individuals = new(), Settings = new PokeCorner.Core.AppSettings() };
 
+        Assert.False(FirstRunFlow.NeedsOnboarding(data));
+    }
+
+    [Fact]
+    public void NeedsOnboarding_ExplicitResetPendingStarter_ReturnsTrue()
+    {
+        var data = new SaveData { Individuals = [], Settings = new(), StarterSelectionPending = true };
         Assert.True(FirstRunFlow.NeedsOnboarding(data));
     }
 

@@ -30,7 +30,13 @@ public static class AppPaths
     /// reinstalling/updating the app never touches it (an MSI never manages %APPDATA%).
     public static string GetSaveFilePath(string? overrideRoot = null)
     {
-        var root = overrideRoot ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PokeCorner");
+        var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        var root = overrideRoot ?? (string.IsNullOrWhiteSpace(appData) || !Path.IsPathFullyQualified(appData)
+            ? throw new IOException("Папка APPDATA недоступна. Сохранение не будет создано в рабочем каталоге.")
+            : Path.Combine(appData, "PokeCorner"));
+        if (string.IsNullOrWhiteSpace(root) || !Path.IsPathFullyQualified(root))
+            throw new IOException("Путь профиля должен быть абсолютным.");
+        root = Path.GetFullPath(root);
         return Path.Combine(root, "state.json");
     }
 

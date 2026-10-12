@@ -8,12 +8,20 @@ namespace PokeCorner.Core.Persistence;
 public sealed class JsonSaveStore
 {
     private readonly string _filePath;
+    private byte[]? _baseline;
+    private string? _firstWriteLegacyPath;
+    private byte[]? _firstWriteLegacyBytes;
+    private bool _resolved;
+    private bool _blocked;
+    public SaveHistory History { get; }
+
     private static readonly JsonSerializerOptions Options = new() { WriteIndented = true };
 
-    public JsonSaveStore(string filePath)
+    public JsonSaveStore(string filePath, Func<DateTimeOffset>? clock = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
-        _filePath = filePath;
+        _filePath = Path.GetFullPath(filePath);
+        History = new SaveHistory(_filePath, clock);
     }
 
     public static string Serialize(SaveData data) => JsonSerializer.Serialize(data, Options);
@@ -24,30 +32,100 @@ public sealed class JsonSaveStore
 
     public void SaveSerialized(string json)
     {
-        var directory = Path.GetDirectoryName(_filePath);
-        if (!string.IsNullOrEmpty(directory))
+        if (_blocked) throw new SaveLoadException(_filePath, "запись остановлена; требуется повторная загрузка или восстановление");
+        if (!_resolved) Load();
+        var bytes = new UTF8Encoding(false).GetBytes(json);
+        Deserialize(bytes);
+        try
         {
-            Directory.CreateDirectory(directory);
+            AssertBaseline();
+            Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
+            if (File.Exists(_filePath + ".tmp") || Directory.Exists(_filePath + ".tmp"))
+                throw new SaveLoadException(_filePath, "обнаружена незавершённая запись");
+            // Both the original and proposed checkpoint are durable before replacement.
+            // An interrupted first commit can therefore be recovered, never auto-onboarded.
+            if (_baseline is not null) History.Preserve(_baseline);
+            History.Preserve(bytes);
+            WriteDurable(_filePath + ".tmp", bytes);
+            History.Prune();
+            AssertBaseline();
+            File.Move(_filePath + ".tmp", _filePath, overwrite: _baseline is not null);
+            _baseline = bytes;
         }
+        catch { _blocked = true; throw; }
+    }
 
-        // Write to a temp file first, then atomically move it into place: a crash mid-write
-        // leaves either the old file intact or the new file complete, never a truncated one.
-        var tempPath = _filePath + ".tmp";
-        using (var stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
+    private byte[]? ReadPrimary()
+    {
+        try { return File.ReadAllBytes(_filePath); }
+        catch (FileNotFoundException) { return null; }
+        catch (DirectoryNotFoundException) { return null; }
+    }
+
+    internal void ObserveLegacyBeforeFirstWrite(string path, byte[]? bytes)
+    { _firstWriteLegacyPath = path; _firstWriteLegacyBytes = bytes?.ToArray(); }
+
+    private void AssertBaseline()
+    {
+        if (_baseline is null && _firstWriteLegacyPath is not null)
         {
-            using (var writer = new StreamWriter(stream, new UTF8Encoding(false), leaveOpen: true))
-            {
-                writer.Write(json);
-                writer.Flush();
-            }
-            stream.Flush(flushToDisk: true);
+            byte[]? legacy;
+            try { legacy = File.ReadAllBytes(_firstWriteLegacyPath); }
+            catch (FileNotFoundException) { legacy = null; }
+            catch (DirectoryNotFoundException) { legacy = null; }
+            if ((_firstWriteLegacyBytes is null) != (legacy is null) ||
+                _firstWriteLegacyBytes is not null && !_firstWriteLegacyBytes.SequenceEqual(legacy!))
+                throw new SaveLoadException(_firstWriteLegacyPath, "v1 появился или изменился после загрузки; запись новой игры запрещена");
         }
-        File.Move(tempPath, _filePath, overwrite: true);
+        var current = ReadPrimary();
+        if ((_baseline is null) != (current is null) ||
+            _baseline is not null && !current!.SequenceEqual(_baseline))
+            throw new SaveLoadException(_filePath, "файл исчез или изменён другим процессом; запись запрещена");
+        if (current is not null) Deserialize(current);
+    }
+
+    internal static void WriteDurable(string path, byte[] bytes)
+    {
+        using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+        stream.Write(bytes);
+        stream.Flush(flushToDisk: true);
     }
 
     public void Delete()
     {
-        if (File.Exists(_filePath)) File.Delete(_filePath);
+        if (!_resolved) Load();
+        AssertBaseline();
+        if (_baseline is not null) History.Preserve(_baseline);
+        if (_baseline is not null) File.Delete(_filePath);
+        _blocked = true;
+    }
+
+    /// Explicit, confirmed recovery only. Preserve even unreadable current bytes.
+    public void RestoreBytes(byte[] bytes)
+    {
+        Deserialize(bytes);
+        Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
+        var current = ReadPrimary();
+        if (current is not null)
+        {
+            try { Deserialize(current); History.Preserve(current); }
+            catch (System.Text.Json.JsonException) { History.Quarantine(current, "rejected"); }
+        }
+        History.Preserve(bytes);
+        if (File.Exists(_filePath + ".tmp"))
+        {
+            History.Quarantine(File.ReadAllBytes(_filePath + ".tmp"), "interrupted");
+            File.Delete(_filePath + ".tmp");
+        }
+        var temporary = _filePath + ".restore-" + Guid.NewGuid() + ".tmp";
+        WriteDurable(temporary, bytes);
+        // Recheck raw bytes here: restore must not replace an unseen external edit either.
+        History.Prune();
+        var now = ReadPrimary();
+        if ((current is null) != (now is null) || current is not null && !current.SequenceEqual(now!))
+            throw new SaveLoadException(_filePath, "файл изменился во время восстановления");
+        File.Move(temporary, _filePath, overwrite: current is not null);
+        _baseline = bytes.ToArray(); _resolved = true; _blocked = false;
     }
 
     public SaveData? Load() => Load(out _);
@@ -55,48 +133,64 @@ public sealed class JsonSaveStore
     public SaveData? Load(out byte[]? originalBytes)
     {
         originalBytes = null;
+        _resolved = false; _blocked = true;
         try
         {
-            originalBytes = File.ReadAllBytes(_filePath);
-            using var reader = new StreamReader(new MemoryStream(originalBytes), Encoding.UTF8, detectEncodingFromByteOrderMarks: true);
-            var json = reader.ReadToEnd();
-            using var document = JsonDocument.Parse(json);
-            var root = document.RootElement;
-            Require(root.ValueKind == JsonValueKind.Object, "корень JSON должен быть объектом");
-            if (root.TryGetProperty("SchemaVersion", out var version))
-                Require(version.ValueKind == JsonValueKind.Number && version.TryGetInt32(out var number) && number is 1 or 2,
-                    "неподдерживаемая версия схемы");
-
-            // Id has a NewGuid initializer for NEW individuals/eggs; a missing saved identity
-            // must be rejected before deserialization can silently replace it.
-            var identities = new HashSet<Guid>();
-            ValidateIdentities(root, "Individuals", identities, required: true);
-            ValidateIdentities(root, "PendingEggs", identities, required: false);
-            if (root.TryGetProperty("Gift", out var gift) && gift.ValueKind == JsonValueKind.Object &&
-                gift.TryGetProperty("Gifts", out var gifts) && gifts.ValueKind == JsonValueKind.Array)
+            originalBytes = ReadPrimary();
+            if (originalBytes is null)
             {
-                var giftIds = new HashSet<Guid>();
-                foreach (var entry in gifts.EnumerateArray())
-                    Require(entry.ValueKind == JsonValueKind.Object && entry.TryGetProperty("Individual", out var individual)
-                        && individual.ValueKind == JsonValueKind.Object && individual.TryGetProperty("Id", out var id)
-                        && id.ValueKind == JsonValueKind.String && id.TryGetGuid(out var guid) && guid != Guid.Empty && giftIds.Add(guid), "неверный GUID подарка");
+                if (History.HasEvidence || File.Exists(_filePath + ".tmp") || Directory.Exists(_filePath + ".tmp") ||
+                    (Directory.Exists(Path.GetDirectoryName(_filePath)) && Directory.EnumerateFiles(Path.GetDirectoryName(_filePath)!, Path.GetFileName(_filePath) + ".restore-*.tmp").Any()))
+                    throw new SaveLoadException(_filePath, "основной файл отсутствует, но найдена история; выберите восстановление");
+                _baseline = null; _resolved = true; _blocked = false;
+                return null;
             }
-            if (root.TryGetProperty("SchemaVersion", out var schema) && schema.GetInt32() == 2)
-                foreach (var field in new[] { "CatalogRevision", "BalanceRevision", "MigrationId", "DiscoveredSpeciesIds", "EvolutionTransitions",
-                    "ShinySpeciesIds", "Metrics", "AwardLedger", "Berries", "Items", "BerryRemainders", "Tutorial", "Gift", "CompletedOperations" })
-                    Require(root.TryGetProperty(field, out var property) && property.ValueKind != JsonValueKind.Null, $"отсутствует {field} v2");
-            var data = JsonSerializer.Deserialize<SaveData>(json, Options);
-            Require(data is not null, "пустое сохранение");
-            ValidateData(data!);
+            var data = Deserialize(originalBytes);
+            _baseline = originalBytes.ToArray(); _resolved = true; _blocked = false;
             return data;
         }
-        catch (FileNotFoundException) { return null; }
-        catch (DirectoryNotFoundException) { return null; }
         catch (Exception ex) when (ex is JsonException or IOException or UnauthorizedAccessException)
         {
+            if (ex is SaveLoadException) throw;
             throw new SaveLoadException(_filePath, ex.Message, ex);
         }
     }
+
+    internal static SaveData Deserialize(byte[] bytes)
+    {
+        using var reader = new StreamReader(new MemoryStream(bytes), Encoding.UTF8, detectEncodingFromByteOrderMarks: true);
+        var json = reader.ReadToEnd();
+        using var document = JsonDocument.Parse(json);
+        var root = document.RootElement;
+        Require(root.ValueKind == JsonValueKind.Object, "корень JSON должен быть объектом");
+        if (root.TryGetProperty("SchemaVersion", out var version))
+            Require(version.ValueKind == JsonValueKind.Number && version.TryGetInt32(out var number) && number is 1 or 2,
+                "неподдерживаемая версия схемы");
+
+        // Id has a NewGuid initializer for NEW individuals/eggs; a missing saved identity
+        // must be rejected before deserialization can silently replace it.
+        var identities = new HashSet<Guid>();
+        ValidateIdentities(root, "Individuals", identities, required: true);
+        ValidateIdentities(root, "PendingEggs", identities, required: false);
+        if (root.TryGetProperty("Gift", out var gift) && gift.ValueKind == JsonValueKind.Object &&
+            gift.TryGetProperty("Gifts", out var gifts) && gifts.ValueKind == JsonValueKind.Array)
+        {
+            var giftIds = new HashSet<Guid>();
+            foreach (var entry in gifts.EnumerateArray())
+                Require(entry.ValueKind == JsonValueKind.Object && entry.TryGetProperty("Individual", out var individual)
+                    && individual.ValueKind == JsonValueKind.Object && individual.TryGetProperty("Id", out var id)
+                    && id.ValueKind == JsonValueKind.String && id.TryGetGuid(out var guid) && guid != Guid.Empty && giftIds.Add(guid), "неверный GUID подарка");
+        }
+        if (root.TryGetProperty("SchemaVersion", out var schema) && schema.GetInt32() == 2)
+            foreach (var field in new[] { "CatalogRevision", "BalanceRevision", "MigrationId", "DiscoveredSpeciesIds", "EvolutionTransitions",
+                "ShinySpeciesIds", "Metrics", "AwardLedger", "Berries", "Items", "BerryRemainders", "Tutorial", "Gift", "CompletedOperations" })
+                Require(root.TryGetProperty(field, out var property) && property.ValueKind != JsonValueKind.Null, $"отсутствует {field} v2");
+        var data = JsonSerializer.Deserialize<SaveData>(json, Options);
+        Require(data is not null, "пустое сохранение");
+        ValidateData(data!);
+        return data!;
+    }
+
 
     private static void Require(bool condition, string diagnostic)
     {
