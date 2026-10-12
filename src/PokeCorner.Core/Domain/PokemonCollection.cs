@@ -32,8 +32,7 @@ public sealed class PokemonCollection
         ActiveIndividualId = id;
     }
 
-    /// Leaves the desktop empty without removing anyone from the collection — used when a
-    /// Hardcore individual runs away; the player picks a replacement or waits out the cooldown.
+    /// Leaves the desktop empty without removing anyone from the collection.
     public void ClearActive() => ActiveIndividualId = null;
 
     public PokemonIndividual? GetActive() =>

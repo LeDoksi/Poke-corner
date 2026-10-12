@@ -188,7 +188,15 @@ public sealed class JsonSaveStore
         var data = JsonSerializer.Deserialize<SaveData>(json, Options);
         Require(data is not null, "пустое сохранение");
         ValidateData(data!);
+        NormalizeLegacyCare(data!);
         return data!;
+    }
+
+    internal static void NormalizeLegacyCare(SaveData data)
+    {
+        data.Settings.CareMode = CareMode.Chill;
+        data.Settings.SuperHardcoreEnabled = false;
+        foreach (var care in data.CareStates.Values) care.RanAwayUntilUtc = null;
     }
 
 

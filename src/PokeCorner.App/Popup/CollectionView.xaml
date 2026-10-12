@@ -332,15 +332,6 @@
                                                     <TextBlock Text="На столе" FontSize="8.5" FontWeight="SemiBold"
                                                                Foreground="{StaticResource AccentGoldBrush}" />
                                                 </Border>
-                                                <Border Style="{StaticResource PillStyle}" Padding="5,1"
-                                                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                                                        Margin="0,0,0,2"
-                                                        BorderBrush="{StaticResource AccentRedBrush}"
-                                                        Visibility="{Binding UnavailableBadgeVisibility}"
-                                                        ToolTip="{Binding AvailabilityToolTip}">
-                                                    <TextBlock Text="Обиделся" FontSize="8.5" FontWeight="SemiBold"
-                                                               Foreground="{StaticResource AccentRedBrush}" />
-                                                </Border>
                                             </Grid>
                                         </Border>
 
@@ -564,11 +555,6 @@
                                 ToolTip="Сейчас на рабочем столе">
                             <TextBlock Text="На столе" FontSize="10" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentGoldBrush}" />
-                        </Border>
-                        <Border x:Name="DetailUnavailableBadge" Style="{StaticResource PillStyle}"
-                                BorderBrush="{StaticResource AccentRedBrush}" Visibility="Collapsed">
-                            <TextBlock Text="Обиделся" FontSize="10" FontWeight="SemiBold"
-                                       Foreground="{StaticResource AccentRedBrush}" />
                         </Border>
                     </WrapPanel>
 

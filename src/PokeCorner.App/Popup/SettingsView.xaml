@@ -6,31 +6,6 @@
 
             <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
                 <StackPanel>
-                    <TextBlock Text="Режим ухода" Style="{StaticResource SectionHeaderTextStyle}" />
-                    <ComboBox x:Name="CareModeCombo" SelectionChanged="CareModeCombo_SelectionChanged">
-                        <ComboBoxItem Content="Chill" />
-                        <ComboBoxItem Content="Hardcore" />
-                    </ComboBox>
-                    <TextBlock Text="Chill — без последствий, если забыл покормить. Hardcore — питомец может &quot;обидеться&quot; и уйти со стола."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,14" />
-
-                    <!-- IsEnabled is driven from code-behind (LoadFromSettings and
-                         CareModeCombo_SelectionChanged) to track the Hardcore selection: the
-                         setting does nothing in Chill, and a checkbox that reads as live while
-                         being inert is worse than one that visibly says "not applicable".
-                         Still visible-but-disabled rather than collapsed, so it doesn't
-                         appear and disappear as the combo changes. The disabled look comes
-                         from the CheckBox style's own IsEnabled=False trigger in
-                         PokedexTheme.xaml — nothing extra needed here. -->
-                    <CheckBox x:Name="SuperHardcoreCheck" Content="Супер Хардкор"
-                              Checked="SuperHardcoreCheck_Changed" Unchecked="SuperHardcoreCheck_Changed" />
-                    <TextBlock Text="Только для Hardcore. Если забыть про питомца надолго, он не уйдёт со стола на час, а покинет коллекцию навсегда."
-                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,0" />
-                </StackPanel>
-            </Border>
-
-            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
-                <StackPanel>
                     <!-- Informational, not a toggle. Claude Code token tracking is gone, and
                          activity at the PC is the app's whole premise rather than an option, so
                          there is nothing left here to switch on or off. The card stays because

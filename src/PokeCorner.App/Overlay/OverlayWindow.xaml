@@ -35,7 +35,6 @@
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform x:Name="SpriteScaleTransform" ScaleX="1" ScaleY="1" />
-                    <TranslateTransform x:Name="SpriteTranslateTransform" X="0" Y="0" />
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
@@ -46,12 +45,5 @@
             <TextBlock x:Name="ReactionGlyphText" FontSize="18" />
         </Border>
 
-        <!-- Hardcore-neglect mood cloud: shown once the pet is upset enough (MoodCloudThreshold),
-             escalating as mood drops. Offset to the corner so it never overlaps the reaction
-             bubble above, which can still fire while this is on screen. -->
-        <Border x:Name="MoodCloudBubble" Style="{StaticResource ThoughtBubbleStyle}"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed">
-            <TextBlock x:Name="MoodCloudText" FontSize="16" FontFamily="Segoe UI Emoji" />
-        </Border>
     </Grid>
 </Window>

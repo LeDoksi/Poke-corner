@@ -29,19 +29,6 @@ public class FeedingServiceTests
     }
 
     [Fact]
-    public void Pet_ClearsRunAwayCooldown()
-    {
-        var service = new FeedingService();
-        var individual = MakeIndividual();
-        var now = DateTimeOffset.UtcNow;
-        var state = new CareState { RanAwayUntilUtc = now + TimeSpan.FromHours(1) };
-
-        service.Pet(individual, state, now);
-
-        Assert.Null(state.RanAwayUntilUtc);
-    }
-
-    [Fact]
     public void Pet_WithinCooldown_ReturnsFalseAndDoesNotAddCarePoints()
     {
         var service = new FeedingService();
@@ -94,20 +81,6 @@ public class FeedingServiceTests
         Assert.True(fed);
         Assert.Equal(2, inventory.Treats);
         Assert.Equal(FeedingService.FeedCarePointsBonus, individual.AccumulatedCarePoints);
-    }
-
-    [Fact]
-    public void Feed_ClearsRunAwayCooldown()
-    {
-        var service = new FeedingService();
-        var individual = MakeIndividual();
-        var now = DateTimeOffset.UtcNow;
-        var inventory = new FeedingInventory { Treats = 1 };
-        var state = new CareState { RanAwayUntilUtc = now + TimeSpan.FromHours(1) };
-
-        service.Feed(individual, inventory, state, now);
-
-        Assert.Null(state.RanAwayUntilUtc);
     }
 
     [Fact]

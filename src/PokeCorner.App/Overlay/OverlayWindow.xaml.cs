@@ -141,16 +141,10 @@ public partial class OverlayWindow : Window
         _animator?.Stop();
         _animator = null;
 
-        // A held (FillBehavior.HoldEnd) animation outranks any later plain property
-        // assignment in WPF's value precedence, so PlayRanAwayReaction's fade/slide would
-        // otherwise keep the sprite invisible and off-position forever — SetMoodTint's
-        // assignments and every subsequent reveal would silently do nothing. Clearing the
-        // clocks with BeginAnimation(property, null) restores local-value precedence, so
-        // every fresh reveal starts from a clean, fully visible, un-translated state.
+        // Clear held animations before assigning the next sprite; held WPF values outrank
+        // plain property assignments and could otherwise leave it invisible or displaced.
         SpriteImage.BeginAnimation(OpacityProperty, null);
-        SpriteTranslateTransform.BeginAnimation(TranslateTransform.YProperty, null);
         SpriteImage.Opacity = 1.0;
-        SpriteTranslateTransform.Y = 0;
 
         if (frames.Count == 0)
         {
@@ -404,73 +398,6 @@ public partial class OverlayWindow : Window
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, flash);
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, flash);
     }
-
-    public void PlayRanAwayReaction()
-    {
-        var slide = new DoubleAnimation(0, Height, TimeSpan.FromMilliseconds(400));
-        var fade = new DoubleAnimation(1.0, 0.0, TimeSpan.FromMilliseconds(400));
-        SpriteTranslateTransform.BeginAnimation(TranslateTransform.YProperty, slide);
-        SpriteImage.BeginAnimation(OpacityProperty, fade);
-    }
-
-    /// mood below this fraction of the way to full decay shows the mood cloud — deliberately
-    /// past the halfway point ("не сразу, а когда питомец уже достаточно обижен"): roughly the
-    /// last 40% of the 6-hour Hardcore window.
-    private const double MoodCloudThreshold = 0.4;
-
-    /// Advances once per SetMoodTint call (App's growth tick, ~once/second while Hardcore) so
-    /// the mood cloud's glyph can cycle/escalate without this window needing its own timer.
-    private int _moodCloudTicks;
-
-    /// mood: 0.0 (long-neglected) to 1.0 (just interacted with) — CareModeService.ComputeMood's
-    /// output, applied continuously so the sprite visibly droops/dims as Hardcore neglect
-    /// approaches the run-away threshold, not just at the moment it triggers.
-    ///
-    /// opacityFloor: how dim the sprite may get at mood=0.0 (the caller picks ~0.15-0.2, so a pet
-    /// at the deadline reads as "fading away").
-    ///
-    /// Also drives the mood cloud: visible once mood drops under MoodCloudThreshold, with glyphs
-    /// alternating faster as it keeps falling toward 0.
-    public void SetMoodTint(double mood, double opacityFloor = 0.5)
-    {
-        SpriteTranslateTransform.Y = DroopOffsetFor(mood);
-        SpriteImage.Opacity = OpacityFor(mood, opacityFloor);
-
-        if (mood >= MoodCloudThreshold)
-        {
-            MoodCloudBubble.Visibility = Visibility.Collapsed;
-            _moodCloudTicks = 0;
-            return;
-        }
-
-        MoodCloudBubble.Visibility = Visibility.Visible;
-
-        // 0 right as the cloud first appears, 1 right at mood == 0 (about to run away).
-        var severity = Math.Clamp(1.0 - mood / MoodCloudThreshold, 0.0, 1.0);
-
-        // Glyph swap speeds up as severity rises: every 3rd tick near the threshold, every
-        // tick once fully upset. Ticks arrive ~once/second off App's growth timer.
-        var cyclePeriodTicks = Math.Max(1, 3 - (int)Math.Round(severity * 2));
-        _moodCloudTicks++;
-        var showBrokenHeart = (_moodCloudTicks / cyclePeriodTicks) % 2 == 0;
-        MoodCloudText.Text = showBrokenHeart ? "💔" : severity > 0.66 ? "💢💢" : "💢";
-    }
-
-    /// Clears droop/dim/mood-cloud state left over from Hardcore neglect. Called whenever the care
-    /// mode isn't Hardcore; otherwise switching away mid-neglect would leave the sprite stuck dim,
-    /// since nothing would call SetMoodTint again.
-    public void ResetMoodTint()
-    {
-        SpriteTranslateTransform.Y = 0;
-        SpriteImage.Opacity = 1.0;
-        MoodCloudBubble.Visibility = Visibility.Collapsed;
-        _moodCloudTicks = 0;
-    }
-
-    /// Pure droop/opacity formulas, pulled out of SetMoodTint so the math is directly testable
-    /// without a live WPF window — same pattern as ToDips/CornerPosition/IsOnWorkArea above.
-    public static double DroopOffsetFor(double mood) => (1.0 - mood) * 10;
-    public static double OpacityFor(double mood, double opacityFloor) => opacityFloor + mood * (1.0 - opacityFloor);
 
     /// Removes any still-holding scale animation clock (and the glyph fade's) so a newly
     /// started bounce/flash isn't silently outranked by the previous one's held end value.

@@ -162,14 +162,14 @@ public sealed class AppState
             Collection.ClearActive();
         }
 
-        Settings.CareMode = data.Settings.CareMode;
+        Settings.CareMode = CareMode.Chill;
         Settings.AutoHideInFullscreen = data.Settings.AutoHideInFullscreen;
         Settings.StartWithWindows = data.Settings.StartWithWindows;
         Settings.ScreenCorner = data.Settings.ScreenCorner;
         Settings.MonitorIndex = data.Settings.MonitorIndex;
         Settings.PetSizePixels = data.Settings.PetSizePixels;
         Settings.ShowProgressPanel = data.Settings.ShowProgressPanel;
-        Settings.SuperHardcoreEnabled = data.Settings.SuperHardcoreEnabled;
+        Settings.SuperHardcoreEnabled = false;
         Settings.CrySoundVolume = data.Settings.CrySoundVolume;
         Settings.EffectsSoundVolume = data.Settings.EffectsSoundVolume;
         Settings.PetPositionX = data.Settings.PetPositionX;
@@ -186,7 +186,12 @@ public sealed class AppState
 
         foreach (var (individualId, careState) in data.CareStates)
         {
-            CareStateByIndividualId[individualId] = careState;
+            CareStateByIndividualId[individualId] = new CareState
+            {
+                LastInteractionUtc = careState.LastInteractionUtc,
+                LastNeglectCheckUtc = careState.LastNeglectCheckUtc,
+                LastPetUtc = careState.LastPetUtc
+            };
         }
 
         PendingEggs.AddRange(data.PendingEggs);

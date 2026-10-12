@@ -67,6 +67,7 @@ public static class SaveMigration
         catch (JsonException ex) { throw new InvalidDataException(ex.Message, ex); }
         if (v1.SchemaVersion != 1) throw new InvalidDataException("Миграция принимает только v1.");
         var next = JsonSaveStore.Clone(v1);
+        JsonSaveStore.NormalizeLegacyCare(next);
         var rulesPath = Path.Combine(catalog.DataRoot, "final", "catalog-rules.json");
         var balancePath = Path.Combine(catalog.DataRoot, "final", "balance.json");
         using var rules = JsonDocument.Parse(File.ReadAllBytes(rulesPath));

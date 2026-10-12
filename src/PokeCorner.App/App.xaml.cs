@@ -73,7 +73,6 @@ public partial class App : System.Windows.Application
     private static readonly TimeSpan AutosaveInterval = TimeSpan.FromSeconds(5);
     private DateTimeOffset _lastAutosaveUtc = DateTimeOffset.MinValue;
     private Guid? _evolutionReadyNotifiedFor;
-    private Guid? _neglectWarningNotifiedFor;
 
     /// Suppresses old-process writes after an explicit replacement and before restart.
     private bool _isWipingSaveData;
@@ -323,7 +322,6 @@ public partial class App : System.Windows.Application
 
         _progressPanelWindow?.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
 
-        CheckHardcoreNeglect();
         CheckEvolutionReady();
 
         // Backstop for the ForegroundWindowChanged hook: plenty of things reorder the normal
@@ -345,77 +343,6 @@ public partial class App : System.Windows.Application
             _lastAutosaveUtc = nowUtc;
             PersistState();
         }
-    }
-
-    /// Opacity floor at mood=0.0 for Hardcore/Super Hardcore's mood tint — dropped well below
-    /// Chill's implicit 0.5 default so a pet at the run-away deadline genuinely reads as
-    /// "fading away" rather than just slightly dimmed. See OverlayWindow.SetMoodTint.
-    private const double HardcoreMoodOpacityFloor = 0.18;
-
-    /// Hardcore's run-away mechanic, polled from the growth tick.
-    private void CheckHardcoreNeglect()
-    {
-        if (_appState.Settings.CareMode != CareMode.Hardcore)
-        {
-            // No neglect consequence outside Hardcore — clear any droop/dim/mood-cloud left
-            // over from a mode switch, since nothing else will call SetMoodTint to reset it.
-            _overlayWindow.ResetMoodTint();
-            return;
-        }
-
-        var active = _appState.Collection.GetActive();
-        if (active is null) return;
-
-        var careState = _appState.GetOrCreateCareState(active.Id);
-        var now = DateTimeOffset.UtcNow;
-
-        // Before anything reads the neglect clock: a PC left on overnight, or the app being
-        // closed for hours, must not cost the player their pet. Only the active individual is
-        // adjusted — the same scope everything else in this method works at.
-        _careModeService.DiscountIdleGap(careState, now);
-
-        // SuperHardcoreEnabled is a flag layered on top of Hardcore (see the check below), not
-        // a separate CareMode value — both share the same recalibrated 6h mood/run-away clock.
-        _overlayWindow.SetMoodTint(_careModeService.ComputeMood(careState, now, CareMode.Hardcore), HardcoreMoodOpacityFloor);
-
-        // One-shot warning shortly before the pet actually runs away — same guard idiom as
-        // CheckEvolutionReady, re-armed whenever the condition isn't currently true (so
-        // petting/feeding before the deadline, or a later neglect cycle, can warn again).
-        var timeUntilRunAway = careState.LastInteractionUtc + CareModeTuning.HardcoreNeglectThreshold - now;
-        if (careState.RanAwayUntilUtc is null && timeUntilRunAway <= CareModeTuning.NeglectWarningLeadTime && timeUntilRunAway > TimeSpan.Zero)
-        {
-            if (_neglectWarningNotifiedFor != active.Id)
-            {
-                _neglectWarningNotifiedFor = active.Id;
-                _trayIconService.ShowNotification("PokéCorner", "Ещё немного — и питомец обидится. Загляни к нему!");
-            }
-        }
-        else
-        {
-            _neglectWarningNotifiedFor = null;
-        }
-
-        if (!_careModeService.ShouldRunAway(careState, now, _appState.Settings.CareMode)) return;
-
-        _overlayWindow.PlayRanAwayReaction();
-
-        if (_appState.Settings.SuperHardcoreEnabled)
-        {
-            // Супер Хардкор: neglect is permanent. Same path as the collection's "Отпустить"
-            // button — Release() also drops them out of the active slot (promoting whoever is
-            // next in the collection, exactly as a manual release does), so no ClearActive()
-            // and no run-away cooldown to set on a care state that no longer belongs to anyone.
-            _appState.Collection.Release(active.Id);
-            _appState.CareStateByIndividualId.Remove(active.Id);
-            RefreshOverlayForActiveIndividual();
-            _trayIconService.ShowNotification("PokéCorner", "Супер Хардкор: питомец ушёл навсегда.");
-            return;
-        }
-
-        _careModeService.TriggerRunAway(careState);
-        _appState.Collection.ClearActive();
-        RefreshOverlayForActiveIndividual();
-        _trayIconService.ShowNotification("PokéCorner", "Питомец расстроен и не хочет возвращаться на стол ещё час.");
     }
 
     /// One-shot "ready to evolve" toast per individual; re-armed when readiness drops or the
@@ -676,9 +603,7 @@ public partial class App : System.Windows.Application
         if (_catchReadyCount <= 0) return null;
 
         // PokemonCollection.Add() auto-activates via ActiveIndividualId ??= individual.Id
-        // whenever nothing is currently active — correct for onboarding, but the only way
-        // ActiveIndividualId is null with a non-empty collection here is a deliberate
-        // Hardcore run-away, and nobody should auto-appear on the desk after that.
+        // whenever nothing is currently active. Preserve an intentionally empty desktop.
         var hadNoActiveInNonEmptyCollection = _appState.Collection.ActiveIndividualId is null && _appState.Collection.Individuals.Count > 0;
 
         var availableChains = GetDirectIssueChains();
@@ -868,7 +793,7 @@ public partial class App : System.Windows.Application
                 // LoadForLookup so the collection/Pokédex can resolve names, sprites and rarity
                 // for individuals sitting on a migrated legacy chain id, not just real ones.
                 var lookupChains = _speciesCatalog.LoadForLookup();
-                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, _appState.Settings.CareMode, lookupChains, _appState.PendingEggs);
+                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, lookupChains, _appState.PendingEggs);
                 var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);

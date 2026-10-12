@@ -1011,87 +1011,20 @@ public class ThemeRenderingTests
             }
         });
 
-    /// Item 5: the closed ComboBox display. WPF's stock ButtonBase style sets a BLACK
-    /// Foreground on the ToggleButton that renders the current selection, and a style setter
-    /// outranks the inherited value from the ComboBox — so the selected mode was drawn in
-    /// near-black on the dark navy card. This asserts the light foreground reaches it.
     [Fact]
-    public void SettingsView_CareModeCombo_ClosedBoxTextIsLegibleNotSystemBlack() =>
-        WpfTestHost.Run(() =>
-        {
-            var view = new SettingsView(new SettingsViewModel(new AppState().Settings), () => { });
-            WpfTestHost.Layout(view);
-
-            var combo = (ComboBox)view.FindName("CareModeCombo")!;
-            var toggle = (ToggleButton)combo.Template.FindName("Toggle", combo);
-
-            var expected = (SolidColorBrush)Application.Current.Resources["PrimaryTextBrush"];
-            var actual = Assert.IsType<SolidColorBrush>(toggle.Foreground);
-            Assert.Equal(expected.Color, actual.Color);
-            Assert.NotEqual(Colors.Black, actual.Color);
-            Assert.NotEqual(SystemColors.ControlTextColor, actual.Color);
-
-            // And it must contrast with what it is drawn on: the closed box's own surface.
-            var closedBox = (Border)toggle.Template.FindName("ClosedBox", toggle);
-            var background = Assert.IsType<SolidColorBrush>(closedBox.Background);
-            Assert.True(RelativeLuminanceGap(actual.Color, background.Color) > 0.4,
-                "the selection text does not contrast with the closed box behind it");
-        });
-
-    /// "Супер Хардкор" only does anything in Hardcore (App.CheckHardcoreNeglect returns early
-    /// for Chill), so the checkbox must be greyed out otherwise — on the initial load as well
-    /// as on every later change of the combo, which is the half that is easy to forget.
-    [Theory]
-    [InlineData(CareMode.Chill, false)]
-    [InlineData(CareMode.Hardcore, true)]
-    public void SettingsView_SuperHardcoreCheckbox_IsEnabledOnlyInHardcore(CareMode mode, bool expectedEnabled) =>
-        WpfTestHost.Run(() =>
-        {
-            var settings = new AppState().Settings;
-            settings.CareMode = mode;
-
-            var view = new SettingsView(new SettingsViewModel(settings), () => { });
-            WpfTestHost.Layout(view);
-
-            var check = (CheckBox)view.FindName("SuperHardcoreCheck")!;
-            Assert.Equal(expectedEnabled, check.IsEnabled);
-        });
-
-    /// Item 5: switching the combo re-gates the checkbox AND clears it.
-    ///
-    /// This reverses what a prior wave asserted here. That wave deliberately kept the stored
-    /// Super Hardcore choice when leaving Hardcore, on the theory that it preserved the
-    /// player's earlier decision — the checkbox went disabled but stayed visibly ticked. Live
-    /// testing rejected it: a ticked checkbox describing a permadeath rule that is not in
-    /// force reads as broken, not as thoughtful. Leaving Hardcore now unchecks it and clears
-    /// the setting, so what the UI shows and what is stored can't disagree.
-    [Fact]
-    public void SettingsView_LeavingHardcore_UnchecksAndClearsSuperHardcore() =>
+    public void SettingsView_OpensWithoutModeControlsOrChangingLegacySettings() =>
         WpfTestHost.Run(() =>
         {
             var settings = new AppState().Settings;
             settings.CareMode = CareMode.Hardcore;
             settings.SuperHardcoreEnabled = true;
-
             var view = new SettingsView(new SettingsViewModel(settings), () => { });
             WpfTestHost.Layout(view);
 
-            var combo = (ComboBox)view.FindName("CareModeCombo")!;
-            var check = (CheckBox)view.FindName("SuperHardcoreCheck")!;
-            Assert.True(check.IsEnabled);
-            Assert.True(check.IsChecked);
-
-            combo.SelectedIndex = 0; // Chill
-            Assert.False(check.IsEnabled);
-            Assert.False(check.IsChecked, "the box must not stay ticked once the mode can't use it");
-            Assert.False(settings.SuperHardcoreEnabled, "the stored setting must not linger past the UI");
-
-            // Coming back to Hardcore re-enables it, unticked — the player opts in again
-            // deliberately rather than silently inheriting a permadeath rule.
-            combo.SelectedIndex = 1;
-            Assert.True(check.IsEnabled);
-            Assert.False(check.IsChecked);
-            Assert.False(settings.SuperHardcoreEnabled);
+            Assert.Null(view.FindName("CareModeCombo"));
+            Assert.Null(view.FindName("SuperHardcoreCheck"));
+            Assert.Equal(CareMode.Hardcore, settings.CareMode);
+            Assert.True(settings.SuperHardcoreEnabled);
         });
 
     /// Item 5, dropdown half: an item that is selected but not hovered must stay readable.
@@ -1424,7 +1357,7 @@ public class ThemeRenderingTests
         }
 
         var viewModel = new CollectionViewModel(appState.Collection, appState.CareStateByIndividualId,
-            new CareModeService(), CareMode.Chill, chains, appState.PendingEggs);
+            new CareModeService(), chains, appState.PendingEggs);
         var spriteCacheDirectory = Path.Combine(Path.GetTempPath(), "pokecorner-theme-tests", Guid.NewGuid().ToString("N"));
         return new CollectionView(viewModel, appState, new SpriteCache(spriteCacheDirectory),
             () => { }, () => { }, () => { }, getActiveSpriteFrames ?? (() => null), _ => true,
@@ -1770,7 +1703,7 @@ public class ThemeRenderingTests
 
         var chains = new[] { new SpeciesEvolutionChain(4, 4, 45, 3, new[] { 4, 5, 6 }, new[] { "Charmander", "Charmeleon", "Charizard" }) };
         var viewModel = new CollectionViewModel(appState.Collection, appState.CareStateByIndividualId,
-            new CareModeService(), CareMode.Chill, chains, appState.PendingEggs);
+            new CareModeService(), chains, appState.PendingEggs);
 
         var spriteCacheDirectory = Path.Combine(Path.GetTempPath(), "pokecorner-theme-tests", Guid.NewGuid().ToString("N"));
         return new CollectionView(viewModel, appState, new SpriteCache(spriteCacheDirectory),

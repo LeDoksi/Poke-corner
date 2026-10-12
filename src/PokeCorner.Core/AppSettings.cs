@@ -27,7 +27,6 @@ public sealed class AppSettings
 
     public int CrySoundVolume { get; set; } = 70;
 
-    /// Only consulted in CareMode.Hardcore: neglect permanently releases the pet from the
-    /// collection instead of benching it behind the usual one-hour RanAwayUntilUtc cooldown.
+    /// Legacy serialized setting; loaded saves normalize this to false.
     public bool SuperHardcoreEnabled { get; set; } = false;
 }

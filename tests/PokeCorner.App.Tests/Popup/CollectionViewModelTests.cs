@@ -23,7 +23,7 @@ public class CollectionViewModelTests
         var second = MakeIndividual(2);
         collection.Add(first);
         collection.Add(second);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
@@ -38,15 +38,15 @@ public class CollectionViewModelTests
         var individual = MakeIndividual(1);
         collection.Add(individual);
         var careStates = new Dictionary<Guid, CareState> { [individual.Id] = new CareState { LastInteractionUtc = DateTimeOffset.UtcNow - TimeSpan.FromDays(5) } };
-        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
 
-        Assert.True(entry.IsAvailableToActivate);
+        Assert.Equal(individual.Id, entry.IndividualId);
     }
 
     [Fact]
-    public void GetEntries_HardcoreModeRanAway_NotAvailableUntilCooldownEnds()
+    public void GetEntries_LegacyCooldown_DoesNotBlockActivation()
     {
         var collection = new PokemonCollection();
         var individual = MakeIndividual(1);
@@ -54,18 +54,17 @@ public class CollectionViewModelTests
         var now = DateTimeOffset.UtcNow;
         var careState = new CareState();
         var careModeService = new CareModeService();
-        careModeService.TriggerRunAway(careState);
+        careState.RanAwayUntilUtc = now.AddHours(1);
         var careStates = new Dictionary<Guid, CareState> { [individual.Id] = careState };
-        var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, careStates, careModeService, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entry = vm.GetEntries(now).Single();
 
-        Assert.False(entry.IsAvailableToActivate);
-        Assert.Equal(careState.RanAwayUntilUtc, entry.AvailableAgainAtUtc);
+        Assert.Equal(individual.Id, entry.IndividualId);
     }
 
     [Fact]
-    public void TrySetActive_UnavailableIndividual_ReturnsFalseAndDoesNotChangeActive()
+    public void TrySetActive_LegacyCooldown_AllowsSelection()
     {
         var collection = new PokemonCollection();
         var first = MakeIndividual(1);
@@ -75,14 +74,14 @@ public class CollectionViewModelTests
         var now = DateTimeOffset.UtcNow;
         var careState = new CareState();
         var careModeService = new CareModeService();
-        careModeService.TriggerRunAway(careState);
+        careState.RanAwayUntilUtc = now.AddHours(1);
         var careStates = new Dictionary<Guid, CareState> { [second.Id] = careState };
-        var vm = new CollectionViewModel(collection, careStates, careModeService, CareMode.Hardcore, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, careStates, careModeService, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var result = vm.TrySetActive(second.Id, now);
 
-        Assert.False(result);
-        Assert.Equal(first.Id, collection.ActiveIndividualId);
+        Assert.True(result);
+        Assert.Equal(second.Id, collection.ActiveIndividualId);
     }
 
     [Fact]
@@ -93,7 +92,7 @@ public class CollectionViewModelTests
         var second = MakeIndividual(2);
         collection.Add(first);
         collection.Add(second);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var result = vm.TrySetActive(second.Id, DateTimeOffset.UtcNow);
 
@@ -110,7 +109,7 @@ public class CollectionViewModelTests
         var nowUtc = DateTimeOffset.UtcNow;
         var careState = new CareState { LastInteractionUtc = nowUtc - TimeSpan.FromDays(2) };
         var careStates = new Dictionary<Guid, CareState> { [individual.Id] = careState };
-        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, careStates, new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var result = vm.TrySetActive(individual.Id, nowUtc);
 
@@ -124,7 +123,7 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         var individual = MakeIndividual(1);
         collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var released = vm.Release(individual.Id);
 
@@ -139,7 +138,7 @@ public class CollectionViewModelTests
         var individual = MakeIndividual(evolutionChainId: 1);
         collection.Add(individual);
         var chains = new[] { new SpeciesEvolutionChain(ChainId: 1, StarterSpeciesId: individual.SpeciesId, CaptureRate: 255, ChainLength: 3, StageSpeciesIds: new[] { individual.SpeciesId }, StageSpeciesNames: new[] { "Testmon" }) };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), chains, new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
@@ -158,7 +157,7 @@ public class CollectionViewModelTests
         collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
         collection.Add(MakeIndividual(evolutionChainId: chainId, speciesId: speciesId));
         var chains = new[] { new SpeciesEvolutionChain(ChainId: chainId, StarterSpeciesId: speciesId, CaptureRate: 100, ChainLength: 3, StageSpeciesIds: new[] { speciesId }, StageSpeciesNames: new[] { "Caterpie" }) };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), chains, new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
@@ -184,7 +183,7 @@ public class CollectionViewModelTests
         collection.Add(baby);
         collection.Add(evolved);
         var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" }) };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), chains, new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
@@ -200,7 +199,7 @@ public class CollectionViewModelTests
         individual.CurrentStage = EvolutionStage.Stage2;
         collection.Add(individual);
         var chains = new[] { new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" }) };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), chains, new List<PendingEgg>());
 
         var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
 
@@ -223,7 +222,7 @@ public class CollectionViewModelTests
             CaughtAtUtc = caughtAt
         };
         collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
 
@@ -234,7 +233,7 @@ public class CollectionViewModelTests
     [Fact]
     public void GetEntries_NoIndividualsOwned_IsEmpty()
     {
-        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         Assert.Empty(vm.GetEntries(DateTimeOffset.UtcNow));
     }
@@ -255,7 +254,7 @@ public class CollectionViewModelTests
         collection.Add(plain);
         collection.Add(pinned);
         pinned.IsFavorite = true; // caught last, pinned
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
@@ -283,7 +282,7 @@ public class CollectionViewModelTests
         collection.Add(pinnedLow);
         pinnedHigh.IsFavorite = true;
         pinnedLow.IsFavorite = true;
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var ids = vm.GetEntries(DateTimeOffset.UtcNow).Select(e => e.IndividualId).ToList();
 
@@ -309,7 +308,7 @@ public class CollectionViewModelTests
             new SpeciesEvolutionChain(10, 10, 255, 3, new[] { 10, 11, 12 }, new[] { "Caterpie", "Metapod", "Butterfree" }),
             new SpeciesEvolutionChain(16, 16, 255, 3, new[] { 16, 17, 18 }, new[] { "Pidgey", "Pidgeotto", "Pidgeot" })
         };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), chains, new List<PendingEgg>());
 
         // The evolved one is the active pet (added first), so the assertion that matters is the
         // pair behind it: #10 before #16.
@@ -328,7 +327,7 @@ public class CollectionViewModelTests
         collection.Add(active);
         collection.Add(high);
         collection.Add(low);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var ids = vm.GetEntries(DateTimeOffset.UtcNow).Select(e => e.IndividualId).ToList();
 
@@ -347,7 +346,7 @@ public class CollectionViewModelTests
         collection.Add(active);
         pinned.IsFavorite = true;
         collection.SetActive(active.Id);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
 
@@ -365,7 +364,7 @@ public class CollectionViewModelTests
         var individual = MakeIndividual(speciesId: 25, evolutionChainId: 25);
         collection.Add(individual);
         var chains = new[] { new SpeciesEvolutionChain(25, 25, 190, 2, new[] { 25, 26 }, new[] { "Pikachu", "Raichu" }) };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, chains, new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), chains, new List<PendingEgg>());
 
         Assert.True(vm.SetNickname(individual.Id, "Sparky"));
 
@@ -385,7 +384,7 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         var individual = MakeIndividual(1);
         collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
         vm.SetNickname(individual.Id, "Sparky");
 
         vm.SetNickname(individual.Id, blank);
@@ -400,7 +399,7 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         var individual = MakeIndividual(1);
         collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         vm.SetNickname(individual.Id, "  Sparky  ");
         Assert.Equal("Sparky", individual.Nickname);
@@ -414,7 +413,7 @@ public class CollectionViewModelTests
     {
         var collection = new PokemonCollection();
         collection.Add(MakeIndividual(1));
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         Assert.False(vm.SetNickname(Guid.NewGuid(), "Sparky"));
     }
@@ -423,8 +422,8 @@ public class CollectionViewModelTests
 
     private static CollectionEntry EntryFor(string speciesName, string? nickname) => new(
         IndividualId: Guid.NewGuid(), SpeciesId: 25, DisplaySpeciesId: 25, SpeciesName: speciesName,
-        Nickname: nickname, IsShiny: false, IsActive: false, IsAvailableToActivate: true,
-        AvailableAgainAtUtc: null, Rarity: RarityTier.Common, EvolutionFraction: null,
+        Nickname: nickname, IsShiny: false, IsActive: false,
+        Rarity: RarityTier.Common, EvolutionFraction: null,
         EvolutionState: EvolutionProgressState.NeverEvolves, CaughtAtUtc: DateTimeOffset.UtcNow,
         Nature: Nature.Hardy, IsFavorite: false, Types: Array.Empty<string>(),
         EvolutionStages: Array.Empty<EvolutionStagePreview>(), HasEvolutionsRemaining: false);
@@ -462,7 +461,7 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         // MakeIndividual defaults to ChainLength 3, CurrentStage Stage1 (0) — two stages left.
         collection.Add(MakeIndividual(1));
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         Assert.True(vm.GetEntries(DateTimeOffset.UtcNow).Single().HasEvolutionsRemaining);
     }
@@ -474,7 +473,7 @@ public class CollectionViewModelTests
         var individual = MakeIndividual(1);
         individual.CurrentStage = EvolutionStage.Stage3; // ChainLength 3 -> stage index 2 is final
         collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         Assert.False(vm.GetEntries(DateTimeOffset.UtcNow).Single().HasEvolutionsRemaining);
     }
@@ -518,7 +517,7 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         var individual = MakeIndividual(1);
         collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         Assert.True(vm.ToggleFavorite(individual.Id));
         Assert.True(individual.IsFavorite);
@@ -534,7 +533,7 @@ public class CollectionViewModelTests
     {
         var collection = new PokemonCollection();
         collection.Add(MakeIndividual(1));
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
+        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
 
         Assert.False(vm.ToggleFavorite(Guid.NewGuid()));
     }
@@ -544,7 +543,7 @@ public class CollectionViewModelTests
     {
         var now = DateTimeOffset.UtcNow;
         var egg = new PendingEgg { Tier = RarityTier.Rare, ReadyAtUtc = now + TimeSpan.FromMinutes(30) }; // half-incubated
-        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg> { egg });
+        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg> { egg });
 
         var entries = vm.GetPendingEggEntries(now);
 
@@ -558,7 +557,7 @@ public class CollectionViewModelTests
     {
         var now = DateTimeOffset.UtcNow;
         var egg = new PendingEgg { Tier = RarityTier.Common, ReadyAtUtc = now - TimeSpan.FromMinutes(1) };
-        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), CareMode.Chill, Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg> { egg });
+        var vm = new CollectionViewModel(new PokemonCollection(), new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg> { egg });
 
         var entries = vm.GetPendingEggEntries(now);
 
@@ -579,7 +578,7 @@ public class CollectionViewModelTests
         var collection = new PokemonCollection();
         collection.Add(individual);
         return new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(),
-            CareMode.Chill, chains, new List<PendingEgg>());
+            chains, new List<PendingEgg>());
     }
 
     /// Types follow the CURRENT stage, not the starter species — an evolved Butterfree is

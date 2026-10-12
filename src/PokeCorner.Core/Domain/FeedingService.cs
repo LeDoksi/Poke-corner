@@ -18,7 +18,6 @@ public sealed class FeedingService
 
         individual.AccumulatedCarePoints += PetCarePointsBonus;
         careState.LastInteractionUtc = nowUtc;
-        careState.RanAwayUntilUtc = null;
         careState.LastPetUtc = nowUtc;
         return true;
     }
@@ -31,7 +30,6 @@ public sealed class FeedingService
         inventory.Treats -= 1;
         individual.AccumulatedCarePoints += FeedCarePointsBonus;
         careState.LastInteractionUtc = nowUtc;
-        careState.RanAwayUntilUtc = null;
         return true;
     }
 

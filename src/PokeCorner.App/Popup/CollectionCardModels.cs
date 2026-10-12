@@ -71,10 +71,8 @@ public sealed class PokedexCard
     public required string NatureText { get; init; }
 
     public required bool CanSelect { get; init; }
-    public required string? AvailabilityToolTip { get; init; }
     public required bool IsShiny { get; init; }
     public required bool IsActive { get; init; }
-    public required bool IsAvailableToActivate { get; init; }
 
     /// Static single frame — always assigned when the species' sprite is on disk, so a card
     /// shows real artwork immediately whether or not an animated sprite exists or has landed.
@@ -87,7 +85,6 @@ public sealed class PokedexCard
     public Visibility PlaceholderVisibility => SpriteImage is null ? Visibility.Visible : Visibility.Collapsed;
     public Visibility ShinyVisibility => IsShiny ? Visibility.Visible : Visibility.Collapsed;
     public Visibility ActiveBadgeVisibility => IsActive ? Visibility.Visible : Visibility.Collapsed;
-    public Visibility UnavailableBadgeVisibility => IsAvailableToActivate ? Visibility.Collapsed : Visibility.Visible;
 
     /// Pinned-to-the-top flag.
     public required bool IsFavorite { get; init; }

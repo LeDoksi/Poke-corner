@@ -136,7 +136,9 @@ public sealed class MigrationTests : IDisposable
         old.ActiveIndividualId = old.Individuals[0].Id;
         old.CareStates[old.ActiveIndividualId.Value] = new() { RanAwayUntilUtc = DateTimeOffset.UtcNow.AddHours(1) };
         next = SaveMigration.Migrate(old, Lookup, Package.Value);
-        Assert.Equal(old.CareStates[old.ActiveIndividualId.Value].RanAwayUntilUtc, next.CareStates[old.ActiveIndividualId.Value].RanAwayUntilUtc);
+        Assert.Null(next.CareStates[old.ActiveIndividualId.Value].RanAwayUntilUtc);
+        Assert.Equal(CareMode.Chill, next.Settings.CareMode);
+        Assert.False(next.Settings.SuperHardcoreEnabled);
         Assert.Equal(old.ActiveIndividualId, next.ActiveIndividualId);
     }
 
@@ -147,15 +149,15 @@ public sealed class MigrationTests : IDisposable
         old.CareStates[old.Individuals[0].Id] = new() { LastInteractionUtc = DateTimeOffset.UtcNow.AddDays(-5), LastPetUtc = DateTimeOffset.UtcNow.AddDays(-5), LastNeglectCheckUtc = null };
         old.PendingEggs.Add(new() { Tier = RarityTier.Common, ReadyAtUtc = DateTimeOffset.UtcNow.AddHours(1) });
         var next = SaveMigration.Migrate(old, Lookup, Package.Value);
-        Assert.Equal(JsonSaveStore.Serialize(old).Split("\"Settings\"")[1].Split("\"FeedingTreats\"")[0], JsonSaveStore.Serialize(next).Split("\"Settings\"")[1].Split("\"FeedingTreats\"")[0]);
+        Assert.Equal(CareMode.Chill, next.Settings.CareMode); Assert.False(next.Settings.SuperHardcoreEnabled);
+        Assert.Equal(old.Settings.MonitorIndex, next.Settings.MonitorIndex);
         Assert.Equal(0, next.Settings.CrySoundVolume); Assert.Equal(0, next.Settings.EffectsSoundVolume);
         Assert.Equal(8, next.FeedingTreats); Assert.Equal(11, next.FeedingRemainderUnits); Assert.Equal(10, next.ShopRemainderUnits);
         Assert.Equal(12, next.CatchAccumulatorUnits); Assert.Equal(2, next.PendingCatchCount);
         Assert.True(next.ShopCatchLuckyCharmActive); Assert.Empty(next.PendingEggs); Assert.Single(old.PendingEggs);
         var care = next.CareStates[old.Individuals[0].Id];
         Assert.Null(care.LastNeglectCheckUtc); Assert.Equal(old.CareStates[old.Individuals[0].Id].LastPetUtc, care.LastPetUtc);
-        var service = new CareModeService(); service.DiscountIdleGap(care, DateTimeOffset.UtcNow);
-        Assert.False(service.ShouldRunAway(care, DateTimeOffset.UtcNow, CareMode.Hardcore));
+        Assert.Equal(old.CareStates[old.Individuals[0].Id].LastInteractionUtc, care.LastInteractionUtc);
     }
 
     [Fact]
@@ -210,12 +212,18 @@ public sealed class MigrationTests : IDisposable
     public async Task LegacyHistoryRestoreValidatesLookupAndPreservesV2()
     {
         File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var legacyBytes = File.ReadAllBytes(V1);
         var store = new JsonSaveStore(V2);
         await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value, store);
         var original = store.Load()!; original.ShopCoins += 10; store.Save(original);
         var legacy = store.History.List().Single(e => e.IsLegacy);
         SaveMigration.RestoreHistory(store, legacy, Package.Value, DataRoot);
-        Assert.Equal(2, store.Load()!.SchemaVersion);
+        var restored = store.Load()!;
+        Assert.Equal(2, restored.SchemaVersion);
+        Assert.Equal(CareMode.Chill, restored.Settings.CareMode);
+        Assert.False(restored.Settings.SuperHardcoreEnabled);
+        Assert.Equal(legacyBytes, File.ReadAllBytes(V1));
+        Assert.Equal(legacyBytes, File.ReadAllBytes(legacy.Path));
         Assert.Contains(store.History.List(), e => e.SchemaVersion == 2 && e.Coins == original.ShopCoins);
         var lookupPath = Path.Combine(Path.GetDirectoryName(legacy.Path)!, LegacyLookup.PreservedLookupFileName);
         File.WriteAllText(lookupPath, "[]"); var before = File.ReadAllBytes(V2);
@@ -416,12 +424,20 @@ public sealed class MigrationTests : IDisposable
     public void RestoreValidBackupPreservesRejectedFileAndRejectsWrongSchema()
     {
         var valid = SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value);
+        valid.Settings.CareMode = CareMode.Hardcore;
+        valid.Settings.SuperHardcoreEnabled = true;
+        valid.CareStates[valid.Individuals[0].Id] = new() { RanAwayUntilUtc = DateTimeOffset.UtcNow.AddHours(1) };
         var backup = Path.Combine(root, "backup.json");
         var backupStore = new JsonSaveStore(backup); backupStore.Save(valid);
         File.WriteAllText(V2, "{broken v2"); var rejected = File.ReadAllBytes(V2);
         var targetStore = new JsonSaveStore(V2);
         SaveMigration.RestoreHistory(targetStore, backupStore.History.List().First(), Package.Value, DataRoot);
         Assert.Equal(File.ReadAllBytes(backup), File.ReadAllBytes(V2));
+        var restored = targetStore.Load()!;
+        Assert.Equal(CareMode.Chill, restored.Settings.CareMode);
+        Assert.False(restored.Settings.SuperHardcoreEnabled);
+        Assert.Null(restored.CareStates[valid.Individuals[0].Id].RanAwayUntilUtc);
+        Assert.Equal(valid.Individuals[0].Id, restored.Individuals[0].Id);
         Assert.Contains(Directory.GetFiles(root, "state-v2.json.rejected-*"), p => File.ReadAllBytes(p).SequenceEqual(rejected));
         var wrong = Path.Combine(root, "v1backup.json"); var wrongStore = new JsonSaveStore(wrong); wrongStore.Save(Old(Pet()));
         var current = File.ReadAllBytes(V2);
@@ -463,6 +479,7 @@ public sealed class MigrationTests : IDisposable
         var checkpoint = DateTimeOffset.UtcNow.AddHours(-2);
         old.CareStates[old.Individuals[0].Id] = new() { LastInteractionUtc = checkpoint.AddHours(-1), LastNeglectCheckUtc = checkpoint, LastPetUtc = checkpoint.AddMinutes(-1) };
         var next = SaveMigration.Migrate(old, Lookup, Package.Value);
+        old.Settings.CareMode = CareMode.Chill; old.Settings.SuperHardcoreEnabled = false;
         Assert.Equal(JsonSerializer.Serialize(old.Settings), JsonSerializer.Serialize(next.Settings));
         Assert.Equal(JsonSerializer.Serialize(old.CareStates), JsonSerializer.Serialize(next.CareStates));
         Assert.Equal(next.FeedingTreats, next.Items["treats"]);
@@ -540,7 +557,7 @@ public sealed class MigrationTests : IDisposable
         var state = new AppState();
         state.Hydrate(SaveMigration.Migrate(Old(Pet(133, 67, 2, EvolutionStage.Stage2)), new(new[] { chosen }, new byte[] { 1 }), Package.Value));
         var pet = state.Collection.GetActive()!;
-        var vm = new global::PokeCorner.App.Popup.CollectionViewModel(state.Collection, state.CareStateByIndividualId, new(), state.Settings.CareMode, Lookup.Chains, state.PendingEggs);
+        var vm = new global::PokeCorner.App.Popup.CollectionViewModel(state.Collection, state.CareStateByIndividualId, new(), Lookup.Chains, state.PendingEggs);
         var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
         Assert.Equal(new int?[] { 133, 135 }, entry.EvolutionStages.Select(s => s.SpeciesId));
         Assert.DoesNotContain(entry.EvolutionStages, s => s.SpeciesName == "Vaporeon");

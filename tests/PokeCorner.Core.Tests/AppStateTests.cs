@@ -169,7 +169,8 @@ public class AppStateTests
 
         Assert.True(state.CareStateByIndividualId.ContainsKey(individual.Id));
         Assert.Equal(careState.LastInteractionUtc, state.CareStateByIndividualId[individual.Id].LastInteractionUtc);
-        Assert.Equal(careState.RanAwayUntilUtc, state.CareStateByIndividualId[individual.Id].RanAwayUntilUtc);
+        Assert.Null(state.CareStateByIndividualId[individual.Id].RanAwayUntilUtc);
+        Assert.NotNull(careState.RanAwayUntilUtc);
     }
 
     /// Regression for the "прогресс сбрасывается при перезапуске" report: the catch and treat
@@ -249,7 +250,7 @@ public class AppStateTests
 
         state.Hydrate(data);
 
-        Assert.Equal(CareMode.Hardcore, state.Settings.CareMode);
+        Assert.Equal(CareMode.Chill, state.Settings.CareMode);
         Assert.False(state.Settings.AutoHideInFullscreen);
         Assert.True(state.Settings.StartWithWindows);
         Assert.Equal("TopLeft", state.Settings.ScreenCorner);
@@ -534,6 +535,8 @@ public class AppStateTests
 
         var saved = state.ToSaveData(pendingCatchCount: 2);
 
+        original.Settings.CareMode = CareMode.Chill;
+        original.Settings.SuperHardcoreEnabled = false;
         Assert.Equal(System.Text.Json.JsonSerializer.Serialize(original), System.Text.Json.JsonSerializer.Serialize(saved));
     }
 }

@@ -431,7 +431,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // until some unrelated field changes. The nickname is in there for the same reason:
         // renaming from the detail overlay must repaint the card behind it.
         var signature = $"{_rarityFilter}|{_searchQuery}|{_hideFullyEvolved}|{_sortOrder}|{_pageIndex}|" + string.Join("|", page.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsAvailableToActivate}:{e.IsFavorite}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsFavorite}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
@@ -451,13 +451,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         EvolutionState = entry.EvolutionState,
         CaughtAtText = FormatCaughtDate(entry.CaughtAtUtc),
         NatureText = entry.Nature.ToString(),
-        CanSelect = !entry.IsActive && entry.IsAvailableToActivate,
-        AvailabilityToolTip = entry.AvailableAgainAtUtc is { } until
-            ? $"Питомец обиделся и вернётся {until.ToLocalTime():dd.MM.yyyy HH:mm}"
-            : "Питомец временно недоступен",
+        CanSelect = !entry.IsActive,
         IsShiny = entry.IsShiny,
         IsActive = entry.IsActive,
-        IsAvailableToActivate = entry.IsAvailableToActivate,
         IsFavorite = entry.IsFavorite,
         TypeBadges = TypeDisplay.ToBadges(entry.Types),
         EvolutionStages = BuildEvolutionStageCards(entry),
@@ -615,14 +611,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         DetailShinyBadge.Visibility = card.ShinyVisibility;
         DetailActiveBadge.Visibility = card.ActiveBadgeVisibility;
-        DetailUnavailableBadge.Visibility = card.UnavailableBadgeVisibility;
-        DetailUnavailableBadge.ToolTip = card.AvailabilityToolTip;
 
-        // An already-active pet, or one that has run away in Hardcore, can't be selected.
+        // An already-active pet can't be selected again.
         DetailSelectButton.IsEnabled = card.CanSelect;
-        DetailSelectButton.ToolTip = card.CanSelect ? null
-            : card.IsActive ? "Этот покемон уже на рабочем столе"
-            : card.AvailabilityToolTip;
+        DetailSelectButton.ToolTip = card.CanSelect ? null : "Этот покемон уже на рабочем столе";
 
         ApplyDetailFavoriteVisuals();
         ShowDetailSprite(card);

@@ -58,12 +58,37 @@ public class JsonSaveStoreTests : IDisposable
         Assert.Equal(25, loaded.Individuals[0].SpeciesId);
         Assert.True(loaded.Individuals[0].IsShiny);
         Assert.Equal(individual.Id, loaded.ActiveIndividualId);
-        Assert.Equal(CareMode.Hardcore, loaded.Settings.CareMode);
+        Assert.Equal(CareMode.Chill, loaded.Settings.CareMode);
         Assert.Equal(128, loaded.Settings.PetSizePixels);
         Assert.Equal(7, loaded.FeedingTreats);
         Assert.Equal(15, loaded.ShopCoins);
         Assert.Equal(200, loaded.ShopRemainderUnits);
         Assert.True(loaded.ShopCatchLuckyCharmActive);
+    }
+
+    [Fact]
+    public void Load_LegacyPunishment_NormalizesWithoutChangingOriginalBytesOrCollection()
+    {
+        var individual = new PokemonIndividual { SpeciesId = 25, EvolutionChainId = 10, ChainLength = 2,
+            Nature = Nature.Jolly, IsShiny = true, CaughtAtUtc = DateTimeOffset.UtcNow, AccumulatedCarePoints = 1234 };
+        var until = DateTimeOffset.UtcNow.AddHours(1);
+        var data = new SaveData { Individuals = [individual], ActiveIndividualId = individual.Id,
+            Settings = new AppSettings { CareMode = CareMode.Hardcore, SuperHardcoreEnabled = true, CrySoundVolume = 17 },
+            ShopCoins = 99, CareStates = new() { [individual.Id] = new() { RanAwayUntilUtc = until } } };
+        var bytes = System.Text.Encoding.UTF8.GetBytes(JsonSaveStore.Serialize(data));
+        File.WriteAllBytes(_tempFile, bytes);
+
+        var loaded = new JsonSaveStore(_tempFile).Load()!;
+
+        Assert.Equal(CareMode.Chill, loaded.Settings.CareMode);
+        Assert.False(loaded.Settings.SuperHardcoreEnabled);
+        Assert.Null(loaded.CareStates[individual.Id].RanAwayUntilUtc);
+        Assert.Equal(individual.Id, loaded.ActiveIndividualId);
+        Assert.True(loaded.Individuals.Single().IsShiny);
+        Assert.Equal(1234, loaded.Individuals.Single().AccumulatedCarePoints);
+        Assert.Equal(99, loaded.ShopCoins);
+        Assert.Equal(17, loaded.Settings.CrySoundVolume);
+        Assert.Equal(bytes, File.ReadAllBytes(_tempFile));
     }
 
     /// The full trip for the cry-volume setting: through the JSON file AND through Hydrate,
