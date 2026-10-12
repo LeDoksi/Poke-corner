@@ -158,10 +158,14 @@ public sealed class JsonSaveStore
             && SaveMigration.TraitIds.Contains(individual.FirstTraitId)
             && (individual.SecondTraitId is null || SaveMigration.TraitIds.Contains(individual.SecondTraitId) && individual.SecondTraitId != individual.FirstTraitId)
             && individual.ReachedSpeciesIds is { Count: > 0 } && individual.ParentIds is not null
+            && ValidRemainder(individual.XpRemainder)
             && individual.ReachedSpeciesIds[^1] == individual.CurrentSpeciesId
             && (individual.DisplayStageOverride is null || individual.DisplayStageOverride < individual.ReachedSpeciesIds.Count)
             && individual.ReachedSpeciesIds.All(id => id > 0) && individual.ReachedSpeciesIds.Distinct().Count() == individual.ReachedSpeciesIds.Count, "неверный экземпляр v2");
     }
+
+    private static bool ValidRemainder(RationalRemainder? r) =>
+        r is not null && r.Denominator > 0 && r.Numerator >= 0 && r.Numerator < r.Denominator;
 
     private static void ValidateV2(SaveData data)
     {
@@ -174,7 +178,7 @@ public sealed class JsonSaveStore
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.Berries!.Keys) && SaveMigration.ItemIds.ToHashSet().SetEquals(data.Items!.Keys)
             && data.Berries.Values.All(n => n >= 0) && data.Items.Values.All(n => n >= 0) && data.Items["treats"] == data.FeedingTreats, "неверный инвентарь v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)
-            && data.BerryRemainders.Values.All(r => r is not null && r.Denominator > 0 && r.Numerator >= 0 && r.Numerator < r.Denominator), "неверный дробный остаток");
+            && data.BerryRemainders.Values.All(ValidRemainder) && ValidRemainder(data.CoinRemainder), "неверный дробный остаток");
         Require(data.DiscoveredSpeciesIds!.All(id => id > 0) && data.ShinySpeciesIds!.All(id => id > 0)
             && data.Metrics!.Values.All(n => n is null or >= 0), "неверная метрика v2");
         Require(data.AwardLedger!.Values.All(a => a is not null && a.CoinsGranted >= 0 && a.ClaimStatus is "claimed" or "unclaimed"

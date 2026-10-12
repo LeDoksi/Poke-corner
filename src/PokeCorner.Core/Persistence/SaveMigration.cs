@@ -90,9 +90,11 @@ public static class SaveMigration
         next.Items = ItemIds.ToDictionary(id => id, _ => 0);
         next.Items["treats"] = next.FeedingTreats;
         next.BerryRemainders = BerryIds.ToDictionary(id => id, _ => new RationalRemainder());
+        next.CoinRemainder = new RationalRemainder();
         foreach (var individual in next.Individuals)
         {
             individual.TotalXp = 0;
+            individual.XpRemainder = new RationalRemainder();
             individual.FirstTraitId = null;
             individual.SecondTraitId = null;
             individual.LegacyOrigin = null;
@@ -155,9 +157,7 @@ public static class SaveMigration
 
     private static string ChooseTrait(int speciesId, JsonElement rules, JsonElement balance)
     {
-        var canEvolve = rules.GetProperty("evolutionEdges").EnumerateArray().Any(e => e.GetProperty("from").GetInt32() == speciesId);
-        var traits = balance.GetProperty("traits").EnumerateObject().Select(p => p.Name)
-            .Where(id => canEvolve || id != "fast-grower").ToArray();
+        var traits = TraitRules.Allowed(speciesId, rules, balance);
         return traits[Random.Shared.Next(traits.Length)];
     }
 

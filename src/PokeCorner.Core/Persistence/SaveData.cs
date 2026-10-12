@@ -16,6 +16,7 @@ public sealed class SaveData
     public Dictionary<string, int> Berries { get; set; } = [];
     public Dictionary<string, int> Items { get; set; } = [];
     public Dictionary<string, RationalRemainder> BerryRemainders { get; set; } = [];
+    public RationalRemainder CoinRemainder { get; set; } = new();
     public TutorialState Tutorial { get; set; } = new();
     public GiftGrant Gift { get; set; } = new();
     public TimedActivity? Expedition { get; set; }
@@ -44,12 +45,6 @@ public sealed class SaveData
 
 
 // IDs are shared with the shipped balance/asset manifest; counts start empty at migration.
-public sealed class RationalRemainder
-{
-    public long Numerator { get; set; }
-    public long Denominator { get; set; } = 1;
-}
-
 public sealed class AwardEntry
 {
     public DateTimeOffset AwardedAtUtc { get; set; }

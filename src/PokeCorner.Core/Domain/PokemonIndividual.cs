@@ -1,3 +1,4 @@
+using PokeCorner.Core.Persistence;
 namespace PokeCorner.Core.Domain;
 
 public enum EvolutionStage { Stage1 = 0, Stage2 = 1, Stage3 = 2 }
@@ -8,6 +9,7 @@ public sealed class PokemonIndividual
     public int FamilyRootId { get; set; }
     public LegacyOrigin? LegacyOrigin { get; set; }
     public int TotalXp { get; set; }
+    public RationalRemainder XpRemainder { get; set; } = new();
     public string? FirstTraitId { get; set; }
     public string? SecondTraitId { get; set; }
     public string AcquisitionSource { get; set; } = "unknown";
