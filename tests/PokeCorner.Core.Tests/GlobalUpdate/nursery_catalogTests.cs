@@ -116,6 +116,41 @@ public sealed class NurseryCatalogTests : IDisposable
         Assert.Null(catalog.Find(first, second));
     }
 
+    [Fact]
+    public void PublishedCollectionsCannotChangeCachedRecipes()
+    {
+        var catalog = Load(2, 849, 451, 453, 803);
+        var recipe = catalog.Find(2, 849)!;
+        if (recipe.Outcomes is NurseryOutcome[] outcomes)
+            outcomes[0] = new NurseryOutcome(999, "Legendary", 999, true);
+        if (recipe.AvailableOutcomes is NurseryOutcome[] available)
+            available[0] = new NurseryOutcome(999, "Legendary", 999, true);
+        if (recipe.BaseBerries is Dictionary<string, int> berries) berries["pecha"] = 999;
+        if (recipe.SelectedSurcharge is Dictionary<string, int> surcharge) surcharge["pecha"] = 999;
+        if (catalog.MixedRecipes is List<NurseryRecipe> mixed) mixed.Clear();
+        if (catalog.SameSpeciesRecipes is List<NurseryRecipe> same) same.Clear();
+        if (catalog.Partners(2) is int[] partners) partners[0] = 999;
+
+        Assert.Throws<NotSupportedException>(() => ((IList<NurseryOutcome>)recipe.Outcomes)[0] =
+            new NurseryOutcome(999, "Legendary", 999, true));
+        Assert.Throws<NotSupportedException>(() => ((IList<NurseryOutcome>)recipe.AvailableOutcomes)[0] =
+            new NurseryOutcome(999, "Legendary", 999, true));
+        Assert.Throws<NotSupportedException>(() => ((IDictionary<string, int>)recipe.BaseBerries)["pecha"] = 999);
+        Assert.Throws<NotSupportedException>(() => ((IDictionary<string, int>)recipe.SelectedSurcharge)["pecha"] = 999);
+        Assert.Throws<NotSupportedException>(() => ((IList<NurseryRecipe>)catalog.MixedRecipes).Clear());
+        Assert.Throws<NotSupportedException>(() => ((IList<NurseryRecipe>)catalog.SameSpeciesRecipes).Clear());
+        Assert.Throws<NotSupportedException>(() => ((IList<int>)catalog.Partners(2))[0] = 999);
+
+        var again = catalog.Find(849, 2)!;
+        Assert.Equal(451, again.Outcomes[0].SpeciesId);
+        Assert.Equal(451, again.AvailableOutcomes[0].SpeciesId);
+        Assert.Equal(6, again.BaseBerries["pecha"]);
+        Assert.Equal(4, again.SelectedSurcharge["pecha"]);
+        Assert.Equal(1046, catalog.MixedRecipes.Count);
+        Assert.Equal(1025, catalog.SameSpeciesRecipes.Count);
+        Assert.Contains(849, catalog.Partners(2));
+    }
+
     private static PokemonIndividual Individual(int speciesId, Guid? id = null) => new()
     {
         Id = id ?? Guid.NewGuid(), SpeciesId = speciesId, CurrentSpeciesId = speciesId, EvolutionChainId = speciesId,

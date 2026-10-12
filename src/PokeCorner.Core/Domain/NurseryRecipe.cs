@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace PokeCorner.Core.Domain;
 
 public sealed record NurseryOutcome(int SpeciesId, string Rarity, int Weight, bool ShinyAvailable);
@@ -21,10 +23,10 @@ public sealed class NurseryRecipe
     {
         FirstParentId = firstParentId;
         SecondParentId = secondParentId;
-        Outcomes = outcomes;
-        AvailableOutcomes = availableOutcomes;
-        BaseBerries = baseBerries;
-        SelectedSurcharge = selectedSurcharge;
+        Outcomes = Array.AsReadOnly(outcomes.ToArray());
+        AvailableOutcomes = Array.AsReadOnly(availableOutcomes.ToArray());
+        BaseBerries = new ReadOnlyDictionary<string, int>(new Dictionary<string, int>(baseBerries));
+        SelectedSurcharge = new ReadOnlyDictionary<string, int>(new Dictionary<string, int>(selectedSurcharge));
         NeedsThemeReview = needsThemeReview;
         Hours = hours;
     }

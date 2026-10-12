@@ -67,7 +67,7 @@ public sealed class NurseryCatalog
             mixed.Add(recipe);
             if (!byPair.TryAdd(Key(ids[0], ids[1]), recipe)) throw new InvalidDataException("Duplicate nursery pair.");
         }
-        MixedRecipes = mixed;
+        MixedRecipes = mixed.AsReadOnly();
 
         var same = new List<NurseryRecipe>();
         foreach (var item in recipes.RootElement.GetProperty("sameSpeciesRecipes").EnumerateArray())
@@ -86,12 +86,13 @@ public sealed class NurseryCatalog
             same.Add(recipe);
             if (!byPair.TryAdd((parent, parent), recipe)) throw new InvalidDataException("Duplicate nursery pair.");
         }
-        SameSpeciesRecipes = same;
+        SameSpeciesRecipes = same.AsReadOnly();
         partners = byPair.Values.Where(r => r.IsAvailable)
             .SelectMany(r => r.FirstParentId == r.SecondParentId
                 ? new[] { (r.FirstParentId, r.SecondParentId) }
                 : new[] { (r.FirstParentId, r.SecondParentId), (r.SecondParentId, r.FirstParentId) })
-            .GroupBy(x => x.Item1).ToDictionary(g => g.Key, g => (IReadOnlyList<int>)g.Select(x => x.Item2).Order().ToArray());
+            .GroupBy(x => x.Item1).ToDictionary(g => g.Key,
+                g => (IReadOnlyList<int>)Array.AsReadOnly(g.Select(x => x.Item2).Order().ToArray()));
 
         void ValidateRoot(int id)
         {
