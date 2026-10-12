@@ -120,3 +120,36 @@ Covered by the 54 synthetic cases plus existing full suite:
 - Existing mathematical 150%/200% positioning tests passed in the full suite, and a synthetic WPF missing-monitor placement check passed. Manual compact-window/physical 150–200% DPI acceptance, recovery-dialog interaction and MSI old→new upgrade were not performed or claimed.
 - No real user save/cache was opened, copied, altered or deleted by this task; no MSI installed; no Windows settings changed. All persistence fixtures use unique temporary directories.
 - Controller owns board/ledger/public design docs; these were not modified. Independent review remains required before the controller marks T02 done.
+
+## Review round 1 — all four Important findings repaired
+
+Independent review source: task-2-review-1.md; repair base diff9c6b9b7 (accepted T10 included).
+Tested repair implementation SHA: 95c06b62f649559818e7345106687d5b366af7d2.
+A report-only follow-up records this evidence. Only T02's App.xaml.cs, AppState.cs, JsonSaveStore.cs, SaveMigration.cs and migrationTests.cs changed; no T10 production/tests or raw writer ordering changed.
+
+### Changed contracts
+
+1. AppState.CommitAsync now takes Func<int> pendingCatchCount, not an integer captured before the queue wait. The factory is invoked only after IsCommitting has been acquired. App.CommitStateAsync supplies () => _catchReadyCount; every existing synthetic caller was updated. The queued fixture consumes encounter 2→1, queues a coins-only commit, and confirms the second live/result/reloaded count stays 1.
+
+2. JsonSaveStore.ValidateIndividual is the single complete validator for owned and gift individuals. It checks original identity/lineage/stage/nature/care/cosmetic rules plus all v2 actual species/family/XP/traits/reached path/parent rules. Both reserved and opened gift payloads use it. Null paths/parents, XP 6401, stage 3, family 0 and unreached display index 1 now fail through controlled SaveLoadException before SaveMigration's catalog checks can dereference them; valid original v1/v2 bytes remain unchanged.
+
+3. ToSaveData accumulates DiscoveredSpeciesIds and ShinySpeciesIds back into the live metadata journal as well as the outgoing deep copy. A later release/snapshot cannot reconstruct history solely from the remaining roster. The fixture executes actual add→snapshot/autosave→release→snapshot/autosave→load→hydrate→snapshot and preserves both histories. It asserts no invented catch metric, transition or award is created by this retention.
+
+4. LegacyLookup.Read explicitly rejects a null StageSpeciesIds before accessing Count. Semantic-invalid current cache records no longer fall through InvalidDataException into a different bundled lookup; this returns the same controlled diagnostic path as an explicitly preserved invalid lookup. Existing syntactically malformed-cache JSON fallback is retained, and valid cache/preserved/bundled behavior is unchanged. Neither path rewrites its input.
+
+### RED / GREEN and exit codes
+
+- RED command: rtk proxy dotnet test tests/PokeCorner.App.Tests --no-restore --filter FullyQualifiedName~Fix1 --verbosity minimal.
+- task-2-fix1-red-tests.log: 9 failed / 1 passed / 0 skipped (10 added cases), exit 1, before any repair production edits.
+- Exact failures: queued encounter expected 1 / actual 2; discovery ID 4 vanished after release; six invalid gift payloads produced no SaveLoadException; cached null path silently fell back. The preserved null-path case already produced a controlled InvalidDataException in this fixture and is retained as an invariance proof; no unobserved NullReferenceException reproduction is claimed.
+- GREEN command: rtk proxy dotnet test tests/PokeCorner.App.Tests --no-restore --filter FullyQualifiedName~MigrationTests --verbosity minimal.
+- task-2-fix1-focused-tests.log: 64/64 passed, 0 failed / 0 skipped, exit 0.
+- One final full command: rtk proxy dotnet test PokeCorner.sln --no-restore --verbosity minimal.
+- task-2-fix1-full-tests.log: Core 226/226 + App 337/337 = 563/563 passed, 0 failed / 0 skipped, exit 0. Current baseline was 553 after T10; ten targeted cases were added.
+- git diff --check: exit 0. Self-review confirms only the five scoped source/test files changed; accepted T10 and frozen legacy-v1 package evidence remain untouched.
+
+The three fix1-specific raw logs remain in the local task directory for controller review/relocation. They were not force-added as more scratch artifacts; this tracked report references them and preserves the exact results.
+
+### Boundaries after repair
+
+All four Important findings are addressed together and await scoped independent rereview. Earlier release boundaries remain: no real saves/cache or MSI operations, no Windows settings writes, and no manual compact/physical-DPI acceptance. Dependent gameplay services must use the factory-based shared commit/publication boundary; T20 still owns pre-replacement preservation of a custom v1 lookup. No new gameplay services or extra resources were added during the repair.
