@@ -656,4 +656,22 @@ public sealed class MigrationTests : IDisposable
         writes[0](); await commit;
         Assert.Equal(0, observed); Assert.Empty(state.Collection.Individuals);
     }
+    [Fact]
+    public void ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary()
+    {
+        var state = new AppState(); state.Hydrate(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
+        var store = new JsonSaveStore(V2); store.Save(state.ToSaveData(0));
+        var writer = new BackgroundSaveWriter(store, write => write());
+        const string foreign = "{foreign corrupt primary"; File.WriteAllText(V2, foreign);
+        writer.Post(state.ToSaveData(0)); Assert.True(writer.HasFailed);
+        state.Shop.Coins += 10;
+        var app = (global::PokeCorner.App.App)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(global::PokeCorner.App.App));
+        foreach (var (name, value) in new (string, object)[] { ("_appState", state), ("_saveStore", store), ("_saveWriter", writer), ("_hasLoadedState", true) })
+            typeof(global::PokeCorner.App.App).GetField(name, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.SetValue(app, value);
+        typeof(global::PokeCorner.App.App).GetMethod("SaveState", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(app, null);
+        Assert.Equal(foreign, File.ReadAllText(V2));
+        Assert.Contains(store.History.List(), entry => entry.SchemaVersion == 2 && entry.Coins == state.Shop.Coins && entry.FromMemory);
+        Assert.Contains("из памяти", store.History.List().First(entry => entry.Coins == state.Shop.Coins).ToString());
+        Assert.True(writer.HasFailed);
+    }
 }

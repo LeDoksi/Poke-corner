@@ -1082,7 +1082,12 @@ public partial class App : System.Windows.Application
         _fullscreenMonitor?.Dispose();
         _trayIconService?.Dispose();
 
-        if (!_isExiting) PersistState(flush: true);
+        if (!_isExiting)
+        {
+            if (_hasLoadedState && !_isWipingSaveData && !_appState.IsCommitting && _saveWriter.HasFailed)
+                _saveStore.History.Capture(_appState.ToSaveData(_catchReadyCount));
+            else PersistState(flush: true);
+        }
     }
 
     /// Autosaves (flush: false) only queue the disk write on the thread pool — they run on the

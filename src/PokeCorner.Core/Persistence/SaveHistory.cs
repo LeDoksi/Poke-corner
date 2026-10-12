@@ -3,9 +3,9 @@ using System.Text.Json;
 
 namespace PokeCorner.Core.Persistence;
 
-public sealed record SaveHistoryEntry(string Path, DateTimeOffset SavedAtUtc, int SchemaVersion, int CollectionCount, int Coins, bool IsLegacy = false, string? Sha256 = null)
+public sealed record SaveHistoryEntry(string Path, DateTimeOffset SavedAtUtc, int SchemaVersion, int CollectionCount, int Coins, bool IsLegacy = false, string? Sha256 = null, bool FromMemory = false)
 {
-    public override string ToString() => $"{SavedAtUtc.ToLocalTime():dd.MM.yyyy HH:mm:ss} · {CollectionCount} покемонов · {Coins} монет · v{SchemaVersion}";
+    public override string ToString() => $"{SavedAtUtc.ToLocalTime():dd.MM.yyyy HH:mm:ss} · {CollectionCount} покемонов · {Coins} монет · v{SchemaVersion}" + (FromMemory ? " · из памяти (не основной файл)" : "");
 }
 
 /// Small, self-contained checkpoints: original bytes, SHA256 and timestamp.
@@ -16,28 +16,36 @@ public sealed class SaveHistory
     public string DirectoryPath => _primary + ".history";
     public bool HasEvidence => File.Exists(DirectoryPath) || Directory.Exists(DirectoryPath);
     public int UnreadableCount { get; private set; }
-    private sealed record Checkpoint(DateTimeOffset SavedAtUtc, string Sha256, byte[] Bytes);
+    private sealed record Checkpoint(DateTimeOffset SavedAtUtc, string Sha256, byte[] Bytes, bool FromMemory = false);
     public SaveHistory(string primary, Func<DateTimeOffset>? clock = null)
     { _primary = primary; _clock = clock ?? (() => DateTimeOffset.UtcNow); }
     private static string Hash(byte[] bytes) => Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
 
     public void Capture(SaveData data)
     {
-        Preserve(System.Text.Encoding.UTF8.GetBytes(JsonSaveStore.Serialize(data)));
+        Preserve(System.Text.Encoding.UTF8.GetBytes(JsonSaveStore.Serialize(data)), fromMemory: true);
         Prune();
     }
 
-    internal void Preserve(byte[] bytes)
+    internal void Preserve(byte[] bytes, bool fromMemory = false)
     {
         JsonSaveStore.Deserialize(bytes);
         Directory.CreateDirectory(DirectoryPath);
         var now = _clock().ToUniversalTime();
         var hash = Hash(bytes);
-        var checkpoint = JsonSerializer.SerializeToUtf8Bytes(new Checkpoint(now, hash, bytes));
+        var checkpoint = JsonSerializer.SerializeToUtf8Bytes(new Checkpoint(now, hash, bytes, fromMemory));
         PreserveOnce(Path.Combine(DirectoryPath, "initial.checkpoint"), checkpoint);
         PreserveOnce(Path.Combine(DirectoryPath, $"day-{now:yyyy-MM-dd}.checkpoint"), checkpoint);
-        if (!Directory.EnumerateFiles(DirectoryPath, $"recent-*-{hash}.checkpoint").Any())
+        var existingPath = Directory.EnumerateFiles(DirectoryPath, $"recent-*-{hash}.checkpoint").FirstOrDefault();
+        if (existingPath is null)
             PreserveOnce(Path.Combine(DirectoryPath, $"recent-{now.UtcTicks:D19}-{hash}.checkpoint"), checkpoint);
+        else if (fromMemory && !ReadCheckpoint(existingPath).FromMemory)
+        {
+            // A failed autosave may already contain these bytes; label the live recovery copy.
+            var temp = existingPath + ".tmp-" + Guid.NewGuid();
+            JsonSaveStore.WriteDurable(temp, checkpoint);
+            File.Move(temp, existingPath, overwrite: true);
+        }
     }
 
     private static void PreserveOnce(string path, byte[] bytes)
@@ -105,7 +113,10 @@ public sealed class SaveHistory
                 try
                 {
                     var checkpoint = ReadCheckpoint(path); var data = JsonSaveStore.Deserialize(checkpoint.Bytes);
-                    entries.TryAdd(checkpoint.Sha256, new(path, checkpoint.SavedAtUtc, data.SchemaVersion, data.Individuals.Count, data.ShopCoins, Sha256: checkpoint.Sha256));
+                    var entry = new SaveHistoryEntry(path, checkpoint.SavedAtUtc, data.SchemaVersion, data.Individuals.Count, data.ShopCoins,
+                        Sha256: checkpoint.Sha256, FromMemory: checkpoint.FromMemory);
+                    if (checkpoint.FromMemory) entries[checkpoint.Sha256] = entry;
+                    else entries.TryAdd(checkpoint.Sha256, entry);
                 }
                 catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or JsonException) { UnreadableCount++; }
             }
