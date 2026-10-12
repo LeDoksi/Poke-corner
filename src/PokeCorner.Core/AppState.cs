@@ -183,6 +183,10 @@ public sealed class AppState
         Shop.Coins = data.ShopCoins;
         Shop.RemainderUnits = data.ShopRemainderUnits;
         Shop.CatchLuckyCharmActive = data.ShopCatchLuckyCharmActive;
+        Shop.Berries.Clear();
+        foreach (var (id, count) in data.Berries) Shop.Berries[id] = count;
+        Shop.Items.Clear();
+        foreach (var (id, count) in data.Items) Shop.Items[id] = count;
 
         foreach (var (individualId, careState) in data.CareStates)
         {
@@ -211,6 +215,8 @@ public sealed class AppState
         data.ShopCoins = Shop.Coins;
         data.ShopRemainderUnits = Shop.RemainderUnits;
         data.ShopCatchLuckyCharmActive = Shop.CatchLuckyCharmActive;
+        data.Berries = new(Shop.Berries);
+        data.Items = new(Shop.Items);
         data.PendingEggs = PendingEggs.ToList();
         data.CareStates = new(CareStateByIndividualId);
         data.PendingCatchCount = pendingCatchCount;

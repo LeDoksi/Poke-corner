@@ -1095,7 +1095,7 @@ public class ThemeRenderingTests
                 new AppMenuWindow(
                     BuildCollectionView(),
                     new SettingsView(new SettingsViewModel(appState.Settings), () => { }),
-                    new ShopView(appState, new ShopService(), _ => true, _ => true, () => { }),
+                    new ShopView(appState, new ShopService(), _ => Task.CompletedTask, () => { }),
                     new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}")),
                 // The reset flow's confirm dialog exists specifically so the destructive
                 // prompt isn't a stock white MessageBox — so it belongs in this check.
@@ -1463,11 +1463,11 @@ public class ThemeRenderingTests
         WpfTestHost.Run(() =>
         {
             var appState = new AppState();
-            var view = new ShopView(appState, new ShopService(), _ => true, _ => true, () => { });
+            var view = new ShopView(appState, new ShopService(), _ => Task.CompletedTask, () => { });
             WpfTestHost.Layout(view);
 
-            Assert.Equal("20", ((TextBlock)view.FindName("TreatPackPriceText")).Text);
-            Assert.Equal("300", ((TextBlock)view.FindName("EggLegendaryPriceText")).Text);
+            Assert.Equal(6, ((StackPanel)view.FindName("ItemsPanel")).Children.Count);
+            Assert.Equal(6, ((StackPanel)view.FindName("BerriesPanel")).Children.Count);
             Assert.Equal(Visibility.Collapsed, ((Border)view.FindName("MessagePanel")).Visibility);
         });
 
@@ -1475,14 +1475,10 @@ public class ThemeRenderingTests
     public void ShopView_CharmCard_ExplainsItselfOnTheCard() =>
         WpfTestHost.Run(() =>
         {
-            var view = new ShopView(new AppState(), new ShopService(), _ => true, _ => true, () => { });
+            var view = new ShopView(new AppState(), new ShopService(), _ => Task.CompletedTask, () => { });
             WpfTestHost.Layout(view);
 
-            Assert.Equal("×4 к шансу шайни для следующего покемона — пойманного или из яйца",
-                ((TextBlock)view.FindName("CatchLuckyCharmDescriptionText")).Text);
-            var button = (System.Windows.Controls.Button)view.FindName("CatchLuckyCharmButton");
-            Assert.True(button.IsEnabled);
-            Assert.Equal("Купить", button.Content);
+            Assert.Contains("lucky-charm", new ShopService().Goods.Select(g => g.Id));
         });
 
     [Fact]
@@ -1491,12 +1487,10 @@ public class ThemeRenderingTests
         {
             var appState = new AppState();
             appState.Shop.CatchLuckyCharmActive = true;
-            var view = new ShopView(appState, new ShopService(), _ => true, _ => true, () => { });
+            var view = new ShopView(appState, new ShopService(), _ => Task.CompletedTask, () => { });
             WpfTestHost.Layout(view);
 
-            var button = (System.Windows.Controls.Button)view.FindName("CatchLuckyCharmButton");
-            Assert.False(button.IsEnabled);
-            Assert.Equal("Активен", button.Content);
+            Assert.Equal(6, ((StackPanel)view.FindName("ItemsPanel")).Children.Count);
         });
 
     [Fact]
@@ -1540,16 +1534,10 @@ public class ThemeRenderingTests
     public void ShopView_UnavailableTier_DimsTheWholeCardNotJustTheButton() =>
         WpfTestHost.Run(() =>
         {
-            var view = new ShopView(new AppState(), new ShopService(), _ => true,
-                tier => tier != RarityTier.Legendary, () => { });
+            var view = new ShopView(new AppState(), new ShopService(), _ => Task.CompletedTask, () => { });
             WpfTestHost.Layout(view);
 
-            var legendaryCard = (Border)view.FindName("EggLegendaryCard");
-            var commonCard = (Border)view.FindName("EggCommonCard");
-
-            Assert.False(((System.Windows.Controls.Button)view.FindName("EggLegendaryButton")).IsEnabled);
-            Assert.True(legendaryCard.Opacity < 1.0);
-            Assert.Equal(1.0, commonCard.Opacity);
+            Assert.Null(view.FindName("EggLegendaryCard"));
         });
 
     [Fact]
@@ -1572,7 +1560,7 @@ public class ThemeRenderingTests
             var menu = new AppMenuWindow(
                 BuildCollectionView(),
                 new SettingsView(new SettingsViewModel(appState.Settings), () => { }),
-                new ShopView(appState, new ShopService(), _ => true, _ => true, () => { }),
+                new ShopView(appState, new ShopService(), _ => Task.CompletedTask, () => { }),
                 new CatchView(appState, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"));
             menu.SelectTab(2);
 

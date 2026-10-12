@@ -1,134 +1,214 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Button = System.Windows.Controls.Button;
+using Image = System.Windows.Controls.Image;
+using MessageBox = System.Windows.MessageBox;
+using Panel = System.Windows.Controls.Panel;
+using TextBox = System.Windows.Controls.TextBox;
+using UserControl = System.Windows.Controls.UserControl;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
+using PokeCorner.Core.Persistence;
 
 namespace PokeCorner.App.Popup;
 
-public partial class ShopView : System.Windows.Controls.UserControl
+public partial class ShopView : UserControl
 {
-    private readonly AppState _appState;
-    private readonly ShopService _shopService;
-    private readonly Func<RarityTier, bool> _tryBuyEgg;
-    private readonly Func<RarityTier, bool> _isTierAvailable;
-    private readonly Action _onStateChanged;
-    private DispatcherTimer? _liveRefreshTimer;
+    private readonly AppState _state;
+    private readonly ShopService _shop;
+    private readonly Func<Action<SaveData>, Task> _commit;
+    private readonly Action _onChanged;
+    private readonly Dictionary<string, (TextBlock Stock, TextBlock Total, TextBox Quantity, Button Buy)> _rows = [];
+    private DispatcherTimer? _timer;
+    private bool _busy;
 
-    private const string UnavailableTierToolTip = "Пока недоступно — нужен более широкий каталог видов";
-
-    public ShopView(AppState appState, ShopService shopService, Func<RarityTier, bool> tryBuyEgg, Func<RarityTier, bool> isTierAvailable, Action onStateChanged)
+    public ShopView(AppState state, ShopService shop, Func<Action<SaveData>, Task> commit, Action onChanged)
     {
         InitializeComponent();
-        _appState = appState;
-        _shopService = shopService;
-        _tryBuyEgg = tryBuyEgg;
-        _isTierAvailable = isTierAvailable;
-        _onStateChanged = onStateChanged;
-        Loaded += (_, _) => StartLiveRefresh();
-        Unloaded += (_, _) => StopLiveRefresh();
+        _state = state;
+        _shop = shop;
+        _commit = commit;
+        _onChanged = onChanged;
+        foreach (var good in shop.Goods) AddRow(good, good.IsBerry ? BerriesPanel : ItemsPanel);
+        Loaded += (_, _) => StartRefresh();
+        Unloaded += (_, _) => { _timer?.Stop(); _timer = null; };
         Refresh();
     }
 
-    private void StartLiveRefresh()
+    private void StartRefresh()
     {
-        _liveRefreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-        _liveRefreshTimer.Tick += (_, _) => Refresh();
-        _liveRefreshTimer.Start();
+        if (_timer is not null) return;
+        _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+        _timer.Tick += (_, _) => Refresh();
+        _timer.Start();
     }
 
-    private void StopLiveRefresh()
+    private void AddRow(ShopGood good, Panel panel)
     {
-        _liveRefreshTimer?.Stop();
-        _liveRefreshTimer = null;
-    }
+        var card = new Border { Style = (Style)FindResource("CardStyle"), Padding = new Thickness(10), Margin = new Thickness(0, 0, 0, 8) };
+        var grid = new Grid();
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        var path = Path.Combine(_shop.DataRoot, "final", "assets", "shop", good.Id + ".png");
+        var icon = new Image { Width = 64, Height = 64, Margin = new Thickness(0, 0, 10, 0) };
+        icon.Source = new BitmapImage(new Uri(path));
+        Grid.SetColumn(icon, 0);
+        grid.Children.Add(icon);
 
-    private void TreatPackButton_Click(object sender, RoutedEventArgs e) =>
-        ReportResult(_shopService.BuyTreatPack(_appState.Shop, _appState.Feeding), "Куплена пачка лакомств.", "Не хватает монет.");
+        var detail = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+        detail.Children.Add(new TextBlock { Text = good.Name, FontWeight = FontWeights.SemiBold, TextWrapping = TextWrapping.Wrap });
+        detail.Children.Add(new TextBlock { Text = good.Effect, Style = (Style)FindResource("CaptionTextStyle"), TextWrapping = TextWrapping.Wrap });
+        var stock = new TextBlock { Style = (Style)FindResource("CaptionTextStyle") };
+        detail.Children.Add(stock);
+        Grid.SetColumn(detail, 1);
+        grid.Children.Add(detail);
 
-    private void CarePointsBoosterButton_Click(object sender, RoutedEventArgs e)
-    {
-        var active = _appState.Collection.GetActive();
-        if (active is null)
+        var action = new StackPanel { Width = 110, Margin = new Thickness(8, 0, 0, 0) };
+        var quantity = new TextBox { Text = "1", Width = 54, HorizontalAlignment = System.Windows.HorizontalAlignment.Right, ToolTip = "Положительное количество" };
+        var total = new TextBlock { TextAlignment = TextAlignment.Right, TextWrapping = TextWrapping.Wrap };
+        var buy = new Button { Content = "Купить", Padding = new Thickness(5), Tag = good.Id };
+        quantity.TextChanged += (_, _) => UpdateTotal(good);
+        buy.Click += async (_, _) => await Buy(good);
+        action.Children.Add(quantity);
+        action.Children.Add(total);
+        action.Children.Add(buy);
+        if (good.Id == "xp-potion")
         {
-            ShowMessage("Нет активного питомца на рабочем столе.");
+            var use = new Button { Content = "Применить", Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
+            use.Click += async (_, _) => await UsePotion();
+            action.Children.Add(use);
+        }
+        if (good.Id == "care-booster")
+        {
+            var use = new Button { Content = "Применить", Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
+            use.Click += async (_, _) => await UseCareBooster();
+            action.Children.Add(use);
+        }
+        Grid.SetColumn(action, 2);
+        grid.Children.Add(action);
+        card.Child = grid;
+        panel.Children.Add(card);
+        _rows.Add(good.Id, (stock, total, quantity, buy));
+        UpdateTotal(good);
+    }
+
+    private void UpdateTotal(ShopGood good)
+    {
+        if (!_rows.TryGetValue(good.Id, out var row)) return;
+        row.Total.Text = int.TryParse(row.Quantity.Text, out var count) && count > 0
+            ? $"{(long)good.Price * count} монет"
+            : "Укажите количество";
+    }
+
+    private async Task Buy(ShopGood good)
+    {
+        if (_busy) return;
+        if (!int.TryParse(_rows[good.Id].Quantity.Text, out var count) || count <= 0)
+        {
+            Show("Укажите положительное количество.");
             return;
         }
-        var bought = _shopService.BuyCarePointsBooster(_appState.Shop, active);
-        // No stage recompute: crossing an evolution threshold only makes the pet ready; evolving
-        // is the player's call via the Collection tab's "Эволюционировать!" button.
-        ReportResult(bought, "Бустер роста применён.", "Не хватает монет.");
-    }
-
-    private void CatchLuckyCharmButton_Click(object sender, RoutedEventArgs e) =>
-        ReportResult(_shopService.BuyCatchLuckyCharm(_appState.Shop), "Талисман удачи активирован на следующую поимку или вылупление.",
-            _appState.Shop.CatchLuckyCharmActive
-                ? "Талисман уже активен — он сработает на следующей поимке или вылуплении."
-                : "Не хватает монет.");
-
-    private void EggCommonButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Common);
-    private void EggUncommonButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Uncommon);
-    private void EggRareButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Rare);
-    private void EggLegendaryButton_Click(object sender, RoutedEventArgs e) => BuyEgg(RarityTier.Legendary);
-
-    private void BuyEgg(RarityTier tier) =>
-        ReportResult(_tryBuyEgg(tier), "Яйцо отправлено в инкубацию — загляни в Коллекцию через час.", "Не хватает монет.");
-
-    private void ReportResult(bool success, string successMessage, string failureMessage)
-    {
-        ShowMessage(success ? successMessage : failureMessage);
-        if (success) _onStateChanged();
+        _busy = true;
         Refresh();
+        var id = Guid.NewGuid();
+        PurchaseResult? result = null;
+        try
+        {
+            await _commit(next =>
+            {
+                result = _shop.TryPurchase(next, good.Id, count, id);
+                if (!result.Success) throw new InvalidOperationException(result.Message);
+            });
+            Show(result?.Message ?? "Покупка сохранена.");
+            _onChanged();
+        }
+        catch (Exception ex) { Show(ex.Message); }
+        finally { _busy = false; Refresh(); }
     }
 
-    private void ShowMessage(string message)
+    private async Task UsePotion()
+    {
+        if (_busy) return;
+        var active = _state.Collection.GetActive();
+        if (active is null) { Show("Выберите питомца."); return; }
+        var levels = new LevelProgression(_shop.DataRoot);
+        var (useful, excess) = _shop.PotionPreview(active, levels);
+        if (useful == 0) { Show("Максимальный уровень: зелье не расходуется."); return; }
+        if (MessageBox.Show($"Полезно {useful} XP; излишек {excess} XP. Применить одно зелье?", "Зелье опыта",
+                MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;
+        _busy = true;
+        Refresh();
+        var id = Guid.NewGuid();
+        PurchaseResult? result = null;
+        try
+        {
+            await _commit(next =>
+            {
+                result = _shop.TryUseXpPotion(next, active.Id, id, levels);
+                if (!result.Success) throw new InvalidOperationException(result.Message);
+            });
+            Show(result?.Message ?? "Зелье применено.");
+            _onChanged();
+        }
+        catch (Exception ex) { Show(ex.Message); }
+        finally { _busy = false; Refresh(); }
+    }
+
+    private async Task UseCareBooster()
+    {
+        if (_busy) return;
+        var active = _state.Collection.GetActive();
+        if (active is null) { Show("Выберите питомца."); return; }
+        _busy = true;
+        Refresh();
+        var id = Guid.NewGuid();
+        PurchaseResult? result = null;
+        try
+        {
+            await _commit(next =>
+            {
+                result = _shop.TryUseCareBooster(next, active.Id, id);
+                if (!result.Success) throw new InvalidOperationException(result.Message);
+            });
+            Show(result?.Message ?? "Бустер применён.");
+            _onChanged();
+        }
+        catch (Exception ex) { Show(ex.Message); }
+        finally { _busy = false; Refresh(); }
+    }
+
+    public void SelectBerryShortage(string berryId, int required)
+    {
+        if (!_rows.TryGetValue(berryId, out var row) || !_shop.Goods.Any(g => g.Id == berryId && g.IsBerry)) return;
+        _state.Shop.Berries.TryGetValue(berryId, out var owned);
+        row.Quantity.Text = Math.Max(0, required - owned).ToString();
+        row.Quantity.Focus();
+    }
+
+    private void Show(string message)
     {
         MessageText.Text = message;
-        MessagePanel.Visibility = string.IsNullOrEmpty(message) ? Visibility.Collapsed : Visibility.Visible;
+        MessagePanel.Visibility = Visibility.Visible;
     }
 
     public void Refresh()
     {
-        CoinsText.Text = _appState.Shop.Coins.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        CoinProgressBar.Value = ProgressCalculator.ComputeCoinFraction(_appState.Shop);
-
-        TreatPackNameText.Text = "Пачка лакомств (5 шт)";
-        TreatPackPriceText.Text = ShopService.TreatPackPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        CarePointsBoosterNameText.Text = $"Бустер роста (+{ShopService.CarePointsBoosterAmount:N0} CP)";
-        CarePointsBoosterPriceText.Text = ShopService.CarePointsBoosterPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        CatchLuckyCharmNameText.Text = "Талисман удачи"; // the effect is spelled out in the description line below it
-        CatchLuckyCharmPriceText.Text = ShopService.CatchLuckyCharmPrice.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        CatchLuckyCharmDescriptionText.Text = $"×{ShopService.CatchLuckyCharmShinyMultiplier:0} к шансу шайни для следующего покемона — пойманного или из яйца";
-        var charmActive = _appState.Shop.CatchLuckyCharmActive;
-        CatchLuckyCharmButton.IsEnabled = !charmActive;
-        CatchLuckyCharmButton.Content = charmActive ? "Активен" : "Купить";
-
-        EggCommonNameText.Text = "Обычное яйцо";
-        EggCommonPriceText.Text = ShopService.EggPriceCommon.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        EggUncommonNameText.Text = "Необычное яйцо";
-        EggUncommonPriceText.Text = ShopService.EggPriceUncommon.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        EggRareNameText.Text = "Редкое яйцо";
-        EggRarePriceText.Text = ShopService.EggPriceRare.ToString(System.Globalization.CultureInfo.CurrentCulture);
-        EggLegendaryNameText.Text = "Легендарное яйцо";
-        EggLegendaryPriceText.Text = ShopService.EggPriceLegendary.ToString(System.Globalization.CultureInfo.CurrentCulture);
-
-        // Buying an egg of a tier the current species catalog can't fill would take the
-        // coins and then leave an unhatchable egg in the save file forever, so those
-        // buttons are disabled outright rather than merely failing on click. The whole card
-        // dims with them, so an unavailable tier reads as unavailable at a glance rather
-        // than looking like a live card with one dead button.
-        ApplyTierAvailability(EggCommonButton, EggCommonCard, RarityTier.Common);
-        ApplyTierAvailability(EggUncommonButton, EggUncommonCard, RarityTier.Uncommon);
-        ApplyTierAvailability(EggRareButton, EggRareCard, RarityTier.Rare);
-        ApplyTierAvailability(EggLegendaryButton, EggLegendaryCard, RarityTier.Legendary);
-    }
-
-    private void ApplyTierAvailability(System.Windows.Controls.Button button, Border card, RarityTier tier)
-    {
-        var available = _isTierAvailable(tier);
-        button.IsEnabled = available;
-        button.ToolTip = available ? null : UnavailableTierToolTip;
-        card.Opacity = available ? 1.0 : 0.45;
-        card.ToolTip = available ? null : UnavailableTierToolTip;
+        CoinsText.Text = _state.Shop.Coins.ToString(System.Globalization.CultureInfo.CurrentCulture);
+        CoinProgressBar.Value = ProgressCalculator.ComputeCoinFraction(_state.Shop);
+        foreach (var good in _shop.Goods)
+        {
+            var row = _rows[good.Id];
+            var stock = good.Id == "treats" ? _state.Feeding.Treats
+                : (good.IsBerry ? _state.Shop.Berries : _state.Shop.Items).GetValueOrDefault(good.Id);
+            row.Stock.Text = $"Запас: {stock} · {good.Price} монет/шт.";
+            row.Buy.IsEnabled = !_busy;
+            if (int.TryParse(row.Quantity.Text, out var count) && count > 0 && (long)good.Price * count > _state.Shop.Coins)
+                row.Total.Text = $"Не хватает {(long)good.Price * count - _state.Shop.Coins} монет";
+            else UpdateTotal(good);
+        }
     }
 }

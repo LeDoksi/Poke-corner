@@ -125,7 +125,7 @@ public partial class App : System.Windows.Application
         _eggIncubationService = new EggIncubationService();
         _careModeService = new CareModeService();
         _feedingService = new FeedingService();
-        _shopService = new ShopService();
+        _shopService = new ShopService(_catalogPackage.DataRoot);
 
         SaveData? loaded;
         var isNewGame = false;
@@ -755,11 +755,6 @@ public partial class App : System.Windows.Application
         return true;
     }
 
-    /// Whether the catalog in use has a chain in this rarity tier, so the shop can't sell an
-    /// egg that can never hatch.
-    private bool IsRarityTierAvailable(RarityTier tier) =>
-        GetDirectIssueChains().Any(c => RarityClassifier.Classify(c.CaptureRate) == tier);
-
     private List<SpeciesEvolutionChain> GetDirectIssueChains() =>
         _speciesCatalog.LoadCachedOrFallback().Where(c => _catalogPackage.CanIssueDirectly(c.StarterSpeciesId, false)).ToList();
 
@@ -768,14 +763,6 @@ public partial class App : System.Windows.Application
         if (!_catalogPackage.CanIssueDirectly(result.SpeciesId, false)) throw new InvalidDataException("Catch must be an available family root.");
         return result.IsShiny && !_catalogPackage.CanIssueDirectly(result.SpeciesId, true)
             ? result with { IsShiny = false } : result;
-    }
-
-    private bool BuyEgg(RarityTier tier)
-    {
-        if (_isExiting || _appState.IsCommitting) return false;
-        if (!_shopService.TrySpendForEgg(_appState.Shop, tier)) return false;
-        _appState.PendingEggs.Add(_eggIncubationService.StartIncubating(tier, DateTimeOffset.UtcNow));
-        return true;
     }
 
     private void OpenMenu(MenuSection section)
@@ -793,7 +780,9 @@ public partial class App : System.Windows.Application
                 var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
-                var shopView = new ShopView(_appState, _shopService, BuyEgg, IsRarityTierAvailable, RefreshOverlayForActiveIndividual);
+                var shopView = new ShopView(_appState, _shopService,
+                    update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount,
+                        next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual);
                 var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;

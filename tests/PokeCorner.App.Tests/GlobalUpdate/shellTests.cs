@@ -135,9 +135,8 @@ public class ShellTests
         menu.Navigate(MenuSection.Shop);
         WpfTestHost.Layout((FrameworkElement)menu.Content, 820, 660);
         var shop = (ShopView)((TabItem)tabs.SelectedItem).Content;
-        var productName = (TextBlock)shop.FindName("TreatPackNameText");
-        Assert.Equal(((SolidColorBrush)Application.Current.Resources["PrimaryTextBrush"]).Color,
-            ((SolidColorBrush)productName.Foreground).Color);
+        Assert.Equal(6, ((StackPanel)shop.FindName("ItemsPanel")).Children.Count);
+        Assert.Equal(6, ((StackPanel)shop.FindName("BerriesPanel")).Children.Count);
 
         menu.Navigate(MenuSection.Settings);
         Assert.Equal(Visibility.Collapsed, tabs.Visibility);
@@ -239,7 +238,7 @@ public class ShellTests
             new SpriteCache(Path.Combine(Path.GetTempPath(), "pokecorner-shell-evidence", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, _ => true, () => true, () => true);
         var menu = new AppMenuWindow(collection, new SettingsView(new SettingsViewModel(state.Settings), () => { }),
-            new ShopView(state, new ShopService(), _ => true, _ => true, () => { }),
+            new ShopView(state, new ShopService(), _ => Task.CompletedTask, () => { }),
             new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"));
 
         menu.Navigate(MenuSection.Pokedex);
@@ -284,7 +283,7 @@ public class ShellTests
         var collection = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), "pokecorner-shell-test", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, _ => true, () => true, () => true);
         return new AppMenuWindow(collection, new SettingsView(new SettingsViewModel(settings), () => { }),
-            new ShopView(state, new ShopService(), _ => true, _ => true, () => { }),
+            new ShopView(state, new ShopService(), _ => Task.CompletedTask, () => { }),
             new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"));
     }
 }
