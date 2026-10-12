@@ -1,3 +1,7 @@
+# Приёмка T02 / POKE-52 — 2026-10-12
+
+Независимое spec/quality review принято для code `95c06b6`. Ниже исходный отчёт реализации и доработок; старые промежуточные counts сохранены как история.
+
 # T02 / POKE-52 — v2 schema, isolated migration and publication barrier
 
 Status: DONE_WITH_CONCERNS (implementation ready for independent review; global-update release/MSI acceptance is still gated).

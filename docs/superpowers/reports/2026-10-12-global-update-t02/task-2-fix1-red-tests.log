@@ -1,0 +1,86 @@
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+[xUnit.net 00:00:01.00]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1DiscoveryAndShinyHistoriesSurviveAutosaveThenRelease [FAIL]
+[xUnit.net 00:00:01.06]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1QueuedCoinsCommitDoesNotRestoreConsumedEncounter [FAIL]
+[xUnit.net 00:00:01.12]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "DisplayStageOverride", value: "1") [FAIL]
+[xUnit.net 00:00:01.18]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "TotalXp", value: "6401") [FAIL]
+[xUnit.net 00:00:01.25]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "ReachedSpeciesIds", value: "null") [FAIL]
+[xUnit.net 00:00:01.31]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "ParentIds", value: "null") [FAIL]
+[xUnit.net 00:00:01.37]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "FamilyRootId", value: "0") [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1DiscoveryAndShinyHistoriesSurviveAutosaveThenRelease [700 ms]
+  Сообщение об ошибке:
+   Assert.Contains() Failure: Item not found in set
+Set:       [1]
+Not found: 4
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1DiscoveryAndShinyHistoriesSurviveAutosaveThenRelease() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 542
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1QueuedCoinsCommitDoesNotRestoreConsumedEncounter [58 ms]
+  Сообщение об ошибке:
+   Assert.Equal() Failure: Values differ
+Expected: 1
+Actual:   2
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1QueuedCoinsCommitDoesNotRestoreConsumedEncounter() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 504
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "DisplayStageOverride", value: "1") [59 ms]
+  Сообщение об ошибке:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(String field, String value) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 522
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "TotalXp", value: "6401") [54 ms]
+  Сообщение об ошибке:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(String field, String value) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 522
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "ReachedSpeciesIds", value: "null") [76 ms]
+  Сообщение об ошибке:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(String field, String value) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 522
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "ParentIds", value: "null") [56 ms]
+  Сообщение об ошибке:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(String field, String value) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 522
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "FamilyRootId", value: "0") [56 ms]
+  Сообщение об ошибке:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(String field, String value) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 522
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:01.43]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "CurrentStage", value: "3") [FAIL]
+[xUnit.net 00:00:01.45]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1NullLegacyPathIsControlledWithoutFallbackOrFileChanges(preserved: False) [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(field: "CurrentStage", value: "3") [59 ms]
+  Сообщение об ошибке:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1ReservedGiftUsesCompleteIndividualValidation(String field, String value) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 522
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1NullLegacyPathIsControlledWithoutFallbackOrFileChanges(preserved: False) [6 ms]
+  Сообщение об ошибке:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.Fix1NullLegacyPathIsControlledWithoutFallbackOrFileChanges(Boolean preserved) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 561
+   at InvokeStub_MigrationTests.Fix1NullLegacyPathIsControlledWithoutFallbackOrFileChanges(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+Не пройден!: не пройдено     9, пройдено     1, пропущено     0, всего    10, длительность 444 ms. - PokeCorner.App.Tests.dll (net8.0)
