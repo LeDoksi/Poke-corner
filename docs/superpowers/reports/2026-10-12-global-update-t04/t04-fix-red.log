@@ -1,0 +1,79 @@
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+dotnet : [xUnit.net 00:00:00.60]     PokeCorner.App.Tests.GlobalUpdate.ShellTests.PaperCardsUseTheirBorderWithoutDarkHa
+los [FAIL]
+At line:1 char:78
++ ... x-red.log"; dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tes ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([xUnit.net 00:0...arkHalos [FAIL]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[xUnit.net 00:00:00.64]     PokeCorner.App.Tests.GlobalUpdate.ShellTests.RarityAndTypeLabelsMeetTextContrastOnTheirReso
+lvedPaperSurface [FAIL]
+[xUnit.net 00:00:00.66]     PokeCorner.App.Tests.GlobalUpdate.ShellTests.ResetActionUsesDistinctDangerInk [FAIL]
+[xUnit.net 00:00:00.74]     PokeCorner.App.Tests.GlobalUpdate.ShellTests.DirectTabSelectionReturnsFromSettingsToTheExac
+tView [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.ShellTests.PaperCardsUseTheirBorderWithoutDarkHalos [224 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   DropShadowEffect { BlurRadius = 14, CanFreeze = True, Color = #FF000000, DependencyObjectType = DependencyObjectType { BaseType = DependencyObjectType { ··· }, Id = 22, Name = "DropShadowEffect", SystemType = typeof(System.Windows.Media.Effects.DropShadowEffect) }, Direction = 315, ··· }
+---- Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   DropShadowEffect { BlurRadius = 14, CanFreeze = True, Color = #FF000000, DependencyObjectType = DependencyObjectType { BaseType = DependencyObjectType { ··· }, Id = 22, Name = "DropShadowEffect", SystemType = typeof(System.Windows.Media.Effects.DropShadowEffect) }, Direction = 315, ··· }
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.PaperCardsUseTheirBorderWithoutDarkHalos() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 72
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.<>c.<PaperCardsUseTheirBorderWithoutDarkHalos>b__3_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 78
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.ShellTests.RarityAndTypeLabelsMeetTextContrastOnTheirResolvedPaperSurface [34 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: RarityCommonBrush
+---- RarityCommonBrush
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.RarityAndTypeLabelsMeetTextContrastOnTheirResolvedPaperSurface() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 38
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.<>c.<RarityAndTypeLabelsMeetTextContrastOnTheirResolvedPaperSurface>b__1_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 45
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.ShellTests.ResetActionUsesDistinctDangerInk [24 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Object reference not set to an instance of an object.
+---- System.NullReferenceException : Object reference not set to an instance of an object.
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.ResetActionUsesDistinctDangerInk() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 63
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.<>c.<ResetActionUsesDistinctDangerInk>b__2_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 67
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.ShellTests.DirectTabSelectionReturnsFromSettingsToTheExactView [78 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values differ
+Expected: 1
+Actual:   0
+---- Assert.Equal() Failure: Values differ
+Expected: 1
+Actual:   0
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.DirectTabSelectionReturnsFromSettingsToTheExactView() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 19
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.ShellTests.<>c.<DirectTabSelectionReturnsFromSettingsToTheExactView>b__0_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\shellTests.cs:line 32
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+
+Не пройден!: не пройдено     4, пройдено     0, пропущено     0, всего     4, длительность 134 ms. - PokeCorner.App.Tests.dll (net8.0)
