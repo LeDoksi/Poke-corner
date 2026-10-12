@@ -23,6 +23,8 @@ public sealed class AppSettings
     /// settings slider and its readout want, and CryVolume.ToPlayerVolume does the conversion
     /// at the one point of use. 0 is genuine silence; the default is deliberately below full,
     /// since a cry that fires on every pet click at 100% wears out its welcome fast.
+    public int EffectsSoundVolume { get; set; } = 30;
+
     public int CrySoundVolume { get; set; } = 70;
 
     /// Only consulted in CareMode.Hardcore: neglect permanently releases the pet from the

@@ -9,11 +9,15 @@ public sealed class CatalogPackage
     private readonly string _root;
     private readonly Dictionary<int, CatalogSpecies> _byId;
 
+    public string DataRoot => _root;
+    public string CatalogRevision { get; }
+
     public IReadOnlyList<CatalogSpecies> Species { get; }
 
-    private CatalogPackage(string root, List<CatalogSpecies> species)
+    private CatalogPackage(string root, List<CatalogSpecies> species, string revision)
     {
         _root = root;
+        CatalogRevision = revision;
         Species = species;
         _byId = species.ToDictionary(s => s.Id);
     }
@@ -52,7 +56,7 @@ public sealed class CatalogPackage
             if (species.Voice is not null) ValidateAsset(species.Voice, true, ".wav", targets, root);
         }
 
-        return new CatalogPackage(root, catalog.Species);
+        return new CatalogPackage(root, catalog.Species, catalog.DataRevision);
     }
 
     public bool CanObtain(int speciesId, bool isShiny) =>

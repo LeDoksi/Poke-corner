@@ -34,6 +34,9 @@ public static class AppPaths
         return Path.Combine(root, "state.json");
     }
 
+    public static string GetV2SaveFilePath(string? overrideRoot = null) =>
+        Path.Combine(Path.GetDirectoryName(GetSaveFilePath(overrideRoot))!, "state-v2.json");
+
     public static string GetSpriteCacheDirectory(string? overrideRoot = null) =>
         Path.Combine(GetAppDataDirectory(overrideRoot), "sprites");
 

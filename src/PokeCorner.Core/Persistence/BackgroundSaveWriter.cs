@@ -8,6 +8,7 @@ public sealed class BackgroundSaveWriter
     private readonly JsonSaveStore _store;
     private readonly Action<Action> _runWrite;
     private readonly object _writeLock = new();
+    private bool _publicationPending;
     private long _lastPostedSequence;
     private long _lastWrittenSequence;
     private readonly SortedDictionary<long, (string Json, TaskCompletionSource Completion)> _commits = new();
@@ -22,6 +23,7 @@ public sealed class BackgroundSaveWriter
     /// Serializes now — the state objects keep changing on the UI thread — and writes later.
     public void Post(SaveData data)
     {
+        if (_publicationPending) return;
         var json = JsonSaveStore.Serialize(data);
         var sequence = ++_lastPostedSequence;
         _runWrite(() =>
@@ -38,7 +40,23 @@ public sealed class BackgroundSaveWriter
     }
 
     /// Synchronous write for exit and the crash handler.
-    public void Flush(SaveData data) => Write(++_lastPostedSequence, JsonSaveStore.Serialize(data));
+    public void Flush(SaveData data)
+    {
+        if (!_publicationPending) Write(++_lastPostedSequence, JsonSaveStore.Serialize(data));
+    }
+
+    public async Task CommitAndPublishAsync(SaveData data, Action publish)
+    {
+        if (_publicationPending) throw new InvalidOperationException("A publication is already pending.");
+        _publicationPending = true;
+        try
+        {
+            await CommitAsync(data);
+            publish();
+        }
+        finally { _publicationPending = false; }
+    }
+
 
     /// Captures now; acknowledges only after this exact snapshot reaches disk. Later Post/Flush
     /// writes drain earlier commits first even when their thread-pool callbacks run first.

@@ -127,22 +127,26 @@ public sealed class CollectionViewModel
     private IReadOnlyList<EvolutionStagePreview> BuildEvolutionPreview(PokemonIndividual individual)
     {
         var chain = _chains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
-        if (chain is null || chain.ChainLength <= 1) return Array.Empty<EvolutionStagePreview>();
+        var explicitSpecies = individual.CurrentSpeciesId > 0;
+        if (!explicitSpecies && (chain is null || chain.ChainLength <= 1)) return Array.Empty<EvolutionStagePreview>();
+        var stageCount = explicitSpecies ? Math.Max(individual.ReachedSpeciesIds.Count, chain?.ChainLength ?? 0) : chain!.ChainLength;
+        if (stageCount <= 1) return Array.Empty<EvolutionStagePreview>();
 
-        var reachedIndex = (int)individual.CurrentStage;
+        var reachedIndex = explicitSpecies ? individual.ReachedSpeciesIds.Count - 1 : (int)individual.CurrentStage;
         // Same clamp as ResolveDisplaySpeciesId: an out-of-range override (e.g. a hand-edited
         // save) falls back to the real current stage rather than trusting the stored value.
         var displayedIndex = individual.DisplayStageOverride is { } overrideIndex && overrideIndex >= 0 && overrideIndex <= reachedIndex
             ? overrideIndex
             : reachedIndex;
-        var stages = new List<EvolutionStagePreview>(chain.ChainLength);
+        var stages = new List<EvolutionStagePreview>(stageCount);
 
-        for (var index = 0; index < chain.ChainLength; index++)
+        for (var index = 0; index < stageCount; index++)
         {
             // Revealed only up to and including the stage actually reached. The bounds check
             // also covers a legacy chain whose ChainLength outruns its stage id list.
-            var isRevealed = index <= reachedIndex && index < chain.StageSpeciesIds.Count;
-            int? speciesId = isRevealed ? chain.StageSpeciesIds[index] : null;
+            var reachedSpecies = explicitSpecies ? individual.ReachedSpeciesIds : chain!.StageSpeciesIds;
+            var isRevealed = index <= reachedIndex && index < reachedSpecies.Count;
+            int? speciesId = isRevealed ? reachedSpecies[index] : null;
 
             stages.Add(new EvolutionStagePreview(
                 StageIndex: index,

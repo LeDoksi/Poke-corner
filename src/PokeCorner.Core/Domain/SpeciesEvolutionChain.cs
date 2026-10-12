@@ -49,6 +49,11 @@ public static class SpeciesEvolutionChainExtensions
     /// trust boundary). Falls back to the caught species when the chain isn't in the catalog.
     public static int ResolveDisplaySpeciesId(this PokemonIndividual individual, IReadOnlyList<SpeciesEvolutionChain> lookupChains)
     {
+        if (individual.CurrentSpeciesId > 0)
+            return individual.DisplayStageOverride is { } reachedIndex && reachedIndex >= 0 &&
+                individual.ReachedSpeciesIds is { } reached && reachedIndex < reached.Count
+                ? reached[reachedIndex] : individual.CurrentSpeciesId;
+
         var chain = lookupChains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
         if (chain is null) return individual.SpeciesId;
 

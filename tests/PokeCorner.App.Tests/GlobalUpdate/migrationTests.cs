@@ -1,0 +1,491 @@
+using System.Security.Cryptography;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using PokeCorner.Core;
+using PokeCorner.Core.Domain;
+using PokeCorner.Core.PokeApi;
+using PokeCorner.Core.Persistence;
+
+namespace PokeCorner.App.Tests.GlobalUpdate;
+
+public sealed class MigrationTests : IDisposable
+{
+    private readonly string root = Path.Combine(Path.GetTempPath(), "MigrationTest_" + Guid.NewGuid());
+    private static readonly string DataRoot = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..")), "src/PokeCorner.App/bin", Directory.GetParent(AppContext.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar))!.Name, "net8.0-windows/Data");
+    private static readonly Lazy<CatalogPackage> Package = new(() => CatalogPackage.Load(DataRoot));
+    private static LegacyLookup Lookup => LegacyLookup.Load(DataRoot);
+    private string V1 => Path.Combine(root, "state.json");
+    private string V2 => Path.Combine(root, "state-v2.json");
+    public MigrationTests() => Directory.CreateDirectory(root);
+    public void Dispose() => Directory.Delete(root, true);
+    private static PokemonIndividual Pet(int species = 1, int chain = 1, int length = 3, EvolutionStage stage = EvolutionStage.Stage1) => new()
+    {
+        SpeciesId = species, EvolutionChainId = chain, ChainLength = length, CurrentStage = stage,
+        Nature = Nature.Hardy, IsShiny = true, CaughtAtUtc = DateTimeOffset.Parse("2020-01-02T03:04:05Z"),
+        IsFavorite = true, Nickname = "Sunny", AccumulatedCarePoints = 200000
+    };
+    private static SaveData Old(params PokemonIndividual[] pets) => new()
+    {
+        Individuals = pets.ToList(), Settings = new() { CareMode = CareMode.Hardcore, SuperHardcoreEnabled = true, MonitorIndex = 999, CrySoundVolume = 0 },
+        ActiveIndividualId = pets.FirstOrDefault()?.Id, ShopCoins = 17, FeedingTreats = 8, CatchAccumulatorUnits = 12,
+        FeedingRemainderUnits = 11, ShopRemainderUnits = 10, PendingCatchCount = 2, ShopCatchLuckyCharmActive = true
+    };
+
+    [Fact]
+    public async Task CommitPublishBarrierDefersStalePostFlushExitAndActivity()
+    {
+        var writes = new List<Action>();
+        var store = new JsonSaveStore(V2);
+        var delayed = true;
+        var writer = new BackgroundSaveWriter(store, action => { if (delayed) writes.Add(action); else action(); });
+        var state = new AppState();
+        state.Hydrate(Old(Pet()));
+        var commit = state.CommitAsync(writer, snapshot => snapshot.ShopCoins += 5, 2);
+        var originalCare = state.Collection.GetActive()!.AccumulatedCarePoints;
+        state.ApplyActivityUnits(23);
+        state.RunWhenReady(() => state.Shop.Coins += 1);
+        writer.Post(state.ToSaveData(2));
+        writer.Flush(state.ToSaveData(2));
+        var exit = state.FlushAsync(writer, () => 2);
+        Assert.False(exit.IsCompleted);
+        Assert.Equal(17, state.Shop.Coins);
+        Assert.Equal(originalCare, state.Collection.GetActive()!.AccumulatedCarePoints);
+        Assert.Single(writes);
+        delayed = false;
+        writes[0]();
+        await commit;
+        await exit;
+        Assert.Equal(23, state.Shop.Coins);
+        Assert.Equal(23, store.Load()!.ShopCoins);
+        Assert.Equal(originalCare + 23, store.Load()!.Individuals[0].AccumulatedCarePoints);
+    }
+
+    [Fact]
+    public async Task FailedCommitKeepsLiveAndDiskThenReplaysActivity()
+    {
+        var state = new AppState(); state.Hydrate(Old(Pet()));
+        var store = new JsonSaveStore(V2); store.Save(state.ToSaveData(2));
+        Directory.CreateDirectory(V2 + ".tmp");
+        var writes = new List<Action>(); var writer = new BackgroundSaveWriter(store, writes.Add);
+        var task = state.CommitAsync(writer, next => next.ShopCoins = 50, 2);
+        state.ApplyActivityUnits(7); writes[0]();
+        await Assert.ThrowsAnyAsync<UnauthorizedAccessException>(() => task);
+        Assert.Equal(17, state.Shop.Coins); Assert.Equal(17, store.Load()!.ShopCoins);
+        Assert.Equal(200007, state.Collection.GetActive()!.AccumulatedCarePoints);
+        Assert.False(state.IsCommitting);
+    }
+
+    [Fact]
+    public void CosmeticRollbackKeepsActualReachedFormAndInputUntouched()
+    {
+        var pet = Pet(stage: EvolutionStage.Stage3); pet.DisplayStageOverride = 0;
+        var v1 = Old(pet); var before = JsonSaveStore.Serialize(v1);
+        var next = SaveMigration.Migrate(v1, Lookup, Package.Value);
+        var p = next.Individuals[0];
+        Assert.Equal(3, p.CurrentSpeciesId); Assert.Equal(1, p.FamilyRootId);
+        Assert.Equal(new[] { 1, 2, 3 }, p.ReachedSpeciesIds);
+        Assert.Equal(0, p.DisplayStageOverride); Assert.Equal(0, p.TotalXp);
+        Assert.Equal(pet.Id, p.Id); Assert.True(p.IsShiny); Assert.Equal(pet.Nature, p.Nature);
+        Assert.Equal(pet.CaughtAtUtc, p.CaughtAtUtc); Assert.Equal(pet.Nickname, p.Nickname);
+        Assert.Equal(pet.AccumulatedCarePoints, p.AccumulatedCarePoints);
+        Assert.Equal(before, JsonSaveStore.Serialize(v1));
+        Assert.Equal(1, p.LegacyOrigin!.ChainId); Assert.Equal(Lookup.Sha256, p.LegacyOrigin.LookupSha256);
+        Assert.DoesNotContain("fast-grower", p.FirstTraitId!);
+        Assert.Equal("unknown", p.AcquisitionSource); Assert.Null(next.Metrics["successful-catches"]);
+        Assert.DoesNotContain("trophy-care-1", next.AwardLedger.Keys);
+    }
+
+    [Fact]
+    public void EeveeUsesExactSavedLookupPath()
+    {
+        var chosen = new SpeciesEvolutionChain(67, 133, 45, 2, new[] { 133, 135 }, new[] { "Eevee", "Jolteon" });
+        var lookup = new LegacyLookup(new[] { chosen }, new byte[] { 1, 2, 3 });
+        var next = SaveMigration.Migrate(Old(Pet(133, 67, 2, EvolutionStage.Stage2)), lookup, Package.Value);
+        Assert.Equal(135, next.Individuals[0].CurrentSpeciesId);
+        Assert.DoesNotContain(134, next.DiscoveredSpeciesIds);
+        var ambiguous = new LegacyLookup(new[] { chosen, chosen with { StageSpeciesIds = new[] { 133, 134 } } }, new byte[] { 1 });
+        Assert.Throws<InvalidDataException>(() => SaveMigration.Migrate(Old(Pet(133, 67, 2, EvolutionStage.Stage2)), ambiguous, Package.Value));
+    }
+
+    [Fact]
+    public void LargeCollectionPreservesAllIdsAndProvenAwardsOnce()
+    {
+        var old = Old(Enumerable.Range(0, 100).Select(_ => Pet()).ToArray());
+        var next = SaveMigration.Migrate(old, Lookup, Package.Value);
+        Assert.Equal(old.Individuals.Select(p => p.Id), next.Individuals.Select(p => p.Id));
+        Assert.Equal(100, next.Individuals.Count);
+        Assert.Contains("trophy-population-4", next.AwardLedger.Keys);
+        Assert.DoesNotContain("trophy-catches-1", next.AwardLedger.Keys);
+        Assert.Equal(17 + next.AwardLedger.Values.Sum(a => a.CoinsGranted), next.ShopCoins);
+        Assert.All(next.Items.Where(p => p.Key != "treats").Select(p => p.Value), n => Assert.Equal(0, n)); Assert.Equal(8, next.Items["treats"]); Assert.All(next.Berries.Values, n => Assert.Equal(0, n));
+        Assert.Equal(6, next.Items.Count); Assert.Equal(6, next.Berries.Count);
+        Assert.All(next.BerryRemainders.Values, n => { Assert.Equal(0, n.Numerator); Assert.Equal(1, n.Denominator); });
+        Assert.Equal(2, next.Gift.Gifts.Count); Assert.NotEqual(next.Gift.Gifts[0].Individual.SpeciesId, next.Gift.Gifts[1].Individual.SpeciesId);
+        Assert.All(next.Gift.Gifts, g => { Assert.Equal("reserved", g.Status); Assert.NotEqual(1, g.Individual.SpeciesId); });
+    }
+
+    [Fact]
+    public void EmptyAndNullActiveAndUnavailableRetainSemantics()
+    {
+        var empty = SaveMigration.Migrate(Old(), Lookup, Package.Value);
+        Assert.Empty(empty.Individuals); Assert.Equal(17, empty.ShopCoins); Assert.Equal(8, empty.FeedingTreats);
+        Assert.Empty(empty.Gift.Gifts);
+        var old = Old(Pet()); old.ActiveIndividualId = null;
+        var next = SaveMigration.Migrate(old, Lookup, Package.Value);
+        Assert.Null(next.ActiveIndividualId); Assert.Single(next.Individuals); Assert.Empty(next.Gift.Gifts);
+        old.ActiveIndividualId = old.Individuals[0].Id;
+        old.CareStates[old.ActiveIndividualId.Value] = new() { RanAwayUntilUtc = DateTimeOffset.UtcNow.AddHours(1) };
+        next = SaveMigration.Migrate(old, Lookup, Package.Value);
+        Assert.Equal(old.CareStates[old.ActiveIndividualId.Value].RanAwayUntilUtc, next.CareStates[old.ActiveIndividualId.Value].RanAwayUntilUtc);
+        Assert.Equal(old.ActiveIndividualId, next.ActiveIndividualId);
+    }
+
+    [Fact]
+    public void SettingsCareCharmEggsAndEarnedEncountersPreserved()
+    {
+        var old = Old(Pet()); old.Settings.EffectsSoundVolume = 0;
+        old.CareStates[old.Individuals[0].Id] = new() { LastInteractionUtc = DateTimeOffset.UtcNow.AddDays(-5), LastPetUtc = DateTimeOffset.UtcNow.AddDays(-5), LastNeglectCheckUtc = null };
+        old.PendingEggs.Add(new() { Tier = RarityTier.Common, ReadyAtUtc = DateTimeOffset.UtcNow.AddHours(1) });
+        var next = SaveMigration.Migrate(old, Lookup, Package.Value);
+        Assert.Equal(JsonSaveStore.Serialize(old).Split("\"Settings\"")[1].Split("\"FeedingTreats\"")[0], JsonSaveStore.Serialize(next).Split("\"Settings\"")[1].Split("\"FeedingTreats\"")[0]);
+        Assert.Equal(0, next.Settings.CrySoundVolume); Assert.Equal(0, next.Settings.EffectsSoundVolume);
+        Assert.Equal(8, next.FeedingTreats); Assert.Equal(11, next.FeedingRemainderUnits); Assert.Equal(10, next.ShopRemainderUnits);
+        Assert.Equal(12, next.CatchAccumulatorUnits); Assert.Equal(2, next.PendingCatchCount);
+        Assert.True(next.ShopCatchLuckyCharmActive); Assert.Empty(next.PendingEggs); Assert.Single(old.PendingEggs);
+        var care = next.CareStates[old.Individuals[0].Id];
+        Assert.Null(care.LastNeglectCheckUtc); Assert.Equal(old.CareStates[old.Individuals[0].Id].LastPetUtc, care.LastPetUtc);
+        var service = new CareModeService(); service.DiscountIdleGap(care, DateTimeOffset.UtcNow);
+        Assert.False(service.ShouldRunAway(care, DateTimeOffset.UtcNow, CareMode.Hardcore));
+    }
+
+    [Fact]
+    public async Task DurableMigrationBacksUpExactBytesAndExistingV2DoesNotRepeat()
+    {
+        var old = Old(Pet()); File.WriteAllText(V1, JsonSaveStore.Serialize(old));
+        var bytes = File.ReadAllBytes(V1);
+        var first = await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        Assert.Equal(2, first!.SchemaVersion); Assert.Equal(bytes, File.ReadAllBytes(V1));
+        Assert.Contains(Directory.GetFiles(root, "state.json", SearchOption.AllDirectories), p => p != V1 && File.ReadAllBytes(p).SequenceEqual(bytes));
+        var saved = new JsonSaveStore(V2).Load()!;
+        saved.Gift.Gifts[0].Status = "opened";
+        saved.CompletedOperations["gift-open-test"] = saved.Gift.Gifts[0].Individual.Id;
+        new JsonSaveStore(V2).Save(saved);
+        var disk = File.ReadAllBytes(V2);
+        var again = await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        Assert.Equal(disk, File.ReadAllBytes(V2));
+        Assert.Equal("opened", again!.Gift.Gifts[0].Status); Assert.Equal(first.AwardLedger.Count, again.AwardLedger.Count);
+        File.WriteAllText(V2, "{bad v2"); var invalid = File.ReadAllBytes(V2);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(invalid, File.ReadAllBytes(V2)); Assert.Equal(bytes, File.ReadAllBytes(V1));
+    }
+
+    [Fact]
+    public async Task FailedAtomicMigrationLeavesV1AndBackupExact()
+    {
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var original = File.ReadAllBytes(V1); Directory.CreateDirectory(V2 + ".tmp");
+        await Assert.ThrowsAnyAsync<UnauthorizedAccessException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.False(File.Exists(V2)); Assert.Equal(original, File.ReadAllBytes(V1));
+        Assert.Contains(Directory.GetFiles(root, "state.json", SearchOption.AllDirectories), p => p != V1 && File.ReadAllBytes(p).SequenceEqual(original));
+        Directory.Delete(V2 + ".tmp");
+        Assert.NotNull(await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+    }
+
+    [Theory]
+    [InlineData("Individuals", "null")]
+    [InlineData("Settings", "null")]
+    [InlineData("CareStates", "null")]
+    [InlineData("PendingEggs", "null")]
+    [InlineData("Individuals", "[null]")]
+    [InlineData("PendingEggs", "[null]")]
+    [InlineData("SchemaVersion", "3")]
+    [InlineData("ShopCoins", "-1")]
+    [InlineData("ShopCoins", "2147483648")]
+    [InlineData("CatchAccumulatorUnits", "9223372036854775808")]
+    [InlineData("ActiveIndividualId", "\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\"")]
+    public async Task InvalidInputNeverWrites(string field, string value)
+    {
+        var json = JsonNode.Parse(JsonSaveStore.Serialize(Old(Pet())))!;
+        json[field] = JsonNode.Parse(value); File.WriteAllText(V1, json.ToJsonString());
+        var bytes = File.ReadAllBytes(V1);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(bytes, File.ReadAllBytes(V1)); Assert.False(File.Exists(V2));
+    }
+
+    [Theory]
+    [InlineData("Id", "null")]
+    [InlineData("Id", "\"00000000-0000-0000-0000-000000000000\"")]
+    [InlineData("CurrentStage", "3")]
+    [InlineData("DisplayStageOverride", "2")]
+    [InlineData("EvolutionChainId", "99999")]
+    public async Task InvalidIndividualNeverWrites(string field, string value)
+    {
+        var node = JsonNode.Parse(JsonSaveStore.Serialize(Old(Pet())))!;
+        node["Individuals"]![0]![field] = JsonNode.Parse(value); File.WriteAllText(V1, node.ToJsonString());
+        var original = File.ReadAllBytes(V1);
+        await Assert.ThrowsAnyAsync<IOException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(original, File.ReadAllBytes(V1)); Assert.False(File.Exists(V2));
+    }
+
+    [Fact]
+    public void UnsupportedExistingShinyMigratesWithoutDowngrade()
+    {
+        var species = Package.Value.Species.First(s => s.NormalAvailable && !s.ShinyAvailable);
+        var chain = new SpeciesEvolutionChain(99999, species.Id, 45, 1, new[] { species.Id }, new[] { species.DisplayName });
+        var next = SaveMigration.Migrate(Old(Pet(species.Id, 99999, 1)), new(new[] { chain }, new byte[] { 1 }), Package.Value);
+        Assert.True(next.Individuals[0].IsShiny); Assert.Equal(species.Id, next.Individuals[0].CurrentSpeciesId);
+        Assert.False(Package.Value.CanObtain(species.Id, true));
+    }
+
+    [Fact]
+    public void RetroCoinOverflowFailsWithoutClamping() { var old = Old(Pet()); old.ShopCoins = int.MaxValue; Assert.Throws<InvalidDataException>(() => SaveMigration.Migrate(old, Lookup, Package.Value)); }
+
+    [Fact]
+    public void SeparateV2Path() => Assert.Equal(Path.Combine(root, "state-v2.json"), AppPaths.GetV2SaveFilePath(root));
+    [Fact]
+    public async Task MissingDuplicateGuidAndCorruptJsonLeaveBytesUnchanged()
+    {
+        foreach (var kind in new[] { "missing", "duplicate", "corrupt", "null-care" })
+        {
+            var node = JsonNode.Parse(JsonSaveStore.Serialize(Old(Pet(), Pet())))!;
+            if (kind == "missing") node["Individuals"]![0]!.AsObject().Remove("Id");
+            if (kind == "duplicate") node["Individuals"]![1]!["Id"] = node["Individuals"]![0]!["Id"]!.DeepClone();
+            if (kind == "null-care") node["CareStates"]![Guid.NewGuid().ToString()] = null;
+            File.WriteAllText(V1, kind == "corrupt" ? "{bad json" : node.ToJsonString());
+            var original = File.ReadAllBytes(V1);
+            await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+            Assert.Equal(original, File.ReadAllBytes(V1)); Assert.False(File.Exists(V2));
+        }
+    }
+
+    [Theory]
+    [InlineData("FirstTraitId", "null")]
+    [InlineData("TotalXp", "6401")]
+    [InlineData("CurrentSpeciesId", "0")]
+    [InlineData("FamilyRootId", "0")]
+    public async Task InvalidV2IndividualDoesNotImportV1(string field, string value)
+    {
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var node = JsonNode.Parse(JsonSaveStore.Serialize(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value)))!;
+        node["Individuals"]![0]![field] = JsonNode.Parse(value);
+        File.WriteAllText(V2, node.ToJsonString()); var before = File.ReadAllBytes(V2);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(before, File.ReadAllBytes(V2));
+    }
+
+    [Fact]
+    public void PreservedLookupUsesExactSavedBranchAndImmutableBackupCannotBeReplaced()
+    {
+        var customPath = Path.Combine(root, LegacyLookup.PreservedLookupFileName);
+        var chains = new[] { new SpeciesEvolutionChain(67, 133, 45, 2, new[] { 133, 135 }, new[] { "Eevee", "Jolteon" }) };
+        File.WriteAllText(customPath, JsonSerializer.Serialize(chains));
+        var lookup = LegacyLookup.Load(DataRoot, preservedLookupPath: customPath);
+        Assert.Equal(File.ReadAllBytes(customPath), lookup.OriginalBytes);
+        Assert.Equal(135, SaveMigration.Migrate(Old(Pet(133, 67, 2, EvolutionStage.Stage2)), lookup, Package.Value).Individuals[0].CurrentSpeciesId);
+        File.WriteAllText(customPath, "{broken");
+        Assert.Throws<JsonException>(() => LegacyLookup.Load(DataRoot, preservedLookupPath: customPath));
+    }
+
+    [Fact]
+    public async Task NoFilesIsNewGameButExistingEmptySaveIsNot()
+    {
+        Assert.Null(await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        new JsonSaveStore(V1).Save(Old());
+        var loaded = await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        Assert.NotNull(loaded); Assert.Equal(17, loaded.ShopCoins);
+        Assert.Equal(30, loaded.Settings.EffectsSoundVolume);
+    }
+
+    [Fact]
+    public async Task V2RoundTripHydrationPreservesReservedPropertiesAndAwards()
+    {
+        var migrated = SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value);
+        new JsonSaveStore(V2).Save(migrated);
+        var loaded = await SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value);
+        var state = new AppState(); state.Hydrate(loaded!);
+        Assert.Equal(JsonSaveStore.Serialize(migrated), JsonSaveStore.Serialize(state.ToSaveData(migrated.PendingCatchCount)));
+        Assert.Equal(Package.Value.CatalogRevision, loaded!.CatalogRevision);
+    }
+
+    [Fact]
+    public async Task UiContinuationRemainsFreeWhileCommitAndExitWait()
+    {
+        Task commit = Task.CompletedTask, exit = Task.CompletedTask;
+        AppState state = null!;
+        var write = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var store = new JsonSaveStore(V2);
+        var first = true;
+        var writer = new BackgroundSaveWriter(store, action => { if (first) { first = false; write.SetResult(action); } else Task.Run(action); });
+        PokeCorner.App.Tests.Theme.WpfTestHost.Run(() =>
+        {
+            state = new AppState(); state.Hydrate(Old(Pet()));
+            commit = state.CommitAsync(writer, next => next.ShopCoins += 2, 2);
+            exit = state.FlushAsync(writer, () => 2);
+            Assert.False(commit.IsCompleted); Assert.False(exit.IsCompleted);
+        });
+        var free = false;
+        PokeCorner.App.Tests.Theme.WpfTestHost.Run(() => { free = true; state.RunWhenReady(() => state.Shop.Coins += 3); });
+        Assert.True(free);
+        await Task.Run(await write.Task);
+        await commit.WaitAsync(TimeSpan.FromSeconds(10));
+        await exit.WaitAsync(TimeSpan.FromSeconds(10));
+        Assert.Equal(22, store.Load()!.ShopCoins);
+    }
+
+    [Fact]
+    public async Task ConsecutiveCommitsUsePublishedSnapshotAndExitWaitsForBoth()
+    {
+        var state = new AppState(); state.Hydrate(Old(Pet()));
+        var write = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var first = true; var store = new JsonSaveStore(V2);
+        var writer = new BackgroundSaveWriter(store, action => { if (first) { first = false; write.SetResult(action); } else Task.Run(action); });
+        var one = state.CommitAsync(writer, next => next.ShopCoins += 2, 2);
+        var two = state.CommitAsync(writer, next => next.ShopCoins += 3, 2);
+        var exit = state.FlushAsync(writer, () => 2);
+        await Task.Run(await write.Task);
+        await Task.WhenAll(one, two, exit).WaitAsync(TimeSpan.FromSeconds(10));
+        Assert.Equal(22, state.Shop.Coins); Assert.Equal(22, store.Load()!.ShopCoins);
+    }
+
+    [Fact]
+    public void RestoreValidBackupPreservesRejectedFileAndRejectsWrongSchema()
+    {
+        var valid = SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value);
+        var backup = Path.Combine(root, "backup.json");
+        new JsonSaveStore(backup).Save(valid);
+        File.WriteAllText(V2, "{broken v2"); var rejected = File.ReadAllBytes(V2);
+        SaveMigration.RestoreBackup(backup, V2, 2);
+        Assert.Equal(File.ReadAllBytes(backup), File.ReadAllBytes(V2));
+        Assert.Contains(Directory.GetFiles(root, "state-v2.json.rejected-*"), p => File.ReadAllBytes(p).SequenceEqual(rejected));
+        var wrong = Path.Combine(root, "v1backup.json"); new JsonSaveStore(wrong).Save(Old(Pet()));
+        var current = File.ReadAllBytes(V2);
+        Assert.Throws<SaveLoadException>(() => SaveMigration.RestoreBackup(wrong, V2, 2));
+        Assert.Equal(current, File.ReadAllBytes(V2));
+    }
+
+    [Theory]
+    [InlineData("Tutorial")]
+    [InlineData("Gift")]
+    [InlineData("AwardLedger")]
+    [InlineData("BerryRemainders")]
+    public void MissingV2JournalIsRejectedWithoutReset(string field)
+    {
+        var node = JsonNode.Parse(JsonSaveStore.Serialize(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value)))!;
+        node.AsObject().Remove(field); File.WriteAllText(V2, node.ToJsonString()); var original = File.ReadAllBytes(V2);
+        Assert.Throws<SaveLoadException>(() => new JsonSaveStore(V2).Load());
+        Assert.Equal(original, File.ReadAllBytes(V2));
+    }
+
+    [Theory]
+    [InlineData(-1, 1)]
+    [InlineData(1, 1)]
+    [InlineData(0, 0)]
+    public void InvalidRationalRemainderRejected(long numerator, long denominator)
+    {
+        var data = SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value);
+        data.BerryRemainders["oran"] = new() { Numerator = numerator, Denominator = denominator };
+        new JsonSaveStore(V2).Save(data);
+        Assert.Throws<SaveLoadException>(() => new JsonSaveStore(V2).Load());
+    }
+
+    [Fact]
+    public void KnownCheckpointAndOtherSettingsRetainExactValues()
+    {
+        var old = Old(Pet());
+        old.Settings.AutoHideInFullscreen = false; old.Settings.StartWithWindows = true; old.Settings.ScreenCorner = "TopLeft";
+        old.Settings.PetSizePixels = 132; old.Settings.ShowProgressPanel = true; old.Settings.PetPositionX = 23; old.Settings.PetPositionY = 24;
+        var checkpoint = DateTimeOffset.UtcNow.AddHours(-2);
+        old.CareStates[old.Individuals[0].Id] = new() { LastInteractionUtc = checkpoint.AddHours(-1), LastNeglectCheckUtc = checkpoint, LastPetUtc = checkpoint.AddMinutes(-1) };
+        var next = SaveMigration.Migrate(old, Lookup, Package.Value);
+        Assert.Equal(JsonSerializer.Serialize(old.Settings), JsonSerializer.Serialize(next.Settings));
+        Assert.Equal(JsonSerializer.Serialize(old.CareStates), JsonSerializer.Serialize(next.CareStates));
+        Assert.Equal(next.FeedingTreats, next.Items["treats"]);
+    }
+
+    [Fact]
+    public void MissingMonitorAndOffscreenPositionUseExistingWpfNormalization()
+    {
+        var next = SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value);
+        PokeCorner.App.Tests.Theme.WpfTestHost.Run(() =>
+        {
+            var window = new global::PokeCorner.App.Overlay.OverlayWindow();
+            window.PositionAt(global::PokeCorner.App.Overlay.ScreenCorner.BottomRight, next.Settings.MonitorIndex, next.Settings.PetSizePixels, int.MaxValue, int.MaxValue);
+            Assert.True(double.IsFinite(window.Left)); Assert.True(double.IsFinite(window.Top));
+            Assert.NotEqual((double)int.MaxValue, window.Left); Assert.NotEqual((double)int.MaxValue, window.Top);
+            Assert.Equal(0, next.Settings.CrySoundVolume);
+            window.AllowClose = true; window.Close();
+        });
+        Assert.Equal(999, next.Settings.MonitorIndex);
+    }
+
+    [Fact]
+    public async Task TreatMutationUsesSingleAuthoritativeBalanceAndAlias()
+    {
+        var state = new AppState(); state.Hydrate(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
+        var writer = new BackgroundSaveWriter(new JsonSaveStore(V2));
+        await state.CommitAsync(writer, next => next.FeedingTreats -= 1, 2);
+        var saved = new JsonSaveStore(V2).Load()!;
+        Assert.Equal(7, state.Feeding.Treats); Assert.Equal(7, saved.FeedingTreats); Assert.Equal(7, saved.Items["treats"]);
+        var node = JsonNode.Parse(JsonSaveStore.Serialize(saved))!; node["Items"]!["treats"] = 50;
+        File.WriteAllText(V2, node.ToJsonString());
+        Assert.Throws<SaveLoadException>(() => new JsonSaveStore(V2).Load());
+    }
+
+    [Fact]
+    public void V2DisplayUsesSavedReachedBranchEvenIfInstalledLookupDiffers()
+    {
+        var chosen = new SpeciesEvolutionChain(67, 133, 45, 2, new[] { 133, 135 }, new[] { "Eevee", "Jolteon" });
+        var migrated = SaveMigration.Migrate(Old(Pet(133, 67, 2, EvolutionStage.Stage2)), new(new[] { chosen }, new byte[] { 1 }), Package.Value);
+        var individual = migrated.Individuals[0];
+        Assert.Equal(135, individual.ResolveDisplaySpeciesId(Lookup.Chains));
+        individual.DisplayStageOverride = 0;
+        Assert.Equal(133, individual.ResolveDisplaySpeciesId(Array.Empty<SpeciesEvolutionChain>()));
+        individual.DisplayStageOverride = null;
+        Assert.Equal(135, individual.ResolveDisplaySpeciesId(Array.Empty<SpeciesEvolutionChain>()));
+    }
+
+    [Theory]
+    [InlineData("FirstTraitId", "\"invented-trait\"")]
+    [InlineData("CurrentSpeciesId", "99999")]
+    public async Task UnknownV2TraitsAndSpeciesRequireRecovery(string field, string value)
+    {
+        var node = JsonNode.Parse(JsonSaveStore.Serialize(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value)))!;
+        node["Individuals"]![0]![field] = JsonNode.Parse(value);
+        if (field == "CurrentSpeciesId") node["Individuals"]![0]!["ReachedSpeciesIds"] = JsonNode.Parse("[99999]");
+        File.WriteAllText(V2, node.ToJsonString()); var original = File.ReadAllBytes(V2);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(original, File.ReadAllBytes(V2));
+    }
+
+    [Fact]
+    public async Task NonemptyV2GiftsWithoutSavedIdentityCannotMintReplacementGuid()
+    {
+        var node = JsonNode.Parse(JsonSaveStore.Serialize(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value)))!;
+        node["Gift"]!["Gifts"]![0]!["Individual"]!.AsObject().Remove("Id");
+        File.WriteAllText(V2, node.ToJsonString()); var original = File.ReadAllBytes(V2);
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(original, File.ReadAllBytes(V2));
+    }
+
+    [Fact]
+    public void CosmeticSelectorNeverOffersInstalledDifferentOrUnreachedBranch()
+    {
+        var chosen = new SpeciesEvolutionChain(67, 133, 45, 2, new[] { 133, 135 }, new[] { "Eevee", "Jolteon" });
+        var state = new AppState();
+        state.Hydrate(SaveMigration.Migrate(Old(Pet(133, 67, 2, EvolutionStage.Stage2)), new(new[] { chosen }, new byte[] { 1 }), Package.Value));
+        var pet = state.Collection.GetActive()!;
+        var vm = new global::PokeCorner.App.Popup.CollectionViewModel(state.Collection, state.CareStateByIndividualId, new(), state.Settings.CareMode, Lookup.Chains, state.PendingEggs);
+        var entry = vm.GetEntries(DateTimeOffset.UtcNow).Single();
+        Assert.Equal(new int?[] { 133, 135 }, entry.EvolutionStages.Select(s => s.SpeciesId));
+        Assert.DoesNotContain(entry.EvolutionStages, s => s.SpeciesName == "Vaporeon");
+        pet.CurrentStage = EvolutionStage.Stage3;
+        state.SetDisplayStage(pet, 2);
+        Assert.Null(pet.DisplayStageOverride); Assert.Equal(135, pet.CurrentSpeciesId);
+        pet.DisplayStageOverride = 2;
+        Assert.Equal(135, pet.ResolveDisplaySpeciesId(Lookup.Chains));
+        var stages = vm.GetEntries(DateTimeOffset.UtcNow).Single().EvolutionStages;
+        Assert.Equal(new int?[] { 133, 135 }, stages.Select(s => s.SpeciesId));
+        Assert.True(stages[1].IsCurrent);
+    }
+
+}

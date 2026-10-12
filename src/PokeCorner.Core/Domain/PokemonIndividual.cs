@@ -4,6 +4,15 @@ public enum EvolutionStage { Stage1 = 0, Stage2 = 1, Stage3 = 2 }
 
 public sealed class PokemonIndividual
 {
+    public int CurrentSpeciesId { get; set; }
+    public int FamilyRootId { get; set; }
+    public LegacyOrigin? LegacyOrigin { get; set; }
+    public int TotalXp { get; set; }
+    public string? FirstTraitId { get; set; }
+    public string? SecondTraitId { get; set; }
+    public string AcquisitionSource { get; set; } = "unknown";
+    public List<Guid> ParentIds { get; set; } = [];
+    public List<int> ReachedSpeciesIds { get; set; } = [];
     public Guid Id { get; init; } = Guid.NewGuid();
     public required int SpeciesId { get; init; }
     private int _evolutionChainId;
@@ -68,4 +77,14 @@ public sealed class PokemonIndividual
             _nickname = trimmed.Length > MaxNicknameLength ? trimmed[..MaxNicknameLength] : trimmed;
         }
     }
+}
+
+
+public sealed class LegacyOrigin
+{
+    public int SpeciesId { get; set; }
+    public int ChainId { get; set; }
+    public int ChainLength { get; set; }
+    public EvolutionStage CurrentStage { get; set; }
+    public string LookupSha256 { get; set; } = "";
 }

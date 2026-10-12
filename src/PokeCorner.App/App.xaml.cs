@@ -29,6 +29,8 @@ public partial class App : System.Windows.Application
     private PokeApiClient _pokeApiClient = null!;
     private SpeciesCatalog _speciesCatalog = null!;
     private CatalogPackage _catalogPackage = null!;
+    private LegacyLookup _legacyLookup = null!;
+    private bool _isExiting;
     private GlobalInputHook? _inputHook;
     private GamepadInputHook? _gamepadHook;
     private InputEventCounter _inputCounter = null!;
@@ -79,7 +81,7 @@ public partial class App : System.Windows.Application
     /// on-disk GIF cache. A GIF costs ~22 ms to decode, so each species is decoded once.
     private readonly Dictionary<int, IReadOnlyList<byte[]>?> _decodedFramesCache = new();
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
@@ -102,7 +104,7 @@ public partial class App : System.Windows.Application
             args.Handled = false; // still let it crash — we're not trying to keep a corrupted UI state running, just to not lose data
         };
 
-        _saveStore = new JsonSaveStore(AppPaths.GetSaveFilePath());
+        _saveStore = new JsonSaveStore(AppPaths.GetV2SaveFilePath());
         _saveWriter = new BackgroundSaveWriter(_saveStore);
         _spriteCache = new SpriteCache(AppPaths.GetSpriteCacheDirectory());
         _pokeApiClient = new PokeApiClient(new System.Net.Http.HttpClientHandler());
@@ -117,28 +119,50 @@ public partial class App : System.Windows.Application
         _shopService = new ShopService();
 
         SaveData? loaded;
+        var isNewGame = false;
         while (true)
         {
             try
             {
-                loaded = _saveStore.Load();
+                var dataRoot = AppPaths.GetAppDataDirectory();
+                var preserved = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "PokeCorner", LegacyLookup.PreservedLookupFileName);
+                _legacyLookup = File.Exists(AppPaths.GetV2SaveFilePath())
+                    ? LegacyLookup.Load(dataRoot)
+                    : LegacyLookup.Load(dataRoot, catalogPath, preserved);
+                loaded = await SaveMigration.LoadAsync(AppPaths.GetSaveFilePath(), AppPaths.GetV2SaveFilePath(), _legacyLookup, _catalogPackage);
+                isNewGame = loaded is null;
+                if (loaded is null)
+                {
+                    loaded = SaveMigration.Migrate(new SaveData { Individuals = [], Settings = new() }, _legacyLookup, _catalogPackage);
+                }
+                _appState = new AppState();
+                _appState.Hydrate(loaded);
                 break;
             }
-            catch (SaveLoadException ex)
+            catch (Exception ex) when (ex is IOException or System.Text.Json.JsonException or UnauthorizedAccessException)
             {
                 var choice = System.Windows.MessageBox.Show(
-                    ex.Message + "\n\nВосстановите файл из резервной копии или исправьте причину ошибки. "
-                    + "Затем нажмите OK для повторной загрузки. Отмена закроет приложение.",
-                    "PokéCorner — сохранение недоступно", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-                if (choice == MessageBoxResult.OK) continue;
+                    ex.Message + "\n\nДа — повторить загрузку. Нет — выбрать исправную резервную копию. Отмена — закрыть приложение.",
+                    "PokéCorner — сохранение недоступно", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                if (choice == MessageBoxResult.Yes) continue;
+                if (choice == MessageBoxResult.No)
+                {
+                    var dialog = new Microsoft.Win32.OpenFileDialog { Title = "Выберите резервную копию PokéCorner", Filter = "Сохранение JSON|*.json" };
+                    if (dialog.ShowDialog() == true)
+                    {
+                        var target = File.Exists(AppPaths.GetV2SaveFilePath()) ? AppPaths.GetV2SaveFilePath() : AppPaths.GetSaveFilePath();
+                        try { SaveMigration.RestoreBackup(dialog.FileName, target, target == AppPaths.GetV2SaveFilePath() ? 2 : 1); }
+                        catch (Exception restoreError) when (restoreError is IOException or UnauthorizedAccessException)
+                        { System.Windows.MessageBox.Show(restoreError.Message, "PokéCorner — резервная копия недоступна"); }
+                    }
+                    continue;
+                }
                 _singleInstance.Dispose();
                 Shutdown();
                 return;
             }
         }
-        _appState = new AppState();
-        if (loaded is not null) _appState.Hydrate(loaded);
-        _catchReadyCount = Math.Clamp(loaded?.PendingCatchCount ?? 0, 0, MaxPendingCatches);
+        _catchReadyCount = loaded?.PendingCatchCount ?? 0;
 
         if (FirstRunFlow.NeedsOnboarding(loaded))
         {
@@ -164,7 +188,14 @@ public partial class App : System.Windows.Application
             var chosenChain = dialogChoseOne ? selectionWindow.Chosen! : commonCandidates[0]; // window closed without a pick (e.g. Alt+F4) still needs a starter
 
             var starter = FirstRunFlow.HatchChosen(chosenChain, _catchRoller, DateTimeOffset.UtcNow);
+            starter.AcquisitionSource = "starter";
+            SaveMigration.InitializeIndividual(starter, _legacyLookup, _catalogPackage);
             _appState.Collection.Add(starter);
+            if (isNewGame)
+            {
+                _appState.Shop.Coins = 20;
+                _appState.Feeding.Treats = 5;
+            }
 
             new OnboardingWindow().ShowDialog();
         }
@@ -197,9 +228,14 @@ public partial class App : System.Windows.Application
         // spot instead of always snapping back to the configured corner.
         _overlayWindow.PositionChanged += () =>
         {
-            _appState.Settings.PetPositionX = (int)_overlayWindow.Left;
-            _appState.Settings.PetPositionY = (int)_overlayWindow.Top;
-            PersistState();
+            var x = (int)_overlayWindow.Left;
+            var y = (int)_overlayWindow.Top;
+            _appState.RunWhenReady(() =>
+            {
+                _appState.Settings.PetPositionX = x;
+                _appState.Settings.PetPositionY = y;
+                PersistState();
+            });
         };
 
         // Keeps the progress panel glued to the pet during a drag: LocationChanged is the only
@@ -238,7 +274,11 @@ public partial class App : System.Windows.Application
 
         _singleInstance.ActivationRequested += () => Dispatcher.BeginInvoke(() => OpenMenu(CollectionTabIndex));
         // Windows logging off must not be blocked by the pet window refusing to close.
-        SessionEnding += (_, _) => AllowDeskWindowsToClose();
+        SessionEnding += (_, args) =>
+        {
+            if (_appState.IsCommitting) { args.Cancel = true; ShutdownApp(); }
+            else AllowDeskWindowsToClose();
+        };
         Exit += (_, _) =>
         {
             SaveState();
@@ -254,7 +294,7 @@ public partial class App : System.Windows.Application
     /// large collections belong on a background thread, with the result handed back here.
     private void OnGrowthTick()
     {
-        ReconcileSettingsState();
+        if (!_appState.IsCommitting) ReconcileSettingsState();
 
         // See FallbackActivityMonitor for why this exists: some anti-cheat drivers (Genshin
         // Impact's mhyprot2.sys is the reported case) silently stop GlobalInputHook's low-level
@@ -267,12 +307,8 @@ public partial class App : System.Windows.Application
         }
 
         var units = _inputCounter.DrainUnits();
-        if (units > 0)
-        {
-            _appState.ApplyActivityUnits(units);
-            _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
-            _shopService.EarnCoinsFromActivity(_appState.Shop, units);
-        }
+        if (units > 0) _appState.RunWhenReady(() => CreditActivity(units));
+        if (_appState.IsCommitting) return;
 
         _progressPanelWindow?.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
 
@@ -625,6 +661,7 @@ public partial class App : System.Windows.Application
 
     private CatchReveal? TryPerformCatch()
     {
+        if (_isExiting || _appState.IsCommitting) return null;
         if (_catchReadyCount <= 0) return null;
 
         // PokemonCollection.Add() auto-activates via ActiveIndividualId ??= individual.Id
@@ -637,7 +674,10 @@ public partial class App : System.Windows.Application
         var shinyMultiplier = _shopService.ConsumeCatchLuckyCharm(_appState.Shop);
         var result = _catchRoller.RollCatch(availableChains, _appState.Collection.Individuals, shinyMultiplier);
 
-        _appState.Collection.Add(result.ToIndividual(DateTimeOffset.UtcNow));
+        var individual = result.ToIndividual(DateTimeOffset.UtcNow);
+        individual.AcquisitionSource = "activity";
+        SaveMigration.InitializeIndividual(individual, _legacyLookup, _catalogPackage);
+        _appState.Collection.Add(individual);
 
         if (hadNoActiveInNonEmptyCollection)
         {
@@ -658,6 +698,8 @@ public partial class App : System.Windows.Application
     /// notification each time.
     private void PetActiveIndividual()
     {
+        if (_isExiting) return;
+        if (_appState.IsCommitting) { _appState.RunWhenReady(PetActiveIndividual); return; }
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
@@ -715,6 +757,8 @@ public partial class App : System.Windows.Application
 
     private void FeedActiveIndividual()
     {
+        if (_isExiting) return;
+        if (_appState.IsCommitting) { _appState.RunWhenReady(FeedActiveIndividual); return; }
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
@@ -736,9 +780,11 @@ public partial class App : System.Windows.Application
     /// so a stale click is inert.
     private bool EvolveActiveIndividual()
     {
+        if (_isExiting || _appState.IsCommitting) return false;
         var active = _appState.Collection.GetActive();
         if (active is null || !_appState.TryEvolve(active)) return false;
 
+        SaveMigration.InitializeIndividual(active, _legacyLookup, _catalogPackage);
         _overlayWindow.PlayEvolutionFlash();
         RefreshOverlayForActiveIndividual();
         return true;
@@ -752,6 +798,7 @@ public partial class App : System.Windows.Application
 
     private bool HatchEgg(Guid eggId)
     {
+        if (_isExiting || _appState.IsCommitting) return false;
         var egg = _appState.PendingEggs.FirstOrDefault(e => e.Id == eggId);
         if (egg is null || !_eggIncubationService.IsReady(egg, DateTimeOffset.UtcNow)) return false;
 
@@ -764,7 +811,10 @@ public partial class App : System.Windows.Application
             return false;
         }
 
-        _appState.Collection.Add(result.ToIndividual(DateTimeOffset.UtcNow));
+        var individual = result.ToIndividual(DateTimeOffset.UtcNow);
+        individual.AcquisitionSource = "legacy-shop-egg";
+        SaveMigration.InitializeIndividual(individual, _legacyLookup, _catalogPackage);
+        _appState.Collection.Add(individual);
         _appState.PendingEggs.Remove(egg);
 
         _menuWindow?.ShowCatchReveal(new CatchReveal(result, egg.Tier));
@@ -778,6 +828,7 @@ public partial class App : System.Windows.Application
 
     private bool BuyEgg(RarityTier tier)
     {
+        if (_isExiting || _appState.IsCommitting) return false;
         if (!_shopService.TrySpendForEgg(_appState.Shop, tier)) return false;
         _appState.PendingEggs.Add(_eggIncubationService.StartIncubating(tier, DateTimeOffset.UtcNow));
         return true;
@@ -785,6 +836,8 @@ public partial class App : System.Windows.Application
 
     private void OpenMenu(int tabIndex)
     {
+        if (_isExiting) return;
+        if (_appState.IsCommitting) { _appState.RunWhenReady(() => OpenMenu(tabIndex)); return; }
         try
         {
             if (_menuWindow is null)
@@ -846,20 +899,68 @@ public partial class App : System.Windows.Application
         if (_progressPanelWindow is not null) _progressPanelWindow.AllowClose = true;
     }
 
-    /// The only way out: lets the pet window close (it refuses otherwise, see OverlayWindow.AllowClose).
-    private void ShutdownApp()
+    /// Shared durable mutation entry point for the v2 gameplay services.
+    public async Task CommitStateAsync(Action<SaveData> update)
     {
+        if (!_hasLoadedState || _isExiting) throw new InvalidOperationException("Сохранение ещё не загружено.");
+        if (_menuWindow is not null) _menuWindow.IsEnabled = false;
+        try
+        {
+            await _appState.CommitAsync(_saveWriter, update, _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+            _menuWindow?.Close();
+            RefreshOverlayForActiveIndividual();
+        }
+        finally { if (_menuWindow is not null) _menuWindow.IsEnabled = true; }
+    }
+
+    private void CreditActivity(long units)
+    {
+        _appState.ApplyActivityUnits(units);
+        _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
+        _shopService.EarnCoinsFromActivity(_appState.Shop, units);
+    }
+
+    private async void ShutdownApp()
+    {
+        if (_isExiting) return;
+        _isExiting = true;
+        if (_menuWindow is not null) _menuWindow.IsEnabled = false;
+        if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
+        _growthTickTimer?.Stop();
+        _inputHook?.Stop();
+        _gamepadHook?.Stop();
+        var units = _inputCounter?.DrainUnits() ?? 0;
+        if (units > 0) _appState.RunWhenReady(() => CreditActivity(units));
+        try
+        {
+            if (_hasLoadedState && !_isWipingSaveData)
+                await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            System.Windows.MessageBox.Show(ex.Message + "\nПоследнее сохранение не записано. Закрытие отменено.",
+                "PokéCorner — ошибка сохранения", MessageBoxButton.OK, MessageBoxImage.Warning);
+            _isExiting = false;
+            if (_menuWindow is not null) _menuWindow.IsEnabled = true;
+            if (_overlayWindow is not null) _overlayWindow.IsEnabled = true;
+            _growthTickTimer?.Start();
+            _inputHook?.Start();
+            _gamepadHook?.Start();
+            return;
+        }
         AllowDeskWindowsToClose();
         Shutdown();
     }
 
     /// Deletes the save file and relaunches, so the new process runs first-run onboarding
-    /// as if freshly installed. Only state.json goes: the sprite cache and catalog.json are
+    /// as if freshly installed. Both active save files go; the immutable v1 backup remains: the sprite cache and catalog.json are
     /// asset caches, and rebuilding the catalog would turn a reset into a multi-minute wait.
     private void ResetSaveDataAndRestart()
     {
+        if (_appState.IsCommitting) { _appState.RunWhenReady(ResetSaveDataAndRestart); return; }
         _isWipingSaveData = true;
-        _saveWriter.Delete(); // also cancels an autosave still queued on the thread pool
+        _saveWriter.Delete();
+        new JsonSaveStore(AppPaths.GetSaveFilePath()).Delete(); // explicit reset must not re-import v1 at restart
 
         Process.Start(Environment.ProcessPath!, AfterRestartArg);
 
@@ -875,7 +976,7 @@ public partial class App : System.Windows.Application
         _fullscreenMonitor?.Dispose();
         _trayIconService?.Dispose();
 
-        PersistState(flush: true);
+        if (!_isExiting) PersistState(flush: true);
     }
 
     /// Autosaves (flush: false) only queue the disk write on the thread pool — they run on the
@@ -884,7 +985,7 @@ public partial class App : System.Windows.Application
     private void PersistState(bool flush = false)
     {
         // ResetSaveDataAndRestart deleted state.json; writing now would bring it straight back.
-        if (_isWipingSaveData || !_hasLoadedState) return;
+        if (_isWipingSaveData || !_hasLoadedState || _appState.IsCommitting) return;
 
         var data = _appState.ToSaveData(_catchReadyCount);
         if (flush) _saveWriter.Flush(data);
