@@ -54,7 +54,7 @@
                            Visibility="Collapsed"
                            Foreground="{StaticResource SecondaryTextBrush}" Margin="0,2,0,0" />
 
-                <Button x:Name="CatchButton" Content="Поймать!" Click="CatchButton_Click" Margin="0,20,0,0"
+                <Button x:Name="CatchButton" Content="Открыть покебол" Click="CatchButton_Click" Margin="0,20,0,0"
                         HorizontalAlignment="Center" Padding="34,10" FontSize="14" />
             </StackPanel>
         </Border>

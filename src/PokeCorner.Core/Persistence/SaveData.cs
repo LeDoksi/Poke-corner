@@ -23,6 +23,8 @@ public sealed class SaveData
     public TimedActivity? Expedition { get; set; }
     public TimedActivity? Nest { get; set; }
     public Dictionary<string, Guid> CompletedOperations { get; set; } = [];
+    public List<EncounterState> Encounters { get; set; } = [];
+    public bool ActivityNewGuaranteed { get; set; }
     public required List<PokemonIndividual> Individuals { get; set; }
     public Guid? ActiveIndividualId { get; set; }
     public required AppSettings Settings { get; set; }
@@ -39,8 +41,7 @@ public sealed class SaveData
     public Dictionary<Guid, CareState> CareStates { get; set; } = new();
     public List<PendingEgg> PendingEggs { get; set; } = new();
 
-    /// How many catches are queued waiting for the player to claim them (capped at
-    /// App.MaxPendingCatches).
+    /// Earned activity balls waiting to be opened.
     public int PendingCatchCount { get; set; }
 }
 

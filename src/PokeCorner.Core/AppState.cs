@@ -13,6 +13,8 @@ public sealed class AppState
     public ShopInventory Shop { get; } = new();
     public Dictionary<Guid, CareState> CareStateByIndividualId { get; } = new();
     public List<PendingEgg> PendingEggs { get; } = new();
+    public List<EncounterState> Encounters { get; } = new();
+    public bool ActivityNewGuaranteed { get; private set; }
 
     private SaveData? _metadata;
     private readonly Queue<Action> _deferredMutations = new();
@@ -143,6 +145,9 @@ public sealed class AppState
         foreach (var existing in Collection.Individuals.ToArray()) Collection.Release(existing.Id);
         CareStateByIndividualId.Clear();
         PendingEggs.Clear();
+        Encounters.Clear();
+        Encounters.AddRange(data.Encounters);
+        ActivityNewGuaranteed = data.ActivityNewGuaranteed;
         foreach (var individual in data.Individuals)
         {
             // Rescue individuals caught under the early hand-authored offline pool, whose invented chain
@@ -218,6 +223,8 @@ public sealed class AppState
         data.Berries = new(Shop.Berries);
         data.Items = new(Shop.Items);
         data.PendingEggs = PendingEggs.ToList();
+        data.Encounters = Encounters.ToList();
+        data.ActivityNewGuaranteed = ActivityNewGuaranteed;
         data.CareStates = new(CareStateByIndividualId);
         data.PendingCatchCount = pendingCatchCount;
         if (data.SchemaVersion == 2)

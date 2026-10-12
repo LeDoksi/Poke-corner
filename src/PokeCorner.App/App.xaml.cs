@@ -42,6 +42,7 @@ public partial class App : System.Windows.Application
     private TrayIconService _trayIconService = null!;
     private ForegroundWindowMonitor _fullscreenMonitor = null!;
     private CatchRoller _catchRoller = null!;
+    private EncounterService _encounterService = null!;
     private EggIncubationService _eggIncubationService = null!;
     private CareModeService _careModeService = null!;
     private FeedingService _feedingService = null!;
@@ -54,10 +55,8 @@ public partial class App : System.Windows.Application
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
 
-    /// Catches waiting to be claimed on the Catch tab, up to MaxPendingCatches; rolls past the
-    /// cap are dropped.
+    /// Earned activity balls waiting to be opened.
     private int _catchReadyCount;
-    private const int MaxPendingCatches = 3;
     /// Every decoded frame of the active individual's sprite — the list the overlay animates
     /// from. One element means a static sprite; null means nothing is cached yet.
     private IReadOnlyList<byte[]>? _activeSpriteFrames;
@@ -167,6 +166,10 @@ public partial class App : System.Windows.Application
             }
         }
         _catchReadyCount = loaded?.PendingCatchCount ?? 0;
+        _encounterService = new EncounterService(_catalogPackage);
+        // Older saves carry earned balls as a count only; give them stable queue IDs in memory.
+        for (var missing = _catchReadyCount - _appState.Encounters.Count(e => e.Source == "activity" && e.Phase == "sealed"); missing > 0; missing--)
+            _encounterService.Reserve(_appState.Encounters, "activity", Guid.NewGuid());
 
         if (FirstRunFlow.NeedsOnboarding(loaded))
         {
@@ -575,13 +578,14 @@ public partial class App : System.Windows.Application
         individual.ResolveDisplaySpeciesId(_speciesCatalog.LoadForLookup());
 
 
-    /// Activity crossed the catch threshold: queue a catch (capped at MaxPendingCatches) for the
-    /// player to claim on the Catch tab. Never catches automatically — that took the moment away.
+    /// Activity crossed the catch threshold: queue a ball for later opening.
     private void OnCatchRollDue()
     {
-        if (_catchReadyCount >= MaxPendingCatches) return; // hard cap — extra rolls are discarded
+        // shortcut: the persisted counter is int-sized; widen it if a profile can earn 2 billion balls.
+        if (_catchReadyCount == int.MaxValue) return;
 
         var wasIdle = _catchReadyCount == 0;
+        _encounterService.Reserve(_appState.Encounters, "activity", Guid.NewGuid());
         _catchReadyCount++;
         _trayIconService.SetCatchReady(true);
         _menuWindow?.SetCatchReady(_catchReadyCount);
@@ -589,42 +593,24 @@ public partial class App : System.Windows.Application
         // Only toast on the 0->1 transition — don't spam a toast per extra queued catch.
         if (wasIdle)
         {
-            _trayIconService.ShowNotification("PokéCorner", "Встретили нового покемона, скорее поймай его!");
+            _trayIconService.ShowNotification("PokéCorner", "Покебол за активность готов к открытию.");
         }
     }
 
-    private CatchReveal? TryPerformCatch()
+    private async Task<CatchReveal?> TryPerformCatchAsync()
     {
         if (_isExiting || _appState.IsCommitting) return null;
-        if (_catchReadyCount <= 0) return null;
-
-        // PokemonCollection.Add() auto-activates via ActiveIndividualId ??= individual.Id
-        // whenever nothing is currently active. Preserve an intentionally empty desktop.
-        var hadNoActiveInNonEmptyCollection = _appState.Collection.ActiveIndividualId is null && _appState.Collection.Individuals.Count > 0;
-
-        var availableChains = GetDirectIssueChains();
-        if (availableChains.Count == 0) return null;
-        var shinyMultiplier = _shopService.ConsumeCatchLuckyCharm(_appState.Shop);
-        var result = ValidateDirectResult(_catchRoller.RollCatch(availableChains, _appState.Collection.Individuals, shinyMultiplier));
-
-        var individual = result.ToIndividual(DateTimeOffset.UtcNow);
-        individual.AcquisitionSource = "activity";
-        SaveMigration.InitializeIndividual(individual, _legacyLookup, _catalogPackage);
-        _appState.Collection.Add(individual);
-
-        if (hadNoActiveInNonEmptyCollection)
-        {
-            _appState.Collection.ClearActive();
-        }
-
-        _catchReadyCount--;
+        var encounter = _appState.Encounters.FirstOrDefault(e => e.Source == "activity" && e.Phase == "sealed");
+        if (encounter is null) return null;
+        EncounterOpenResult? result = null;
+        await _appState.CommitAsync(_saveWriter, next => result = _encounterService.Open(next, encounter.Id),
+            () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
         _trayIconService.SetCatchReady(_catchReadyCount > 0);
         _menuWindow?.SetCatchReady(_catchReadyCount);
         RefreshOverlayForActiveIndividual();
-
-        var chain = availableChains.FirstOrDefault(c => c.ChainId == result.ChainId);
-        var rarity = chain is null ? RarityTier.Common : RarityClassifier.Classify(chain.CaptureRate);
-        return new CatchReveal(result, rarity);
+        var individual = result!.Individual;
+        return new CatchReveal(new CatchResult(individual.EvolutionChainId, individual.SpeciesId, individual.Nature,
+            individual.IsShiny, result.WasDuplicateSpecies, individual.ChainLength), result.Rarity);
     }
 
     /// No toast: the bounce is the feedback, and pets get clicked far too often for a
@@ -783,7 +769,7 @@ public partial class App : System.Windows.Application
                 var shopView = new ShopView(_appState, _shopService,
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount,
                         next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual);
-                var catchView = new CatchView(_appState, TryPerformCatch, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId));
+                var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened

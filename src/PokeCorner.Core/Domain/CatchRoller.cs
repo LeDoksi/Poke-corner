@@ -12,6 +12,29 @@ public sealed class CatchRoller
 
     public CatchRoller(Random? random = null) => _random = random ?? Random.Shared;
 
+    public CatchResult RollActivity(IReadOnlyList<SpeciesEvolutionChain> availableRoots, IReadOnlySet<int> discovered,
+        bool guaranteeNew, IReadOnlyList<int> rarityWeights, double newChance, Func<int, bool> canBeShiny, Func<int, double> shinyMultiplier)
+    {
+        if (availableRoots.Count == 0) throw new ArgumentException("No directly issuable roots.", nameof(availableRoots));
+        if (rarityWeights.Count != 4 || rarityWeights.Any(w => w < 0) || rarityWeights.All(w => w == 0))
+            throw new ArgumentException("Invalid activity rarity weights.", nameof(rarityWeights));
+        if (newChance is < 0 or > 1) throw new ArgumentOutOfRangeException(nameof(newChance));
+        var unknown = availableRoots.Where(c => !discovered.Contains(c.StarterSpeciesId)).ToArray();
+        var known = availableRoots.Where(c => discovered.Contains(c.StarterSpeciesId)).ToArray();
+        var chooseNew = unknown.Length > 0 && (known.Length == 0 || guaranteeNew || _random.NextDouble() < newChance);
+        var pool = chooseNew ? unknown : known;
+        var weightedTiers = Enum.GetValues<RarityTier>()
+            .Select(t => (tier: t, weight: pool.Any(c => RarityClassifier.Classify(c.CaptureRate) == t) ? rarityWeights[(int)t] : 0))
+            .Where(x => x.weight > 0).ToArray();
+        if (weightedTiers.Length == 0) throw new InvalidDataException("No weighted rarity in the available encounter pool.");
+        var roll = _random.Next(weightedTiers.Sum(x => x.weight));
+        var tier = weightedTiers.First(x => (roll -= x.weight) < 0).tier;
+        var candidates = pool.Where(c => RarityClassifier.Classify(c.CaptureRate) == tier).ToArray();
+        var chain = candidates[_random.Next(candidates.Length)];
+        var shiny = canBeShiny(chain.StarterSpeciesId) && _random.NextDouble() < BaseShinyChance * shinyMultiplier(chain.StarterSpeciesId);
+        return new CatchResult(chain.ChainId, chain.StarterSpeciesId, PickUniformNature(), shiny, !chooseNew, chain.ChainLength);
+    }
+
     public CatchResult RollCatch(
         IReadOnlyList<SpeciesEvolutionChain> allChains,
         IReadOnlyCollection<PokemonIndividual> owned,
@@ -62,6 +85,12 @@ public sealed class CatchRoller
         var isShiny = _random.NextDouble() < BaseShinyChance;
         var nature = PickUniformNature();
         return new CatchResult(chain.ChainId, chain.StarterSpeciesId, nature, isShiny, WasDuplicateSpecies: false, chain.ChainLength);
+    }
+
+    public CatchResult RollKnownEncounter(SpeciesEvolutionChain chain, bool wasDuplicate, bool canBeShiny, double shinyMultiplier)
+    {
+        var shiny = canBeShiny && _random.NextDouble() < BaseShinyChance * shinyMultiplier;
+        return new CatchResult(chain.ChainId, chain.StarterSpeciesId, PickUniformNature(), shiny, wasDuplicate, chain.ChainLength);
     }
 
     private SpeciesEvolutionChain PickChain(IReadOnlyList<SpeciesEvolutionChain> allChains, IReadOnlySet<int> ownedChainIds)

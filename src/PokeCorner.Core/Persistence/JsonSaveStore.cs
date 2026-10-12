@@ -234,7 +234,7 @@ public sealed class JsonSaveStore
     public static void ValidateData(SaveData data)
     {
         Require(data.Individuals is not null && data.Settings is not null
-            && data.CareStates is not null && data.PendingEggs is not null, "обязательное поле равно null");
+            && data.CareStates is not null && data.PendingEggs is not null && data.Encounters is not null, "обязательное поле равно null");
         Require(data.FeedingTreats >= 0 && data.CatchAccumulatorUnits >= 0 && data.FeedingRemainderUnits >= 0
             && data.ShopCoins >= 0 && data.ShopRemainderUnits >= 0 && data.PendingCatchCount >= 0,
             "отрицательный счётчик");
@@ -299,12 +299,32 @@ public sealed class JsonSaveStore
         Require(data.Gift!.GrantId == "global-update-compatible-pair-v1" && data.Gift.Gifts is not null
             && data.Gift.Gifts.Count is 0 or 2, "неверный подарок");
         var ids = data.Individuals.Select(i => i.Id).ToHashSet();
+        Require(data.Encounters!.All(e => e is not null && e.Id != Guid.Empty
+            && e.Source is "activity" or "expedition" or "gift"
+            && e.Phase is "sealed" or "opened"
+            && (e.KnownSpeciesId is null or > 0)
+            && (e.GiftIndividualId is null || e.Source == "gift" && e.GiftIndividualId != Guid.Empty)
+            && (e.Source != "activity" || e.KnownSpeciesId is null && e.GiftIndividualId is null)
+            && (e.Phase == "sealed" && e.Individual is null || e.Phase == "opened" && e.Individual is not null && e.Rarity is not null)), "неверная встреча");
+        Require(data.Encounters.Select(e => e.Id).Distinct().Count() == data.Encounters.Count, "повторный ID встречи");
+        foreach (var encounter in data.Encounters.Where(e => e.Phase == "opened"))
+        {
+            ValidateIndividual(encounter.Individual, 2);
+            Require(Enum.IsDefined(encounter.Rarity!.Value) && data.Individuals.Any(i => i.Id == encounter.Individual!.Id)
+                && (encounter.KnownSpeciesId is null || encounter.Individual!.SpeciesId == encounter.KnownSpeciesId),
+                "открытая встреча без экземпляра");
+        }
+        Require(data.Encounters.Where(e => e.Phase == "opened").Select(e => e.Individual!.Id).Distinct().Count()
+            == data.Encounters.Count(e => e.Phase == "opened"), "экземпляр выдан дважды");
         foreach (var gift in data.Gift.Gifts!)
         {
             Require(gift is not null && gift.Status is "reserved" or "opened" && gift.Individual is not null, "неверная выдача");
             ValidateIndividual(gift!.Individual, 2);
             Require(gift!.Status != "reserved" || ids.Add(gift.Individual!.Id), "повторный GUID подарка");
         }
+        Require(data.Encounters.All(e => e.GiftIndividualId is not { } giftId || data.Gift.Gifts.Any(g =>
+            g.Individual.Id == giftId && g.Status == (e.Phase == "sealed" ? "reserved" : "opened")
+            && (e.Individual is null || e.Individual.Id == giftId))), "встреча не совпадает с подарком");
         var ownedIds = data.Individuals.Select(i => i.Id).ToHashSet();
         ValidateActivity(data.Expedition, ownedIds, "claimed");
         ValidateActivity(data.Nest, ownedIds, "hatched");

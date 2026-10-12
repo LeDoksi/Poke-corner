@@ -11,22 +11,24 @@ namespace PokeCorner.App.Popup;
 public partial class CatchView : System.Windows.Controls.UserControl
 {
     private readonly AppState _appState;
-    private readonly Func<CatchReveal?> _tryPerformCatch;
+    private readonly Func<Task<CatchReveal?>> _tryPerformCatch;
     private readonly Func<int, Task<byte[]?>> _fetchSprite;
-    /// Number of queued catches waiting to be claimed (capped at App.MaxPendingCatches) — drives
-    /// the "N поимок готово" wording below.
+    /// Number of earned activity balls waiting to be opened.
     private readonly Func<int> _catchReadyCount;
     private readonly Action _onStateChanged;
 
     /// Species id -> display name, resolved against the live species catalog by the caller.
     private readonly Func<int, string> _resolveSpeciesName;
     private DispatcherTimer? _liveRefreshTimer;
+    private bool _busy;
+    private bool _showingResult;
+    private string? _error;
 
-    public CatchView(AppState appState, Func<CatchReveal?> tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<int> catchReadyCount, Action onStateChanged, Func<int, string> resolveSpeciesName)
+    public CatchView(AppState appState, Func<CatchReveal?>? tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<int> catchReadyCount, Action onStateChanged, Func<int, string> resolveSpeciesName, Func<Task<CatchReveal?>>? tryPerformCatchAsync = null)
     {
         InitializeComponent();
         _appState = appState;
-        _tryPerformCatch = tryPerformCatch;
+        _tryPerformCatch = tryPerformCatchAsync ?? (() => Task.FromResult(tryPerformCatch?.Invoke()));
         _fetchSprite = fetchSprite;
         _catchReadyCount = catchReadyCount;
         _onStateChanged = onStateChanged;
@@ -62,25 +64,50 @@ public partial class CatchView : System.Windows.Controls.UserControl
     /// through singular to plural.
     private void SetReady(int count)
     {
-        CatchButton.IsEnabled = count > 0;
+        CatchButton.IsEnabled = !_busy && (_showingResult || count > 0);
+        if (_showingResult) return;
+        CatchButton.Content = "Открыть покебол";
         StatusText.Text = count switch
         {
             <= 0 => "Копи активность за ПК — полоса поимки ещё не заполнилась.",
-            1 => "Встретили нового покемона, скорее поймай его!",
-            _ => $"Готово {count} поимки — жми «Поймать!»."
+            1 => "Покебол за активность готов к открытию.",
+            _ => $"Готово {count} покебола за активность."
         };
+        if (_error is not null) StatusText.Text = _error;
     }
 
     private async void CatchButton_Click(object sender, RoutedEventArgs e)
     {
-        var reveal = _tryPerformCatch();
-        if (reveal is null)
+        if (_busy) return;
+        if (_showingResult)
         {
-            StatusText.Text = "Пока не готово — играй ещё.";
+            _showingResult = false;
+            RevealSpriteImage.Visibility = Visibility.Collapsed;
+            RevealNameText.Visibility = Visibility.Collapsed;
+            RevealRarityText.Visibility = Visibility.Collapsed;
+            Refresh();
             return;
         }
-        _onStateChanged();
-        await PlayReveal(reveal);
+        _busy = true;
+        _error = null;
+        CatchButton.IsEnabled = false;
+        try
+        {
+            var reveal = await _tryPerformCatch();
+            if (reveal is null) { StatusText.Text = "Пока нет готового покебола."; return; }
+            _onStateChanged();
+            await PlayReveal(reveal);
+        }
+        catch (Exception ex)
+        {
+            _error = "Не удалось открыть покебол: " + ex.Message;
+            StatusText.Text = _error;
+        }
+        finally
+        {
+            _busy = false;
+            CatchButton.IsEnabled = _showingResult || _catchReadyCount() > 0;
+        }
     }
 
     public async Task PlayReveal(CatchReveal reveal)
@@ -102,11 +129,12 @@ public partial class CatchView : System.Windows.Controls.UserControl
         PokeBallRotate.BeginAnimation(System.Windows.Media.RotateTransform.AngleProperty, shake);
         await tcs.Task;
 
-        var spriteBytes = await _fetchSprite(reveal.Result.SpeciesId);
-        if (spriteBytes is not null)
+        try
         {
-            RevealSpriteImage.Source = SpriteImages.Decode(spriteBytes);
+            var spriteBytes = await _fetchSprite(reveal.Result.SpeciesId);
+            if (spriteBytes is not null) RevealSpriteImage.Source = SpriteImages.Decode(spriteBytes);
         }
+        catch { RevealSpriteImage.Source = null; } // The individual is already saved; an image failure must not imply a failed catch.
 
         RevealNameText.Text = _resolveSpeciesName(reveal.Result.SpeciesId) + (reveal.Result.IsShiny ? " ✨" : "");
         RevealRarityText.Text = reveal.Rarity + (reveal.Result.WasDuplicateSpecies ? " · уже был в коллекции" : " · новый вид!");
@@ -123,6 +151,8 @@ public partial class CatchView : System.Windows.Controls.UserControl
         RevealNameText.BeginAnimation(OpacityProperty, fadeIn);
         RevealRarityText.BeginAnimation(OpacityProperty, fadeIn);
 
-        StatusText.Text = "Загляни в Коллекцию, чтобы посмотреть на нового покемона.";
+        _showingResult = true;
+        CatchButton.Content = "Продолжить";
+        StatusText.Text = "Покемон уже добавлен в коллекцию.";
     }
 }
