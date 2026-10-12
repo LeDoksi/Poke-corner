@@ -78,6 +78,7 @@ public partial class AppMenuWindow : Window
     {
         if (section == MenuSection.Settings)
         {
+            if (SettingsContent.Visibility != Visibility.Visible) _lastSection = SelectedSection();
             MenuTabControl.Visibility = Visibility.Collapsed;
             SettingsContent.Visibility = Visibility.Visible;
             SettingsButton.Content = "К разделам";
@@ -109,6 +110,15 @@ public partial class AppMenuWindow : Window
             if (section == MenuSection.Corner) CornerTabs.SelectedItem = CornerHomeTab;
         }
     }
+
+    private MenuSection SelectedSection() => MenuTabControl.SelectedItem switch
+    {
+        var tab when tab == CollectionTab => MenuSection.Pokedex,
+        var tab when tab == ShopTab => MenuSection.Shop,
+        var tab when tab == ExpeditionsTab => MenuSection.Expeditions,
+        var tab when tab == NurseryTab => MenuSection.Nursery,
+        _ => CornerTabs.SelectedItem == CatchTab ? MenuSection.Catch : MenuSection.Corner
+    };
 
     // Compatibility for callers compiled against the previous four-tab shell.
     public void SelectTab(int index)

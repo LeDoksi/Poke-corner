@@ -99,7 +99,7 @@
                     <Button x:Name="ResetDataButton" Content="Очистить сохранённые данные" Click="ResetDataButton_Click"
                             Margin="0,10,0,0" HorizontalAlignment="Left"
                             Style="{StaticResource SecondaryButtonStyle}"
-                            Foreground="{StaticResource AccentRedBrush}" />
+                            Foreground="{StaticResource DangerTextBrush}" />
                     <TextBlock Text="Начинает новую игру с выбором стартового покемона. Предыдущие данные остаются в истории для восстановления."
                                Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,0" />
                 </StackPanel>

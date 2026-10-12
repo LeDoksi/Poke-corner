@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 using PokeCorner.App.Popup;
 using PokeCorner.App.Tests.Theme;
 using PokeCorner.Core;
@@ -14,6 +15,102 @@ namespace PokeCorner.App.Tests.GlobalUpdate;
 
 public class ShellTests
 {
+    [Fact]
+    public void DirectTabSelectionReturnsFromSettingsToTheExactView() => WpfTestHost.Run(() =>
+    {
+        var menu = CreateMenu(new AppState());
+        var main = (TabControl)menu.FindName("MenuTabControl");
+        var nested = (TabControl)menu.FindName("CornerTabs");
+        var settingsButton = (Button)menu.FindName("SettingsButton");
+        foreach (var index in new[] { 1, 2, 0 })
+        {
+            main.SelectedIndex = index;
+            if (index == 0) nested.SelectedIndex = 1;
+            settingsButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            Assert.Equal(Visibility.Collapsed, main.Visibility);
+            settingsButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            Assert.Equal(index, main.SelectedIndex);
+            if (index == 0) Assert.Equal(1, nested.SelectedIndex);
+        }
+    });
+
+    [Fact]
+    public void RarityAndTypeLabelsMeetTextContrastOnTheirResolvedPaperSurface() => WpfTestHost.Run(() =>
+    {
+        foreach (var key in new[] { "RarityCommonBrush", "RarityUncommonBrush", "RarityRareBrush", "RarityLegendaryBrush" })
+        {
+            var text = new TextBlock { Text = "Редкость", Foreground = (Brush)Application.Current.Resources[key] };
+            var card = new Border { Style = (Style)Application.Current.Resources["CardStyle"], Child = text };
+            WpfTestHost.Layout(card, 180, 40);
+            Assert.True(Contrast(((SolidColorBrush)text.Foreground).Color, ((SolidColorBrush)card.Background).Color) >= 4.5, key);
+        }
+
+        foreach (var type in new[] { "normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy", "unknown" })
+        {
+            var presenter = new ContentPresenter
+            {
+                Content = TypeDisplay.ToBadge(type),
+                ContentTemplate = (DataTemplate)Application.Current.Resources["TypeBadgeTemplate"]
+            };
+            WpfTestHost.Layout(presenter, 180, 40);
+            var label = FindChild<TextBlock>(presenter);
+            var paper = FindChild<Border>(presenter);
+            Assert.True(Contrast(((SolidColorBrush)label.Foreground).Color, ((SolidColorBrush)paper.Background).Color) >= 4.5, type);
+        }
+    });
+
+    [Fact]
+    public void ResetActionUsesDistinctDangerInk() => WpfTestHost.Run(() =>
+    {
+        var view = new SettingsView(new SettingsViewModel(new AppSettings()), () => { });
+        var button = (Button)view.FindName("ResetDataButton");
+        Assert.Equal(((SolidColorBrush)Application.Current.Resources["DangerTextBrush"]).Color,
+            ((SolidColorBrush)button.Foreground).Color);
+    });
+
+    [Fact]
+    public void PaperCardsUseTheirBorderWithoutDarkHalos() => WpfTestHost.Run(() =>
+    {
+        foreach (var key in new[] { "CardStyle", "HeroCardStyle" })
+        {
+            var card = new Border { Style = (Style)Application.Current.Resources[key] };
+            WpfTestHost.Layout(card, 180, 60);
+            Assert.Null(card.Effect);
+            Assert.True(card.BorderThickness.Left > 0);
+        }
+    });
+
+    private static T FindChild<T>(DependencyObject parent) where T : DependencyObject
+    {
+        for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+        {
+            var child = VisualTreeHelper.GetChild(parent, i);
+            if (child is T match) return match;
+            if (VisualTreeHelper.GetChildrenCount(child) > 0)
+            {
+                try { return FindChild<T>(child); }
+                catch (InvalidOperationException) { }
+            }
+        }
+        throw new InvalidOperationException($"Missing {typeof(T).Name}");
+    }
+
+    private static double Contrast(Color a, Color b)
+    {
+        static double L(Color c)
+        {
+            static double C(byte value)
+            {
+                var n = value / 255.0;
+                return n <= 0.04045 ? n / 12.92 : Math.Pow((n + 0.055) / 1.055, 2.4);
+            }
+            return 0.2126 * C(c.R) + 0.7152 * C(c.G) + 0.0722 * C(c.B);
+        }
+        var x = L(a);
+        var y = L(b);
+        return (Math.Max(x, y) + 0.05) / (Math.Min(x, y) + 0.05);
+    }
+
     [Fact]
     public void FiveSectionsAndSettingsKeepCatchAndSoundControlsReachable() => WpfTestHost.Run(() =>
     {

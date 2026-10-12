@@ -22,38 +22,35 @@ public sealed record TypeBadge(string Label, Brush Brush);
 /// text, the four rarity tiers); this is a fixed external vocabulary that maps 1:1 onto
 /// PokeAPI's own type list and changes only if PokeAPI adds a type.
 ///
-/// Deliberately kept clear of the rarity tier colours (#9AA5D1 grey-blue, #4CD787 mint,
-/// #5B9DFF blue, #FFB020 gold) so the two badge systems don't read as one at a glance: water
-/// is a deeper blue than RarityRare, grass a leafier green than RarityUncommon, and electric a
-/// truer yellow than RarityLegendary's orange-gold.
+/// Dark enough for type labels on the paper card, while keeping each type distinct.
 public static class TypeDisplay
 {
     private static readonly IReadOnlyDictionary<string, Brush> Brushes = new Dictionary<string, Brush>(StringComparer.OrdinalIgnoreCase)
     {
-        ["normal"] = Frozen("#A8A47E"),
-        ["fire"] = Frozen("#F0803C"),
-        ["water"] = Frozen("#3B82E8"),
-        ["electric"] = Frozen("#EFD023"),
-        ["grass"] = Frozen("#62B14E"),
-        ["ice"] = Frozen("#6FD3D8"),
-        ["fighting"] = Frozen("#C0392B"),
-        ["poison"] = Frozen("#9B59B6"),
-        ["ground"] = Frozen("#D6A94E"),
-        ["flying"] = Frozen("#9C8FE8"),
-        ["psychic"] = Frozen("#F0568F"),
-        ["bug"] = Frozen("#8CAF3E"),
-        ["rock"] = Frozen("#B08D57"),
-        ["ghost"] = Frozen("#6A5B9E"),
-        ["dragon"] = Frozen("#6C4CE0"),
-        ["dark"] = Frozen("#5A5266"),
-        ["steel"] = Frozen("#8E9BA8"),
-        ["fairy"] = Frozen("#EE9BC0")
+        ["normal"] = Frozen("#5C5A43"),
+        ["fire"] = Frozen("#9B3F17"),
+        ["water"] = Frozen("#25548E"),
+        ["electric"] = Frozen("#6B5600"),
+        ["grass"] = Frozen("#2D662E"),
+        ["ice"] = Frozen("#176A70"),
+        ["fighting"] = Frozen("#8A3028"),
+        ["poison"] = Frozen("#683B82"),
+        ["ground"] = Frozen("#76511B"),
+        ["flying"] = Frozen("#51478D"),
+        ["psychic"] = Frozen("#99325E"),
+        ["bug"] = Frozen("#526520"),
+        ["rock"] = Frozen("#675132"),
+        ["ghost"] = Frozen("#4B427A"),
+        ["dragon"] = Frozen("#4935A0"),
+        ["dark"] = Frozen("#41404A"),
+        ["steel"] = Frozen("#4A5D69"),
+        ["fairy"] = Frozen("#934A72")
     };
 
     /// Unknown type name (PokeAPI adding a 19th, or a corrupted cache entry) falls back to a
     /// neutral grey rather than throwing — a badge with the right text in the wrong colour is
     /// still useful, a crash is not.
-    private static readonly Brush UnknownBrush = Frozen("#7C8497");
+    private static readonly Brush UnknownBrush = Frozen("#505B67");
 
     private static Brush Frozen(string hex)
     {

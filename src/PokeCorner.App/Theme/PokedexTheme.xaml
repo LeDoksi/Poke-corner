@@ -24,11 +24,12 @@
     <SolidColorBrush x:Key="MutedTextBrush" Color="#50614F" />
     <SolidColorBrush x:Key="DisabledSurfaceBrush" Color="#D8D7CE" />
     <SolidColorBrush x:Key="OnForestTextBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="DangerTextBrush" Color="#9B3833" />
 
-    <SolidColorBrush x:Key="RarityCommonBrush" Color="#9AA5D1" />
-    <SolidColorBrush x:Key="RarityUncommonBrush" Color="#4CD787" />
-    <SolidColorBrush x:Key="RarityRareBrush" Color="#5B9DFF" />
-    <SolidColorBrush x:Key="RarityLegendaryBrush" Color="#FFB020" />
+    <SolidColorBrush x:Key="RarityCommonBrush" Color="#555D66" />
+    <SolidColorBrush x:Key="RarityUncommonBrush" Color="#246A48" />
+    <SolidColorBrush x:Key="RarityRareBrush" Color="#2A548A" />
+    <SolidColorBrush x:Key="RarityLegendaryBrush" Color="#80521B" />
 
     <!-- ===================== Gradient tokens ===================== -->
     <LinearGradientBrush x:Key="PrimaryButtonBrush" StartPoint="0,0" EndPoint="0,1">
@@ -196,22 +197,12 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="14" />
         <Setter Property="Padding" Value="12" />
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="3" Opacity="0.4" />
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style x:Key="HeroCardStyle" TargetType="Border" BasedOn="{StaticResource CardStyle}">
         <Setter Property="Background" Value="{StaticResource HeroCardBrush}" />
         <Setter Property="CornerRadius" Value="18" />
         <Setter Property="Padding" Value="16" />
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect Color="Black" BlurRadius="22" ShadowDepth="5" Opacity="0.5" />
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <!-- Recessed well: the inverse of a card — used behind sprite thumbnails and stat
