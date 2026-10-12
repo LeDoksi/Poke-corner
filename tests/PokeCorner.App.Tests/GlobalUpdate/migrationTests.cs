@@ -121,7 +121,7 @@ public sealed class MigrationTests : IDisposable
         Assert.Equal(6, next.Items.Count); Assert.Equal(6, next.Berries.Count);
         Assert.All(next.BerryRemainders.Values, n => { Assert.Equal(0, n.Numerator); Assert.Equal(1, n.Denominator); });
         Assert.Equal(2, next.Gift.Gifts.Count); Assert.NotEqual(next.Gift.Gifts[0].Individual.SpeciesId, next.Gift.Gifts[1].Individual.SpeciesId);
-        Assert.All(next.Gift.Gifts, g => { Assert.Equal("reserved", g.Status); Assert.NotEqual(1, g.Individual.SpeciesId); });
+        Assert.All(next.Gift.Gifts, g => { Assert.Equal("reserved", g.Status); Assert.NotEqual(1, g.Individual.SpeciesId); Assert.Equal(g.Individual.SpeciesId, Package.Value.Species.Single(s => s.Id == g.Individual.SpeciesId).FamilyRootId); });
     }
 
     [Fact]

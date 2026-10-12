@@ -10,8 +10,8 @@
   "tasks": 20,
   "dependencyGraphAcyclic": true,
   "runtimeFiles": 2739,
-  "runtimeBytes": 255731272,
+  "runtimeBytes": 255721533,
   "allOperationalPathsInAllowlist": true,
-  "runtimeManifestSha256": "dc76a960bc1896c53662c7ebf26755a95e86414bf1163a81a041bc4a59da557a",
+  "runtimeManifestSha256": "81b50353b9cc765300f73766c93b3ca3f0ba5d19437f0035a2d97b8740848cd0",
   "scope": "Prepared files and local task registry; live board verified separately. Not WPF migration/release acceptance."
 }

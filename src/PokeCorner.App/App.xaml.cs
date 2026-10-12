@@ -167,7 +167,7 @@ public partial class App : System.Windows.Application
         if (FirstRunFlow.NeedsOnboarding(loaded))
         {
             // The bundled full catalog makes this work with no network on a first launch.
-            var allChains = _speciesCatalog.LoadCachedOrFallback();
+            var allChains = GetDirectIssueChains();
             var commonCandidates = allChains
                 .Where(c => RarityClassifier.Classify(c.CaptureRate) == RarityTier.Common)
                 .OrderBy(_ => Random.Shared.Next())
@@ -187,7 +187,7 @@ public partial class App : System.Windows.Application
             var dialogChoseOne = selectionWindow.ShowDialog() == true;
             var chosenChain = dialogChoseOne ? selectionWindow.Chosen! : commonCandidates[0]; // window closed without a pick (e.g. Alt+F4) still needs a starter
 
-            var starter = FirstRunFlow.HatchChosen(chosenChain, _catchRoller, DateTimeOffset.UtcNow);
+            var starter = FirstRunFlow.HatchChosen(chosenChain, _catchRoller, DateTimeOffset.UtcNow, _catalogPackage);
             starter.AcquisitionSource = "starter";
             SaveMigration.InitializeIndividual(starter, _legacyLookup, _catalogPackage);
             _appState.Collection.Add(starter);
@@ -670,9 +670,10 @@ public partial class App : System.Windows.Application
         // Hardcore run-away, and nobody should auto-appear on the desk after that.
         var hadNoActiveInNonEmptyCollection = _appState.Collection.ActiveIndividualId is null && _appState.Collection.Individuals.Count > 0;
 
-        var availableChains = _speciesCatalog.LoadCachedOrFallback();
+        var availableChains = GetDirectIssueChains();
+        if (availableChains.Count == 0) return null;
         var shinyMultiplier = _shopService.ConsumeCatchLuckyCharm(_appState.Shop);
-        var result = _catchRoller.RollCatch(availableChains, _appState.Collection.Individuals, shinyMultiplier);
+        var result = ValidateDirectResult(_catchRoller.RollCatch(availableChains, _appState.Collection.Individuals, shinyMultiplier));
 
         var individual = result.ToIndividual(DateTimeOffset.UtcNow);
         individual.AcquisitionSource = "activity";
@@ -804,13 +805,14 @@ public partial class App : System.Windows.Application
 
         // A save written before the shop's tier gating (or hand-edited) can hold an egg of a tier
         // the catalog can't fill yet: keep the egg — and the lucky charm — for a later retry.
-        if (!_catchRoller.TryRollCatchFromTier(_speciesCatalog.LoadCachedOrFallback(), egg.Tier, _appState.Collection.Individuals,
+        if (!_catchRoller.TryRollCatchFromTier(GetDirectIssueChains(), egg.Tier, _appState.Collection.Individuals,
                 () => _shopService.ConsumeCatchLuckyCharm(_appState.Shop), out var result))
         {
             _trayIconService.ShowNotification("PokéCorner", "Пока нет доступных покемонов этой редкости — попробуй позже, когда каталог обновится.");
             return false;
         }
 
+        result = ValidateDirectResult(result);
         var individual = result.ToIndividual(DateTimeOffset.UtcNow);
         individual.AcquisitionSource = "legacy-shop-egg";
         SaveMigration.InitializeIndividual(individual, _legacyLookup, _catalogPackage);
@@ -824,7 +826,17 @@ public partial class App : System.Windows.Application
     /// Whether the catalog in use has a chain in this rarity tier, so the shop can't sell an
     /// egg that can never hatch.
     private bool IsRarityTierAvailable(RarityTier tier) =>
-        _speciesCatalog.LoadCachedOrFallback().Any(c => RarityClassifier.Classify(c.CaptureRate) == tier);
+        GetDirectIssueChains().Any(c => RarityClassifier.Classify(c.CaptureRate) == tier);
+
+    private List<SpeciesEvolutionChain> GetDirectIssueChains() =>
+        _speciesCatalog.LoadCachedOrFallback().Where(c => _catalogPackage.CanIssueDirectly(c.StarterSpeciesId, false)).ToList();
+
+    private CatchResult ValidateDirectResult(CatchResult result)
+    {
+        if (!_catalogPackage.CanIssueDirectly(result.SpeciesId, false)) throw new InvalidDataException("Catch must be an available family root.");
+        return result.IsShiny && !_catalogPackage.CanIssueDirectly(result.SpeciesId, true)
+            ? result with { IsShiny = false } : result;
+    }
 
     private bool BuyEgg(RarityTier tier)
     {

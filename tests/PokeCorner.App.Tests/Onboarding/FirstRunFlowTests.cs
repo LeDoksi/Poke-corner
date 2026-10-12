@@ -1,11 +1,13 @@
 using PokeCorner.App.Onboarding;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
+using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.App.Tests.Onboarding;
 
 public class FirstRunFlowTests
 {
+    private static readonly Lazy<CatalogPackage> Package = new(() => CatalogPackage.Load(Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..")), "src", "PokeCorner.App", "bin", Directory.GetParent(AppContext.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar))!.Name, "net8.0-windows", "Data")));
     [Fact]
     public void NeedsOnboarding_NullSaveData_ReturnsTrue()
     {
@@ -39,13 +41,28 @@ public class FirstRunFlowTests
         var chosenChain = new SpeciesEvolutionChain(ChainId: 4, StarterSpeciesId: 4, CaptureRate: 45, ChainLength: 3, StageSpeciesIds: new[] { 4, 5, 6 }, StageSpeciesNames: new[] { "Charmander", "Charmeleon", "Charizard" });
         var roller = new CatchRoller(new Random(Seed: 42));
 
-        var starter = FirstRunFlow.HatchChosen(chosenChain, roller, DateTimeOffset.UtcNow);
+        var starter = FirstRunFlow.HatchChosen(chosenChain, roller, DateTimeOffset.UtcNow, Package.Value);
 
         Assert.Equal(chosenChain.StarterSpeciesId, starter.SpeciesId);
         Assert.Equal(chosenChain.ChainId, starter.EvolutionChainId);
         Assert.Equal(chosenChain.ChainLength, starter.ChainLength);
         Assert.Equal(0, starter.AccumulatedCarePoints);
         Assert.Equal(EvolutionStage.Stage1, starter.CurrentStage);
+    }
+
+    [Fact]
+    public void HatchChosen_RejectsAnEvolvedStarterEvenWhenItsAssetExists()
+    {
+        var chain = new SpeciesEvolutionChain(10, 25, 190, 2, [25, 26], ["Pikachu", "Raichu"]);
+        Assert.True(Package.Value.CanObtain(25, false));
+        Assert.Throws<InvalidDataException>(() => FirstRunFlow.HatchChosen(chain, new CatchRoller(new Random(1)), DateTimeOffset.UtcNow, Package.Value));
+    }
+
+    [Fact]
+    public void HatchChosen_AcceptsStandaloneRoot()
+    {
+        var chain = new SpeciesEvolutionChain(201, 201, 255, 1, [201], ["Unown"]);
+        Assert.Equal(201, FirstRunFlow.HatchChosen(chain, new CatchRoller(new Random(1)), DateTimeOffset.UtcNow, Package.Value).SpeciesId);
     }
 
     // ===================== Part D: "wild catches always start at stage 1" =====================
@@ -90,7 +107,7 @@ public class FirstRunFlowTests
 
         for (var seed = 0; seed < 50; seed++)
         {
-            var starter = FirstRunFlow.HatchChosen(chain, new CatchRoller(new Random(seed)), DateTimeOffset.UtcNow);
+            var starter = FirstRunFlow.HatchChosen(chain, new CatchRoller(new Random(seed)), DateTimeOffset.UtcNow, Package.Value);
 
             Assert.Equal(EvolutionStage.Stage1, starter.CurrentStage);
             Assert.Equal(0, starter.AccumulatedCarePoints);

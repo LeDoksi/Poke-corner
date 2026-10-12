@@ -11164,8 +11164,8 @@
     {
       "path": "docs/design-v2/final/catalog-rules.json",
       "target": "final/catalog-rules.json",
-      "bytes": 249557,
-      "sha256": "6967a8af4d26d548fc665effcfe014b82bbd8ad0ceafe69bbddd363c49d7a69b"
+      "bytes": 239818,
+      "sha256": "2db7d3a7dc1c81ab87fb9a4c4d390c8726a8c8944b9e81cfa2a5eb7f8ede475b"
     },
     {
       "path": "docs/design-v2/final/DESIGN.json",
@@ -16442,5 +16442,5 @@
       "sha256": "bb55a5ca5c2042335b3991af27c4d0705d0ef41cac6164ac737fd8f2a1e85207"
     }
   ],
-  "totalBytes": 255731272
+  "totalBytes": 255721533
 }

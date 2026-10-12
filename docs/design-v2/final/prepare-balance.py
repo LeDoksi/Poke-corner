@@ -255,7 +255,7 @@ for location in config['locations']:
     assert pool
     routes.append({**location,'speciesIds':pool,'rarityCounts':dict(Counter(by_id[i]['rarity'] for i in pool))})
 assert set().union(*(set(r['speciesIds']) for r in routes))=={r['id'] for r in rarity if r['normalAnimated']}
-gift_candidates=[r for r in recipes if r['active'] and all(by_id[i]['rarity'] in ['Common','Uncommon'] for i in r['parentIds'])]
+gift_candidates=[r for r in recipes if r['active'] and all(by_id[i]['rarity'] in ['Common','Uncommon'] and i==by_id[i]['familyRootId'] for i in r['parentIds'])]
 gift_candidates.sort(key=lambda r:(r['hours'],r['id']))
 assert all(any(starter not in r['parentIds'] for r in gift_candidates) for starter in by_id)
 write('catalog-rules.json',{'schemaVersion':1,'status':'deterministic-tables-for-implementation',

@@ -11,7 +11,7 @@
   "routesCoverAll868": true,
   "sameFamilyDifferentSpeciesPairs": 35,
   "themeMethod": "all recipes share parent/child type; same-family pairs allowed by different-species rule; individual visual-lore approval not inferred",
-  "giftCandidatePairs": 789,
+  "giftCandidatePairs": 166,
   "giftShortestHours": 2,
   "normalSixHoursMinimumBerries": 12,
   "canonicalBerryIdsVerified": true,

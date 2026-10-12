@@ -169,7 +169,7 @@ public static class SaveMigration
             .Where(r => r.GetProperty("active").GetBoolean() && candidateIds.Contains(r.GetProperty("id").GetString()!))
             .Select(r => new { Id = r.GetProperty("id").GetString()!, Hours = r.GetProperty("hours").GetInt32(), Parents = r.GetProperty("parentIds").EnumerateArray().Select(p => p.GetInt32()).ToArray() })
             .Where(r => r.Parents.Length == 2 && r.Parents.Distinct().Count() == 2 && !r.Parents.Contains(excluded) &&
-                r.Parents.All(id => catalog.CanObtain(id, false) && catalog.Species.Single(s => s.Id == id).Rarity is "Common" or "Uncommon"))
+                r.Parents.All(id => catalog.CanIssueDirectly(id, false) && catalog.Species.Single(s => s.Id == id).Rarity is "Common" or "Uncommon"))
             .OrderByDescending(r => r.Parents.Count(id => !next.DiscoveredSpeciesIds.Contains(id)))
             .ThenBy(r => r.Hours).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
         if (candidates.Length == 0) throw new InvalidDataException("Нет допустимой совместимой подарочной пары.");

@@ -63,6 +63,9 @@ public sealed class CatalogPackage
         _byId.TryGetValue(speciesId, out var species) &&
         (isShiny ? species.ShinyAvailable : species.NormalAvailable);
 
+    public bool CanIssueDirectly(int speciesId, bool isShiny) =>
+        _byId.TryGetValue(speciesId, out var species) && species.Id == species.FamilyRootId && CanObtain(speciesId, isShiny);
+
     public string? GetAssetPath(int speciesId, bool isShiny)
     {
         if (!CanObtain(speciesId, isShiny)) return null;
