@@ -205,6 +205,77 @@ public class ShellTests
         }
     });
 
+    [Fact]
+    public void FinishReviewEvidenceRendersPopulatedPokedexAndResetArea() => WpfTestHost.Run(() =>
+    {
+        var output = Environment.GetEnvironmentVariable("POKE_SHELL_CAPTURE_DIR");
+        Assert.False(string.IsNullOrWhiteSpace(output));
+        Directory.CreateDirectory(output);
+
+        var state = new AppState();
+        var examples = new[]
+        {
+            (id: 19, name: "Rattata", rate: 200, type: "normal"),
+            (id: 37, name: "Vulpix", rate: 100, type: "fire"),
+            (id: 25, name: "Pikachu", rate: 45, type: "electric"),
+            (id: 151, name: "Mew", rate: 3, type: "psychic")
+        };
+        foreach (var example in examples)
+            state.Collection.Add(new PokemonIndividual
+            {
+                SpeciesId = example.id,
+                EvolutionChainId = example.id,
+                ChainLength = 1,
+                Nature = Nature.Hardy,
+                IsShiny = false,
+                CaughtAtUtc = DateTimeOffset.UtcNow
+            });
+        var chains = examples.Select(example => new SpeciesEvolutionChain(
+            example.id, example.id, example.rate, 1, new[] { example.id },
+            new[] { example.name }, new IReadOnlyList<string>[] { new[] { example.type } })).ToArray();
+        var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId,
+            new CareModeService(), chains, state.PendingEggs);
+        var collection = new CollectionView(vm, state,
+            new SpriteCache(Path.Combine(Path.GetTempPath(), "pokecorner-shell-evidence", Guid.NewGuid().ToString("N"))),
+            () => { }, () => { }, () => { }, () => null, _ => true, () => true, () => true);
+        var menu = new AppMenuWindow(collection, new SettingsView(new SettingsViewModel(state.Settings), () => { }),
+            new ShopView(state, new ShopService(), _ => true, _ => true, () => { }),
+            new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"));
+
+        menu.Navigate(MenuSection.Pokedex);
+        var root = (FrameworkElement)menu.Content;
+        WpfTestHost.Layout(root, 820, 660);
+        var collectionTabs = FindChild<TabControl>(collection);
+        collectionTabs.SelectedIndex = 1;
+        WpfTestHost.Layout(root, 820, 660);
+        var grid = (ItemsControl)collection.FindName("PokedexGrid");
+        Assert.Equal(4, grid.Items.Count);
+        var pokedexScroll = (ScrollViewer)((TabItem)collectionTabs.Items[1]).Content;
+        pokedexScroll.ScrollToVerticalOffset(160);
+        root.UpdateLayout();
+        Capture(root, 820, 660, 1.5, Path.Combine(output, "pokedex-populated-150.png"));
+
+        menu.Navigate(MenuSection.Settings);
+        WpfTestHost.Layout(root, 640, 480);
+        var settingsView = (SettingsView)((ContentControl)menu.FindName("SettingsContent")).Content;
+        var settingsScroll = (ScrollViewer)settingsView.Content;
+        settingsScroll.ScrollToEnd();
+        root.UpdateLayout();
+        Assert.True(settingsScroll.VerticalOffset > 0);
+        Capture(root, 640, 480, 2.0, Path.Combine(output, "settings-reset-compact-200.png"));
+    });
+
+    private static void Capture(FrameworkElement root, int width, int height, double scale, string path)
+    {
+        var bitmap = new RenderTargetBitmap((int)(width * scale), (int)(height * scale),
+            96 * scale, 96 * scale, PixelFormats.Pbgra32);
+        bitmap.Render(root);
+        using var stream = File.Create(path);
+        var encoder = new PngBitmapEncoder();
+        encoder.Frames.Add(BitmapFrame.Create(bitmap));
+        encoder.Save(stream);
+    }
+
     private static AppMenuWindow CreateMenu(AppState state)
     {
         var settings = state.Settings;
