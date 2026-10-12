@@ -42,6 +42,8 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         PetSizeValueText.Text = $"{settings.PetSizePixels} px";
         CrySoundVolumeSlider.Value = settings.CrySoundVolume;
         CrySoundVolumeValueText.Text = $"{settings.CrySoundVolume}%";
+        EffectsSoundVolumeSlider.Value = settings.EffectsSoundVolume;
+        EffectsSoundVolumeValueText.Text = $"{settings.EffectsSoundVolume}%";
         ShowProgressPanelCheck.IsChecked = settings.ShowProgressPanel;
     }
 
@@ -81,6 +83,13 @@ public partial class SettingsView : System.Windows.Controls.UserControl
         if (_isLoadingInitialState) return;
         _viewModel.SetCrySoundVolume((int)e.NewValue);
         CrySoundVolumeValueText.Text = $"{_viewModel.Settings.CrySoundVolume}%";
+    }
+
+    private void EffectsSoundVolumeSlider_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isLoadingInitialState) return;
+        _viewModel.SetEffectsSoundVolume((int)e.NewValue);
+        EffectsSoundVolumeValueText.Text = $"{_viewModel.Settings.EffectsSoundVolume}%";
     }
 
     private void ShowProgressPanelCheck_Changed(object sender, System.Windows.RoutedEventArgs e)

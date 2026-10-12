@@ -50,10 +50,6 @@ public partial class App : System.Windows.Application
     private int _overlayRefreshGeneration;
     private AppMenuWindow? _menuWindow;
     private ShopService _shopService = null!;
-    private const int CollectionTabIndex = 0;
-    private const int ShopTabIndex = 1;
-    private const int CatchTabIndex = 2;
-    private const int SettingsTabIndex = 3;
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
     private int _appliedPetSizePixels;
@@ -235,7 +231,7 @@ public partial class App : System.Windows.Application
 
         _overlayWindow = new OverlayWindow();
         _overlayWindow.PetClicked += PetActiveIndividual;
-        _overlayWindow.MenuRequested += () => OpenMenu(CollectionTabIndex);
+        _overlayWindow.MenuRequested += () => OpenMenu(MenuSection.Corner);
         // Re-top the pet the moment another app comes to the front, not on the next tick.
         _overlayWindow.ForegroundWindowChanged += ReassertOverlayTopmost;
         // Remember where the player actually leaves the pet, so relaunch/reboot restores that
@@ -269,10 +265,10 @@ public partial class App : System.Windows.Application
             petWindowHandle: () => new System.Windows.Interop.WindowInteropHelper(_overlayWindow).Handle);
 
         _trayIconService = new TrayIconService();
-        _trayIconService.OpenCollectionRequested += () => OpenMenu(CollectionTabIndex);
-        _trayIconService.OpenSettingsRequested += () => OpenMenu(SettingsTabIndex);
-        _trayIconService.OpenShopRequested += () => OpenMenu(ShopTabIndex);
-        _trayIconService.CatchRequested += () => OpenMenu(CatchTabIndex);
+        _trayIconService.OpenCollectionRequested += () => OpenMenu(MenuSection.Pokedex);
+        _trayIconService.OpenSettingsRequested += () => OpenMenu(MenuSection.Settings);
+        _trayIconService.OpenShopRequested += () => OpenMenu(MenuSection.Shop);
+        _trayIconService.CatchRequested += () => OpenMenu(MenuSection.Catch);
         _trayIconService.ExitRequested += ShutdownApp;
         // Restore the tray's ready glyph if a catch was already queued when the app last closed
         // (see _catchReadyCount's hydration above) — the AppMenuWindow badge doesn't need the
@@ -286,7 +282,7 @@ public partial class App : System.Windows.Application
 
         ReconcileSettingsState();
 
-        _singleInstance.ActivationRequested += () => Dispatcher.BeginInvoke(() => OpenMenu(CollectionTabIndex));
+        _singleInstance.ActivationRequested += () => Dispatcher.BeginInvoke(() => OpenMenu(MenuSection.Corner));
         // Windows logging off must not be blocked by the pet window refusing to close.
         SessionEnding += (_, args) =>
         {
@@ -782,10 +778,10 @@ public partial class App : System.Windows.Application
         return true;
     }
 
-    private void OpenMenu(int tabIndex)
+    private void OpenMenu(MenuSection section)
     {
         if (_isExiting) return;
-        if (_appState.IsCommitting) { _appState.RunWhenReady(() => OpenMenu(tabIndex)); return; }
+        if (_appState.IsCommitting) { _appState.RunWhenReady(() => OpenMenu(section)); return; }
         try
         {
             if (_menuWindow is null)
@@ -804,7 +800,7 @@ public partial class App : System.Windows.Application
                 _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened
                 _menuWindow.Show();
             }
-            _menuWindow.SelectTab(tabIndex);
+            _menuWindow.Navigate(section);
             // Activate() alone does not un-minimize a window — only guard against Minimized,
             // not stomp a Maximized state the player may have set via MaximizeButton_Click.
             if (_menuWindow.WindowState == WindowState.Minimized)

@@ -1,32 +1,29 @@
-<!-- PokéCorner design system.
-
-     Layering rule (darkest to lightest): WindowBackground -> SurfaceBackground -> Card ->
-     CardHover. Every panel that sits "on top of" another moves exactly one step up that
-     ladder. Accent red is reserved for primary/commit actions and the selected tab; accent
-     gold for resources/progress; rarity brushes are the only other saturated colors. -->
+<!-- PokéCorner native palette: cream paper, forest controls and Nunito. -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:theme="clr-namespace:PokeCorner.App.Theme">
 
     <!-- ===================== Color tokens ===================== -->
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#0D1120" />
-    <SolidColorBrush x:Key="SurfaceBackgroundBrush" Color="#131A2E" />
-    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#182042" />
-    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1B2340" />
-    <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="#232C4F" />
-    <SolidColorBrush x:Key="CardBorderBrush" Color="#2A3358" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#F8F4E9" />
+    <SolidColorBrush x:Key="SurfaceBackgroundBrush" Color="#E9E2D3" />
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#EBE7D9" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#F8F4E9" />
+    <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="#F7F4E8" />
+    <SolidColorBrush x:Key="CardBorderBrush" Color="#C8C2B3" />
 
-    <SolidColorBrush x:Key="AccentRedBrush" Color="#E8384F" />
-    <SolidColorBrush x:Key="AccentRedHoverBrush" Color="#FF4F63" />
-    <SolidColorBrush x:Key="AccentGoldBrush" Color="#F5C542" />
-    <SolidColorBrush x:Key="AccentGoldHoverBrush" Color="#FFDB70" />
+    <SolidColorBrush x:Key="AccentRedBrush" Color="#31694D" />
+    <SolidColorBrush x:Key="AccentRedHoverBrush" Color="#24543D" />
+    <SolidColorBrush x:Key="AccentGoldBrush" Color="#B17837" />
+    <SolidColorBrush x:Key="AccentGoldHoverBrush" Color="#98642D" />
     <!-- Back-compat alias: kept so any XAML still asking for the old key resolves to the
          new gold rather than dangling. New code should use AccentGoldBrush. -->
-    <SolidColorBrush x:Key="AccentYellowBrush" Color="#F5C542" />
+    <SolidColorBrush x:Key="AccentYellowBrush" Color="#B17837" />
 
-    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#F5F7FF" />
-    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#9AA5D1" />
-    <SolidColorBrush x:Key="MutedTextBrush" Color="#6B7399" />
-    <SolidColorBrush x:Key="DisabledSurfaceBrush" Color="#242C48" />
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#26352D" />
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#50614F" />
+    <SolidColorBrush x:Key="MutedTextBrush" Color="#50614F" />
+    <SolidColorBrush x:Key="DisabledSurfaceBrush" Color="#D8D7CE" />
+    <SolidColorBrush x:Key="OnForestTextBrush" Color="#FFFFFF" />
 
     <SolidColorBrush x:Key="RarityCommonBrush" Color="#9AA5D1" />
     <SolidColorBrush x:Key="RarityUncommonBrush" Color="#4CD787" />
@@ -35,16 +32,16 @@
 
     <!-- ===================== Gradient tokens ===================== -->
     <LinearGradientBrush x:Key="PrimaryButtonBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#F0455C" Offset="0" />
-        <GradientStop Color="#D42840" Offset="1" />
+        <GradientStop Color="#31694D" Offset="0" />
+        <GradientStop Color="#2F654D" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PrimaryButtonHoverBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#FF6377" Offset="0" />
-        <GradientStop Color="#E8384F" Offset="1" />
+        <GradientStop Color="#367657" Offset="0" />
+        <GradientStop Color="#31694D" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PrimaryButtonPressedBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#C9203A" Offset="0" />
-        <GradientStop Color="#A81A30" Offset="1" />
+        <GradientStop Color="#24543D" Offset="0" />
+        <GradientStop Color="#1E4935" Offset="1" />
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="ProgressGoldBrush" StartPoint="0,0" EndPoint="0,1">
@@ -73,8 +70,8 @@
     </RadialGradientBrush>
 
     <LinearGradientBrush x:Key="HeroCardBrush" StartPoint="0,0" EndPoint="0.35,1">
-        <GradientStop Color="#232C52" Offset="0" />
-        <GradientStop Color="#161D36" Offset="1" />
+        <GradientStop Color="#EEE7D7" Offset="0" />
+        <GradientStop Color="#E9E2D3" Offset="1" />
     </LinearGradientBrush>
 
     <!-- KEYED: every window opts in with Style="{StaticResource AppWindowStyle}". An implicit
@@ -86,13 +83,13 @@
     <Style x:Key="AppWindowStyle" TargetType="Window">
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
-        <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="{x:Static theme:BundledFont.Family}" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
     </Style>
 
     <!-- The single-purpose dialogs' chrome: onboarding, starter selection and ConfirmDialog.
-         They kept AppWindowStyle's dark palette but sat inside the stock light OS title bar,
+         They keep AppWindowStyle's palette but would sit inside the stock OS title bar,
          which is what made them read as foreign next to AppMenuWindow's custom header.
 
          A shared Style rather than a header strip copied into each of the three windows —
@@ -162,12 +159,12 @@
 
     <!-- ===================== Typography helpers ===================== -->
     <Style x:Key="ScreenTitleTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontSize" Value="24" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
     </Style>
     <Style x:Key="SectionHeaderTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="17" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
         <Setter Property="Margin" Value="2,0,0,6" />
@@ -178,16 +175,16 @@
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
     </Style>
     <Style x:Key="StatLabelTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{StaticResource MutedTextBrush}" />
         <Setter Property="Margin" Value="0,0,0,2" />
     </Style>
     <Style x:Key="MetaTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
     </Style>
     <Style x:Key="CaptionTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="10.5" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{StaticResource MutedTextBrush}" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
@@ -247,7 +244,7 @@
 
          Colours come from TypeDisplay (18 frozen brushes, one per PokeAPI type name) rather
          than from tokens here — see that class for why the external vocabulary lives in code.
-         Bound as Foreground AND BorderBrush against the dark surface, which keeps all 18
+         Bound as Foreground AND BorderBrush against the card surface, which keeps all 18
          legible; a filled pill would need per-type light/dark text to stay readable. -->
     <DataTemplate x:Key="TypeBadgeTemplate">
         <Border Style="{StaticResource PillStyle}" BorderThickness="1.4" CornerRadius="5"
@@ -270,7 +267,7 @@
          via SecondaryButtonStyle. -->
     <Style TargetType="Button">
         <Setter Property="Background" Value="{StaticResource PrimaryButtonBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource OnForestTextBrush}" />
         <Setter Property="Padding" Value="14,7" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="BorderThickness" Value="0" />
@@ -278,10 +275,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="11"
+                    <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="9"
                             Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                         <Border.Effect>
-                            <DropShadowEffect Color="#E8384F" BlurRadius="12" ShadowDepth="2" Opacity="0.35" />
+                            <DropShadowEffect Color="#26352D" BlurRadius="9" ShadowDepth="2" Opacity="0.16" />
                         </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
                                           RecognizesAccessKey="True" />
@@ -294,11 +291,15 @@
                             <Setter TargetName="Root" Property="Background" Value="{StaticResource PrimaryButtonPressedBrush}" />
                             <Setter TargetName="Root" Property="Effect" Value="{x:Null}" />
                         </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
+                            <Setter TargetName="Root" Property="BorderThickness" Value="2" />
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Root" Property="Background" Value="{StaticResource DisabledSurfaceBrush}" />
                             <Setter TargetName="Root" Property="Effect" Value="{x:Null}" />
                             <Setter Property="Foreground" Value="{StaticResource MutedTextBrush}" />
-                            <Setter Property="Opacity" Value="0.35" />
+                            <Setter Property="Opacity" Value="0.65" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -308,7 +309,7 @@
 
     <!-- Outline/ghost variant for routine-but-not-primary actions (release, skip, back).
          Not BasedOn the implicit style: it needs its own template so it never inherits the
-         red glow. -->
+         primary button shadow. -->
     <Style x:Key="SecondaryButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
@@ -677,7 +678,7 @@
     <!-- ===================== Text input =====================
          The app had no TextBox anywhere until the Pokédex search box and the nickname field,
          so an unstyled one would have rendered as a stock WHITE Win32 box in the middle of a
-         dark screen. Deliberately shaped like FilterPillStyle's BasePill (same recessed
+         screen. Deliberately shaped like FilterPillStyle's BasePill (same recessed
          background, same border brush, same 9px radius) so the search field reads as part of
          the same filter row it sits above, and takes the accent ring on focus the way a
          checked pill does. -->
@@ -762,7 +763,7 @@
                                               VerticalAlignment="Center" RecognizesAccessKey="True" />
                         </Border>
                         <Border x:Name="SelectionRail" Height="3" CornerRadius="2,2,0,0" Margin="10,0,10,0"
-                                VerticalAlignment="Bottom" Background="{StaticResource AccentRedBrush}"
+                                VerticalAlignment="Bottom" Background="{StaticResource OnForestTextBrush}"
                                 Visibility="Collapsed" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -771,9 +772,13 @@
                             <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource AccentRedBrush}" />
                             <Setter TargetName="SelectionRail" Property="Visibility" Value="Visible" />
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource OnForestTextBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
+                            <Setter TargetName="HeaderBorder" Property="BorderThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -838,8 +843,8 @@
                             <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource SecondaryTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Box" Property="Background" Value="{StaticResource AccentGoldBrush}" />
-                            <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
+                            <Setter TargetName="Box" Property="Background" Value="{StaticResource AccentRedBrush}" />
+                            <Setter TargetName="Box" Property="BorderBrush" Value="{StaticResource AccentRedBrush}" />
                             <Setter TargetName="Check" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -862,9 +867,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
                     <Grid>
-                        <Ellipse Fill="{StaticResource AccentGoldBrush}">
+                        <Ellipse Fill="{StaticResource AccentRedBrush}">
                             <Ellipse.Effect>
-                                <DropShadowEffect Color="#F5C542" BlurRadius="10" ShadowDepth="0" Opacity="0.55" />
+                                <DropShadowEffect Color="#26352D" BlurRadius="8" ShadowDepth="2" Opacity="0.15" />
                             </Ellipse.Effect>
                         </Ellipse>
                         <Ellipse Fill="{StaticResource WindowBackgroundBrush}" Margin="5.5" />
@@ -882,7 +887,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
                     <Border Height="6" CornerRadius="3" VerticalAlignment="Center"
-                            Background="{StaticResource ProgressGoldBrush}" />
+                            Background="{StaticResource AccentRedBrush}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1024,7 +1029,7 @@
     <!-- Same story as TabControl/TabItem above: ComboBox's default chrome (the closed-box
          display area and the dropdown Popup) paints its own system-color background that a
          plain Background/Foreground Setter can't fully reach, so this settings screen's mode
-         picker stayed light-gray inside an otherwise dark window. Minimal template covering
+         picker used system chrome that clashed with the window. Minimal template covering
          just the closed-box display (a ToggleButton-free Border + ContentPresenter, since
          AppSettings' combos are never editable) and the dropdown Popup's ItemsPresenter. -->
     <Style TargetType="ComboBoxItem">
@@ -1066,7 +1071,7 @@
                         <!-- Foreground and Padding are template-bound onto the ToggleButton on purpose: the stock
                              ButtonBase style sets Foreground to SystemColors.ControlText (black), and that setter
                              outranks the inherited value, so the closed box showed its selection in near-black on
-                             the dark card. -->
+                             the card. -->
                         <ToggleButton x:Name="Toggle" Focusable="False" ClickMode="Press"
                                       Foreground="{TemplateBinding Foreground}"
                                       Padding="{TemplateBinding Padding}"

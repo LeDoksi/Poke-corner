@@ -24,4 +24,7 @@ public sealed class SettingsViewModel
     /// an out-of-range value settle there would show a slider pinned past its own track.
     public void SetCrySoundVolume(int percent) =>
         _settings.CrySoundVolume = Math.Clamp(percent, CryVolume.MinPercent, CryVolume.MaxPercent);
+
+    public void SetEffectsSoundVolume(int percent) =>
+        _settings.EffectsSoundVolume = Math.Clamp(percent, 0, 100);
 }

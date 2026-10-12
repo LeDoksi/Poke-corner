@@ -60,12 +60,25 @@
                             ToolTip="Громкость звука, который издаёт питомец, когда его гладишь. 0 — совсем без звука." />
                     <TextBlock Text="Питомец подаёт голос, когда его гладишь. Поставь 0, если хочешь тишины."
                                Style="{StaticResource CaptionTextStyle}" Margin="2,5,0,0" />
+                    <Grid Margin="0,14,0,0">
+                        <TextBlock Text="Громкость эффектов" Style="{StaticResource StatLabelTextStyle}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock x:Name="EffectsSoundVolumeValueText" Style="{StaticResource MetaTextStyle}"
+                                   FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <Slider x:Name="EffectsSoundVolumeSlider" Minimum="0" Maximum="100"
+                            ValueChanged="EffectsSoundVolumeSlider_ValueChanged"
+                            AutomationProperties.Name="Громкость эффектов" />
+                    <TextBlock Text="Звуки действий регулируются отдельно от голоса питомца. 0 — без эффектов."
+                               Style="{StaticResource CaptionTextStyle}" Margin="2,5,0,0" />
                 </StackPanel>
             </Border>
 
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel>
                     <TextBlock Text="Система" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <TextBlock Text="Анимации следуют настройке движения Windows."
+                               Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,12" />
                     <CheckBox x:Name="AutostartCheck" Content="Запускать при входе в Windows"
                               Checked="AutostartCheck_Changed" Unchecked="AutostartCheck_Changed" />
                     <Button x:Name="ShowOnboardingButton" Content="Показать обучение" Click="ShowOnboardingButton_Click"
