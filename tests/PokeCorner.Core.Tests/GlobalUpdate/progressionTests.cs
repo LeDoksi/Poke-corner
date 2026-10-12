@@ -75,4 +75,33 @@ public sealed class ProgressionTests
         loaded.Individuals[0].XpRemainder.Numerator = 7;
         Assert.Throws<JsonException>(() => JsonSaveStore.ValidateData(loaded));
     }
+    [Theory]
+    [InlineData(1200, 1, 1)]
+    [InlineData(6400, 1, 0)]
+    public void LoadedV2MissingSecondTraitIsRepairedOnce(int totalXp, int award, int expectedGain)
+    {
+        var individual = Individual(3);
+        individual.TotalXp = totalXp;
+        var data = new SaveData
+        {
+            SchemaVersion = 2, CatalogRevision = "test", BalanceRevision = "test", MigrationId = SaveMigration.MigrationId,
+            Individuals = [individual], Settings = new AppSettings(),
+            Berries = SaveMigration.BerryIds.ToDictionary(id => id, _ => 0),
+            Items = SaveMigration.ItemIds.ToDictionary(id => id, _ => 0),
+            BerryRemainders = SaveMigration.BerryIds.ToDictionary(id => id, _ => new RationalRemainder())
+        };
+        JsonSaveStore.ValidateData(data);
+        var snapshot = JsonSaveStore.Clone(data);
+        var levels = new LevelProgression(Root);
+        Assert.Equal(expectedGain, levels.AddXp(snapshot.Individuals[0], award));
+        var chosen = snapshot.Individuals[0].SecondTraitId;
+        Assert.NotNull(chosen);
+        Assert.NotEqual(snapshot.Individuals[0].FirstTraitId, chosen);
+        Assert.DoesNotContain("fast-grower", new TraitRules(Root).Allowed(3));
+        var committed = JsonSaveStore.Clone(snapshot);
+        JsonSaveStore.ValidateData(committed);
+        Assert.Equal(chosen, committed.Individuals[0].SecondTraitId);
+        Assert.Equal(0, levels.AddXp(committed.Individuals[0], 0));
+        Assert.Equal(chosen, committed.Individuals[0].SecondTraitId);
+    }
 }

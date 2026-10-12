@@ -55,12 +55,11 @@ public sealed class LevelProgression
         if (xp < 0) throw new ArgumentOutOfRangeException(nameof(xp));
         var current = individual.TotalXp;
         LevelForXp(current);
-        if (xp == 0 || current == MaxXp) return 0;
         if (string.IsNullOrWhiteSpace(individual.FirstTraitId)) throw new InvalidOperationException("First trait is missing.");
         var gained = (int)Math.Min((long)xp, MaxXp - current);
         var next = current + gained;
         string? second = null;
-        if (current < XpForLevel(secondTraitLevel) && next >= XpForLevel(secondTraitLevel) && individual.SecondTraitId is null)
+        if (next >= XpForLevel(secondTraitLevel) && individual.SecondTraitId is null)
         {
             var allowed = traits.Allowed(individual.CurrentSpeciesId).Where(id => id != individual.FirstTraitId).ToArray();
             if (allowed.Length == 0) throw new InvalidOperationException("No second trait is allowed.");
