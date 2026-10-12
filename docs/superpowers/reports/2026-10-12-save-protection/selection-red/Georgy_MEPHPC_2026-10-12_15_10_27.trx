@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="eb56b30d-8f07-45d2-885f-12aabe90fa0f" name="Georgy@MEPHPC 2026-10-12 15:10:27" runUser="MEPHPC\Georgy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-12T15:10:27.1306369+03:00" queuing="2026-10-12T15:10:27.1306373+03:00" start="2026-10-12T15:10:26.3836492+03:00" finish="2026-10-12T15:10:27.1363232+03:00" />
+  <TestSettings name="default" id="d36f29ca-390c-44a0-a6b1-59a465ea3bf5">
+    <Deployment runDeploymentRoot="Georgy_MEPHPC_2026-10-12_15_10_27" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="b3161a23-9e7d-4042-a7ef-905923054c28" testId="c76d6356-b69e-6549-2e24-73f3a3a83665" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.RestoreRefusesCheckpointChangedAfterSelectionEvenWithValidNewChecksum" computerName="MEPHPC" duration="00:00:00.1195343" startTime="2026-10-12T15:10:27.0528205+03:00" endTime="2026-10-12T15:10:27.0528288+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b3161a23-9e7d-4042-a7ef-905923054c28">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+Expected: typeof(System.IO.IOException)</Message>
+          <StackTrace>   at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.RestoreRefusesCheckpointChangedAfterSelectionEvenWithValidNewChecksum() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs:line 205&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.RestoreRefusesCheckpointChangedAfterSelectionEvenWithValidNewChecksum" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="c76d6356-b69e-6549-2e24-73f3a3a83665">
+      <Execution id="b3161a23-9e7d-4042-a7ef-905923054c28" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="RestoreRefusesCheckpointChangedAfterSelectionEvenWithValidNewChecksum" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="c76d6356-b69e-6549-2e24-73f3a3a83665" executionId="b3161a23-9e7d-4042-a7ef-905923054c28" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Список результатов" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Все загруженные результаты" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)&#xD;
+[xUnit.net 00:00:00.04]   Discovering: PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.08]   Discovered:  PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.09]   Starting:    PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.23]       Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:00.23]       Expected: typeof(System.IO.IOException)&#xD;
+[xUnit.net 00:00:00.23]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.24]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs(205,0): at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.RestoreRefusesCheckpointChangedAfterSelectionEvenWithValidNewChecksum()&#xD;
+[xUnit.net 00:00:00.24]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:00.24]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:00.24]   Finished:    PokeCorner.Core.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T15:10:27.0517956+03:00">
+        <Text>[xUnit.net 00:00:00.23]     PokeCorner.Core.Tests.Persistence.SaveProtectionTests.RestoreRefusesCheckpointChangedAfterSelectionEvenWithValidNewChecksum [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

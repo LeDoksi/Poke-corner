@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a4875d4f-5386-4889-9397-ee321da7717d" name="Georgy@MEPHPC 2026-10-12 14:55:17" runUser="MEPHPC\Georgy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-12T14:55:17.8879252+03:00" queuing="2026-10-12T14:55:17.8879256+03:00" start="2026-10-12T14:55:17.0823565+03:00" finish="2026-10-12T14:55:17.8965861+03:00" />
+  <TestSettings name="default" id="6f9db1a6-cf54-4242-b0cc-aa25685cd805">
+    <Deployment runDeploymentRoot="Georgy_MEPHPC_2026-10-12_14_55_17" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="ff3355a5-5274-4fd1-b318-915a433b2d52" testId="5a7c10eb-7dc9-0371-c940-0b7d8c1e847f" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.FirstWriteRefusesSaveThatAppearedAfterFreshDecision" computerName="MEPHPC" duration="00:00:00.0046346" startTime="2026-10-12T14:55:17.8163866+03:00" endTime="2026-10-12T14:55:17.8163870+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ff3355a5-5274-4fd1-b318-915a433b2d52">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+Expected: typeof(System.IO.IOException)</Message>
+          <StackTrace>   at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.FirstWriteRefusesSaveThatAppearedAfterFreshDecision() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs:line 37&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="39e887f4-1fe8-4418-8eca-8652da0ba163" testId="12335bd0-11fa-1dbb-d694-afcca27e82fc" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(delete: False)" computerName="MEPHPC" duration="00:00:00.0771813" startTime="2026-10-12T14:55:17.7774229+03:00" endTime="2026-10-12T14:55:17.7774348+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="39e887f4-1fe8-4418-8eca-8652da0ba163">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+Expected: typeof(System.IO.IOException)</Message>
+          <StackTrace>   at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(Boolean delete) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs:line 48&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fe3c3c6c-46cf-49f3-b1e9-1415e1d4fb20" testId="345a4d66-da69-79e1-8cc6-6989122f92b7" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.InterruptedFirstWriteIsNotNewGame" computerName="MEPHPC" duration="00:00:00.0023497" startTime="2026-10-12T14:55:17.7886702+03:00" endTime="2026-10-12T14:55:17.7886704+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fe3c3c6c-46cf-49f3-b1e9-1415e1d4fb20">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Throws() Failure: No exception was thrown&#xD;
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)</Message>
+          <StackTrace>   at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.InterruptedFirstWriteIsNotNewGame() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs:line 57&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="49928eba-305c-4092-96c6-908728c3f120" testId="c507bf90-d1a1-f1f5-10c0-88ae04cda93e" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.ExistingEmptyCollectionRemainsValid" computerName="MEPHPC" duration="00:00:00.0176563" startTime="2026-10-12T14:55:17.8064158+03:00" endTime="2026-10-12T14:55:17.8064161+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="49928eba-305c-4092-96c6-908728c3f120" />
+    <UnitTestResult executionId="6760aea7-acea-4619-9051-1a8e57bc2b6b" testId="debd3628-4e55-614d-eca2-4628c2dc37ec" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(delete: True)" computerName="MEPHPC" duration="00:00:00.0055607" startTime="2026-10-12T14:55:17.7805373+03:00" endTime="2026-10-12T14:55:17.7805374+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6760aea7-acea-4619-9051-1a8e57bc2b6b">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+Expected: typeof(System.IO.IOException)</Message>
+          <StackTrace>   at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(Boolean delete) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs:line 48&#xD;
+   at InvokeStub_SaveProtectionTests.OrdinaryWriteRefusesExternalChange(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c804f5de-e16f-4921-b151-310b6cf6478f" testId="a56af4d9-a6f7-bb18-faf3-563032931cb7" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.MissingPrimaryWithHistoryRefusesNewGame" computerName="MEPHPC" duration="00:00:00.0050818" startTime="2026-10-12T14:55:17.7861089+03:00" endTime="2026-10-12T14:55:17.7861092+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c804f5de-e16f-4921-b151-310b6cf6478f">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Throws() Failure: No exception was thrown&#xD;
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)</Message>
+          <StackTrace>   at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.MissingPrimaryWithHistoryRefusesNewGame() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs:line 26&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.MissingPrimaryWithHistoryRefusesNewGame" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="a56af4d9-a6f7-bb18-faf3-563032931cb7">
+      <Execution id="c804f5de-e16f-4921-b151-310b6cf6478f" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="MissingPrimaryWithHistoryRefusesNewGame" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.InterruptedFirstWriteIsNotNewGame" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="345a4d66-da69-79e1-8cc6-6989122f92b7">
+      <Execution id="fe3c3c6c-46cf-49f3-b1e9-1415e1d4fb20" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="InterruptedFirstWriteIsNotNewGame" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(delete: True)" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="debd3628-4e55-614d-eca2-4628c2dc37ec">
+      <Execution id="6760aea7-acea-4619-9051-1a8e57bc2b6b" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="OrdinaryWriteRefusesExternalChange" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.ExistingEmptyCollectionRemainsValid" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="c507bf90-d1a1-f1f5-10c0-88ae04cda93e">
+      <Execution id="49928eba-305c-4092-96c6-908728c3f120" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="ExistingEmptyCollectionRemainsValid" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(delete: False)" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="12335bd0-11fa-1dbb-d694-afcca27e82fc">
+      <Execution id="39e887f4-1fe8-4418-8eca-8652da0ba163" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="OrdinaryWriteRefusesExternalChange" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.FirstWriteRefusesSaveThatAppearedAfterFreshDecision" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="5a7c10eb-7dc9-0371-c940-0b7d8c1e847f">
+      <Execution id="ff3355a5-5274-4fd1-b318-915a433b2d52" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="FirstWriteRefusesSaveThatAppearedAfterFreshDecision" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="5a7c10eb-7dc9-0371-c940-0b7d8c1e847f" executionId="ff3355a5-5274-4fd1-b318-915a433b2d52" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="12335bd0-11fa-1dbb-d694-afcca27e82fc" executionId="39e887f4-1fe8-4418-8eca-8652da0ba163" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="345a4d66-da69-79e1-8cc6-6989122f92b7" executionId="fe3c3c6c-46cf-49f3-b1e9-1415e1d4fb20" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c507bf90-d1a1-f1f5-10c0-88ae04cda93e" executionId="49928eba-305c-4092-96c6-908728c3f120" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="debd3628-4e55-614d-eca2-4628c2dc37ec" executionId="6760aea7-acea-4619-9051-1a8e57bc2b6b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a56af4d9-a6f7-bb18-faf3-563032931cb7" executionId="c804f5de-e16f-4921-b151-310b6cf6478f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Список результатов" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Все загруженные результаты" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="6" executed="6" passed="1" failed="5" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)&#xD;
+[xUnit.net 00:00:00.06]   Discovering: PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.11]   Discovered:  PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.12]   Starting:    PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.23]       Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:00.23]       Expected: typeof(System.IO.IOException)&#xD;
+[xUnit.net 00:00:00.23]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.23]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs(48,0): at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(Boolean delete)&#xD;
+[xUnit.net 00:00:00.23]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:00.23]       Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:00.23]       Expected: typeof(System.IO.IOException)&#xD;
+[xUnit.net 00:00:00.23]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.23]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs(48,0): at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(Boolean delete)&#xD;
+[xUnit.net 00:00:00.23]            at InvokeStub_SaveProtectionTests.OrdinaryWriteRefusesExternalChange(Object, Span`1)&#xD;
+[xUnit.net 00:00:00.23]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+[xUnit.net 00:00:00.24]       Assert.Throws() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:00.24]       Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)&#xD;
+[xUnit.net 00:00:00.24]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.24]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs(26,0): at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.MissingPrimaryWithHistoryRefusesNewGame()&#xD;
+[xUnit.net 00:00:00.24]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:00.24]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:00.24]       Assert.Throws() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:00.24]       Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)&#xD;
+[xUnit.net 00:00:00.24]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.24]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs(57,0): at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.InterruptedFirstWriteIsNotNewGame()&#xD;
+[xUnit.net 00:00:00.24]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:00.24]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:00.26]       Assert.ThrowsAny() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:00.26]       Expected: typeof(System.IO.IOException)&#xD;
+[xUnit.net 00:00:00.26]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.26]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\Persistence\SaveProtectionTests.cs(37,0): at PokeCorner.Core.Tests.Persistence.SaveProtectionTests.FirstWriteRefusesSaveThatAppearedAfterFreshDecision()&#xD;
+[xUnit.net 00:00:00.27]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:00.27]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:00.27]   Finished:    PokeCorner.Core.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T14:55:17.7760116+03:00">
+        <Text>[xUnit.net 00:00:00.23]     PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(delete: False) [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T14:55:17.7805647+03:00">
+        <Text>[xUnit.net 00:00:00.23]     PokeCorner.Core.Tests.Persistence.SaveProtectionTests.OrdinaryWriteRefusesExternalChange(delete: True) [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T14:55:17.7861069+03:00">
+        <Text>[xUnit.net 00:00:00.24]     PokeCorner.Core.Tests.Persistence.SaveProtectionTests.MissingPrimaryWithHistoryRefusesNewGame [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T14:55:17.7886830+03:00">
+        <Text>[xUnit.net 00:00:00.24]     PokeCorner.Core.Tests.Persistence.SaveProtectionTests.InterruptedFirstWriteIsNotNewGame [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T14:55:17.8115102+03:00">
+        <Text>[xUnit.net 00:00:00.26]     PokeCorner.Core.Tests.Persistence.SaveProtectionTests.FirstWriteRefusesSaveThatAppearedAfterFreshDecision [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

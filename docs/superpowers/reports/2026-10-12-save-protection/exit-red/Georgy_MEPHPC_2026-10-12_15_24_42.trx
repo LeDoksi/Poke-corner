@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="27781f87-9a21-4a5f-a1c1-5a254a58ff34" name="Georgy@MEPHPC 2026-10-12 15:24:42" runUser="MEPHPC\Georgy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-12T15:24:42.2534296+03:00" queuing="2026-10-12T15:24:42.2534297+03:00" start="2026-10-12T15:24:40.7058124+03:00" finish="2026-10-12T15:24:42.2577637+03:00" />
+  <TestSettings name="default" id="7f5fd6f9-0a6a-4cc9-b2ef-29a919a0ced3">
+    <Deployment runDeploymentRoot="Georgy_MEPHPC_2026-10-12_15_24_42" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="82b58e83-d701-47d9-a463-b4295d477537" testId="c77ac005-2de0-216a-d1b0-95b4fab74216" testName="PokeCorner.App.Tests.GlobalUpdate.MigrationTests.ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary" computerName="MEPHPC" duration="00:00:00.7531257" startTime="2026-10-12T15:24:42.1872529+03:00" endTime="2026-10-12T15:24:42.1872620+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="82b58e83-d701-47d9-a463-b4295d477537">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Contains() Failure: Filter not matched in collection&#xD;
+Collection: [12.10.2026 15:24:42 · 1 покемонов · 37 монет · v2]</Message>
+          <StackTrace>   at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 673&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="PokeCorner.App.Tests.GlobalUpdate.MigrationTests.ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.app.tests\bin\debug\net8.0-windows\pokecorner.app.tests.dll" id="c77ac005-2de0-216a-d1b0-95b4fab74216">
+      <Execution id="82b58e83-d701-47d9-a463-b4295d477537" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.App.Tests.GlobalUpdate.MigrationTests" name="ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="c77ac005-2de0-216a-d1b0-95b4fab74216" executionId="82b58e83-d701-47d9-a463-b4295d477537" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Список результатов" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Все загруженные результаты" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)&#xD;
+[xUnit.net 00:00:00.27]   Discovering: PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:00.33]   Discovered:  PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:00.33]   Starting:    PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:01.11]       Assert.Contains() Failure: Filter not matched in collection&#xD;
+[xUnit.net 00:00:01.11]       Collection: [12.10.2026 15:24:42 · 1 покемонов · 37 монет · v2]&#xD;
+[xUnit.net 00:00:01.11]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.11]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs(673,0): at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary()&#xD;
+[xUnit.net 00:00:01.11]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:01.11]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:01.12]   Finished:    PokeCorner.App.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T15:24:42.1858161+03:00">
+        <Text>[xUnit.net 00:00:01.11]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

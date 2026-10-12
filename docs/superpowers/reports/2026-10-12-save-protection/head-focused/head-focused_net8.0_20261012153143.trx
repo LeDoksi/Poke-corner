@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="e2492927-abbb-42c3-ab5a-0ee63afce90a" name="Georgy@MEPHPC 2026-10-12 15:31:42" runUser="MEPHPC\Georgy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-12T15:31:42.1408994+03:00" queuing="2026-10-12T15:31:42.1408994+03:00" start="2026-10-12T15:31:40.5848001+03:00" finish="2026-10-12T15:31:42.1448050+03:00" />
+  <TestSettings name="default" id="7d86cbb1-8138-4d8d-a769-a0afc73ee734">
+    <Deployment runDeploymentRoot="Georgy_MEPHPC_2026-10-12_15_31_42" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="54d6abda-245d-4652-aa07-a6d19ce73b82" testId="b65a4836-ee2b-076d-c480-9900334ede4b" testName="PokeCorner.App.Tests.PersistenceStartupTests.PersistState_BeforeSuccessfulHydration_DoesNotOverwriteOriginal(flush: False)" computerName="MEPHPC" duration="00:00:00.0025875" startTime="2026-10-12T15:31:41.3094818+03:00" endTime="2026-10-12T15:31:41.3094818+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="54d6abda-245d-4652-aa07-a6d19ce73b82" />
+    <UnitTestResult executionId="f95336c6-c790-4a71-9ae2-7511316621cc" testId="c77ac005-2de0-216a-d1b0-95b4fab74216" testName="PokeCorner.App.Tests.GlobalUpdate.MigrationTests.ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary" computerName="MEPHPC" duration="00:00:00.7959629" startTime="2026-10-12T15:31:42.0779279+03:00" endTime="2026-10-12T15:31:42.0779283+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f95336c6-c790-4a71-9ae2-7511316621cc" />
+    <UnitTestResult executionId="0deca75e-d008-43cb-b576-a619e15712ba" testId="1686a41f-db7c-b19c-4e4a-98960fc3220e" testName="PokeCorner.App.Tests.PersistenceStartupTests.CrashExitSaveBeforeHydrationDoesNotOverwriteOriginal" computerName="MEPHPC" duration="00:00:00.0021168" startTime="2026-10-12T15:31:41.3112774+03:00" endTime="2026-10-12T15:31:41.3112776+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0deca75e-d008-43cb-b576-a619e15712ba" />
+    <UnitTestResult executionId="6f211fad-4c4c-4e8e-9c99-7a98b8931c98" testId="358ea316-6730-7ef5-d1a7-97d3f2438f6a" testName="PokeCorner.App.Tests.PersistenceStartupTests.PersistState_BeforeSuccessfulHydration_DoesNotOverwriteOriginal(flush: True)" computerName="MEPHPC" duration="00:00:00.0217484" startTime="2026-10-12T15:31:41.3070555+03:00" endTime="2026-10-12T15:31:41.3070776+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6f211fad-4c4c-4e8e-9c99-7a98b8931c98" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="PokeCorner.App.Tests.PersistenceStartupTests.PersistState_BeforeSuccessfulHydration_DoesNotOverwriteOriginal(flush: True)" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.app.tests\bin\debug\net8.0-windows\pokecorner.app.tests.dll" id="358ea316-6730-7ef5-d1a7-97d3f2438f6a">
+      <Execution id="6f211fad-4c4c-4e8e-9c99-7a98b8931c98" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.App.Tests.PersistenceStartupTests" name="PersistState_BeforeSuccessfulHydration_DoesNotOverwriteOriginal" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.App.Tests.GlobalUpdate.MigrationTests.ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.app.tests\bin\debug\net8.0-windows\pokecorner.app.tests.dll" id="c77ac005-2de0-216a-d1b0-95b4fab74216">
+      <Execution id="f95336c6-c790-4a71-9ae2-7511316621cc" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.App.Tests.GlobalUpdate.MigrationTests" name="ExitAfterPrimaryWriteFailureKeepsMemoryInHistoryWithoutReplacingForeignPrimary" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.App.Tests.PersistenceStartupTests.PersistState_BeforeSuccessfulHydration_DoesNotOverwriteOriginal(flush: False)" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.app.tests\bin\debug\net8.0-windows\pokecorner.app.tests.dll" id="b65a4836-ee2b-076d-c480-9900334ede4b">
+      <Execution id="54d6abda-245d-4652-aa07-a6d19ce73b82" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.App.Tests.PersistenceStartupTests" name="PersistState_BeforeSuccessfulHydration_DoesNotOverwriteOriginal" />
+    </UnitTest>
+    <UnitTest name="PokeCorner.App.Tests.PersistenceStartupTests.CrashExitSaveBeforeHydrationDoesNotOverwriteOriginal" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.app.tests\bin\debug\net8.0-windows\pokecorner.app.tests.dll" id="1686a41f-db7c-b19c-4e4a-98960fc3220e">
+      <Execution id="0deca75e-d008-43cb-b576-a619e15712ba" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.App.Tests.PersistenceStartupTests" name="CrashExitSaveBeforeHydrationDoesNotOverwriteOriginal" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="b65a4836-ee2b-076d-c480-9900334ede4b" executionId="54d6abda-245d-4652-aa07-a6d19ce73b82" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c77ac005-2de0-216a-d1b0-95b4fab74216" executionId="f95336c6-c790-4a71-9ae2-7511316621cc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1686a41f-db7c-b19c-4e4a-98960fc3220e" executionId="0deca75e-d008-43cb-b576-a619e15712ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="358ea316-6730-7ef5-d1a7-97d3f2438f6a" executionId="6f211fad-4c4c-4e8e-9c99-7a98b8931c98" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="4" executed="4" passed="4" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)&#xD;
+[xUnit.net 00:00:00.25]   Discovering: PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:00.31]   Discovered:  PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:00.31]   Starting:    PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:01.14]   Finished:    PokeCorner.App.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

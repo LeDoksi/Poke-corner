@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a6bbc9d8-fffc-4daf-814a-308771d32ee6" name="Georgy@MEPHPC 2026-10-12 19:42:30" runUser="MEPHPC\Georgy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-12T19:42:30.5161744+03:00" queuing="2026-10-12T19:42:30.5161746+03:00" start="2026-10-12T19:42:28.7665270+03:00" finish="2026-10-12T19:42:30.5193566+03:00" />
+  <TestSettings name="default" id="dbcdd19f-d7e4-4a22-a5a5-1f1a351b844b">
+    <Deployment runDeploymentRoot="Georgy_MEPHPC_2026-10-12_19_42_30" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="e1500345-ac79-4c71-85cd-9fae72746943" testId="26dad45a-77ce-7ec4-194a-f39387fcb651" testName="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.SameDayPeakSurvivesPruningAndLatestPeakWinsTie" computerName="MEPHPC" duration="00:00:01.0327084" startTime="2026-10-12T19:42:30.4564468+03:00" endTime="2026-10-12T19:42:30.4564563+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e1500345-ac79-4c71-85cd-9fae72746943" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="PokeCorner.Core.Tests.Persistence.SaveProtectionTests.SameDayPeakSurvivesPruningAndLatestPeakWinsTie" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.core.tests\bin\debug\net8.0\pokecorner.core.tests.dll" id="26dad45a-77ce-7ec4-194a-f39387fcb651">
+      <Execution id="e1500345-ac79-4c71-85cd-9fae72746943" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.Core.Tests.Persistence.SaveProtectionTests" name="SameDayPeakSurvivesPruningAndLatestPeakWinsTie" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="26dad45a-77ce-7ec4-194a-f39387fcb651" executionId="e1500345-ac79-4c71-85cd-9fae72746943" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)&#xD;
+[xUnit.net 00:00:00.17]   Discovering: PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.21]   Discovered:  PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.21]   Starting:    PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:01.27]   Finished:    PokeCorner.Core.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

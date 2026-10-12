@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="76d0e01d-4fa8-4775-92a6-2ab85587580c" name="Georgy@MEPHPC 2026-10-12 14:53:50" runUser="MEPHPC\Georgy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-12T14:53:50.8600495+03:00" queuing="2026-10-12T14:53:50.8600499+03:00" start="2026-10-12T14:53:47.0701350+03:00" finish="2026-10-12T14:53:50.8685989+03:00" />
+  <TestSettings name="default" id="3516016e-f88f-4c70-b872-0bbb9f4746d1">
+    <Deployment runDeploymentRoot="Georgy_MEPHPC_2026-10-12_14_53_50" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="cb65ddfa-5532-4942-bcb4-adeb381d0462" testId="2169b49e-ccd6-8fc5-79f7-f1dc1a9166c6" testName="PokeCorner.App.Tests.GlobalUpdate.MigrationTests.MissingV2AfterMigrationRefusesStaleV1" computerName="MEPHPC" duration="00:00:02.5803470" startTime="2026-10-12T14:53:50.7881390+03:00" endTime="2026-10-12T14:53:50.7881508+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cb65ddfa-5532-4942-bcb4-adeb381d0462">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Throws() Failure: No exception was thrown&#xD;
+Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)</Message>
+          <StackTrace>   at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.MissingV2AfterMigrationRefusesStaleV1() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs:line 188&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="PokeCorner.App.Tests.GlobalUpdate.MigrationTests.MissingV2AfterMigrationRefusesStaleV1" storage="c:\users\georgy\.codex\worktrees\global-update\poketokenbar-windows\tests\pokecorner.app.tests\bin\debug\net8.0-windows\pokecorner.app.tests.dll" id="2169b49e-ccd6-8fc5-79f7-f1dc1a9166c6">
+      <Execution id="cb65ddfa-5532-4942-bcb4-adeb381d0462" />
+      <TestMethod codeBase="C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="PokeCorner.App.Tests.GlobalUpdate.MigrationTests" name="MissingV2AfterMigrationRefusesStaleV1" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="2169b49e-ccd6-8fc5-79f7-f1dc1a9166c6" executionId="cb65ddfa-5532-4942-bcb4-adeb381d0462" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Список результатов" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Все загруженные результаты" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)&#xD;
+[xUnit.net 00:00:00.37]   Discovering: PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:00.45]   Discovered:  PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:00.45]   Starting:    PokeCorner.App.Tests&#xD;
+[xUnit.net 00:00:03.08]       Assert.Throws() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:03.08]       Expected: typeof(PokeCorner.Core.Persistence.SaveLoadException)&#xD;
+[xUnit.net 00:00:03.08]       Stack Trace:&#xD;
+[xUnit.net 00:00:03.08]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\migrationTests.cs(188,0): at PokeCorner.App.Tests.GlobalUpdate.MigrationTests.MissingV2AfterMigrationRefusesStaleV1()&#xD;
+[xUnit.net 00:00:03.08]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:03.08]   Finished:    PokeCorner.App.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="MEPHPC" outcome="Error" timestamp="2026-10-12T14:53:50.7865846+03:00">
+        <Text>[xUnit.net 00:00:03.08]     PokeCorner.App.Tests.GlobalUpdate.MigrationTests.MissingV2AfterMigrationRefusesStaleV1 [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

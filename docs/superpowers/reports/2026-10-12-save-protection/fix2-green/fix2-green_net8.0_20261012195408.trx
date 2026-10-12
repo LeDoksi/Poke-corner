@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="b0f90f8a-5513-4c26-bf0b-c29b60757fae" name="Georgy@MEPHPC 2026-10-12 19:54:08" runUser="MEPHPC\Georgy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-12T19:54:08.2278218+03:00" queuing="2026-10-12T19:54:08.2278221+03:00" start="2026-10-12T19:54:07.7115338+03:00" finish="2026-10-12T19:54:08.2280767+03:00" />
+  <TestSettings name="default" id="93ace100-7278-4cd8-aa44-c24740366874">
+    <Deployment runDeploymentRoot="Georgy_MEPHPC_2026-10-12_19_54_08" />
+  </TestSettings>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="0" executed="0" passed="0" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)&#xD;
+[xUnit.net 00:00:00.18]   Discovering: PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.24]   Discovered:  PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.24]   Starting:    PokeCorner.Core.Tests&#xD;
+[xUnit.net 00:00:00.25]   Finished:    PokeCorner.Core.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="MEPHPC" outcome="Warning" timestamp="2026-10-12T19:54:08.1910056+03:00">
+        <Text>No test matches the given testcase filter `FullyQualifiedName~MissingActiveV1WithIncompleteStagingNeverStartsNewGame|FullyQualifiedName~NoFilesIsNewGameButExistingEmptySaveIsNot|FullyQualifiedName~InterruptedLegacyStagingBeforeManifestResumesFromIntactV1|FullyQualifiedName~MissingV2WithOnlyImmutabl...` in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>
