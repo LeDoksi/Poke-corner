@@ -203,6 +203,23 @@ public sealed class MigrationTests : IDisposable
         await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task MissingActiveV1WithIncompleteStagingNeverStartsNewGame(bool hasPartialState)
+    {
+        var partial = Path.Combine(root, "legacy-v1", "interrupted");
+        Directory.CreateDirectory(partial);
+        var state = Path.Combine(partial, "state.json");
+        var original = System.Text.Encoding.UTF8.GetBytes(JsonSaveStore.Serialize(Old(Pet())));
+        if (hasPartialState) File.WriteAllBytes(state, original);
+
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.False(File.Exists(V1)); Assert.False(File.Exists(V2));
+        Assert.True(Directory.Exists(partial));
+        if (hasPartialState) Assert.Equal(original, File.ReadAllBytes(state));
+    }
+
     [Fact]
     public async Task CorruptManifestNeverAllowsAutomaticStaleV1Remigration()
     {

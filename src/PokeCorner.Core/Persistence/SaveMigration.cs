@@ -244,6 +244,8 @@ public static class SaveMigration
         if (Directory.Exists(legacyRoot) && Directory.EnumerateFiles(legacyRoot, "manifest.json", SearchOption.AllDirectories).Any())
             throw new SaveLoadException(v2Path, "найдена предыдущая миграция; автоматический импорт старого v1 запрещён");
         var v1 = new JsonSaveStore(v1Path).Load(out var bytes);
+        if (v1 is null && Directory.Exists(legacyRoot))
+            throw new SaveLoadException(v1Path, "активный v1 отсутствует, но найдены следы незавершённой миграции; новая игра запрещена");
         store.ObserveLegacyBeforeFirstWrite(v1Path, bytes);
         if (v1 is null) return null;
         SaveData migrated;
