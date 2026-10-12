@@ -906,7 +906,7 @@ public partial class App : System.Windows.Application
         if (_menuWindow is not null) _menuWindow.IsEnabled = false;
         try
         {
-            await _appState.CommitAsync(_saveWriter, update, _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+            await _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
             _menuWindow?.Close();
             RefreshOverlayForActiveIndividual();
         }

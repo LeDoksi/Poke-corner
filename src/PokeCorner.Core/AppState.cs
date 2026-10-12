@@ -26,14 +26,14 @@ public sealed class AppState
         else mutation();
     }
 
-    public async Task CommitAsync(BackgroundSaveWriter writer, Action<SaveData> update, int pendingCatchCount, Action<SaveData>? afterPublish = null)
+    public async Task CommitAsync(BackgroundSaveWriter writer, Action<SaveData> update, Func<int> pendingCatchCount, Action<SaveData>? afterPublish = null)
     {
         while (IsCommitting) await WhenIdle;
         IsCommitting = true;
         var idle = _idle = new(TaskCreationOptions.RunContinuationsAsynchronously);
         try
         {
-            var next = ToSaveData(pendingCatchCount);
+            var next = ToSaveData(pendingCatchCount());
             update(next);
             if (next.SchemaVersion == 2) next.Items["treats"] = next.FeedingTreats;
             JsonSaveStore.ValidateData(next);
@@ -217,6 +217,8 @@ public sealed class AppState
                 data.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
                 if (individual.IsShiny) data.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             }
+            _metadata!.DiscoveredSpeciesIds.UnionWith(data.DiscoveredSpeciesIds);
+            _metadata.ShinySpeciesIds.UnionWith(data.ShinySpeciesIds);
         }
         return JsonSaveStore.Clone(data);
     }

@@ -40,7 +40,7 @@ public sealed class MigrationTests : IDisposable
         var writer = new BackgroundSaveWriter(store, action => { if (delayed) writes.Add(action); else action(); });
         var state = new AppState();
         state.Hydrate(Old(Pet()));
-        var commit = state.CommitAsync(writer, snapshot => snapshot.ShopCoins += 5, 2);
+        var commit = state.CommitAsync(writer, snapshot => snapshot.ShopCoins += 5, () => 2);
         var originalCare = state.Collection.GetActive()!.AccumulatedCarePoints;
         state.ApplyActivityUnits(23);
         state.RunWhenReady(() => state.Shop.Coins += 1);
@@ -67,7 +67,7 @@ public sealed class MigrationTests : IDisposable
         var store = new JsonSaveStore(V2); store.Save(state.ToSaveData(2));
         Directory.CreateDirectory(V2 + ".tmp");
         var writes = new List<Action>(); var writer = new BackgroundSaveWriter(store, writes.Add);
-        var task = state.CommitAsync(writer, next => next.ShopCoins = 50, 2);
+        var task = state.CommitAsync(writer, next => next.ShopCoins = 50, () => 2);
         state.ApplyActivityUnits(7); writes[0]();
         await Assert.ThrowsAnyAsync<UnauthorizedAccessException>(() => task);
         Assert.Equal(17, state.Shop.Coins); Assert.Equal(17, store.Load()!.ShopCoins);
@@ -319,7 +319,7 @@ public sealed class MigrationTests : IDisposable
         PokeCorner.App.Tests.Theme.WpfTestHost.Run(() =>
         {
             state = new AppState(); state.Hydrate(Old(Pet()));
-            commit = state.CommitAsync(writer, next => next.ShopCoins += 2, 2);
+            commit = state.CommitAsync(writer, next => next.ShopCoins += 2, () => 2);
             exit = state.FlushAsync(writer, () => 2);
             Assert.False(commit.IsCompleted); Assert.False(exit.IsCompleted);
         });
@@ -339,8 +339,8 @@ public sealed class MigrationTests : IDisposable
         var write = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
         var first = true; var store = new JsonSaveStore(V2);
         var writer = new BackgroundSaveWriter(store, action => { if (first) { first = false; write.SetResult(action); } else Task.Run(action); });
-        var one = state.CommitAsync(writer, next => next.ShopCoins += 2, 2);
-        var two = state.CommitAsync(writer, next => next.ShopCoins += 3, 2);
+        var one = state.CommitAsync(writer, next => next.ShopCoins += 2, () => 2);
+        var two = state.CommitAsync(writer, next => next.ShopCoins += 3, () => 2);
         var exit = state.FlushAsync(writer, () => 2);
         await Task.Run(await write.Task);
         await Task.WhenAll(one, two, exit).WaitAsync(TimeSpan.FromSeconds(10));
@@ -423,7 +423,7 @@ public sealed class MigrationTests : IDisposable
     {
         var state = new AppState(); state.Hydrate(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
         var writer = new BackgroundSaveWriter(new JsonSaveStore(V2));
-        await state.CommitAsync(writer, next => next.FeedingTreats -= 1, 2);
+        await state.CommitAsync(writer, next => next.FeedingTreats -= 1, () => 2);
         var saved = new JsonSaveStore(V2).Load()!;
         Assert.Equal(7, state.Feeding.Treats); Assert.Equal(7, saved.FeedingTreats); Assert.Equal(7, saved.Items["treats"]);
         var node = JsonNode.Parse(JsonSaveStore.Serialize(saved))!; node["Items"]!["treats"] = 50;
@@ -486,6 +486,83 @@ public sealed class MigrationTests : IDisposable
         var stages = vm.GetEntries(DateTimeOffset.UtcNow).Single().EvolutionStages;
         Assert.Equal(new int?[] { 133, 135 }, stages.Select(s => s.SpeciesId));
         Assert.True(stages[1].IsCurrent);
+    }
+
+    [Fact]
+    public async Task Fix1QueuedCoinsCommitDoesNotRestoreConsumedEncounter()
+    {
+        var state = new AppState(); state.Hydrate(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
+        var store = new JsonSaveStore(V2);
+        var pendingCount = 2;
+        var write = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var first = true;
+        var writer = new BackgroundSaveWriter(store, action => { if (first) { first = false; write.SetResult(action); } else Task.Run(action); });
+        var one = state.CommitAsync(writer, next => next.PendingCatchCount -= 1, () => pendingCount, next => pendingCount = next.PendingCatchCount);
+        var two = state.CommitAsync(writer, next => next.ShopCoins += 3, () => pendingCount, next => pendingCount = next.PendingCatchCount);
+        await Task.Run(await write.Task);
+        await Task.WhenAll(one, two).WaitAsync(TimeSpan.FromSeconds(10));
+        Assert.Equal(1, pendingCount);
+        Assert.Equal(1, store.Load()!.PendingCatchCount);
+    }
+
+    [Theory]
+    [InlineData("ReachedSpeciesIds", "null")]
+    [InlineData("ParentIds", "null")]
+    [InlineData("TotalXp", "6401")]
+    [InlineData("CurrentStage", "3")]
+    [InlineData("FamilyRootId", "0")]
+    [InlineData("DisplayStageOverride", "1")]
+    public async Task Fix1ReservedGiftUsesCompleteIndividualValidation(string field, string value)
+    {
+        File.WriteAllText(V1, JsonSaveStore.Serialize(Old(Pet())));
+        var node = JsonNode.Parse(JsonSaveStore.Serialize(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value)))!;
+        node["Gift"]!["Gifts"]![0]!["Individual"]![field] = JsonNode.Parse(value);
+        File.WriteAllText(V2, node.ToJsonString());
+        var originalV2 = File.ReadAllBytes(V2); var originalV1 = File.ReadAllBytes(V1);
+        Assert.Throws<SaveLoadException>(() => new JsonSaveStore(V2).Load());
+        await Assert.ThrowsAsync<SaveLoadException>(() => SaveMigration.LoadAsync(V1, V2, Lookup, Package.Value));
+        Assert.Equal(originalV2, File.ReadAllBytes(V2)); Assert.Equal(originalV1, File.ReadAllBytes(V1));
+    }
+
+    [Fact]
+    public void Fix1DiscoveryAndShinyHistoriesSurviveAutosaveThenRelease()
+    {
+        var state = new AppState(); state.Hydrate(SaveMigration.Migrate(Old(Pet()), Lookup, Package.Value));
+        var newPet = Pet(4, 4, 3);
+        SaveMigration.InitializeIndividual(newPet, Lookup, Package.Value);
+        state.Collection.Add(newPet);
+        var writer = new BackgroundSaveWriter(new JsonSaveStore(V2), action => action());
+        var beforeRelease = state.ToSaveData(2);
+        writer.Post(beforeRelease);
+        Assert.Contains(4, beforeRelease.DiscoveredSpeciesIds); Assert.Contains(4, beforeRelease.ShinySpeciesIds);
+        state.Collection.Release(newPet.Id);
+        var afterRelease = state.ToSaveData(2);
+        writer.Post(afterRelease);
+        var loaded = new JsonSaveStore(V2).Load()!;
+        Assert.Contains(4, afterRelease.DiscoveredSpeciesIds); Assert.Contains(4, afterRelease.ShinySpeciesIds);
+        Assert.Contains(4, loaded.DiscoveredSpeciesIds); Assert.Contains(4, loaded.ShinySpeciesIds);
+        Assert.DoesNotContain(loaded.Individuals, pet => pet.Id == newPet.Id);
+        Assert.Equal(beforeRelease.AwardLedger.Keys.Order(), loaded.AwardLedger.Keys.Order());
+        Assert.Null(loaded.Metrics["successful-catches"]); Assert.Empty(loaded.EvolutionTransitions);
+        var restarted = new AppState(); restarted.Hydrate(loaded);
+        Assert.Contains(4, restarted.ToSaveData(2).DiscoveredSpeciesIds);
+        Assert.Contains(4, restarted.ToSaveData(2).ShinySpeciesIds);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Fix1NullLegacyPathIsControlledWithoutFallbackOrFileChanges(bool preserved)
+    {
+        var path = Path.Combine(root, "lookup.json");
+        var node = JsonSerializer.SerializeToNode(new[] { new SpeciesEvolutionChain(67, 133, 45, 2, new[] { 133, 135 }, new[] { "Eevee", "Jolteon" }) })!;
+        node[0]!["StageSpeciesIds"] = null;
+        File.WriteAllText(path, node.ToJsonString()); var original = File.ReadAllBytes(path);
+        var error = Assert.Throws<InvalidDataException>(() => preserved
+            ? LegacyLookup.Load(DataRoot, preservedLookupPath: path)
+            : LegacyLookup.Load(DataRoot, existingCachePath: path));
+        Assert.Contains("lookup", error.Message); Assert.Equal(original, File.ReadAllBytes(path));
+        Assert.False(File.Exists(V2));
     }
 
 }

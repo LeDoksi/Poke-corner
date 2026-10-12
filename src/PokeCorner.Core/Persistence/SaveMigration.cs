@@ -29,7 +29,6 @@ public sealed class LegacyLookup
         {
             try { return Read(existingCachePath); }
             catch (JsonException) { }
-            catch (InvalidDataException) { }
         }
         var directory = Path.Combine(dataRoot, "final", "legacy-v1");
         using var manifest = JsonDocument.Parse(File.ReadAllText(Path.Combine(directory, "manifest.json")));
@@ -48,7 +47,7 @@ public sealed class LegacyLookup
         var bytes = File.ReadAllBytes(path);
         var chains = JsonSerializer.Deserialize<List<SpeciesEvolutionChain>>(bytes)
             ?? throw new InvalidDataException("Пустой lookup v1.");
-        if (chains.Count == 0 || chains.Any(c => c is null || c.StageSpeciesIds.Count != c.ChainLength ||
+        if (chains.Count == 0 || chains.Any(c => c is null || c.StageSpeciesIds is null || c.StageSpeciesIds.Count != c.ChainLength ||
             c.StageSpeciesIds.Count == 0 || c.StageSpeciesIds.Any(id => id <= 0)))
             throw new InvalidDataException("Неверный lookup v1.");
         return new(chains.Concat(LegacyOfflineChains.All), bytes);

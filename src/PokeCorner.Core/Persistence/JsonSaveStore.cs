@@ -131,17 +131,7 @@ public sealed class JsonSaveStore
             && data.FeedingRemainderUnits < FeedingService.ActivityUnitsPerTreatEarned
             && data.ShopRemainderUnits < ShopService.ActivityUnitsPerCoinEarned, "остаток вне интервала начисления");
         Require(data.SchemaVersion is 1 or 2, "неподдерживаемая версия схемы");
-        foreach (var individual in data.Individuals!)
-        {
-            Require(individual is not null && individual.Id != Guid.Empty, "неверный экземпляр");
-            Require(individual!.SpeciesId > 0 && individual.EvolutionChainId > 0 && individual.ChainLength is >= 1 and <= 3,
-                "неверный вид или эволюционная цепочка");
-            Require(Enum.IsDefined(individual.Nature) && Enum.IsDefined(individual.CurrentStage)
-                && (int)individual.CurrentStage < individual.ChainLength && individual.AccumulatedCarePoints >= 0,
-                "неверная стадия или прогресс");
-            Require(individual.DisplayStageOverride is null || (individual.DisplayStageOverride >= 0
-                && individual.DisplayStageOverride <= (int)individual.CurrentStage), "неверная отображаемая стадия");
-        }
+        foreach (var individual in data.Individuals!) ValidateIndividual(individual, data.SchemaVersion);
         Require(data.Individuals!.Select(i => i.Id).Distinct().Count() == data.Individuals.Count, "повторный GUID");
         if (data.SchemaVersion == 2) ValidateV2(data);
         Require(data.ActiveIndividualId is null || data.Individuals!.Any(i => i.Id == data.ActiveIndividualId),
@@ -153,6 +143,26 @@ public sealed class JsonSaveStore
             && (data.Settings.PetPositionX is null) == (data.Settings.PetPositionY is null),
             "неверные настройки");
     }
+    private static void ValidateIndividual(PokemonIndividual? individual, int schemaVersion)
+    {
+        Require(individual is not null && individual.Id != Guid.Empty, "неверный экземпляр");
+        Require(individual!.SpeciesId > 0 && individual.EvolutionChainId > 0 && individual.ChainLength is >= 1 and <= 3,
+            "неверный вид или эволюционная цепочка");
+        Require(Enum.IsDefined(individual.Nature) && Enum.IsDefined(individual.CurrentStage)
+            && (int)individual.CurrentStage < individual.ChainLength && individual.AccumulatedCarePoints >= 0,
+            "неверная стадия или прогресс");
+        Require(individual.DisplayStageOverride is null || (individual.DisplayStageOverride >= 0
+            && individual.DisplayStageOverride <= (int)individual.CurrentStage), "неверная отображаемая стадия");
+        if (schemaVersion != 2) return;
+        Require(individual.CurrentSpeciesId > 0 && individual.FamilyRootId > 0 && individual.TotalXp is >= 0 and <= 6400
+            && SaveMigration.TraitIds.Contains(individual.FirstTraitId)
+            && (individual.SecondTraitId is null || SaveMigration.TraitIds.Contains(individual.SecondTraitId) && individual.SecondTraitId != individual.FirstTraitId)
+            && individual.ReachedSpeciesIds is { Count: > 0 } && individual.ParentIds is not null
+            && individual.ReachedSpeciesIds[^1] == individual.CurrentSpeciesId
+            && (individual.DisplayStageOverride is null || individual.DisplayStageOverride < individual.ReachedSpeciesIds.Count)
+            && individual.ReachedSpeciesIds.All(id => id > 0) && individual.ReachedSpeciesIds.Distinct().Count() == individual.ReachedSpeciesIds.Count, "неверный экземпляр v2");
+    }
+
     private static void ValidateV2(SaveData data)
     {
         Require(!string.IsNullOrWhiteSpace(data.CatalogRevision) && !string.IsNullOrWhiteSpace(data.BalanceRevision)
@@ -161,13 +171,6 @@ public sealed class JsonSaveStore
             && data.Metrics is not null && data.AwardLedger is not null && data.Berries is not null && data.Items is not null
             && data.BerryRemainders is not null && data.Tutorial is not null && data.Gift is not null
             && data.CompletedOperations is not null, "обязательное поле v2 равно null");
-        Require(data.Individuals.All(i => i.CurrentSpeciesId > 0 && i.FamilyRootId > 0 && i.TotalXp is >= 0 and <= 6400
-            && SaveMigration.TraitIds.Contains(i.FirstTraitId)
-            && (i.SecondTraitId is null || SaveMigration.TraitIds.Contains(i.SecondTraitId) && i.SecondTraitId != i.FirstTraitId)
-            && i.ReachedSpeciesIds is { Count: > 0 } && i.ParentIds is not null
-            && i.ReachedSpeciesIds[^1] == i.CurrentSpeciesId
-            && (i.DisplayStageOverride is null || i.DisplayStageOverride < i.ReachedSpeciesIds.Count)
-            && i.ReachedSpeciesIds.All(id => id > 0) && i.ReachedSpeciesIds.Distinct().Count() == i.ReachedSpeciesIds.Count), "неверный экземпляр v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.Berries!.Keys) && SaveMigration.ItemIds.ToHashSet().SetEquals(data.Items!.Keys)
             && data.Berries.Values.All(n => n >= 0) && data.Items.Values.All(n => n >= 0) && data.Items["treats"] == data.FeedingTreats, "неверный инвентарь v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)
@@ -183,8 +186,8 @@ public sealed class JsonSaveStore
         var ids = data.Individuals.Select(i => i.Id).ToHashSet();
         foreach (var gift in data.Gift.Gifts!)
         {
-            Require(gift is not null && gift.Status is "reserved" or "opened" && gift.Individual is not null
-                && gift.Individual.Id != Guid.Empty && gift.Individual.CurrentSpeciesId > 0 && SaveMigration.TraitIds.Contains(gift.Individual.FirstTraitId), "неверная выдача");
+            Require(gift is not null && gift.Status is "reserved" or "opened" && gift.Individual is not null, "неверная выдача");
+            ValidateIndividual(gift!.Individual, 2);
             Require(gift!.Status != "reserved" || ids.Add(gift.Individual!.Id), "повторный GUID подарка");
         }
         var ownedIds = data.Individuals.Select(i => i.Id).ToHashSet();
