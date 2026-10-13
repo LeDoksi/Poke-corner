@@ -204,7 +204,7 @@ public partial class ShopView : UserControl
             var row = _rows[good.Id];
             var stock = good.Id == "treats" ? _state.Feeding.Treats
                 : (good.IsBerry ? _state.Shop.Berries : _state.Shop.Items).GetValueOrDefault(good.Id);
-            row.Stock.Text = $"Запас: {stock} · {good.Price} монет/шт.";
+            row.Stock.Text = $"Запас: {stock} · {good.Price} монет/{(good.Id == "treats" ? "пачка" : "шт.")}";
             row.Buy.IsEnabled = !_busy;
             if (int.TryParse(row.Quantity.Text, out var count) && count > 0 && (long)good.Price * count > _state.Shop.Coins)
                 row.Total.Text = $"Не хватает {(long)good.Price * count - _state.Shop.Coins} монет";

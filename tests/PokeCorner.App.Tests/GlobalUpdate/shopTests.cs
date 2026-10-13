@@ -71,6 +71,83 @@ public sealed class ShopTests : IDisposable
     }
 
     [Theory]
+    [InlineData("cheri", 2)]
+    [InlineData("oran", 3)]
+    public void PurchaseReplayWithDifferentInputsIsRejected(string itemId, int quantity)
+    {
+        var data = State();
+        var id = Guid.NewGuid();
+        Assert.True(shop.TryPurchase(data, "oran", 2, id).Success);
+
+        var replay = shop.TryPurchase(data, itemId, quantity, id);
+
+        Assert.False(replay.Success);
+        Assert.False(replay.Repeated);
+        Assert.Equal(90, data.ShopCoins);
+        Assert.Equal(2, data.Berries["oran"]);
+        Assert.Equal(0, data.Berries["cheri"]);
+    }
+
+    [Fact]
+    public void LegacyPurchaseJournalEntryCannotClaimUnverifiableReplay()
+    {
+        var data = State();
+        var id = Guid.NewGuid();
+        data.CompletedOperations[$"shop:{id}"] = id;
+
+        var replay = shop.TryPurchase(data, "oran", 1, id);
+
+        Assert.False(replay.Success);
+        Assert.Equal(100, data.ShopCoins);
+        Assert.Equal(0, data.Berries["oran"]);
+    }
+
+    [Fact]
+    public void PotionAndCareReplayMustTargetOriginalIndividual()
+    {
+        var levels = new LevelProgression(DataRoot);
+        var data = State();
+        var first = new PokemonIndividual { SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1,
+            EvolutionChainId = 1, ChainLength = 1, ReachedSpeciesIds = [1], Nature = Nature.Hardy,
+            IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = "gatherer", SecondTraitId = "tracker" };
+        var second = new PokemonIndividual { SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1,
+            EvolutionChainId = 1, ChainLength = 1, ReachedSpeciesIds = [1], Nature = Nature.Hardy,
+            IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = "gatherer", SecondTraitId = "tracker" };
+        data.Individuals.AddRange([first, second]);
+        data.Items["xp-potion"] = 1;
+        data.Items["care-booster"] = 1;
+        var potionId = Guid.NewGuid();
+        var careId = Guid.NewGuid();
+        Assert.True(shop.TryUseXpPotion(data, first.Id, potionId, levels).Success);
+        Assert.True(shop.TryUseCareBooster(data, first.Id, careId).Success);
+
+        Assert.True(shop.TryUseXpPotion(data, first.Id, potionId, levels).Repeated);
+        Assert.True(shop.TryUseCareBooster(data, first.Id, careId).Repeated);
+        Assert.False(shop.TryUseXpPotion(data, second.Id, potionId, levels).Success);
+        Assert.False(shop.TryUseCareBooster(data, second.Id, careId).Success);
+        Assert.Equal(0, second.TotalXp);
+        Assert.Equal(0, second.AccumulatedCarePoints);
+        Assert.Equal(0, data.Items["xp-potion"]);
+        Assert.Equal(0, data.Items["care-booster"]);
+    }
+
+    [Fact]
+    public void ChoiceReplayWithDifferentItemOrChoiceCountIsRejected()
+    {
+        var data = State();
+        data.Items["evolution-stone"] = 1;
+        data.Items["offspring-charm"] = 1;
+        var id = Guid.NewGuid();
+        Assert.True(shop.TrySpendChoiceItem(data, "evolution-stone", 2, id).Success);
+
+        Assert.True(shop.TrySpendChoiceItem(data, "evolution-stone", 2, id).Repeated);
+        Assert.False(shop.TrySpendChoiceItem(data, "offspring-charm", 2, id).Success);
+        Assert.False(shop.TrySpendChoiceItem(data, "evolution-stone", 3, id).Success);
+        Assert.Equal(0, data.Items["evolution-stone"]);
+        Assert.Equal(1, data.Items["offspring-charm"]);
+    }
+
+    [Theory]
     [InlineData("evolution-stone")]
     [InlineData("offspring-charm")]
     public void ChoiceItemIsSpentOnlyForMultipleOutcomes(string itemId)
@@ -152,6 +229,21 @@ public sealed class ShopTests : IDisposable
         Assert.Equal("3", ((TextBox)action.Children[0]).Text);
         Assert.Equal(0, commits);
         Assert.Equal(100, live.Shop.Coins);
+    });
+
+    [Fact]
+    public void TreatPriceIsLabeledPerPackAndBerryPricePerItem() => WpfTestHost.Run(() =>
+    {
+        var live = new AppState();
+        live.Hydrate(State());
+        var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
+        var items = (StackPanel)view.FindName("ItemsPanel");
+        var berries = (StackPanel)view.FindName("BerriesPanel");
+        var treatsDetail = (StackPanel)((Grid)((Border)items.Children[0]).Child).Children[1];
+        var berryDetail = (StackPanel)((Grid)((Border)berries.Children[0]).Child).Children[1];
+
+        Assert.Contains("20 монет/пачка", ((TextBlock)treatsDetail.Children[2]).Text);
+        Assert.Contains("5 монет/шт.", ((TextBlock)berryDetail.Children[2]).Text);
     });
 
     [Fact]

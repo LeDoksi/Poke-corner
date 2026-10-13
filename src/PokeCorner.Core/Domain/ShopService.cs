@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text.Json;
 using PokeCorner.Core.Persistence;
 
@@ -40,12 +41,26 @@ public sealed class ShopService
         return goods;
     }
 
+    private static Guid OperationFingerprint(params string[] inputs) =>
+        new(SHA256.HashData(JsonSerializer.SerializeToUtf8Bytes(inputs)).AsSpan(0, 16));
+
+    private static PurchaseResult? ReplayResult(SaveData next, string key, Guid operationId, Guid fingerprint, string message)
+    {
+        if (!next.CompletedOperations.TryGetValue(key, out var saved)) return null;
+        // Older saves stored only operationId, so their original inputs cannot be verified.
+        if (saved == operationId || saved != fingerprint)
+            return new(false, "Идентификатор действия уже использован или параметры сохранённой операции неизвестны.");
+        return new(true, message, true);
+    }
+
     public PurchaseResult TryPurchase(SaveData next, string itemId, int quantity, Guid operationId)
     {
         ArgumentNullException.ThrowIfNull(next);
         if (operationId == Guid.Empty) return new(false, "Неверный идентификатор покупки.");
         if (next.SchemaVersion != 2) return new(false, "Требуется обновлённое сохранение.");
-        if (next.CompletedOperations.ContainsKey($"shop:{operationId}")) return new(true, "Покупка уже сохранена.", true);
+        var operationKey = $"shop:{operationId}";
+        var fingerprint = OperationFingerprint("shop", itemId, quantity.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        if (ReplayResult(next, operationKey, operationId, fingerprint, "Покупка уже сохранена.") is { } replay) return replay;
         var good = Goods.FirstOrDefault(g => g.Id == itemId);
         if (good is null) return new(false, "Товар не найден.");
         if (quantity <= 0) return new(false, "Укажите положительное количество.");
@@ -57,7 +72,7 @@ public sealed class ShopService
         next.ShopCoins -= (int)cost;
         if (good.Id == "treats") next.FeedingTreats += (int)added;
         else (good.IsBerry ? next.Berries : next.Items)[good.Id] += (int)added;
-        next.CompletedOperations[$"shop:{operationId}"] = operationId;
+        next.CompletedOperations[operationKey] = fingerprint;
         return new(true, $"Куплено: {good.Name} ×{quantity}.");
     }
 
@@ -71,7 +86,9 @@ public sealed class ShopService
     public PurchaseResult TryUseXpPotion(SaveData next, Guid individualId, Guid operationId, LevelProgression levels)
     {
         if (operationId == Guid.Empty) return new(false, "Неверный идентификатор действия.");
-        if (next.CompletedOperations.ContainsKey($"potion:{operationId}")) return new(true, "Зелье уже применено.", true);
+        var operationKey = $"potion:{operationId}";
+        var fingerprint = OperationFingerprint("potion", individualId.ToString("N"));
+        if (ReplayResult(next, operationKey, operationId, fingerprint, "Зелье уже применено.") is { } replay) return replay;
         var individual = next.Individuals.FirstOrDefault(i => i.Id == individualId);
         if (individual is null) return new(false, "Питомец не найден.");
         if (next.Items["xp-potion"] <= 0) return new(false, "Нет зелья опыта.");
@@ -79,14 +96,16 @@ public sealed class ShopService
         if (useful == 0) return new(false, "Максимальный уровень: зелье не расходуется.");
         levels.AddXp(individual, useful);
         next.Items["xp-potion"]--;
-        next.CompletedOperations[$"potion:{operationId}"] = operationId;
+        next.CompletedOperations[operationKey] = fingerprint;
         return new(true, $"Получено {useful} XP; излишек {excess} XP.");
     }
 
     public PurchaseResult TryUseCareBooster(SaveData next, Guid individualId, Guid operationId)
     {
         if (operationId == Guid.Empty) return new(false, "Неверный идентификатор действия.");
-        if (next.CompletedOperations.ContainsKey($"care-booster:{operationId}")) return new(true, "Бустер уже применён.", true);
+        var operationKey = $"care-booster:{operationId}";
+        var fingerprint = OperationFingerprint("care-booster", individualId.ToString("N"));
+        if (ReplayResult(next, operationKey, operationId, fingerprint, "Бустер уже применён.") is { } replay) return replay;
         var individual = next.Individuals.FirstOrDefault(i => i.Id == individualId);
         if (individual is null) return new(false, "Питомец не найден.");
         if (next.Items["care-booster"] <= 0) return new(false, "Нет бустера ухода.");
@@ -94,7 +113,7 @@ public sealed class ShopService
         if (gained == 0) return new(false, "Прогресс ухода уже максимален.");
         individual.AccumulatedCarePoints += gained;
         next.Items["care-booster"]--;
-        next.CompletedOperations[$"care-booster:{operationId}"] = operationId;
+        next.CompletedOperations[operationKey] = fingerprint;
         return new(true, $"Добавлено {gained} CP ухода.");
     }
 
@@ -103,11 +122,13 @@ public sealed class ShopService
     {
         if (itemId is not ("evolution-stone" or "offspring-charm")) return new(false, "Неверный предмет выбора.");
         if (operationId == Guid.Empty) return new(false, "Неверный идентификатор действия.");
-        if (next.CompletedOperations.ContainsKey($"choice:{operationId}")) return new(true, "Выбор уже сохранён.", true);
+        var operationKey = $"choice:{operationId}";
+        var fingerprint = OperationFingerprint("choice", itemId, availableChoices.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        if (ReplayResult(next, operationKey, operationId, fingerprint, "Выбор уже сохранён.") is { } replay) return replay;
         if (availableChoices <= 1) return new(false, "Доступен только один исход: предмет не расходуется.");
         if (next.Items[itemId] <= 0) return new(false, "Предмета нет в инвентаре.");
         next.Items[itemId]--;
-        next.CompletedOperations[$"choice:{operationId}"] = operationId;
+        next.CompletedOperations[operationKey] = fingerprint;
         return new(true, "Предмет выбора применён.");
     }
     // ~10 coins/hour of active play at the recalibrated 9000-units/hour baseline (see
