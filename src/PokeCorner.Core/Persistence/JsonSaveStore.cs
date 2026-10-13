@@ -285,7 +285,7 @@ public sealed class JsonSaveStore
         Require(data.DiscoveredSpeciesIds is not null && data.EvolutionTransitions is not null && data.ShinySpeciesIds is not null
             && data.Metrics is not null && data.AwardLedger is not null && data.Berries is not null && data.Items is not null
             && data.BerryRemainders is not null && data.Tutorial is not null && data.Gift is not null
-            && data.CompletedOperations is not null, "обязательное поле v2 равно null");
+            && data.CompletedOperations is not null && data.HatchedNurseryResults is not null, "обязательное поле v2 равно null");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.Berries!.Keys) && SaveMigration.ItemIds.ToHashSet().SetEquals(data.Items!.Keys)
             && data.Berries.Values.All(n => n >= 0) && data.Items.Values.All(n => n >= 0) && data.Items["treats"] == data.FeedingTreats, "неверный инвентарь v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)
@@ -350,6 +350,15 @@ public sealed class JsonSaveStore
                 && (expedition.Status == "claimed") == (expedition.ClaimOperationId is not null), "неверный поход v2");
         }
         ValidateActivity(data.Nest, ownedIds, "hatched");
+        foreach (var (id, child) in data.HatchedNurseryResults!)
+        {
+            ValidateIndividual(child, 2);
+            Require(id != Guid.Empty && child.Id == id && child.AcquisitionSource == "nursery"
+                && child.SpeciesId == child.FamilyRootId && child.CurrentSpeciesId == child.SpeciesId
+                && child.ReachedSpeciesIds.SequenceEqual(new[] { child.SpeciesId })
+                && child.TotalXp == 0 && data.CompletedOperations!.ContainsKey($"nursery:hatch:{id}"),
+                "неверный результат питомника v2");
+        }
         if (data.Nest is { } nest)
         {
             ValidateIndividual(nest.Child, 2);
@@ -366,7 +375,8 @@ public sealed class JsonSaveStore
                 && nest.Child.ParentIds.SequenceEqual(nest.ParticipantIds)
                 && (!nest.Child.IsShiny || nest.ShinySupported)
                 && (nest.Status == "hatched") == (nest.HatchOperationId is not null)
-                && (nest.Status != "hatched" || data.Individuals.Count(x => x.Id == nest.Child.Id) == 1
+                && (nest.Status != "hatched" || (data.Individuals.Count(x => x.Id == nest.Child.Id) == 1
+                    || data.HatchedNurseryResults.ContainsKey(nest.Id))
                     && data.CompletedOperations!.GetValueOrDefault($"nursery:hatch:{nest.Id}") == nest.HatchOperationId)
                 && (nest.Status == "hatched" || data.Individuals.All(x => x.Id != nest.Child.Id)),
                 "неверное гнездо v2");

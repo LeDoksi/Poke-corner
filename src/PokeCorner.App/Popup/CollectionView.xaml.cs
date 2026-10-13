@@ -544,6 +544,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         _detailCard = card;
         _detailIsFavorite = card.IsFavorite;
+        DetailReleaseButton.IsEnabled = !_appState.BusyIndividualIds.Contains(card.IndividualId);
 
         DetailDexNumberText.Text = card.DexNumber;
         DetailSpeciesNameText.Text = card.DisplayName;
@@ -768,7 +769,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void ReleaseIndividual(Guid id)
     {
-        _viewModel.Release(id);
+        if (!_viewModel.Release(id)) return;
         _onStateChanged();
         Refresh();
     }

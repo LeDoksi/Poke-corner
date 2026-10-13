@@ -125,6 +125,7 @@ public sealed class AppState
     /// query — it never mutates the individual, so UI can poll it every refresh tick to decide
     /// whether the evolve button is enabled.
     public bool IsReadyToEvolve(PokemonIndividual individual) =>
+        !BusyIndividualIds.Contains(individual.Id) &&
         EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength) > individual.CurrentStage;
 
     /// Applies the pending evolution, if there is one. Returns false (and changes nothing)
@@ -132,7 +133,7 @@ public sealed class AppState
     /// double-evolve.
     public bool TryEvolve(PokemonIndividual individual)
     {
-        if (IsCommitting) return false;
+        if (IsCommitting || BusyIndividualIds.Contains(individual.Id)) return false;
         var nextStage = EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength);
         if (nextStage <= individual.CurrentStage) return false;
 

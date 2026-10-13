@@ -138,7 +138,7 @@ public sealed class EncounterService
             rolled = roller.RollActivity(_roots, discovered, state.ActivityNewGuaranteed, _rarityWeights, _newChance,
                 id => _catalog.CanIssueDirectly(id, true), Multiplier);
         }
-        var allowedTraits = _traits.Allowed(rolled.SpeciesId);
+        var allowedTraits = _traits.Allowed(rolled.SpeciesId, rolled.IsShiny, _catalog);
         var individual = reservedGift ?? new PokemonIndividual
         {
             Id = encounter.Id, SpeciesId = rolled.SpeciesId, EvolutionChainId = rolled.ChainId,

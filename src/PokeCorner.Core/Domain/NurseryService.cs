@@ -10,7 +10,8 @@ public sealed record NurseryRequest(IReadOnlyList<Guid> ParentIds, int? Selected
 public sealed record NurseryPreview(IReadOnlyList<NurseryOutcome> Outcomes, IReadOnlyDictionary<string, int> Berries,
     int Hours, DateTimeOffset ReadyAtUtc, IReadOnlyList<string> TraitIds, IReadOnlyDictionary<int, double> ShinyChances,
     bool SelectionUseful, IReadOnlyDictionary<int, double> OutcomeChances,
-    IReadOnlyDictionary<int, IReadOnlyList<string>> TraitsBySpecies);
+    IReadOnlyDictionary<int, IReadOnlyList<string>> TraitsBySpecies,
+    IReadOnlyDictionary<int, IReadOnlyList<string>> ShinyTraitsBySpecies);
 public sealed record NurseryAction(bool Success, string Message, bool Repeated = false, PokemonIndividual? Child = null);
 
 // Mutate only a proposed SaveData; AppState.CommitAsync publishes the complete candidate after the write.
@@ -55,9 +56,13 @@ public sealed class NurseryService
         if (selectedSpeciesId is not null)
             foreach (var (id, count) in recipe.SelectedSurcharge) berries[id] = berries.GetValueOrDefault(id) + count;
         var traitsBySpecies = recipe.AvailableOutcomes.ToDictionary(x => x.SpeciesId,
-            x => (IReadOnlyList<string>)Inheritance(parents, x.SpeciesId));
-        var traitIds = selectedSpeciesId is { } chosen ? traitsBySpecies[chosen]
-            : traitsBySpecies.Values.SelectMany(x => x).Distinct().Order().ToArray();
+            x => (IReadOnlyList<string>)Inheritance(parents, x.SpeciesId, false));
+        var shinyTraitsBySpecies = recipe.AvailableOutcomes.ToDictionary(x => x.SpeciesId,
+            x => (IReadOnlyList<string>)(x.ShinyAvailable ? Inheritance(parents, x.SpeciesId, true) : []));
+        var visibleSpecies = selectedSpeciesId is { } chosen ? new[] { chosen } :
+            recipe.AvailableOutcomes.Select(x => x.SpeciesId);
+        var traitIds = visibleSpecies.SelectMany(id => traitsBySpecies[id].Concat(shinyTraitsBySpecies[id]))
+            .Distinct().Order().ToArray();
         var reduction = Math.Min(maxReduction, TraitRules.Stack(parents.SelectMany(p =>
             new[] { p.FirstTraitId, p.SecondTraitId }.Where(id => id == "caring-parent")
                 .Select(_ => traits.Value("caring-parent", levels.TraitTierForXp(p.TotalXp))))));
@@ -71,7 +76,7 @@ public sealed class NurseryService
                     state.ShopCatchLuckyCharmActive, x.ShinyAvailable)), recipe.SelectionUseful,
             recipe.AvailableOutcomes.ToDictionary(x => x.SpeciesId,
                 x => selectedSpeciesId is null ? (double)x.Weight / weight : x.SpeciesId == selectedSpeciesId ? 1d : 0d),
-            traitsBySpecies);
+            traitsBySpecies, shinyTraitsBySpecies);
     }
 
     public NurseryAction Start(NurseryRequest request)
@@ -103,11 +108,11 @@ public sealed class NurseryService
             var pick = random.Next(total);
             outcome = recipe.AvailableOutcomes.First(x => (pick -= x.Weight) < 0);
         }
-        var pool = Inheritance(parents, outcome.SpeciesId);
         var shinyChance = ShinyRules.Chance(ShinySource.Nursery, state.NurseryLuckBonus,
             state.ShopCatchLuckyCharmActive, outcome.ShinyAvailable);
         var shinyDraw = new ShinyDraw(random.NextDouble(), shinyChance);
         var isShiny = ShinyRules.Resolve(ShinySource.Nursery, shinyDraw);
+        var pool = Inheritance(parents, outcome.SpeciesId, isShiny);
         var species = catalog.Species.Single(x => x.Id == outcome.SpeciesId);
         var child = new PokemonIndividual
         {
@@ -140,7 +145,7 @@ public sealed class NurseryService
         if (id == Guid.Empty || operationId == Guid.Empty) throw new InvalidOperationException("Требуется ID вылупления.");
         if (state.CompletedOperations.TryGetValue($"nursery:hatch:{id}", out var completed))
             return completed == operationId
-                ? new(true, "Малыш уже встречен.", true, state.Individuals.SingleOrDefault(x => x.Id == id))
+                ? new(true, "Малыш уже встречен.", true, FrozenChild(id))
                 : new(false, "Малыш уже был встречен.");
         var nest = state.Nest;
         if (nest?.Id != id || nest.Status is not ("running" or "ready"))
@@ -148,7 +153,8 @@ public sealed class NurseryService
         if (nest.Status == "running" && (now ?? DateTimeOffset.UtcNow).ToUniversalTime() < nest.ReadyAtUtc)
             return new(false, "Малыш ещё не готов.");
         if (state.Individuals.Any(x => x.Id == nest.Child.Id)) throw new InvalidDataException("Потомок уже выдан.");
-        state.Individuals.Add(nest.Child);
+        state.Individuals.Add(Copy(nest.Child));
+        state.HatchedNurseryResults[id] = Copy(nest.Child);
         state.DiscoveredSpeciesIds.Add(nest.Child.SpeciesId);
         if (nest.Child.IsShiny) state.ShinySpeciesIds.Add(nest.Child.SpeciesId);
         state.NurseryLuckBonus = ShinyRules.NextNurseryLuck(state.NurseryLuckBonus, nest.Child.IsShiny, nest.ShinySupported);
@@ -156,8 +162,15 @@ public sealed class NurseryService
         nest.HatchOperationId = operationId;
         state.CompletedOperations[$"nursery:hatch:{id}"] = operationId;
         state.Metrics["hatched-children"] = checked((state.Metrics.GetValueOrDefault("hatched-children") ?? 0) + 1);
-        return new(true, "Малыш появился.", false, nest.Child);
+        return new(true, "Малыш появился.", false, Copy(nest.Child));
     }
+
+    private PokemonIndividual? FrozenChild(Guid id) =>
+        state.HatchedNurseryResults.TryGetValue(id, out var saved) ? Copy(saved)
+        : state.Nest is { Status: "hatched" } nest && nest.Id == id ? Copy(nest.Child) : null;
+
+    private static PokemonIndividual Copy(PokemonIndividual individual) =>
+        JsonSerializer.Deserialize<PokemonIndividual>(JsonSerializer.Serialize(individual))!;
 
     public bool RefreshReady(DateTimeOffset now)
     {
@@ -177,9 +190,9 @@ public sealed class NurseryService
         return (parents, recipe);
     }
 
-    private string[] Inheritance(PokemonIndividual[] parents, int speciesId)
+    private string[] Inheritance(PokemonIndividual[] parents, int speciesId, bool isShiny)
     {
-        var allowed = traits.Allowed(speciesId).ToHashSet();
+        var allowed = traits.Allowed(speciesId, isShiny, catalog).ToHashSet();
         var inherited = parents.SelectMany(p => new[] { p.FirstTraitId, p.SecondTraitId })
             .Where(id => id is not null && allowed.Contains(id)).Select(id => id!).Distinct().Order().ToArray();
         var pool = inherited.Length > 0 ? inherited : allowed.Order().ToArray();

@@ -22,6 +22,8 @@ public sealed class SaveData
     public GiftGrant Gift { get; set; } = new();
     public ExpeditionState? Expedition { get; set; }
     public NurseryState? Nest { get; set; }
+    // Frozen hatch results keep idempotent replies stable after evolution, release, or another nest.
+    public Dictionary<Guid, PokemonIndividual> HatchedNurseryResults { get; set; } = [];
     // Bonus above the base 1/512 chance. Only an eligible nursery hatch changes it.
     public double NurseryLuckBonus { get; set; }
     public Dictionary<string, Guid> CompletedOperations { get; set; } = [];

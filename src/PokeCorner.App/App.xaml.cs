@@ -749,7 +749,7 @@ public partial class App : System.Windows.Application
                 // LoadForLookup so the collection/Pokédex can resolve names, sprites and rarity
                 // for individuals sitting on a migrated legacy chain id, not just real ones.
                 var lookupChains = _speciesCatalog.LoadForLookup();
-                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, lookupChains, _appState.PendingEggs);
+                var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, lookupChains, _appState.PendingEggs, () => _appState.BusyIndividualIds);
                 var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);

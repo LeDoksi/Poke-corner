@@ -66,14 +66,16 @@ public sealed class CollectionViewModel
     private readonly CareModeService _careModeService;
     private readonly IReadOnlyList<SpeciesEvolutionChain> _chains;
     private readonly IReadOnlyList<PendingEgg> _pendingEggs;
+    private readonly Func<IReadOnlySet<Guid>> _busyIndividualIds;
 
-    public CollectionViewModel(PokemonCollection collection, IDictionary<Guid, CareState> careStates, CareModeService careModeService, IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlyList<PendingEgg> pendingEggs)
+    public CollectionViewModel(PokemonCollection collection, IDictionary<Guid, CareState> careStates, CareModeService careModeService, IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlyList<PendingEgg> pendingEggs, Func<IReadOnlySet<Guid>>? busyIndividualIds = null)
     {
         _collection = collection;
         _careStates = careStates;
         _careModeService = careModeService;
         _chains = chains;
         _pendingEggs = pendingEggs;
+        _busyIndividualIds = busyIndividualIds ?? (() => new HashSet<Guid>());
     }
 
     /// The grid's default order, in three bands: the individual on the desktop, then the
@@ -182,7 +184,7 @@ public sealed class CollectionViewModel
         return true;
     }
 
-    public bool Release(Guid id) => _collection.Release(id);
+    public bool Release(Guid id) => !_busyIndividualIds().Contains(id) && _collection.Release(id);
 
     /// Flips the pin on one individual and reports its new state. Returns false when the id
     /// isn't in the collection (e.g. a stale card clicked after a release).

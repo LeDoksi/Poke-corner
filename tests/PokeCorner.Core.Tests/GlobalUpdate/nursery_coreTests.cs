@@ -66,7 +66,7 @@ public sealed class NurseryCoreTests : IDisposable
             {
                 SpeciesId = species.FamilyRootId, CurrentSpeciesId = id, FamilyRootId = species.FamilyRootId,
                 EvolutionChainId = species.EvolutionChainId,
-                ChainLength = id switch { 26 => 3, 2 or 849 => 2, _ => 1 },
+                ChainLength = id switch { 26 or 679 => 3, 2 or 849 or 714 => 2, _ => 1 },
                 ReachedSpeciesIds = id switch { 26 => [172, 25, 26], 2 => [1, 2], 849 => [848, 849], _ => [id] },
                 CurrentStage = id switch { 26 => EvolutionStage.Stage3, 2 or 849 => EvolutionStage.Stage2, _ => EvolutionStage.Stage1 },
                 Nature = Nature.Bold, IsShiny = false, CaughtAtUtc = Now, FirstTraitId = "gatherer"
@@ -237,6 +237,112 @@ public sealed class NurseryCoreTests : IDisposable
         Assert.Contains(state.Nest!.Child.FirstTraitId, preview.TraitIds);
         Assert.Equal(1, state.Nest.Child.ChainLength);
         Assert.All(state.Individuals, parent => Assert.Equal("fast-grower", parent.FirstTraitId));
+    }
+
+    [Fact]
+    public void RootWithBlockedNormalNextStageCannotInheritFastGrower()
+    {
+        // Honedge is a real family root; the next normal stage #680 has no asset.
+        var catalog = Catalog([679]);
+        var state = State(catalog, 679, 679);
+        foreach (var parent in state.Individuals) parent.FirstTraitId = "fast-grower";
+        var service = new NurseryService(catalog, state);
+        var request = Request(state);
+        Assert.DoesNotContain("fast-grower", service.Preview(request.ParentIds).TraitsBySpecies[679]);
+        service.Start(request);
+        Assert.NotEqual("fast-grower", state.Nest!.Child.FirstTraitId);
+    }
+
+    [Fact]
+    public void ShinyRootWithBlockedShinyNextStageCannotInheritFastGrower()
+    {
+        // Noibat #714 is a real root with shiny art; #715 has normal but no shiny art.
+        var catalog = Catalog([714, 715], 714);
+        for (var i = 1; i <= 50; i++)
+        {
+            var state = State(catalog, 714, 714);
+            foreach (var parent in state.Individuals) parent.FirstTraitId = "fast-grower";
+            state.NurseryLuckBonus = ShinyRules.NurseryChanceCap - ShinyRules.BaseChance;
+            state.ShopCatchLuckyCharmActive = true;
+            var service = new NurseryService(catalog, state);
+            var preview = service.Preview(Request(state).ParentIds);
+            Assert.Contains("fast-grower", preview.TraitsBySpecies[714]);
+            Assert.DoesNotContain("fast-grower", preview.ShinyTraitsBySpecies[714]);
+            var id = new Guid(i, 0, 0, new byte[8]);
+            service.Start(Request(state, id: id));
+            if (!state.Nest!.Child.IsShiny) continue;
+            Assert.NotEqual("fast-grower", state.Nest.Child.FirstTraitId);
+            return;
+        }
+        Assert.Fail("No shiny child was rolled in 50 deterministic launch IDs.");
+    }
+
+    [Fact]
+    public void HatchReplayReturnsFrozenChildAfterLegalEvolutionAndRelease()
+    {
+        var catalog = Catalog([714, 715]);
+        var state = State(catalog, 714, 714);
+        var service = new NurseryService(catalog, state);
+        var request = Request(state);
+        service.Start(request);
+        var hatchId = Guid.NewGuid();
+        var result = service.Hatch(request.OperationId, hatchId, Now.AddHours(2));
+        var owned = state.Individuals.Single(x => x.Id == result.Child!.Id);
+        owned.CurrentSpeciesId = 715;
+        owned.ReachedSpeciesIds.Add(715);
+        owned.CurrentStage = EvolutionStage.Stage2;
+        Assert.Equal(714, service.Hatch(request.OperationId, hatchId).Child!.CurrentSpeciesId);
+        state.Individuals.Remove(owned);
+        Assert.Equal(714, service.Hatch(request.OperationId, hatchId).Child!.CurrentSpeciesId);
+        Assert.Equal(2, state.Individuals.Count);
+        JsonSaveStore.ValidateData(state);
+        var reloaded = JsonSaveStore.Clone(state);
+        var nextRequest = Request(reloaded, id: Guid.NewGuid());
+        new NurseryService(catalog, reloaded).Start(nextRequest);
+        var replay = new NurseryService(catalog, reloaded).Hatch(request.OperationId, hatchId);
+        Assert.True(replay.Repeated);
+        Assert.Equal(714, replay.Child!.CurrentSpeciesId);
+        Assert.Equal(2, reloaded.Individuals.Count);
+        JsonSaveStore.ValidateData(reloaded);
+    }
+
+    [Theory]
+    [InlineData("running")]
+    [InlineData("ready")]
+    public void BusyNestParentCannotEvolveThroughAppState(string phase)
+    {
+        var catalog = Catalog([679]);
+        var state = State(catalog, 679, 679);
+        state.Individuals[0].AccumulatedCarePoints = int.MaxValue;
+        var request = Request(state);
+        new NurseryService(catalog, state).Start(request);
+        state.Nest!.Status = phase;
+        var live = new AppState(); live.Hydrate(state);
+        var parent = live.Collection.Individuals[0];
+        Assert.False(live.IsReadyToEvolve(parent));
+        Assert.False(live.TryEvolve(parent));
+        Assert.Equal(EvolutionStage.Stage1, parent.CurrentStage);
+        JsonSaveStore.ValidateData(live.ToSaveData(0));
+    }
+
+    [Theory]
+    [InlineData("running")]
+    [InlineData("ready")]
+    public void BusyExpeditionParentCannotEvolveThroughAppState(string phase)
+    {
+        var catalog = Catalog([679]);
+        var state = State(catalog, 679, 679);
+        state.Individuals[0].AccumulatedCarePoints = int.MaxValue;
+        state.Expedition = new ExpeditionState { Id = Guid.NewGuid(), ParticipantIds = [state.Individuals[0].Id],
+            Status = phase, StartedAtUtc = Now, ReadyAtUtc = Now.AddMinutes(30), DurationMinutes = 30,
+            LocationId = "grove", Difficulty = "easy", Rewards = new ExpeditionRewards { PrimaryBerryId = "oran" },
+            Conditions = JsonSerializer.SerializeToElement(new { }), Outcomes = JsonSerializer.SerializeToElement(new { }) };
+        var live = new AppState(); live.Hydrate(state);
+        var parent = live.Collection.Individuals[0];
+        Assert.False(live.IsReadyToEvolve(parent));
+        Assert.False(live.TryEvolve(parent));
+        Assert.Equal(EvolutionStage.Stage1, parent.CurrentStage);
+        JsonSaveStore.ValidateData(live.ToSaveData(0));
     }
 
     [Theory]
