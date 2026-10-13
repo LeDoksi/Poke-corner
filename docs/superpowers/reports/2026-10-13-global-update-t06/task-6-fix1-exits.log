@@ -1,0 +1,4 @@
+T06 fix round 1, 2026-10-13
+task-6-fix1-focused.log: exit 0; PokeCorner.App.Tests EncountersTests 12 passed, 0 failed, 0 skipped.
+task-6-fix1-full.log: exit 0; PokeCorner.Core.Tests 228 passed, 0 failed, 0 skipped; PokeCorner.App.Tests 390 passed, 0 failed, 0 skipped.
+Full gate filter excludes FinishReviewEvidenceRendersPopulatedPokedexAndResetArea (requires POKE_SHELL_CAPTURE_DIR) and StartStop_WithNoControllerConnected_RecordsNothingAndDisposesCleanly (requires no physical gamepad input), matching the existing T06 environment boundary.
