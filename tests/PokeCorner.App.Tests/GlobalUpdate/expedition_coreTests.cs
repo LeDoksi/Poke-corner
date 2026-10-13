@@ -167,6 +167,88 @@ public sealed class ExpeditionCoreTests : IDisposable
     }
 
     [Fact]
+    public void ClaimResolvesClosedEncounterWithoutCatchingOrDiscoveringIt()
+    {
+        var save = State(3);
+        var request = Request(save, 30, Utc);
+        new ExpeditionService(Catalog.Value, save).Start(request);
+        save.Expedition!.Rewards.HasEncounter = true;
+        save.Expedition.Status = "ready";
+        var ownedBefore = save.Individuals.Count;
+        var discoveryBefore = save.DiscoveredSpeciesIds.ToHashSet();
+        var shinyBefore = save.ShinySpeciesIds.ToHashSet();
+        var activeBefore = save.ActiveIndividualId;
+        var claim = new ExpeditionService(Catalog.Value, save).Claim(request.OperationId, Guid.NewGuid(), Utc.AddMinutes(30));
+        Assert.True(claim.Success);
+        Assert.Equal(ownedBefore, save.Individuals.Count);
+        Assert.Equal(discoveryBefore, save.DiscoveredSpeciesIds);
+        Assert.Equal(shinyBefore, save.ShinySpeciesIds);
+        Assert.Equal(activeBefore, save.ActiveIndividualId);
+        Assert.Equal("resolved", Assert.Single(save.Encounters).Phase);
+        Assert.NotNull(claim.Encounter);
+        Assert.True(claim.Encounter.IsClosed);
+        Assert.Equal(save.Encounters.Single().Individual!.SpeciesId, claim.Encounter.SpeciesId);
+    }
+
+    [Fact]
+    public void LaterOpenUsesFrozenClaimResultAndDoesNotSpendNewlyActivatedCharm()
+    {
+        var save = State(3);
+        var request = Request(save, 30, Utc);
+        new ExpeditionService(Catalog.Value, save).Start(request);
+        save.Expedition!.Rewards.HasEncounter = true;
+        save.Expedition.Status = "ready";
+        var operationId = Guid.NewGuid();
+        var claim = new ExpeditionService(Catalog.Value, save).Claim(request.OperationId, operationId, Utc.AddMinutes(30));
+        var store = new JsonSaveStore(Path.Combine(root, "closed.json"));
+        store.Save(save);
+        var loaded = store.Load()!;
+        var closed = Assert.Single(loaded.Encounters);
+        Assert.Equal("resolved", closed.Phase);
+        Assert.Equal(claim.Encounter!.SpeciesId, closed.Individual!.SpeciesId);
+        Assert.Equal(claim.Encounter.IsShiny, closed.Individual.IsShiny);
+        Assert.Equal(3, loaded.Individuals.Count);
+        loaded.ShopCatchLuckyCharmActive = true; // activated after the claim's frozen draw
+        var opened = new EncounterService(Catalog.Value).Open(loaded, closed.Id);
+        Assert.Equal(closed.Individual.Id, opened.Individual.Id);
+        Assert.Equal(claim.Encounter.SpeciesId, opened.Individual.SpeciesId);
+        Assert.Equal(claim.Encounter.IsShiny, opened.Individual.IsShiny);
+        Assert.True(loaded.ShopCatchLuckyCharmActive);
+        Assert.Equal(4, loaded.Individuals.Count);
+        Assert.Contains(opened.Individual.SpeciesId, loaded.DiscoveredSpeciesIds);
+        Assert.Equal(opened.Individual.IsShiny, loaded.ShinySpeciesIds.Contains(opened.Individual.SpeciesId));
+        var repeated = new EncounterService(Catalog.Value).Open(loaded, closed.Id);
+        Assert.True(repeated.Repeated);
+        Assert.Equal(4, loaded.Individuals.Count);
+        var claimReplay = new ExpeditionService(Catalog.Value, loaded).Claim(request.OperationId, operationId);
+        Assert.True(claimReplay.Repeated);
+        Assert.False(claimReplay.Encounter!.IsClosed);
+        Assert.Equal(4, loaded.Individuals.Count);
+        JsonSaveStore.ValidateData(loaded);
+    }
+
+    [Fact]
+    public void UnsupportedShinyAtResolutionKeepsCharmAndClosedNormalResult()
+    {
+        var save = State();
+        var blocked = Catalog.Value.Species.First(s => Catalog.Value.CanIssueDirectly(s.Id, false)
+            && !Catalog.Value.CanIssueDirectly(s.Id, true));
+        save.ShopCatchLuckyCharmActive = true;
+        var service = new EncounterService(Catalog.Value);
+        var reserved = service.Reserve(save, "expedition", Guid.NewGuid(), blocked.Id);
+        var resolved = service.Resolve(save, reserved.Id);
+        Assert.True(resolved.IsClosed);
+        Assert.False(resolved.IsShiny);
+        Assert.True(save.ShopCatchLuckyCharmActive);
+        Assert.Single(save.Individuals);
+        Assert.Equal("resolved", reserved.Phase);
+        JsonSaveStore.ValidateData(save);
+        service.Open(save, reserved.Id);
+        Assert.True(save.ShopCatchLuckyCharmActive);
+        Assert.Equal(2, save.Individuals.Count);
+    }
+
+    [Fact]
     public void EarlyCancellationReleasesParticipantsWithoutAwardsAndReplays()
     {
         var state = State();
@@ -211,10 +293,14 @@ public sealed class ExpeditionCoreTests : IDisposable
         live.Hydrate(state);
         var op = Guid.NewGuid();
         ExpeditionAction? proposed = null;
+        SaveData? proposedCandidate = null;
         var broken = new BackgroundSaveWriter(new JsonSaveStore(Path.Combine(root, "broken.json")),
             _ => throw new IOException("synthetic failure"));
         await Assert.ThrowsAsync<IOException>(() => live.CommitAsync(broken, next =>
-            proposed = new ExpeditionService(Catalog.Value, next).Claim(request.OperationId, op), () => 0));
+        {
+            proposed = new ExpeditionService(Catalog.Value, next).Claim(request.OperationId, op);
+            proposedCandidate = next;
+        }, () => 0));
         Assert.Equal("ready", live.ToSaveData(0).Expedition!.Status);
         Assert.Empty(live.Encounters);
         Assert.All(live.Collection.Individuals, p => Assert.Equal(0, p.TotalXp));
@@ -230,13 +316,23 @@ public sealed class ExpeditionCoreTests : IDisposable
         Assert.Empty(ExpeditionService.BusyIndividualIds(committed));
         Assert.True(committed.ShopCoins > 0);
         Assert.All(committed.Individuals.Take(3), p => Assert.True(p.TotalXp > 0));
-        Assert.Equal(proposed!.Encounter!.Individual.SpeciesId, result!.Encounter!.Individual.SpeciesId);
-        Assert.Equal(proposed.Encounter.Individual.IsShiny, result.Encounter.Individual.IsShiny);
-        Assert.Equal(!Catalog.Value.CanIssueDirectly(result.Encounter.Individual.SpeciesId, true), committed.ShopCatchLuckyCharmActive);
+        Assert.Equal(proposed!.Encounter!.SpeciesId, result!.Encounter!.SpeciesId);
+        Assert.Equal(proposed.Encounter.IsShiny, result.Encounter.IsShiny);
+        Assert.True(result.Encounter.IsClosed);
+        var proposedChild = Assert.Single(proposedCandidate!.Encounters).Individual!;
+        var committedChild = Assert.Single(committed.Encounters).Individual!;
+        Assert.Equal(proposedChild.Id, committedChild.Id);
+        Assert.Equal(proposedChild.Nature, committedChild.Nature);
+        Assert.Equal(proposedChild.FirstTraitId, committedChild.FirstTraitId);
+        Assert.Equal(proposedChild.SecondTraitId, committedChild.SecondTraitId);
+        Assert.Equal(!Catalog.Value.CanIssueDirectly(result.Encounter.SpeciesId, true), committed.ShopCatchLuckyCharmActive);
         Assert.True(committed.ActivityNewGuaranteed);
-        Assert.True(new ExpeditionService(Catalog.Value, committed).Claim(request.OperationId, op).Repeated);
+        var repeated = new ExpeditionService(Catalog.Value, committed).Claim(request.OperationId, op);
+        Assert.True(repeated.Repeated);
+        Assert.Equal(result.Encounter, repeated.Encounter);
         Assert.Equal(1, committed.Metrics["claimed-expeditions"]);
         Assert.Single(committed.Encounters);
-        Assert.Equal(4, committed.Individuals.Count);
+        Assert.Equal(3, committed.Individuals.Count);
+        Assert.Equal("resolved", committed.Encounters.Single().Phase);
     }
 }

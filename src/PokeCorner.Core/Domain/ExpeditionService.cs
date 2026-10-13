@@ -10,7 +10,7 @@ public sealed record ExpeditionRequest(string LocationId, string Difficulty, int
     IReadOnlyList<Guid> ParticipantIds, Guid OperationId, DateTimeOffset NowUtc);
 public sealed record ExpeditionPreview(string PrimaryBerryId, int PrimaryBerries, int Coins, int XpPerParticipant,
     double EncounterChance, double ExtraChancePerCheck, DateTimeOffset ReadyAtUtc, IReadOnlyDictionary<Guid, int> XpByParticipant);
-public sealed record ExpeditionAction(bool Success, string Message, bool Repeated = false, EncounterOpenResult? Encounter = null);
+public sealed record ExpeditionAction(bool Success, string Message, bool Repeated = false, EncounterResolvedResult? Encounter = null);
 
 // Works only on a proposed SaveData. AppState.CommitAsync is the publication barrier for every mutation.
 public sealed class ExpeditionService
@@ -215,13 +215,14 @@ public sealed class ExpeditionService
             var xp = checked((int)participant.XpRemainder.Settle(reward.XpNumerator, reward.XpDenominator));
             gainedXp |= levels.AddXp(participant, xp, catalog, Draw(id, participantId.ToString("N"))) > 0;
         }
-        EncounterOpenResult? encounter = null;
+        EncounterResolvedResult? encounter = null;
         if (reward.HasEncounter)
         {
             var species = SelectSpecies(trip);
-            var sealedBall = new EncounterService(catalog).Reserve(state, "expedition", id, species.Id);
+            var encounterService = new EncounterService(catalog);
+            var sealedBall = encounterService.Reserve(state, "expedition", id, species.Id);
             sealedBall.ReservedAtUtc = trip.ReadyAtUtc;
-            encounter = new EncounterService(catalog).Open(state, sealedBall.Id);
+            encounter = encounterService.Resolve(state, sealedBall.Id);
         }
         trip.Status = "claimed";
         trip.ClaimOperationId = operationId;
@@ -306,8 +307,8 @@ public sealed class ExpeditionService
         return new(primary, coins, xp, common, eventPreparation, timeReduction);
     }
     private static RationalRemainder Copy(RationalRemainder value) => new() { Numerator = value.Numerator, Denominator = value.Denominator };
-    private EncounterOpenResult? ReplayedEncounter(Guid id) => state.Encounters.FirstOrDefault(e => e.Id == id) is { Phase: "opened" } saved
-        ? new EncounterOpenResult(saved.Individual!, saved.Rarity!.Value, saved.WasDuplicateSpecies, true) : null;
+    private EncounterResolvedResult? ReplayedEncounter(Guid id) => state.Encounters.FirstOrDefault(e => e.Id == id) is { Phase: "resolved" or "opened" } saved
+        ? EncounterService.Describe(saved) : null;
     private static Random Draw(Guid id, string salt) => new(BitConverter.ToInt32(SHA256.HashData(id.ToByteArray().Concat(System.Text.Encoding.UTF8.GetBytes(salt)).ToArray())));
 
     private CatalogSpecies SelectSpecies(ExpeditionState trip)

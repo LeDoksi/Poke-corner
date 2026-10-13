@@ -304,12 +304,19 @@ public sealed class JsonSaveStore
         var ids = data.Individuals.Select(i => i.Id).ToHashSet();
         Require(data.Encounters!.All(e => e is not null && e.Id != Guid.Empty
             && e.Source is "activity" or "expedition" or "gift"
-            && e.Phase is "sealed" or "opened"
+            && e.Phase is "sealed" or "resolved" or "opened"
             && (e.KnownSpeciesId is null or > 0)
             && (e.GiftIndividualId is null || e.Source == "gift" && e.GiftIndividualId != Guid.Empty)
             && (e.Source != "activity" || e.KnownSpeciesId is null && e.GiftIndividualId is null)
-            && (e.Phase == "sealed" && e.Individual is null || e.Phase == "opened" && e.Individual is not null && e.Rarity is not null)), "неверная встреча");
+            && (e.Phase == "sealed" && e.Individual is null || e.Phase is "resolved" or "opened" && e.Individual is not null && e.Rarity is not null)), "неверная встреча");
         Require(data.Encounters.Select(e => e.Id).Distinct().Count() == data.Encounters.Count, "повторный ID встречи");
+        foreach (var encounter in data.Encounters.Where(e => e.Phase == "resolved"))
+        {
+            ValidateIndividual(encounter.Individual, 2);
+            Require(encounter.Source == "expedition" && encounter.KnownSpeciesId == encounter.Individual!.SpeciesId
+                && encounter.Individual.Id == encounter.Id && Enum.IsDefined(encounter.Rarity!.Value)
+                && ids.Add(encounter.Individual.Id), "закрытая встреча уже выдана или повреждена");
+        }
         foreach (var encounter in data.Encounters.Where(e => e.Phase == "opened"))
         {
             ValidateIndividual(encounter.Individual, 2);

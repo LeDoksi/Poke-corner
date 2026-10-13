@@ -89,7 +89,25 @@ public sealed class EncounterService
         return encounter;
     }
 
-    // Mutate only a proposed SaveData snapshot. Caller commits it before publishing the result.
+    // Expedition claim fixes the draw and eligible charm spend, but leaves the result closed.
+    // Mutate only a proposed SaveData snapshot; the caller commits it before publication.
+    public EncounterResolvedResult Resolve(SaveData state, Guid encounterId)
+    {
+        var encounter = state.Encounters.FirstOrDefault(e => e.Id == encounterId)
+            ?? throw new InvalidOperationException("Encounter was not reserved.");
+        if (encounter.Source != "expedition") throw new InvalidOperationException("Only an expedition encounter resolves before opening.");
+        if (encounter.Phase == "sealed") Prepare(state, encounter);
+        return Describe(encounter);
+    }
+
+    public static EncounterResolvedResult Describe(EncounterState encounter)
+    {
+        if (encounter.Phase is not ("resolved" or "opened") || encounter.Individual is null || encounter.Rarity is null)
+            throw new InvalidDataException("Encounter has no resolved result.");
+        return new(encounter.Id, encounter.Individual.SpeciesId, encounter.Individual.IsShiny,
+            encounter.Rarity.Value, encounter.Phase == "resolved");
+    }
+
     public EncounterOpenResult Open(SaveData state, Guid encounterId)
     {
         var encounter = state.Encounters.FirstOrDefault(e => e.Id == encounterId)
@@ -99,6 +117,32 @@ public sealed class EncounterService
             var saved = encounter.Individual ?? throw new InvalidDataException("Opened encounter has no result.");
             return new EncounterOpenResult(saved, encounter.Rarity!.Value, encounter.WasDuplicateSpecies, true);
         }
+        if (encounter.Phase == "sealed") Prepare(state, encounter);
+        if (encounter.Phase != "resolved" || encounter.Individual is null || encounter.Rarity is null)
+            throw new InvalidDataException("Encounter has no resolved result.");
+        var individual = encounter.Individual;
+        if (state.Individuals.Any(i => i.Id == individual.Id)) throw new InvalidDataException("Encounter individual ID is already in use.");
+        state.Individuals.Add(individual);
+        state.DiscoveredSpeciesIds.Add(individual.SpeciesId);
+        if (individual.IsShiny) state.ShinySpeciesIds.Add(individual.SpeciesId);
+        if (state.ActiveIndividualId is null && state.Individuals.Count == 1) state.ActiveIndividualId = individual.Id;
+        if (encounter.Source == "gift")
+        {
+            var gift = state.Gift.Gifts.SingleOrDefault(g => g.Individual.Id == encounter.GiftIndividualId && g.Status == "reserved")
+                ?? throw new InvalidDataException("Gift reservation is unavailable.");
+            gift.Status = "opened";
+        }
+        if (encounter.Source == "activity")
+        {
+            state.PendingCatchCount = Math.Max(0, state.PendingCatchCount - 1);
+            state.ActivityNewGuaranteed = encounter.WasDuplicateSpecies && _roots.Any(c => !state.DiscoveredSpeciesIds.Contains(c.StarterSpeciesId));
+        }
+        encounter.Phase = "opened";
+        return new EncounterOpenResult(individual, encounter.Rarity.Value, encounter.WasDuplicateSpecies, false);
+    }
+
+    private void Prepare(SaveData state, EncounterState encounter)
+    {
         if (encounter.Phase != "sealed") throw new InvalidDataException("Unknown encounter phase.");
         if (encounter.Source == "gift" && encounter.GiftIndividualId is null ||
             encounter.Source == "expedition" && encounter.KnownSpeciesId is null)
@@ -124,7 +168,6 @@ public sealed class EncounterService
                 throw new InvalidDataException("Gift variant is unavailable.");
             rolled = new CatchResult(chain.ChainId, reservedGift.SpeciesId, reservedGift.Nature, reservedGift.IsShiny,
                 discovered.Contains(reservedGift.SpeciesId), chain.ChainLength);
-            gift.Status = "opened";
         }
         else if (encounter.KnownSpeciesId is { } knownId)
         {
@@ -153,19 +196,9 @@ public sealed class EncounterService
             individual.ReachedSpeciesIds = [rolled.SpeciesId];
         }
         if (state.Individuals.Any(i => i.Id == individual.Id)) throw new InvalidDataException("Encounter individual ID is already in use.");
-        state.Individuals.Add(individual);
-        state.DiscoveredSpeciesIds.Add(individual.SpeciesId);
-        if (individual.IsShiny) state.ShinySpeciesIds.Add(individual.SpeciesId);
-        if (state.ActiveIndividualId is null && state.Individuals.Count == 1) state.ActiveIndividualId = individual.Id;
-        if (encounter.Source == "activity")
-        {
-            state.PendingCatchCount = Math.Max(0, state.PendingCatchCount - 1);
-            state.ActivityNewGuaranteed = rolled.WasDuplicateSpecies && _roots.Any(c => !state.DiscoveredSpeciesIds.Contains(c.StarterSpeciesId));
-        }
         encounter.Individual = individual;
         encounter.Rarity = RarityClassifier.Classify(_roots.First(c => c.StarterSpeciesId == rolled.SpeciesId).CaptureRate);
         encounter.WasDuplicateSpecies = rolled.WasDuplicateSpecies;
-        encounter.Phase = "opened";
-        return new EncounterOpenResult(individual, encounter.Rarity.Value, rolled.WasDuplicateSpecies, false);
+        encounter.Phase = "resolved";
     }
 }

@@ -14,3 +14,4 @@ public sealed class EncounterState
 }
 
 public sealed record EncounterOpenResult(PokemonIndividual Individual, RarityTier Rarity, bool WasDuplicateSpecies, bool Repeated);
+public sealed record EncounterResolvedResult(Guid Id, int SpeciesId, bool IsShiny, RarityTier Rarity, bool IsClosed);

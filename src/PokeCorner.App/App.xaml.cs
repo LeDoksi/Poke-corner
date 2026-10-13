@@ -863,6 +863,18 @@ public partial class App : System.Windows.Application
     public Task<ExpeditionAction> ClaimExpeditionAsync(Guid id, Guid operationId) =>
         CommitExpeditionAsync(service => service.Claim(id, operationId));
 
+    public async Task<EncounterOpenResult> OpenExpeditionEncounterAsync(Guid encounterId)
+    {
+        EncounterOpenResult? result = null;
+        await CommitStateAsync(next =>
+        {
+            if (next.Encounters.FirstOrDefault(e => e.Id == encounterId) is not { Source: "expedition", Phase: "resolved" or "opened" })
+                throw new InvalidOperationException("Встреча похода ещё не готова к открытию.");
+            result = _encounterService.Open(next, encounterId);
+        });
+        return result!;
+    }
+
     private async Task<ExpeditionAction> CommitExpeditionAsync(Func<ExpeditionService, ExpeditionAction> action)
     {
         ExpeditionAction? result = null;
