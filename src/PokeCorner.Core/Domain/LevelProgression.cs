@@ -49,7 +49,7 @@ public sealed class LevelProgression
         return level >= tierLevels[2] ? 3 : level >= tierLevels[1] ? 2 : 1;
     }
 
-    public int AddXp(PokemonIndividual individual, int xp)
+    public int AddXp(PokemonIndividual individual, int xp, Random? random = null)
     {
         ArgumentNullException.ThrowIfNull(individual);
         if (xp < 0) throw new ArgumentOutOfRangeException(nameof(xp));
@@ -63,7 +63,7 @@ public sealed class LevelProgression
         {
             var allowed = traits.Allowed(individual.CurrentSpeciesId).Where(id => id != individual.FirstTraitId).ToArray();
             if (allowed.Length == 0) throw new InvalidOperationException("No second trait is allowed.");
-            second = allowed[Random.Shared.Next(allowed.Length)];
+            second = allowed[(random ?? Random.Shared).Next(allowed.Length)];
         }
         individual.TotalXp = next;
         if (second is not null) individual.SecondTraitId = second;

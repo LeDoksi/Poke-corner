@@ -23,6 +23,9 @@ public sealed class AppState
     public bool IsCommitting { get; private set; }
     public Task WhenIdle => _idle?.Task ?? Task.CompletedTask;
     public int PendingActivityEncounterCount => _pendingActivityEncounterIds.Count;
+    public bool HasRunningExpedition => _metadata?.Expedition?.Status == "running";
+    public DateTimeOffset? ExpeditionReadyAtUtc => _metadata?.Expedition?.Status == "running" ? _metadata.Expedition.ReadyAtUtc : null;
+    public IReadOnlySet<Guid> BusyIndividualIds => _metadata is null ? new HashSet<Guid>() : ExpeditionService.BusyIndividualIds(_metadata);
 
     public void QueueActivityEncounter(Guid operationId)
     {

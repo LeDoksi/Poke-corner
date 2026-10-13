@@ -20,7 +20,7 @@ public sealed class SaveData
     public RationalRemainder CoinRemainder { get; set; } = new();
     public TutorialState Tutorial { get; set; } = new();
     public GiftGrant Gift { get; set; } = new();
-    public TimedActivity? Expedition { get; set; }
+    public ExpeditionState? Expedition { get; set; }
     public TimedActivity? Nest { get; set; }
     // Bonus above the base 1/512 chance. Only an eligible nursery hatch changes it.
     public double NurseryLuckBonus { get; set; }
@@ -81,7 +81,7 @@ public sealed class ReservedGift
 }
 
 // Payload is captured by the dependent expedition/nest services, never recomputed at claim.
-public sealed class TimedActivity
+public class TimedActivity
 {
     public Guid Id { get; set; }
     public string Status { get; set; } = "running";

@@ -330,6 +330,23 @@ public sealed class JsonSaveStore
             && (e.Individual is null || e.Individual.Id == giftId))), "встреча не совпадает с подарком");
         var ownedIds = data.Individuals.Select(i => i.Id).ToHashSet();
         ValidateActivity(data.Expedition, ownedIds, "claimed");
+        if (data.Expedition is { } expedition)
+        {
+            var rewards = expedition.Rewards;
+            Require(expedition.LocationId is "grove" or "lake" or "coast" or "mountains" or "desert" or "volcano" or "snow" or "ruins"
+                && expedition.Difficulty is "easy" or "normal" or "hard"
+                && expedition.DurationMinutes is 30 or 90 or 180 or 360
+                && expedition.StartedAtUtc.Offset == TimeSpan.Zero && expedition.ReadyAtUtc.Offset == TimeSpan.Zero
+                && expedition.ActivityActions >= 0 && expedition.TraitTimeReduction is >= 0 and <= .25m
+                && expedition.CollectorBoost >= 0 && expedition.RarityBoost >= 1
+                && expedition.KnownSpeciesIdsAtStart is not null && expedition.KnownSpeciesIdsAtStart.All(id => id > 0)
+                && rewards is not null && SaveMigration.BerryIds.Contains(rewards.PrimaryBerryId)
+                && rewards.PrimaryNumerator >= 0 && rewards.CoinNumerator >= 0 && rewards.XpNumerator >= 0
+                && rewards.ExtraCoins >= 0 && rewards.ExtraBerries is not null && rewards.ExtraItems is not null
+                && rewards.ExtraBerries.All(x => SaveMigration.BerryIds.Contains(x.Key) && x.Value >= 0)
+                && rewards.ExtraItems.All(x => SaveMigration.ItemIds.Contains(x.Key) && x.Value >= 0)
+                && (expedition.Status == "claimed") == (expedition.ClaimOperationId is not null), "неверный поход v2");
+        }
         ValidateActivity(data.Nest, ownedIds, "hatched");
         Require(data.Expedition is null || data.Nest is null || data.Expedition.Id != data.Nest.Id, "повторный ID таймера");
         if (data.Expedition?.Status is "running" or "ready" && data.Nest?.Status is "running" or "ready")
