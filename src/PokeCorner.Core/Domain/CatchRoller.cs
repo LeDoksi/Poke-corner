@@ -3,8 +3,6 @@ namespace PokeCorner.Core.Domain;
 public sealed class CatchRoller
 {
     private const double DuplicateChainWeightPenalty = 0.15;
-    private const double BaseShinyChance = 1.0 / 512.0;
-    private const double DuplicateShinyChanceMultiplier = 4.0;
     private const double DuplicateOwnedNatureWeight = 0.3;
     private const double DuplicateUnownedNatureWeight = 1.0;
 
@@ -31,14 +29,18 @@ public sealed class CatchRoller
         var tier = weightedTiers.First(x => (roll -= x.weight) < 0).tier;
         var candidates = pool.Where(c => RarityClassifier.Classify(c.CaptureRate) == tier).ToArray();
         var chain = candidates[_random.Next(candidates.Length)];
-        var shiny = canBeShiny(chain.StarterSpeciesId) && _random.NextDouble() < BaseShinyChance * shinyMultiplier(chain.StarterSpeciesId);
+        var eligible = canBeShiny(chain.StarterSpeciesId);
+        var multiplier = eligible ? shinyMultiplier(chain.StarterSpeciesId) : 1;
+        var shiny = RollShiny(ShinySource.Activity, eligible, multiplier);
         return new CatchResult(chain.ChainId, chain.StarterSpeciesId, PickUniformNature(), shiny, !chooseNew, chain.ChainLength);
     }
 
     public CatchResult RollCatch(
         IReadOnlyList<SpeciesEvolutionChain> allChains,
         IReadOnlyCollection<PokemonIndividual> owned,
-        double shinyChanceMultiplier = 1.0)
+        double shinyChanceMultiplier = 1.0,
+        Func<int, bool>? canBeShiny = null,
+        Func<double>? consumeMultiplier = null)
     {
         if (allChains.Count == 0)
         {
@@ -52,7 +54,9 @@ public sealed class CatchRoller
         // until PickChain returns, so callers can't pre-filter this.
         var ownedNaturesForDuplicateChain = owned.Where(i => i.EvolutionChainId == chain.ChainId).Select(i => i.Nature).ToHashSet();
 
-        var isShiny = _random.NextDouble() < (isDuplicate ? BaseShinyChance * DuplicateShinyChanceMultiplier : BaseShinyChance) * shinyChanceMultiplier;
+        var eligible = canBeShiny?.Invoke(chain.StarterSpeciesId) ?? true;
+        var multiplier = eligible ? consumeMultiplier?.Invoke() ?? shinyChanceMultiplier : 1;
+        var isShiny = RollShiny(ShinySource.Activity, eligible, multiplier);
         var nature = isDuplicate
             ? PickNatureBiasedTowardUnowned(ownedNaturesForDuplicateChain)
             : PickUniformNature();
@@ -63,7 +67,7 @@ public sealed class CatchRoller
     /// Guaranteed-tier roll for a shop egg. Returns false — without calling
     /// consumeShinyMultiplier — when the catalog has no species of that tier, so a lucky charm
     /// isn't spent on a hatch that can't happen; otherwise consumes it exactly once and rolls.
-    public bool TryRollCatchFromTier(IReadOnlyList<SpeciesEvolutionChain> allChains, RarityTier tier, IReadOnlyCollection<PokemonIndividual> owned, Func<double> consumeShinyMultiplier, out CatchResult result)
+    public bool TryRollCatchFromTier(IReadOnlyList<SpeciesEvolutionChain> allChains, RarityTier tier, IReadOnlyCollection<PokemonIndividual> owned, Func<double> consumeShinyMultiplier, out CatchResult result, Func<int, bool>? canBeShiny = null)
     {
         var tierChains = allChains.Where(c => RarityClassifier.Classify(c.CaptureRate) == tier).ToList();
         if (tierChains.Count == 0)
@@ -72,7 +76,7 @@ public sealed class CatchRoller
             return false;
         }
 
-        result = RollCatch(tierChains, owned, consumeShinyMultiplier());
+        result = RollCatch(tierChains, owned, canBeShiny: canBeShiny, consumeMultiplier: consumeShinyMultiplier);
         return true;
     }
 
@@ -82,15 +86,22 @@ public sealed class CatchRoller
     // first individual of a brand-new collection.
     public CatchResult RollFromChain(SpeciesEvolutionChain chain)
     {
-        var isShiny = _random.NextDouble() < BaseShinyChance;
+        var isShiny = RollShiny(ShinySource.Starter, true, 1);
         var nature = PickUniformNature();
         return new CatchResult(chain.ChainId, chain.StarterSpeciesId, nature, isShiny, WasDuplicateSpecies: false, chain.ChainLength);
     }
 
     public CatchResult RollKnownEncounter(SpeciesEvolutionChain chain, bool wasDuplicate, bool canBeShiny, double shinyMultiplier)
     {
-        var shiny = canBeShiny && _random.NextDouble() < BaseShinyChance * shinyMultiplier;
+        var shiny = RollShiny(ShinySource.Expedition, canBeShiny, shinyMultiplier);
         return new CatchResult(chain.ChainId, chain.StarterSpeciesId, PickUniformNature(), shiny, wasDuplicate, chain.ChainLength);
+    }
+
+    private bool RollShiny(ShinySource source, bool variantSupported, double multiplier)
+    {
+        if (!double.IsFinite(multiplier) || multiplier < 0) throw new ArgumentOutOfRangeException(nameof(multiplier));
+        var chance = Math.Min(1, ShinyRules.Chance(source, 0, false, variantSupported) * multiplier);
+        return ShinyRules.Resolve(source, new ShinyDraw(_random.NextDouble(), chance));
     }
 
     private SpeciesEvolutionChain PickChain(IReadOnlyList<SpeciesEvolutionChain> allChains, IReadOnlySet<int> ownedChainIds)

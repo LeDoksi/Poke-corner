@@ -1502,12 +1502,15 @@ public class ThemeRenderingTests
             WpfTestHost.Layout(view);
 
             var charmText = (TextBlock)view.FindName("CatchCharmText");
-            Assert.Equal(Visibility.Collapsed, charmText.Visibility);
+            Assert.Equal(Visibility.Visible, charmText.Visibility);
+            var basePreview = charmText.Text;
+            Assert.Contains("пригодном виде", basePreview);
 
             appState.Shop.CatchLuckyCharmActive = true;
             view.Refresh();
             Assert.Equal(Visibility.Visible, charmText.Visibility);
-            Assert.Equal("Талисман удачи активен: ×4 к шансу шайни на этой поимке.", charmText.Text);
+            Assert.NotEqual(basePreview, charmText.Text);
+            Assert.Contains("пригодную попытку", charmText.Text);
         });
 
     /// An active charm applies to whichever comes first, a catch or a hatch — so every pending

@@ -42,16 +42,15 @@ public class CatchRollerTests
     }
 
     [Fact]
-    public void RollCatch_Duplicate_ShinyChanceIsHigherThanNewCatch()
+    public void RollCatch_Duplicate_DoesNotReceiveHiddenShinyBonus()
     {
         var chains = new[] { CommonUnowned };
         var owned = new[] { Owned(CommonUnowned.ChainId) };
 
         var newCatchShinyCount = CountShiny(chains, owned: Array.Empty<PokemonIndividual>(), trials: 20_000, seed: 3);
-        var duplicateShinyCount = CountShiny(chains, owned, trials: 20_000, seed: 4);
+        var duplicateShinyCount = CountShiny(chains, owned, trials: 20_000, seed: 3);
 
-        Assert.True(duplicateShinyCount > newCatchShinyCount,
-            $"Expected duplicate shiny rate ({duplicateShinyCount}) > new-catch shiny rate ({newCatchShinyCount})");
+        Assert.Equal(newCatchShinyCount, duplicateShinyCount);
     }
 
     [Fact]

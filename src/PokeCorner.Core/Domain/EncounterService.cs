@@ -109,9 +109,7 @@ public sealed class EncounterService
         var discovered = state.DiscoveredSpeciesIds.Concat(state.Individuals.SelectMany(i => i.ReachedSpeciesIds)).ToHashSet();
         double Multiplier(int _)
         {
-            if (!state.ShopCatchLuckyCharmActive) return 1;
-            state.ShopCatchLuckyCharmActive = false;
-            return ShopService.CatchLuckyCharmShinyMultiplier;
+            return new ShopService().TryConsumeLuckyCharm(state, true) ? ShinyRules.CharmMultiplier : 1;
         }
         CatchResult rolled;
         PokemonIndividual? reservedGift = null;

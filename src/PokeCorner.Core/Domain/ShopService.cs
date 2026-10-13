@@ -29,7 +29,7 @@ public sealed class ShopService
         {
             new("treats", "Лакомства", $"Пачка: {pack} шт.", prices.GetProperty("treats5").GetInt32(), pack, false),
             new("care-booster", "Бустер ухода", $"+{care:N0} CP выбранному питомцу", prices.GetProperty("careBooster7500").GetInt32(), care, false),
-            new("lucky-charm", "Shiny-талисман", "×4 к следующему допустимому shiny-шансу", prices.GetProperty("luckyCharm").GetInt32(), 1, false),
+            new("lucky-charm", "Shiny-талисман", "Увеличивает текущий шанс shiny в 4 раза на одну попытку. Расходуется независимо от результата", prices.GetProperty("luckyCharm").GetInt32(), 1, false),
             new("evolution-stone", "Камень выбора", "Выбор доступной ветви эволюции", prices.GetProperty("evolutionStone").GetInt32(), 1, false),
             new("offspring-charm", "Талисман потомства", "Выбор доступного вида в гнезде", prices.GetProperty("offspringCharm").GetInt32(), 1, false),
             new("xp-potion", "Зелье опыта", $"+{xp} XP выбранному питомцу", prices.GetProperty("xpPotion300").GetInt32(), xp, false)
@@ -137,6 +137,26 @@ public sealed class ShopService
     public const long ActivityUnitsPerCoinEarned = 900;
 
     public const double CatchLuckyCharmShinyMultiplier = 4.0;
+
+    // Activation moves one unit out of stock. The active bool is the persisted reserved unit;
+    // an unsupported attempt keeps it reserved for the next eligible source.
+    public PurchaseResult TryActivateLuckyCharm(SaveData next)
+    {
+        ArgumentNullException.ThrowIfNull(next);
+        if (next.ShopCatchLuckyCharmActive) return new(false, "Талисман удачи уже активен.");
+        if (next.Items.GetValueOrDefault("lucky-charm") <= 0) return new(false, "Нет талисмана удачи в запасе.");
+        next.Items["lucky-charm"]--;
+        next.ShopCatchLuckyCharmActive = true;
+        return new(true, "Талисман удачи активирован.");
+    }
+
+    public bool TryConsumeLuckyCharm(SaveData next, bool variantSupported)
+    {
+        ArgumentNullException.ThrowIfNull(next);
+        if (!variantSupported || !next.ShopCatchLuckyCharmActive) return false;
+        next.ShopCatchLuckyCharmActive = false;
+        return true;
+    }
 
     public void EarnCoinsFromActivity(ShopInventory shop, long activityUnits)
     {

@@ -290,6 +290,9 @@ public sealed class JsonSaveStore
             && data.Berries.Values.All(n => n >= 0) && data.Items.Values.All(n => n >= 0) && data.Items["treats"] == data.FeedingTreats, "неверный инвентарь v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)
             && data.BerryRemainders.Values.All(ValidRemainder) && ValidRemainder(data.CoinRemainder), "неверный дробный остаток");
+        Require(double.IsFinite(data.NurseryLuckBonus) && data.NurseryLuckBonus >= 0
+            && data.NurseryLuckBonus <= ShinyRules.NurseryChanceCap - ShinyRules.BaseChance,
+            "неверная удача питомника");
         Require(data.DiscoveredSpeciesIds!.All(id => id > 0) && data.ShinySpeciesIds!.All(id => id > 0)
             && data.Metrics!.Values.All(n => n is null or >= 0), "неверная метрика v2");
         Require(data.AwardLedger!.Values.All(a => a is not null && a.CoinsGranted >= 0 && a.ClaimStatus is "claimed" or "unclaimed"

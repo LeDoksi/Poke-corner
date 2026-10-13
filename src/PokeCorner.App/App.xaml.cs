@@ -743,7 +743,8 @@ public partial class App : System.Windows.Application
         // A save written before the shop's tier gating (or hand-edited) can hold an egg of a tier
         // the catalog can't fill yet: keep the egg — and the lucky charm — for a later retry.
         if (!_catchRoller.TryRollCatchFromTier(GetDirectIssueChains(), egg.Tier, _appState.Collection.Individuals,
-                () => _shopService.ConsumeCatchLuckyCharm(_appState.Shop), out var result))
+                () => _shopService.ConsumeCatchLuckyCharm(_appState.Shop), out var result,
+                id => _catalogPackage.CanIssueDirectly(id, true)))
         {
             _trayIconService.ShowNotification("PokéCorner", "Пока нет доступных покемонов этой редкости — попробуй позже, когда каталог обновится.");
             return false;

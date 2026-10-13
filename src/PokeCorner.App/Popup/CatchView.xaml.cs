@@ -55,8 +55,12 @@ public partial class CatchView : System.Windows.Controls.UserControl
     {
         var progress = ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding);
         CatchProgressBar.Value = progress.CatchFraction;
-        CatchCharmText.Text = $"Талисман удачи активен: ×{ShopService.CatchLuckyCharmShinyMultiplier:0} к шансу шайни на этой поимке.";
-        CatchCharmText.Visibility = _appState.Shop.CatchLuckyCharmActive ? Visibility.Visible : Visibility.Collapsed;
+        var activeCharm = _appState.Shop.CatchLuckyCharmActive;
+        var chance = ShinyRules.Chance(ShinySource.Activity, 0, activeCharm, true);
+        CatchCharmText.Text = $"Шанс shiny при пригодном виде: {chance:P3}. " +
+            (activeCharm ? "Активный талисман расходуется на пригодную попытку; при недоступном shiny сохраняется."
+                : "Если у выбранного вида нет shiny-ресурса, шанс 0%.");
+        CatchCharmText.Visibility = Visibility.Visible;
         SetReady(_catchReadyCount());
     }
 

@@ -22,6 +22,8 @@ public sealed class SaveData
     public GiftGrant Gift { get; set; } = new();
     public TimedActivity? Expedition { get; set; }
     public TimedActivity? Nest { get; set; }
+    // Bonus above the base 1/512 chance. Only an eligible nursery hatch changes it.
+    public double NurseryLuckBonus { get; set; }
     public Dictionary<string, Guid> CompletedOperations { get; set; } = [];
     public List<EncounterState> Encounters { get; set; } = [];
     public bool ActivityNewGuaranteed { get; set; }

@@ -88,6 +88,12 @@ public partial class ShopView : UserControl
             use.Click += async (_, _) => await UseCareBooster();
             action.Children.Add(use);
         }
+        if (good.Id == "lucky-charm")
+        {
+            var activate = new Button { Content = "Активировать", Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
+            activate.Click += async (_, _) => await ActivateLuckyCharm();
+            action.Children.Add(activate);
+        }
         Grid.SetColumn(action, 2);
         grid.Children.Add(action);
         card.Child = grid;
@@ -181,6 +187,26 @@ public partial class ShopView : UserControl
         finally { _busy = false; Refresh(); }
     }
 
+    private async Task ActivateLuckyCharm()
+    {
+        if (_busy) return;
+        _busy = true;
+        Refresh();
+        PurchaseResult? result = null;
+        try
+        {
+            await _commit(next =>
+            {
+                result = _shop.TryActivateLuckyCharm(next);
+                if (!result.Success) throw new InvalidOperationException(result.Message);
+            });
+            Show(result?.Message ?? "Талисман удачи активирован.");
+            _onChanged();
+        }
+        catch (Exception ex) { Show(ex.Message); }
+        finally { _busy = false; Refresh(); }
+    }
+
     public void SelectBerryShortage(string berryId, int required)
     {
         if (!_rows.TryGetValue(berryId, out var row) || !_shop.Goods.Any(g => g.Id == berryId && g.IsBerry)) return;
@@ -204,7 +230,9 @@ public partial class ShopView : UserControl
             var row = _rows[good.Id];
             var stock = good.Id == "treats" ? _state.Feeding.Treats
                 : (good.IsBerry ? _state.Shop.Berries : _state.Shop.Items).GetValueOrDefault(good.Id);
-            row.Stock.Text = $"Запас: {stock} · {good.Price} монет/{(good.Id == "treats" ? "пачка" : "шт.")}";
+            row.Stock.Text = good.Id == "lucky-charm"
+                ? $"Запас: {stock} · {(_state.Shop.CatchLuckyCharmActive ? "активен" : "не активен")} · {good.Price} монет/шт."
+                : $"Запас: {stock} · {good.Price} монет/{(good.Id == "treats" ? "пачка" : "шт.")}";
             row.Buy.IsEnabled = !_busy;
             if (int.TryParse(row.Quantity.Text, out var count) && count > 0 && (long)good.Price * count > _state.Shop.Coins)
                 row.Total.Text = $"Не хватает {(long)good.Price * count - _state.Shop.Coins} монет";
