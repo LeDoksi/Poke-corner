@@ -228,6 +228,60 @@ public sealed class ExpeditionCoreTests : IDisposable
     }
 
     [Fact]
+    public void DelayedOpenDatesExpeditionCatchAtFirstOpenAndPreservesItOnReplay()
+    {
+        var save = State(3);
+        var request = Request(save, 30, Utc);
+        new ExpeditionService(Catalog.Value, save).Start(request);
+        save.Expedition!.Rewards.HasEncounter = true;
+        save.Expedition.Status = "ready";
+        new ExpeditionService(Catalog.Value, save).Claim(request.OperationId, Guid.NewGuid(), Utc.AddMinutes(30));
+        var encounter = Assert.Single(save.Encounters);
+        var openedAt = Utc.AddDays(3).ToOffset(TimeSpan.FromHours(4));
+        var opened = new EncounterService(Catalog.Value).Open(save, encounter.Id, openedAt);
+        Assert.Equal(openedAt.ToUniversalTime(), opened.Individual.CaughtAtUtc);
+        var firstCatchTime = opened.Individual.CaughtAtUtc;
+        var historicalOpened = JsonSaveStore.Clone(save);
+        var replayed = new EncounterService(Catalog.Value).Open(historicalOpened, encounter.Id, openedAt.AddDays(2));
+        Assert.True(replayed.Repeated);
+        Assert.Equal(firstCatchTime, replayed.Individual.CaughtAtUtc);
+        Assert.Equal(4, historicalOpened.Individuals.Count);
+        var activity = new EncounterService(Catalog.Value).Reserve(save, "activity", Guid.NewGuid());
+        activity.ReservedAtUtc = Utc;
+        var activityOpened = new EncounterService(Catalog.Value).Open(save, activity.Id, openedAt);
+        Assert.Equal(Utc, activityOpened.Individual.CaughtAtUtc);
+    }
+
+    [Fact]
+    public async Task FailedDelayedOpenKeepsClosedOutcomeUntilConfirmedCatchTime()
+    {
+        var save = State(3);
+        var request = Request(save, 30, Utc);
+        new ExpeditionService(Catalog.Value, save).Start(request);
+        save.Expedition!.Rewards.HasEncounter = true;
+        save.Expedition.Status = "ready";
+        new ExpeditionService(Catalog.Value, save).Claim(request.OperationId, Guid.NewGuid(), Utc.AddMinutes(30));
+        var id = Assert.Single(save.Encounters).Id;
+        var live = new AppState(); live.Hydrate(save);
+        var service = new EncounterService(Catalog.Value);
+        var failed = new BackgroundSaveWriter(new JsonSaveStore(Path.Combine(root, "failed-open.json")),
+            _ => throw new IOException("synthetic open write failure"));
+        await Assert.ThrowsAsync<IOException>(() => live.CommitAsync(failed,
+            next => service.Open(next, id, Utc.AddDays(1)), () => 0));
+        Assert.Equal("resolved", Assert.Single(live.Encounters).Phase);
+        Assert.Equal(3, live.Collection.Individuals.Count);
+        var store = new JsonSaveStore(Path.Combine(root, "confirmed-open.json"));
+        EncounterOpenResult? granted = null;
+        var confirmedAt = Utc.AddDays(2);
+        await live.CommitAsync(new BackgroundSaveWriter(store),
+            next => granted = service.Open(next, id, confirmedAt), () => 0);
+        Assert.Equal(confirmedAt, granted!.Individual.CaughtAtUtc);
+        Assert.Equal(4, store.Load()!.Individuals.Count);
+        Assert.True(service.Open(store.Load()!, id, Utc.AddDays(3)).Repeated);
+        Assert.Equal(confirmedAt, store.Load()!.Encounters.Single().Individual!.CaughtAtUtc);
+    }
+
+    [Fact]
     public void UnsupportedShinyAtResolutionKeepsCharmAndClosedNormalResult()
     {
         var save = State();

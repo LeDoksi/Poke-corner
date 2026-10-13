@@ -870,7 +870,7 @@ public partial class App : System.Windows.Application
         {
             if (next.Encounters.FirstOrDefault(e => e.Id == encounterId) is not { Source: "expedition", Phase: "resolved" or "opened" })
                 throw new InvalidOperationException("Встреча похода ещё не готова к открытию.");
-            result = _encounterService.Open(next, encounterId);
+            result = _encounterService.Open(next, encounterId, DateTimeOffset.UtcNow);
         });
         return result!;
     }

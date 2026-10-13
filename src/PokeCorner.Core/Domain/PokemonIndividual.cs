@@ -36,7 +36,14 @@ public sealed class PokemonIndividual
     public required int ChainLength { get; init; }
     public required Nature Nature { get; init; }
     public required bool IsShiny { get; init; }
-    public required DateTimeOffset CaughtAtUtc { get; init; }
+    private DateTimeOffset _caughtAtUtc;
+    public required DateTimeOffset CaughtAtUtc
+    {
+        get => _caughtAtUtc;
+        init => _caughtAtUtc = value;
+    }
+    // Only a closed expedition encounter may acquire its actual catch time on first open.
+    internal void StampCaughtAt(DateTimeOffset now) => _caughtAtUtc = now.ToUniversalTime();
     public int AccumulatedCarePoints { get; set; }
     public EvolutionStage CurrentStage { get; set; } = EvolutionStage.Stage1;
 

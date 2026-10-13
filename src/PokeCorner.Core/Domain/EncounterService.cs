@@ -108,7 +108,7 @@ public sealed class EncounterService
             encounter.Rarity.Value, encounter.Phase == "resolved");
     }
 
-    public EncounterOpenResult Open(SaveData state, Guid encounterId)
+    public EncounterOpenResult Open(SaveData state, Guid encounterId, DateTimeOffset? now = null)
     {
         var encounter = state.Encounters.FirstOrDefault(e => e.Id == encounterId)
             ?? throw new InvalidOperationException("Encounter was not reserved.");
@@ -122,6 +122,7 @@ public sealed class EncounterService
             throw new InvalidDataException("Encounter has no resolved result.");
         var individual = encounter.Individual;
         if (state.Individuals.Any(i => i.Id == individual.Id)) throw new InvalidDataException("Encounter individual ID is already in use.");
+        if (encounter.Source == "expedition") individual.StampCaughtAt(now ?? DateTimeOffset.UtcNow);
         state.Individuals.Add(individual);
         state.DiscoveredSpeciesIds.Add(individual.SpeciesId);
         if (individual.IsShiny) state.ShinySpeciesIds.Add(individual.SpeciesId);
