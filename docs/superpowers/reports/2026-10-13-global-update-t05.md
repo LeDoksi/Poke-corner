@@ -54,3 +54,8 @@ Pinned scope: cbd7557ab4509bf3422804bab70c7340e65978f5..401a5187e13c2d8c2458c19e
 **Spec compliance: PASS for the requested fix scope. Task quality: PASS for the requested fix scope.** No new Critical or Important issue is introduced by this diff. The choice primitive still relies on its future caller to commit the selected outcome in the same snapshot, as recorded in the original review; this fix does not change that handoff.
 
 Evidence: reviewed the pinned diff and the reported RED/GREEN logs. task-5-fix1-red.log records five behavioral failures and one focused pack-label failure before the fix; task-5-fix1-green.log records 16/16 passing, exit 0. Tests were not rerun for this read-only re-review.
+
+
+## Correction of the legacy egg handoff
+
+The earlier statement that saved purchased eggs continue hatching was inaccurate. Canonical MIGRATION.md removes unhatched purchased PendingEggs during migration; already-hatched individuals remain. T07 retires the obsolete live shop-egg hatch action instead of developing a competing nursery engine. Original verification counts above are historical.
