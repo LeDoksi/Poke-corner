@@ -12,6 +12,7 @@ using UserControl = System.Windows.Controls.UserControl;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
+using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.App.Popup;
 
@@ -19,17 +20,19 @@ public partial class ShopView : UserControl
 {
     private readonly AppState _state;
     private readonly ShopService _shop;
+    private readonly CatalogPackage? _catalog;
     private readonly Func<Action<SaveData>, Task> _commit;
     private readonly Action _onChanged;
     private readonly Dictionary<string, (TextBlock Stock, TextBlock Total, TextBox Quantity, Button Buy)> _rows = [];
     private DispatcherTimer? _timer;
     private bool _busy;
 
-    public ShopView(AppState state, ShopService shop, Func<Action<SaveData>, Task> commit, Action onChanged)
+    public ShopView(AppState state, ShopService shop, Func<Action<SaveData>, Task> commit, Action onChanged, CatalogPackage? catalog = null)
     {
         InitializeComponent();
         _state = state;
         _shop = shop;
+        _catalog = catalog;
         _commit = commit;
         _onChanged = onChanged;
         foreach (var good in shop.Goods) AddRow(good, good.IsBerry ? BerriesPanel : ItemsPanel);
@@ -141,6 +144,7 @@ public partial class ShopView : UserControl
         if (_busy) return;
         var active = _state.Collection.GetActive();
         if (active is null) { Show("Выберите питомца."); return; }
+        if (_catalog is null) { Show("Каталог недоступен."); return; }
         var levels = new LevelProgression(_shop.DataRoot);
         var (useful, excess) = _shop.PotionPreview(active, levels);
         if (useful == 0) { Show("Максимальный уровень: зелье не расходуется."); return; }
@@ -154,7 +158,7 @@ public partial class ShopView : UserControl
         {
             await _commit(next =>
             {
-                result = _shop.TryUseXpPotion(next, active.Id, id, levels);
+                result = _shop.TryUseXpPotion(next, active.Id, id, levels, _catalog);
                 if (!result.Success) throw new InvalidOperationException(result.Message);
             });
             Show(result?.Message ?? "Зелье применено.");

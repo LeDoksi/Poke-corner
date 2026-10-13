@@ -15,7 +15,7 @@ public sealed class NurseryCoreTests : IDisposable
     private readonly string root = Path.Combine(Path.GetTempPath(), "nursery-core-" + Guid.NewGuid());
     public void Dispose() { if (Directory.Exists(root)) Directory.Delete(root, true); }
 
-    private CatalogPackage Catalog(int[] normal, params int[] shiny)
+    internal CatalogPackage Catalog(int[] normal, params int[] shiny)
     {
         Directory.CreateDirectory(Path.Combine(root, "final"));
         var source = Path.Combine(Repo, "docs/design-v2");

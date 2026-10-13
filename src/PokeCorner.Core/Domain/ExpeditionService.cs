@@ -213,7 +213,7 @@ public sealed class ExpeditionService
             var participant = state.Individuals.Single(i => i.Id == participantId);
             if (participant.TotalXp == levels.MaxXp) continue;
             var xp = checked((int)participant.XpRemainder.Settle(reward.XpNumerator, reward.XpDenominator));
-            gainedXp |= levels.AddXp(participant, xp, Draw(id, participantId.ToString("N"))) > 0;
+            gainedXp |= levels.AddXp(participant, xp, catalog, Draw(id, participantId.ToString("N"))) > 0;
         }
         EncounterOpenResult? encounter = null;
         if (reward.HasEncounter)

@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text.Json;
 using PokeCorner.Core.Persistence;
+using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.Core.Domain;
 
@@ -83,7 +84,7 @@ public sealed class ShopService
         return (useful, amount - useful);
     }
 
-    public PurchaseResult TryUseXpPotion(SaveData next, Guid individualId, Guid operationId, LevelProgression levels)
+    public PurchaseResult TryUseXpPotion(SaveData next, Guid individualId, Guid operationId, LevelProgression levels, CatalogPackage catalog)
     {
         if (operationId == Guid.Empty) return new(false, "Неверный идентификатор действия.");
         var operationKey = $"potion:{operationId}";
@@ -94,7 +95,7 @@ public sealed class ShopService
         if (next.Items["xp-potion"] <= 0) return new(false, "Нет зелья опыта.");
         var (useful, excess) = PotionPreview(individual, levels);
         if (useful == 0) return new(false, "Максимальный уровень: зелье не расходуется.");
-        levels.AddXp(individual, useful);
+        levels.AddXp(individual, useful, catalog);
         next.Items["xp-potion"]--;
         next.CompletedOperations[operationKey] = fingerprint;
         return new(true, $"Получено {useful} XP; излишек {excess} XP.");

@@ -5,6 +5,7 @@ using PokeCorner.App.Tests.Theme;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
+using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.App.Tests.GlobalUpdate;
 
@@ -12,6 +13,7 @@ public sealed class ShopTests : IDisposable
 {
     private readonly string root = Path.Combine(Path.GetTempPath(), "ShopTest_" + Guid.NewGuid().ToString("N"));
     private static string DataRoot => Path.Combine(AppContext.BaseDirectory, "Data");
+    private static readonly Lazy<CatalogPackage> Catalog = new(() => CatalogPackage.Load(DataRoot));
     private readonly ShopService shop = new(DataRoot);
 
     public ShopTests() => Directory.CreateDirectory(root);
@@ -118,12 +120,12 @@ public sealed class ShopTests : IDisposable
         data.Items["care-booster"] = 1;
         var potionId = Guid.NewGuid();
         var careId = Guid.NewGuid();
-        Assert.True(shop.TryUseXpPotion(data, first.Id, potionId, levels).Success);
+        Assert.True(shop.TryUseXpPotion(data, first.Id, potionId, levels, Catalog.Value).Success);
         Assert.True(shop.TryUseCareBooster(data, first.Id, careId).Success);
 
-        Assert.True(shop.TryUseXpPotion(data, first.Id, potionId, levels).Repeated);
+        Assert.True(shop.TryUseXpPotion(data, first.Id, potionId, levels, Catalog.Value).Repeated);
         Assert.True(shop.TryUseCareBooster(data, first.Id, careId).Repeated);
-        Assert.False(shop.TryUseXpPotion(data, second.Id, potionId, levels).Success);
+        Assert.False(shop.TryUseXpPotion(data, second.Id, potionId, levels, Catalog.Value).Success);
         Assert.False(shop.TryUseCareBooster(data, second.Id, careId).Success);
         Assert.Equal(0, second.TotalXp);
         Assert.Equal(0, second.AccumulatedCarePoints);
@@ -189,11 +191,11 @@ public sealed class ShopTests : IDisposable
         data.Individuals.Add(pet);
         data.Items["xp-potion"] = 1;
         Assert.Equal((0, 300), shop.PotionPreview(pet, levels));
-        Assert.False(shop.TryUseXpPotion(data, pet.Id, Guid.NewGuid(), levels).Success);
+        Assert.False(shop.TryUseXpPotion(data, pet.Id, Guid.NewGuid(), levels, Catalog.Value).Success);
         Assert.Equal(1, data.Items["xp-potion"]);
         pet.TotalXp = levels.MaxXp - 80;
         Assert.Equal((80, 220), shop.PotionPreview(pet, levels));
-        Assert.True(shop.TryUseXpPotion(data, pet.Id, Guid.NewGuid(), levels).Success);
+        Assert.True(shop.TryUseXpPotion(data, pet.Id, Guid.NewGuid(), levels, Catalog.Value).Success);
         Assert.Equal(levels.MaxXp, pet.TotalXp);
         Assert.Equal(0, data.Items["xp-potion"]);
     }

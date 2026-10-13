@@ -1,4 +1,5 @@
 using System.Text.Json;
+using PokeCorner.Core.PokeApi;
 namespace PokeCorner.Core.Domain;
 
 public sealed class LevelProgression
@@ -49,9 +50,10 @@ public sealed class LevelProgression
         return level >= tierLevels[2] ? 3 : level >= tierLevels[1] ? 2 : 1;
     }
 
-    public int AddXp(PokemonIndividual individual, int xp, Random? random = null)
+    public int AddXp(PokemonIndividual individual, int xp, CatalogPackage catalog, Random? random = null)
     {
         ArgumentNullException.ThrowIfNull(individual);
+        ArgumentNullException.ThrowIfNull(catalog);
         if (xp < 0) throw new ArgumentOutOfRangeException(nameof(xp));
         var current = individual.TotalXp;
         LevelForXp(current);
@@ -61,7 +63,8 @@ public sealed class LevelProgression
         string? second = null;
         if (next >= XpForLevel(secondTraitLevel) && individual.SecondTraitId is null)
         {
-            var allowed = traits.Allowed(individual.CurrentSpeciesId).Where(id => id != individual.FirstTraitId).ToArray();
+            var allowed = traits.Allowed(individual.CurrentSpeciesId, individual.IsShiny, catalog)
+                .Where(id => id != individual.FirstTraitId).ToArray();
             if (allowed.Length == 0) throw new InvalidOperationException("No second trait is allowed.");
             second = allowed[(random ?? Random.Shared).Next(allowed.Length)];
         }

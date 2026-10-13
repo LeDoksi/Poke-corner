@@ -4,8 +4,15 @@ using PokeCorner.Core.Persistence;
 namespace PokeCorner.Core.Tests.GlobalUpdate;
 public sealed class ProgressionTests
 {
+    private sealed class BoundedIndexRandom(int index) : Random
+    {
+        public override int Next(int maxValue) => Math.Min(index, maxValue - 1);
+    }
+
     private static readonly string Root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../docs/design-v2"));
-    private static PokemonIndividual Individual(int species = 1) => new() { SpeciesId = species, EvolutionChainId = 1, ChainLength = 3, Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, CurrentSpeciesId = species, FamilyRootId = species, ReachedSpeciesIds = [species], FirstTraitId = "gatherer" };
+    private static PokeCorner.Core.PokeApi.CatalogPackage Catalog(NurseryCoreTests fixture) =>
+        fixture.Catalog([1, 2, 3, 679, 714, 715], 714);
+    private static PokemonIndividual Individual(int species = 1, bool shiny = false) => new() { SpeciesId = species, EvolutionChainId = 1, ChainLength = 3, Nature = Nature.Hardy, IsShiny = shiny, CaughtAtUtc = DateTimeOffset.UtcNow, CurrentSpeciesId = species, FamilyRootId = species, ReachedSpeciesIds = [species], FirstTraitId = "gatherer" };
     [Fact] public void ExactThresholds()
     {
         var levels = new LevelProgression(Root);
@@ -18,18 +25,54 @@ public sealed class ProgressionTests
     }
     [Fact] public void CrossingTenOnceAndCap()
     {
+        using var fixture = new NurseryCoreTests(); var catalog = Catalog(fixture);
         var levels = new LevelProgression(Root); var individual = Individual(); individual.TotalXp = 1199;
-        Assert.Equal(1, levels.AddXp(individual, 1)); Assert.NotNull(individual.SecondTraitId); Assert.NotEqual(individual.FirstTraitId, individual.SecondTraitId);
+        Assert.Equal(1, levels.AddXp(individual, 1, catalog)); Assert.NotNull(individual.SecondTraitId); Assert.NotEqual(individual.FirstTraitId, individual.SecondTraitId);
         var saved = JsonSerializer.Deserialize<PokemonIndividual>(JsonSerializer.Serialize(individual))!;
-        Assert.Equal(5200, levels.AddXp(saved, int.MaxValue)); Assert.Equal(individual.SecondTraitId, saved.SecondTraitId);
-        Assert.Equal(0, levels.AddXp(saved, 1)); Assert.Equal(6400, saved.TotalXp);
+        Assert.Equal(5200, levels.AddXp(saved, int.MaxValue, catalog)); Assert.Equal(individual.SecondTraitId, saved.SecondTraitId);
+        Assert.Equal(0, levels.AddXp(saved, 1, catalog)); Assert.Equal(6400, saved.TotalXp);
+    }
+
+    [Theory]
+    [InlineData(679, false)]
+    [InlineData(714, true)]
+    public void LevelTenRejectsFastGrowerWhenNextVariantAssetIsMissing(int speciesId, bool shiny)
+    {
+        using var fixture = new NurseryCoreTests();
+        var catalog = fixture.Catalog([679, 714, 715], 714);
+        Assert.False(catalog.CanObtain(speciesId == 679 ? 680 : 715, shiny));
+        var individual = Individual(speciesId, shiny);
+        individual.TotalXp = 1199;
+        var oldPool = new TraitRules(catalog.DataRoot).Allowed(speciesId)
+            .Where(id => id != individual.FirstTraitId).ToArray();
+        var fastIndex = Array.IndexOf(oldPool, "fast-grower");
+        Assert.True(fastIndex >= 0);
+        Assert.Equal(1, new LevelProgression(catalog.DataRoot).AddXp(individual, 1, catalog, new BoundedIndexRandom(fastIndex)));
+        Assert.NotEqual("fast-grower", individual.SecondTraitId);
+    }
+
+    [Fact]
+    public void LevelTenCanAwardFastGrowerWhenNextVariantAssetExists()
+    {
+        using var fixture = new NurseryCoreTests();
+        var catalog = fixture.Catalog([714, 715], 714);
+        Assert.True(catalog.CanObtain(715, false));
+        var individual = Individual(714);
+        individual.TotalXp = 1199;
+        var oldPool = new TraitRules(catalog.DataRoot).Allowed(714)
+            .Where(id => id != individual.FirstTraitId).ToArray();
+        var fastIndex = Array.IndexOf(oldPool, "fast-grower");
+        Assert.True(fastIndex >= 0);
+        Assert.Equal(1, new LevelProgression(catalog.DataRoot).AddXp(individual, 1, catalog, new BoundedIndexRandom(fastIndex)));
+        Assert.Equal("fast-grower", individual.SecondTraitId);
     }
     [Fact] public void TerminalExclusionAndExistingTrait()
     {
+        using var fixture = new NurseryCoreTests(); var catalog = Catalog(fixture);
         var traits = new TraitRules(Root); Assert.Equal(11, traits.Allowed(1).Count); Assert.Equal(10, traits.Allowed(3).Count);
         Assert.Contains("fast-grower", traits.Allowed(1)); Assert.DoesNotContain("fast-grower", traits.Allowed(3));
         var individual = Individual(3); individual.FirstTraitId = "fast-grower"; individual.TotalXp = 1199;
-        new LevelProgression(Root).AddXp(individual, 1); Assert.Equal("fast-grower", individual.FirstTraitId); Assert.NotEqual("fast-grower", individual.SecondTraitId);
+        new LevelProgression(Root).AddXp(individual, 1, catalog); Assert.Equal("fast-grower", individual.FirstTraitId); Assert.NotEqual("fast-grower", individual.SecondTraitId);
     }
     [Fact] public void TraitTiersAndRepeatOrder()
     {
@@ -80,6 +123,7 @@ public sealed class ProgressionTests
     [InlineData(6400, 1, 0)]
     public void LoadedV2MissingSecondTraitIsRepairedOnce(int totalXp, int award, int expectedGain)
     {
+        using var fixture = new NurseryCoreTests(); var catalog = Catalog(fixture);
         var individual = Individual(3);
         individual.TotalXp = totalXp;
         var data = new SaveData
@@ -93,7 +137,7 @@ public sealed class ProgressionTests
         JsonSaveStore.ValidateData(data);
         var snapshot = JsonSaveStore.Clone(data);
         var levels = new LevelProgression(Root);
-        Assert.Equal(expectedGain, levels.AddXp(snapshot.Individuals[0], award));
+        Assert.Equal(expectedGain, levels.AddXp(snapshot.Individuals[0], award, catalog));
         var chosen = snapshot.Individuals[0].SecondTraitId;
         Assert.NotNull(chosen);
         Assert.NotEqual(snapshot.Individuals[0].FirstTraitId, chosen);
@@ -101,7 +145,7 @@ public sealed class ProgressionTests
         var committed = JsonSaveStore.Clone(snapshot);
         JsonSaveStore.ValidateData(committed);
         Assert.Equal(chosen, committed.Individuals[0].SecondTraitId);
-        Assert.Equal(0, levels.AddXp(committed.Individuals[0], 0));
+        Assert.Equal(0, levels.AddXp(committed.Individuals[0], 0, catalog));
         Assert.Equal(chosen, committed.Individuals[0].SecondTraitId);
     }
 }
