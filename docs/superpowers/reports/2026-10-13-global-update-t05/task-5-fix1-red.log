@@ -1,0 +1,16 @@
+Command: rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --filter FullyQualifiedName~ShopTests --verbosity minimal
+Exit: 1
+[xUnit.net 00:00:00.15]     PokeCorner.App.Tests.GlobalUpdate.ShopTests.ChoiceReplayWithDifferentItemOrChoiceCountIsRejected [FAIL]
+[xUnit.net 00:00:00.15]     PokeCorner.App.Tests.GlobalUpdate.ShopTests.PurchaseReplayWithDifferentInputsIsRejected(itemId: "cheri", quantity: 2) [FAIL]
+[xUnit.net 00:00:00.16]     PokeCorner.App.Tests.GlobalUpdate.ShopTests.PurchaseReplayWithDifferentInputsIsRejected(itemId: "oran", quantity: 3) [FAIL]
+[xUnit.net 00:00:00.16]     PokeCorner.App.Tests.GlobalUpdate.ShopTests.LegacyPurchaseJournalEntryCannotClaimUnverifiableReplay [FAIL]
+[xUnit.net 00:00:00.51]     PokeCorner.App.Tests.GlobalUpdate.ShopTests.PotionAndCareReplayMustTargetOriginalIndividual [FAIL]
+Не пройден!: не пройдено     5, пройдено    10, пропущено     0, всего    15, длительность 387 ms. - PokeCorner.App.Tests.dll (net8.0)
+
+Command: rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --filter FullyQualifiedName~ShopTests.TreatPriceIsLabeledPerPackAndBerryPricePerItem --verbosity minimal
+Exit: 1
+[xUnit.net 00:00:00.44]     PokeCorner.App.Tests.GlobalUpdate.ShopTests.TreatPriceIsLabeledPerPackAndBerryPricePerItem [FAIL]
+System.InvalidOperationException : UI-thread action failed: Assert.Contains() Failure: Sub-string not found
+String:    "Запас: 0 · 20 монет/шт."
+Not found: "20 монет/пачка"
+Не пройден!: не пройдено     1, пройдено     0, пропущено     0, всего     1, длительность < 1 ms. - PokeCorner.App.Tests.dll (net8.0)
