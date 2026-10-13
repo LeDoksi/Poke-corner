@@ -20,10 +20,13 @@ public sealed class AppState
     private readonly Queue<Action> _deferredMutations = new();
     private readonly List<Guid> _pendingActivityEncounterIds = new();
     private TaskCompletionSource? _idle;
+    private TaskCompletionSource? _commitsDrained;
+    private int _pendingCommitRequests;
     public bool IsCommitting { get; private set; }
-    public Task WhenIdle => _idle?.Task ?? Task.CompletedTask;
+    public Task WhenIdle => _pendingCommitRequests > 0 ? _commitsDrained!.Task : Task.CompletedTask;
     public int PendingActivityEncounterCount => _pendingActivityEncounterIds.Count;
     public bool HasRunningExpedition => _metadata?.Expedition?.Status == "running";
+    public Guid? RunningExpeditionId => HasRunningExpedition ? _metadata!.Expedition!.Id : null;
     public DateTimeOffset? ExpeditionReadyAtUtc => _metadata?.Expedition?.Status == "running" ? _metadata.Expedition.ReadyAtUtc : null;
     public IReadOnlySet<Guid> BusyIndividualIds => _metadata is null ? new HashSet<Guid>() : ExpeditionService.BusyIndividualIds(_metadata);
 
@@ -60,31 +63,39 @@ public sealed class AppState
 
     public async Task CommitAsync(BackgroundSaveWriter writer, Action<SaveData> update, Func<int> pendingCatchCount, Action<SaveData>? afterPublish = null, SaveData? replacement = null)
     {
-        while (IsCommitting) await WhenIdle;
-        IsCommitting = true;
-        var idle = _idle = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        if (_pendingCommitRequests++ == 0) _commitsDrained = new(TaskCreationOptions.RunContinuationsAsynchronously);
         try
         {
-            var next = replacement is null ? ToSaveData(pendingCatchCount()) : JsonSaveStore.Clone(replacement);
-            update(next);
-            if (next.SchemaVersion == 2) next.Items["treats"] = next.FeedingTreats;
-            JsonSaveStore.ValidateData(next);
-            await writer.CommitAndPublishAsync(next, () => { Hydrate(next); afterPublish?.Invoke(next); });
+            while (IsCommitting) await _idle!.Task;
+            IsCommitting = true;
+            var idle = _idle = new(TaskCreationOptions.RunContinuationsAsynchronously);
+            try
+            {
+                var next = replacement is null ? ToSaveData(pendingCatchCount()) : JsonSaveStore.Clone(replacement);
+                update(next);
+                if (next.SchemaVersion == 2) next.Items["treats"] = next.FeedingTreats;
+                JsonSaveStore.ValidateData(next);
+                await writer.CommitAndPublishAsync(next, () => { Hydrate(next); afterPublish?.Invoke(next); });
+            }
+            finally
+            {
+                IsCommitting = false;
+                try
+                {
+                    while (!IsCommitting && _deferredMutations.TryDequeue(out var mutation)) mutation();
+                }
+                finally { idle.TrySetResult(); }
+            }
         }
         finally
         {
-            IsCommitting = false;
-            try
-            {
-                while (!IsCommitting && _deferredMutations.TryDequeue(out var mutation)) mutation();
-            }
-            finally { idle.TrySetResult(); }
+            if (--_pendingCommitRequests == 0) _commitsDrained?.TrySetResult();
         }
     }
 
     public async Task FlushAsync(BackgroundSaveWriter writer, Func<int> pendingCatchCount)
     {
-        while (IsCommitting) await WhenIdle;
+        while (_pendingCommitRequests > 0) await _commitsDrained!.Task;
         await writer.CommitAsync(ToSaveData(pendingCatchCount()));
     }
 

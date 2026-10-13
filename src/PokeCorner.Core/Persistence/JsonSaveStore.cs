@@ -341,7 +341,9 @@ public sealed class JsonSaveStore
                 && expedition.CollectorBoost >= 0 && expedition.RarityBoost >= 1
                 && expedition.KnownSpeciesIdsAtStart is not null && expedition.KnownSpeciesIdsAtStart.All(id => id > 0)
                 && rewards is not null && SaveMigration.BerryIds.Contains(rewards.PrimaryBerryId)
-                && rewards.PrimaryNumerator >= 0 && rewards.CoinNumerator >= 0 && rewards.XpNumerator >= 0
+                && rewards.PrimaryNumerator >= 0 && rewards.PrimaryDenominator > 0
+                && rewards.CoinNumerator >= 0 && rewards.CoinDenominator > 0
+                && rewards.XpNumerator >= 0 && rewards.XpDenominator > 0
                 && rewards.ExtraCoins >= 0 && rewards.ExtraBerries is not null && rewards.ExtraItems is not null
                 && rewards.ExtraBerries.All(x => SaveMigration.BerryIds.Contains(x.Key) && x.Value >= 0)
                 && rewards.ExtraItems.All(x => SaveMigration.ItemIds.Contains(x.Key) && x.Value >= 0)

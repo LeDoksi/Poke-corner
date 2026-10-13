@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using System.Numerics;
 using System.Text.Json;
 using PokeCorner.Core.Persistence;
 using PokeCorner.Core.PokeApi;
@@ -22,6 +23,37 @@ public sealed class ExpeditionService
     private readonly JsonElement balance;
     private readonly Dictionary<string, Route> routes;
     private static readonly string[] Rarities = ["Common", "Uncommon", "Rare", "Legendary"];
+    private readonly record struct Fraction(BigInteger Numerator, BigInteger Denominator)
+    {
+        public static Fraction Of(long value) => new(value, 1);
+        public static Fraction Of(decimal value)
+        {
+            var bits = decimal.GetBits(value);
+            var magnitude = (BigInteger)(uint)bits[0] + ((BigInteger)(uint)bits[1] << 32) + ((BigInteger)(uint)bits[2] << 64);
+            if ((bits[3] & int.MinValue) != 0) magnitude = -magnitude;
+            return Reduce(magnitude, BigInteger.Pow(10, (bits[3] >> 16) & 0xff));
+        }
+        public static Fraction Reduce(BigInteger numerator, BigInteger denominator)
+        {
+            if (denominator <= 0) throw new InvalidDataException("Invalid fraction denominator.");
+            var gcd = BigInteger.GreatestCommonDivisor(BigInteger.Abs(numerator), denominator);
+            return new(numerator / gcd, denominator / gcd);
+        }
+        public static Fraction operator +(Fraction a, Fraction b) => Reduce(a.Numerator * b.Denominator + b.Numerator * a.Denominator, a.Denominator * b.Denominator);
+        public static Fraction operator -(Fraction a, Fraction b) => Reduce(a.Numerator * b.Denominator - b.Numerator * a.Denominator, a.Denominator * b.Denominator);
+        public static Fraction operator *(Fraction a, Fraction b) => Reduce(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+        public static Fraction operator /(Fraction a, Fraction b) => Reduce(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+        public static Fraction Min(Fraction a, Fraction b) => a.Numerator * b.Denominator <= b.Numerator * a.Denominator ? a : b;
+        public static Fraction Max(Fraction a, Fraction b) => a.Numerator * b.Denominator >= b.Numerator * a.Denominator ? a : b;
+        public double AsDouble() => (double)Numerator / (double)Denominator;
+        public (long Numerator, long Denominator) ForMinutes(int minutes)
+        {
+            var scaled = this * Reduce(minutes, 60);
+            return (checked((long)scaled.Numerator), checked((long)scaled.Denominator));
+        }
+    }
+    private readonly record struct Rates(Fraction Primary, Fraction Coins, Fraction Xp, Fraction Common,
+        Fraction EventPreparation, decimal TimeReduction);
 
     public ExpeditionService(CatalogPackage catalog, SaveData state)
     {
@@ -49,36 +81,21 @@ public sealed class ExpeditionService
     public ExpeditionPreview Preview(ExpeditionRequest request)
     {
         var (route, members, difficulty) = ValidateRequest(request);
-        var hours = request.DurationMinutes / 60m;
-        var average = members.Average(x => levels.LevelForXp(x.TotalXp));
-        var recommended = balance.GetProperty("recommendedLevels")[difficulty].GetInt32();
-        var preparation = 1m - Math.Min(balance.GetProperty("maxUnderlevelPenalty").GetDecimal(),
-            balance.GetProperty("underlevelPenaltyPerLevel").GetDecimal() * Math.Max(0m, recommended - (decimal)average));
-        var matching = members.Count(p => catalog.Species.First(s => s.Id == p.CurrentSpeciesId).Types.Any(route.BonusTypes.Contains));
-        var common = balance.GetProperty("levelBonusPerLevel").GetDecimal() * ((decimal)average - 1m)
-            + balance.GetProperty("matchingTypeBonusPerMember").GetDecimal() * matching;
-        var composition = balance.GetProperty("resourceCompositionByMembers")[members.Length - 1].GetDecimal();
-        decimal ResourceRate(string trait, string table) =>
-            balance.GetProperty(table)[difficulty].GetDecimal()
-            * (1m + Math.Min(balance.GetProperty("resourceBonusCap").GetDecimal(), common + Trait(trait, members)))
-            * preparation * composition;
-        var primaryRate = Math.Max(balance.GetProperty("minimumPrimaryBerriesPerHour").GetDecimal(),
-            ResourceRate("gatherer", "primaryBerriesPerHour"));
-        var coinRate = ResourceRate("treasure-hunter", "coinsPerHour");
-        var xpRate = balance.GetProperty("xpPerHour").GetDecimal() * (1m + Trait("mentor", members));
-        var primary = Copy(state.BerryRemainders[route.Primary]).Settle(Scaled(primaryRate, request.DurationMinutes), ExpeditionRewards.Denominator);
-        var coins = Copy(state.CoinRemainder).Settle(Scaled(coinRate, request.DurationMinutes), ExpeditionRewards.Denominator);
+        var rates = CalculateRates(route, members, difficulty);
+        var primaryFraction = rates.Primary.ForMinutes(request.DurationMinutes);
+        var coinFraction = rates.Coins.ForMinutes(request.DurationMinutes);
+        var xpFraction = rates.Xp.ForMinutes(request.DurationMinutes);
+        var primary = Copy(state.BerryRemainders[route.Primary]).Settle(primaryFraction.Numerator, primaryFraction.Denominator);
+        var coins = Copy(state.CoinRemainder).Settle(coinFraction.Numerator, coinFraction.Denominator);
         var xpByParticipant = members.ToDictionary(p => p.Id, p => checked((int)Copy(p.XpRemainder)
-            .Settle(Scaled(xpRate, request.DurationMinutes), ExpeditionRewards.Denominator)));
-        var eventPreparation = 1m - Math.Min(balance.GetProperty("maxUnderlevelPenalty").GetDecimal(),
-            balance.GetProperty("eventUnderlevelPenaltyPerLevel").GetDecimal() * Math.Max(0m, recommended - (decimal)average));
-        var hourly = Math.Min(.95, (double)(balance.GetProperty("hourlyEncounterChance")[difficulty].GetDecimal() * (1m + common) * eventPreparation));
+            .Settle(xpFraction.Numerator, xpFraction.Denominator)));
+        var hourly = Math.Min(.95, (Fraction.Of(balance.GetProperty("hourlyEncounterChance")[difficulty].GetDecimal())
+            * (Fraction.Of(1) + rates.Common) * rates.EventPreparation).AsDouble());
         var chance = members.Length == balance.GetProperty("eventTeamSize").GetInt32()
-            ? Math.Min(.95, (1 - Math.Pow(1 - hourly, (double)hours)) * (1 + (double)Trait("tracker", members))) : 0;
-        var extra = members.Length == 3 ? Math.Min(.95, (double)(balance.GetProperty("extraChancePerHalfHour")[difficulty].GetDecimal()
-            * (1m + common + Trait("finder", members)) * eventPreparation)) : 0;
-        var timeReduction = Math.Min(balance.GetProperty("maxExpeditionTimeReduction").GetDecimal(), Trait("terrain-expert", members));
-        var ready = request.NowUtc.ToUniversalTime().AddTicks(checked((long)(TimeSpan.FromMinutes(request.DurationMinutes).Ticks * (1m - timeReduction))));
+            ? Math.Min(.95, (1 - Math.Pow(1 - hourly, request.DurationMinutes / 60d)) * (1 + (double)Trait("tracker", members))) : 0;
+        var extra = members.Length == 3 ? Math.Min(.95, (Fraction.Of(balance.GetProperty("extraChancePerHalfHour")[difficulty].GetDecimal())
+            * (Fraction.Of(1) + rates.Common + Fraction.Of(Trait("finder", members))) * rates.EventPreparation).AsDouble()) : 0;
+        var ready = request.NowUtc.ToUniversalTime().AddTicks(checked((long)(TimeSpan.FromMinutes(request.DurationMinutes).Ticks * (1m - rates.TimeReduction))));
         return new(route.Primary, checked((int)primary), checked((int)coins), xpByParticipant[members[0].Id], chance, extra, ready, xpByParticipant);
     }
 
@@ -96,21 +113,25 @@ public sealed class ExpeditionService
             return new(true, "Поход уже был начат.", true);
         var preview = Preview(request);
         var (route, members, difficulty) = ValidateRequest(request);
+        var rates = CalculateRates(route, members, difficulty);
+        var primary = rates.Primary.ForMinutes(request.DurationMinutes);
+        var coins = rates.Coins.ForMinutes(request.DurationMinutes);
+        var xp = rates.Xp.ForMinutes(request.DurationMinutes);
         var random = Draw(request.OperationId, "expedition-start");
         var rewards = new ExpeditionRewards
         {
             PrimaryBerryId = route.Primary,
-            PrimaryNumerator = ScaledPrimary(request, route, members, difficulty),
-            CoinNumerator = ScaledCoins(request, route, members, difficulty),
-            XpNumerator = ScaledXp(request, members),
+            PrimaryNumerator = primary.Numerator, PrimaryDenominator = primary.Denominator,
+            CoinNumerator = coins.Numerator, CoinDenominator = coins.Denominator,
+            XpNumerator = xp.Numerator, XpDenominator = xp.Denominator,
             HasEncounter = random.NextDouble() < preview.EncounterChance
         };
         if (members.Length == 3)
         {
             var checks = request.DurationMinutes / balance.GetProperty("extraCheckMinutes").GetInt32();
             var loot = balance.GetProperty("extraLoot");
-            var relicChance = Math.Min(.95, (double)(Trait("relic-finder", members)
-                * (1m + CommonBonus(route, members)) * EventPreparation(difficulty, members)));
+            var relicChance = Math.Min(.95, (Fraction.Of(Trait("relic-finder", members))
+                * (Fraction.Of(1) + rates.Common) * rates.EventPreparation).AsDouble());
             for (var n = 0; n < checks; n++)
             {
                 if (random.NextDouble() < preview.ExtraChancePerCheck)
@@ -182,8 +203,8 @@ public sealed class ExpeditionService
             return new(false, "Поход ещё идёт.");
         var reward = trip.Rewards;
         state.Berries[reward.PrimaryBerryId] = checked(state.Berries[reward.PrimaryBerryId]
-            + (int)state.BerryRemainders[reward.PrimaryBerryId].Settle(reward.PrimaryNumerator, ExpeditionRewards.Denominator));
-        state.ShopCoins = checked(state.ShopCoins + (int)state.CoinRemainder.Settle(reward.CoinNumerator, ExpeditionRewards.Denominator) + reward.ExtraCoins);
+            + (int)state.BerryRemainders[reward.PrimaryBerryId].Settle(reward.PrimaryNumerator, reward.PrimaryDenominator));
+        state.ShopCoins = checked(state.ShopCoins + (int)state.CoinRemainder.Settle(reward.CoinNumerator, reward.CoinDenominator) + reward.ExtraCoins);
         foreach (var (berry, count) in reward.ExtraBerries) state.Berries[berry] = checked(state.Berries[berry] + count);
         foreach (var (item, count) in reward.ExtraItems) state.Items[item] = checked(state.Items[item] + count);
         var gainedXp = false;
@@ -191,7 +212,7 @@ public sealed class ExpeditionService
         {
             var participant = state.Individuals.Single(i => i.Id == participantId);
             if (participant.TotalXp == levels.MaxXp) continue;
-            var xp = checked((int)participant.XpRemainder.Settle(reward.XpNumerator, ExpeditionRewards.Denominator));
+            var xp = checked((int)participant.XpRemainder.Settle(reward.XpNumerator, reward.XpDenominator));
             gainedXp |= levels.AddXp(participant, xp, Draw(id, participantId.ToString("N"))) > 0;
         }
         EncounterOpenResult? encounter = null;
@@ -262,37 +283,28 @@ public sealed class ExpeditionService
     private decimal Trait(string id, PokemonIndividual[] members) => TraitRules.Stack(members.SelectMany(p =>
         new[] { p.FirstTraitId, p.SecondTraitId }.Where(x => x == id).Select(_ => traits.Value(id, levels.TraitTierForXp(p.TotalXp)))));
 
-    private decimal CommonBonus(Route route, PokemonIndividual[] members) =>
-        balance.GetProperty("levelBonusPerLevel").GetDecimal() * ((decimal)members.Average(x => levels.LevelForXp(x.TotalXp)) - 1m)
-        + balance.GetProperty("matchingTypeBonusPerMember").GetDecimal() * members.Count(p =>
-            catalog.Species.First(s => s.Id == p.CurrentSpeciesId).Types.Any(route.BonusTypes.Contains));
-
-    private decimal EventPreparation(int difficulty, PokemonIndividual[] members) => 1m - Math.Min(
-        balance.GetProperty("maxUnderlevelPenalty").GetDecimal(),
-        balance.GetProperty("eventUnderlevelPenaltyPerLevel").GetDecimal()
-        * Math.Max(0m, balance.GetProperty("recommendedLevels")[difficulty].GetDecimal()
-            - (decimal)members.Average(x => levels.LevelForXp(x.TotalXp))));
-
-    private decimal ResourcePreparation(int difficulty, PokemonIndividual[] members) => 1m - Math.Min(
-        balance.GetProperty("maxUnderlevelPenalty").GetDecimal(),
-        balance.GetProperty("underlevelPenaltyPerLevel").GetDecimal()
-        * Math.Max(0m, balance.GetProperty("recommendedLevels")[difficulty].GetDecimal()
-            - (decimal)members.Average(x => levels.LevelForXp(x.TotalXp))));
-
-    private decimal ResourceRate(string trait, string table, Route route, PokemonIndividual[] members, int difficulty) =>
-        balance.GetProperty(table)[difficulty].GetDecimal()
-        * (1m + Math.Min(balance.GetProperty("resourceBonusCap").GetDecimal(), CommonBonus(route, members) + Trait(trait, members)))
-        * ResourcePreparation(difficulty, members)
-        * balance.GetProperty("resourceCompositionByMembers")[members.Length - 1].GetDecimal();
-
-    private long ScaledPrimary(ExpeditionRequest request, Route route, PokemonIndividual[] members, int difficulty) =>
-        Scaled(Math.Max(balance.GetProperty("minimumPrimaryBerriesPerHour").GetDecimal(),
-            ResourceRate("gatherer", "primaryBerriesPerHour", route, members, difficulty)), request.DurationMinutes);
-    private long ScaledCoins(ExpeditionRequest request, Route route, PokemonIndividual[] members, int difficulty) =>
-        Scaled(ResourceRate("treasure-hunter", "coinsPerHour", route, members, difficulty), request.DurationMinutes);
-    private long ScaledXp(ExpeditionRequest request, PokemonIndividual[] members) =>
-        Scaled(balance.GetProperty("xpPerHour").GetDecimal() * (1m + Trait("mentor", members)), request.DurationMinutes);
-    private static long Scaled(decimal hourly, int minutes) => checked((long)decimal.Round(hourly * 1_000_000_000m, 0) * minutes);
+    private Rates CalculateRates(Route route, PokemonIndividual[] members, int difficulty)
+    {
+        Fraction Setting(string key) => Fraction.Of(balance.GetProperty(key).GetDecimal());
+        var average = Fraction.Reduce(members.Sum(x => levels.LevelForXp(x.TotalXp)), members.Length);
+        var underlevel = Fraction.Max(Fraction.Of(0), Fraction.Of(balance.GetProperty("recommendedLevels")[difficulty].GetInt32()) - average);
+        var cap = Setting("maxUnderlevelPenalty");
+        var resourcePreparation = Fraction.Of(1) - Fraction.Min(cap, Setting("underlevelPenaltyPerLevel") * underlevel);
+        var eventPreparation = Fraction.Of(1) - Fraction.Min(cap, Setting("eventUnderlevelPenaltyPerLevel") * underlevel);
+        var matching = members.Count(p => catalog.Species.First(s => s.Id == p.CurrentSpeciesId).Types.Any(route.BonusTypes.Contains));
+        var common = Setting("levelBonusPerLevel") * (average - Fraction.Of(1))
+            + Setting("matchingTypeBonusPerMember") * Fraction.Of(matching);
+        var composition = Fraction.Of(balance.GetProperty("resourceCompositionByMembers")[members.Length - 1].GetDecimal());
+        Fraction ResourceRate(string trait, string table) =>
+            Fraction.Of(balance.GetProperty(table)[difficulty].GetDecimal())
+            * (Fraction.Of(1) + Fraction.Min(Setting("resourceBonusCap"), common + Fraction.Of(Trait(trait, members))))
+            * resourcePreparation * composition;
+        var primary = Fraction.Max(Setting("minimumPrimaryBerriesPerHour"), ResourceRate("gatherer", "primaryBerriesPerHour"));
+        var coins = ResourceRate("treasure-hunter", "coinsPerHour");
+        var xp = Setting("xpPerHour") * (Fraction.Of(1) + Fraction.Of(Trait("mentor", members)));
+        var timeReduction = Math.Min(balance.GetProperty("maxExpeditionTimeReduction").GetDecimal(), Trait("terrain-expert", members));
+        return new(primary, coins, xp, common, eventPreparation, timeReduction);
+    }
     private static RationalRemainder Copy(RationalRemainder value) => new() { Numerator = value.Numerator, Denominator = value.Denominator };
     private EncounterOpenResult? ReplayedEncounter(Guid id) => state.Encounters.FirstOrDefault(e => e.Id == id) is { Phase: "opened" } saved
         ? new EncounterOpenResult(saved.Individual!, saved.Rarity!.Value, saved.WasDuplicateSpecies, true) : null;

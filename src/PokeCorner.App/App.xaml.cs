@@ -58,7 +58,7 @@ public partial class App : System.Windows.Application
     private int _catchReadyCount;
     private Task _activityReservationTask = Task.CompletedTask;
     private Task _expeditionProgressTask = Task.CompletedTask;
-    private long _pendingExpeditionActions;
+    private readonly ExpeditionActivityBuffer _expeditionActivity = new();
     /// Every decoded frame of the active individual's sprite — the list the overlay animates
     /// from. One element means a static sprite; null means nothing is cached yet.
     private IReadOnlyList<byte[]>? _activeSpriteFrames;
@@ -840,29 +840,22 @@ public partial class App : System.Windows.Application
             result = action(new ExpeditionService(_catalogPackage, next));
             if (!result.Success) throw new InvalidOperationException(result.Message);
         });
-        _pendingExpeditionActions = 0;
+        _expeditionActivity.Sync(_appState.RunningExpeditionId);
         return result!;
     }
 
     private void StartExpeditionProgressCommit()
     {
         if (_isWipingSaveData || _saveWriter.HasFailed || !_expeditionProgressTask.IsCompleted || !_appState.HasRunningExpedition) return;
-        if (_pendingExpeditionActions < 500 && _appState.ExpeditionReadyAtUtc > DateTimeOffset.UtcNow) return;
+        if (_expeditionActivity.PendingActions < 500 && _appState.ExpeditionReadyAtUtc > DateTimeOffset.UtcNow) return;
         _expeditionProgressTask = CommitExpeditionProgressAsync();
     }
 
     private async Task CommitExpeditionProgressAsync()
     {
-        var actions = _pendingExpeditionActions;
         try
         {
-            await _appState.CommitAsync(_saveWriter, next =>
-            {
-                var service = new ExpeditionService(_catalogPackage, next);
-                if (actions > 0) service.ApplyActivityActions(actions, DateTimeOffset.UtcNow);
-                service.RefreshReady(DateTimeOffset.UtcNow);
-            }, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
-            _pendingExpeditionActions -= actions;
+            await CommitBufferedExpeditionActivityAsync();
         }
         catch (Exception ex) when (ex is IOException or InvalidDataException or InvalidOperationException or UnauthorizedAccessException or System.Text.Json.JsonException)
         {
@@ -870,12 +863,23 @@ public partial class App : System.Windows.Application
         }
     }
 
+    private Task CommitBufferedExpeditionActivityAsync() =>
+        _expeditionActivity.CommitAsync(_appState, _saveWriter, _catalogPackage,
+            () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount, DateTimeOffset.UtcNow);
+
+    private SaveData SnapshotIncludingPendingExpeditionActivity()
+    {
+        var snapshot = _appState.ToSaveDataIncludingPendingActivity(_encounterService, _catchReadyCount);
+        _expeditionActivity?.ApplyTo(snapshot, _catalogPackage, DateTimeOffset.UtcNow);
+        return snapshot;
+    }
+
     private void CreditActivity(long units)
     {
         _appState.ApplyActivityUnits(units);
         _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
         _shopService.EarnCoinsFromActivity(_appState.Shop, units);
-        if (_appState.HasRunningExpedition) _pendingExpeditionActions = checked(_pendingExpeditionActions + units);
+        _expeditionActivity.Credit(_appState.RunningExpeditionId, units);
         StartExpeditionProgressCommit();
         if (_appState.PendingActivityEncounterCount > 0) StartActivityReservationCommit();
     }
@@ -899,10 +903,12 @@ public partial class App : System.Windows.Application
                 if (_appState.PendingActivityEncounterCount > 0 && !_saveWriter.HasFailed) StartActivityReservationCommit();
                 await _activityReservationTask;
                 await _expeditionProgressTask;
-                if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveDataIncludingPendingActivity(_encounterService, _catchReadyCount));
+                if (_saveWriter.HasFailed) _saveStore.History.Capture(SnapshotIncludingPendingExpeditionActivity());
                 else
                 {
                     if (_appState.PendingActivityEncounterCount > 0) throw new IOException("Заработанный покебол ещё не записан.");
+                    if (_appState.HasRunningExpedition && _expeditionActivity.PendingActions > 0)
+                        await CommitBufferedExpeditionActivityAsync();
                     await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
                 }
             }
@@ -950,8 +956,14 @@ public partial class App : System.Windows.Application
         if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
         try
         {
-            if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveDataIncludingPendingActivity(_encounterService, _catchReadyCount));
-            else await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+            if (_saveWriter.HasFailed) _saveStore.History.Capture(SnapshotIncludingPendingExpeditionActivity());
+            else
+            {
+                await _expeditionProgressTask;
+                if (_appState.HasRunningExpedition && _expeditionActivity.PendingActions > 0)
+                    await CommitBufferedExpeditionActivityAsync();
+                await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+            }
             if (!RestoreFromHistory()) return;
             RestartAfterReplacement();
         }
@@ -1030,7 +1042,7 @@ public partial class App : System.Windows.Application
         if (!_isExiting)
         {
             if (_hasLoadedState && !_isWipingSaveData && !_appState.IsCommitting && _saveWriter.HasFailed)
-                _saveStore.History.Capture(_appState.ToSaveDataIncludingPendingActivity(_encounterService, _catchReadyCount));
+                _saveStore.History.Capture(SnapshotIncludingPendingExpeditionActivity());
             else PersistState(flush: true);
         }
     }

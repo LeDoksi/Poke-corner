@@ -34,6 +34,58 @@ public sealed class ExpeditionCoreTests : IDisposable
         new("grove", "normal", minutes, state.Individuals.Select(x => x.Id).ToArray(), Guid.NewGuid(), now);
 
     [Fact]
+    public async Task QueuedActivityAfterStartPublicationAndShutdownRemainderSurviveRestart()
+    {
+        var initial = State();
+        var live = new AppState(); live.Hydrate(initial);
+        var buffer = new ExpeditionActivityBuffer();
+        var request = Request(initial, 360, Utc);
+        var store = new JsonSaveStore(Path.Combine(root, "buffered.json"));
+        var firstWrite = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var first = true;
+        var writer = new BackgroundSaveWriter(store, action =>
+        {
+            if (first) { first = false; firstWrite.SetResult(action); }
+            else Task.Run(action);
+        });
+        Task start = Task.CompletedTask;
+        PokeCorner.App.Tests.Theme.WpfTestHost.Run(() =>
+        {
+            start = live.CommitAsync(writer, next => new ExpeditionService(Catalog.Value, next).Start(request), () => 0);
+            live.RunWhenReady(() => buffer.Credit(live.RunningExpeditionId, 237));
+        });
+        await Task.Run(await firstWrite.Task);
+        await start.WaitAsync(TimeSpan.FromSeconds(10));
+        PokeCorner.App.Tests.Theme.WpfTestHost.Run(() =>
+        {
+            buffer.Sync(live.RunningExpeditionId);
+            Assert.Equal(237, buffer.PendingActions);
+        });
+        Task shutdownCommit = Task.CompletedTask;
+        PokeCorner.App.Tests.Theme.WpfTestHost.Run(() => shutdownCommit = buffer.CommitAsync(
+            live, writer, Catalog.Value, () => 0, null, Utc.AddMinutes(1)));
+        await shutdownCommit.WaitAsync(TimeSpan.FromSeconds(10));
+        Assert.Equal(0, buffer.PendingActions);
+        Assert.Equal(237, store.Load()!.Expedition!.ActivityActions);
+    }
+
+    [Fact]
+    public void FailedWriterRecoverySnapshotIncludesUncommittedActivityWithoutMutatingLiveState()
+    {
+        var save = State();
+        var request = Request(save, 360, Utc);
+        new ExpeditionService(Catalog.Value, save).Start(request);
+        var live = new AppState(); live.Hydrate(save);
+        var buffer = new ExpeditionActivityBuffer();
+        buffer.Credit(live.RunningExpeditionId, 123);
+        var candidate = live.ToSaveData(0);
+        buffer.ApplyTo(candidate, Catalog.Value, Utc.AddMinutes(1));
+        Assert.Equal(123, JsonSaveStore.Clone(candidate).Expedition!.ActivityActions);
+        Assert.Equal(0, live.ToSaveData(0).Expedition!.ActivityActions);
+        Assert.Equal(123, buffer.PendingActions);
+    }
+
+    [Fact]
     public void OfflineUtcAccelerationReadyAndBusySurviveRestart()
     {
         var state = State();
@@ -127,6 +179,22 @@ public sealed class ExpeditionCoreTests : IDisposable
         Assert.Empty(state.Berries.Where(x => x.Value != 0));
         Assert.Equal(0, state.Individuals[0].TotalXp);
         Assert.True(service.Cancel(request.OperationId, Utc).Repeated);
+    }
+
+    [Theory]
+    [InlineData("normal", 2447, 18000)]
+    [InlineData("easy", 1, 400)]
+    public void FractionalTeamRateCarriesExactCoinRemainder(string difficulty, long numerator, long denominator)
+    {
+        var state = State(3);
+        foreach (var member in state.Individuals) member.FirstTraitId = "caring-parent";
+        state.Individuals[2].TotalXp = 134; // levels 1, 1, 2: exact average 4/3
+        var request = Request(state, 30, Utc) with { LocationId = "lake", Difficulty = difficulty };
+        var service = new ExpeditionService(Catalog.Value, state);
+        service.Start(request);
+        service.Claim(request.OperationId, Guid.NewGuid(), Utc.AddMinutes(30));
+        Assert.Equal(numerator, state.CoinRemainder.Numerator);
+        Assert.Equal(denominator, state.CoinRemainder.Denominator);
     }
 
     [Fact]

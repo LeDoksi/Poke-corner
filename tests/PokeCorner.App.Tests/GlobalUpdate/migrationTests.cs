@@ -488,16 +488,119 @@ public sealed class MigrationTests : IDisposable
     [Fact]
     public async Task ConsecutiveCommitsUsePublishedSnapshotAndExitWaitsForBoth()
     {
-        var state = new AppState(); state.Hydrate(Old(Pet()));
-        var write = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
-        var first = true; var store = new JsonSaveStore(V2);
-        var writer = new BackgroundSaveWriter(store, action => { if (first) { first = false; write.SetResult(action); } else Task.Run(action); });
-        var one = state.CommitAsync(writer, next => next.ShopCoins += 2, () => 2);
-        var two = state.CommitAsync(writer, next => next.ShopCoins += 3, () => 2);
-        var exit = state.FlushAsync(writer, () => 2);
-        await Task.Run(await write.Task);
+        AppState state = null!;
+        Task one = Task.CompletedTask, two = Task.CompletedTask, exit = Task.CompletedTask;
+        var firstWrite = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var secondWrite = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var count = 0; var store = new JsonSaveStore(V2);
+        var writer = new BackgroundSaveWriter(store, action =>
+        {
+            switch (++count)
+            {
+                case 1: firstWrite.SetResult(action); break;
+                case 2: secondWrite.SetResult(action); break;
+                default: Task.Run(action); break;
+            }
+        });
+        PokeCorner.App.Tests.Theme.WpfTestHost.Run(() =>
+        {
+            state = new AppState(); state.Hydrate(Old(Pet()));
+            one = state.CommitAsync(writer, next => next.ShopCoins += 2, () => 2);
+            two = state.CommitAsync(writer, next => next.ShopCoins += 3, () => 2);
+            exit = state.FlushAsync(writer, () => 2);
+            Assert.False(exit.IsCompleted);
+        });
+        await Task.Run(await firstWrite.Task);
+        await secondWrite.Task.WaitAsync(TimeSpan.FromSeconds(10));
+        Assert.False(exit.IsCompleted);
+        await Task.Run(await secondWrite.Task);
         await Task.WhenAll(one, two, exit).WaitAsync(TimeSpan.FromSeconds(10));
         Assert.Equal(22, state.Shop.Coins); Assert.Equal(22, store.Load()!.ShopCoins);
+    }
+
+    // This test pumps a deliberately reordered single-thread SynchronizationContext.
+#pragma warning disable xUnit1031
+    [Fact]
+    public void ExitWaitsForEarlierQueuedCommitEvenWhenItsUiContinuationRunsFirst()
+    {
+        var previous = SynchronizationContext.Current;
+        var context = new ReverseContinuationContext();
+        SynchronizationContext.SetSynchronizationContext(context);
+        try
+        {
+            var state = new AppState(); state.Hydrate(Old(Pet()));
+            var firstWrite = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var secondWrite = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var writes = 0; var store = new JsonSaveStore(V2);
+            var writer = new BackgroundSaveWriter(store, action =>
+            {
+                switch (++writes)
+                {
+                    case 1: firstWrite.SetResult(action); break;
+                    case 2: secondWrite.SetResult(action); break;
+                    default: Task.Run(action); break;
+                }
+            });
+            var one = state.CommitAsync(writer, next => next.ShopCoins += 2, () => 2);
+            var two = state.CommitAsync(writer, next => next.ShopCoins += 3, () => 2);
+            var exit = state.FlushAsync(writer, () => 2);
+            Task.Run(firstWrite.Task.GetAwaiter().GetResult()).GetAwaiter().GetResult();
+            context.RunLast(); // first publication queues both waiters
+            // The fixed barrier keeps exit on the drain task. Before the fix both
+            // waiters are queued; run exit first to expose its stale snapshot.
+            if (context.TryWaitForCount(2, TimeSpan.FromSeconds(1))) context.RunLast();
+            Assert.False(exit.IsCompleted);
+            Assert.Equal(1, writes); // no stale 19-coin flush submitted
+            context.RunLast(); // second commit now enters its slot
+            Task.Run(secondWrite.Task.GetAwaiter().GetResult()).GetAwaiter().GetResult();
+            context.PumpUntil(() => Task.WhenAll(one, two, exit).IsCompleted);
+            Task.WhenAll(one, two, exit).GetAwaiter().GetResult();
+            Assert.Equal(22, store.Load()!.ShopCoins);
+        }
+        finally { SynchronizationContext.SetSynchronizationContext(previous); }
+    }
+#pragma warning restore xUnit1031
+
+    private sealed class ReverseContinuationContext : SynchronizationContext
+    {
+        private readonly List<(SendOrPostCallback Callback, object? State)> queue = [];
+        public override void Post(SendOrPostCallback callback, object? state)
+        {
+            lock (queue) { queue.Add((callback, state)); Monitor.PulseAll(queue); }
+        }
+        public void WaitForCount(int count)
+        {
+            if (!TryWaitForCount(count, TimeSpan.FromSeconds(10))) throw new TimeoutException("UI continuations did not arrive.");
+        }
+        public bool TryWaitForCount(int count, TimeSpan timeout)
+        {
+            lock (queue)
+            {
+                var deadline = DateTime.UtcNow.Add(timeout);
+                while (queue.Count < count)
+                {
+                    var remaining = deadline - DateTime.UtcNow;
+                    if (remaining <= TimeSpan.Zero || !Monitor.Wait(queue, remaining)) return false;
+                }
+                return true;
+            }
+        }
+        public void RunLast()
+        {
+            WaitForCount(1);
+            (SendOrPostCallback Callback, object? State) next;
+            lock (queue) { next = queue[^1]; queue.RemoveAt(queue.Count - 1); }
+            next.Callback(next.State);
+        }
+        public void PumpUntil(Func<bool> done)
+        {
+            var deadline = DateTime.UtcNow.AddSeconds(10);
+            while (!done())
+            {
+                if (DateTime.UtcNow >= deadline) throw new TimeoutException("UI barrier did not drain.");
+                RunLast();
+            }
+        }
     }
 
     [Fact]
