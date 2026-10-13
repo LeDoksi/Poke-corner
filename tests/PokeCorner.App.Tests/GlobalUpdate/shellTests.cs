@@ -236,7 +236,7 @@ public class ShellTests
             new CareModeService(), chains, state.PendingEggs);
         var collection = new CollectionView(vm, state,
             new SpriteCache(Path.Combine(Path.GetTempPath(), "pokecorner-shell-evidence", Guid.NewGuid().ToString("N"))),
-            () => { }, () => { }, () => { }, () => null, _ => true, () => true, () => true);
+            () => { }, () => { }, () => { }, () => null, () => true, () => true);
         var menu = new AppMenuWindow(collection, new SettingsView(new SettingsViewModel(state.Settings), () => { }),
             new ShopView(state, new ShopService(), _ => Task.CompletedTask, () => { }),
             new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"));
@@ -281,7 +281,7 @@ public class ShellTests
         var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(),
             Array.Empty<SpeciesEvolutionChain>(), state.PendingEggs);
         var collection = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), "pokecorner-shell-test", Guid.NewGuid().ToString("N"))),
-            () => { }, () => { }, () => { }, () => null, _ => true, () => true, () => true);
+            () => { }, () => { }, () => { }, () => null, () => true, () => true);
         return new AppMenuWindow(collection, new SettingsView(new SettingsViewModel(settings), () => { }),
             new ShopView(state, new ShopService(), _ => Task.CompletedTask, () => { }),
             new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"));

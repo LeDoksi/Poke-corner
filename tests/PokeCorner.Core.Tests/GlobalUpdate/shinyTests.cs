@@ -48,8 +48,8 @@ public class ShinyTests
         var onlyRoot = new SpeciesEvolutionChain(1, 870, 255, 1, [870], ["Falinks"]);
         var spend = 0;
         var roller = new CatchRoller(new Random(1));
-        Assert.True(roller.TryRollCatchFromTier([onlyRoot], RarityTier.Common, [],
-            () => { spend++; return 4; }, out var result, _ => false));
+        var result = roller.RollActivity([onlyRoot], new HashSet<int>(), false, [1, 0, 0, 0], .8,
+            _ => false, _ => { spend++; return 4; });
         Assert.Equal(870, result.SpeciesId);
         Assert.False(result.IsShiny);
         Assert.Equal(0, spend);

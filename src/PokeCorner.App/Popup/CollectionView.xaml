@@ -391,51 +391,6 @@
                                 Click="PokedexNextPage_Click" />
                     </StackPanel>
 
-                    <!-- Incubating eggs -->
-                    <TextBlock Text="Яйца в инкубации" Style="{StaticResource SectionHeaderTextStyle}" Margin="2,14,0,6" />
-                    <TextBlock x:Name="EggsEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,12"
-                               Text="Пока пусто — яйца покупаются в Магазине и вылупляются через час." />
-                    <ItemsControl x:Name="PendingEggsList" Margin="0,0,0,4">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border Grid.Column="0" Style="{StaticResource WellStyle}" Width="46" Height="46"
-                                                Margin="0,0,12,0" VerticalAlignment="Center">
-                                            <Path Width="24" Height="30" Stretch="Uniform" VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center" Fill="{Binding TierBrush}"
-                                                  Data="M20,4 C28,4 34,16 34,25 C34,33 28,39 20,39 C12,39 6,33 6,25 C6,16 12,4 20,4 Z" />
-                                        </Border>
-
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Яйцо: " FontWeight="SemiBold" />
-                                                <TextBlock Text="{Binding TierName}" FontWeight="SemiBold"
-                                                           Foreground="{Binding TierBrush}" />
-                                            </StackPanel>
-                                            <TextBlock Text="{Binding CharmText}" Visibility="{Binding CharmVisibility}"
-                                                       Style="{StaticResource MetaTextStyle}" Foreground="{StaticResource AccentGoldBrush}"
-                                                       Margin="0,1,0,0" />
-                                            <TextBlock Text="{Binding StatusText}" Style="{StaticResource MetaTextStyle}"
-                                                       Margin="0,1,0,6" />
-                                            <ProgressBar Style="{StaticResource GoldProgressBarStyle}" Height="8"
-                                                         Value="{Binding HatchFraction, Mode=OneWay}" Minimum="0" Maximum="1" />
-                                        </StackPanel>
-
-                                        <Button Grid.Column="2" Content="Вылупить!" Margin="12,0,0,0" VerticalAlignment="Center"
-                                                Tag="{Binding EggId}" Click="HatchButton_Click" IsEnabled="{Binding IsReady}" />
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
                 </StackPanel>
             </ScrollViewer>
         </TabItem>

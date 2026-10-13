@@ -20,7 +20,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Action _onFeedRequested;
     private readonly Action _onStateChanged;
     private readonly Func<IReadOnlyList<byte[]>?> _getActiveSpriteFrames;
-    private readonly Func<Guid, bool> _onHatchRequested;
 
     /// Evolution is player-triggered, so this view needs both "can they?" (button visibility)
     /// and "do it".
@@ -99,10 +98,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     // every item container (each carrying a drop shadow). Doing that 60 times a minute for
     // data that rarely changes made the cards visibly flicker, so each list only rebuilds
     // when a cheap signature of its content actually changes.
-    private string _eggsSignature = string.Empty;
     private string _pokedexSignature = string.Empty;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<Guid, bool> onHatchRequested, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -114,7 +112,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _onFeedRequested = onFeedRequested;
         _onStateChanged = onStateChanged;
         _getActiveSpriteFrames = getActiveSpriteFrames;
-        _onHatchRequested = onHatchRequested;
         _getAnimatedFrames = getAnimatedFrames;
         _fetchSprite = fetchSprite;
 
@@ -182,7 +179,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         RefreshHero(active, entries);
         RefreshProgress(active);
-        RefreshEggs(nowUtc);
         RefreshPokedex(entries);
     }
 
@@ -286,30 +282,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         _onEvolveRequested();
         Refresh();
-    }
-
-    private void RefreshEggs(DateTimeOffset nowUtc)
-    {
-        var eggs = _viewModel.GetPendingEggEntries(nowUtc);
-        EggsEmptyText.Visibility = eggs.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-
-        var charmActive = _appState.Shop.CatchLuckyCharmActive;
-        var signature = charmActive + "|" + string.Join("|", eggs.Select(e => $"{e.EggId}:{e.IsReady}:{Math.Round(e.HatchFraction, 3)}"));
-        if (signature == _eggsSignature) return;
-        _eggsSignature = signature;
-
-        PendingEggsList.ItemsSource = eggs.Select(egg => new PendingEggCard
-        {
-            EggId = egg.EggId,
-            TierName = RarityDisplay.GetName(egg.Tier),
-            TierBrush = RarityDisplay.GetBrush(egg.Tier),
-            HatchFraction = egg.HatchFraction,
-            IsReady = egg.IsReady,
-            CharmActive = charmActive,
-            StatusText = egg.IsReady
-                ? "Готово — можно вылуплять!"
-                : $"Осталось ≈ {RemainingMinutes(egg.HatchFraction)} мин"
-        }).ToList();
     }
 
     /// One of the rarity filter pills was selected. RadioButton's GroupName already
@@ -846,25 +818,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private static string FormatCaughtDate(DateTimeOffset caughtAtUtc) =>
         caughtAtUtc.ToLocalTime().ToString("dd.MM.yyyy", CultureInfo.CurrentCulture);
 
-    private static int RemainingMinutes(double hatchFraction)
-    {
-        var remaining = EggIncubationService.HatchDuration * (1.0 - Math.Clamp(hatchFraction, 0.0, 1.0));
-        return Math.Max(1, (int)Math.Ceiling(remaining.TotalMinutes));
-    }
-
-
-
-    // Fully qualified: UseWindowsForms (for the tray's NotifyIcon) makes a bare Button
-    // ambiguous with System.Windows.Forms.Button.
-    private void HatchButton_Click(object sender, RoutedEventArgs e)
-    {
-        var eggId = (Guid)((System.Windows.Controls.Button)sender).Tag;
-        if (_onHatchRequested(eggId))
-        {
-            _onStateChanged();
-        }
-        Refresh();
-    }
 }
 
 internal static class CollectionEntryFormatting

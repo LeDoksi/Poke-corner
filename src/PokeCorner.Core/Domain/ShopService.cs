@@ -136,8 +136,6 @@ public sealed class ShopService
     // minutes of engaged play.
     public const long ActivityUnitsPerCoinEarned = 900;
 
-    public const double CatchLuckyCharmShinyMultiplier = 4.0;
-
     // Activation moves one unit out of stock. The active bool is the persisted reserved unit;
     // an unsupported attempt keeps it reserved for the next eligible source.
     public PurchaseResult TryActivateLuckyCharm(SaveData next)
@@ -163,15 +161,6 @@ public sealed class ShopService
         var totalUnits = shop.RemainderUnits + activityUnits;
         shop.Coins += (int)(totalUnits / ActivityUnitsPerCoinEarned);
         shop.RemainderUnits = totalUnits % ActivityUnitsPerCoinEarned;
-    }
-
-    // Read-and-clear in one place so a catch and an egg hatch spend the charm identically:
-    // whichever happens first gets the boost, regardless of whether the roll comes up shiny.
-    public double ConsumeCatchLuckyCharm(ShopInventory shop)
-    {
-        if (!shop.CatchLuckyCharmActive) return 1.0;
-        shop.CatchLuckyCharmActive = false;
-        return CatchLuckyCharmShinyMultiplier;
     }
 
 }

@@ -163,21 +163,6 @@ public sealed class EvolutionStageCard
         : "Ещё не открыто — продолжай растить питомца";
 }
 
-public sealed class PendingEggCard
-{
-    public required Guid EggId { get; init; }
-    public required string TierName { get; init; }
-    public required Brush TierBrush { get; init; }
-    public required double HatchFraction { get; init; }
-    public required bool IsReady { get; init; }
-    public required string StatusText { get; init; }
-    /// The lucky charm boosts whichever comes first, a catch or a hatch — so while it's active
-    /// every pending egg shows it.
-    public bool CharmActive { get; init; }
-    public Visibility CharmVisibility => CharmActive ? Visibility.Visible : Visibility.Collapsed;
-    public string CharmText => $"✨ Талисман активен: ×{PokeCorner.Core.Domain.ShopService.CatchLuckyCharmShinyMultiplier:0} шанс шайни при вылуплении";
-}
-
 /// Theme-dictionary brush lookup by resource key.
 ///
 /// Fully qualified as System.Windows.Application, not a bare Application — the project has

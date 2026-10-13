@@ -155,6 +155,8 @@ public sealed class MigrationTests : IDisposable
         Assert.Equal(8, next.FeedingTreats); Assert.Equal(11, next.FeedingRemainderUnits); Assert.Equal(10, next.ShopRemainderUnits);
         Assert.Equal(12, next.CatchAccumulatorUnits); Assert.Equal(2, next.PendingCatchCount);
         Assert.True(next.ShopCatchLuckyCharmActive); Assert.Empty(next.PendingEggs); Assert.Single(old.PendingEggs);
+        Assert.Equal(old.Individuals[0].Id, next.Individuals.Single().Id);
+        Assert.True(next.Individuals.Single().IsShiny);
         var care = next.CareStates[old.Individuals[0].Id];
         Assert.Null(care.LastNeglectCheckUtc); Assert.Equal(old.CareStates[old.Individuals[0].Id].LastPetUtc, care.LastPetUtc);
         Assert.Equal(old.CareStates[old.Individuals[0].Id].LastInteractionUtc, care.LastInteractionUtc);

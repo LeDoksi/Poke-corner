@@ -252,12 +252,14 @@ public class ThemeRenderingTests
             var homeTab = (TabItem)tabs.Items[0];
             var pokedexTab = (TabItem)tabs.Items[1];
 
-            foreach (var name in new[] { "PendingEggsList", "EggsEmptyText", "PokedexGrid", "PokedexCountText" })
+            foreach (var name in new[] { "PokedexGrid", "PokedexCountText" })
             {
                 var element = (FrameworkElement)view.FindName(name)!;
                 Assert.True(IsLogicalDescendantOf(element, pokedexTab), $"{name} should sit under the Pokédex tab.");
                 Assert.False(IsLogicalDescendantOf(element, homeTab), $"{name} should no longer sit under the home tab.");
             }
+            Assert.Null(view.FindName("PendingEggsList"));
+            Assert.Null(view.FindName("EggsEmptyText"));
 
             // The hero and progress cards stayed put.
             foreach (var name in new[] { "ActiveSpriteImage", "CatchProgressBar", "TreatHintText" })
@@ -1360,7 +1362,7 @@ public class ThemeRenderingTests
             new CareModeService(), chains, appState.PendingEggs);
         var spriteCacheDirectory = Path.Combine(Path.GetTempPath(), "pokecorner-theme-tests", Guid.NewGuid().ToString("N"));
         return new CollectionView(viewModel, appState, new SpriteCache(spriteCacheDirectory),
-            () => { }, () => { }, () => { }, getActiveSpriteFrames ?? (() => null), _ => true,
+            () => { }, () => { }, () => { }, getActiveSpriteFrames ?? (() => null),
             // Ready-to-evolve is true so the "Эволюционировать!" button is actually visible
             // during these layout/theme assertions rather than collapsed out of the tree.
             () => true, () => true);
@@ -1513,24 +1515,21 @@ public class ThemeRenderingTests
             Assert.Contains("пригодную попытку", charmText.Text);
         });
 
-    /// An active charm applies to whichever comes first, a catch or a hatch — so every pending
-    /// egg says so while it's active, and none does once it's spent.
+    /// Migrated shop eggs are discarded. Even a stale in-memory egg cannot expose the old
+    /// hatch action or consume a charm before a durable save.
     [Fact]
-    public void CollectionView_EggCards_ShowAnActiveCharm() =>
+    public void CollectionView_DoesNotExposeLegacyShopEggHatch() =>
         WpfTestHost.Run(() =>
         {
             var appState = new AppState();
             appState.PendingEggs.Add(new PendingEgg { Tier = RarityTier.Rare, ReadyAtUtc = DateTimeOffset.UtcNow.AddMinutes(30) });
             var view = BuildCollectionView(appState, new List<SpeciesEvolutionChain>());
+            var existingId = appState.Collection.Individuals.Single().Id;
             WpfTestHost.Layout(view);
-            PendingEggCard Card() => ((ItemsControl)view.FindName("PendingEggsList")!).ItemsSource.Cast<PendingEggCard>().Single();
-
-            Assert.Equal(Visibility.Collapsed, Card().CharmVisibility);
-
-            appState.Shop.CatchLuckyCharmActive = true;
-            view.Refresh();
-            Assert.Equal(Visibility.Visible, Card().CharmVisibility);
-            Assert.Equal("✨ Талисман активен: ×4 шанс шайни при вылуплении", Card().CharmText);
+            Assert.Null(view.FindName("PendingEggsList"));
+            Assert.Null(view.FindName("EggsEmptyText"));
+            Assert.Single(appState.PendingEggs);
+            Assert.Equal(existingId, appState.Collection.Individuals.Single().Id);
         });
 
     [Fact]
@@ -1698,6 +1697,6 @@ public class ThemeRenderingTests
 
         var spriteCacheDirectory = Path.Combine(Path.GetTempPath(), "pokecorner-theme-tests", Guid.NewGuid().ToString("N"));
         return new CollectionView(viewModel, appState, new SpriteCache(spriteCacheDirectory),
-            () => { }, () => { }, () => { }, () => null, _ => true, () => true, () => true);
+            () => { }, () => { }, () => { }, () => null, () => true, () => true);
     }
 }

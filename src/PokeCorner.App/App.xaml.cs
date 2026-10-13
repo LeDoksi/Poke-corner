@@ -43,7 +43,6 @@ public partial class App : System.Windows.Application
     private ForegroundWindowMonitor _fullscreenMonitor = null!;
     private CatchRoller _catchRoller = null!;
     private EncounterService _encounterService = null!;
-    private EggIncubationService _eggIncubationService = null!;
     private CareModeService _careModeService = null!;
     private FeedingService _feedingService = null!;
     private bool _isFullscreenHiding;
@@ -122,7 +121,6 @@ public partial class App : System.Windows.Application
         _catalogPackage = CatalogPackage.Load(AppPaths.GetAppDataDirectory());
 
         _catchRoller = new CatchRoller();
-        _eggIncubationService = new EggIncubationService();
         _careModeService = new CareModeService();
         _feedingService = new FeedingService();
         _shopService = new ShopService(_catalogPackage.DataRoot);
@@ -734,42 +732,8 @@ public partial class App : System.Windows.Application
         return active is not null && _appState.IsReadyToEvolve(active);
     }
 
-    private bool HatchEgg(Guid eggId)
-    {
-        if (_isExiting || _appState.IsCommitting) return false;
-        var egg = _appState.PendingEggs.FirstOrDefault(e => e.Id == eggId);
-        if (egg is null || !_eggIncubationService.IsReady(egg, DateTimeOffset.UtcNow)) return false;
-
-        // A save written before the shop's tier gating (or hand-edited) can hold an egg of a tier
-        // the catalog can't fill yet: keep the egg — and the lucky charm — for a later retry.
-        if (!_catchRoller.TryRollCatchFromTier(GetDirectIssueChains(), egg.Tier, _appState.Collection.Individuals,
-                () => _shopService.ConsumeCatchLuckyCharm(_appState.Shop), out var result,
-                id => _catalogPackage.CanIssueDirectly(id, true)))
-        {
-            _trayIconService.ShowNotification("PokéCorner", "Пока нет доступных покемонов этой редкости — попробуй позже, когда каталог обновится.");
-            return false;
-        }
-
-        result = ValidateDirectResult(result);
-        var individual = result.ToIndividual(DateTimeOffset.UtcNow);
-        individual.AcquisitionSource = "legacy-shop-egg";
-        SaveMigration.InitializeIndividual(individual, _legacyLookup, _catalogPackage);
-        _appState.Collection.Add(individual);
-        _appState.PendingEggs.Remove(egg);
-
-        _menuWindow?.ShowCatchReveal(new CatchReveal(result, egg.Tier));
-        return true;
-    }
-
     private List<SpeciesEvolutionChain> GetDirectIssueChains() =>
         _speciesCatalog.LoadCachedOrFallback().Where(c => _catalogPackage.CanIssueDirectly(c.StarterSpeciesId, false)).ToList();
-
-    private CatchResult ValidateDirectResult(CatchResult result)
-    {
-        if (!_catalogPackage.CanIssueDirectly(result.SpeciesId, false)) throw new InvalidDataException("Catch must be an available family root.");
-        return result.IsShiny && !_catalogPackage.CanIssueDirectly(result.SpeciesId, true)
-            ? result with { IsShiny = false } : result;
-    }
 
     private void OpenMenu(MenuSection section)
     {
@@ -783,7 +747,7 @@ public partial class App : System.Windows.Application
                 // for individuals sitting on a migrated legacy chain id, not just real ones.
                 var lookupChains = _speciesCatalog.LoadForLookup();
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, lookupChains, _appState.PendingEggs);
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, HatchEgg, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
                 var shopView = new ShopView(_appState, _shopService,

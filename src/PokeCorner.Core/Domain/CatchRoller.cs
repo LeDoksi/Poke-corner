@@ -38,9 +38,7 @@ public sealed class CatchRoller
     public CatchResult RollCatch(
         IReadOnlyList<SpeciesEvolutionChain> allChains,
         IReadOnlyCollection<PokemonIndividual> owned,
-        double shinyChanceMultiplier = 1.0,
-        Func<int, bool>? canBeShiny = null,
-        Func<double>? consumeMultiplier = null)
+        double shinyChanceMultiplier = 1.0)
     {
         if (allChains.Count == 0)
         {
@@ -54,30 +52,12 @@ public sealed class CatchRoller
         // until PickChain returns, so callers can't pre-filter this.
         var ownedNaturesForDuplicateChain = owned.Where(i => i.EvolutionChainId == chain.ChainId).Select(i => i.Nature).ToHashSet();
 
-        var eligible = canBeShiny?.Invoke(chain.StarterSpeciesId) ?? true;
-        var multiplier = eligible ? consumeMultiplier?.Invoke() ?? shinyChanceMultiplier : 1;
-        var isShiny = RollShiny(ShinySource.Activity, eligible, multiplier);
+        var isShiny = RollShiny(ShinySource.Activity, true, shinyChanceMultiplier);
         var nature = isDuplicate
             ? PickNatureBiasedTowardUnowned(ownedNaturesForDuplicateChain)
             : PickUniformNature();
 
         return new CatchResult(chain.ChainId, chain.StarterSpeciesId, nature, isShiny, isDuplicate, chain.ChainLength);
-    }
-
-    /// Guaranteed-tier roll for a shop egg. Returns false — without calling
-    /// consumeShinyMultiplier — when the catalog has no species of that tier, so a lucky charm
-    /// isn't spent on a hatch that can't happen; otherwise consumes it exactly once and rolls.
-    public bool TryRollCatchFromTier(IReadOnlyList<SpeciesEvolutionChain> allChains, RarityTier tier, IReadOnlyCollection<PokemonIndividual> owned, Func<double> consumeShinyMultiplier, out CatchResult result, Func<int, bool>? canBeShiny = null)
-    {
-        var tierChains = allChains.Where(c => RarityClassifier.Classify(c.CaptureRate) == tier).ToList();
-        if (tierChains.Count == 0)
-        {
-            result = null!;
-            return false;
-        }
-
-        result = RollCatch(tierChains, owned, canBeShiny: canBeShiny, consumeMultiplier: consumeShinyMultiplier);
-        return true;
     }
 
     // Used for starter selection: the player has already picked the species, so this
