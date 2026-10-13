@@ -1,13 +1,16 @@
 using PokeCorner.App.Imaging;
 using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Windows.Media.Imaging;
 using PokeCorner.App.Overlay;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.PokeApi;
+using PokeCorner.Core.Persistence;
 
 namespace PokeCorner.App.Popup;
 
@@ -50,7 +53,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private bool _hideFullyEvolved;
 
     /// Current Pokédex sort choice — see CollectionViewModel.ApplySort.
-    private PokedexSortOrder _sortOrder = PokedexSortOrder.Default;
+    private PokedexSortOrder _sortOrder = PokedexSortOrder.Number;
 
     /// Zero-based page of the filtered grid. Deliberately view STATE, not derived: Refresh()
     /// runs once a second, so recomputing it from scratch every tick would drop the player back
@@ -58,9 +61,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// (and RefreshPokedex clamps it when a release shrinks the list past the current page).
     private int _pageIndex;
 
-    /// 4 cards fit per row (the card is 112px wide with 5px margins each side, inside a 580px
-    /// window), so 4 rows fill the visible grid area without turning the tab into an endless
-    /// scroll.
+    /// Keep the owned-individual list bounded while leaving room for the inline details.
     private const int PageSize = 16;
 
     /// Animated-GIF frames for one species, or null when it has none. Optional so the
@@ -76,6 +77,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly HashSet<int> _animatedFetchStarted = new();
     private readonly Func<int, Task<byte[]?>>? _fetchSprite;
     private readonly HashSet<int> _thumbnailFetchStarted = new();
+    private readonly Func<int, string?>? _getSpeciesAssetPath;
+    private readonly Func<Action<SaveData>, Task>? _commitState;
+    private readonly Dictionary<int, ImageSource> _packageSprites = new();
+    private readonly HashSet<int> _missingPackageSprites = new();
+    private int _speciesPageIndex;
+    private const int SpeciesPageSize = 12;
+    private int? _selectedSpeciesId;
+    private string _speciesSignature = string.Empty;
+    private string _speciesTypeSignature = string.Empty;
+    private bool _updatingSpeciesTypes;
 
     /// One SpriteAnimator per realized card Image. A DataTemplate gives no named element to
     /// hand the animator at construction time the way the hero Image does, so each Image
@@ -100,7 +111,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     // when a cheap signature of its content actually changes.
     private string _pokedexSignature = string.Empty;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null)
+    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null,
+        Func<int, string?>? getSpeciesAssetPath = null, Func<Action<SaveData>, Task>? commitState = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -114,6 +126,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _getActiveSpriteFrames = getActiveSpriteFrames;
         _getAnimatedFrames = getAnimatedFrames;
         _fetchSprite = fetchSprite;
+        _getSpeciesAssetPath = getSpeciesAssetPath;
+        _commitState = commitState;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
         // rename there can never leave the filter pills saying something different.
@@ -180,6 +194,164 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshHero(active, entries);
         RefreshProgress(active);
         RefreshPokedex(entries);
+        if (SpeciesPane.Visibility == Visibility.Visible) RefreshSpecies();
+    }
+
+    private void IndividualsMode_Click(object sender, RoutedEventArgs e)
+    {
+        IndividualsPane.Visibility = Visibility.Visible;
+        SpeciesPane.Visibility = Visibility.Collapsed;
+        IndividualsModeButton.Style = null;
+        SpeciesModeButton.Style = (Style)FindResource("SecondaryButtonStyle");
+    }
+
+    private void SpeciesMode_Click(object sender, RoutedEventArgs e)
+    {
+        IndividualsPane.Visibility = Visibility.Collapsed;
+        SpeciesPane.Visibility = Visibility.Visible;
+        SpeciesModeButton.Style = null;
+        IndividualsModeButton.Style = (Style)FindResource("SecondaryButtonStyle");
+        RefreshSpecies();
+    }
+
+    private void SpeciesFilters_Changed(object sender, RoutedEventArgs e)
+    {
+        if (!_isReady || _updatingSpeciesTypes) return;
+        _speciesPageIndex = 0;
+        RefreshSpecies();
+    }
+
+    private void SpeciesFilters_Changed(object sender, SelectionChangedEventArgs e) => SpeciesFilters_Changed(sender, (RoutedEventArgs)e);
+    private void SpeciesFilters_Changed(object sender, TextChangedEventArgs e) => SpeciesFilters_Changed(sender, (RoutedEventArgs)e);
+
+    private void SpeciesPrev_Click(object sender, RoutedEventArgs e)
+    {
+        _speciesPageIndex = Math.Max(0, _speciesPageIndex - 1);
+        RefreshSpecies();
+    }
+
+    private void SpeciesNext_Click(object sender, RoutedEventArgs e)
+    {
+        _speciesPageIndex++;
+        RefreshSpecies();
+    }
+
+    private void RefreshSpecies()
+    {
+        if (!_isReady) return;
+        var all = _viewModel.GetSpeciesEntries();
+        var types = all.Where(e => e.IsDiscovered).SelectMany(e => e.Types).Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(typeName => typeName, StringComparer.OrdinalIgnoreCase).ToArray();
+        var typeSignature = string.Join("|", types);
+        if (typeSignature != _speciesTypeSignature)
+        {
+            _updatingSpeciesTypes = true;
+            var selectedType = (SpeciesTypeCombo.SelectedItem as ComboBoxItem)?.Tag as string;
+            SpeciesTypeCombo.Items.Clear();
+            SpeciesTypeCombo.Items.Add(new ComboBoxItem { Content = "Тип: любой" });
+            foreach (var name in types) SpeciesTypeCombo.Items.Add(new ComboBoxItem { Content = $"Тип: {TypeDisplay.GetLabel(name)}", Tag = name });
+            SpeciesTypeCombo.SelectedIndex = Math.Max(0, Array.IndexOf(types, selectedType) + 1);
+            _speciesTypeSignature = typeSignature;
+            _updatingSpeciesTypes = false;
+        }
+        var type = (SpeciesTypeCombo.SelectedItem as ComboBoxItem)?.Tag as string;
+        var rarity = (SpeciesRarityCombo.SelectedItem as ComboBoxItem)?.Tag as string;
+        var sort = SpeciesSortCombo.SelectedIndex switch { 1 => SpeciesSortOrder.CatchDate, 2 => SpeciesSortOrder.Type, _ => SpeciesSortOrder.Number };
+        var visible = CollectionViewModel.FilterSpecies(all, SpeciesSearchBox.Text, type, rarity,
+            SpeciesCanEvolve.IsChecked == true, sort);
+        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)SpeciesPageSize));
+        _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
+        SpeciesCountText.Text = $"Открыто видов: {all.Count(e => e.IsDiscovered)} · показано: {visible.Count}";
+        SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
+        SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
+        SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
+        SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
+        var page = visible.Skip(_speciesPageIndex * SpeciesPageSize).Take(SpeciesPageSize).ToList();
+        var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{SpeciesCanEvolve.IsChecked}|" +
+            string.Join("|", page.Select(e => $"{e.SpeciesId}:{e.IsDiscovered}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
+        if (signature != _speciesSignature)
+        {
+            _speciesSignature = signature;
+            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId))).ToList();
+        }
+        if (_selectedSpeciesId is { } id) ShowSpeciesDetail(all.FirstOrDefault(e => e.SpeciesId == id));
+    }
+
+    private ImageSource? GetPackageSprite(int speciesId)
+    {
+        if (_packageSprites.TryGetValue(speciesId, out var cached)) return cached;
+        if (_missingPackageSprites.Contains(speciesId)) return null;
+        var path = _getSpeciesAssetPath?.Invoke(speciesId);
+        if (path is null) return null;
+        try
+        {
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(path);
+            bitmap.EndInit();
+            bitmap.Freeze();
+            _packageSprites[speciesId] = bitmap;
+            return bitmap;
+        }
+        catch (Exception error) when (error is IOException or NotSupportedException or System.Runtime.InteropServices.COMException)
+        {
+            _missingPackageSprites.Add(speciesId);
+            return null;
+        }
+    }
+
+    private void SpeciesGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (SpeciesGrid.SelectedItem is not SpeciesCard card) return;
+        _selectedSpeciesId = card.Entry.SpeciesId;
+        ShowSpeciesDetail(card.Entry);
+    }
+
+    private void ShowSpeciesDetail(PokedexSpeciesEntry? entry)
+    {
+        SpeciesDetail.Visibility = entry is null ? Visibility.Collapsed : Visibility.Visible;
+        if (entry is null) return;
+        SpeciesDetailName.Text = entry.IsDiscovered ? $"{entry.Number} · {entry.DisplayName}" : entry.Number;
+        SpeciesDetailDescription.Text = entry.IsDiscovered ? entry.DescriptionRu : $"Подсказка: {entry.RouteHint}";
+        SpeciesDetailTypes.Text = entry.IsDiscovered ? string.Join(" · ", entry.Types.Select(TypeDisplay.GetLabel)) : string.Empty;
+        SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : "Мои экземпляры";
+        SpeciesOwnedList.ItemsSource = entry.OwnedIndividuals.Select(i => new IndividualChoice(i.IndividualId,
+            $"{(i.Nickname ?? entry.DisplayName)} · ур. {i.Level} · {(i.IsBusy ? "Занят" : i.IsActive ? "На столе" : "Свободен")} · {FormatCaughtDate(i.CaughtAtUtc)}{(i.IsShiny ? " · Shiny" : "")}"))
+            .ToList();
+    }
+
+    private void SpeciesOwned_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not System.Windows.Controls.Button { Tag: Guid id }) return;
+        OpenIndividual(id);
+    }
+
+    public Guid? SelectedIndividualId => _detailCard?.IndividualId;
+
+    public bool OpenIndividual(Guid id)
+    {
+        var entry = _viewModel.GetEntry(id, DateTimeOffset.UtcNow);
+        if (entry is null) return false;
+        ShowDetail(BuildCard(entry));
+        return true;
+    }
+
+    private sealed record IndividualChoice(Guid IndividualId, string Label);
+    private sealed record SpeciesCard(PokedexSpeciesEntry Entry, ImageSource? SpriteImage)
+    {
+        public string Number => Entry.Number;
+        public string AccessibleName => Entry.AccessibleName;
+        public string NameText => Entry.DisplayName ?? "Неизвестный вид";
+        public string SubText => Entry.IsDiscovered
+            ? $"{string.Join(" · ", Entry.Types.Select(TypeDisplay.GetLabel))} · {RarityName} · {Entry.OwnedIndividuals.Count} моих"
+            : Entry.HasSilhouette ? Entry.RouteHint : "Этот вид ещё никто не встречал";
+        private string RarityName => Enum.TryParse<RarityTier>(Entry.Rarity, true, out var tier)
+            ? RarityDisplay.GetName(tier) : Entry.Rarity ?? string.Empty;
+        public Visibility RevealedVisibility => Entry.IsDiscovered && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility SilhouetteVisibility => !Entry.IsDiscovered && Entry.HasSilhouette && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility UnknownVisibility => SpriteImage is null || !Entry.IsDiscovered && !Entry.HasSilhouette ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void RefreshHero(PokemonIndividual? active, IReadOnlyList<CollectionEntry> entries)
@@ -326,15 +498,22 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
+    private void IndividualExtraFilter_Changed(object sender, RoutedEventArgs e)
+    {
+        if (!_isReady) return;
+        _pageIndex = 0;
+        Refresh();
+    }
+
     private void PokedexSortCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (!_isReady) return;
 
         _sortOrder = PokedexSortCombo.SelectedIndex switch
         {
-            1 => PokedexSortOrder.Alphabetical,
+            1 => PokedexSortOrder.Type,
             2 => PokedexSortOrder.CatchDate,
-            _ => PokedexSortOrder.Default
+            _ => PokedexSortOrder.Number
         };
         _pageIndex = 0;
         Refresh();
@@ -355,8 +534,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    /// One card per individual (two owned Pikachus are two cards), in GetEntries' order:
-    /// active, then favourites, then dex number — unless a sort option replaces it.
+    /// One card per individual (two owned Pikachus are two cards), in the selected order.
     private void RefreshPokedex(IReadOnlyList<CollectionEntry> entries)
     {
         // Distinct SPECIES even though the cards are per-individual: this line reports Pokédex
@@ -366,11 +544,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
 
-        // All three filters narrow the list GetEntries already ordered (AND), then ApplySort
-        // keeps that banding or replaces it with an alphabetical/catch-date order.
+        // Filters narrow the owned list together before number, type, or catch-date sorting.
         var visible = CollectionViewModel.ApplySort(entries
             .Where(entry => _rarityFilter is null || entry.Rarity == _rarityFilter.Value)
             .Where(entry => !_hideFullyEvolved || entry.HasEvolutionsRemaining)
+             .Where(entry => FavoritesFilterToggle.IsChecked != true || entry.IsFavorite)
+             .Where(entry => ShinyFilterToggle.IsChecked != true || entry.IsShiny)
             .Where(entry => CollectionViewModel.MatchesSearch(entry, _searchQuery))
             .ToList(), _sortOrder);
 
@@ -413,6 +592,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private PokedexCard BuildCard(CollectionEntry entry) => new()
     {
         IndividualId = entry.IndividualId,
+        Level = entry.Level,
+        IsBusy = entry.IsBusy,
+        FirstTraitId = entry.FirstTraitId,
+        SecondTraitId = entry.SecondTraitId,
+        DescriptionRu = entry.DescriptionRu,
         SpeciesId = entry.DisplaySpeciesId,
         SpeciesName = entry.SpeciesName,
         Nickname = entry.Nickname,
@@ -523,6 +707,27 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         ShowDetail(card);
     }
 
+    private void PokedexCard_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key is not (System.Windows.Input.Key.Enter or System.Windows.Input.Key.Space) ||
+            ((FrameworkElement)sender).DataContext is not PokedexCard card) return;
+        ShowDetail(card);
+        e.Handled = true;
+    }
+
+    private void PokedexCard_GotKeyboardFocus(object sender, RoutedEventArgs e) =>
+        ((Border)sender).BorderBrush = ThemeBrushes.Get("AccentGoldBrush");
+
+    private void PokedexCard_LostKeyboardFocus(object sender, RoutedEventArgs e) =>
+        ((Border)sender).ClearValue(Border.BorderBrushProperty);
+
+    private void CollectionView_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key != System.Windows.Input.Key.Escape || DetailOverlay.Visibility != Visibility.Visible) return;
+        HideDetail();
+        e.Handled = true;
+    }
+
     // ======================= Pokédex detail overlay =======================
     // Renders the PokedexCard it is handed and routes every mutation through the same
     // SelectIndividual/ReleaseIndividual/ToggleFavorite methods the rest of this view uses.
@@ -543,6 +748,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void ShowDetail(PokedexCard card)
     {
         _detailCard = card;
+        DetailErrorText.Text = string.Empty;
         _detailIsFavorite = card.IsFavorite;
         DetailReleaseButton.IsEnabled = !_appState.BusyIndividualIds.Contains(card.IndividualId);
 
@@ -559,6 +765,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         DetailNatureText.Text = card.NatureText;
         DetailCaughtAtText.Text = card.CaughtAtText;
+        DetailLevelText.Text = card.LevelText;
+        DetailBusyText.Text = card.AvailabilityText;
+        DetailTraitsText.Text = "Особенности: " + string.Join(" · ",
+            new[] { card.FirstTraitId, card.SecondTraitId }.Where(id => !string.IsNullOrWhiteSpace(id)).Select(TraitLabel));
+        DetailTraitsText.Visibility = card.FirstTraitId is null && card.SecondTraitId is null ? Visibility.Collapsed : Visibility.Visible;
+        DetailDescriptionText.Text = card.DescriptionRu ?? "Описание вида пока недоступно.";
         DetailEvolutionBar.Value = card.EvolutionBarValue;
         DetailEvolutionBar.Opacity = card.EvolutionBarOpacity;
         DetailEvolutionBar.ToolTip = card.EvolutionToolTip;
@@ -651,17 +863,31 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             : ThemeBrushes.Get("MutedTextBrush");
         DetailFavoriteButton.ToolTip = _detailIsFavorite
             ? "Убрать из избранного"
-            : "В избранное — закрепить в начале списка";
+            : "Добавить в избранное";
         DetailFavoriteBadge.Visibility = _detailIsFavorite ? Visibility.Visible : Visibility.Collapsed;
     }
 
     /// Stays open, unlike the other two: pinning is a small reversible tweak, and closing the
     /// card under the player after it would make a second thought cost another two clicks.
-    private void DetailFavoriteButton_Click(object sender, RoutedEventArgs e)
+    private async void DetailFavoriteButton_Click(object sender, RoutedEventArgs e)
     {
         if (_detailCard is null) return;
-        ToggleFavorite(_detailCard.IndividualId);
-        _detailIsFavorite = !_detailIsFavorite;
+        var id = _detailCard.IndividualId;
+        if (_commitState is null) ToggleFavorite(id);
+        else
+        {
+            DetailFavoriteButton.IsEnabled = false;
+            var committed = await CommitMutationAsync(next =>
+            {
+                var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
+                    ?? throw new InvalidOperationException("Этот покемон больше не найден.");
+                individual.IsFavorite = !individual.IsFavorite;
+            });
+            DetailFavoriteButton.IsEnabled = true;
+            if (!committed) return;
+            Refresh();
+        }
+        _detailIsFavorite = _appState.Collection.Individuals.First(i => i.Id == id).IsFavorite;
         ApplyDetailFavoriteVisuals();
     }
 
@@ -669,7 +895,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// override for the open individual. Only a REVEALED stage can be picked — never a future
     /// one, which is the spoiler boundary the model enforces. e.Handled keeps the click from
     /// bubbling to the backdrop and dismissing the overlay.
-    private void DetailEvolutionStage_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private async void DetailEvolutionStage_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         e.Handled = true;
         if (_detailCard is null) return;
@@ -680,7 +906,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         // Clicking the already-displayed stage resets to the real current stage instead of
         // re-picking the same one — the click is a toggle, not a one-way pin.
-        _appState.SetDisplayStage(individual, stage.IsDisplayed ? null : stage.StageIndex);
+        if (_commitState is null) _appState.SetDisplayStage(individual, stage.IsDisplayed ? null : stage.StageIndex);
+        else if (!await CommitMutationAsync(next =>
+        {
+            var current = next.Individuals.FirstOrDefault(i => i.Id == individual.Id)
+                ?? throw new InvalidOperationException("Этот покемон больше не найден.");
+            if (stage.StageIndex > (int)current.CurrentStage ||
+                current.CurrentSpeciesId > 0 && stage.StageIndex >= current.ReachedSpeciesIds.Count)
+                throw new InvalidOperationException("Эта форма ещё не открыта.");
+            current.DisplayStageOverride = stage.IsDisplayed ? null : stage.StageIndex;
+        })) return;
 
         // Nudges the desktop pet's sprite immediately when this is the active individual.
         if (individual.Id == _appState.Collection.ActiveIndividualId) _onStateChanged();
@@ -696,11 +931,28 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// Live rename. Does NOT call _onStateChanged — the overlay has nothing to re-fetch; the
     /// periodic autosave persists it. The grid behind picks the new name up on the next tick,
     /// because Nickname is part of its rebuild signature.
-    private void DetailNicknameBox_TextChanged(object sender, TextChangedEventArgs e)
+    private async void DetailNicknameBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (_isLoadingDetailNickname || _detailCard is null) return;
-
-        _viewModel.SetNickname(_detailCard.IndividualId, DetailNicknameBox.Text);
+        var id = _detailCard.IndividualId;
+        var nicknameText = DetailNicknameBox.Text;
+        if (_commitState is null) _viewModel.SetNickname(id, nicknameText);
+        else if (!await CommitMutationAsync(next =>
+        {
+            var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
+                ?? throw new InvalidOperationException("Этот покемон больше не найден.");
+            individual.Nickname = nicknameText;
+        }))
+        {
+            if (_detailCard?.IndividualId == id)
+            {
+                _isLoadingDetailNickname = true;
+                DetailNicknameBox.Text = LiveNickname(id) ?? string.Empty;
+                _isLoadingDetailNickname = false;
+            }
+            return;
+        }
+        if (_detailCard?.IndividualId != id) return;
 
         // Re-read from the model rather than from the box: the setter trims and clamps, so a
         // whitespace-only entry must show as "back to the species name", not as a blank title.
@@ -719,15 +971,29 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     /// Both of these close: they change which cards exist (release) or which one is marked
     /// active (select), so the snapshot the overlay is rendering is stale the moment they run.
-    private void DetailSelectButton_Click(object sender, RoutedEventArgs e)
+    private async void DetailSelectButton_Click(object sender, RoutedEventArgs e)
     {
         if (_detailCard is null) return;
         var id = _detailCard.IndividualId;
+        if (_commitState is null) SelectIndividual(id);
+        else
+        {
+            DetailSelectButton.IsEnabled = false;
+            var committed = await CommitMutationAsync(next =>
+            {
+                if (!next.Individuals.Any(i => i.Id == id)) throw new InvalidOperationException("Этот покемон больше не найден.");
+                next.ActiveIndividualId = id;
+                if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
+                care.LastInteractionUtc = DateTimeOffset.UtcNow;
+            });
+            if (!committed) { DetailSelectButton.IsEnabled = true; return; }
+            _onStateChanged();
+            Refresh();
+        }
         HideDetail();
-        SelectIndividual(id);
     }
 
-    private void DetailReleaseButton_Click(object sender, RoutedEventArgs e)
+    private async void DetailReleaseButton_Click(object sender, RoutedEventArgs e)
     {
         if (_detailCard is null) return;
 
@@ -745,8 +1011,42 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (!confirmed) return;
 
         var id = _detailCard.IndividualId;
+        if (_commitState is null) ReleaseIndividual(id);
+        else
+        {
+            DetailReleaseButton.IsEnabled = false;
+            var committed = await CommitMutationAsync(next =>
+            {
+                if (ExpeditionService.BusyIndividualIds(next).Contains(id))
+                    throw new InvalidOperationException("Покемон занят в походе или питомнике.");
+                var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
+                    ?? throw new InvalidOperationException("Этот покемон больше не найден.");
+                next.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+                next.DiscoveredSpeciesIds.Add(individual.SpeciesId);
+                next.Individuals.Remove(individual);
+                next.CareStates.Remove(id);
+                if (next.ActiveIndividualId == id) next.ActiveIndividualId = next.Individuals.FirstOrDefault()?.Id;
+            });
+            if (!committed) { DetailReleaseButton.IsEnabled = true; return; }
+            _onStateChanged();
+            Refresh();
+        }
         HideDetail();
-        ReleaseIndividual(id);
+    }
+
+    private async Task<bool> CommitMutationAsync(Action<SaveData> update)
+    {
+        try
+        {
+            await _commitState!(update);
+            DetailErrorText.Text = string.Empty;
+            return true;
+        }
+        catch (Exception error)
+        {
+            DetailErrorText.Text = error.Message;
+            return false;
+        }
     }
 
     private void SelectIndividual(Guid id)
@@ -818,6 +1118,22 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private static string FormatCaughtDate(DateTimeOffset caughtAtUtc) =>
         caughtAtUtc.ToLocalTime().ToString("dd.MM.yyyy", CultureInfo.CurrentCulture);
+
+    private static string TraitLabel(string? id) => id switch
+    {
+        "gatherer" => "Собиратель",
+        "treasure-hunter" => "Искатель сокровищ",
+        "tracker" => "Следопыт",
+        "finder" => "Находчивый",
+        "mentor" => "Наставник",
+        "collector" => "Коллекционер",
+        "relic-finder" => "Искатель реликвий",
+        "terrain-expert" => "Знаток местности",
+        "fast-grower" => "Быстрорастущий",
+        "rarity-expert" => "Знаток редкостей",
+        "caring-parent" => "Заботливый родитель",
+        _ => id ?? string.Empty
+    };
 
 }
 

@@ -64,12 +64,20 @@ public static class TypeDisplay
     public static Brush GetBrush(string apiTypeName) =>
         Brushes.TryGetValue(apiTypeName ?? string.Empty, out var brush) ? brush : UnknownBrush;
 
-    /// "electric" -> "Electric". PokeAPI's type names are single lowercase words, so this is
-    /// just capitalization — kept as a method so the one-word assumption has a place to change.
+    /// Canonical API ids stay in data; labels match the Russian Pokédex controls.
     public static string GetLabel(string apiTypeName)
     {
         if (string.IsNullOrWhiteSpace(apiTypeName)) return string.Empty;
-        return char.ToUpperInvariant(apiTypeName[0]) + apiTypeName[1..].ToLowerInvariant();
+        return apiTypeName.ToLowerInvariant() switch
+        {
+            "normal" => "Нормальный", "fire" => "Огонь", "water" => "Вода",
+            "electric" => "Электро", "grass" => "Трава", "ice" => "Лёд",
+            "fighting" => "Боевой", "poison" => "Яд", "ground" => "Земля",
+            "flying" => "Летающий", "psychic" => "Психический", "bug" => "Жук",
+            "rock" => "Камень", "ghost" => "Призрак", "dragon" => "Дракон",
+            "dark" => "Тьма", "steel" => "Сталь", "fairy" => "Фея",
+            _ => char.ToUpperInvariant(apiTypeName[0]) + apiTypeName[1..].ToLowerInvariant()
+        };
     }
 
     public static TypeBadge ToBadge(string apiTypeName) =>

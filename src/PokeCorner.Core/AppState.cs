@@ -29,6 +29,7 @@ public sealed class AppState
     public Guid? RunningExpeditionId => HasRunningExpedition ? _metadata!.Expedition!.Id : null;
     public DateTimeOffset? ExpeditionReadyAtUtc => _metadata?.Expedition?.Status == "running" ? _metadata.Expedition.ReadyAtUtc : null;
     public IReadOnlySet<Guid> BusyIndividualIds => _metadata is null ? new HashSet<Guid>() : ExpeditionService.BusyIndividualIds(_metadata);
+    public IReadOnlySet<int> DiscoveredSpeciesIds => _metadata?.DiscoveredSpeciesIds ?? new HashSet<int>();
 
     public void QueueActivityEncounter(Guid operationId)
     {

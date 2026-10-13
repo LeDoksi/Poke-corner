@@ -571,10 +571,9 @@ public class ThemeRenderingTests
     ///
     /// The ACTIVE pet now leads the grid ahead of the favorites (the default-sort change), so
     /// this arranges a separate active individual and asserts the pin's effect on the two
-    /// behind it — where the pin is the only thing that can explain the order, since the
-    /// pinned one has the HIGHER dex number.
+    /// behind it. Number order stays stable while the pinned card keeps its gold badge.
     [Fact]
-    public void CollectionView_FavoriteIndividual_SortsAboveThePlainOnesAndRendersAGoldStar() =>
+    public void CollectionView_FavoriteIndividual_KeepsNumberOrderAndRendersAGoldStar() =>
         WpfTestHost.Run(() =>
         {
             var appState = new AppState();
@@ -600,13 +599,13 @@ public class ThemeRenderingTests
             Assert.Equal(active.Id, cards[0].IndividualId);
             Assert.True(cards[0].IsActive);
 
-            Assert.Equal(pinned.Id, cards[1].IndividualId);
-            Assert.True(cards[1].IsFavorite);
-            Assert.Equal(Visibility.Visible, cards[1].FavoriteBadgeVisibility);
+            Assert.Equal(plain.Id, cards[1].IndividualId);
+            Assert.False(cards[1].IsFavorite);
+            Assert.Equal(Visibility.Collapsed, cards[1].FavoriteBadgeVisibility);
 
-            Assert.Equal(plain.Id, cards[2].IndividualId);
-            Assert.False(cards[2].IsFavorite);
-            Assert.Equal(Visibility.Collapsed, cards[2].FavoriteBadgeVisibility);
+            Assert.Equal(pinned.Id, cards[2].IndividualId);
+            Assert.True(cards[2].IsFavorite);
+            Assert.Equal(Visibility.Visible, cards[2].FavoriteBadgeVisibility);
         });
 
     // ================= search / pagination / nicknames (this wave) =================
@@ -1389,7 +1388,7 @@ public class ThemeRenderingTests
             var badges = (System.Windows.Controls.ItemsControl)view.FindName("ActiveTypeBadges")!;
             var labels = Descendants<TextBlock>(badges).Select(t => t.Text).ToList();
 
-            Assert.Contains("Fire", labels);
+            Assert.Contains("Огонь", labels);
             Assert.All(Descendants<TextBlock>(badges), t => Assert.False(string.IsNullOrWhiteSpace(t.Text)));
         });
 

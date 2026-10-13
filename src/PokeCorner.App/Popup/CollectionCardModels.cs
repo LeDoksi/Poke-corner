@@ -19,6 +19,13 @@ namespace PokeCorner.App.Popup;
 /// and — when clicked — as the contents of the detail overlay.
 public sealed class PokedexCard
 {
+    public int Level { get; init; } = 1;
+    public bool IsBusy { get; init; }
+    public string? FirstTraitId { get; init; }
+    public string? SecondTraitId { get; init; }
+    public string? DescriptionRu { get; init; }
+    public string LevelText => $"Ур. {Level}";
+    public string AvailabilityText => IsBusy ? "Занят" : IsActive ? "На столе" : "Свободен";
     public required Guid IndividualId { get; init; }
 
     /// The individual's CURRENT evolution stage — what the sprite, dex number and name all
@@ -86,7 +93,7 @@ public sealed class PokedexCard
     public Visibility ShinyVisibility => IsShiny ? Visibility.Visible : Visibility.Collapsed;
     public Visibility ActiveBadgeVisibility => IsActive ? Visibility.Visible : Visibility.Collapsed;
 
-    /// Pinned-to-the-top flag.
+    /// Marks an individual as a favorite in its card and details.
     public required bool IsFavorite { get; init; }
 
     public Visibility FavoriteBadgeVisibility => IsFavorite ? Visibility.Visible : Visibility.Collapsed;

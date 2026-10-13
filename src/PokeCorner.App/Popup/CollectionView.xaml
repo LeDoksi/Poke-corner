@@ -1,6 +1,7 @@
 <UserControl x:Class="PokeCorner.App.Popup.CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             PreviewKeyDown="CollectionView_PreviewKeyDown">
     <!-- Two layers: the tabs, and the Pokédex detail card that overlays them (an in-view
          overlay rather than a second OS window). -->
     <Grid>
@@ -178,13 +179,13 @@
         <!-- ================================= POKÉDEX =================================
              The "everything I own" screen: one card per owned individual, plus the incubating
              eggs. Clicking a card opens the detail overlay with the details and the actions. -->
-        <TabItem Header="Pokédex">
+         <TabItem Header="Покедекс">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
                     <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
                         <Grid>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Pokédex" Style="{StaticResource ScreenTitleTextStyle}" />
+                                 <TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}" />
                                 <TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}" Margin="0,2,0,0" />
                             </StackPanel>
                             <Grid Width="46" Height="46" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -197,15 +198,100 @@
                         </Grid>
                     </Border>
 
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Button x:Name="IndividualsModeButton" Grid.Column="0" Content="Мои покемоны"
+                                Click="IndividualsMode_Click" Margin="0,0,4,0" />
+                        <Button x:Name="SpeciesModeButton" Grid.Column="1" Content="Все виды"
+                                Click="SpeciesMode_Click" Margin="4,0,0,0" Style="{StaticResource SecondaryButtonStyle}" />
+                    </Grid>
+
+                    <StackPanel x:Name="SpeciesPane" Visibility="Collapsed">
+                        <TextBox x:Name="SpeciesSearchBox" Style="{StaticResource ThemedTextBoxStyle}" MaxLength="40"
+                                 TextChanged="SpeciesFilters_Changed" Margin="0,0,0,8"
+                                 AutomationProperties.Name="Поиск видов по имени, номеру или местности"
+                                 ToolTip="Имя открытого вида, номер или открытая подсказка местности" />
+                        <WrapPanel Margin="0,0,0,8">
+                            <ComboBox x:Name="SpeciesSortCombo" Width="155" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
+                                      AutomationProperties.Name="Сортировка видов" SelectedIndex="0">
+                                <ComboBoxItem Content="По номеру"/><ComboBoxItem Content="По дате"/><ComboBoxItem Content="По типу"/>
+                            </ComboBox>
+                            <ComboBox x:Name="SpeciesTypeCombo" Width="145" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
+                                      AutomationProperties.Name="Тип вида" SelectedIndex="0">
+                                <ComboBoxItem Content="Тип: любой"/>
+                            </ComboBox>
+                            <ComboBox x:Name="SpeciesRarityCombo" Width="145" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
+                                      AutomationProperties.Name="Редкость вида" SelectedIndex="0">
+                                <ComboBoxItem Content="Редкость: любая"/>
+                                <ComboBoxItem Content="Обычный" Tag="Common"/><ComboBoxItem Content="Необычный" Tag="Uncommon"/>
+                                <ComboBoxItem Content="Редкий" Tag="Rare"/><ComboBoxItem Content="Легендарный" Tag="Legendary"/>
+                            </ComboBox>
+                            <CheckBox x:Name="SpeciesCanEvolve" Content="Есть куда расти" VerticalAlignment="Center"
+                                      Checked="SpeciesFilters_Changed" Unchecked="SpeciesFilters_Changed"/>
+                        </WrapPanel>
+                        <TextBlock x:Name="SpeciesCountText" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,7"/>
+                        <ListBox x:Name="SpeciesGrid" SelectionChanged="SpeciesGrid_SelectionChanged"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 AutomationProperties.Name="Виды Покедекса">
+                            <ListBox.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource CardStyle}" Width="158" Margin="3" Padding="9"
+                                            AutomationProperties.Name="{Binding AccessibleName}">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Number}" Style="{StaticResource MetaTextStyle}"/>
+                                            <Grid Height="76" Margin="0,3">
+                                                <Image Source="{Binding SpriteImage}" Width="72" Height="72"
+                                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                       Visibility="{Binding RevealedVisibility}"/>
+                                                <Border Width="72" Height="72" Background="{StaticResource MutedTextBrush}"
+                                                        Visibility="{Binding SilhouetteVisibility}" Opacity="0.7">
+                                                    <Border.OpacityMask><ImageBrush ImageSource="{Binding SpriteImage}" Stretch="Uniform"/></Border.OpacityMask>
+                                                </Border>
+                                                <TextBlock Text="?" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                           Visibility="{Binding UnknownVisibility}"/>
+                                            </Grid>
+                                            <TextBlock Text="{Binding NameText}" FontWeight="Bold" TextWrapping="Wrap"/>
+                                            <TextBlock Text="{Binding SubText}" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel x:Name="SpeciesPagination" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
+                            <Button x:Name="SpeciesPrevButton" Content="Назад" Click="SpeciesPrev_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                            <TextBlock x:Name="SpeciesPageText" VerticalAlignment="Center" Margin="10,0"/>
+                            <Button x:Name="SpeciesNextButton" Content="Вперёд" Click="SpeciesNext_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                        </StackPanel>
+                        <Border x:Name="SpeciesDetail" Style="{StaticResource CardStyle}" Visibility="Collapsed" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="SpeciesDetailName" Style="{StaticResource SectionHeaderTextStyle}"/>
+                                <TextBlock x:Name="SpeciesDetailDescription" TextWrapping="Wrap" Margin="0,4,0,8"/>
+                                <TextBlock x:Name="SpeciesDetailTypes" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,8"/>
+                                <TextBlock x:Name="SpeciesDetailOwnedLabel" FontWeight="Bold"/>
+                                <ItemsControl x:Name="SpeciesOwnedList">
+                                    <ItemsControl.ItemTemplate><DataTemplate>
+                                        <Button Content="{Binding Label}" Tag="{Binding IndividualId}" Click="SpeciesOwned_Click"
+                                                Style="{StaticResource SecondaryButtonStyle}" Margin="0,4,0,0" HorizontalContentAlignment="Left"
+                                                AutomationProperties.Name="{Binding Label}"/>
+                                    </DataTemplate></ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel x:Name="IndividualsPane">
+
                     <!-- Search. Filters on the SPECIES name and the player's own nickname, so
                          "sparky" finds a nicknamed Pikachu and "pika" finds it too. ANDs with
                          the rarity pills below, and resets the page to 1 on every keystroke —
                          staying on page 4 of a two-page result would look like an empty grid. -->
-                    <TextBlock Text="Поиск" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <TextBlock Text="Моя маленькая команда" Style="{StaticResource SectionHeaderTextStyle}" />
                     <TextBox x:Name="PokedexSearchBox" Style="{StaticResource ThemedTextBoxStyle}"
                              Margin="2,0,2,10" MaxLength="30"
                              TextChanged="PokedexSearchBox_TextChanged"
-                             ToolTip="Фильтр по имени вида или по прозвищу" />
+                              ToolTip="Фильтр по имени вида или по прозвищу"
+                              AutomationProperties.Name="Поиск своих покемонов" />
 
                     <!-- Rarity filter. RadioButtons sharing a GroupName give exactly-one-active
                          for free; each carries its tier's theme brush in Tag, which FilterPillStyle
@@ -242,19 +328,21 @@
                          set. FilterPillCheckBoxStyle mirrors FilterPillStyle's look. -->
                     <WrapPanel Margin="2,0,0,4">
                         <CheckBox x:Name="EvolutionFilterToggle" Style="{StaticResource FilterPillCheckBoxStyle}"
-                                  Content="Не завершившие эволюцию" Tag="{StaticResource PrimaryTextBrush}"
+                                   Content="Есть куда расти" Tag="{StaticResource PrimaryTextBrush}"
                                   Checked="EvolutionFilter_Changed" Unchecked="EvolutionFilter_Changed"
                                   ToolTip="Показать только тех, кто ещё не достиг финальной стадии" />
+                         <CheckBox x:Name="FavoritesFilterToggle" Content="Избранные" Margin="10,0,0,0"
+                                   Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
+                         <CheckBox x:Name="ShinyFilterToggle" Content="Shiny" Margin="10,0,0,0"
+                                   Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
                     </WrapPanel>
 
-                    <!-- Sort choice. Default leaves GetEntries' own active/favorites/dex banding
-                         alone; the other two options re-order the (already filtered) list — see
-                         CollectionViewModel.ApplySort. -->
+                    <!-- Number, type, or catch-date order applies after owned-individual filters. -->
                     <TextBlock Text="Сортировка" Style="{StaticResource SectionHeaderTextStyle}" />
                     <ComboBox x:Name="PokedexSortCombo" Margin="2,0,2,10" HorizontalAlignment="Left" MinWidth="170"
                               SelectionChanged="PokedexSortCombo_SelectionChanged">
-                        <ComboBoxItem Content="По умолчанию" IsSelected="True" />
-                        <ComboBoxItem Content="По алфавиту" />
+                         <ComboBoxItem Content="По номеру" IsSelected="True" />
+                         <ComboBoxItem Content="По типу" />
                         <ComboBoxItem Content="По дате поимки" />
                     </ComboBox>
 
@@ -277,9 +365,13 @@
                                      mouse-DOWN, so a card opening on Up split one physical click across two visual trees —
                                      the down-stroke dismissed the overlay and the up-stroke opened whatever card lay under
                                      the pointer. Open and dismiss fire on the same event, so the overlay eats the whole click. -->
-                                <Border Style="{StaticResource CardStyle}" Width="112" Margin="5" Padding="9"
-                                        Cursor="Hand" Tag="{Binding IndividualId}"
+                                 <Border Style="{StaticResource CardStyle}" Width="158" Margin="5" Padding="9"
+                                         Cursor="Hand" Tag="{Binding IndividualId}" Focusable="True"
                                         MouseLeftButtonDown="PokedexCard_Click"
+                                         KeyDown="PokedexCard_KeyDown"
+                                         GotKeyboardFocus="PokedexCard_GotKeyboardFocus"
+                                         LostKeyboardFocus="PokedexCard_LostKeyboardFocus"
+                                         AutomationProperties.Name="{Binding DisplayName}"
                                         ToolTip="Открыть карточку — характер, дата поимки и действия">
                                     <StackPanel>
                                         <Grid Margin="0,0,0,6">
@@ -342,11 +434,13 @@
                                              exactly as it did before. -->
                                         <StackPanel Margin="0,0,0,7">
                                             <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold" FontSize="12"
-                                                       TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" />
+                                                        TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" />
                                             <TextBlock Text="{Binding SpeciesSubtitle}" Style="{StaticResource CaptionTextStyle}"
                                                        Visibility="{Binding SpeciesSubtitleVisibility}"
-                                                       TextAlignment="Center" HorizontalAlignment="Center"
+                                                        TextAlignment="Left" HorizontalAlignment="Left"
                                                        Margin="0,1,0,0" />
+                                             <TextBlock Text="{Binding LevelText}" Style="{StaticResource CaptionTextStyle}"/>
+                                             <TextBlock Text="{Binding AvailabilityText}" Style="{StaticResource CaptionTextStyle}"/>
                                         </StackPanel>
 
                                         <Border Style="{StaticResource PillStyle}" HorizontalAlignment="Center"
@@ -359,11 +453,8 @@
                                             </StackPanel>
                                         </Border>
 
-                                        <!-- Types, under the rarity tag. Centred and wrapping:
-                                             a two-type species stacks its second badge on a
-                                             second row rather than clipping it at the 112px
-                                             card edge. Collapses when the catalog in use has
-                                             no type data, so the card doesn't grow a gap. -->
+                                        <!-- Types wrap within each owned-individual card and
+                                             collapse when the catalog has no type data. -->
                                         <ItemsControl Margin="0,5,0,0" HorizontalAlignment="Center"
                                                       Visibility="{Binding TypeBadgesVisibility}"
                                                       ItemsSource="{Binding TypeBadges}"
@@ -391,6 +482,7 @@
                                 Click="PokedexNextPage_Click" />
                     </StackPanel>
 
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </TabItem>
@@ -415,6 +507,7 @@
                  edges by its own margin, clipping the very buttons this is here to protect. -->
             <Grid x:Name="DetailOverlayArea" Margin="0,18">
             <Border x:Name="DetailCard" Style="{StaticResource CardStyle}" Padding="18,16" Width="360"
+                    MaxWidth="{Binding ActualWidth, ElementName=DetailOverlayArea}"
                     MaxHeight="{Binding ActualHeight, ElementName=DetailOverlayArea}"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
@@ -427,27 +520,30 @@
                      anything that reflows the content above, and it is reachable without scrolling. -->
                 <DockPanel LastChildFill="True">
                     <Grid DockPanel.Dock="Bottom" Margin="0,12,0,0">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="DetailErrorText" Grid.ColumnSpan="3" Foreground="{StaticResource AccentRedBrush}"
+                                   TextWrapping="Wrap" Margin="0,0,0,5" AutomationProperties.LiveSetting="Assertive"/>
 
                         <!-- The star pin, moved here off the roster rows. One Path with both Fill
                              and Stroke bound covers both states: gold-on-gold when pinned, hollow
                              with a muted outline when not. -->
-                        <Button x:Name="DetailFavoriteButton" Grid.Column="0" Style="{StaticResource FavoriteToggleStyle}"
+                        <Button x:Name="DetailFavoriteButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource FavoriteToggleStyle}"
                                 Click="DetailFavoriteButton_Click" VerticalAlignment="Center" Margin="0,0,8,0">
                             <Path x:Name="DetailFavoriteStar" Width="17" Height="17" Stretch="Uniform"
                                   StrokeThickness="1.6" StrokeLineJoin="Round"
                                   Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
                         </Button>
 
-                        <Button x:Name="DetailSelectButton" Grid.Column="1" Content="Выбрать" Click="DetailSelectButton_Click"
+                        <Button x:Name="DetailSelectButton" Grid.Row="1" Grid.Column="1" Content="Выбрать" Click="DetailSelectButton_Click"
                                 Padding="12,7" Margin="0,0,8,0"
                                 ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
 
-                        <Button x:Name="DetailReleaseButton" Grid.Column="2" Content="Отпустить" Click="DetailReleaseButton_Click"
+                        <Button x:Name="DetailReleaseButton" Grid.Row="1" Grid.Column="2" Content="Отпустить" Click="DetailReleaseButton_Click"
                                 Padding="12,7" Style="{StaticResource SecondaryButtonStyle}"
                                 ToolTip="Насовсем удалить этого покемона из коллекции" />
                     </Grid>
@@ -549,6 +645,9 @@
                                 <TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource MetaTextStyle}"
                                            HorizontalAlignment="Right" FontWeight="SemiBold" />
                             </Grid>
+                            <TextBlock x:Name="DetailLevelText" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,4"/>
+                            <TextBlock x:Name="DetailBusyText" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,4"/>
+                            <TextBlock x:Name="DetailTraitsText" Style="{StaticResource MetaTextStyle}" TextWrapping="Wrap" Margin="0,0,0,8"/>
                             <!-- The readout carries the percentage OR "Не эволюционирует" / "Финальная форма":
                                  a bare bar can't tell "99% there" from "no further evolution". -->
                             <Grid Margin="0,0,0,4">
@@ -565,6 +664,13 @@
                             <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource SlimProgressBarStyle}"
                                          Minimum="0" Maximum="1"
                                          ToolTip="Прогресс до следующей эволюции этого покемона" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource WellStyle}" Padding="13,10" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="О виде" Style="{StaticResource SectionHeaderTextStyle}"/>
+                            <TextBlock x:Name="DetailDescriptionText" TextWrapping="Wrap" Margin="0,4,0,0"/>
                         </StackPanel>
                     </Border>
 

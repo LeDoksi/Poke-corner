@@ -1,4 +1,5 @@
 using PokeCorner.Core.Domain;
+using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.App.Popup;
 
@@ -32,7 +33,14 @@ public sealed record CollectionEntry(
     /// (CurrentStage is 0-based, so the final stage is ChainLength - 1). Drives the Pokédex's
     /// "Не завершившие эволюцию" filter — a single-stage species (ChainLength == 1) is always
     /// already at its final stage, so it never matches.
-    bool HasEvolutionsRemaining);
+    bool HasEvolutionsRemaining)
+{
+    public int Level { get; init; } = 1;
+    public bool IsBusy { get; init; }
+    public string? FirstTraitId { get; init; }
+    public string? SecondTraitId { get; init; }
+    public string? DescriptionRu { get; init; }
+}
 
 /// One node of the evolution-chain strip in the detail view.
 ///
@@ -59,6 +67,17 @@ public sealed record EvolutionStagePreview(
 
 public sealed record PendingEggEntry(Guid EggId, RarityTier Tier, double HatchFraction, bool IsReady);
 
+public sealed record OwnedIndividualEntry(Guid IndividualId, string? Nickname, int Level,
+    bool IsShiny, bool IsBusy, bool IsActive, DateTimeOffset CaughtAtUtc);
+
+public sealed record PokedexSpeciesEntry(int SpeciesId, string? DisplayName, string? DescriptionRu,
+    IReadOnlyList<string> Types, string? Rarity, string RouteHint, bool IsDiscovered,
+    bool HasSilhouette, bool HasEvolutionsRemaining, IReadOnlyList<OwnedIndividualEntry> OwnedIndividuals)
+{
+    public string Number => $"#{SpeciesId:D4}";
+    public string AccessibleName => IsDiscovered ? $"{Number} {DisplayName}" : $"{Number} · {RouteHint}";
+}
+
 public sealed class CollectionViewModel
 {
     private readonly PokemonCollection _collection;
@@ -67,8 +86,15 @@ public sealed class CollectionViewModel
     private readonly IReadOnlyList<SpeciesEvolutionChain> _chains;
     private readonly IReadOnlyList<PendingEgg> _pendingEggs;
     private readonly Func<IReadOnlySet<Guid>> _busyIndividualIds;
+    private readonly IReadOnlyList<CatalogSpecies> _species;
+    private readonly IReadOnlyDictionary<int, CatalogSpecies> _speciesById;
+    private readonly Func<IReadOnlySet<int>> _discoveredSpeciesIds;
+    private readonly IReadOnlyDictionary<int, string> _routeHints;
+    private readonly Func<PokemonIndividual, int> _levelFor;
 
-    public CollectionViewModel(PokemonCollection collection, IDictionary<Guid, CareState> careStates, CareModeService careModeService, IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlyList<PendingEgg> pendingEggs, Func<IReadOnlySet<Guid>>? busyIndividualIds = null)
+    public CollectionViewModel(PokemonCollection collection, IDictionary<Guid, CareState> careStates, CareModeService careModeService, IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlyList<PendingEgg> pendingEggs, Func<IReadOnlySet<Guid>>? busyIndividualIds = null,
+        IReadOnlyList<CatalogSpecies>? species = null, Func<IReadOnlySet<int>>? discoveredSpeciesIds = null,
+        IReadOnlyDictionary<int, string>? routeHints = null, Func<PokemonIndividual, int>? levelFor = null)
     {
         _collection = collection;
         _careStates = careStates;
@@ -76,6 +102,80 @@ public sealed class CollectionViewModel
         _chains = chains;
         _pendingEggs = pendingEggs;
         _busyIndividualIds = busyIndividualIds ?? (() => new HashSet<Guid>());
+        _species = species ?? [];
+        _speciesById = _species.ToDictionary(s => s.Id);
+        _discoveredSpeciesIds = discoveredSpeciesIds ?? (() => new HashSet<int>());
+        _routeHints = routeHints ?? new Dictionary<int, string>();
+        _levelFor = levelFor ?? (_ => 1);
+    }
+
+    public CollectionEntry? GetEntry(Guid id, DateTimeOffset nowUtc) =>
+        GetEntries(nowUtc).FirstOrDefault(entry => entry.IndividualId == id);
+
+    public Guid? ResolveDirectIndividual(int speciesId)
+    {
+        var ids = _collection.Individuals.Where(i => ResolveCurrentSpeciesId(i) == speciesId)
+            .Select(i => i.Id).Take(2).ToArray();
+        return ids.Length == 1 ? ids[0] : null;
+    }
+
+    public IReadOnlyList<PokedexSpeciesEntry> GetSpeciesEntries()
+    {
+        var discovered = _discoveredSpeciesIds().ToHashSet();
+        foreach (var individual in _collection.Individuals)
+        {
+            discovered.Add(individual.SpeciesId);
+            discovered.UnionWith(individual.ReachedSpeciesIds);
+            discovered.Add(ResolveCurrentSpeciesId(individual));
+        }
+        var busy = _busyIndividualIds();
+        var ownedBySpecies = _collection.Individuals.GroupBy(ResolveCurrentSpeciesId)
+            .ToDictionary(group => group.Key, group => group.ToArray());
+        return _species.OrderBy(species => species.Id).Select(species =>
+        {
+            var open = discovered.Contains(species.Id);
+            var current = ownedBySpecies.GetValueOrDefault(species.Id) ?? [];
+            var owned = current
+                .Select(i => new OwnedIndividualEntry(i.Id, i.Nickname, _levelFor(i), i.IsShiny,
+                    busy.Contains(i.Id), i.Id == _collection.ActiveIndividualId, i.CaughtAtUtc)).ToList();
+            return new PokedexSpeciesEntry(species.Id,
+                open ? species.DisplayName : null,
+                open ? species.DescriptionRu : null,
+                open ? species.Types : [],
+                open ? species.Rarity : null,
+                _routeHints.GetValueOrDefault(species.Id) ?? "Местность пока неизвестна",
+                open, species.NormalAvailable,
+                open && current.Any(i => (int)i.CurrentStage < i.ChainLength - 1), owned);
+        }).ToList();
+    }
+
+    public static bool MatchesSpeciesSearch(PokedexSpeciesEntry entry, string? query)
+    {
+        if (string.IsNullOrWhiteSpace(query)) return true;
+        var needle = query.Trim();
+        return entry.Number.Contains(needle, StringComparison.OrdinalIgnoreCase)
+            || entry.SpeciesId.ToString().Contains(needle, StringComparison.OrdinalIgnoreCase)
+            || entry.RouteHint.Contains(needle, StringComparison.OrdinalIgnoreCase)
+            || (entry.DisplayName?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false);
+    }
+
+    public static IReadOnlyList<PokedexSpeciesEntry> FilterSpecies(IReadOnlyList<PokedexSpeciesEntry> entries,
+        string? search, string? type, string? rarity, bool canEvolve, SpeciesSortOrder sort = SpeciesSortOrder.Number)
+    {
+        var filtered = entries.Where(e => MatchesSpeciesSearch(e, search))
+            .Where(e => type is null || e.IsDiscovered && e.Types.Contains(type, StringComparer.OrdinalIgnoreCase))
+            .Where(e => rarity is null || e.IsDiscovered && string.Equals(e.Rarity, rarity, StringComparison.OrdinalIgnoreCase))
+            .Where(e => !canEvolve || e.IsDiscovered && e.HasEvolutionsRemaining);
+        return sort switch
+        {
+            SpeciesSortOrder.Type => filtered.OrderBy(e => !e.IsDiscovered)
+                .ThenBy(e => e.Types.FirstOrDefault(), StringComparer.OrdinalIgnoreCase).ThenBy(e => e.SpeciesId).ToList(),
+            SpeciesSortOrder.CatchDate => filtered.OrderBy(e => !e.IsDiscovered)
+                .ThenBy(e => e.OwnedIndividuals.Count == 0)
+                .ThenByDescending(e => e.OwnedIndividuals.Select(i => i.CaughtAtUtc).DefaultIfEmpty().Max())
+                .ThenBy(e => e.SpeciesId).ToList(),
+            _ => filtered.OrderBy(e => e.SpeciesId).ToList()
+        };
     }
 
     /// The grid's default order, in three bands: the individual on the desktop, then the
@@ -97,19 +197,26 @@ public sealed class CollectionViewModel
                 individual.Id,
                 individual.SpeciesId,
                 displaySpeciesId,
-                _chains.ResolveSpeciesName(displaySpeciesId),
+                _speciesById.GetValueOrDefault(displaySpeciesId)?.DisplayName ?? _chains.ResolveSpeciesName(displaySpeciesId),
                 individual.Nickname,
                 individual.IsShiny,
                 IsActive: individual.Id == _collection.ActiveIndividualId,
-                Rarity: RarityForChain(individual.EvolutionChainId),
+                Rarity: RarityForSpecies(displaySpeciesId, individual.EvolutionChainId),
                 EvolutionFraction: progress.EvolutionFraction,
                 EvolutionState: progress.EvolutionState,
                 CaughtAtUtc: individual.CaughtAtUtc,
                 Nature: individual.Nature,
                 IsFavorite: individual.IsFavorite,
-                Types: _chains.ResolveSpeciesTypes(displaySpeciesId),
+                Types: _speciesById.GetValueOrDefault(displaySpeciesId)?.Types ?? _chains.ResolveSpeciesTypes(displaySpeciesId),
                 EvolutionStages: BuildEvolutionPreview(individual),
-                HasEvolutionsRemaining: (int)individual.CurrentStage < individual.ChainLength - 1);
+                HasEvolutionsRemaining: (int)individual.CurrentStage < individual.ChainLength - 1)
+            {
+                Level = _levelFor(individual),
+                IsBusy = _busyIndividualIds().Contains(individual.Id),
+                FirstTraitId = individual.FirstTraitId,
+                SecondTraitId = individual.SecondTraitId,
+                DescriptionRu = _speciesById.GetValueOrDefault(displaySpeciesId)?.DescriptionRu
+            };
         }).ToList();
 
     /// Builds the spoiler-masked evolution strip for one individual: every stage its chain
@@ -145,8 +252,8 @@ public sealed class CollectionViewModel
             stages.Add(new EvolutionStagePreview(
                 StageIndex: index,
                 SpeciesId: speciesId,
-                SpeciesName: speciesId is null ? null : _chains.ResolveSpeciesName(speciesId.Value),
-                Types: speciesId is null ? Array.Empty<string>() : _chains.ResolveSpeciesTypes(speciesId.Value),
+                SpeciesName: speciesId is null ? null : _speciesById.GetValueOrDefault(speciesId.Value)?.DisplayName ?? _chains.ResolveSpeciesName(speciesId.Value),
+                Types: speciesId is null ? Array.Empty<string>() : _speciesById.GetValueOrDefault(speciesId.Value)?.Types ?? _chains.ResolveSpeciesTypes(speciesId.Value),
                 IsCurrent: index == reachedIndex,
                 IsDisplayed: index == displayedIndex));
         }
@@ -156,6 +263,15 @@ public sealed class CollectionViewModel
 
 
     private int ResolveDisplaySpeciesId(PokemonIndividual individual) => individual.ResolveDisplaySpeciesId(_chains);
+
+    private int ResolveCurrentSpeciesId(PokemonIndividual individual)
+    {
+        if (individual.CurrentSpeciesId > 0) return individual.CurrentSpeciesId;
+        var chain = _chains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
+        var stage = (int)individual.CurrentStage;
+        return chain is not null && stage >= 0 && stage < chain.StageSpeciesIds.Count
+            ? chain.StageSpeciesIds[stage] : individual.SpeciesId;
+    }
 
     public IReadOnlyList<PendingEggEntry> GetPendingEggEntries(DateTimeOffset nowUtc) =>
         _pendingEggs.Select(egg =>
@@ -171,6 +287,10 @@ public sealed class CollectionViewModel
         var chain = _chains.FirstOrDefault(c => c.ChainId == evolutionChainId);
         return chain is null ? RarityTier.Common : RarityClassifier.Classify(chain.CaptureRate);
     }
+
+    private RarityTier RarityForSpecies(int speciesId, int evolutionChainId) =>
+        Enum.TryParse<RarityTier>(_speciesById.GetValueOrDefault(speciesId)?.Rarity, true, out var tier)
+            ? tier : RarityForChain(evolutionChainId);
 
     public bool TrySetActive(Guid id, DateTimeOffset nowUtc)
     {
@@ -231,9 +351,13 @@ public sealed class CollectionViewModel
     {
         PokedexSortOrder.Alphabetical => entries.OrderBy(e => e.SpeciesName, StringComparer.OrdinalIgnoreCase).ToList(),
         PokedexSortOrder.CatchDate => entries.OrderByDescending(e => e.CaughtAtUtc).ToList(),
+        PokedexSortOrder.Number => entries.OrderBy(e => e.DisplaySpeciesId).ThenBy(e => e.CaughtAtUtc).ToList(),
+        PokedexSortOrder.Type => entries.OrderBy(e => e.Types.FirstOrDefault(), StringComparer.OrdinalIgnoreCase)
+            .ThenBy(e => e.DisplaySpeciesId).ToList(),
         _ => entries
     };
 }
 
 /// The Pokédex grid's sort choice — see CollectionViewModel.ApplySort.
-public enum PokedexSortOrder { Default, Alphabetical, CatchDate }
+public enum PokedexSortOrder { Default, Alphabetical, CatchDate, Number, Type }
+public enum SpeciesSortOrder { Number, CatchDate, Type }

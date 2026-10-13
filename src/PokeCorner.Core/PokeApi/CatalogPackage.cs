@@ -77,6 +77,18 @@ public sealed class CatalogPackage
         _byId.TryGetValue(speciesId, out var species) && species.Voice is not null
             ? FullPath(_root, species.Voice.Path) : null;
 
+    public IReadOnlyDictionary<int, string> GetRouteHints()
+    {
+        using var document = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(_root, "location-draft.json")));
+        var root = document.RootElement;
+        var names = root.GetProperty("routes").EnumerateArray().ToDictionary(
+            route => route.GetProperty("id").GetString()!, route => route.GetProperty("name").GetString()!);
+        return root.GetProperty("species").EnumerateArray()
+            .Where(species => species.GetProperty("locationIds").GetArrayLength() > 0)
+            .ToDictionary(species => species.GetProperty("id").GetInt32(),
+                species => names[species.GetProperty("locationIds")[0].GetString()!]);
+    }
+
     private static T Read<T>(string path)
     {
         try { return JsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions) ?? throw new InvalidDataException($"Empty catalog file: {path}"); }
