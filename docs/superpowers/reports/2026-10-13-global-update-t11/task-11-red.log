@@ -1,0 +1,4 @@
+COMMAND: rtk proxy dotnet test tests/PokeCorner.Core.Tests/PokeCorner.Core.Tests.csproj --no-restore --filter FullyQualifiedName~NurseryCoreTests --verbosity minimal
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\GlobalUpdate\nursery_coreTests.cs(72,20): error CS0246: Не удалось найти тип или имя пространства имен "NurseryRequest" (возможно, отсутствует директива using или ссылка на сборку). [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\PokeCorner.Core.Tests.csproj]
+ExitCode: 1

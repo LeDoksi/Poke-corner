@@ -1,0 +1,48 @@
+COMMAND: rtk proxy dotnet test tests/PokeCorner.Core.Tests/PokeCorner.Core.Tests.csproj --no-restore --filter FullyQualifiedName~NurseryCoreTests --verbosity minimal
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.Core.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+  Не пройден PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.RootWithBlockedNormalNextStageCannotInheritFastGrower [183 ms]
+  Сообщение об ошибке:
+   Assert.DoesNotContain() Failure: Item found in collection
+             ↓ (pos 0)
+Collection: ["fast-grower"]
+Found:      "fast-grower"
+  Трассировка стека:
+     at PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.RootWithBlockedNormalNextStageCannotInheritFastGrower() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\GlobalUpdate\nursery_coreTests.cs:line 251
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Не пройден PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.BusyNestParentCannotEvolveThroughAppState(phase: "ready") [112 ms]
+  Сообщение об ошибке:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Трассировка стека:
+     at PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.BusyNestParentCannotEvolveThroughAppState(String phase) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\GlobalUpdate\nursery_coreTests.cs:line 290
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Не пройден PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.BusyNestParentCannotEvolveThroughAppState(phase: "running") [106 ms]
+  Сообщение об ошибке:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Трассировка стека:
+     at PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.BusyNestParentCannotEvolveThroughAppState(String phase) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\GlobalUpdate\nursery_coreTests.cs:line 290
+   at InvokeStub_NurseryCoreTests.BusyNestParentCannotEvolveThroughAppState(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Не пройден PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.ShinyRootWithBlockedShinyNextStageCannotInheritFastGrower [112 ms]
+  Сообщение об ошибке:
+   Assert.NotEqual() Failure: Strings are equal
+Expected: Not "fast-grower"
+Actual:       "fast-grower"
+  Трассировка стека:
+     at PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.ShinyRootWithBlockedShinyNextStageCannotInheritFastGrower() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\GlobalUpdate\nursery_coreTests.cs:line 271
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Не пройден!: не пройдено     4, пройдено     9, пропущено     0, всего    13, длительность 1 s. - PokeCorner.Core.Tests.dll (net8.0)
+ExitCode: 1

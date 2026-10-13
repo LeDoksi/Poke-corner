@@ -1,0 +1,20 @@
+COMMAND: rtk proxy dotnet test tests/PokeCorner.Core.Tests/PokeCorner.Core.Tests.csproj --no-restore --filter FullyQualifiedName~HatchReplayReturnsFrozenChildAfterLegalEvolutionAndRelease --verbosity minimal
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.Core.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\bin\Debug\net8.0\PokeCorner.Core.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+  Не пройден PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.HatchReplayReturnsFrozenChildAfterLegalEvolutionAndRelease [192 ms]
+  Сообщение об ошибке:
+   Assert.Equal() Failure: Values differ
+Expected: 714
+Actual:   715
+  Трассировка стека:
+     at PokeCorner.Core.Tests.GlobalUpdate.NurseryCoreTests.HatchReplayReturnsFrozenChildAfterLegalEvolutionAndRelease() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\GlobalUpdate\nursery_coreTests.cs:line 291
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Не пройден!: не пройдено     1, пройдено     0, пропущено     0, всего     1, длительность < 1 ms. - PokeCorner.Core.Tests.dll (net8.0)
+ExitCode: 1
