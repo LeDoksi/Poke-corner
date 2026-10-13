@@ -71,6 +71,13 @@ public sealed class EncounterService
 
     public EncounterState ReserveGift(SaveData state, Guid operationId, Guid giftIndividualId)
     {
+        var existing = state.Encounters.FirstOrDefault(e => e.Id == operationId);
+        if (existing is not null)
+        {
+            if (existing.Source != "gift" || existing.GiftIndividualId != giftIndividualId)
+                throw new InvalidOperationException("Operation ID belongs to another gift.");
+            return existing;
+        }
         var gift = state.Gift.Gifts.SingleOrDefault(g => g.Individual.Id == giftIndividualId)
             ?? throw new InvalidOperationException("Reserved gift was not found.");
         if (gift.Status != "reserved" || !_catalog.CanIssueDirectly(gift.Individual.SpeciesId, gift.Individual.IsShiny))

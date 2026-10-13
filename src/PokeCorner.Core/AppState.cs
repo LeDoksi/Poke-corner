@@ -18,9 +18,36 @@ public sealed class AppState
 
     private SaveData? _metadata;
     private readonly Queue<Action> _deferredMutations = new();
+    private readonly List<Guid> _pendingActivityEncounterIds = new();
     private TaskCompletionSource? _idle;
     public bool IsCommitting { get; private set; }
     public Task WhenIdle => _idle?.Task ?? Task.CompletedTask;
+    public int PendingActivityEncounterCount => _pendingActivityEncounterIds.Count;
+
+    public void QueueActivityEncounter(Guid operationId)
+    {
+        if (operationId == Guid.Empty) throw new ArgumentException("Operation ID is required.", nameof(operationId));
+        if (!_pendingActivityEncounterIds.Contains(operationId)) _pendingActivityEncounterIds.Add(operationId);
+    }
+
+    public async Task CommitQueuedActivityEncountersAsync(BackgroundSaveWriter writer, EncounterService service,
+        Func<int> pendingCatchCount, Action<SaveData>? afterPublish = null)
+    {
+        var ids = _pendingActivityEncounterIds.ToArray();
+        if (ids.Length == 0) return;
+        await CommitAsync(writer, next =>
+        {
+            foreach (var id in ids) service.Reserve(next, "activity", id);
+        }, pendingCatchCount, afterPublish);
+        _pendingActivityEncounterIds.RemoveAll(ids.Contains);
+    }
+
+    public SaveData ToSaveDataIncludingPendingActivity(EncounterService service, int pendingCatchCount)
+    {
+        var next = ToSaveData(pendingCatchCount);
+        foreach (var id in _pendingActivityEncounterIds) service.Reserve(next, "activity", id);
+        return next;
+    }
 
     public void RunWhenReady(Action mutation)
     {

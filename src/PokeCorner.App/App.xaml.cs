@@ -57,6 +57,7 @@ public partial class App : System.Windows.Application
 
     /// Earned activity balls waiting to be opened.
     private int _catchReadyCount;
+    private Task _activityReservationTask = Task.CompletedTask;
     /// Every decoded frame of the active individual's sprite — the list the overlay animates
     /// from. One element means a static sprite; null means nothing is cached yet.
     private IReadOnlyList<byte[]>? _activeSpriteFrames;
@@ -214,7 +215,7 @@ public partial class App : System.Windows.Application
         }
 
         _hasLoadedState = true;
-        _appState.CatchRollDue += OnCatchRollDue; // now just flips "ready" state — see OnCatchRollDue
+        _appState.CatchRollDue += OnCatchRollDue;
 
         _inputCounter = new InputEventCounter();
 
@@ -317,6 +318,7 @@ public partial class App : System.Windows.Application
 
         var units = _inputCounter.DrainUnits();
         if (units > 0) _appState.RunWhenReady(() => CreditActivity(units));
+        if (_appState.PendingActivityEncounterCount > 0) StartActivityReservationCommit();
         if (_appState.IsCommitting) return;
 
         _progressPanelWindow?.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
@@ -582,18 +584,35 @@ public partial class App : System.Windows.Application
     private void OnCatchRollDue()
     {
         // shortcut: the persisted counter is int-sized; widen it if a profile can earn 2 billion balls.
-        if (_catchReadyCount == int.MaxValue) return;
+        if ((long)_catchReadyCount + _appState.PendingActivityEncounterCount == int.MaxValue) return;
+        _appState.QueueActivityEncounter(Guid.NewGuid());
+    }
 
-        var wasIdle = _catchReadyCount == 0;
-        _encounterService.Reserve(_appState.Encounters, "activity", Guid.NewGuid());
-        _catchReadyCount++;
-        _trayIconService.SetCatchReady(true);
-        _menuWindow?.SetCatchReady(_catchReadyCount);
+    private void StartActivityReservationCommit()
+    {
+        if (_isWipingSaveData || _saveWriter.HasFailed || !_activityReservationTask.IsCompleted) return;
+        _activityReservationTask = CommitActivityReservationsAsync();
+    }
 
-        // Only toast on the 0->1 transition — don't spam a toast per extra queued catch.
-        if (wasIdle)
+    private async Task CommitActivityReservationsAsync()
+    {
+        try
         {
-            _trayIconService.ShowNotification("PokéCorner", "Покебол за активность готов к открытию.");
+            while (_appState.PendingActivityEncounterCount > 0)
+            {
+                var wasIdle = _catchReadyCount == 0;
+                await _appState.CommitQueuedActivityEncountersAsync(_saveWriter, _encounterService,
+                    () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+                _trayIconService.SetCatchReady(_catchReadyCount > 0);
+                _menuWindow?.SetCatchReady(_catchReadyCount);
+                if (wasIdle && _catchReadyCount > 0)
+                    _trayIconService.ShowNotification("PokéCorner", "Покебол за активность готов к открытию.");
+            }
+        }
+        catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+        {
+            System.Windows.MessageBox.Show(ex.Message + "\nПокебол заработан, но сохранение не записано. Повторите после восстановления сохранения.",
+                "PokéCorner — ошибка сохранения", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 
@@ -837,6 +856,7 @@ public partial class App : System.Windows.Application
         _appState.ApplyActivityUnits(units);
         _feedingService.EarnTreatsFromActivity(_appState.Feeding, units);
         _shopService.EarnCoinsFromActivity(_appState.Shop, units);
+        if (_appState.PendingActivityEncounterCount > 0) StartActivityReservationCommit();
     }
 
     private async void ShutdownApp()
@@ -854,8 +874,15 @@ public partial class App : System.Windows.Application
         {
             if (_hasLoadedState && !_isWipingSaveData)
             {
-                if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveData(_catchReadyCount));
-                else await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+                await _appState.WhenIdle;
+                if (_appState.PendingActivityEncounterCount > 0 && !_saveWriter.HasFailed) StartActivityReservationCommit();
+                await _activityReservationTask;
+                if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveDataIncludingPendingActivity(_encounterService, _catchReadyCount));
+                else
+                {
+                    if (_appState.PendingActivityEncounterCount > 0) throw new IOException("Заработанный покебол ещё не записан.");
+                    await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
+                }
             }
         }
         catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
@@ -901,7 +928,7 @@ public partial class App : System.Windows.Application
         if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
         try
         {
-            if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveData(_catchReadyCount));
+            if (_saveWriter.HasFailed) _saveStore.History.Capture(_appState.ToSaveDataIncludingPendingActivity(_encounterService, _catchReadyCount));
             else await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
             if (!RestoreFromHistory()) return;
             RestartAfterReplacement();
@@ -981,7 +1008,7 @@ public partial class App : System.Windows.Application
         if (!_isExiting)
         {
             if (_hasLoadedState && !_isWipingSaveData && !_appState.IsCommitting && _saveWriter.HasFailed)
-                _saveStore.History.Capture(_appState.ToSaveData(_catchReadyCount));
+                _saveStore.History.Capture(_appState.ToSaveDataIncludingPendingActivity(_encounterService, _catchReadyCount));
             else PersistState(flush: true);
         }
     }
@@ -992,7 +1019,7 @@ public partial class App : System.Windows.Application
     private void PersistState(bool flush = false)
     {
         // Never publish unresolved startup state or an old candidate after replacement/failure.
-        if (_isWipingSaveData || !_hasLoadedState || _appState.IsCommitting || _saveWriter.HasFailed) return;
+        if (_isWipingSaveData || !_hasLoadedState || _appState.IsCommitting || _saveWriter.HasFailed || _appState.PendingActivityEncounterCount > 0) return;
 
         var data = _appState.ToSaveData(_catchReadyCount);
         if (flush) _saveWriter.Flush(data);

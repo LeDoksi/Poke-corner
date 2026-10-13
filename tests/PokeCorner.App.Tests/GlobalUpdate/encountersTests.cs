@@ -131,6 +131,82 @@ public sealed class EncountersTests : IDisposable
     }
 
     [Fact]
+    public void OpenedGiftReservationReplaysAfterRestartWithoutAnotherGrant()
+    {
+        var service = new EncounterService(Catalog.Value);
+        var chain = Lookup.Value.Chains.First(c => Catalog.Value.CanIssueDirectly(c.StarterSpeciesId, false));
+        var gift = new PokemonIndividual
+        {
+            SpeciesId = chain.StarterSpeciesId, EvolutionChainId = chain.ChainId, ChainLength = chain.ChainLength,
+            Nature = Nature.Bold, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, AcquisitionSource = "gift"
+        };
+        SaveMigration.InitializeIndividual(gift, Lookup.Value, Catalog.Value);
+        var state = State();
+        var other = new PokemonIndividual
+        {
+            SpeciesId = chain.StarterSpeciesId, EvolutionChainId = chain.ChainId, ChainLength = chain.ChainLength,
+            Nature = Nature.Bold, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, AcquisitionSource = "gift"
+        };
+        SaveMigration.InitializeIndividual(other, Lookup.Value, Catalog.Value);
+        state.Gift.Gifts = [new ReservedGift { Individual = gift }, new ReservedGift { Individual = other }];
+        var id = Guid.NewGuid();
+        service.ReserveGift(state, id, gift.Id);
+        var original = service.Open(state, id);
+        var store = new JsonSaveStore(Path.Combine(root, "gift.json"));
+        store.Save(state);
+        var loaded = store.Load()!;
+        var replayed = new EncounterService(Catalog.Value).ReserveGift(loaded, id, gift.Id);
+        Assert.Same(loaded.Encounters.Single(), replayed);
+        var repeated = service.Open(loaded, replayed.Id);
+        Assert.True(repeated.Repeated);
+        Assert.Equal(original.Individual.Id, repeated.Individual.Id);
+        Assert.Single(loaded.Individuals);
+        Assert.Throws<InvalidOperationException>(() => service.ReserveGift(loaded, id, Guid.NewGuid()));
+        Assert.Single(loaded.Encounters);
+    }
+
+    [Fact]
+    public async Task EarnedActivityReservationWaitsForCommitAndKeepsItsIdOnFailedWrite()
+    {
+        var service = new EncounterService(Catalog.Value);
+        var live = new AppState();
+        live.Hydrate(State());
+        var id = Guid.NewGuid();
+        var secondId = Guid.NewGuid();
+        var earnedIds = new Queue<Guid>([id, secondId]);
+        live.CatchRollDue += () => live.QueueActivityEncounter(earnedIds.Dequeue());
+        live.ApplyActivityUnits(ActivityAccumulator.CatchCheckIntervalUnits);
+        var store = new JsonSaveStore(Path.Combine(root, "activity.json"));
+        var pendingWrite = new TaskCompletionSource<Action>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var writer = new BackgroundSaveWriter(store, write => pendingWrite.SetResult(write));
+        var commit = live.CommitQueuedActivityEncountersAsync(writer, service, () => 0);
+        Assert.Empty(live.Encounters);
+        Assert.Equal(1, live.PendingActivityEncounterCount);
+        Assert.False(commit.IsCompleted);
+        live.ApplyActivityUnits(ActivityAccumulator.CatchCheckIntervalUnits);
+        Assert.Equal(1, live.PendingActivityEncounterCount);
+        await Task.Run(await pendingWrite.Task);
+        await commit.WaitAsync(TimeSpan.FromSeconds(10));
+        Assert.Equal(id, Assert.Single(live.Encounters).Id);
+        Assert.Equal(1, store.Load()!.PendingCatchCount);
+        Assert.Equal(1, live.PendingActivityEncounterCount);
+        var failedWriter = new BackgroundSaveWriter(new JsonSaveStore(Path.Combine(root, "missing", "state.json")),
+            _ => throw new IOException("synthetic reservation failure"));
+        await Assert.ThrowsAsync<IOException>(() => live.CommitQueuedActivityEncountersAsync(failedWriter, service, () => 1));
+        Assert.Equal(id, Assert.Single(live.Encounters).Id);
+        Assert.Equal(1, live.PendingActivityEncounterCount);
+        var recovery = live.ToSaveDataIncludingPendingActivity(service, 1);
+        Assert.Equal(new[] { id, secondId }, recovery.Encounters.Select(e => e.Id));
+        Assert.Equal(2, recovery.PendingCatchCount);
+        JsonSaveStore.ValidateData(recovery);
+        Assert.Equal(id, Assert.Single(live.Encounters).Id);
+        await live.CommitQueuedActivityEncountersAsync(new BackgroundSaveWriter(store), service, () => 1);
+        Assert.Equal(new[] { id, secondId }, live.Encounters.Select(e => e.Id));
+        Assert.Equal(2, store.Load()!.PendingCatchCount);
+        Assert.Equal(0, live.PendingActivityEncounterCount);
+    }
+
+    [Fact]
     public void UnsupportedShinyKeepsActivatedCharm()
     {
         var blocked = Lookup.Value.Chains.First(c => Catalog.Value.CanIssueDirectly(c.StarterSpeciesId, false)
