@@ -822,6 +822,38 @@ public partial class App : System.Windows.Application
     public ExpeditionPreview PreviewExpedition(ExpeditionRequest request) =>
         new ExpeditionService(_catalogPackage, _appState.ToSaveData(_catchReadyCount)).Preview(request);
 
+    public NurseryPreview PreviewNursery(IReadOnlyList<Guid> parentIds, int? selectedSpeciesId = null) =>
+        new NurseryService(_catalogPackage, _appState.ToSaveData(_catchReadyCount))
+            .Preview(parentIds, selectedSpeciesId);
+
+    public Task<NurseryAction> StartNurseryAsync(NurseryRequest request) =>
+        CommitNurseryAsync(service => service.Start(request));
+
+    public Task<NurseryAction> HatchNurseryAsync(Guid id, Guid operationId) =>
+        CommitNurseryAsync(service => service.Hatch(id, operationId));
+
+    public async Task<bool> RefreshNurseryReadyAsync(DateTimeOffset now)
+    {
+        var nest = _appState.ToSaveData(_catchReadyCount).Nest;
+        if (nest?.Status != "running" || now.ToUniversalTime() < nest.ReadyAtUtc) return false;
+        var changed = false;
+        await _expeditionProgressTask;
+        await CommitStateAsync(next => changed = new NurseryService(_catalogPackage, next).RefreshReady(now));
+        return changed;
+    }
+
+    private async Task<NurseryAction> CommitNurseryAsync(Func<NurseryService, NurseryAction> action)
+    {
+        NurseryAction? result = null;
+        await _expeditionProgressTask;
+        await CommitStateAsync(next =>
+        {
+            result = action(new NurseryService(_catalogPackage, next));
+            if (!result.Success) throw new InvalidOperationException(result.Message);
+        });
+        return result!;
+    }
+
     public Task<ExpeditionAction> StartExpeditionAsync(ExpeditionRequest request) =>
         CommitExpeditionAsync(service => service.Start(request));
 

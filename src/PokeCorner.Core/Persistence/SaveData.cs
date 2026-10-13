@@ -21,7 +21,7 @@ public sealed class SaveData
     public TutorialState Tutorial { get; set; } = new();
     public GiftGrant Gift { get; set; } = new();
     public ExpeditionState? Expedition { get; set; }
-    public TimedActivity? Nest { get; set; }
+    public NurseryState? Nest { get; set; }
     // Bonus above the base 1/512 chance. Only an eligible nursery hatch changes it.
     public double NurseryLuckBonus { get; set; }
     public Dictionary<string, Guid> CompletedOperations { get; set; } = [];

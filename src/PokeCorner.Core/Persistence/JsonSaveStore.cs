@@ -350,6 +350,27 @@ public sealed class JsonSaveStore
                 && (expedition.Status == "claimed") == (expedition.ClaimOperationId is not null), "неверный поход v2");
         }
         ValidateActivity(data.Nest, ownedIds, "hatched");
+        if (data.Nest is { } nest)
+        {
+            ValidateIndividual(nest.Child, 2);
+            Require(nest.ParticipantIds.Count == 2 && nest.Child.Id == nest.Id
+                && nest.StartedAtUtc.Offset == TimeSpan.Zero && nest.ReadyAtUtc.Offset == TimeSpan.Zero
+                && nest.ShinyDraw.Roll is >= 0 and < 1 && double.IsFinite(nest.ShinyDraw.Roll)
+                && nest.ShinyDraw.Chance is >= 0 and <= 1 && double.IsFinite(nest.ShinyDraw.Chance)
+                && nest.Child.IsShiny == (nest.ShinyDraw.Roll < nest.ShinyDraw.Chance)
+                && (nest.ShinySupported || nest.ShinyDraw.Chance == 0)
+                && nest.Child.SpeciesId == nest.Child.FamilyRootId
+                && nest.Child.CurrentSpeciesId == nest.Child.SpeciesId
+                && nest.Child.ReachedSpeciesIds.SequenceEqual(new[] { nest.Child.SpeciesId })
+                && nest.Child.TotalXp == 0 && nest.Child.AcquisitionSource == "nursery"
+                && nest.Child.ParentIds.SequenceEqual(nest.ParticipantIds)
+                && (!nest.Child.IsShiny || nest.ShinySupported)
+                && (nest.Status == "hatched") == (nest.HatchOperationId is not null)
+                && (nest.Status != "hatched" || data.Individuals.Count(x => x.Id == nest.Child.Id) == 1
+                    && data.CompletedOperations!.GetValueOrDefault($"nursery:hatch:{nest.Id}") == nest.HatchOperationId)
+                && (nest.Status == "hatched" || data.Individuals.All(x => x.Id != nest.Child.Id)),
+                "неверное гнездо v2");
+        }
         Require(data.Expedition is null || data.Nest is null || data.Expedition.Id != data.Nest.Id, "повторный ID таймера");
         if (data.Expedition?.Status is "running" or "ready" && data.Nest?.Status is "running" or "ready")
             Require(!data.Expedition.ParticipantIds.Intersect(data.Nest.ParticipantIds).Any(), "участник занят дважды");

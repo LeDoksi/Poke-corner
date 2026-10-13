@@ -268,7 +268,9 @@ public static class SaveMigration
     {
         if (data.SchemaVersion != 2) throw new SaveLoadException(path, "ожидалась схема v2");
         var species = catalog.Species.ToDictionary(s => s.Id);
-        foreach (var individual in data.Individuals.Concat(data.Gift.Gifts.Select(g => g.Individual)).Concat(data.Encounters.Where(e => e.Individual is not null).Select(e => e.Individual!)))
+        foreach (var individual in data.Individuals.Concat(data.Gift.Gifts.Select(g => g.Individual))
+            .Concat(data.Encounters.Where(e => e.Individual is not null).Select(e => e.Individual!))
+            .Concat(data.Nest is null ? [] : new[] { data.Nest.Child }))
             if (!species.TryGetValue(individual.CurrentSpeciesId, out var current) ||
                 current.FamilyRootId != individual.FamilyRootId || individual.ReachedSpeciesIds.Any(id => !species.ContainsKey(id)))
                 throw new SaveLoadException(path, $"неверный вид/семья v2: {individual.Id}");
