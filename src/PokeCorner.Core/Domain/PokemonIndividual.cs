@@ -33,7 +33,15 @@ public sealed class PokemonIndividual
     /// nothing outside Core should be rewriting an individual's chain, and the one caller is
     /// the save-load migration in <see cref="LegacyOfflineChains.TryMigrate"/>.
     internal void RemapEvolutionChainId(int chainId) => _evolutionChainId = chainId;
-    public required int ChainLength { get; init; }
+    private int _chainLength;
+    public required int ChainLength
+    {
+        get => _chainLength;
+        init => _chainLength = value;
+    }
+    // Repairs the length-one placeholder on an already-owned v2 update gift during its first
+    // canonical evolution. The original gift and encounter records remain historical snapshots.
+    internal void ReconcileGiftChainLength(int canonicalLength) => _chainLength = canonicalLength;
     public required Nature Nature { get; init; }
     public required bool IsShiny { get; init; }
     private DateTimeOffset _caughtAtUtc;

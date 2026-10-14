@@ -15,6 +15,8 @@ public sealed class EncounterService
     private readonly double _newChance;
 
     public IReadOnlyList<int> DirectRootIds => _roots.Select(c => c.StarterSpeciesId).ToArray();
+    public int DirectRootChainLength(int speciesId) =>
+        _roots.Single(c => c.StarterSpeciesId == speciesId).ChainLength;
 
     public EncounterService(CatalogPackage catalog)
     {

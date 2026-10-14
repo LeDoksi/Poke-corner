@@ -129,6 +129,11 @@ public sealed class AppState
         !BusyIndividualIds.Contains(individual.Id) &&
         EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength) > individual.CurrentStage;
 
+    public bool IsReadyToEvolve(PokemonIndividual individual, EvolutionPreview canonicalPreview) =>
+        !BusyIndividualIds.Contains(individual.Id) && !canonicalPreview.IsBusy &&
+        canonicalPreview.Branches.Any(branch => branch.Available) &&
+        canonicalPreview.CareOwned >= canonicalPreview.CareRequired;
+
     /// Legacy v1 stage mutation only. V2 evolution requires the canonical recipe and commit path.
     public bool TryEvolve(PokemonIndividual individual)
     {

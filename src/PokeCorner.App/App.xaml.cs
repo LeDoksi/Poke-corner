@@ -718,9 +718,9 @@ public partial class App : System.Windows.Application
     private bool IsActiveIndividualReadyToEvolve()
     {
         var active = _appState.Collection.GetActive();
-        if (active is null || !_appState.IsReadyToEvolve(active)) return false;
+        if (active is null) return false;
         var preview = new EvolutionService(_catalogPackage, _appState.ToSaveData(_catchReadyCount)).Preview(active.Id);
-        return preview.Branches.Any(branch => branch.Available);
+        return _appState.IsReadyToEvolve(active, preview);
     }
 
     private EvolutionPreview PreviewEvolution(Guid id) =>

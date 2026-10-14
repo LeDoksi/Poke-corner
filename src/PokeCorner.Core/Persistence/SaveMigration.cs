@@ -177,6 +177,7 @@ public static class SaveMigration
         if (candidates.Length == 0) throw new InvalidDataException("Нет допустимой совместимой подарочной пары.");
         var selected = candidates[0];
         next.Gift = new() { RecipeId = selected.Id, ExcludedSpeciesId = excluded };
+        var canonicalRoots = new EncounterService(catalog);
         foreach (var id in selected.Parents)
         {
             var s = catalog.Species.Single(s => s.Id == id);
@@ -185,7 +186,7 @@ public static class SaveMigration
                 Individual = new()
                 {
                     SpeciesId = id, CurrentSpeciesId = id, FamilyRootId = s.FamilyRootId,
-                    EvolutionChainId = s.EvolutionChainId, ChainLength = 1, Nature = (Nature)Random.Shared.Next(Enum.GetValues<Nature>().Length),
+                    EvolutionChainId = s.EvolutionChainId, ChainLength = canonicalRoots.DirectRootChainLength(id), Nature = (Nature)Random.Shared.Next(Enum.GetValues<Nature>().Length),
                     IsShiny = catalog.CanObtain(id, true) && Random.Shared.NextDouble() < balance.GetProperty("shinyBase").GetDouble(), CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = ChooseTrait(id, rules, balance),
                     AcquisitionSource = "update-gift", ReachedSpeciesIds = [id]
                 }

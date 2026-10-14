@@ -85,6 +85,16 @@ public sealed class EvolutionService
             return new(false, "Выбранная ветвь недоступна.");
         var needsStone = selectedBranch is not null && available.Length > 1;
         if (needsStone && preview.StonesOwned < 1) return new(false, "Для выбора ветви нужен камень эволюции.");
+        var canonicalLength = CanonicalLength(individual.SpeciesId, new HashSet<int>());
+        if ((int)individual.CurrentStage + 1 >= individual.ChainLength)
+        {
+            if (individual.ChainLength != 1 || individual.CurrentStage != EvolutionStage.Stage1 ||
+                individual.AcquisitionSource != "update-gift" || individual.SpeciesId != individual.FamilyRootId ||
+                individual.CurrentSpeciesId != individual.SpeciesId ||
+                !individual.ReachedSpeciesIds.SequenceEqual(new[] { individual.SpeciesId }) || canonicalLength < 2)
+                return new(false, "Эволюционная цепочка этого покемона не согласована с каталогом.");
+            individual.ReconcileGiftChainLength(canonicalLength);
+        }
         var chosen = selectedBranch ?? available[BinaryPrimitives.ReadUInt32LittleEndian(
             SHA256.HashData(Encoding.UTF8.GetBytes($"evolution-draw:{operationId:N}:{individualId:N}"))) % (uint)available.Length].SpeciesId;
 
@@ -100,5 +110,15 @@ public sealed class EvolutionService
         state.CompletedOperations[key] = fingerprint;
         state.EvolutionResults[operationId] = chosen;
         return new(true, $"Эволюция: {available.Single(x => x.SpeciesId == chosen).Name}.", chosen);
+    }
+
+    private int CanonicalLength(int speciesId, HashSet<int> path)
+    {
+        if (!path.Add(speciesId)) throw new InvalidDataException("Цикл в канонической цепочке эволюции.");
+        var length = 1 + (edges.GetValueOrDefault(speciesId) ?? [])
+            .Select(edge => CanonicalLength(edge.To, path)).DefaultIfEmpty(0).Max();
+        path.Remove(speciesId);
+        if (length is < 1 or > 3) throw new InvalidDataException("Неверная длина канонической цепочки эволюции.");
+        return length;
     }
 }
