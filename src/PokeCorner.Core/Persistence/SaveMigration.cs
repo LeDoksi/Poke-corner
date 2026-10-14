@@ -72,7 +72,6 @@ public static class SaveMigration
         var balancePath = Path.Combine(catalog.DataRoot, "final", "balance.json");
         using var rules = JsonDocument.Parse(File.ReadAllBytes(rulesPath));
         using var balance = JsonDocument.Parse(File.ReadAllBytes(balancePath));
-        using var awards = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "achievement-rewards.json")));
         next.SchemaVersion = 2;
         next.CatalogRevision = catalog.CatalogRevision;
         next.BalanceRevision = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(balancePath))).ToLowerInvariant();
@@ -115,7 +114,7 @@ public static class SaveMigration
             ["distinct-hatched-root-species"] = null, ["items-used"] = null,
             ["first-care-evolution-ready"] = next.Individuals.Any(i => EvolutionCalculator.StageForPoints(i.AccumulatedCarePoints, i.ChainLength) > i.CurrentStage) ? 1 : null
         };
-        GrantProvenAwards(next, catalog, awards.RootElement);
+        new AchievementService(catalog).Evaluate(next);
         var companion = next.Individuals.SingleOrDefault(p => p.Id == next.ActiveIndividualId);
         if (companion is not null) ReserveGift(next, companion.CurrentSpeciesId, catalog, rules.RootElement, balance.RootElement);
         JsonSaveStore.ValidateData(next);
@@ -192,44 +191,6 @@ public static class SaveMigration
                 }
             });
         }
-    }
-
-    private static void GrantProvenAwards(SaveData next, CatalogPackage catalog, JsonElement awards)
-    {
-        var available = catalog.Species.Where(s => catalog.CanObtain(s.Id, false)).Select(s => s.Id).ToList();
-        var legends = catalog.Species.Where(s => s.Rarity == "Legendary" && catalog.CanObtain(s.Id, false)).Select(s => s.Id).ToList();
-        foreach (var goal in awards.GetProperty("chainGoals").EnumerateArray())
-        {
-            var condition = goal.GetProperty("condition").GetString();
-            var count = condition switch
-            {
-                "discovered-species" => next.DiscoveredSpeciesIds.Count,
-                "owned-individuals" => next.Individuals.Count,
-                "distinct-species-transitions" => next.EvolutionTransitions.Count,
-                "distinct-shiny-species" => next.ShinySpeciesIds.Count,
-                "all-normal-species-in-award-revision" when available.Count > 0 && available.All(next.DiscoveredSpeciesIds.Contains) => int.MaxValue,
-                _ => 0
-            };
-            if (count < goal.GetProperty("count").GetInt32()) continue;
-            var id = goal.GetProperty("awardId").GetString()!;
-            var tier = int.Parse(id[^1..]) - 1;
-            AddAward(next, id, awards.GetProperty("chainTiers")[tier].GetInt32(), catalog.CatalogRevision,
-                condition == "all-normal-species-in-award-revision" ? available : []);
-        }
-        foreach (var (id, proven) in new[] {
-            ("trophy-special-nick", next.Individuals.Any(i => i.Nickname is not null)),
-            ("trophy-special-favorite", next.Individuals.Any(i => i.IsFavorite)),
-            ("trophy-special-all-legends", legends.Count > 0 && legends.All(next.DiscoveredSpeciesIds.Contains)) })
-            if (proven) AddAward(next, id, awards.GetProperty("specials").GetProperty(id).GetInt32(), catalog.CatalogRevision,
-                id == "trophy-special-all-legends" ? legends : []);
-    }
-
-    private static void AddAward(SaveData next, string id, int coins, string revision, List<int> available)
-    {
-        if (next.AwardLedger.ContainsKey(id)) return;
-        try { next.ShopCoins = checked(next.ShopCoins + coins); }
-        catch (OverflowException ex) { throw new InvalidDataException("Награда переполняет счётчик монет.", ex); }
-        next.AwardLedger.Add(id, new() { AwardedAtUtc = DateTimeOffset.UtcNow, CoinsGranted = coins, CatalogRevision = revision, AvailableSpeciesIds = available });
     }
 
     public static async Task<SaveData?> LoadAsync(string v1Path, string v2Path, LegacyLookup lookup, CatalogPackage catalog, JsonSaveStore? store = null)

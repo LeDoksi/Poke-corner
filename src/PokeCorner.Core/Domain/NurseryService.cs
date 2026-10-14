@@ -137,6 +137,8 @@ public sealed class NurseryService
             Outcomes = JsonSerializer.SerializeToElement(new { child.SpeciesId, child.IsShiny })
         };
         state.CompletedOperations[key] = fingerprint;
+        if (request.SelectedSpeciesId is not null)
+            AchievementMetrics.Record(state, "special:trophy-special-offspring-choice");
         return new(true, "Гнездо запущено.");
     }
 

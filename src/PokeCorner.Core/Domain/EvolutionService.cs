@@ -107,6 +107,8 @@ public sealed class EvolutionService
         state.DiscoveredSpeciesIds.Add(chosen);
         if (individual.IsShiny) state.ShinySpeciesIds.Add(chosen);
         state.EvolutionTransitions.Add($"{from}->{chosen}");
+        AchievementMetrics.Record(state, "special:trophy-special-berry-evolution");
+        if (needsStone) AchievementMetrics.Record(state, "special:trophy-special-branch-choice");
         state.CompletedOperations[key] = fingerprint;
         state.EvolutionResults[operationId] = chosen;
         return new(true, $"Эволюция: {available.Single(x => x.SpeciesId == chosen).Name}.", chosen);

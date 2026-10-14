@@ -145,7 +145,7 @@ public partial class App : System.Windows.Application
                     loaded = SaveMigration.Migrate(new SaveData { Individuals = [], Settings = new() }, _legacyLookup, _catalogPackage);
                     loaded.StarterSelectionPending = true;
                 }
-                _appState = new AppState();
+                _appState = new AppState { Achievements = new AchievementService(_catalogPackage) };
                 _appState.Hydrate(loaded);
                 break;
             }
@@ -635,18 +635,33 @@ public partial class App : System.Windows.Application
 
     /// No toast: the bounce is the feedback, and pets get clicked far too often for a
     /// notification each time.
-    private void PetActiveIndividual()
+    private async void PetActiveIndividual()
     {
         if (_isExiting) return;
         if (_appState.IsCommitting) { _appState.RunWhenReady(PetActiveIndividual); return; }
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
-        var careState = _appState.GetOrCreateCareState(active.Id);
-        if (!_feedingService.Pet(active, careState, DateTimeOffset.UtcNow)) return; // on cooldown
-
-        _overlayWindow.PlayPetReaction();
-        PlayCry(ResolveDisplaySpeciesId(active));
+        if (_appState.CareStateByIndividualId.TryGetValue(active.Id, out var currentCare) &&
+            currentCare.LastPetUtc is { } lastPet && DateTimeOffset.UtcNow - lastPet < FeedingService.PetCooldown) return;
+        var id = active.Id;
+        var petted = false;
+        try
+        {
+            await _appState.CommitAsync(_saveWriter, next =>
+            {
+                var individual = next.Individuals.Single(i => i.Id == id);
+                if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
+                petted = _feedingService.Pet(individual, care, DateTimeOffset.UtcNow);
+                if (petted) AchievementMetrics.Record(next, "care:" + id);
+            }, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+            if (!petted) return;
+            RefreshOverlayForActiveIndividual();
+            _overlayWindow.PlayPetReaction();
+            if (_appState.Collection.Individuals.FirstOrDefault(i => i.Id == id) is { } saved)
+                PlayCry(ResolveDisplaySpeciesId(saved));
+        }
+        catch (Exception ex) { _trayIconService.ShowNotification("PokéCorner", "Поглаживание не сохранено: " + ex.Message); }
     }
 
     /// One player for every cry, created lazily. MediaPlayer rather than SoundPlayer because it
@@ -694,25 +709,43 @@ public partial class App : System.Windows.Application
         }
     }
 
-    private void FeedActiveIndividual()
+    private async void FeedActiveIndividual()
     {
         if (_isExiting) return;
         if (_appState.IsCommitting) { _appState.RunWhenReady(FeedActiveIndividual); return; }
         var active = _appState.Collection.GetActive();
         if (active is null) return;
 
-        var careState = _appState.GetOrCreateCareState(active.Id);
-        var fed = _feedingService.Feed(active, _appState.Feeding, careState, DateTimeOffset.UtcNow);
-        if (fed)
-        {
-            _overlayWindow.PlayFeedReaction();
-        }
-        else
+        if (_appState.Feeding.Treats < 1)
         {
             // Unlike a successful feed, running out of treats has no on-screen animation, so without
             // the toast the click would look like it did nothing.
             _trayIconService.ShowNotification("PokéCorner", "Не хватает лакомств — накопи ещё активности.");
+            return;
         }
+        var id = active.Id;
+        var fed = false;
+        try
+        {
+            await _appState.CommitAsync(_saveWriter, next =>
+            {
+                var individual = next.Individuals.Single(i => i.Id == id);
+                if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
+                var food = new FeedingInventory { Treats = next.FeedingTreats, RemainderUnits = next.FeedingRemainderUnits };
+                fed = _feedingService.Feed(individual, food, care, DateTimeOffset.UtcNow);
+                if (!fed) return;
+                next.FeedingTreats = food.Treats;
+                AchievementMetrics.Record(next, "care:" + id);
+                AchievementMetrics.Record(next, "first-feeding");
+            }, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+            if (fed)
+            {
+                RefreshOverlayForActiveIndividual();
+                _overlayWindow.PlayFeedReaction();
+            }
+            else _trayIconService.ShowNotification("PokéCorner", "Не хватает лакомств — накопи ещё активности.");
+        }
+        catch (Exception ex) { _trayIconService.ShowNotification("PokéCorner", "Кормление не сохранено: " + ex.Message); }
     }
 
     private bool IsActiveIndividualReadyToEvolve()

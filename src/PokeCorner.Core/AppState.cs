@@ -23,6 +23,7 @@ public sealed class AppState
     private TaskCompletionSource? _commitsDrained;
     private int _pendingCommitRequests;
     public bool IsCommitting { get; private set; }
+    public AchievementService? Achievements { get; set; }
     public Task WhenIdle => _pendingCommitRequests > 0 ? _commitsDrained!.Task : Task.CompletedTask;
     public int PendingActivityEncounterCount => _pendingActivityEncounterIds.Count;
     public bool HasRunningExpedition => _metadata?.Expedition?.Status == "running";
@@ -75,6 +76,7 @@ public sealed class AppState
                 var next = replacement is null ? ToSaveData(pendingCatchCount()) : JsonSaveStore.Clone(replacement);
                 update(next);
                 if (next.SchemaVersion == 2) next.Items["treats"] = next.FeedingTreats;
+                Achievements?.Evaluate(next);
                 JsonSaveStore.ValidateData(next);
                 await writer.CommitAndPublishAsync(next, () => { Hydrate(next); afterPublish?.Invoke(next); });
             }

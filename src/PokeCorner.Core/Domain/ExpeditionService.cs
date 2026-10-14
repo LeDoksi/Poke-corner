@@ -232,6 +232,17 @@ public sealed class ExpeditionService
         if (trip.Difficulty == "hard") state.Metrics[$"expedition:hard:{trip.LocationId}"] = 1;
         state.Metrics["hard-expedition-in-each-region"] = routes.Keys.Count(route => state.Metrics.GetValueOrDefault($"expedition:hard:{route}") == 1);
         if (gainedXp) state.Metrics["first-expedition-xp"] = 1;
+        var members = trip.ParticipantIds.Select(id => state.Individuals.Single(i => i.Id == id)).ToArray();
+        if (members.Length == 3 && members.All(i => catalog.Species.Single(s => s.Id == i.CurrentSpeciesId).Types.Any(routes[trip.LocationId].BonusTypes.Contains)))
+            AchievementMetrics.Record(state, "special:trophy-special-type-team");
+        if (reward.ExtraBerries.Values.Any(x => x > 0) || reward.ExtraItems.Values.Any(x => x > 0) || reward.ExtraCoins > 0)
+            AchievementMetrics.Record(state, "special:trophy-special-bonus-find");
+        if (members.Any(i => i.AcquisitionSource == "nursery"))
+            AchievementMetrics.Record(state, "special:trophy-special-nursery-expedition");
+        if (members.Any(i => members.Any(other => other.Id != i.Id && i.ParentIds.Contains(other.Id))))
+            AchievementMetrics.Record(state, "special:trophy-special-family-expedition");
+        if (members.Any(i => i.ReachedSpeciesIds.Count > 1))
+            AchievementMetrics.Record(state, "special:trophy-special-evolved-expedition");
         state.CompletedOperations[$"expedition:claim:{id}"] = operationId;
         return new(true, "Награды получены.", false, encounter);
     }
