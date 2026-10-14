@@ -1,0 +1,19 @@
+**********************
+Windows PowerShell transcript start
+Start time: 20261014130320
+Username: MEPHPC\Georgy
+RunAs User: MEPHPC\Georgy
+Configuration Name:
+Machine: MEPHPC (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -Command $log=".superpowers/sdd/2026-10-11-global-update-transition/task-15-app-gate.log"; $command="rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --verbosity minimal --filter FullyQualifiedName!~FinishReviewEvidenceRendersPopulatedPokedexAndResetArea"; Start-Transcript -Path $log -Force | Out-Null; Write-Output "COMMAND: $command"; & rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --verbosity minimal --filter FullyQualifiedName!~FinishReviewEvidenceRendersPopulatedPokedexAndResetArea; $exit=$LASTEXITCODE; Write-Output "ExitCode: $exit"; Stop-Transcript | Out-Null; exit $exit
+Process ID: 29400
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+COMMAND: rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --verbosity minimal --filter FullyQualifiedName!~FinishReviewEvidenceRendersPopulatedPokedexAndResetArea
