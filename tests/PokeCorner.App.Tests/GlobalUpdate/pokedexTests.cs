@@ -7,6 +7,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Threading;
 
 namespace PokeCorner.App.Tests.GlobalUpdate;
 
@@ -126,6 +129,132 @@ public class PokedexTests
     }
 
     [Fact]
+    public void OwnedCardRefreshesWhenOnlyBusyStateOrLevelChanges() => WpfTestHost.Run(() =>
+    {
+        var state = new AppState();
+        var individual = new PokemonIndividual { SpeciesId = 1, EvolutionChainId = 1, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        state.Collection.Add(individual);
+        var busy = new HashSet<Guid>();
+        var level = 2;
+        var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(),
+            [], [], busyIndividualIds: () => busy, levelFor: _ => level);
+        var view = new CollectionView(vm, state,
+            new SpriteCache(Path.Combine(Path.GetTempPath(), "pokedex-test", Guid.NewGuid().ToString("N"))),
+            () => { }, () => { }, () => { }, () => null, () => false, () => false);
+        ((TabControl)((Grid)view.Content).Children[0]).SelectedIndex = 1;
+        WpfTestHost.Layout(view);
+        var grid = (ItemsControl)view.FindName("PokedexGrid");
+        var first = Assert.IsType<PokedexCard>(Assert.Single(grid.Items));
+        Assert.Equal("Ур. 2", first.LevelText);
+        Assert.Equal("На столе", first.AvailabilityText);
+
+        busy.Add(individual.Id);
+        level = 3;
+        view.Refresh();
+        var refreshed = Assert.IsType<PokedexCard>(Assert.Single(grid.Items));
+        Assert.Equal("Ур. 3", refreshed.LevelText);
+        Assert.Equal("Занят", refreshed.AvailabilityText);
+    });
+
+    [Fact]
+    public async Task DelayedFavoriteCommitDoesNotRepaintAnotherOpenedDetail()
+    {
+        var state = new AppState();
+        var first = new PokemonIndividual { SpeciesId = 1, EvolutionChainId = 1, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        var second = new PokemonIndividual { SpeciesId = 2, EvolutionChainId = 2, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        state.Collection.Add(first);
+        state.Collection.Add(second);
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        CollectionView? view = null;
+        WpfTestHost.Run(() =>
+        {
+            view = new CollectionView(CreateVm(state.Collection), state,
+                new SpriteCache(Path.Combine(Path.GetTempPath(), "pokedex-test", Guid.NewGuid().ToString("N"))),
+                () => { }, () => { }, () => { }, () => null, () => false, () => false,
+                commitState: _ => gate.Task);
+            Assert.True(view.OpenIndividual(first.Id));
+            ((Button)view.FindName("DetailFavoriteButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            Assert.True(view.OpenIndividual(second.Id));
+            first.IsFavorite = true;
+        });
+        gate.SetResult();
+        await view!.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle).Task;
+        WpfTestHost.Run(() =>
+        {
+            Assert.Equal(second.Id, view!.SelectedIndividualId);
+            Assert.Equal(Visibility.Collapsed, ((FrameworkElement)view.FindName("DetailFavoriteBadge")).Visibility);
+            Assert.Equal(string.Empty, ((TextBlock)view.FindName("DetailErrorText")).Text);
+        });
+    }
+
+    [Fact]
+    public async Task DelayedCommitErrorStaysOffAnotherDetailAndSelectKeepsItsOriginalGuid()
+    {
+        var state = new AppState();
+        var first = new PokemonIndividual { SpeciesId = 1, EvolutionChainId = 1, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        var second = new PokemonIndividual { SpeciesId = 2, EvolutionChainId = 2, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        state.Collection.Add(first);
+        state.Collection.Add(second);
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        Guid? requestedActiveId = null;
+        CollectionView? view = null;
+        WpfTestHost.Run(() =>
+        {
+            view = new CollectionView(CreateVm(state.Collection), state,
+                new SpriteCache(Path.Combine(Path.GetTempPath(), "pokedex-test", Guid.NewGuid().ToString("N"))),
+                () => { }, () => { }, () => { }, () => null, () => false, () => false,
+                commitState: update =>
+                {
+                    var next = state.ToSaveData(0);
+                    update(next);
+                    requestedActiveId = next.ActiveIndividualId;
+                    return gate.Task;
+                });
+            Assert.True(view.OpenIndividual(second.Id));
+            ((Button)view.FindName("DetailSelectButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            Assert.True(view.OpenIndividual(first.Id));
+        });
+        Assert.Equal(second.Id, requestedActiveId);
+        gate.SetException(new IOException("Отложенный отказ записи"));
+        await view!.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle).Task;
+        WpfTestHost.Run(() =>
+        {
+            Assert.Equal(first.Id, view.SelectedIndividualId);
+            Assert.Equal(string.Empty, ((TextBlock)view.FindName("DetailErrorText")).Text);
+            Assert.True(((Button)view.FindName("DetailSelectButton")).IsEnabled == false);
+        });
+    }
+
+    [Fact]
+    public async Task FavoriteCompletionToleratesItsIndividualBeingReleased()
+    {
+        var state = new AppState();
+        var individual = new PokemonIndividual { SpeciesId = 1, EvolutionChainId = 1, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        state.Collection.Add(individual);
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        CollectionView? view = null;
+        WpfTestHost.Run(() =>
+        {
+            view = new CollectionView(CreateVm(state.Collection), state,
+                new SpriteCache(Path.Combine(Path.GetTempPath(), "pokedex-test", Guid.NewGuid().ToString("N"))),
+                () => { }, () => { }, () => { }, () => null, () => false, () => false,
+                commitState: _ => gate.Task);
+            Assert.True(view.OpenIndividual(individual.Id));
+            ((Button)view.FindName("DetailFavoriteButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            state.Collection.Release(individual.Id);
+        });
+        gate.SetResult();
+        await view!.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle).Task;
+        WpfTestHost.Run(() => Assert.Null(view.SelectedIndividualId));
+    }
+
+    [Fact]
     public void NewSpeciesScreenRendersClosedSearchAndExplicitOwnedChoicesAtCompactSize() => WpfTestHost.Run(() =>
     {
         var state = new AppState();
@@ -152,6 +281,19 @@ public class PokedexTests
         Assert.Contains("Собиратель", ((TextBlock)view.FindName("DetailTraitsText")).Text);
         Assert.Equal("Факт", ((TextBlock)view.FindName("DetailDescriptionText")).Text);
         Assert.False(view.OpenIndividual(Guid.NewGuid()));
+
+        var card = Assert.IsType<Border>(((ItemsControl)view.FindName("PokedexGrid")).ItemTemplate.LoadContent());
+        card.DataContext = Assert.IsType<PokedexCard>(((ItemsControl)view.FindName("PokedexGrid")).Items[0]);
+        using var inputSource = new HwndSource(new HwndSourceParameters("pokedex-keyboard-test") { WindowStyle = 0 });
+        card.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Enter)
+            { RoutedEvent = Keyboard.KeyDownEvent });
+        Assert.Equal(first.Id, view.SelectedIndividualId);
+        view.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Escape)
+            { RoutedEvent = Keyboard.PreviewKeyDownEvent });
+        Assert.Null(view.SelectedIndividualId);
+        card.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Space)
+            { RoutedEvent = Keyboard.KeyDownEvent });
+        Assert.Equal(first.Id, view.SelectedIndividualId);
 
         var search = (TextBox)view.FindName("SpeciesSearchBox");
         search.Text = "Secret";

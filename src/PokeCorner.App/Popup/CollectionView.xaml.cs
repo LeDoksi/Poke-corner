@@ -582,7 +582,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // until some unrelated field changes. The nickname is in there for the same reason:
         // renaming from the detail overlay must repaint the card behind it.
         var signature = $"{_rarityFilter}|{_searchQuery}|{_hideFullyEvolved}|{_sortOrder}|{_pageIndex}|" + string.Join("|", page.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsFavorite}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
@@ -734,6 +734,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     /// The card currently on show, or null when the overlay is hidden.
     private PokedexCard? _detailCard;
+    private int _detailGeneration;
+
+    private bool IsCurrentDetail(Guid id, int generation) =>
+        _detailGeneration == generation && DetailOverlay.Visibility == Visibility.Visible &&
+        _detailCard?.IndividualId == id;
 
     /// Local mirror of the pin so the star can flip immediately on click. The grid rebuilds
     /// from the model, but the overlay holds an immutable snapshot card — re-reading it would
@@ -747,9 +752,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void ShowDetail(PokedexCard card)
     {
+        _detailGeneration++;
         _detailCard = card;
         DetailErrorText.Text = string.Empty;
         _detailIsFavorite = card.IsFavorite;
+        DetailFavoriteButton.IsEnabled = true;
         DetailReleaseButton.IsEnabled = !_appState.BusyIndividualIds.Contains(card.IndividualId);
 
         DetailDexNumberText.Text = card.DexNumber;
@@ -809,6 +816,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void HideDetail()
     {
+        _detailGeneration++;
         DetailOverlay.Visibility = Visibility.Collapsed;
         _detailCard = null;
 
@@ -873,6 +881,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         if (_detailCard is null) return;
         var id = _detailCard.IndividualId;
+        var generation = _detailGeneration;
         if (_commitState is null) ToggleFavorite(id);
         else
         {
@@ -882,12 +891,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
                 var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
                     ?? throw new InvalidOperationException("Этот покемон больше не найден.");
                 individual.IsFavorite = !individual.IsFavorite;
-            });
+            }, id, generation);
+            if (!IsCurrentDetail(id, generation)) return;
             DetailFavoriteButton.IsEnabled = true;
             if (!committed) return;
             Refresh();
         }
-        _detailIsFavorite = _appState.Collection.Individuals.First(i => i.Id == id).IsFavorite;
+        if (!IsCurrentDetail(id, generation)) return;
+        var current = _appState.Collection.Individuals.FirstOrDefault(i => i.Id == id);
+        if (current is null) { HideDetail(); return; }
+        _detailIsFavorite = current.IsFavorite;
         ApplyDetailFavoriteVisuals();
     }
 
@@ -903,6 +916,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         var individual = _appState.Collection.Individuals.FirstOrDefault(i => i.Id == _detailCard.IndividualId);
         if (individual is null) return;
+        var generation = _detailGeneration;
 
         // Clicking the already-displayed stage resets to the real current stage instead of
         // re-picking the same one — the click is a toggle, not a one-way pin.
@@ -915,15 +929,19 @@ public partial class CollectionView : System.Windows.Controls.UserControl
                 current.CurrentSpeciesId > 0 && stage.StageIndex >= current.ReachedSpeciesIds.Count)
                 throw new InvalidOperationException("Эта форма ещё не открыта.");
             current.DisplayStageOverride = stage.IsDisplayed ? null : stage.StageIndex;
-        })) return;
+        }, individual.Id, generation)) return;
 
         // Nudges the desktop pet's sprite immediately when this is the active individual.
         if (individual.Id == _appState.Collection.ActiveIndividualId) _onStateChanged();
 
         // Card stays open (like the favorite star): rebuild just the strip in place from fresh
         // model data rather than closing/reopening the whole detail overlay.
-        var entry = _viewModel.GetEntries(DateTimeOffset.UtcNow).FirstOrDefault(x => x.IndividualId == individual.Id);
-        if (entry is not null) DetailEvolutionChainStrip.ItemsSource = BuildEvolutionStageCards(entry);
+        if (IsCurrentDetail(individual.Id, generation))
+        {
+            var entry = _viewModel.GetEntry(individual.Id, DateTimeOffset.UtcNow);
+            if (entry is not null) DetailEvolutionChainStrip.ItemsSource = BuildEvolutionStageCards(entry);
+            else HideDetail();
+        }
 
         Refresh();
     }
@@ -935,6 +953,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         if (_isLoadingDetailNickname || _detailCard is null) return;
         var id = _detailCard.IndividualId;
+        var generation = _detailGeneration;
         var nicknameText = DetailNicknameBox.Text;
         if (_commitState is null) _viewModel.SetNickname(id, nicknameText);
         else if (!await CommitMutationAsync(next =>
@@ -942,9 +961,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
                 ?? throw new InvalidOperationException("Этот покемон больше не найден.");
             individual.Nickname = nicknameText;
-        }))
+        }, id, generation))
         {
-            if (_detailCard?.IndividualId == id)
+            if (IsCurrentDetail(id, generation))
             {
                 _isLoadingDetailNickname = true;
                 DetailNicknameBox.Text = LiveNickname(id) ?? string.Empty;
@@ -952,7 +971,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             }
             return;
         }
-        if (_detailCard?.IndividualId != id) return;
+        if (!IsCurrentDetail(id, generation)) return;
 
         // Re-read from the model rather than from the box: the setter trims and clamps, so a
         // whitespace-only entry must show as "back to the species name", not as a blank title.
@@ -975,6 +994,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         if (_detailCard is null) return;
         var id = _detailCard.IndividualId;
+        var generation = _detailGeneration;
         if (_commitState is null) SelectIndividual(id);
         else
         {
@@ -985,12 +1005,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
                 next.ActiveIndividualId = id;
                 if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
                 care.LastInteractionUtc = DateTimeOffset.UtcNow;
-            });
-            if (!committed) { DetailSelectButton.IsEnabled = true; return; }
+            }, id, generation);
+            if (!committed) { if (IsCurrentDetail(id, generation)) DetailSelectButton.IsEnabled = true; return; }
             _onStateChanged();
             Refresh();
         }
-        HideDetail();
+        if (IsCurrentDetail(id, generation)) HideDetail();
     }
 
     private async void DetailReleaseButton_Click(object sender, RoutedEventArgs e)
@@ -1011,6 +1031,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (!confirmed) return;
 
         var id = _detailCard.IndividualId;
+        var generation = _detailGeneration;
         if (_commitState is null) ReleaseIndividual(id);
         else
         {
@@ -1026,25 +1047,25 @@ public partial class CollectionView : System.Windows.Controls.UserControl
                 next.Individuals.Remove(individual);
                 next.CareStates.Remove(id);
                 if (next.ActiveIndividualId == id) next.ActiveIndividualId = next.Individuals.FirstOrDefault()?.Id;
-            });
-            if (!committed) { DetailReleaseButton.IsEnabled = true; return; }
+            }, id, generation);
+            if (!committed) { if (IsCurrentDetail(id, generation)) DetailReleaseButton.IsEnabled = true; return; }
             _onStateChanged();
             Refresh();
         }
-        HideDetail();
+        if (IsCurrentDetail(id, generation)) HideDetail();
     }
 
-    private async Task<bool> CommitMutationAsync(Action<SaveData> update)
+    private async Task<bool> CommitMutationAsync(Action<SaveData> update, Guid id, int generation)
     {
         try
         {
             await _commitState!(update);
-            DetailErrorText.Text = string.Empty;
+            if (IsCurrentDetail(id, generation)) DetailErrorText.Text = string.Empty;
             return true;
         }
         catch (Exception error)
         {
-            DetailErrorText.Text = error.Message;
+            if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message;
             return false;
         }
     }
