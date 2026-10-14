@@ -1,0 +1,5 @@
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\evolutionTests.cs(8,70): error CS0246: Не удалось найти тип или имя пространства имен "EvolutionService" (возможно, отсутствует директива using или ссылка на сборку). [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+COMMAND: rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --verbosity minimal --filter 'FullyQualifiedName~EvolutionTests'
+ExitCode: 1

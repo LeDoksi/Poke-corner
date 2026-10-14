@@ -1,0 +1,30 @@
+COMMAND: rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --verbosity minimal --filter 'FullyQualifiedName~OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity|FullyQualifiedName~AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip'
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+[xUnit.net 00:00:01.18]     PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip [FAIL]
+[xUnit.net 00:00:01.25]     PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip [784 ms]
+  Сообщение об ошибке:
+   Assert.True() Failure
+Expected: True
+Actual:   False
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\evolutionTests.cs:line 360
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity [74 ms]
+  Сообщение об ошибке:
+   Assert.True() Failure
+Expected: True
+Actual:   False
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\evolutionTests.cs:line 316
+--- End of stack trace from previous location ---
+
+Не пройден!: не пройдено     2, пройдено     0, пропущено     0, всего     2, длительность 72 ms. - PokeCorner.App.Tests.dll (net8.0)
+ExitCode: 1

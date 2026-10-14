@@ -1,0 +1,34 @@
+COMMAND: rtk proxy dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --verbosity minimal --filter 'FullyQualifiedName~OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity|FullyQualifiedName~AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip'
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+[xUnit.net 00:00:00.92]     PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip [FAIL]
+[xUnit.net 00:00:01.01]     PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip [790 ms]
+  Сообщение об ошибке:
+   System.Text.Json.JsonException : неверная стадия или прогресс
+  Трассировка стека:
+     at PokeCorner.Core.Persistence.JsonSaveStore.Require(Boolean condition, String diagnostic) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\Persistence\JsonSaveStore.cs:line 214
+   at PokeCorner.Core.Persistence.JsonSaveStore.ValidateIndividual(PokemonIndividual individual, Int32 schemaVersion) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\Persistence\JsonSaveStore.cs:line 262
+   at PokeCorner.Core.Persistence.JsonSaveStore.ValidateData(SaveData data) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\Persistence\JsonSaveStore.cs:line 245
+   at PokeCorner.Core.AppState.CommitAsync(BackgroundSaveWriter writer, Action`1 update, Func`1 pendingCatchCount, Action`1 afterPublish, SaveData replacement) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\AppState.cs:line 78
+   at PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.AlreadySavedV2OpenedGiftWithOldLengthCanEvolveAfterRoundTrip() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\evolutionTests.cs:line 363
+--- End of stack trace from previous location ---
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity [84 ms]
+  Сообщение об ошибке:
+   System.Text.Json.JsonException : неверная стадия или прогресс
+  Трассировка стека:
+     at PokeCorner.Core.Persistence.JsonSaveStore.Require(Boolean condition, String diagnostic) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\Persistence\JsonSaveStore.cs:line 214
+   at PokeCorner.Core.Persistence.JsonSaveStore.ValidateIndividual(PokemonIndividual individual, Int32 schemaVersion) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\Persistence\JsonSaveStore.cs:line 262
+   at PokeCorner.Core.Persistence.JsonSaveStore.ValidateData(SaveData data) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\Persistence\JsonSaveStore.cs:line 245
+   at PokeCorner.Core.AppState.CommitAsync(BackgroundSaveWriter writer, Action`1 update, Func`1 pendingCatchCount, Action`1 afterPublish, SaveData replacement) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\AppState.cs:line 78
+   at PokeCorner.App.Tests.GlobalUpdate.EvolutionTests.OpenedMigrationGiftCanCommitCanonicalEvolutionAndKeepIdentity() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\evolutionTests.cs:line 320
+--- End of stack trace from previous location ---
+
+Не пройден!: не пройдено     2, пройдено     0, пропущено     0, всего     2, длительность 82 ms. - PokeCorner.App.Tests.dll (net8.0)
+ExitCode: 1
