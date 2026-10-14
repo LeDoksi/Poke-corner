@@ -297,6 +297,11 @@ public sealed class JsonSaveStore
             && data.Individuals.All(i => i.Id != x.Value.IndividualId))
             && data.RehomingResults!.Values.Select(x => x.IndividualId).Distinct().Count() == data.RehomingResults!.Count,
             "неверный журнал передачи");
+        Require(data.CompletedOperations!.Keys.Where(key => key.StartsWith("rehome", StringComparison.OrdinalIgnoreCase))
+            .All(key => key.StartsWith("rehome:", StringComparison.Ordinal)
+                && Guid.TryParseExact(key["rehome:".Length..], "D", out var operationId)
+                && operationId != Guid.Empty && key == $"rehome:{operationId}"
+                && data.RehomingResults!.ContainsKey(operationId)), "неверное завершение передачи");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.Berries!.Keys) && SaveMigration.ItemIds.ToHashSet().SetEquals(data.Items!.Keys)
             && data.Berries.Values.All(n => n >= 0) && data.Items.Values.All(n => n >= 0) && data.Items["treats"] == data.FeedingTreats, "неверный инвентарь v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)

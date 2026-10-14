@@ -191,6 +191,22 @@ public sealed class RehomeTests
     }
 
     [Fact]
+    public void RehomeCompletionRequiresMatchingResultAndCanonicalKey()
+    {
+        var data = State();
+        data.CompletedOperations["shop:unrelated-operation"] = Guid.NewGuid();
+        JsonSaveStore.ValidateData(data);
+
+        foreach (var key in new[] { $"rehome:{Guid.NewGuid()}", "rehome", "rehome:", "rehome:not-a-guid",
+                     $"rehome:{Guid.NewGuid():N}", $"rehome:{Guid.NewGuid()}:extra", $"REHOME:{Guid.NewGuid()}" })
+        {
+            data.CompletedOperations[key] = Guid.NewGuid();
+            Assert.Throws<JsonException>(() => JsonSaveStore.ValidateData(data));
+            data.CompletedOperations.Remove(key);
+        }
+    }
+
+    [Fact]
     public void CardShowsProtectionAndCancelledConfirmationKeepsSelectedIndividual() => WpfTestHost.Run(() =>
     {
         var data = State();
