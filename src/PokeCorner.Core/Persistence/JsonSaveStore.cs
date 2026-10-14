@@ -285,10 +285,18 @@ public sealed class JsonSaveStore
         Require(data.DiscoveredSpeciesIds is not null && data.EvolutionTransitions is not null && data.ShinySpeciesIds is not null
             && data.Metrics is not null && data.AwardLedger is not null && data.Berries is not null && data.Items is not null
             && data.BerryRemainders is not null && data.Tutorial is not null && data.Gift is not null
-            && data.CompletedOperations is not null && data.EvolutionResults is not null
+            && data.CompletedOperations is not null && data.EvolutionResults is not null && data.RehomingResults is not null
             && data.HatchedNurseryResults is not null, "обязательное поле v2 равно null");
         Require(data.EvolutionResults!.All(x => x.Key != Guid.Empty && x.Value > 0 &&
             data.CompletedOperations!.ContainsKey($"evolution:{x.Key}")), "неверный журнал эволюций");
+        Require(data.RehomingResults!.All(x => x.Key != Guid.Empty && x.Value is not null
+            && x.Value.IndividualId != Guid.Empty && x.Value.Coins is > 0 and <= 49
+            && x.Value.ReplacementId != x.Value.IndividualId
+            && data.CompletedOperations!.GetValueOrDefault($"rehome:{x.Key}") ==
+                RehomingService.Fingerprint(x.Value.IndividualId, x.Value.ReplacementId)
+            && data.Individuals.All(i => i.Id != x.Value.IndividualId))
+            && data.RehomingResults!.Values.Select(x => x.IndividualId).Distinct().Count() == data.RehomingResults!.Count,
+            "неверный журнал передачи");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.Berries!.Keys) && SaveMigration.ItemIds.ToHashSet().SetEquals(data.Items!.Keys)
             && data.Berries.Values.All(n => n >= 0) && data.Items.Values.All(n => n >= 0) && data.Items["treats"] == data.FeedingTreats, "неверный инвентарь v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)
@@ -323,7 +331,8 @@ public sealed class JsonSaveStore
         foreach (var encounter in data.Encounters.Where(e => e.Phase == "opened"))
         {
             ValidateIndividual(encounter.Individual, 2);
-            Require(Enum.IsDefined(encounter.Rarity!.Value) && data.Individuals.Any(i => i.Id == encounter.Individual!.Id)
+            Require(Enum.IsDefined(encounter.Rarity!.Value) && (data.Individuals.Any(i => i.Id == encounter.Individual!.Id)
+                || data.RehomingResults!.Values.Any(r => r.IndividualId == encounter.Individual!.Id))
                 && (encounter.KnownSpeciesId is null || encounter.Individual!.SpeciesId == encounter.KnownSpeciesId),
                 "открытая встреча без экземпляра");
         }

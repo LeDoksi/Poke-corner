@@ -28,6 +28,7 @@ public sealed class SaveData
     public double NurseryLuckBonus { get; set; }
     public Dictionary<string, Guid> CompletedOperations { get; set; } = [];
     public Dictionary<Guid, int> EvolutionResults { get; set; } = [];
+    public Dictionary<Guid, RehomeResult> RehomingResults { get; set; } = [];
     public List<EncounterState> Encounters { get; set; } = [];
     public bool ActivityNewGuaranteed { get; set; }
     public required List<PokemonIndividual> Individuals { get; set; }
@@ -60,6 +61,8 @@ public sealed class AwardEntry
     public string? CatalogRevision { get; set; }
     public List<int> AvailableSpeciesIds { get; set; } = [];
 }
+
+public sealed record RehomeResult(Guid IndividualId, Guid? ReplacementId, int Coins);
 
 public sealed class TutorialState
 {

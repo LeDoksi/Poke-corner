@@ -30,6 +30,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Func<bool> _isReadyToEvolve;
     private readonly Func<Guid, EvolutionPreview>? _previewEvolution;
     private readonly Func<Guid, int?, Guid, Task<EvolutionAction>>? _evolveIndividual;
+    private readonly Func<Guid, RehomeQuote>? _previewRehome;
+    private readonly Func<Guid, Guid, Task<RehomeAction>>? _rehomeIndividual;
     private readonly Action<MenuSection>? _navigate;
     private readonly Action<string, int>? _buyBerries;
     private DispatcherTimer? _liveRefreshTimer;
@@ -119,7 +121,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Func<int, string?>? getSpeciesAssetPath = null, Func<Action<SaveData>, Task>? commitState = null,
         Func<Guid, EvolutionPreview>? previewEvolution = null,
         Func<Guid, int?, Guid, Task<EvolutionAction>>? evolveIndividual = null,
-        Action<MenuSection>? navigate = null, Action<string, int>? buyBerries = null)
+        Action<MenuSection>? navigate = null, Action<string, int>? buyBerries = null,
+        Func<Guid, RehomeQuote>? previewRehome = null, Func<Guid, Guid, Task<RehomeAction>>? rehomeIndividual = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -137,6 +140,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _commitState = commitState;
         _previewEvolution = previewEvolution;
         _evolveIndividual = evolveIndividual;
+        _previewRehome = previewRehome;
+        _rehomeIndividual = rehomeIndividual;
         _navigate = navigate;
         _buyBerries = buyBerries;
 
@@ -206,7 +211,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshProgress(active);
         RefreshPokedex(entries);
         if (SpeciesPane.Visibility == Visibility.Visible) RefreshSpecies();
-        if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailEvolution();
+        if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible)
+        {
+            RefreshDetailEvolution();
+            RefreshDetailRehome();
+        }
     }
 
     private void IndividualsMode_Click(object sender, RoutedEventArgs e)
@@ -744,10 +753,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     // ======================= Pokédex detail overlay =======================
     // Renders the PokedexCard it is handed and routes every mutation through the same
-    // SelectIndividual/ReleaseIndividual/ToggleFavorite methods the rest of this view uses.
+    // SelectIndividual/ToggleFavorite methods the rest of this view uses.
 
     /// The card currently on show, or null when the overlay is hidden.
     private PokedexCard? _detailCard;
+    private readonly HashSet<Guid> _rehomingIndividuals = [];
     private int _detailGeneration;
     private string _evolutionChoicesSignature = string.Empty;
     private EvolutionPreview? _detailEvolutionPreview;
@@ -774,7 +784,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailErrorText.Text = string.Empty;
         _detailIsFavorite = card.IsFavorite;
         DetailFavoriteButton.IsEnabled = true;
-        DetailReleaseButton.IsEnabled = !_appState.BusyIndividualIds.Contains(card.IndividualId);
+        RefreshDetailRehome();
 
         DetailDexNumberText.Text = card.DexNumber;
         DetailSpeciesNameText.Text = card.DisplayName;
@@ -1130,46 +1140,61 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (IsCurrentDetail(id, generation)) HideDetail();
     }
 
-    private async void DetailReleaseButton_Click(object sender, RoutedEventArgs e)
+    private void RefreshDetailRehome()
     {
-        if (_detailCard is null) return;
+        if (_detailCard is null || _previewRehome is null || _rehomeIndividual is null)
+        {
+            DetailRehomeButton.Visibility = Visibility.Visible;
+            DetailRehomeButton.IsEnabled = false;
+            DetailRehomeReasonText.Visibility = Visibility.Collapsed;
+            return;
+        }
+        var quote = _previewRehome(_detailCard.IndividualId);
+        DetailRehomeButton.Visibility = Visibility.Visible;
+        DetailRehomeReasonText.Visibility = Visibility.Visible;
+        DetailRehomeReasonText.Text = quote.Reason ?? $"Передача: +{quote.Coins} монет. Необратимо.";
+        DetailRehomeButton.IsEnabled = quote.Reason is null && !_rehomingIndividuals.Contains(_detailCard.IndividualId);
+    }
 
-        // Releasing is permanent and the button sits one click from a card the player opened
-        // just to look at, so it gets the same themed confirmation the save-reset flow uses.
-        // Both names in the prompt when the pet has a nickname: "Sparky" alone would leave the
-        // player unsure WHICH Pikachu is about to be released permanently.
-        var nickname = LiveNickname(_detailCard.IndividualId);
-        var name = nickname is null ? _detailCard.SpeciesName : $"{nickname} ({_detailCard.SpeciesName})";
-
-        var confirmed = ConfirmDialog.Ask(
-            "Отпустить покемона?",
-            $"{name} будет навсегда удалён из коллекции. Это нельзя отменить.",
-            "Отпустить", System.Windows.Window.GetWindow(this));
-        if (!confirmed) return;
-
+    private async void DetailRehomeButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailCard is null || _previewRehome is null || _rehomeIndividual is null) return;
         var id = _detailCard.IndividualId;
         var generation = _detailGeneration;
-        if (_commitState is null) ReleaseIndividual(id);
-        else
+        if (_rehomingIndividuals.Contains(id)) return;
+        var quote = _previewRehome(id);
+        if (quote.Reason is not null) { DetailErrorText.Text = quote.Reason; RefreshDetailRehome(); return; }
+        var nickname = LiveNickname(id);
+        var name = nickname is null ? _detailCard.SpeciesName : $"{nickname} ({_detailCard.SpeciesName})";
+        if (!ConfirmDialog.Ask("Найти новый дом?",
+            $"Передать {name} за {quote.Coins} монет? Покемон покинет коллекцию навсегда. Это нельзя отменить.",
+            "Передать", System.Windows.Window.GetWindow(this))) return;
+        if (!IsCurrentDetail(id, generation)) return;
+        var current = _previewRehome(id);
+        if (current.Reason is not null || current.Coins != quote.Coins)
         {
-            DetailReleaseButton.IsEnabled = false;
-            var committed = await CommitMutationAsync(next =>
-            {
-                if (ExpeditionService.BusyIndividualIds(next).Contains(id))
-                    throw new InvalidOperationException("Покемон занят в походе или питомнике.");
-                var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
-                    ?? throw new InvalidOperationException("Этот покемон больше не найден.");
-                next.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
-                next.DiscoveredSpeciesIds.Add(individual.SpeciesId);
-                next.Individuals.Remove(individual);
-                next.CareStates.Remove(id);
-                if (next.ActiveIndividualId == id) next.ActiveIndividualId = next.Individuals.FirstOrDefault()?.Id;
-            }, id, generation);
-            if (!committed) { if (IsCurrentDetail(id, generation)) DetailReleaseButton.IsEnabled = true; return; }
+            DetailErrorText.Text = current.Reason ?? "Условия передачи изменились. Проверьте сумму ещё раз.";
+            RefreshDetailRehome();
+            return;
+        }
+        _rehomingIndividuals.Add(id);
+        DetailRehomeButton.IsEnabled = false;
+        try
+        {
+            await _rehomeIndividual(id, Guid.NewGuid());
             _onStateChanged();
             Refresh();
+            if (IsCurrentDetail(id, generation)) HideDetail();
         }
-        if (IsCurrentDetail(id, generation)) HideDetail();
+        catch (Exception error)
+        {
+            if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message;
+        }
+        finally
+        {
+            _rehomingIndividuals.Remove(id);
+            if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailRehome();
+        }
     }
 
     private async Task<bool> CommitMutationAsync(Action<SaveData> update, Guid id, int generation)
@@ -1202,13 +1227,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void ToggleFavorite(Guid id)
     {
         _viewModel.ToggleFavorite(id);
-        Refresh();
-    }
-
-    private void ReleaseIndividual(Guid id)
-    {
-        if (!_viewModel.Release(id)) return;
-        _onStateChanged();
         Refresh();
     }
 

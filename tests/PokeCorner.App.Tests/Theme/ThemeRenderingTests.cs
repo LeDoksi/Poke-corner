@@ -481,7 +481,7 @@ public class ThemeRenderingTests
             scroller.ScrollToBottom();
             WpfTestHost.Layout(view, windowWidth, windowHeight);
 
-            foreach (var name in new[] { "DetailSelectButton", "DetailReleaseButton" })
+            foreach (var name in new[] { "DetailSelectButton", "DetailRehomeButton" })
             {
                 var button = (System.Windows.Controls.Button)view.FindName(name)!;
                 var transform = button.TransformToAncestor(view);

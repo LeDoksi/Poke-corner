@@ -304,8 +304,6 @@ public sealed class CollectionViewModel
         return true;
     }
 
-    public bool Release(Guid id) => !_busyIndividualIds().Contains(id) && _collection.Release(id);
-
     /// Flips the pin on one individual and reports its new state. Returns false when the id
     /// isn't in the collection (e.g. a stale card clicked after a release).
     public bool ToggleFavorite(Guid id)

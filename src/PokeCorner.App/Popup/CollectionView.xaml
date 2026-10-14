@@ -513,14 +513,14 @@
                     MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
                 <!-- MaxHeight bounds the card and the ScrollViewer makes overflow reachable: a shiny,
                      pinned, active two-type Pokémon in a 3-stage line is taller than the app window, and
-                     without them Выбрать/Отпустить rendered below the window's bottom edge.
+                     without them Выбрать/Найти новый дом rendered below the window's bottom edge.
                 
                      The action row is docked to the BOTTOM of this DockPanel (added first, so LastChildFill
                      gives the scroller the rest), outside the scrollable content: its position is immune to
                      anything that reflows the content above, and it is reachable without scrolling. -->
                 <DockPanel LastChildFill="True">
                     <Grid DockPanel.Dock="Bottom" Margin="0,12,0,0">
-                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -528,24 +528,26 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="DetailErrorText" Grid.ColumnSpan="3" Foreground="{StaticResource AccentRedBrush}"
                                    TextWrapping="Wrap" Margin="0,0,0,5" AutomationProperties.LiveSetting="Assertive"/>
+                        <TextBlock x:Name="DetailRehomeReasonText" Grid.Row="1" Grid.ColumnSpan="3"
+                                   TextWrapping="Wrap" Margin="0,0,0,5" Foreground="{StaticResource MutedTextBrush}"/>
 
                         <!-- The star pin, moved here off the roster rows. One Path with both Fill
                              and Stroke bound covers both states: gold-on-gold when pinned, hollow
                              with a muted outline when not. -->
-                        <Button x:Name="DetailFavoriteButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource FavoriteToggleStyle}"
+                        <Button x:Name="DetailFavoriteButton" Grid.Row="2" Grid.Column="0" Style="{StaticResource FavoriteToggleStyle}"
                                 Click="DetailFavoriteButton_Click" VerticalAlignment="Center" Margin="0,0,8,0">
                             <Path x:Name="DetailFavoriteStar" Width="17" Height="17" Stretch="Uniform"
                                   StrokeThickness="1.6" StrokeLineJoin="Round"
                                   Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
                         </Button>
 
-                        <Button x:Name="DetailSelectButton" Grid.Row="1" Grid.Column="1" Content="Выбрать" Click="DetailSelectButton_Click"
+                        <Button x:Name="DetailSelectButton" Grid.Row="2" Grid.Column="1" Content="Выбрать" Click="DetailSelectButton_Click"
                                 Padding="12,7" Margin="0,0,8,0"
                                 ToolTip="Сделать этого покемона активным — он появится на рабочем столе" />
 
-                        <Button x:Name="DetailReleaseButton" Grid.Row="1" Grid.Column="2" Content="Отпустить" Click="DetailReleaseButton_Click"
+                        <Button x:Name="DetailRehomeButton" Grid.Row="2" Grid.Column="2" Content="Найти новый дом" Click="DetailRehomeButton_Click"
                                 Padding="12,7" Style="{StaticResource SecondaryButtonStyle}"
-                                ToolTip="Насовсем удалить этого покемона из коллекции" />
+                                ToolTip="Передать этого покемона за монеты после подтверждения" />
                     </Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>

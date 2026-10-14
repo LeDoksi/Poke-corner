@@ -118,37 +118,6 @@ public class CollectionViewModelTests
     }
 
     [Fact]
-    public void Release_DelegatesToCollection()
-    {
-        var collection = new PokemonCollection();
-        var individual = MakeIndividual(1);
-        collection.Add(individual);
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(), new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>());
-
-        var released = vm.Release(individual.Id);
-
-        Assert.True(released);
-        Assert.Empty(collection.Individuals);
-    }
-
-    [Fact]
-    public void Release_RefusesBusyParentThenAllowsAfterCommittedUnlock()
-    {
-        var collection = new PokemonCollection();
-        var individual = MakeIndividual();
-        collection.Add(individual);
-        IReadOnlySet<Guid> busy = new HashSet<Guid> { individual.Id };
-        var vm = new CollectionViewModel(collection, new Dictionary<Guid, CareState>(),
-            new CareModeService(), Array.Empty<SpeciesEvolutionChain>(), new List<PendingEgg>(), () => busy);
-
-        Assert.False(vm.Release(individual.Id));
-        Assert.Single(collection.Individuals);
-        busy = new HashSet<Guid>();
-        Assert.True(vm.Release(individual.Id));
-        Assert.Empty(collection.Individuals);
-    }
-
-    [Fact]
     public void GetEntries_IncludesRarityFromChainCaptureRate()
     {
         var collection = new PokemonCollection();
