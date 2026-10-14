@@ -32,6 +32,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Func<Guid, int?, Guid, Task<EvolutionAction>>? _evolveIndividual;
     private readonly Func<Guid, RehomeQuote>? _previewRehome;
     private readonly Func<Guid, Guid, Task<RehomeAction>>? _rehomeIndividual;
+    private readonly Func<Guid, int, RetrainingPreview>? _previewRetraining;
+    private readonly Func<Guid, int, Guid, Task<RetrainingAction>>? _retrainIndividual;
     private readonly Action<MenuSection>? _navigate;
     private readonly Action<string, int>? _buyBerries;
     private DispatcherTimer? _liveRefreshTimer;
@@ -122,7 +124,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Func<Guid, EvolutionPreview>? previewEvolution = null,
         Func<Guid, int?, Guid, Task<EvolutionAction>>? evolveIndividual = null,
         Action<MenuSection>? navigate = null, Action<string, int>? buyBerries = null,
-        Func<Guid, RehomeQuote>? previewRehome = null, Func<Guid, Guid, Task<RehomeAction>>? rehomeIndividual = null)
+        Func<Guid, RehomeQuote>? previewRehome = null, Func<Guid, Guid, Task<RehomeAction>>? rehomeIndividual = null,
+        Func<Guid, int, RetrainingPreview>? previewRetraining = null,
+        Func<Guid, int, Guid, Task<RetrainingAction>>? retrainIndividual = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -142,6 +146,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _evolveIndividual = evolveIndividual;
         _previewRehome = previewRehome;
         _rehomeIndividual = rehomeIndividual;
+        _previewRetraining = previewRetraining;
+        _retrainIndividual = retrainIndividual;
         _navigate = navigate;
         _buyBerries = buyBerries;
 
@@ -214,6 +220,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible)
         {
             RefreshDetailEvolution();
+            RefreshDetailRetraining();
             RefreshDetailRehome();
         }
     }
@@ -762,6 +769,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private string _evolutionChoicesSignature = string.Empty;
     private EvolutionPreview? _detailEvolutionPreview;
     private readonly HashSet<Guid> _evolvingIndividuals = [];
+    private RetrainingPreview? _detailRetrainingPreview;
+    private readonly HashSet<Guid> _retrainingIndividuals = [];
+    private (Guid IndividualId, int Slot, Guid OperationId)? _pendingRetraining;
 
     private bool IsCurrentDetail(Guid id, int generation) =>
         _detailGeneration == generation && DetailOverlay.Visibility == Visibility.Visible &&
@@ -829,6 +839,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailEvolutionChainStrip.ItemsSource = card.EvolutionStages;
         _evolutionChoicesSignature = string.Empty;
         RefreshDetailEvolution();
+        RefreshDetailRetraining();
 
         DetailShinyBadge.Visibility = card.ShinyVisibility;
         DetailActiveBadge.Visibility = card.ActiveBadgeVisibility;
@@ -940,6 +951,88 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _navigate?.Invoke(MenuSection.Shop);
     }
     private void DetailEvolutionRouteButton_Click(object sender, RoutedEventArgs e) => _navigate?.Invoke(MenuSection.Expeditions);
+
+    private void RefreshDetailRetraining()
+    {
+        if (_detailCard is null || _previewRetraining is null || _retrainIndividual is null ||
+            !_appState.Collection.Individuals.Any(x => x.Id == _detailCard.IndividualId))
+        {
+            DetailRetrainingSection.Visibility = Visibility.Collapsed;
+            return;
+        }
+        DetailRetrainingSection.Visibility = Visibility.Visible;
+        var selected = (DetailRetrainingSlotPicker.SelectedItem as ComboBoxItem)?.Tag as int? ?? 1;
+        DetailRetrainingSlotPicker.SelectionChanged -= DetailRetrainingSlotPicker_SelectionChanged;
+        DetailRetrainingSlotPicker.Items.Clear();
+        DetailRetrainingSlotPicker.Items.Add(new ComboBoxItem { Content = $"Первый слот · {TraitLabel(_detailCard.FirstTraitId ?? "")}", Tag = 1 });
+        if (!string.IsNullOrWhiteSpace(_detailCard.SecondTraitId))
+            DetailRetrainingSlotPicker.Items.Add(new ComboBoxItem { Content = $"Второй слот · {TraitLabel(_detailCard.SecondTraitId)}", Tag = 2 });
+        DetailRetrainingSlotPicker.SelectedItem = DetailRetrainingSlotPicker.Items.Cast<ComboBoxItem>()
+            .FirstOrDefault(x => x.Tag is int slot && slot == selected) ?? DetailRetrainingSlotPicker.Items[0];
+        DetailRetrainingSlotPicker.SelectionChanged += DetailRetrainingSlotPicker_SelectionChanged;
+        selected = (int)((ComboBoxItem)DetailRetrainingSlotPicker.SelectedItem).Tag;
+        var preview = _previewRetraining(_detailCard.IndividualId, selected);
+        _detailRetrainingPreview = preview;
+        DetailRetrainingCostText.Text = "Стоимость: " + string.Join(" · ",
+            preview.Costs.Select(x => $"{x.BerryId}: {x.Owned} / {x.Required}"));
+        DetailRetrainingOutcomesText.Text = "Возможные новые особенности (равный шанс): " +
+            string.Join(" · ", preview.Outcomes.Select(TraitLabel));
+        DetailRetrainingReasonText.Text = preview.Reason ?? string.Empty;
+        DetailRetrainButton.IsEnabled = preview.Reason is null && !_retrainingIndividuals.Contains(_detailCard.IndividualId);
+        DetailRetrainingShopButton.Visibility = preview.Costs.Any(x => x.Owned < x.Required)
+            ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private void DetailRetrainingSlotPicker_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+        RefreshDetailRetraining();
+
+    private async void DetailRetrainButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailCard is null || _previewRetraining is null || _retrainIndividual is null) return;
+        var id = _detailCard.IndividualId;
+        var generation = _detailGeneration;
+        var slot = (DetailRetrainingSlotPicker.SelectedItem as ComboBoxItem)?.Tag as int? ?? 1;
+        var preview = _previewRetraining(id, slot);
+        if (preview.Reason is not null) { DetailRetrainingReasonText.Text = preview.Reason; return; }
+        var cost = string.Join(", ", preview.Costs.Select(x => $"{x.Required} {x.BerryId}"));
+        if (!ConfirmDialog.Ask("Подтвердить переобучение?",
+            $"Потратить {cost} и случайно заменить {TraitLabel(preview.CurrentTraitId!)}? Возможные результаты: " +
+            string.Join(", ", preview.Outcomes.Select(TraitLabel)), "Переобучить", System.Windows.Window.GetWindow(this))) return;
+        if (!IsCurrentDetail(id, generation)) return;
+        if (_pendingRetraining is not { } pending || pending.IndividualId != id || pending.Slot != slot)
+            _pendingRetraining = (id, slot, Guid.NewGuid());
+        var operationId = _pendingRetraining.Value.OperationId;
+        _retrainingIndividuals.Add(id);
+        DetailRetrainButton.IsEnabled = false;
+        try
+        {
+            var result = await _retrainIndividual(id, slot, operationId);
+            _pendingRetraining = null;
+            Refresh();
+            if (IsCurrentDetail(id, generation))
+            {
+                OpenIndividual(id);
+                DetailErrorText.Text = result.Message;
+            }
+        }
+        catch (Exception error)
+        {
+            if (IsCurrentDetail(id, generation)) DetailRetrainingReasonText.Text = error.Message;
+        }
+        finally
+        {
+            _retrainingIndividuals.Remove(id);
+            if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailRetraining();
+        }
+    }
+
+    private void DetailRetrainingShopButton_Click(object sender, RoutedEventArgs e)
+    {
+        var shortage = _detailRetrainingPreview?.Costs.FirstOrDefault(x => x.Owned < x.Required);
+        if (shortage is null) return;
+        _buyBerries?.Invoke(shortage.BerryId, shortage.Required);
+        _navigate?.Invoke(MenuSection.Shop);
+    }
 
     private void HideDetail()
     {

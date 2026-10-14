@@ -62,6 +62,75 @@ public sealed class EvolutionTests
     }
 
     [Fact]
+    public void PersonalCardShowsRetrainingRecipeOutcomesAndShopShortage() => WpfTestHost.Run(() =>
+    {
+        var data = State(1);
+        var app = new AppState();
+        app.Hydrate(data);
+        var id = data.Individuals[0].Id;
+        var vm = new CollectionViewModel(app.Collection, app.CareStateByIndividualId, new CareModeService(),
+            [], [], species: Catalog.Value.Species, discoveredSpeciesIds: () => app.DiscoveredSpeciesIds);
+        MenuSection? destination = null;
+        (string Berry, int Required)? purchase = null;
+        var view = new CollectionView(vm, app,
+            new SpriteCache(Path.Combine(Path.GetTempPath(), "retraining-view", Guid.NewGuid().ToString("N"))),
+            () => { }, () => { }, () => { }, () => null, () => false, () => true,
+            previewRetraining: (individualId, slot) => new RetrainingService(Catalog.Value, data).Preview(individualId, slot),
+            retrainIndividual: (_, _, _) => Task.FromResult(new RetrainingAction(false, "test")),
+            navigate: section => destination = section,
+            buyBerries: (berry, required) => purchase = (berry, required));
+        Assert.True(view.OpenIndividual(id));
+        WpfTestHost.Layout(view, 320, 420);
+        Assert.Equal(Visibility.Visible, ((Border)view.FindName("DetailRetrainingSection")).Visibility);
+        Assert.Contains("20 / 20", ((TextBlock)view.FindName("DetailRetrainingCostText")).Text);
+        Assert.Contains("равный шанс", ((TextBlock)view.FindName("DetailRetrainingOutcomesText")).Text);
+        Assert.True(((Button)view.FindName("DetailRetrainButton")).IsEnabled);
+        data.Berries["rawst"] = 0;
+        view.Refresh();
+        Assert.False(((Button)view.FindName("DetailRetrainButton")).IsEnabled);
+        ((Button)view.FindName("DetailRetrainingShopButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        Assert.Equal(("rawst", 20), purchase);
+        Assert.Equal(MenuSection.Shop, destination);
+    });
+
+    [Fact]
+    public void ConfirmedPersonalCardRetrainingCallsRealProducer() => WpfTestHost.Run(() =>
+    {
+        var data = State(1);
+        var app = new AppState();
+        app.Hydrate(data);
+        var id = data.Individuals[0].Id;
+        var vm = new CollectionViewModel(app.Collection, app.CareStateByIndividualId, new CareModeService(),
+            [], [], species: Catalog.Value.Species, discoveredSpeciesIds: () => app.DiscoveredSpeciesIds);
+        Guid operation = Guid.Empty;
+        var view = new CollectionView(vm, app,
+            new SpriteCache(Path.Combine(Path.GetTempPath(), "retraining-confirm", Guid.NewGuid().ToString("N"))),
+            () => { }, () => { }, () => { }, () => null, () => false, () => true,
+            previewRetraining: (individualId, slot) => new RetrainingService(Catalog.Value, data).Preview(individualId, slot),
+            retrainIndividual: (individualId, slot, operationId) =>
+            {
+                operation = operationId;
+                return Task.FromResult(new RetrainingService(Catalog.Value, data).Retrain(individualId, slot, operationId));
+            });
+        Assert.True(view.OpenIndividual(id));
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
+        timer.Tick += (_, _) =>
+        {
+            var dialog = Application.Current.Windows.OfType<ConfirmDialog>().FirstOrDefault();
+            if (dialog is null) return;
+            Assert.Contains("20", ((TextBlock)dialog.FindName("BodyText")).Text);
+            timer.Stop();
+            ((Button)dialog.FindName("ConfirmButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        };
+        timer.Start();
+        ((Button)view.FindName("DetailRetrainButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        timer.Stop();
+        Assert.NotEqual(Guid.Empty, operation);
+        Assert.Equal(0, data.Berries["rawst"]);
+        Assert.True(data.Metrics.ContainsKey("special:trophy-special-retrain"));
+    });
+
+    [Fact]
     public void EeveeUsesOneBerryForEveryActualBranchAndPreservesIdentity()
     {
         var data = State(133, shiny: true);

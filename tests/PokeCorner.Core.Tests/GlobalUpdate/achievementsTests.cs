@@ -106,7 +106,8 @@ public sealed class AchievementsTests
             SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1, EvolutionChainId = 1,
             ChainLength = 1, Nature = Nature.Hardy, IsShiny = false,
             ReachedSpeciesIds = [1], CaughtAtUtc = DateTimeOffset.UtcNow,
-            TotalXp = maxXp, Nickname = "Ace", IsFavorite = true, SecondTraitId = "finder"
+            TotalXp = maxXp, Nickname = "Ace", IsFavorite = true,
+            FirstTraitId = "collector", SecondTraitId = "finder"
         }));
         foreach (var key in new[] { "successful-catches", "claimed-expeditions", "visited-regions",
             "hard-expedition-in-each-region", "first-expedition-xp", "first-feeding",
@@ -116,10 +117,12 @@ public sealed class AchievementsTests
                 "successful-catches" => 500, "claimed-expeditions" => 200,
                 "distinct-cared-individuals" => 50, "distinct-hatched-root-species" => 30, _ => 8
             };
-        foreach (var berry in SaveMigration.BerryIds) state.Berries[berry] = 1;
+        foreach (var berry in SaveMigration.BerryIds) state.Berries[berry] = 21;
         foreach (var id in new[] { "type-team", "bonus-find", "nursery-expedition", "family-expedition",
-            "evolved-expedition", "berry-evolution", "branch-choice", "offspring-choice", "retrain" })
+            "evolved-expedition", "berry-evolution", "branch-choice", "offspring-choice" })
             AchievementMetrics.Record(state, "special:trophy-special-" + id);
+        var retrained = new RetrainingService(catalog, state).Retrain(state.Individuals[0].Id, 1, Guid.NewGuid());
+        Assert.True(retrained.Success, retrained.Message);
         state.RehomingResults.Add(Guid.NewGuid(), new RehomeResult(Guid.NewGuid(), null, 6));
         state.CompletedOperations["potion:" + Guid.NewGuid()] = Guid.NewGuid();
         service.Evaluate(state);
@@ -131,7 +134,7 @@ public sealed class AchievementsTests
     }
 
     [Fact]
-    public void FrozenHatchAndDistinctCareMarkersSurviveRehome()
+    public void FrozenHatchAndDistinctCareMarkersSurviveReevaluation()
     {
         using var fixture = new NurseryCoreTests();
         var catalog = fixture.Catalog([172]);
@@ -152,6 +155,106 @@ public sealed class AchievementsTests
         var coins = state.ShopCoins;
         service.Evaluate(state);
         Assert.Equal(coins, state.ShopCoins);
+    }
+
+    [Fact]
+    public async Task ConfirmedRetrainingAwardsOnceAndReplaysWithoutSpendingAgain()
+    {
+        using var fixture = new NurseryCoreTests();
+        var catalog = fixture.Catalog([1]);
+        var state = State(catalog);
+        var individual = new PokemonIndividual
+        {
+            SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1, EvolutionChainId = 1,
+            ChainLength = 1, Nature = Nature.Hardy, IsShiny = false,
+            ReachedSpeciesIds = [1], CaughtAtUtc = DateTimeOffset.UtcNow,
+            FirstTraitId = "collector", TotalXp = 5
+        };
+        state.Individuals.Add(individual);
+        foreach (var berry in new[] { "rawst", "pecha", "cheri" }) state.Berries[berry] = 20;
+        var app = new AppState { Achievements = Service(catalog) };
+        app.Hydrate(state);
+        var operation = Guid.NewGuid();
+        var path = Path.Combine(Path.GetTempPath(), "retrain-" + Guid.NewGuid() + ".json");
+        try
+        {
+            var store = new JsonSaveStore(path);
+            store.Save(state);
+            var writer = new BackgroundSaveWriter(store);
+            RetrainingAction? result = null;
+            Directory.CreateDirectory(path + ".tmp");
+            await Assert.ThrowsAnyAsync<IOException>(() => app.CommitAsync(writer, next =>
+            {
+                result = new RetrainingService(catalog, next).Retrain(individual.Id, 1, operation);
+                Assert.True(result.Success);
+            }, () => 0));
+            var failedChoice = result!.TraitId;
+            Assert.Empty(app.ToSaveData(0).AwardLedger);
+            Assert.Equal(20, app.ToSaveData(0).Berries["rawst"]);
+            Assert.Equal("collector", app.ToSaveData(0).Individuals.Single().FirstTraitId);
+            Directory.Delete(path + ".tmp");
+            writer = new BackgroundSaveWriter(new JsonSaveStore(path));
+            await app.CommitAsync(writer, next =>
+            {
+                result = new RetrainingService(catalog, next).Retrain(individual.Id, 1, operation);
+                Assert.True(result.Success);
+            }, () => 0);
+            Assert.Equal(failedChoice, result!.TraitId);
+            Assert.Contains("trophy-special-retrain", store.Load()!.AwardLedger.Keys);
+            Assert.Single(store.Load()!.RetrainingResults);
+            Assert.Equal(individual.Id, store.Load()!.Individuals.Single().Id);
+            Assert.Equal(5, store.Load()!.Individuals.Single().TotalXp);
+            Assert.False(store.Load()!.Individuals.Single().IsShiny);
+            Assert.Null(store.Load()!.Individuals.Single().SecondTraitId);
+            var coins = store.Load()!.ShopCoins;
+            await app.CommitAsync(writer, next =>
+            {
+                result = new RetrainingService(catalog, next).Retrain(individual.Id, 1, operation);
+                Assert.True(result.Success);
+                Assert.True(result.Repeated);
+            }, () => 0);
+            Assert.Equal(coins, store.Load()!.ShopCoins);
+            Assert.Equal(0, store.Load()!.Berries["rawst"]);
+            Assert.Equal(0, store.Load()!.Berries["pecha"]);
+            Assert.Equal(0, store.Load()!.Berries["cheri"]);
+        }
+        finally
+        {
+            if (File.Exists(path)) File.Delete(path);
+            if (Directory.Exists(path + ".tmp")) Directory.Delete(path + ".tmp");
+        }
+    }
+
+    [Fact]
+    public void RetrainingBlocksBusyOrMissingResourcesAndExcludesBothOldTraits()
+    {
+        using var fixture = new NurseryCoreTests();
+        var catalog = fixture.Catalog([1]);
+        var state = State(catalog);
+        var individual = new PokemonIndividual
+        {
+            SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1, EvolutionChainId = 1,
+            ChainLength = 1, Nature = Nature.Hardy, IsShiny = false,
+            ReachedSpeciesIds = [1], CaughtAtUtc = DateTimeOffset.UtcNow,
+            FirstTraitId = "collector", SecondTraitId = "finder"
+        };
+        state.Individuals.Add(individual);
+        var service = new RetrainingService(catalog, state);
+        var operation = Guid.NewGuid();
+        Assert.False(service.Retrain(individual.Id, 1, operation).Success);
+        foreach (var berry in new[] { "rawst", "pecha", "cheri" }) state.Berries[berry] = 20;
+        state.Nest = new NurseryState { Status = "ready", ParticipantIds = [individual.Id], Child = individual };
+        Assert.False(service.Retrain(individual.Id, 1, operation).Success);
+        state.Nest = null;
+        var preview = service.Preview(individual.Id, 1);
+        Assert.Equal(3, preview.Costs.Count);
+        Assert.All(preview.Costs, cost => Assert.Equal(20, cost.Required));
+        Assert.DoesNotContain("collector", preview.Outcomes);
+        Assert.DoesNotContain("finder", preview.Outcomes);
+        Assert.Null(preview.Reason);
+        Assert.True(service.Retrain(individual.Id, 1, operation).Success);
+        Assert.Equal("finder", individual.SecondTraitId);
+        Assert.False(service.Retrain(individual.Id, 2, operation).Success);
     }
 
     [Fact]

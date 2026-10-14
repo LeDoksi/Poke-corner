@@ -286,9 +286,20 @@ public sealed class JsonSaveStore
             && data.Metrics is not null && data.AwardLedger is not null && data.Berries is not null && data.Items is not null
             && data.BerryRemainders is not null && data.Tutorial is not null && data.Gift is not null
             && data.CompletedOperations is not null && data.EvolutionResults is not null && data.RehomingResults is not null
+            && data.RetrainingResults is not null
             && data.HatchedNurseryResults is not null, "обязательное поле v2 равно null");
         Require(data.EvolutionResults!.All(x => x.Key != Guid.Empty && x.Value > 0 &&
             data.CompletedOperations!.ContainsKey($"evolution:{x.Key}")), "неверный журнал эволюций");
+        Require(data.RetrainingResults!.All(x => x.Key != Guid.Empty && x.Value is not null
+            && x.Value.IndividualId != Guid.Empty && x.Value.Slot is 1 or 2
+            && !string.IsNullOrWhiteSpace(x.Value.TraitId)
+            && data.CompletedOperations!.GetValueOrDefault($"retrain:{x.Key}") ==
+                RetrainingService.Fingerprint(x.Value.IndividualId, x.Value.Slot))
+            && data.CompletedOperations!.Keys.Where(key => key.StartsWith("retrain", StringComparison.OrdinalIgnoreCase))
+                .All(key => key.StartsWith("retrain:", StringComparison.Ordinal)
+                    && Guid.TryParseExact(key["retrain:".Length..], "D", out var operationId)
+                    && operationId != Guid.Empty && key == $"retrain:{operationId}"
+                    && data.RetrainingResults!.ContainsKey(operationId)), "неверный журнал переобучения");
         Require(data.RehomingResults!.All(x => x.Key != Guid.Empty && x.Value is not null
             && x.Value.IndividualId != Guid.Empty && x.Value.Coins is > 0 and <= 49
             && x.Value.ReplacementId != x.Value.IndividualId

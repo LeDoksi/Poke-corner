@@ -759,6 +759,24 @@ public partial class App : System.Windows.Application
     private EvolutionPreview PreviewEvolution(Guid id) =>
         new EvolutionService(_catalogPackage, _appState.ToSaveData(_catchReadyCount)).Preview(id);
 
+    private RetrainingPreview PreviewRetraining(Guid id, int slot) =>
+        new RetrainingService(_catalogPackage, _appState.ToSaveData(_catchReadyCount)).Preview(id, slot);
+
+    private async Task<RetrainingAction> RetrainIndividualAsync(Guid id, int slot, Guid operationId)
+    {
+        if (_isExiting) throw new InvalidOperationException("Приложение закрывается.");
+        RetrainingAction? result = null;
+        await _expeditionProgressTask;
+        if (_isExiting) throw new InvalidOperationException("Приложение закрывается.");
+        await _appState.CommitAsync(_saveWriter, next =>
+        {
+            result = new RetrainingService(_catalogPackage, next).Retrain(id, slot, operationId);
+            if (!result.Success) throw new InvalidOperationException(result.Message);
+        }, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+        if (_appState.Collection.ActiveIndividualId == id) RefreshOverlayForActiveIndividual();
+        return result!;
+    }
+
     private RehomeQuote PreviewRehome(Guid id) =>
         new RehomingService(_catalogPackage, _appState.ToSaveData(_catchReadyCount)).Quote(id);
 
@@ -821,7 +839,8 @@ public partial class App : System.Windows.Application
                     speciesId => _catalogPackage.GetAssetPath(speciesId, false),
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount),
                     PreviewEvolution, EvolveIndividualAsync, section => _menuWindow?.Navigate(section),
-                    (berry, required) => shopView.SelectBerryShortage(berry, required), PreviewRehome, RehomeIndividualAsync);
+                    (berry, required) => shopView.SelectBerryShortage(berry, required), PreviewRehome, RehomeIndividualAsync,
+                    PreviewRetraining, RetrainIndividualAsync);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
                 var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);

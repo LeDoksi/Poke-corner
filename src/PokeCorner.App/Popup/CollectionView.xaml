@@ -692,6 +692,27 @@
                         </StackPanel>
                     </Border>
 
+                    <Border x:Name="DetailRetrainingSection" Style="{StaticResource WellStyle}"
+                            Padding="13,10" Margin="0,0,0,12" Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBlock Text="Переобучение" Style="{StaticResource SectionHeaderTextStyle}"/>
+                            <ComboBox x:Name="DetailRetrainingSlotPicker" MinWidth="190" MaxWidth="300"
+                                      HorizontalAlignment="Left" Margin="0,5,0,5"
+                                      SelectionChanged="DetailRetrainingSlotPicker_SelectionChanged"
+                                      AutomationProperties.Name="Слот особенности"/>
+                            <TextBlock x:Name="DetailRetrainingCostText" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="DetailRetrainingOutcomesText" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                            <TextBlock x:Name="DetailRetrainingReasonText" TextWrapping="Wrap" Margin="0,5,0,0"
+                                       Foreground="{StaticResource AccentRedBrush}" AutomationProperties.LiveSetting="Polite"/>
+                            <WrapPanel Margin="0,8,0,0">
+                                <Button x:Name="DetailRetrainButton" Content="Переобучить" Click="DetailRetrainButton_Click"
+                                        Padding="12,7" Margin="0,0,7,0"/>
+                                <Button x:Name="DetailRetrainingShopButton" Content="В магазин" Click="DetailRetrainingShopButton_Click"
+                                        Style="{StaticResource SecondaryButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
                     <Border Style="{StaticResource WellStyle}" Padding="13,10" Margin="0,0,0,12">
                         <StackPanel>
                             <TextBlock Text="О виде" Style="{StaticResource SectionHeaderTextStyle}"/>
