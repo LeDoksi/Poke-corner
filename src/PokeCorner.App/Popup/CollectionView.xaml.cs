@@ -28,6 +28,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// and "do it".
     private readonly Func<bool> _onEvolveRequested;
     private readonly Func<bool> _isReadyToEvolve;
+    private readonly Func<Guid, EvolutionPreview>? _previewEvolution;
+    private readonly Func<Guid, int?, Guid, Task<EvolutionAction>>? _evolveIndividual;
+    private readonly Action<MenuSection>? _navigate;
+    private readonly Action<string, int>? _buyBerries;
     private DispatcherTimer? _liveRefreshTimer;
 
     /// Same idle cadence the desktop overlay animates at, so the hero sprite and the pet on
@@ -112,7 +116,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private string _pokedexSignature = string.Empty;
 
     public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null,
-        Func<int, string?>? getSpeciesAssetPath = null, Func<Action<SaveData>, Task>? commitState = null)
+        Func<int, string?>? getSpeciesAssetPath = null, Func<Action<SaveData>, Task>? commitState = null,
+        Func<Guid, EvolutionPreview>? previewEvolution = null,
+        Func<Guid, int?, Guid, Task<EvolutionAction>>? evolveIndividual = null,
+        Action<MenuSection>? navigate = null, Action<string, int>? buyBerries = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -128,6 +135,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _fetchSprite = fetchSprite;
         _getSpeciesAssetPath = getSpeciesAssetPath;
         _commitState = commitState;
+        _previewEvolution = previewEvolution;
+        _evolveIndividual = evolveIndividual;
+        _navigate = navigate;
+        _buyBerries = buyBerries;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
         // rename there can never leave the filter pills saying something different.
@@ -195,6 +206,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshProgress(active);
         RefreshPokedex(entries);
         if (SpeciesPane.Visibility == Visibility.Visible) RefreshSpecies();
+        if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailEvolution();
     }
 
     private void IndividualsMode_Click(object sender, RoutedEventArgs e)
@@ -452,7 +464,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// calling it again here would fire a second redundant sprite fetch per click.
     private void EvolveButton_Click(object sender, RoutedEventArgs e)
     {
-        _onEvolveRequested();
+        if (_previewEvolution is not null && _appState.Collection.ActiveIndividualId is { } id)
+            OpenIndividual(id);
+        else _onEvolveRequested();
         Refresh();
     }
 
@@ -735,6 +749,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// The card currently on show, or null when the overlay is hidden.
     private PokedexCard? _detailCard;
     private int _detailGeneration;
+    private string _evolutionChoicesSignature = string.Empty;
+    private EvolutionPreview? _detailEvolutionPreview;
+    private readonly HashSet<Guid> _evolvingIndividuals = [];
 
     private bool IsCurrentDetail(Guid id, int generation) =>
         _detailGeneration == generation && DetailOverlay.Visibility == Visibility.Visible &&
@@ -800,6 +817,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ? Visibility.Visible
             : Visibility.Collapsed;
         DetailEvolutionChainStrip.ItemsSource = card.EvolutionStages;
+        _evolutionChoicesSignature = string.Empty;
+        RefreshDetailEvolution();
 
         DetailShinyBadge.Visibility = card.ShinyVisibility;
         DetailActiveBadge.Visibility = card.ActiveBadgeVisibility;
@@ -813,6 +832,104 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         DetailOverlay.Visibility = Visibility.Visible;
     }
+
+    private void RefreshDetailEvolution()
+    {
+        if (_detailCard is null || _previewEvolution is null || _evolveIndividual is null) return;
+        if (!_appState.Collection.Individuals.Any(x => x.Id == _detailCard.IndividualId))
+        {
+            DetailEvolutionActionSection.Visibility = Visibility.Collapsed;
+            return;
+        }
+        var preview = _previewEvolution(_detailCard.IndividualId);
+        _detailEvolutionPreview = preview;
+        DetailEvolutionActionSection.Visibility = preview.Branches.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
+        if (preview.Branches.Count == 0) return;
+        DetailEvolutionCostText.Text = $"Уход: {preview.CareOwned:N0} / {preview.CareRequired:N0} · Ягоды {preview.BerryId}: {preview.BerriesOwned} / {preview.BerryCost} · Камни: {preview.StonesOwned}";
+        DetailEvolutionBlockedText.Text = preview.Branches.Any(x => !x.Available)
+            ? "Недоступные ветви отмечены в списке; вариант без ресурса не подменяется."
+            : string.Empty;
+        UpdateEvolutionActionState();
+        var signature = string.Join("|", preview.Branches.Select(x => $"{x.SpeciesId}:{x.Available}"))
+            + ":" + string.Join("|", _appState.DiscoveredSpeciesIds.Order());
+        if (signature == _evolutionChoicesSignature) return;
+        var selected = (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int?;
+        DetailEvolutionBranchPicker.Items.Clear();
+        DetailEvolutionBranchPicker.Items.Add(new ComboBoxItem { Content = "Случайная доступная ветвь · без камня" });
+        foreach (var branch in preview.Branches)
+        {
+            var known = _appState.DiscoveredSpeciesIds.Contains(branch.SpeciesId);
+            DetailEvolutionBranchPicker.Items.Add(new ComboBoxItem
+            {
+                Tag = branch.SpeciesId,
+                Content = $"#{branch.SpeciesId} · {(known ? branch.Name : "?")}{(branch.Available ? string.Empty : " · недоступно")}",
+                IsEnabled = branch.Available,
+                ToolTip = branch.Reason
+            });
+        }
+        DetailEvolutionBranchPicker.SelectedItem = DetailEvolutionBranchPicker.Items.Cast<ComboBoxItem>()
+            .FirstOrDefault(x => x.IsEnabled && x.Tag is int id && id == selected)
+            ?? DetailEvolutionBranchPicker.Items[0];
+        _evolutionChoicesSignature = signature;
+        UpdateEvolutionActionState();
+    }
+
+    private void DetailEvolutionBranchPicker_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+        UpdateEvolutionActionState();
+
+    private void UpdateEvolutionActionState()
+    {
+        if (_detailEvolutionPreview is null) return;
+        var branch = (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int?;
+        var needsStone = branch is not null && _detailEvolutionPreview.Branches.Count(x => x.Available) > 1;
+        var reason = _detailEvolutionPreview.Reason
+            ?? (needsStone && _detailEvolutionPreview.StonesOwned == 0 ? "Для выбора ветви нужен камень эволюции." : null);
+        DetailEvolutionReasonText.Text = reason ?? string.Empty;
+        DetailEvolveButton.IsEnabled = reason is null && (_detailCard is null || !_evolvingIndividuals.Contains(_detailCard.IndividualId));
+    }
+
+    private async void DetailEvolveButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailCard is null || _previewEvolution is null || _evolveIndividual is null) return;
+        var id = _detailCard.IndividualId;
+        var generation = _detailGeneration;
+        var branch = (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int?;
+        var preview = _previewEvolution(id);
+        if (preview.Reason is not null) { DetailErrorText.Text = preview.Reason; return; }
+        if (branch is not null && !preview.Branches.Any(x => x.SpeciesId == branch && x.Available))
+        { DetailErrorText.Text = "Выбранная ветвь недоступна."; return; }
+        var choice = branch is null ? "случайную доступную ветвь" : $"ветвь #{branch}";
+        if (!ConfirmDialog.Ask("Подтвердить эволюцию?",
+            $"Потратить {preview.BerryCost} ягод {preview.BerryId} на {choice}?" +
+            (branch is not null && preview.Branches.Count(x => x.Available) > 1 ? " Будет потрачен камень выбора." : string.Empty),
+            "Эволюционировать", System.Windows.Window.GetWindow(this))) return;
+        if (!IsCurrentDetail(id, generation)) return;
+        _evolvingIndividuals.Add(id);
+        DetailEvolveButton.IsEnabled = false;
+        try
+        {
+            await _evolveIndividual(id, branch, Guid.NewGuid());
+            Refresh();
+            if (IsCurrentDetail(id, generation)) OpenIndividual(id);
+        }
+        catch (Exception error)
+        {
+            if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message;
+        }
+        finally
+        {
+            _evolvingIndividuals.Remove(id);
+            if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailEvolution();
+        }
+    }
+
+    private void DetailEvolutionShopButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailEvolutionPreview is { } preview && preview.BerriesOwned < preview.BerryCost)
+            _buyBerries?.Invoke(preview.BerryId, preview.BerryCost);
+        _navigate?.Invoke(MenuSection.Shop);
+    }
+    private void DetailEvolutionRouteButton_Click(object sender, RoutedEventArgs e) => _navigate?.Invoke(MenuSection.Expeditions);
 
     private void HideDetail()
     {

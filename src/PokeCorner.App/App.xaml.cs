@@ -352,7 +352,7 @@ public partial class App : System.Windows.Application
     private void CheckEvolutionReady()
     {
         var active = _appState.Collection.GetActive();
-        if (active is null || !_appState.IsReadyToEvolve(active))
+        if (active is null || !IsActiveIndividualReadyToEvolve())
         {
             _evolutionReadyNotifiedFor = null;
             return;
@@ -715,24 +715,34 @@ public partial class App : System.Windows.Application
         }
     }
 
-    /// Evolution is an explicit player action. False when the active individual isn't ready,
-    /// so a stale click is inert.
-    private bool EvolveActiveIndividual()
-    {
-        if (_isExiting || _appState.IsCommitting) return false;
-        var active = _appState.Collection.GetActive();
-        if (active is null || !_appState.TryEvolve(active)) return false;
-
-        SaveMigration.InitializeIndividual(active, _legacyLookup, _catalogPackage);
-        _overlayWindow.PlayEvolutionFlash();
-        RefreshOverlayForActiveIndividual();
-        return true;
-    }
-
     private bool IsActiveIndividualReadyToEvolve()
     {
         var active = _appState.Collection.GetActive();
-        return active is not null && _appState.IsReadyToEvolve(active);
+        if (active is null || !_appState.IsReadyToEvolve(active)) return false;
+        var preview = new EvolutionService(_catalogPackage, _appState.ToSaveData(_catchReadyCount)).Preview(active.Id);
+        return preview.Branches.Any(branch => branch.Available);
+    }
+
+    private EvolutionPreview PreviewEvolution(Guid id) =>
+        new EvolutionService(_catalogPackage, _appState.ToSaveData(_catchReadyCount)).Preview(id);
+
+    private async Task<EvolutionAction> EvolveIndividualAsync(Guid id, int? branch, Guid operationId)
+    {
+        if (_isExiting) throw new InvalidOperationException("Приложение закрывается.");
+        EvolutionAction? result = null;
+        await _expeditionProgressTask;
+        if (_isExiting) throw new InvalidOperationException("Приложение закрывается.");
+        await _appState.CommitAsync(_saveWriter, next =>
+        {
+            result = new EvolutionService(_catalogPackage, next).Evolve(id, branch, operationId);
+            if (!result.Success) throw new InvalidOperationException(result.Message);
+        }, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+        if (_appState.Collection.ActiveIndividualId == id)
+        {
+            _overlayWindow.PlayEvolutionFlash();
+            RefreshOverlayForActiveIndividual();
+        }
+        return result!;
     }
 
     private List<SpeciesEvolutionChain> GetDirectIssueChains() =>
@@ -753,14 +763,16 @@ public partial class App : System.Windows.Application
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, lookupChains, _appState.PendingEggs,
                     () => _appState.BusyIndividualIds, _catalogPackage.Species, () => _appState.DiscoveredSpeciesIds,
                     _catalogPackage.GetRouteHints(), individual => levels.LevelForXp(individual.TotalXp));
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, EvolveActiveIndividual, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
-                    speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
-                    speciesId => _catalogPackage.GetAssetPath(speciesId, false),
-                    update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount));
-                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
                 var shopView = new ShopView(_appState, _shopService,
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount,
                         next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual, _catalogPackage);
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, () => false, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
+                    speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
+                    speciesId => _catalogPackage.GetAssetPath(speciesId, false),
+                    update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount),
+                    PreviewEvolution, EvolveIndividualAsync, section => _menuWindow?.Navigate(section),
+                    (berry, required) => shopView.SelectBerryShortage(berry, required));
+                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
                 var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;

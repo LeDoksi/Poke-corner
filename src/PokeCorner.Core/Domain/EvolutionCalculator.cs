@@ -11,6 +11,13 @@ public static class EvolutionThresholds
 
 public static class EvolutionCalculator
 {
+    public static int RequiredCareForNext(EvolutionStage currentStage) => currentStage switch
+    {
+        EvolutionStage.Stage1 => EvolutionThresholds.Stage2Threshold,
+        EvolutionStage.Stage2 => EvolutionThresholds.Stage3Threshold,
+        _ => int.MaxValue
+    };
+
     public static EvolutionStage StageForPoints(int accumulatedCarePoints, int chainLength)
     {
         if (chainLength >= 3 && accumulatedCarePoints >= EvolutionThresholds.Stage3Threshold)

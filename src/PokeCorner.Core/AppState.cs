@@ -129,12 +129,10 @@ public sealed class AppState
         !BusyIndividualIds.Contains(individual.Id) &&
         EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength) > individual.CurrentStage;
 
-    /// Applies the pending evolution, if there is one. Returns false (and changes nothing)
-    /// when the individual isn't ready, so a stale button click can't skip a stage or
-    /// double-evolve.
+    /// Legacy v1 stage mutation only. V2 evolution requires the canonical recipe and commit path.
     public bool TryEvolve(PokemonIndividual individual)
     {
-        if (IsCommitting || BusyIndividualIds.Contains(individual.Id)) return false;
+        if (_metadata?.SchemaVersion == 2 || IsCommitting || BusyIndividualIds.Contains(individual.Id)) return false;
         var nextStage = EvolutionCalculator.StageForPoints(individual.AccumulatedCarePoints, individual.ChainLength);
         if (nextStage <= individual.CurrentStage) return false;
 

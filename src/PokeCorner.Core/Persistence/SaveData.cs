@@ -27,6 +27,7 @@ public sealed class SaveData
     // Bonus above the base 1/512 chance. Only an eligible nursery hatch changes it.
     public double NurseryLuckBonus { get; set; }
     public Dictionary<string, Guid> CompletedOperations { get; set; } = [];
+    public Dictionary<Guid, int> EvolutionResults { get; set; } = [];
     public List<EncounterState> Encounters { get; set; } = [];
     public bool ActivityNewGuaranteed { get; set; }
     public required List<PokemonIndividual> Individuals { get; set; }

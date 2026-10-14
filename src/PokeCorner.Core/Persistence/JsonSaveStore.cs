@@ -285,7 +285,10 @@ public sealed class JsonSaveStore
         Require(data.DiscoveredSpeciesIds is not null && data.EvolutionTransitions is not null && data.ShinySpeciesIds is not null
             && data.Metrics is not null && data.AwardLedger is not null && data.Berries is not null && data.Items is not null
             && data.BerryRemainders is not null && data.Tutorial is not null && data.Gift is not null
-            && data.CompletedOperations is not null && data.HatchedNurseryResults is not null, "обязательное поле v2 равно null");
+            && data.CompletedOperations is not null && data.EvolutionResults is not null
+            && data.HatchedNurseryResults is not null, "обязательное поле v2 равно null");
+        Require(data.EvolutionResults!.All(x => x.Key != Guid.Empty && x.Value > 0 &&
+            data.CompletedOperations!.ContainsKey($"evolution:{x.Key}")), "неверный журнал эволюций");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.Berries!.Keys) && SaveMigration.ItemIds.ToHashSet().SetEquals(data.Items!.Keys)
             && data.Berries.Values.All(n => n >= 0) && data.Items.Values.All(n => n >= 0) && data.Items["treats"] == data.FeedingTreats, "неверный инвентарь v2");
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)

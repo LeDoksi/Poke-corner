@@ -667,6 +667,29 @@
                         </StackPanel>
                     </Border>
 
+                    <Border x:Name="DetailEvolutionActionSection" Style="{StaticResource WellStyle}"
+                            Padding="13,10" Margin="0,0,0,12" Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBlock Text="Эволюция" Style="{StaticResource SectionHeaderTextStyle}"/>
+                            <TextBlock x:Name="DetailEvolutionCostText" TextWrapping="Wrap" Margin="0,4,0,6"/>
+                            <ComboBox x:Name="DetailEvolutionBranchPicker" MinWidth="190" MaxWidth="300"
+                                      SelectionChanged="DetailEvolutionBranchPicker_SelectionChanged"
+                                      HorizontalAlignment="Left" AutomationProperties.Name="Ветвь эволюции"/>
+                            <TextBlock x:Name="DetailEvolutionBlockedText" TextWrapping="Wrap" Margin="0,6,0,0"
+                                       Foreground="{StaticResource MutedTextBrush}"/>
+                            <TextBlock x:Name="DetailEvolutionReasonText" TextWrapping="Wrap" Margin="0,6,0,0"
+                                       Foreground="{StaticResource AccentRedBrush}" AutomationProperties.LiveSetting="Polite"/>
+                            <Button x:Name="DetailEvolveButton" Content="Эволюционировать" Click="DetailEvolveButton_Click"
+                                    HorizontalAlignment="Left" Padding="12,7" Margin="0,8,0,0"/>
+                            <WrapPanel Margin="0,7,0,0">
+                                <Button x:Name="DetailEvolutionShopButton" Content="В магазин" Click="DetailEvolutionShopButton_Click"
+                                        Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,7,0"/>
+                                <Button x:Name="DetailEvolutionRouteButton" Content="В поход" Click="DetailEvolutionRouteButton_Click"
+                                        Style="{StaticResource SecondaryButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
                     <Border Style="{StaticResource WellStyle}" Padding="13,10" Margin="0,0,0,12">
                         <StackPanel>
                             <TextBlock Text="О виде" Style="{StaticResource SectionHeaderTextStyle}"/>
