@@ -77,7 +77,7 @@ public partial class App : System.Windows.Application
 
     /// Decoded PNG frames per display species id (null = no usable animation), in front of the
     /// on-disk GIF cache. A GIF costs ~22 ms to decode, so each species is decoded once.
-    private readonly Dictionary<int, IReadOnlyList<byte[]>?> _decodedFramesCache = new();
+    private readonly Dictionary<(int SpeciesId, bool IsShiny), IReadOnlyList<byte[]>?> _decodedFramesCache = new();
 
     protected override async void OnStartup(StartupEventArgs e)
     {
@@ -456,7 +456,7 @@ public partial class App : System.Windows.Application
 
         var displaySpeciesId = ResolveDisplaySpeciesId(active);
 
-        var pngFrames = await GetAnimatedFramesAsync(displaySpeciesId);
+        var pngFrames = await GetAnimatedFramesAsync(displaySpeciesId, active.IsShiny);
 
         if (generation != _overlayRefreshGeneration)
         {
@@ -531,13 +531,17 @@ public partial class App : System.Windows.Application
     /// the fetch/decode failed — callers then fall back to the static PNG. The overlay, the
     /// Pokédex and the starter picker share this memo; each species is decoded once, on a worker
     /// thread. The returned list is shared: read-only, and nobody writes into the frame arrays.
-    private async Task<IReadOnlyList<byte[]>?> GetAnimatedFramesAsync(int speciesId)
+    private Task<IReadOnlyList<byte[]>?> GetAnimatedFramesAsync(int speciesId) => GetAnimatedFramesAsync(speciesId, false);
+
+    private async Task<IReadOnlyList<byte[]>?> GetAnimatedFramesAsync(int speciesId, bool isShiny)
     {
-        if (_decodedFramesCache.TryGetValue(speciesId, out var memoized)) return memoized;
+        var key = (speciesId, isShiny);
+        if (_decodedFramesCache.TryGetValue(key, out var memoized)) return memoized;
 
         byte[]? animatedBytes = null;
         // The selected package provides verified local GIFs; an unavailable species has no animation.
-        var gifPath = _catalogPackage.GetAssetPath(speciesId, false);
+        var gifPath = _catalogPackage.GetAssetPath(speciesId, isShiny)
+            ?? (isShiny ? _catalogPackage.GetAssetPath(speciesId, false) : null);
         if (gifPath is null) return null;
         try
         {
@@ -571,7 +575,7 @@ public partial class App : System.Windows.Application
         // ponytail: unbounded, one entry per species ever shown (measured: ~57 MB if all 638 are viewed);
         // add LRU eviction if memory ever matters. A null from a failed network fetch is not
         // memoized, so it is retried on the next call.
-        if (animatedBytes is not null) _decodedFramesCache[speciesId] = decoded;
+        if (animatedBytes is not null) _decodedFramesCache[key] = decoded;
         return decoded;
     }
 
@@ -864,7 +868,14 @@ public partial class App : System.Windows.Application
                         if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
                         care.LastInteractionUtc = DateTimeOffset.UtcNow;
                     }, closeMenu: false));
-                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView, nurseryView);
+                var roomArt = RoomArt.Load(_catalogPackage.DataRoot);
+                var roomView = new RoomView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
+                    () => _activeSpriteFrames, () => _menuWindow?.Navigate(MenuSection.Achievements),
+                    id => _catalogPackage.Species.FirstOrDefault(species => species.Id == id)?.DisplayName ?? $"№{id:D4}");
+                var achievementsView = new AchievementsView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
+                    update => CommitStateAsync(update, closeMenu: false), () => _menuWindow?.Navigate(MenuSection.Corner));
+                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView,
+                    nurseryView, roomView, achievementsView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened
                 _menuWindow.Show();

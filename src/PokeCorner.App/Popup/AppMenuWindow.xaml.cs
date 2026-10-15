@@ -4,7 +4,7 @@ using System.Windows.Media.Animation;
 
 namespace PokeCorner.App.Popup;
 
-public enum MenuSection { Corner, Pokedex, Shop, Expeditions, Nursery, Settings, Catch }
+public enum MenuSection { Corner, Pokedex, Shop, Expeditions, Nursery, Settings, Catch, Achievements }
 
 public partial class AppMenuWindow : Window
 {
@@ -16,7 +16,8 @@ public partial class AppMenuWindow : Window
     private bool _catchBadgePulsing;
 
     public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView,
-        ExpeditionView? expeditionView = null, NurseryView? nurseryView = null)
+        ExpeditionView? expeditionView = null, NurseryView? nurseryView = null,
+        RoomView? roomView = null, AchievementsView? achievementsView = null)
     {
         InitializeComponent();
         SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
@@ -30,6 +31,8 @@ public partial class AppMenuWindow : Window
         SettingsContent.Content = settingsView;
         ShopTab.Content = shopView;
         CatchTab.Content = catchView;
+        if (roomView is not null) { roomView.Foreground = contentInk; CornerHomeTab.Content = roomView; }
+        if (achievementsView is not null) { achievementsView.Foreground = contentInk; AlbumTab.Content = achievementsView; }
         if (expeditionView is not null)
         {
             expeditionView.Foreground = contentInk;
@@ -102,10 +105,10 @@ public partial class AppMenuWindow : Window
         _lastSection = section;
         SettingsButton.Content = "Настройки";
         System.Windows.Automation.AutomationProperties.SetName(SettingsButton, "Открыть настройки");
-        if (section == MenuSection.Catch)
+        if (section is MenuSection.Catch or MenuSection.Achievements)
         {
             MenuTabControl.SelectedItem = CornerTab;
-            CornerTabs.SelectedItem = CatchTab;
+            CornerTabs.SelectedItem = section == MenuSection.Catch ? CatchTab : AlbumTab;
         }
         else
         {
@@ -128,7 +131,8 @@ public partial class AppMenuWindow : Window
         var tab when tab == ShopTab => MenuSection.Shop,
         var tab when tab == ExpeditionsTab => MenuSection.Expeditions,
         var tab when tab == NurseryTab => MenuSection.Nursery,
-        _ => CornerTabs.SelectedItem == CatchTab ? MenuSection.Catch : MenuSection.Corner
+        _ => CornerTabs.SelectedItem == CatchTab ? MenuSection.Catch :
+            CornerTabs.SelectedItem == AlbumTab ? MenuSection.Achievements : MenuSection.Corner
     };
 
     // Compatibility for callers compiled against the previous four-tab shell.

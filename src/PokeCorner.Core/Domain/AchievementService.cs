@@ -114,5 +114,15 @@ public sealed class AchievementService
             AvailableSpeciesIds = revisionSpecies.ToList()
         });
         state.ShopCoins = total;
+        var chain = id.Length > 2 && id[^2] == '-' && id[^1] is >= '1' and <= '4' ? id[..^1] : null;
+        var occupied = chain is null ? -1 : state.TrophyShelfIds.FindIndex(existing =>
+            existing is not null && existing.Length == id.Length && existing.StartsWith(chain, StringComparison.Ordinal));
+        if (occupied >= 0) state.TrophyShelfIds[occupied] = id;
+        else
+        {
+            var vacant = state.TrophyShelfIds.FindIndex(existing => existing is null);
+            if (vacant >= 0) state.TrophyShelfIds[vacant] = id;
+            else if (state.TrophyShelfIds.Count < 3) state.TrophyShelfIds.Add(id);
+        }
     }
 }

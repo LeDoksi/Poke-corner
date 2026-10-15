@@ -81,6 +81,7 @@ public static class SaveMigration
         next.ShinySpeciesIds = [];
         next.EvolutionTransitions = [];
         next.AwardLedger = [];
+        next.TrophyShelfIds = [];
         next.Tutorial = new();
         next.Gift = new();
         next.Expedition = null;

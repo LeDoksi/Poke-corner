@@ -324,6 +324,8 @@ public sealed class JsonSaveStore
             && data.Metrics!.Values.All(n => n is null or >= 0), "неверная метрика v2");
         Require(data.AwardLedger!.Values.All(a => a is not null && a.CoinsGranted >= 0 && a.ClaimStatus is "claimed" or "unclaimed"
             && a.AvailableSpeciesIds is not null), "неверный журнал наград");
+        Require(data.TrophyShelfIds is { Count: <= 3 } && data.TrophyShelfIds.Where(id => id is not null).Distinct().Count() == data.TrophyShelfIds.Count(id => id is not null)
+            && data.TrophyShelfIds.All(id => id is null || data.AwardLedger.ContainsKey(id)), "неверная полка наград");
         Require(data.Tutorial!.TutorialRevision == SaveMigration.MigrationId && data.Tutorial.CurrentStep is >= 1 and <= 6
             && data.Tutorial.Status is "not-started" or "in-progress" or "completed" or "skipped" && data.Tutorial.SeenHintKeys is not null, "неверный тур");
         Require(data.Gift!.GrantId == "global-update-compatible-pair-v1" && data.Gift.Gifts is not null

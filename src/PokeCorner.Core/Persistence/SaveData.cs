@@ -14,6 +14,7 @@ public sealed class SaveData
     public HashSet<int> ShinySpeciesIds { get; set; } = [];
     public Dictionary<string, long?> Metrics { get; set; } = [];
     public Dictionary<string, AwardEntry> AwardLedger { get; set; } = [];
+    public List<string?> TrophyShelfIds { get; set; } = [];
     public Dictionary<string, int> Berries { get; set; } = [];
     public Dictionary<string, int> Items { get; set; } = [];
     public Dictionary<string, RationalRemainder> BerryRemainders { get; set; } = [];
