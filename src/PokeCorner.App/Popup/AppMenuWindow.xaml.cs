@@ -15,7 +15,8 @@ public partial class AppMenuWindow : Window
     /// restart the animation (and its phase) on every catch-ready refresh tick.
     private bool _catchBadgePulsing;
 
-    public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView)
+    public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView,
+        ExpeditionView? expeditionView = null)
     {
         InitializeComponent();
         SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
@@ -29,6 +30,11 @@ public partial class AppMenuWindow : Window
         SettingsContent.Content = settingsView;
         ShopTab.Content = shopView;
         CatchTab.Content = catchView;
+        if (expeditionView is not null)
+        {
+            expeditionView.Foreground = contentInk;
+            ExpeditionsTab.Content = expeditionView;
+        }
         _catchView = catchView;
     }
 

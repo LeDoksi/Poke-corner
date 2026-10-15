@@ -85,10 +85,6 @@
             <TabItem x:Name="CollectionTab" Header="Покедекс" AutomationProperties.Name="Покедекс" />
             <TabItem x:Name="ShopTab" Header="Магазин" AutomationProperties.Name="Магазин" />
             <TabItem x:Name="ExpeditionsTab" Header="Экспедиции" AutomationProperties.Name="Экспедиции">
-                <Grid Background="{StaticResource WindowBackgroundBrush}">
-                    <TextBlock Text="Экспедиции откроются здесь." Style="{StaticResource CaptionTextStyle}"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
             </TabItem>
             <TabItem x:Name="NurseryTab" Header="Питомник" AutomationProperties.Name="Питомник">
                 <Grid Background="{StaticResource WindowBackgroundBrush}">

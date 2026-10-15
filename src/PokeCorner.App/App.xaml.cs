@@ -843,7 +843,10 @@ public partial class App : System.Windows.Application
                     PreviewRetraining, RetrainIndividualAsync);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
                 var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync);
-                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView);
+                var expeditionView = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
+                    PreviewExpedition, StartExpeditionAsync, CancelExpeditionAsync, ClaimExpeditionAsync,
+                    OpenExpeditionEncounterAsync, _catalogPackage);
+                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened
                 _menuWindow.Show();
@@ -892,14 +895,14 @@ public partial class App : System.Windows.Application
     }
 
     /// Shared durable mutation entry point for the v2 gameplay services.
-    public async Task CommitStateAsync(Action<SaveData> update)
+    public async Task CommitStateAsync(Action<SaveData> update, bool closeMenu = true)
     {
         if (!_hasLoadedState || _isExiting) throw new InvalidOperationException("Сохранение ещё не загружено.");
         if (_menuWindow is not null) _menuWindow.IsEnabled = false;
         try
         {
             await _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
-            _menuWindow?.Close();
+            if (closeMenu) _menuWindow?.Close();
             RefreshOverlayForActiveIndividual();
         }
         finally { if (_menuWindow is not null) _menuWindow.IsEnabled = true; }
@@ -957,7 +960,7 @@ public partial class App : System.Windows.Application
             if (next.Encounters.FirstOrDefault(e => e.Id == encounterId) is not { Source: "expedition", Phase: "resolved" or "opened" })
                 throw new InvalidOperationException("Встреча похода ещё не готова к открытию.");
             result = _encounterService.Open(next, encounterId, DateTimeOffset.UtcNow);
-        });
+        }, closeMenu: false);
         return result!;
     }
 
@@ -969,7 +972,7 @@ public partial class App : System.Windows.Application
         {
             result = action(new ExpeditionService(_catalogPackage, next));
             if (!result.Success) throw new InvalidOperationException(result.Message);
-        });
+        }, closeMenu: false);
         _expeditionActivity.Sync(_appState.RunningExpeditionId);
         return result!;
     }
