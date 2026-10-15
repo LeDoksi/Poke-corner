@@ -43,7 +43,6 @@ public partial class ExpeditionView : UserControl
     private ExpeditionRequest? _pendingStart;
     private Guid _pendingClaimId;
     private Guid _pendingClaimTripId;
-    private string? _lastClaimRewardText;
     private bool _busy;
     private bool _initializing;
 
@@ -71,7 +70,7 @@ public partial class ExpeditionView : UserControl
                 Content = route.Name, Tag = route.Id, MinWidth = 122, Margin = new Thickness(0, 0, 6, 6),
                 Style = (Style)FindResource("SecondaryButtonStyle")
             };
-            button.Click += (_, _) => { _route = route.Id; _pendingStart = null; Refresh(); };
+            button.Click += (_, _) => { if (_busy) return; _route = route.Id; _pendingStart = null; Refresh(); };
             RouteButtons.Children.Add(button);
         }
         DifficultyBox.SelectedIndex = 1;
@@ -97,6 +96,14 @@ public partial class ExpeditionView : UserControl
     {
         if (!_initializing && DifficultyBox.SelectedItem is not null && DurationBox.SelectedItem is not null)
         {
+            if (_busy && _pendingStart is { } pending)
+            {
+                _initializing = true;
+                DifficultyBox.SelectedItem = DifficultyBox.Items.OfType<ComboBoxItem>().Single(item => Equals(item.Tag, pending.Difficulty));
+                DurationBox.SelectedItem = DurationBox.Items.OfType<ComboBoxItem>().Single(item => Equals(item.Tag, pending.DurationMinutes.ToString(CultureInfo.InvariantCulture)));
+                _initializing = false;
+                return;
+            }
             _pendingStart = null;
             Refresh();
         }
@@ -114,6 +121,8 @@ public partial class ExpeditionView : UserControl
         var data = _snapshot();
         var trip = data.Expedition;
         var active = trip?.Status is "running" or "ready";
+        foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
+        DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
         PreparationPanel.Visibility = active ? Visibility.Collapsed : Visibility.Visible;
         TripPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
         ResultPanel.Visibility = !active && trip?.Status == "claimed" ? Visibility.Visible : Visibility.Collapsed;
@@ -134,7 +143,7 @@ public partial class ExpeditionView : UserControl
             button.BorderThickness = Equals(button.Tag, _route) ? new Thickness(2) : new Thickness(1);
         }
         var busy = ExpeditionService.BusyIndividualIds(data);
-        if (_selected.RemoveWhere(id => busy.Contains(id) || data.Individuals.All(p => p.Id != id)) > 0) _pendingStart = null;
+        if (!_busy && _selected.RemoveWhere(id => busy.Contains(id) || data.Individuals.All(p => p.Id != id)) > 0) _pendingStart = null;
         TeamPanel.Children.Clear();
         foreach (var member in data.Individuals)
         {
@@ -151,6 +160,7 @@ public partial class ExpeditionView : UserControl
             };
             button.Click += (_, _) =>
             {
+                if (_busy) return;
                 if (!_selected.Remove(member.Id) && _selected.Count < 3) _selected.Add(member.Id);
                 _pendingStart = null;
                 Refresh();
@@ -228,9 +238,16 @@ public partial class ExpeditionView : UserControl
     private void RefreshResult(SaveData data, ExpeditionState trip)
     {
         var reward = trip.Rewards;
-        // The claimed quantities were committed already; retained terms are displayed as rates, not recalculated from live levels.
+        var receiptText = trip.Receipt is { } receipt
+            ? $"Основная ягода: {reward.PrimaryBerryId} ×{receipt.PrimaryBerries}; монеты: {receipt.Coins}; опыт: " +
+              string.Join(", ", receipt.XpByParticipant.Select(x =>
+              {
+                  var member = data.Individuals.FirstOrDefault(p => p.Id == x.Key);
+                  return $"{(member is null ? x.Key.ToString("N")[..6] : SpeciesName(member.CurrentSpeciesId))} +{x.Value} XP";
+              })) + ". "
+            : "Точные количества ягод, монет и опыта этого старого похода не сохранены. ";
         ResultText.Text = $"{RouteName(trip.LocationId)} · {trip.DurationMinutes} мин · находки и XP сохранены. " +
-            (_lastClaimRewardText is null ? $"Основная ягода: {reward.PrimaryBerryId}; " : $"{_lastClaimRewardText} ") +
+            receiptText +
             "Дополнительные: " +
             (reward.ExtraBerries.Count == 0 && reward.ExtraItems.Count == 0 && reward.ExtraCoins == 0 ? "нет" :
                 string.Join(", ", reward.ExtraBerries.Select(x => $"{x.Key} ×{x.Value}")
@@ -238,6 +255,7 @@ public partial class ExpeditionView : UserControl
                     .Concat(reward.ExtraCoins > 0 ? [$"{reward.ExtraCoins} монет"] : [])));
         var encounter = data.Encounters.FirstOrDefault(e => e.Source == "expedition" && e.Id == trip.Id);
         OpenEncounterButton.Visibility = encounter?.Phase == "resolved" ? Visibility.Visible : Visibility.Collapsed;
+        OpenEncounterButton.IsEnabled = !_busy && encounter?.Phase == "resolved";
         OpenEncounterButton.Tag = encounter?.Id;
         if (encounter?.Individual is { } individual)
             ResultText.Text += $" Встреча: {SpeciesName(individual.CurrentSpeciesId)}{(individual.IsShiny ? " · шайни" : "")}. " +
@@ -254,7 +272,6 @@ public partial class ExpeditionView : UserControl
             _pendingStart ??= Request(DateTimeOffset.UtcNow);
             Show((await _start(_pendingStart)).Message);
             _pendingStart = null;
-            _lastClaimRewardText = null;
         }
         catch (Exception ex) { Show(ex.Message); }
         finally { _busy = false; Refresh(); }
@@ -281,7 +298,6 @@ public partial class ExpeditionView : UserControl
         Refresh();
         try
         {
-            var rewardText = TripRewards.Text;
             if (_pendingClaimTripId != trip.Id)
             {
                 _pendingClaimTripId = trip.Id;
@@ -290,7 +306,6 @@ public partial class ExpeditionView : UserControl
             var result = await _claim(trip.Id, _pendingClaimId);
             Show(result.Encounter is { IsClosed: true } encounter
                 ? $"{result.Message} Встреча с {SpeciesName(encounter.SpeciesId)} сохранена закрытой." : result.Message);
-            _lastClaimRewardText = rewardText;
             _pendingClaimId = Guid.Empty;
         }
         catch (Exception ex) { Show(ex.Message); }

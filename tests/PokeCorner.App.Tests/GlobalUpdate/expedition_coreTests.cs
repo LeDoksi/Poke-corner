@@ -356,6 +356,8 @@ public sealed class ExpeditionCoreTests : IDisposable
             proposedCandidate = next;
         }, () => 0));
         Assert.Equal("ready", live.ToSaveData(0).Expedition!.Status);
+        Assert.Null(live.ToSaveData(0).Expedition!.Receipt);
+        Assert.NotNull(proposedCandidate!.Expedition!.Receipt);
         Assert.Empty(live.Encounters);
         Assert.All(live.Collection.Individuals, p => Assert.Equal(0, p.TotalXp));
         var store = new JsonSaveStore(Path.Combine(root, "state.json"));
@@ -365,6 +367,11 @@ public sealed class ExpeditionCoreTests : IDisposable
             result = new ExpeditionService(Catalog.Value, next).Claim(request.OperationId, op), () => 0);
         var committed = store.Load()!;
         Assert.Equal("claimed", committed.Expedition!.Status);
+        Assert.NotNull(committed.Expedition.Receipt);
+        Assert.Equal(committed.Berries[committed.Expedition.Rewards.PrimaryBerryId], committed.Expedition.Receipt.PrimaryBerries);
+        Assert.Equal(committed.ShopCoins, committed.Expedition.Receipt.Coins);
+        Assert.All(committed.Expedition.ParticipantIds, id => Assert.Equal(committed.Individuals.Single(p => p.Id == id).TotalXp,
+            committed.Expedition.Receipt.XpByParticipant[id]));
         Assert.Equal(1, committed.Metrics["claimed-expeditions"]);
         Assert.Equal(1, committed.Metrics["visited-regions"]);
         Assert.Empty(ExpeditionService.BusyIndividualIds(committed));
@@ -372,6 +379,8 @@ public sealed class ExpeditionCoreTests : IDisposable
         Assert.All(committed.Individuals.Take(3), p => Assert.True(p.TotalXp > 0));
         Assert.Equal(proposed!.Encounter!.SpeciesId, result!.Encounter!.SpeciesId);
         Assert.Equal(proposed.Encounter.IsShiny, result.Encounter.IsShiny);
+        Assert.Equal(proposedCandidate.Expedition.Receipt!.PrimaryBerries, committed.Expedition.Receipt.PrimaryBerries);
+        Assert.Equal(proposedCandidate.Expedition.Receipt.Coins, committed.Expedition.Receipt.Coins);
         Assert.True(result.Encounter.IsClosed);
         var proposedChild = Assert.Single(proposedCandidate!.Encounters).Individual!;
         var committedChild = Assert.Single(committed.Encounters).Individual!;
@@ -384,9 +393,32 @@ public sealed class ExpeditionCoreTests : IDisposable
         var repeated = new ExpeditionService(Catalog.Value, committed).Claim(request.OperationId, op);
         Assert.True(repeated.Repeated);
         Assert.Equal(result.Encounter, repeated.Encounter);
+        Assert.Equal(committed.Expedition.Receipt.PrimaryBerries, store.Load()!.Expedition!.Receipt!.PrimaryBerries);
+        Assert.Equal(result.Encounter, repeated.Encounter);
         Assert.Equal(1, committed.Metrics["claimed-expeditions"]);
         Assert.Single(committed.Encounters);
         Assert.Equal(3, committed.Individuals.Count);
         Assert.Equal("resolved", committed.Encounters.Single().Phase);
+    }
+
+    [Fact]
+    public void ClaimedReceiptSurvivesReloadAndOlderClaimWithoutReceiptRemainsReadable()
+    {
+        var data = State();
+        var request = Request(data, 30, Utc);
+        var service = new ExpeditionService(Catalog.Value, data);
+        service.Start(request);
+        data.Expedition!.Status = "ready";
+        service.Claim(request.OperationId, Guid.NewGuid(), Utc.AddMinutes(30));
+        var saved = new JsonSaveStore(Path.Combine(root, "receipt.json"));
+        saved.Save(data);
+        var loaded = saved.Load()!;
+        Assert.Equal(data.Expedition.Receipt!.PrimaryBerries, loaded.Expedition!.Receipt!.PrimaryBerries);
+        Assert.Equal(data.Expedition.Receipt.Coins, loaded.Expedition.Receipt.Coins);
+        Assert.Equal(data.Expedition.Receipt.XpByParticipant, loaded.Expedition.Receipt.XpByParticipant);
+        loaded.Expedition.Receipt.PrimaryBerries = -1;
+        Assert.Throws<System.Text.Json.JsonException>(() => JsonSaveStore.ValidateData(loaded));
+        loaded.Expedition.Receipt = null;
+        JsonSaveStore.ValidateData(loaded);
     }
 }

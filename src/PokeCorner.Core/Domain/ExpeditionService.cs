@@ -202,18 +202,24 @@ public sealed class ExpeditionService
         if (trip.Status != "ready" && (now ?? DateTimeOffset.UtcNow).ToUniversalTime() < trip.ReadyAtUtc)
             return new(false, "Поход ещё идёт.");
         var reward = trip.Rewards;
-        state.Berries[reward.PrimaryBerryId] = checked(state.Berries[reward.PrimaryBerryId]
-            + (int)state.BerryRemainders[reward.PrimaryBerryId].Settle(reward.PrimaryNumerator, reward.PrimaryDenominator));
-        state.ShopCoins = checked(state.ShopCoins + (int)state.CoinRemainder.Settle(reward.CoinNumerator, reward.CoinDenominator) + reward.ExtraCoins);
+        var receipt = new ExpeditionReceipt
+        {
+            PrimaryBerries = checked((int)state.BerryRemainders[reward.PrimaryBerryId].Settle(reward.PrimaryNumerator, reward.PrimaryDenominator)),
+            Coins = checked((int)state.CoinRemainder.Settle(reward.CoinNumerator, reward.CoinDenominator) + reward.ExtraCoins)
+        };
+        state.Berries[reward.PrimaryBerryId] = checked(state.Berries[reward.PrimaryBerryId] + receipt.PrimaryBerries);
+        state.ShopCoins = checked(state.ShopCoins + receipt.Coins);
         foreach (var (berry, count) in reward.ExtraBerries) state.Berries[berry] = checked(state.Berries[berry] + count);
         foreach (var (item, count) in reward.ExtraItems) state.Items[item] = checked(state.Items[item] + count);
         var gainedXp = false;
         foreach (var participantId in trip.ParticipantIds)
         {
             var participant = state.Individuals.Single(i => i.Id == participantId);
-            if (participant.TotalXp == levels.MaxXp) continue;
+            if (participant.TotalXp == levels.MaxXp) { receipt.XpByParticipant[participantId] = 0; continue; }
             var xp = checked((int)participant.XpRemainder.Settle(reward.XpNumerator, reward.XpDenominator));
-            gainedXp |= levels.AddXp(participant, xp, catalog, Draw(id, participantId.ToString("N"))) > 0;
+            var granted = levels.AddXp(participant, xp, catalog, Draw(id, participantId.ToString("N")));
+            receipt.XpByParticipant[participantId] = granted;
+            gainedXp |= granted > 0;
         }
         EncounterResolvedResult? encounter = null;
         if (reward.HasEncounter)
@@ -226,6 +232,7 @@ public sealed class ExpeditionService
         }
         trip.Status = "claimed";
         trip.ClaimOperationId = operationId;
+        trip.Receipt = receipt;
         state.Metrics["claimed-expeditions"] = checked((state.Metrics.GetValueOrDefault("claimed-expeditions") ?? 0) + 1);
         state.Metrics[$"expedition:visited:{trip.LocationId}"] = 1;
         state.Metrics["visited-regions"] = routes.Keys.Count(route => state.Metrics.GetValueOrDefault($"expedition:visited:{route}") == 1);

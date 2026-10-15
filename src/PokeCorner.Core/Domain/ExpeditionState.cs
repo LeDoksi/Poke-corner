@@ -13,4 +13,12 @@ public sealed class ExpeditionState : TimedActivity
     public HashSet<int> KnownSpeciesIdsAtStart { get; set; } = [];
     public ExpeditionRewards Rewards { get; set; } = new();
     public Guid? ClaimOperationId { get; set; }
+    public ExpeditionReceipt? Receipt { get; set; }
+}
+
+public sealed class ExpeditionReceipt
+{
+    public int PrimaryBerries { get; set; }
+    public int Coins { get; set; }
+    public Dictionary<Guid, int> XpByParticipant { get; set; } = [];
 }

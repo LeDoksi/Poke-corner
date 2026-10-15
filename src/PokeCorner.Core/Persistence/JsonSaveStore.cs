@@ -383,6 +383,11 @@ public sealed class JsonSaveStore
                 && rewards.ExtraBerries.All(x => SaveMigration.BerryIds.Contains(x.Key) && x.Value >= 0)
                 && rewards.ExtraItems.All(x => SaveMigration.ItemIds.Contains(x.Key) && x.Value >= 0)
                 && (expedition.Status == "claimed") == (expedition.ClaimOperationId is not null), "неверный поход v2");
+            if (expedition.Receipt is { } receipt)
+                Require(expedition.Status == "claimed" && receipt.PrimaryBerries >= 0 && receipt.Coins >= rewards!.ExtraCoins
+                    && receipt.XpByParticipant is { } xpByParticipant
+                    && xpByParticipant.Keys.ToHashSet().SetEquals(expedition.ParticipantIds)
+                    && xpByParticipant.Values.All(xp => xp >= 0), "неверная квитанция похода v2");
         }
         ValidateActivity(data.Nest, ownedIds, "hatched");
         foreach (var (id, child) in data.HatchedNurseryResults!)

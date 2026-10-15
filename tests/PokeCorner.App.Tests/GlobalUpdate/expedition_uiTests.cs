@@ -206,4 +206,98 @@ public sealed class ExpeditionUiTests
             Assert.Equal(System.Windows.Visibility.Collapsed, openButton.Visibility);
         });
     }
+
+    [Fact]
+    public void FailedOpenCanRetryInSameView()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var data = State(3);
+            var request = new ExpeditionRequest("grove", "normal", 30,
+                data.Individuals.Select(p => p.Id).ToArray(), Guid.NewGuid(), DateTimeOffset.UtcNow.AddHours(-2));
+            var service = new ExpeditionService(Catalog.Value, data);
+            service.Start(request);
+            data.Expedition!.Rewards.HasEncounter = true;
+            data.Expedition.Status = "ready";
+            service.Claim(request.OperationId, Guid.NewGuid());
+            var calls = 0;
+            var view = new ExpeditionView(() => data, query => new ExpeditionService(Catalog.Value, data).Preview(query),
+                _ => Task.FromResult(new ExpeditionAction(true, "started")),
+                (_, _) => Task.FromResult(new ExpeditionAction(true, "cancelled")),
+                (_, _) => Task.FromResult(new ExpeditionAction(true, "claimed")),
+                id =>
+                {
+                    calls++;
+                    return calls == 1
+                        ? Task.FromException<EncounterOpenResult>(new IOException("write failed"))
+                        : Task.FromResult(new EncounterService(Catalog.Value).Open(data, id));
+                }, Catalog.Value);
+            var button = (Button)view.FindName("OpenEncounterButton")!;
+            button.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            Assert.True(button.IsEnabled);
+            Assert.Equal("resolved", data.Encounters.Single().Phase);
+            button.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            Assert.Equal(2, calls);
+            Assert.Equal("opened", data.Encounters.Single().Phase);
+            Assert.Equal(4, data.Individuals.Count);
+        });
+    }
+
+    [Fact]
+    public void InFlightStartCannotChangeVisibleRequestOrRetryIdentity()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var data = State();
+            var sent = new List<ExpeditionRequest>();
+            ExpeditionView? view = null;
+            view = new ExpeditionView(() => data, request => new ExpeditionService(Catalog.Value, data).Preview(request),
+                request =>
+                {
+                    sent.Add(request);
+                    if (sent.Count == 1)
+                    {
+                        view!.RouteButtons.Children.OfType<Button>().Last().RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+                        ((ComboBox)view.FindName("DurationBox")!).SelectedIndex = 3;
+                        return Task.FromException<ExpeditionAction>(new IOException("write failed"));
+                    }
+                    return Task.FromResult(new ExpeditionAction(true, "saved"));
+                },
+                (_, _) => Task.FromResult(new ExpeditionAction(true, "cancelled")),
+                (_, _) => Task.FromResult(new ExpeditionAction(true, "claimed")),
+                _ => Task.FromResult(default(EncounterOpenResult)!), Catalog.Value);
+            ((WrapPanel)view.FindName("TeamPanel")!).Children.OfType<Button>().Single()
+                .RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            var start = (Button)view.FindName("StartButton")!;
+            start.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            Assert.Equal("Лесная роща", ((TextBlock)view.FindName("LandscapeName")!).Text);
+            Assert.Equal(1, ((ComboBox)view.FindName("DurationBox")!).SelectedIndex);
+            start.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            Assert.Equal(sent[0], sent[1]);
+        });
+    }
+
+    [Fact]
+    public void ReloadedClaimedViewShowsExactPersistedReceipt()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var data = State();
+            var request = new ExpeditionRequest("grove", "easy", 30,
+                [data.Individuals[0].Id], Guid.NewGuid(), DateTimeOffset.UtcNow.AddHours(-2));
+            var service = new ExpeditionService(Catalog.Value, data);
+            service.Start(request);
+            data.Expedition!.Status = "ready";
+            service.Claim(request.OperationId, Guid.NewGuid());
+            var loaded = JsonSaveStore.Clone(data);
+            var view = View(loaded);
+            var text = ((TextBlock)view.FindName("ResultText")!).Text;
+            Assert.Contains($"×{loaded.Expedition!.Receipt!.PrimaryBerries}", text);
+            Assert.Contains($"монеты: {loaded.Expedition.Receipt.Coins}", text);
+            Assert.Contains($"+{loaded.Expedition.Receipt.XpByParticipant[request.ParticipantIds[0]]} XP", text);
+            loaded.Expedition.Receipt = null;
+            view.Refresh();
+            Assert.Contains("не сохранены", ((TextBlock)view.FindName("ResultText")!).Text);
+        });
+    }
 }
