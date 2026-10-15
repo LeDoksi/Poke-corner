@@ -16,7 +16,7 @@ public partial class AppMenuWindow : Window
     private bool _catchBadgePulsing;
 
     public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView,
-        ExpeditionView? expeditionView = null)
+        ExpeditionView? expeditionView = null, NurseryView? nurseryView = null)
     {
         InitializeComponent();
         SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
@@ -34,6 +34,11 @@ public partial class AppMenuWindow : Window
         {
             expeditionView.Foreground = contentInk;
             ExpeditionsTab.Content = expeditionView;
+        }
+        if (nurseryView is not null)
+        {
+            nurseryView.Foreground = contentInk;
+            NurseryTab.Content = nurseryView;
         }
         _catchView = catchView;
     }

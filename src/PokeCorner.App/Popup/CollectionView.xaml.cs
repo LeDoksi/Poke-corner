@@ -1368,7 +1368,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private static string FormatCaughtDate(DateTimeOffset caughtAtUtc) =>
         caughtAtUtc.ToLocalTime().ToString("dd.MM.yyyy", CultureInfo.CurrentCulture);
 
-    private static string TraitLabel(string? id) => id switch
+    internal static string TraitLabel(string? id) => id switch
     {
         "gatherer" => "Собиратель",
         "treasure-hunter" => "Искатель сокровищ",

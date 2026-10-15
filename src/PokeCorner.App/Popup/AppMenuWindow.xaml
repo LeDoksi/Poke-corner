@@ -87,10 +87,6 @@
             <TabItem x:Name="ExpeditionsTab" Header="Экспедиции" AutomationProperties.Name="Экспедиции">
             </TabItem>
             <TabItem x:Name="NurseryTab" Header="Питомник" AutomationProperties.Name="Питомник">
-                <Grid Background="{StaticResource WindowBackgroundBrush}">
-                    <TextBlock Text="Питомник откроется здесь." Style="{StaticResource CaptionTextStyle}"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
             </TabItem>
         </TabControl>
         <ContentControl x:Name="SettingsContent" Visibility="Collapsed" />

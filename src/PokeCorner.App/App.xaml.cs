@@ -846,7 +846,25 @@ public partial class App : System.Windows.Application
                 var expeditionView = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
                     PreviewExpedition, StartExpeditionAsync, CancelExpeditionAsync, ClaimExpeditionAsync,
                     OpenExpeditionEncounterAsync, _catalogPackage);
-                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView);
+                var nurseryView = new NurseryView(() => _appState.ToSaveData(_catchReadyCount), PreviewNursery,
+                    StartNurseryAsync, HatchNurseryAsync, RefreshNurseryReadyAsync, _catalogPackage,
+                    (good, required) =>
+                    {
+                        if (good == "offspring-charm") shopView.SelectItemShortage(good, required);
+                        else shopView.SelectBerryShortage(good, required);
+                        _menuWindow?.Navigate(MenuSection.Shop);
+                    },
+                    id => { _menuWindow?.Navigate(MenuSection.Pokedex); collectionView.OpenIndividual(id); },
+                    id => CommitStateAsync(next =>
+                    {
+                        if (!next.HatchedNurseryResults.Values.Any(child => child.Id == id) ||
+                            !next.Individuals.Any(individual => individual.Id == id))
+                            throw new InvalidOperationException("Малыш больше не найден в коллекции.");
+                        next.ActiveIndividualId = id;
+                        if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
+                        care.LastInteractionUtc = DateTimeOffset.UtcNow;
+                    }, closeMenu: false));
+                _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView, nurseryView);
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened
                 _menuWindow.Show();
@@ -927,7 +945,7 @@ public partial class App : System.Windows.Application
         if (nest?.Status != "running" || now.ToUniversalTime() < nest.ReadyAtUtc) return false;
         var changed = false;
         await _expeditionProgressTask;
-        await CommitStateAsync(next => changed = new NurseryService(_catalogPackage, next).RefreshReady(now));
+        await CommitStateAsync(next => changed = new NurseryService(_catalogPackage, next).RefreshReady(now), closeMenu: false);
         return changed;
     }
 
@@ -939,7 +957,7 @@ public partial class App : System.Windows.Application
         {
             result = action(new NurseryService(_catalogPackage, next));
             if (!result.Success) throw new InvalidOperationException(result.Message);
-        });
+        }, closeMenu: false);
         return result!;
     }
 

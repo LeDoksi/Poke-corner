@@ -219,6 +219,14 @@ public partial class ShopView : UserControl
         row.Quantity.Focus();
     }
 
+    public void SelectItemShortage(string itemId, int required)
+    {
+        if (!_rows.TryGetValue(itemId, out var row) || !_shop.Goods.Any(g => g.Id == itemId && !g.IsBerry)) return;
+        _state.Shop.Items.TryGetValue(itemId, out var owned);
+        row.Quantity.Text = Math.Max(0, required - owned).ToString();
+        row.Quantity.Focus();
+    }
+
     private void Show(string message)
     {
         MessageText.Text = message;
