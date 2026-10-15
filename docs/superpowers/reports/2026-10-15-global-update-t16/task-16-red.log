@@ -1,0 +1,5 @@
+Command: rtk proxy dotnet test tests/PokeCorner.Core.Tests/PokeCorner.Core.Tests.csproj --no-restore --filter FullyQualifiedName~AchievementsTests --verbosity minimal
+stdout/stderr (raw):
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\GlobalUpdate\achievementsTests.cs(21,27): error CS0246: Не удалось найти тип или имя пространства имен "AchievementService" (возможно, отсутствует директива using или ссылка на сборку). [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.Core.Tests\PokeCorner.Core.Tests.csproj]
+ExitCode: 1
