@@ -1,0 +1,130 @@
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+[xUnit.net 00:00:01.78]     PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(shiny: False, unsupported: True, expected: "не изменилась") [FAIL]
+[xUnit.net 00:00:01.97]     PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(shiny: True, unsupported: False, expected: "сброшена") [FAIL]
+[xUnit.net 00:00:02.14]     PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(shiny: False, unsupported: False, expected: "увеличилась") [FAIL]
+[xUnit.net 00:00:02.33]     PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.CompactScreenShowsDistinctCompatibleParentsAndCanonicalPreview [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(shiny: False, unsupported: True, expected: "не изменилась") [247 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Contains() Failure: Sub-string not found
+String:    "№187 · Hoppip · характер Naughty · особен"···
+Not found: "ягод"
+---- Assert.Contains() Failure: Sub-string not found
+String:    "№187 · Hoppip · характер Naughty · особен"···
+Not found: "ягод"
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(Boolean shiny, Boolean unsupported, String expected) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 282
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.<>c__DisplayClass15_0.<HatchedResultExplainsTraitEffectAndSavedLuckChange>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 301
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(shiny: True, unsupported: False, expected: "сброшена") [183 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Contains() Failure: Sub-string not found
+String:    "№187 · Hoppip · шайни · характер Naughty "···
+Not found: "ягод"
+---- Assert.Contains() Failure: Sub-string not found
+String:    "№187 · Hoppip · шайни · характер Naughty "···
+Not found: "ягод"
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(Boolean shiny, Boolean unsupported, String expected) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 282
+   at InvokeStub_NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.<>c__DisplayClass15_0.<HatchedResultExplainsTraitEffectAndSavedLuckChange>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 301
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(shiny: False, unsupported: False, expected: "увеличилась") [177 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Contains() Failure: Sub-string not found
+String:    "№187 · Hoppip · характер Timid · особенно"···
+Not found: "ягод"
+---- Assert.Contains() Failure: Sub-string not found
+String:    "№187 · Hoppip · характер Timid · особенно"···
+Not found: "ягод"
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(Boolean shiny, Boolean unsupported, String expected) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 282
+   at InvokeStub_NurseryUiTests.HatchedResultExplainsTraitEffectAndSavedLuckChange(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.<>c__DisplayClass15_0.<HatchedResultExplainsTraitEffectAndSavedLuckChange>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 301
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.CompactScreenShowsDistinctCompatibleParentsAndCanonicalPreview [187 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Sequence contains no matching element
+---- System.InvalidOperationException : Sequence contains no matching element
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.CompactScreenShowsDistinctCompatibleParentsAndCanonicalPreview() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 62
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at System.Linq.ThrowHelper.ThrowNoMatchException()
+   at System.Linq.Enumerable.Single[TSource](IEnumerable`1 source, Func`2 predicate)
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.<>c.<CompactScreenShowsDistinctCompatibleParentsAndCanonicalPreview>b__5_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 69
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+[xUnit.net 00:00:03.47]     PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.SelectedUnknownOutcomeRetainsNumberButHidesNameWhileRunning [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.SelectedUnknownOutcomeRetainsNumberButHidesNameWhileRunning [259 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Contains() Failure: Sub-string not found
+String:    "Сохранённая цена: rawst ×10, pecha ×4. Вы"···
+Not found: "№114"
+---- Assert.Contains() Failure: Sub-string not found
+String:    "Сохранённая цена: rawst ×10, pecha ×4. Вы"···
+Not found: "№114"
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.SelectedUnknownOutcomeRetainsNumberButHidesNameWhileRunning() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 247
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.<>c.<SelectedUnknownOutcomeRetainsNumberButHidesNameWhileRunning>b__13_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 254
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+[xUnit.net 00:00:05.20]     PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.RunningRandomNestShowsFrozenPossibleVariantsWithoutNamingActualChild [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.RunningRandomNestShowsFrozenPossibleVariantsWithoutNamingActualChild [300 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.All() Failure: 3 out of 3 items in the collection did not pass.
+[0]: Item:  NurseryOutcome { SpeciesId = 114, Rarity = Rare, Weight = 4, ShinyAvailable = True }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "Сохранённая цена: rawst ×6, pecha ×4. Слу"···
+            Not found: "№114"
+[1]: Item:  NurseryOutcome { SpeciesId = 187, Rarity = Common, Weight = 16, ShinyAvailable = True }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "Сохранённая цена: rawst ×6, pecha ×4. Слу"···
+            Not found: "№187"
+[2]: Item:  NurseryOutcome { SpeciesId = 798, Rarity = Rare, Weight = 4, ShinyAvailable = True }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "Сохранённая цена: rawst ×6, pecha ×4. Слу"···
+            Not found: "№798"
+---- Assert.All() Failure: 3 out of 3 items in the collection did not pass.
+[0]: Item:  NurseryOutcome { SpeciesId = 114, Rarity = Rare, Weight = 4, ShinyAvailable = True }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "Сохранённая цена: rawst ×6, pecha ×4. Слу"···
+            Not found: "№114"
+[1]: Item:  NurseryOutcome { SpeciesId = 187, Rarity = Common, Weight = 16, ShinyAvailable = True }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "Сохранённая цена: rawst ×6, pecha ×4. Слу"···
+            Not found: "№187"
+[2]: Item:  NurseryOutcome { SpeciesId = 798, Rarity = Rare, Weight = 4, ShinyAvailable = True }
+     Error: Assert.Contains() Failure: Sub-string not found
+            String:    "Сохранённая цена: rawst ×6, pecha ×4. Слу"···
+            Not found: "№798"
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.RunningRandomNestShowsFrozenPossibleVariantsWithoutNamingActualChild() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 231
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.NurseryUiTests.<>c.<RunningRandomNestShowsFrozenPossibleVariantsWithoutNamingActualChild>b__12_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\nursery_uiTests.cs:line 238
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+
+Не пройден!: не пройдено     6, пройдено     7, пропущено     0, всего    13, длительность 3 s. - PokeCorner.App.Tests.dll (net8.0)
