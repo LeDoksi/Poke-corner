@@ -269,7 +269,7 @@ public sealed class NurseryUiTests
             var text = ((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<StackPanel>()
                 .SelectMany(card => card.Children.OfType<TextBlock>())
                 .Single(row => row.Text.Contains($"№{recipe.AvailableOutcomes.First(o => !o.ShinyAvailable).SpeciesId} ·"));
-            Assert.Contains("shiny 0", text.Text);
+            Assert.Contains($"shiny {0:P2} ·", text.Text);
         });
     }
 
