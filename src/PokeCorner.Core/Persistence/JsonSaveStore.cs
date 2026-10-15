@@ -414,6 +414,14 @@ public sealed class JsonSaveStore
                 && nest.Child.TotalXp == 0 && nest.Child.AcquisitionSource == "nursery"
                 && nest.Child.ParentIds.SequenceEqual(nest.ParticipantIds)
                 && (!nest.Child.IsShiny || nest.ShinySupported)
+                && nest.PossibleOutcomeSpeciesIds is { Count: <= 3 } possibilities
+                && possibilities.Distinct().Count() == possibilities.Count
+                && possibilities.All(id => id > 0)
+                && (possibilities.Count == 0 || possibilities.Contains(nest.Child.SpeciesId))
+                && (nest.LuckBeforeHatch is null ||
+                    (nest.Status == "hatched" && double.IsFinite(nest.LuckBeforeHatch.Value)
+                     && nest.LuckBeforeHatch.Value >= 0
+                     && nest.LuckBeforeHatch.Value <= ShinyRules.NurseryChanceCap - ShinyRules.BaseChance))
                 && (nest.Status == "hatched") == (nest.HatchOperationId is not null)
                 && (nest.Status != "hatched" || (data.Individuals.Count(x => x.Id == nest.Child.Id) == 1
                     || data.HatchedNurseryResults.ContainsKey(nest.Id))

@@ -12,9 +12,9 @@ public sealed class NurseryUiTests
 {
     private static readonly Lazy<CatalogPackage> Catalog = new(() => CatalogPackage.Load(Path.Combine(AppContext.BaseDirectory, "Data")));
 
-    private static (SaveData Data, Guid First, Guid Second) State()
+    private static (SaveData Data, Guid First, Guid Second) State(NurseryRecipe? recipe = null)
     {
-        var recipe = new NurseryCatalog(Catalog.Value).MixedRecipes.First(r => r.IsAvailable && r.SelectionUseful);
+        recipe ??= new NurseryCatalog(Catalog.Value).MixedRecipes.First(r => r.IsAvailable && r.SelectionUseful);
         var data = new SaveData
         {
             SchemaVersion = 2, CatalogRevision = Catalog.Value.CatalogRevision, BalanceRevision = "test",
@@ -66,7 +66,9 @@ public sealed class NurseryUiTests
             WpfTestHost.Layout(view, 600, 420);
             Assert.True(view.DesiredSize.Width <= 600);
             Choose(view, first, second);
-            Assert.DoesNotContain(((WrapPanel)view.FindName("SecondParentsPanel")!).Children.OfType<Button>(), b => Equals(b.Tag, first));
+            var same = ((WrapPanel)view.FindName("SecondParentsPanel")!).Children.OfType<Button>().Single(b => Equals(b.Tag, first));
+            Assert.False(same.IsEnabled);
+            Assert.Contains("уже выбран", same.Content.ToString());
             var expected = new NurseryService(Catalog.Value, data).Preview([first, second]);
             var cost = ((TextBlock)view.FindName("CostText")!).Text;
             Assert.Contains($"{expected.Hours} ч", cost);
@@ -220,6 +222,108 @@ public sealed class NurseryUiTests
             Assert.Null(data.ActiveIndividualId);
             ((Button)view.FindName("ActivateButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.Equal(data.Nest.Child.Id, data.ActiveIndividualId);
+        });
+    }
+
+    [Fact]
+    public void RunningRandomNestShowsFrozenPossibleVariantsWithoutNamingActualChild()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var recipe = new NurseryCatalog(Catalog.Value).MixedRecipes.First(r => r.IsAvailable && r.SelectionUseful);
+            var (data, first, second) = State(recipe);
+            new NurseryService(Catalog.Value, data).Start(new NurseryRequest([first, second], null, Guid.NewGuid(), DateTimeOffset.UtcNow));
+            var saved = JsonSaveStore.Clone(data);
+            var text = ((TextBlock)View(saved).FindName("NestTerms")!).Text;
+            Assert.All(recipe.AvailableOutcomes, outcome => Assert.Contains($"№{outcome.SpeciesId}", text));
+            Assert.Contains("скрыт", text);
+            Assert.DoesNotContain(Catalog.Value.Species.Single(s => s.Id == saved.Nest!.Child.SpeciesId).DisplayName, text);
+        });
+    }
+
+    [Fact]
+    public void SelectedUnknownOutcomeRetainsNumberButHidesNameWhileRunning()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var recipe = new NurseryCatalog(Catalog.Value).MixedRecipes.First(r => r.IsAvailable && r.SelectionUseful);
+            var (data, first, second) = State(recipe);
+            var selected = recipe.AvailableOutcomes[0].SpeciesId;
+            new NurseryService(Catalog.Value, data).Start(new NurseryRequest([first, second], selected, Guid.NewGuid(), DateTimeOffset.UtcNow));
+            var text = ((TextBlock)View(JsonSaveStore.Clone(data)).FindName("NestTerms")!).Text;
+            Assert.Contains($"№{selected}", text);
+            Assert.Contains("неизвестный вид", text);
+            Assert.DoesNotContain(Catalog.Value.Species.Single(s => s.Id == selected).DisplayName, text);
+        });
+    }
+
+    [Fact]
+    public void UnsupportedShinyOutcomeRendersZeroPercent()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var recipe = new NurseryCatalog(Catalog.Value).MixedRecipes.First(r => r.IsAvailable && r.AvailableOutcomes.Any(o => !o.ShinyAvailable));
+            var (data, first, second) = State(recipe);
+            var view = View(data);
+            Choose(view, first, second);
+            var text = ((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<StackPanel>()
+                .SelectMany(card => card.Children.OfType<TextBlock>())
+                .Single(row => row.Text.Contains($"№{recipe.AvailableOutcomes.First(o => !o.ShinyAvailable).SpeciesId} ·"));
+            Assert.Contains("shiny 0", text.Text);
+        });
+    }
+
+    [Theory]
+    [InlineData(false, false, "увеличилась")]
+    [InlineData(true, false, "сброшена")]
+    [InlineData(false, true, "не изменилась")]
+    public void HatchedResultExplainsTraitEffectAndSavedLuckChange(bool shiny, bool unsupported, string expected)
+    {
+        WpfTestHost.Run(() =>
+        {
+            var (data, first, second) = State();
+            data.NurseryLuckBonus = .01;
+            var request = new NurseryRequest([first, second], null, Guid.NewGuid(), DateTimeOffset.UtcNow.AddHours(-9));
+            var service = new NurseryService(Catalog.Value, data);
+            service.Start(request);
+            var original = data.Nest!.Child;
+            data.Nest.ShinySupported = !unsupported;
+            data.Nest.ShinyDraw = new ShinyDraw(shiny ? 0 : .9, shiny ? 1 : 0);
+            data.Nest.Child = new PokemonIndividual
+            {
+                Id = original.Id, SpeciesId = original.SpeciesId, CurrentSpeciesId = original.CurrentSpeciesId,
+                FamilyRootId = original.FamilyRootId, EvolutionChainId = original.EvolutionChainId,
+                ChainLength = original.ChainLength, ReachedSpeciesIds = [original.SpeciesId],
+                ParentIds = [first, second], AcquisitionSource = "nursery", FirstTraitId = "gatherer",
+                Nature = original.Nature, IsShiny = shiny, CaughtAtUtc = original.CaughtAtUtc
+            };
+            service.Hatch(request.OperationId, Guid.NewGuid());
+            var text = ((TextBlock)View(JsonSaveStore.Clone(data)).FindName("ResultText")!).Text;
+            Assert.Contains("ягод", text);
+            Assert.Contains(expected, text);
+        });
+    }
+
+    [Fact]
+    public void OldMissingMetadataAndArchiveDoNotInventResultOrLuckHistory()
+    {
+        WpfTestHost.Run(() =>
+        {
+            var (data, first, second) = State();
+            var request = new NurseryRequest([first, second], null, Guid.NewGuid(), DateTimeOffset.UtcNow.AddHours(-9));
+            var service = new NurseryService(Catalog.Value, data);
+            service.Start(request);
+            data.Nest!.PossibleOutcomeSpeciesIds.Clear();
+            Assert.Contains("не сохранены", ((TextBlock)View(data).FindName("NestTerms")!).Text);
+            service.Hatch(request.OperationId, Guid.NewGuid());
+            data.Nest.LuckBeforeHatch = null;
+            var view = View(data);
+            Assert.Contains("не сохранено", ((TextBlock)view.FindName("ResultText")!).Text);
+            data.HatchedNurseryResults.Clear();
+            view.Refresh();
+            Assert.Contains("недоступен", ((TextBlock)view.FindName("ResultText")!).Text);
+            Assert.False(((Button)view.FindName("OpenPokedexButton")!).IsEnabled);
+            Assert.False(((Button)view.FindName("ActivateButton")!).IsEnabled);
         });
     }
 }

@@ -122,7 +122,8 @@ public partial class NurseryView : UserControl
         PreparationPanel.Visibility = active ? Visibility.Collapsed : Visibility.Visible;
         NestPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
         ResultPanel.Visibility = !active && nest?.Status == "hatched" ? Visibility.Visible : Visibility.Collapsed;
-        OpenPokedexButton.IsEnabled = ActivateButton.IsEnabled = !_busy && nest?.Status == "hatched";
+        OpenPokedexButton.IsEnabled = ActivateButton.IsEnabled = !_busy && nest?.Status == "hatched"
+            && data.HatchedNurseryResults.ContainsKey(nest.Id);
         if (active)
         {
             RefreshNest(data, nest!);
@@ -130,12 +131,20 @@ public partial class NurseryView : UserControl
         }
         if (nest?.Status == "hatched")
         {
-            var child = data.HatchedNurseryResults.GetValueOrDefault(nest.Id) ?? nest.Child;
-            var owned = data.Individuals.Count(p => p.SpeciesId == child.SpeciesId);
-            ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · шайни" : "")} · " +
-                $"характер {child.Nature} · особенность {CollectionView.TraitLabel(child.FirstTraitId)}. В коллекции сохранён один малыш. " +
-                $"{(owned == 1 ? "Первый экземпляр этого вида." : $"Экземпляров этого вида: {owned}.")} " +
-                $"Удача питомника: {data.NurseryLuckBonus:P2}.";
+            if (!data.HatchedNurseryResults.TryGetValue(nest.Id, out var child))
+                ResultText.Text = "Сохранённый результат вылупления недоступен. Откройте историю сохранений.";
+            else
+            {
+                var owned = data.Individuals.Count(p => p.SpeciesId == child.SpeciesId);
+                var luck = nest.LuckBeforeHatch is { } before
+                    ? $"Удача питомника {(nest.ShinySupported && child.IsShiny ? "сброшена" : data.NurseryLuckBonus > before ? "увеличилась" : "не изменилась")}: " +
+                      $"{before:P2} → {data.NurseryLuckBonus:P2}."
+                    : $"Изменение удачи этого старого вылупления не сохранено. Сейчас: {data.NurseryLuckBonus:P2}.";
+                ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · шайни" : "")} · " +
+                    $"характер {child.Nature} · особенность {CollectionView.TraitLabel(child.FirstTraitId)}: {TraitEffect(child.FirstTraitId)}. " +
+                    $"В коллекции сохранён один малыш. " +
+                    $"{(owned == 1 ? "Первый экземпляр этого вида." : $"Экземпляров этого вида: {owned}.")} {luck}";
+            }
         }
         var busy = ExpeditionService.BusyIndividualIds(data);
         if (!_busy && (_first != Guid.Empty && (busy.Contains(_first) || data.Individuals.All(p => p.Id != _first)) ||
@@ -155,7 +164,15 @@ public partial class NurseryView : UserControl
                 () => SelectFirst(parent.Id));
             firstButton.ToolTip = unavailable ? "Родитель уже занят" : "Выбрать первым родителем";
             FirstParentsPanel.Children.Add(firstButton);
-            if (_first == Guid.Empty || parent.Id == _first ||
+            if (_first != Guid.Empty && parent.Id == _first)
+            {
+                var same = ParentButton(data, parent, false, false, () => { });
+                same.Content += " · уже выбран";
+                same.ToolTip = "Один и тот же экземпляр нельзя выбрать дважды";
+                SecondParentsPanel.Children.Add(same);
+                continue;
+            }
+            if (_first == Guid.Empty ||
                 !_recipes.Partners(data.Individuals.Single(p => p.Id == _first).CurrentSpeciesId).Contains(parent.CurrentSpeciesId)) continue;
             var secondButton = ParentButton(data, parent, parent.Id == _second, !_busy && !unavailable,
                 () => SelectSecond(parent.Id));
@@ -244,6 +261,22 @@ public partial class NurseryView : UserControl
     private string OutcomeName(SaveData data, int id) => data.DiscoveredSpeciesIds.Contains(id)
         ? $"№{id} · {SpeciesName(id)}" : $"№{id} · неизвестный вид";
 
+    private static string TraitEffect(string? id) => id switch
+    {
+        "gatherer" => "увеличивает основную добычу ягод",
+        "treasure-hunter" => "увеличивает основную добычу монет",
+        "tracker" => "повышает шанс встречи",
+        "finder" => "повышает шанс дополнительных находок",
+        "mentor" => "увеличивает опыт команды",
+        "collector" => "повышает шанс встретить ещё не открытый вид",
+        "relic-finder" => "даёт шанс найти специальные предметы в полной команде",
+        "terrain-expert" => "сокращает время похода",
+        "fast-grower" => "снижает требуемый для эволюции уход",
+        "rarity-expert" => "повышает шанс более редкого доступного вида",
+        "caring-parent" => "сокращает время гнезда",
+        _ => "эффект не указан"
+    };
+
     private Button ChoiceButton(string title, int? choice)
     {
         var button = new Button
@@ -269,8 +302,11 @@ public partial class NurseryView : UserControl
         var ready = nest.Status == "ready";
         NestTitle.Text = ready ? "Малыш готов появиться" : "Яйцо в гнезде";
         NestParents.Text = "Родители: " + string.Join(" + ", nest.ParticipantIds.Select(id => ParentName(data, id)));
+        var variants = nest.PossibleOutcomeSpeciesIds.Count == 0
+            ? "Варианты этого старого гнезда не сохранены."
+            : "Возможные виды: " + string.Join(", ", nest.PossibleOutcomeSpeciesIds.Select(id => OutcomeName(data, id))) + ".";
         NestTerms.Text = $"Сохранённая цена: {string.Join(", ", nest.ResourcePrices.Select(x => $"{x.Key} ×{x.Value}"))}. " +
-            $"{(nest.SelectedSpeciesId is { } selected ? $"Выбранный вид: {SpeciesName(selected)}." : "Случайный исход скрыт до вылупления.")} " +
+            $"{(nest.SelectedSpeciesId is { } selected ? $"Выбранный вид: {OutcomeName(data, selected)}." : $"{variants} Случайный исход скрыт до вылупления.")} " +
             $"Удача: {data.NurseryLuckBonus:P2}.";
         NestTime.Text = ready ? "Яйцо ждёт встречи. Родители заняты до вылупления." :
             $"Готовность: {nest.ReadyAtUtc.ToLocalTime():g} · осталось {Math.Max(0, Math.Ceiling((nest.ReadyAtUtc - DateTimeOffset.UtcNow).TotalMinutes))} мин";
@@ -347,20 +383,24 @@ public partial class NurseryView : UserControl
 
     private void OpenPokedexButton_Click(object sender, RoutedEventArgs e)
     {
-        if (!_busy && _snapshot().Nest is { Status: "hatched" } nest) _openPokedex(nest.Child.Id);
+        var data = _snapshot();
+        if (!_busy && data.Nest is { Status: "hatched" } nest && data.HatchedNurseryResults.TryGetValue(nest.Id, out var child))
+            _openPokedex(child.Id);
     }
 
     private async void ActivateButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_busy || _snapshot().Nest is not { Status: "hatched" } nest) return;
-        var id = nest.Child.Id;
+        var data = _snapshot();
+        if (_busy || data.Nest is not { Status: "hatched" } nest ||
+            !data.HatchedNurseryResults.TryGetValue(nest.Id, out var child)) return;
+        var id = child.Id;
         _busy = true;
         Refresh();
         try
         {
             await _activate(id);
             if (_snapshot().ActiveIndividualId != id) throw new InvalidOperationException("Спутник не подтверждён сохранением.");
-            Show($"{SpeciesName(nest.Child.SpeciesId)} теперь на рабочем столе.");
+            Show($"{SpeciesName(child.SpeciesId)} теперь на рабочем столе.");
         }
         catch (Exception ex) { Show(ex.Message); }
         finally { _busy = false; Refresh(); }

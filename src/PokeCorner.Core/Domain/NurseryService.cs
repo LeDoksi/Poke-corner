@@ -133,6 +133,7 @@ public sealed class NurseryService
             DurationMinutes = checked(preview.Hours * 60), ResourcePrices = preview.Berries.ToDictionary(x => x.Key, x => x.Value),
             Child = child, ShinySupported = outcome.ShinyAvailable, ShinyDraw = shinyDraw,
             SelectedSpeciesId = request.SelectedSpeciesId,
+            PossibleOutcomeSpeciesIds = preview.Outcomes.Select(x => x.SpeciesId).ToList(),
             Conditions = JsonSerializer.SerializeToElement(new { request.SelectedSpeciesId }),
             Outcomes = JsonSerializer.SerializeToElement(new { child.SpeciesId, child.IsShiny })
         };
@@ -159,6 +160,7 @@ public sealed class NurseryService
         state.HatchedNurseryResults[id] = Copy(nest.Child);
         state.DiscoveredSpeciesIds.Add(nest.Child.SpeciesId);
         if (nest.Child.IsShiny) state.ShinySpeciesIds.Add(nest.Child.SpeciesId);
+        nest.LuckBeforeHatch = state.NurseryLuckBonus;
         state.NurseryLuckBonus = ShinyRules.NextNurseryLuck(state.NurseryLuckBonus, nest.Child.IsShiny, nest.ShinySupported);
         nest.Status = "hatched";
         nest.HatchOperationId = operationId;
