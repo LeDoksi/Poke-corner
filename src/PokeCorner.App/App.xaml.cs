@@ -213,7 +213,7 @@ public partial class App : System.Windows.Application
                 Shutdown(); return;
             }
         }
-        else if (loaded!.ActiveIndividualId is null || loaded.Gift.Gifts.Count == 0)
+        else if (loaded!.ActiveIndividualId is null || loaded.Gift.Gifts.Count == 0 || FirstRunFlow.HasUnqueuedGift(loaded))
         {
             var companion = FirstRunFlow.AvailableCompanion(loaded, _catalogPackage);
             try
@@ -302,7 +302,7 @@ public partial class App : System.Windows.Application
         // Restore the tray's ready glyph if a catch was already queued when the app last closed
         // (see _catchReadyCount's hydration above) — the AppMenuWindow badge doesn't need the
         // same treatment since it's created lazily and reads the live count when it is.
-        _trayIconService.SetCatchReady(_catchReadyCount > 0);
+        _trayIconService.SetCatchReady(ReadyBallCount() > 0);
 
         // MUST come after _trayIconService exists. This async void runs straight through to
         // _trayIconService.SetSpriteIcon when the sprite is already memoized — which it is right after
@@ -638,8 +638,8 @@ public partial class App : System.Windows.Application
                 var wasIdle = _catchReadyCount == 0;
                 await _appState.CommitQueuedActivityEncountersAsync(_saveWriter, _encounterService,
                     () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
-                _trayIconService.SetCatchReady(_catchReadyCount > 0);
-                _menuWindow?.SetCatchReady(_catchReadyCount);
+                _trayIconService.SetCatchReady(ReadyBallCount() > 0);
+                _menuWindow?.SetCatchReady(ReadyBallCount());
                 if (wasIdle && _catchReadyCount > 0)
                     _trayIconService.ShowNotification("PokéCorner", "Покебол за активность готов к открытию.");
             }
@@ -654,7 +654,7 @@ public partial class App : System.Windows.Application
     private async Task<CatchReveal?> TryPerformCatchAsync()
     {
         if (_isExiting || _appState.IsCommitting) return null;
-        var encounter = _appState.Encounters.FirstOrDefault(e => e.Source == "activity" && e.Phase == "sealed");
+        var encounter = CatchBallQueue.NextReady(_appState.Encounters);
         if (encounter is null) return null;
         EncounterOpenResult? result = null;
         CatchReveal? reveal = null;
@@ -664,11 +664,13 @@ public partial class App : System.Windows.Application
                 _catchReadyCount = next.PendingCatchCount;
                 reveal = PublishConfirmedCatch(result!);
             });
-        _trayIconService.SetCatchReady(_catchReadyCount > 0);
-        _menuWindow?.SetCatchReady(_catchReadyCount);
+        _trayIconService.SetCatchReady(ReadyBallCount() > 0);
+        _menuWindow?.SetCatchReady(ReadyBallCount());
         RefreshOverlayForActiveIndividual();
         return reveal;
     }
+
+    private int ReadyBallCount() => CatchBallQueue.ReadyCount(_appState.Encounters, _catchReadyCount);
 
     private CatchReveal PublishConfirmedCatch(EncounterOpenResult result)
     {
@@ -987,7 +989,7 @@ public partial class App : System.Windows.Application
                     nurseryView, roomView, achievementsView);
                 _menuWindow.SectionViewed += ShowContextHint;
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
-                _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened
+                _menuWindow.SetCatchReady(ReadyBallCount()); // picks up activity and gift balls queued before opening
                 _menuWindow.Show();
             }
             _menuWindow.Navigate(section);

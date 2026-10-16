@@ -1,6 +1,7 @@
 using System.Windows.Controls;
 using System.Windows;
 using PokeCorner.App.Onboarding;
+using PokeCorner.App.Popup;
 using PokeCorner.App.Tests.Theme;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
@@ -189,10 +190,13 @@ public class onboardingTests
         Directory.CreateDirectory(root);
         try
         {
-            var store = new JsonSaveStore(Path.Combine(root, "state-v2.json"));
+            var path = Path.Combine(root, "state-v2.json");
+            var store = new JsonSaveStore(path);
             var data = EmptyMigrated();
             var pet = Starter();
             data.Individuals.Add(pet);
+            SaveMigration.EnsureGift(data, pet.CurrentSpeciesId, Package.Value);
+            Assert.True(FirstRunFlow.HasUnqueuedGift(data));
             store.Save(data);
             var state = new AppState();
             state.Hydrate(store.Load()!);
@@ -202,15 +206,116 @@ public class onboardingTests
             Assert.Equal(pet.Id, committed.ActiveIndividualId);
             Assert.Single(committed.Individuals);
             Assert.Equal(2, committed.Gift.Gifts.Count);
+            Assert.Equal(2, committed.Encounters.Count(e => e.Source == "gift" && e.Phase == "sealed"));
+            Assert.False(FirstRunFlow.HasUnqueuedGift(committed));
             var giftIds = committed.Gift.Gifts.Select(g => g.Individual.Id).ToArray();
             state.Hydrate(committed);
             await state.CommitAsync(writer, next => FirstRunFlow.RestoreCompanionAndGift(next, Package.Value), () => 0);
             Assert.Equal(giftIds, store.Load()!.Gift.Gifts.Select(g => g.Individual.Id));
+            Assert.Equal(2, store.Load()!.Encounters.Count(e => e.Source == "gift"));
             Assert.Single(store.Load()!.Individuals);
             writer.Stop();
         }
         finally { Directory.Delete(root, true); }
     }
+
+    [Fact]
+    public async Task StarterGiftAppearsAsTwoClosedReadyBallsAndOpensDurablyWithoutActivityCatch()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "GiftCatchTest_" + Guid.NewGuid());
+        Directory.CreateDirectory(root);
+        try
+        {
+            var path = Path.Combine(root, "state-v2.json");
+            var store = new JsonSaveStore(path);
+            var state = new AppState();
+            state.Hydrate(EmptyMigrated());
+            var writer = new BackgroundSaveWriter(store);
+            var service = new EncounterService(Package.Value);
+            await state.CommitAsync(writer, next => FirstRunFlow.CompleteStarter(next, Starter(), true, Package.Value), () => 0);
+            var saved = store.Load()!;
+            Assert.Equal(2, saved.Encounters.Count(e => e.Source == "gift" && e.Phase == "sealed"));
+            Assert.Equal(0, saved.PendingCatchCount);
+            Assert.All(saved.Encounters, e =>
+            {
+                Assert.Equal("gift", e.Source);
+                Assert.Null(e.Individual);
+                Assert.Null(e.KnownSpeciesId);
+                Assert.NotNull(e.GiftIndividualId);
+            });
+            WpfTestHost.Run(() =>
+            {
+                var view = new PokeCorner.App.Popup.CatchView(state, () => null,
+                    _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, _ => "hidden");
+                Assert.True(((Button)view.FindName("CatchButton")!).IsEnabled);
+                Assert.Contains("подар", ((TextBlock)view.FindName("StatusText")!).Text, StringComparison.OrdinalIgnoreCase);
+                Assert.DoesNotContain(saved.Gift.Gifts[0].Individual.SpeciesId.ToString(), ((TextBlock)view.FindName("StatusText")!).Text);
+            });
+
+            var firstGift = CatchBallQueue.NextReady(state.Encounters)!;
+            Assert.Equal("gift", firstGift.Source);
+            Directory.CreateDirectory(path + ".tmp");
+            var failingWriter = new BackgroundSaveWriter(store);
+            await Assert.ThrowsAnyAsync<IOException>(() => state.CommitAsync(failingWriter,
+                next => service.Open(next, firstGift.Id), () => 0));
+            Assert.Equal("sealed", state.Encounters.Single(e => e.Id == firstGift.Id).Phase);
+            Assert.Equal("sealed", store.Load()!.Encounters.Single(e => e.Id == firstGift.Id).Phase);
+            failingWriter.Stop();
+            Directory.Delete(path + ".tmp");
+
+            var activityId = Guid.NewGuid();
+            var activityReady = 0;
+            await state.CommitAsync(writer, next =>
+            {
+                service.Reserve(next, "activity", activityId);
+                next.ActivityNewGuaranteed = true;
+            }, () => activityReady, next => activityReady = next.PendingCatchCount);
+            Assert.Equal(3, CatchBallQueue.ReadyCount(state.Encounters, activityReady));
+
+            for (var i = 0; i < 2; i++)
+            {
+                var closed = CatchBallQueue.NextReady(state.Encounters)!;
+                Assert.Equal("gift", closed.Source);
+                await state.CommitAsync(writer, next => service.Open(next, closed.Id), () => activityReady,
+                    next => activityReady = next.PendingCatchCount);
+                var opened = store.Load()!;
+                Assert.Equal("opened", opened.Encounters.Single(e => e.Id == closed.Id).Phase);
+                Assert.Equal("opened", opened.Gift.Gifts.Single(g => g.Individual.Id == closed.GiftIndividualId).Status);
+                Assert.Equal(1, opened.PendingCatchCount);
+                Assert.True(opened.ActivityNewGuaranteed);
+                Assert.Equal("sealed", opened.Encounters.Single(e => e.Id == activityId).Phase);
+                state.Hydrate(opened); // restart from confirmed disk state
+                await state.CommitAsync(writer, next => service.Open(next, closed.Id), () => activityReady);
+                Assert.Equal(opened.Individuals.Select(p => p.Id), store.Load()!.Individuals.Select(p => p.Id));
+            }
+            Assert.Equal(activityId, CatchBallQueue.NextReady(state.Encounters)!.Id);
+            await state.CommitAsync(writer, next => FirstRunFlow.RestoreCompanionAndGift(next, Package.Value), () => activityReady);
+            Assert.Equal(2, store.Load()!.Gift.Gifts.Count);
+            Assert.Equal(2, store.Load()!.Encounters.Count(e => e.Source == "gift"));
+            Assert.Equal(3, store.Load()!.Individuals.Count); // starter + pair, without replacing the active pet
+            Assert.Equal(saved.ActiveIndividualId, store.Load()!.ActiveIndividualId);
+            Assert.Equal(20, store.Load()!.ShopCoins);
+            Assert.Equal(5, store.Load()!.FeedingTreats);
+            writer.Stop();
+        }
+        finally { Directory.Delete(root, true); }
+    }
+
+    [Fact]
+    public void CatchViewOffersAlreadyReservedGiftWhenNoActivityBallIsReady() => WpfTestHost.Run(() =>
+    {
+        var saved = EmptyMigrated();
+        FirstRunFlow.CompleteStarter(saved, Starter(), true, Package.Value);
+        var gift = saved.Gift.Gifts[0];
+        new EncounterService(Package.Value).ReserveGift(saved, gift.Individual.Id, gift.Individual.Id);
+        var live = new AppState();
+        live.Hydrate(saved);
+        var view = new PokeCorner.App.Popup.CatchView(live, () => null,
+            _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, _ => "hidden");
+        Assert.True(((Button)view.FindName("CatchButton")!).IsEnabled);
+        Assert.Contains("подар", ((TextBlock)view.FindName("StatusText")!).Text, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("талисман не меняет", ((TextBlock)view.FindName("CatchCharmText")!).Text, StringComparison.OrdinalIgnoreCase);
+    });
 
     [Fact]
     public async Task FailedStarterCommitDoesNotPublishCandidateOrGift()
@@ -303,15 +408,21 @@ public class onboardingTests
     public void ClosingDuringPendingStepCommitKeepsDisplayedStepUntilRestart()
     {
         var pending = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        OnboardingWindow? window = null;
+        string? beforeClose = null;
         WpfTestHost.Run(() =>
         {
-            var window = new OnboardingWindow(2, (_, _) => pending.Task);
+            window = new OnboardingWindow(2, (_, _) => pending.Task);
             window.Show();
             ((Button)window.FindName("NextButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            Assert.Contains("ШАГ 2 ИЗ 6", ((TextBlock)window.FindName("StepCounterText")!).Text);
+            beforeClose = ((TextBlock)window.FindName("StepCounterText")!).Text;
             window.Close();
         });
         pending.SetResult();
-        WpfTestHost.Run(() => { });
+        WpfTestHost.Run(() =>
+        {
+            Assert.False(window!.IsVisible);
+            Assert.Equal(beforeClose, ((TextBlock)window.FindName("StepCounterText")!).Text);
+        });
     }
 }

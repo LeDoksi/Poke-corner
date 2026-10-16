@@ -75,15 +75,19 @@ public partial class CatchView : System.Windows.Controls.UserControl
         CatchCharmText.Text = $"Шанс shiny при пригодном виде: {chance:P3}. " +
             (activeCharm ? "Активный талисман расходуется на пригодную попытку; при недоступном shiny сохраняется."
                 : "Если у выбранного вида нет shiny-ресурса, шанс 0%.");
+        if (GiftReadyCount() > 0)
+            CatchCharmText.Text += " Подарочные покеболы уже закрыты: талисман не меняет их результат.";
         CatchCharmText.Visibility = Visibility.Visible;
-        SetReady(_catchReadyCount());
+        SetReady(_catchReadyCount(), GiftReadyCount());
     }
+
+    private int GiftReadyCount() => CatchBallQueue.GiftReadyCount(_appState.Encounters);
 
     /// count: how many catches are queued (0 = none ready). Wording goes from "не готово"
     /// through singular to plural.
-    private void SetReady(int count)
+    private void SetReady(int count, int giftCount)
     {
-        CatchButton.IsEnabled = !_busy && _revealCancellation is null && (_showingResult || count > 0);
+        CatchButton.IsEnabled = !_busy && _revealCancellation is null && (_showingResult || count > 0 || giftCount > 0);
         if (_showingResult) return;
         CatchButton.Content = "Открыть покебол";
         StatusText.Text = count switch
@@ -92,6 +96,10 @@ public partial class CatchView : System.Windows.Controls.UserControl
             1 => "Покебол за активность готов к открытию.",
             _ => $"Готово {count} покебола за активность."
         };
+        if (giftCount > 0)
+            StatusText.Text = count > 0
+                ? $"Готово подарочных покеболов: {giftCount}; за активность: {count}."
+                : $"Готово подарочных покеболов: {giftCount}.";
         if (_error is not null) StatusText.Text = _error;
     }
 
@@ -130,7 +138,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         finally
         {
             _busy = false;
-            CatchButton.IsEnabled = _revealCancellation is null && (_showingResult || _catchReadyCount() > 0);
+            CatchButton.IsEnabled = _revealCancellation is null && (_showingResult || _catchReadyCount() > 0 || GiftReadyCount() > 0);
         }
     }
 
