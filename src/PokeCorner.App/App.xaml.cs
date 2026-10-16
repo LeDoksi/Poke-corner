@@ -633,12 +633,22 @@ public partial class App : System.Windows.Application
         var encounter = _appState.Encounters.FirstOrDefault(e => e.Source == "activity" && e.Phase == "sealed");
         if (encounter is null) return null;
         EncounterOpenResult? result = null;
+        CatchReveal? reveal = null;
         await _appState.CommitAsync(_saveWriter, next => result = _encounterService.Open(next, encounter.Id),
-            () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
+            () => _catchReadyCount, next =>
+            {
+                _catchReadyCount = next.PendingCatchCount;
+                reveal = PublishConfirmedCatch(result!);
+            });
         _trayIconService.SetCatchReady(_catchReadyCount > 0);
         _menuWindow?.SetCatchReady(_catchReadyCount);
         RefreshOverlayForActiveIndividual();
-        var individual = result!.Individual;
+        return reveal;
+    }
+
+    private CatchReveal PublishConfirmedCatch(EncounterOpenResult result)
+    {
+        var individual = result.Individual;
         _pendingCatchReveal = new CatchReveal(new CatchResult(individual.EvolutionChainId, individual.SpeciesId, individual.Nature,
             individual.IsShiny, result.WasDuplicateSpecies, individual.ChainLength), result.Rarity);
         return _pendingCatchReveal;
@@ -748,8 +758,8 @@ public partial class App : System.Windows.Application
     {
         var now = DateTimeOffset.UtcNow;
         var active = _appState.Collection.GetActive();
-        var last = active is not null && _appState.CareStateByIndividualId.TryGetValue(active.Id, out var care)
-            ? care.LastInteractionUtc : now;
+        var last = active is null ? now : _appState.CareStateByIndividualId.TryGetValue(active.Id, out var care)
+            ? care.LastInteractionUtc : active.CaughtAtUtc;
         _overlayWindow.UpdateThought(last, now);
     }
 

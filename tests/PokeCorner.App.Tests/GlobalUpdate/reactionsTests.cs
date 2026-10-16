@@ -1,5 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using PokeCorner.App.Overlay;
 using PokeCorner.App.Popup;
 using PokeCorner.App.Tests.Theme;
@@ -12,6 +14,97 @@ namespace PokeCorner.App.Tests.GlobalUpdate;
 
 public sealed class ReactionsTests
 {
+    private const BindingFlags AppPrivate = BindingFlags.Instance | BindingFlags.NonPublic;
+
+    [Theory]
+    [InlineData(3.1, 1)]
+    [InlineData(4.6, 2)]
+    [InlineData(5.85, 3)]
+    public void UntouchedPetUsesSavedObtainedTimeAcrossRefreshTicks(double idleHours, int expectedStage)
+    {
+        WpfTestHost.Run(() =>
+        {
+            var pet = new PokemonIndividual
+            {
+                SpeciesId = 1, EvolutionChainId = 1, ChainLength = 3, Nature = Nature.Bold,
+                IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow.AddHours(-idleHours)
+            };
+            var state = new AppState();
+            state.Hydrate(new SaveData { Individuals = [pet], ActiveIndividualId = pet.Id, Settings = new() });
+            Assert.Empty(state.CareStateByIndividualId);
+            var overlay = new OverlayWindow();
+            var app = (global::PokeCorner.App.App)RuntimeHelpers.GetUninitializedObject(typeof(global::PokeCorner.App.App));
+            typeof(global::PokeCorner.App.App).GetField("_appState", AppPrivate)!.SetValue(app, state);
+            typeof(global::PokeCorner.App.App).GetField("_overlayWindow", AppPrivate)!.SetValue(app, overlay);
+            var refresh = typeof(global::PokeCorner.App.App).GetMethod("UpdateActiveThought", AppPrivate)!;
+
+            refresh.Invoke(app, null);
+            Assert.Equal(expectedStage, overlay.FindName("ThoughtBubble") is FrameworkElement first ? first.Tag : null);
+            refresh.Invoke(app, null);
+            Assert.Equal(expectedStage, overlay.FindName("ThoughtBubble") is FrameworkElement next ? next.Tag : null);
+        });
+    }
+
+    [Fact]
+    public async Task DeferredReopenDuringSavedCatchReceivesConfirmedResultBeforeCommitReturns()
+    {
+        var directory = Path.Combine(Path.GetTempPath(), "t18-catch-reopen", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(directory);
+        try
+        {
+            var writes = new List<Action>();
+            var store = new JsonSaveStore(Path.Combine(directory, "state.json"));
+            var writer = new BackgroundSaveWriter(store, writes.Add);
+            var individual = new PokemonIndividual
+            {
+                SpeciesId = 1, EvolutionChainId = 1, ChainLength = 3, Nature = Nature.Bold,
+                IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow
+            };
+            var confirmed = new EncounterOpenResult(individual, RarityTier.Common, false, false);
+            var state = new AppState();
+            var app = (global::PokeCorner.App.App)RuntimeHelpers.GetUninitializedObject(typeof(global::PokeCorner.App.App));
+            var pending = typeof(global::PokeCorner.App.App).GetField("_pendingCatchReveal", AppPrivate)!;
+            var publish = typeof(global::PokeCorner.App.App).GetMethod("PublishConfirmedCatch", AppPrivate);
+            CatchView? reopened = null;
+            Task? commit = null;
+            var opens = 0;
+            WpfTestHost.Run(() =>
+            {
+                state.Hydrate(new SaveData { Individuals = [], Settings = new(), PendingCatchCount = 1 });
+                var old = new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null),
+                    () => 1, () => { }, _ => "Bulbasaur");
+                commit = state.CommitAsync(writer, next =>
+                {
+                    next.Individuals.Add(individual);
+                    next.ActiveIndividualId = individual.Id;
+                    next.PendingCatchCount = 0;
+                }, () => 1, _ => publish?.Invoke(app, [confirmed]));
+                Assert.True(state.IsCommitting);
+                old.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+                state.RunWhenReady(() =>
+                {
+                    reopened = new CatchView(state, () => { opens++; return null; },
+                        _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, _ => "Bulbasaur");
+                    if (pending.GetValue(app) is CatchReveal reveal) reopened.RestoreReveal(reveal);
+                });
+                Assert.Null(reopened);
+                Assert.Null(pending.GetValue(app));
+                Assert.Single(writes);
+                writes[0]();
+            });
+            await commit!;
+            WpfTestHost.Run(() =>
+            {
+                Assert.NotNull(reopened);
+                Assert.Equal("Продолжить", ((Button)reopened.FindName("CatchButton")!).Content);
+                Assert.Equal(0, opens);
+                Assert.Single(state.Collection.Individuals);
+                Assert.Single(store.Load()!.Individuals);
+            });
+        }
+        finally { Directory.Delete(directory, true); }
+    }
+
     [Fact]
     public void ConfirmedCatchRemainsVisibleWhenPlaybackIsInterrupted()
     {
