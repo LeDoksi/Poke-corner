@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
 using Brush = System.Windows.Media.Brush;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
@@ -40,6 +41,9 @@ public partial class NurseryView : UserControl
     private bool _busy;
     private bool _refreshingReady;
     private int _selectionGeneration;
+    private CancellationTokenSource? _hatchAnimationCancellation;
+    private bool _hatchPlaying;
+    private bool _awaitingHatchContinue;
 
     public NurseryView(Func<SaveData> snapshot, Func<IReadOnlyList<Guid>, int?, NurseryPreview> preview,
         Func<NurseryRequest, Task<NurseryAction>> start, Func<Guid, Guid, Task<NurseryAction>> hatch,
@@ -58,8 +62,19 @@ public partial class NurseryView : UserControl
         _activate = activate;
         InitializeComponent();
         _timer.Tick += async (_, _) => await TickAsync();
-        Loaded += (_, _) => { _timer.Start(); Refresh(); };
-        Unloaded += (_, _) => _timer.Stop();
+        Loaded += (_, _) =>
+        {
+            _timer.Start();
+            SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
+            Refresh();
+        };
+        Unloaded += (_, _) =>
+        {
+            _timer.Stop();
+            SystemParameters.StaticPropertyChanged -= SystemParameters_StaticPropertyChanged;
+            _hatchAnimationCancellation?.Cancel();
+            if (_hatchPlaying) CompleteHatchAnimation();
+        };
         Refresh();
     }
 
@@ -119,9 +134,11 @@ public partial class NurseryView : UserControl
         var data = _snapshot();
         var nest = data.Nest;
         var active = nest?.Status is "running" or "ready";
-        PreparationPanel.Visibility = active ? Visibility.Collapsed : Visibility.Visible;
+        var showingHatch = (_hatchPlaying || _awaitingHatchContinue) && nest?.Status == "hatched";
+        PreparationPanel.Visibility = active || showingHatch ? Visibility.Collapsed : Visibility.Visible;
         NestPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
-        ResultPanel.Visibility = !active && nest?.Status == "hatched" ? Visibility.Visible : Visibility.Collapsed;
+        HatchAnimationPanel.Visibility = showingHatch ? Visibility.Visible : Visibility.Collapsed;
+        ResultPanel.Visibility = !active && !showingHatch && nest?.Status == "hatched" ? Visibility.Visible : Visibility.Collapsed;
         OpenPokedexButton.IsEnabled = ActivateButton.IsEnabled = !_busy && nest?.Status == "hatched"
             && data.HatchedNurseryResults.ContainsKey(nest.Id);
         if (active)
@@ -370,10 +387,76 @@ public partial class NurseryView : UserControl
                 result.Child is null || !_snapshot().HatchedNurseryResults.ContainsKey(nest.Id))
                 throw new InvalidOperationException("Вылупление не подтверждено сохранением.");
             _pendingHatchNest = _pendingHatchOperation = Guid.Empty;
+            await PlayHatchAnimation();
             Show(result.Message);
         }
         catch (Exception ex) { Show(ex.Message); }
         finally { _busy = false; Refresh(); }
+    }
+
+    private async Task PlayHatchAnimation()
+    {
+        _hatchPlaying = true;
+        _awaitingHatchContinue = false;
+        HatchContinueButton.Visibility = Visibility.Collapsed;
+        HatchEgg.Opacity = 1;
+        Refresh();
+        var cancellation = _hatchAnimationCancellation = new CancellationTokenSource();
+        try
+        {
+            if (IsLoaded && SystemParameters.ClientAreaAnimation)
+            {
+                HatchStageText.Text = "Яйцо покачивается…";
+                var shake = new DoubleAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(850) };
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(-12, KeyTime.FromPercent(.25)));
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(12, KeyTime.FromPercent(.5)));
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(-12, KeyTime.FromPercent(.75)));
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(0, KeyTime.FromPercent(1)));
+                HatchEggRotate.BeginAnimation(RotateTransform.AngleProperty, shake);
+                await Task.Delay(850, cancellation.Token);
+                HatchStageText.Text = "Скорлупа раскрывается…";
+                HatchEgg.BeginAnimation(OpacityProperty, new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(250)));
+                await Task.Delay(250, cancellation.Token);
+            }
+            else await Task.Delay(100, cancellation.Token);
+        }
+        catch (OperationCanceledException) { }
+        finally
+        {
+            if (ReferenceEquals(_hatchAnimationCancellation, cancellation)) _hatchAnimationCancellation = null;
+            cancellation.Dispose();
+            CompleteHatchAnimation();
+        }
+    }
+
+    private void CompleteHatchAnimation()
+    {
+        if (!_hatchPlaying) return;
+        _hatchPlaying = false;
+        _awaitingHatchContinue = true;
+        HatchEggRotate.BeginAnimation(RotateTransform.AngleProperty, null);
+        HatchEggRotate.Angle = 0;
+        HatchEgg.BeginAnimation(OpacityProperty, null);
+        HatchEgg.Opacity = 0;
+        HatchStageText.Text = "Малыш вылупился.";
+        HatchContinueButton.Visibility = Visibility.Visible;
+        Refresh();
+    }
+
+    private void HatchContinueButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (!_awaitingHatchContinue) return;
+        _awaitingHatchContinue = false;
+        HatchEgg.Opacity = 1;
+        Refresh();
+    }
+
+    private void SystemParameters_StaticPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(SystemParameters.ClientAreaAnimation) || SystemParameters.ClientAreaAnimation) return;
+        if (!Dispatcher.CheckAccess()) { Dispatcher.BeginInvoke(() => SystemParameters_StaticPropertyChanged(sender, e)); return; }
+        _hatchAnimationCancellation?.Cancel();
+        CompleteHatchAnimation();
     }
 
     private void ShopButton_Click(object sender, RoutedEventArgs e)

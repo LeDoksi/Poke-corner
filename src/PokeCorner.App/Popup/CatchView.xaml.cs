@@ -19,12 +19,16 @@ public partial class CatchView : System.Windows.Controls.UserControl
 
     /// Species id -> display name, resolved against the live species catalog by the caller.
     private readonly Func<int, string> _resolveSpeciesName;
+    private readonly Action? _onResultContinued;
     private DispatcherTimer? _liveRefreshTimer;
     private bool _busy;
     private bool _showingResult;
     private string? _error;
+    private CatchReveal? _pendingReveal;
+    private CatchReveal? _spriteFetchedFor;
+    private CancellationTokenSource? _revealCancellation;
 
-    public CatchView(AppState appState, Func<CatchReveal?>? tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<int> catchReadyCount, Action onStateChanged, Func<int, string> resolveSpeciesName, Func<Task<CatchReveal?>>? tryPerformCatchAsync = null)
+    public CatchView(AppState appState, Func<CatchReveal?>? tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite, Func<int> catchReadyCount, Action onStateChanged, Func<int, string> resolveSpeciesName, Func<Task<CatchReveal?>>? tryPerformCatchAsync = null, Action? onResultContinued = null)
     {
         InitializeComponent();
         _appState = appState;
@@ -33,8 +37,19 @@ public partial class CatchView : System.Windows.Controls.UserControl
         _catchReadyCount = catchReadyCount;
         _onStateChanged = onStateChanged;
         _resolveSpeciesName = resolveSpeciesName;
-        Loaded += (_, _) => StartLiveRefresh();
-        Unloaded += (_, _) => StopLiveRefresh();
+        _onResultContinued = onResultContinued;
+        Loaded += (_, _) =>
+        {
+            StartLiveRefresh();
+            SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
+        };
+        Unloaded += (_, _) =>
+        {
+            StopLiveRefresh();
+            SystemParameters.StaticPropertyChanged -= SystemParameters_StaticPropertyChanged;
+            _revealCancellation?.Cancel();
+            if (_pendingReveal is { } reveal) ShowResult(reveal, false);
+        };
         Refresh();
     }
 
@@ -68,7 +83,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
     /// through singular to plural.
     private void SetReady(int count)
     {
-        CatchButton.IsEnabled = !_busy && (_showingResult || count > 0);
+        CatchButton.IsEnabled = !_busy && _revealCancellation is null && (_showingResult || count > 0);
         if (_showingResult) return;
         CatchButton.Content = "Открыть покебол";
         StatusText.Text = count switch
@@ -82,10 +97,15 @@ public partial class CatchView : System.Windows.Controls.UserControl
 
     private async void CatchButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_busy) return;
+        if (_busy || _revealCancellation is not null) return;
         if (_showingResult)
         {
             _showingResult = false;
+            _pendingReveal = null;
+            _onResultContinued?.Invoke();
+            PokeBallCanvas.BeginAnimation(OpacityProperty, null);
+            PokeBallCanvas.Opacity = 1;
+            PokeBallThrow.Y = 0;
             RevealSpriteImage.Visibility = Visibility.Collapsed;
             RevealNameText.Visibility = Visibility.Collapsed;
             RevealRarityText.Visibility = Visibility.Collapsed;
@@ -110,37 +130,87 @@ public partial class CatchView : System.Windows.Controls.UserControl
         finally
         {
             _busy = false;
-            CatchButton.IsEnabled = _showingResult || _catchReadyCount() > 0;
+            CatchButton.IsEnabled = _revealCancellation is null && (_showingResult || _catchReadyCount() > 0);
         }
     }
 
     public async Task PlayReveal(CatchReveal reveal)
     {
-        SetReady(0);
+        if (_revealCancellation is not null) return;
+        _pendingReveal = reveal;
+        _showingResult = true;
+        CatchButton.IsEnabled = false;
+        RevealSpriteImage.Source = null;
+        RevealSpriteImage.BeginAnimation(OpacityProperty, null);
+        RevealNameText.BeginAnimation(OpacityProperty, null);
+        RevealRarityText.BeginAnimation(OpacityProperty, null);
         RevealSpriteImage.Opacity = 0;
         RevealNameText.Opacity = 0;
         RevealRarityText.Opacity = 0;
-
-        var shake = new DoubleAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(900) };
-        shake.KeyFrames.Add(new EasingDoubleKeyFrame(-15, KeyTime.FromPercent(0.15)));
-        shake.KeyFrames.Add(new EasingDoubleKeyFrame(15, KeyTime.FromPercent(0.35)));
-        shake.KeyFrames.Add(new EasingDoubleKeyFrame(-15, KeyTime.FromPercent(0.55)));
-        shake.KeyFrames.Add(new EasingDoubleKeyFrame(15, KeyTime.FromPercent(0.75)));
-        shake.KeyFrames.Add(new EasingDoubleKeyFrame(0, KeyTime.FromPercent(1.0)));
-
-        var tcs = new TaskCompletionSource();
-        shake.Completed += (_, _) => tcs.SetResult();
-        PokeBallRotate.BeginAnimation(System.Windows.Media.RotateTransform.AngleProperty, shake);
-        await tcs.Task;
-
+        var cancellation = _revealCancellation = new CancellationTokenSource();
         try
         {
-            var spriteBytes = await _fetchSprite(reveal.Result.SpeciesId);
-            if (spriteBytes is not null) RevealSpriteImage.Source = SpriteImages.Decode(spriteBytes);
+            if (SystemParameters.ClientAreaAnimation)
+            {
+                StatusText.Text = "Покебол летит…";
+                PokeBallThrow.Y = -36;
+                PokeBallThrow.BeginAnimation(System.Windows.Media.TranslateTransform.YProperty,
+                    new DoubleAnimation(-36, 0, TimeSpan.FromMilliseconds(350)));
+                await Task.Delay(350, cancellation.Token);
+                StatusText.Text = "Покебол покачивается…";
+                var shake = new DoubleAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(900) };
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(-15, KeyTime.FromPercent(0.15)));
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(15, KeyTime.FromPercent(0.35)));
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(-15, KeyTime.FromPercent(0.55)));
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(15, KeyTime.FromPercent(0.75)));
+                shake.KeyFrames.Add(new EasingDoubleKeyFrame(0, KeyTime.FromPercent(1)));
+                PokeBallRotate.BeginAnimation(System.Windows.Media.RotateTransform.AngleProperty, shake);
+                await Task.Delay(900, cancellation.Token);
+                StatusText.Text = "Покебол открывается…";
+                PokeBallCanvas.BeginAnimation(OpacityProperty,
+                    new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(250)));
+                await Task.Delay(250, cancellation.Token);
+            }
+            else await Task.Delay(100, cancellation.Token);
+            ShowResult(reveal, SystemParameters.ClientAreaAnimation);
         }
-        catch { RevealSpriteImage.Source = null; } // The individual is already saved; an image failure must not imply a failed catch.
+        catch (OperationCanceledException) { }
+        finally
+        {
+            if (ReferenceEquals(_revealCancellation, cancellation)) _revealCancellation = null;
+            cancellation.Dispose();
+            CatchButton.IsEnabled = !_busy;
+        }
+    }
 
-        RevealNameText.Text = _resolveSpeciesName(reveal.Result.SpeciesId) + (reveal.Result.IsShiny ? " ✨" : "");
+    public void RestoreReveal(CatchReveal reveal)
+    {
+        _pendingReveal = reveal;
+        _showingResult = true;
+        ShowResult(reveal, false);
+        CatchButton.IsEnabled = true;
+    }
+
+    private void SystemParameters_StaticPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(SystemParameters.ClientAreaAnimation) || SystemParameters.ClientAreaAnimation) return;
+        if (!Dispatcher.CheckAccess()) { Dispatcher.BeginInvoke(() => SystemParameters_StaticPropertyChanged(sender, e)); return; }
+        _revealCancellation?.Cancel();
+        if (_pendingReveal is { } reveal) ShowResult(reveal, false);
+    }
+
+    private void ShowResult(CatchReveal reveal, bool animate)
+    {
+        PokeBallThrow.BeginAnimation(System.Windows.Media.TranslateTransform.YProperty, null);
+        PokeBallThrow.Y = 0;
+        PokeBallRotate.BeginAnimation(System.Windows.Media.RotateTransform.AngleProperty, null);
+        PokeBallRotate.Angle = 0;
+        PokeBallCanvas.BeginAnimation(OpacityProperty, null);
+        PokeBallCanvas.Opacity = 0;
+        string name;
+        try { name = _resolveSpeciesName(reveal.Result.SpeciesId); }
+        catch { name = $"№{reveal.Result.SpeciesId}"; }
+        RevealNameText.Text = name + (reveal.Result.IsShiny ? " ✨" : "");
         RevealRarityText.Text = reveal.Rarity + (reveal.Result.WasDuplicateSpecies ? " · уже был в коллекции" : " · новый вид!");
 
         // The reveal block starts Collapsed (not merely Opacity=0) so the idle screen has no
@@ -150,13 +220,39 @@ public partial class CatchView : System.Windows.Controls.UserControl
         RevealNameText.Visibility = Visibility.Visible;
         RevealRarityText.Visibility = Visibility.Visible;
 
-        var fadeIn = new System.Windows.Media.Animation.DoubleAnimation(0.0, 1.0, TimeSpan.FromMilliseconds(400));
-        RevealSpriteImage.BeginAnimation(OpacityProperty, fadeIn);
-        RevealNameText.BeginAnimation(OpacityProperty, fadeIn);
-        RevealRarityText.BeginAnimation(OpacityProperty, fadeIn);
+        if (animate)
+        {
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(400));
+            RevealSpriteImage.BeginAnimation(OpacityProperty, fadeIn);
+            RevealNameText.BeginAnimation(OpacityProperty, fadeIn);
+            RevealRarityText.BeginAnimation(OpacityProperty, fadeIn);
+        }
+        else
+        {
+            RevealSpriteImage.BeginAnimation(OpacityProperty, null);
+            RevealNameText.BeginAnimation(OpacityProperty, null);
+            RevealRarityText.BeginAnimation(OpacityProperty, null);
+            RevealSpriteImage.Opacity = RevealNameText.Opacity = RevealRarityText.Opacity = 1;
+        }
 
         _showingResult = true;
         CatchButton.Content = "Продолжить";
         StatusText.Text = "Покемон уже добавлен в коллекцию.";
+        if (!ReferenceEquals(_spriteFetchedFor, reveal))
+        {
+            _spriteFetchedFor = reveal;
+            _ = LoadSpriteAsync(reveal);
+        }
+    }
+
+    private async Task LoadSpriteAsync(CatchReveal reveal)
+    {
+        try
+        {
+            var spriteBytes = await _fetchSprite(reveal.Result.SpeciesId);
+            if (ReferenceEquals(_pendingReveal, reveal) && spriteBytes is not null)
+                RevealSpriteImage.Source = SpriteImages.Decode(spriteBytes);
+        }
+        catch { /* Saved result remains visible when its art is unavailable. */ }
     }
 }

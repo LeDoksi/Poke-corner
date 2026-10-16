@@ -46,6 +46,19 @@
                 </Border>
                 <Button x:Name="HatchButton" Content="Встретить малыша" Click="HatchButton_Click" Visibility="Collapsed" />
             </StackPanel>
+            <Border x:Name="HatchAnimationPanel" Visibility="Collapsed" Style="{StaticResource HeroCardStyle}"
+                    Padding="20" Margin="0,0,0,12">
+                <StackPanel HorizontalAlignment="Center">
+                    <Ellipse x:Name="HatchEgg" Width="70" Height="90" Fill="#F2F4FF" Stroke="#D39A5B"
+                             StrokeThickness="4" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center">
+                        <Ellipse.RenderTransform><RotateTransform x:Name="HatchEggRotate" /></Ellipse.RenderTransform>
+                    </Ellipse>
+                    <TextBlock x:Name="HatchStageText" Text="Яйцо покачивается…" TextAlignment="Center"
+                               Margin="0,12,0,0" />
+                    <Button x:Name="HatchContinueButton" Content="Продолжить" Visibility="Collapsed"
+                            Click="HatchContinueButton_Click" Margin="0,14,0,0" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Border>
             <Border x:Name="ResultPanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
                 <StackPanel>
                     <TextBlock Text="Малыш появился" Style="{StaticResource SectionHeaderTextStyle}" />

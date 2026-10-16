@@ -39,10 +39,21 @@
             </Image.RenderTransform>
         </Image>
 
-        <!-- Transient petting/feed reaction: PlayBounce fades the whole bubble's Opacity. -->
-        <Border x:Name="ReactionBubble" Style="{StaticResource ThoughtBubbleStyle}"
-                HorizontalAlignment="Center" VerticalAlignment="Top" Opacity="0">
-            <TextBlock x:Name="ReactionGlyphText" FontSize="18" />
+        <Canvas x:Name="HeartEffects" HorizontalAlignment="Center" VerticalAlignment="Center"
+                IsHitTestVisible="False">
+            <Path x:Name="HeartLeft" Fill="#FF6480" Opacity="0" Data="M 4,0 L 8,0 8,2 10,2 10,0 14,0 14,2 16,2 16,6 14,6 14,8 12,8 12,10 10,10 10,12 8,12 8,10 6,10 6,8 4,8 4,6 2,6 2,2 4,2 Z" />
+            <Path x:Name="HeartMiddle" Fill="#FF6480" Opacity="0" Data="M 4,0 L 8,0 8,2 10,2 10,0 14,0 14,2 16,2 16,6 14,6 14,8 12,8 12,10 10,10 10,12 8,12 8,10 6,10 6,8 4,8 4,6 2,6 2,2 4,2 Z" />
+            <Path x:Name="HeartRight" Fill="#FF6480" Opacity="0" Data="M 4,0 L 8,0 8,2 10,2 10,0 14,0 14,2 16,2 16,6 14,6 14,8 12,8 12,10 10,10 10,12 8,12 8,10 6,10 6,8 4,8 4,6 2,6 2,2 4,2 Z" />
+        </Canvas>
+        <Canvas x:Name="CrumbEffects" HorizontalAlignment="Center" VerticalAlignment="Center"
+                IsHitTestVisible="False">
+            <Rectangle x:Name="CrumbLeft" Width="5" Height="5" Fill="#D39A5B" Opacity="0" />
+            <Rectangle x:Name="CrumbMiddle" Width="4" Height="4" Fill="#E5B579" Opacity="0" />
+            <Rectangle x:Name="CrumbRight" Width="5" Height="5" Fill="#D39A5B" Opacity="0" />
+        </Canvas>
+        <Border x:Name="ThoughtBubble" Style="{StaticResource ThoughtBubbleStyle}"
+                HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed">
+            <TextBlock x:Name="ThoughtStage" Foreground="#273447" FontSize="17" />
         </Border>
 
     </Grid>

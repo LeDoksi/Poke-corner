@@ -49,6 +49,7 @@ public partial class App : System.Windows.Application
     private bool _isFullscreenMonitorRunning;
     private int _overlayRefreshGeneration;
     private AppMenuWindow? _menuWindow;
+    private CatchReveal? _pendingCatchReveal;
     private ShopService _shopService = null!;
     private ScreenCorner _appliedCorner;
     private int _appliedMonitorIndex;
@@ -323,6 +324,9 @@ public partial class App : System.Windows.Application
         if (_appState.IsCommitting) return;
 
         _progressPanelWindow?.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
+        UpdateActiveThought();
+        if (_cryPlayer is not null) _cryPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.CrySoundVolume);
+        if (_effectPlayer is not null) _effectPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.EffectsSoundVolume);
 
         CheckEvolutionReady();
 
@@ -453,6 +457,8 @@ public partial class App : System.Windows.Application
             _progressPanelWindow?.Hide(); // nothing on the desk to show progress for
             return;
         }
+
+        UpdateActiveThought();
 
         var displaySpeciesId = ResolveDisplaySpeciesId(active);
 
@@ -633,8 +639,9 @@ public partial class App : System.Windows.Application
         _menuWindow?.SetCatchReady(_catchReadyCount);
         RefreshOverlayForActiveIndividual();
         var individual = result!.Individual;
-        return new CatchReveal(new CatchResult(individual.EvolutionChainId, individual.SpeciesId, individual.Nature,
+        _pendingCatchReveal = new CatchReveal(new CatchResult(individual.EvolutionChainId, individual.SpeciesId, individual.Nature,
             individual.IsShiny, result.WasDuplicateSpecies, individual.ChainLength), result.Rarity);
+        return _pendingCatchReveal;
     }
 
     /// No toast: the bounce is the feedback, and pets get clicked far too often for a
@@ -688,6 +695,7 @@ public partial class App : System.Windows.Application
     {
         try
         {
+            if (_appState.Settings.CrySoundVolume <= 0) { _cryPlayer?.Stop(); return; }
             var path = _catalogPackage.GetVoicePath(speciesId);
             if (path is null) return;
             if (!File.Exists(path)) return;
@@ -704,6 +712,7 @@ public partial class App : System.Windows.Application
 
             // Re-Open every time: MediaPlayer keeps the previous media open and would replay the
             // previous species; opening also rewinds, so the same species twice is audible twice.
+            _cryPlayer.Stop();
             _cryPlayer.Open(new Uri(path));
             _cryPlayer.Play();
         }
@@ -711,6 +720,37 @@ public partial class App : System.Windows.Application
         {
             // no sound this click; see above
         }
+    }
+
+    private System.Windows.Media.MediaPlayer? _effectPlayer;
+
+    private void PlayCrunch()
+    {
+        try
+        {
+            if (_appState.Settings.EffectsSoundVolume <= 0) { _effectPlayer?.Stop(); return; }
+            var path = Path.Combine(_catalogPackage.DataRoot, "voice-preview", "audio", "feeding-crunch.wav");
+            if (!File.Exists(path)) return;
+            if (_effectPlayer is null)
+            {
+                _effectPlayer = new System.Windows.Media.MediaPlayer();
+                _effectPlayer.MediaFailed += (_, _) => { };
+            }
+            _effectPlayer.Stop();
+            _effectPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.EffectsSoundVolume);
+            _effectPlayer.Open(new Uri(path));
+            _effectPlayer.Play();
+        }
+        catch { /* cosmetic sound must not turn a committed feed into a visible failure */ }
+    }
+
+    private void UpdateActiveThought()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var active = _appState.Collection.GetActive();
+        var last = active is not null && _appState.CareStateByIndividualId.TryGetValue(active.Id, out var care)
+            ? care.LastInteractionUtc : now;
+        _overlayWindow.UpdateThought(last, now);
     }
 
     private async void FeedActiveIndividual()
@@ -746,6 +786,7 @@ public partial class App : System.Windows.Application
             {
                 RefreshOverlayForActiveIndividual();
                 _overlayWindow.PlayFeedReaction();
+                PlayCrunch();
             }
             else _trayIconService.ShowNotification("PokéCorner", "Не хватает лакомств — накопи ещё активности.");
         }
@@ -846,7 +887,8 @@ public partial class App : System.Windows.Application
                     (berry, required) => shopView.SelectBerryShortage(berry, required), PreviewRehome, RehomeIndividualAsync,
                     PreviewRetraining, RetrainIndividualAsync);
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
-                var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync);
+                var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync, () => _pendingCatchReveal = null);
+                if (_pendingCatchReveal is { } pendingCatchReveal) catchView.RestoreReveal(pendingCatchReveal);
                 var expeditionView = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
                     PreviewExpedition, StartExpeditionAsync, CancelExpeditionAsync, ClaimExpeditionAsync,
                     OpenExpeditionEncounterAsync, _catalogPackage);

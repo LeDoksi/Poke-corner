@@ -17,6 +17,24 @@ public sealed class EvolutionTests
 {
     private static readonly Lazy<CatalogPackage> Catalog = new(() => CatalogPackage.Load(Path.Combine(AppContext.BaseDirectory, "Data")));
 
+    private static ConfirmDialog? VisibleRetrainingConfirmation() => Application.Current.Windows
+        .OfType<ConfirmDialog>()
+        .FirstOrDefault(dialog => dialog.IsVisible &&
+            ((TextBlock)dialog.FindName("TitleText")).Text == "Подтвердить переобучение?");
+
+    [Fact]
+    public void RetrainingDialogObserverIgnoresHiddenUnrelatedDialog() => WpfTestHost.Run(() =>
+    {
+        var hidden = new ConfirmDialog("Другой диалог", "Не подтверждать", "OK");
+        try
+        {
+            Assert.Contains(hidden, Application.Current.Windows.OfType<ConfirmDialog>());
+            Assert.False(hidden.IsVisible);
+            Assert.NotSame(hidden, VisibleRetrainingConfirmation());
+        }
+        finally { hidden.Close(); }
+    });
+
     private static SaveData MigrationWithEvolvableGift()
     {
         var starter = new PokemonIndividual
@@ -116,10 +134,10 @@ public sealed class EvolutionTests
         var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
         timer.Tick += (_, _) =>
         {
-            var dialog = Application.Current.Windows.OfType<ConfirmDialog>().FirstOrDefault();
+            var dialog = VisibleRetrainingConfirmation();
             if (dialog is null) return;
-            Assert.Contains("20", ((TextBlock)dialog.FindName("BodyText")).Text);
             timer.Stop();
+            Assert.Contains("20", ((TextBlock)dialog.FindName("BodyText")).Text);
             ((Button)dialog.FindName("ConfirmButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         };
         timer.Start();

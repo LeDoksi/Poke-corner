@@ -4,6 +4,9 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Controls;
+using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PokeCorner.App.Overlay;
 
@@ -20,6 +23,9 @@ public partial class OverlayWindow : Window
     private SpriteAnimator? _animator;
     private System.Windows.Point _mouseDownPosition;
     private bool _isDragging;
+    private readonly DispatcherTimer _stillEffectTimer = new() { Interval = TimeSpan.FromMilliseconds(600) };
+    private int _thoughtStage;
+    private bool _thoughtAnimated;
 
     /// Field, not a local: SetWinEventHook stores only the raw function pointer, so a
     /// delegate that the GC is free to collect would leave Windows calling into freed
@@ -53,6 +59,15 @@ public partial class OverlayWindow : Window
     public OverlayWindow()
     {
         InitializeComponent();
+        ThoughtBubble.Tag = 0;
+        _stillEffectTimer.Tick += (_, _) =>
+        {
+            _stillEffectTimer.Stop();
+            foreach (var shape in HeartEffects.Children.OfType<Shape>().Concat(CrumbEffects.Children.OfType<Shape>()))
+                shape.Opacity = 0;
+        };
+        Loaded += (_, _) => SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
+        Unloaded += (_, _) => SystemParameters.StaticPropertyChanged -= SystemParameters_StaticPropertyChanged;
         _foregroundChangedCallback = (_, _, _, _, _, _, _) => ForegroundWindowChanged?.Invoke();
         SourceInitialized += (_, _) =>
         {
@@ -65,6 +80,7 @@ public partial class OverlayWindow : Window
         };
         Closed += (_, _) =>
         {
+            _stillEffectTimer.Stop();
             if (_foregroundHook != IntPtr.Zero) UnhookWinEvent(_foregroundHook);
             _foregroundHook = IntPtr.Zero;
         };
@@ -247,6 +263,8 @@ public partial class OverlayWindow : Window
         _spriteSizeDips = sizePixels;
         SpriteImage.Width = sizePixels;
         SpriteImage.Height = sizePixels;
+        HeartEffects.Width = HeartEffects.Height = sizePixels;
+        CrumbEffects.Width = CrumbEffects.Height = sizePixels;
 
         var windowSize = sizePixels * SpriteScaleHeadroom;
         Width = windowSize;
@@ -266,17 +284,22 @@ public partial class OverlayWindow : Window
         // The remembered pair is a WINDOW origin on both sides of the round trip — App stores
         // Left/Top and hands the same numbers back — so it is restored verbatim and only the
         // on-a-connected-monitor test needs the window's (padded) size.
-        if (rememberedX is { } x && rememberedY is { } y &&
-            screens.Any(s => IsOnWorkArea(x, y, windowSize, ToDips(s.WorkingArea, dpi))))
+        var rememberedArea = screens.Select(s => (Rect?)ToDips(s.WorkingArea, dpi))
+            .FirstOrDefault(area => area is { } bounds && rememberedX is { } x && rememberedY is { } y
+                && IsOnWorkArea(x, y, windowSize, bounds));
+        if (rememberedX is { } rememberedLeft && rememberedY is { } rememberedTop && rememberedArea is { } area)
         {
-            (Left, Top) = (x, y);
+            (Left, Top) = (Math.Clamp(rememberedLeft, area.Left, Math.Max(area.Left, area.Right - windowSize)),
+                Math.Clamp(rememberedTop, area.Top, Math.Max(area.Top, area.Bottom - windowSize)));
             KeepAboveAppsBelowShell(this);
             return;
         }
 
         var screen = monitorIndex >= 0 && monitorIndex < screens.Length ? screens[monitorIndex] : System.Windows.Forms.Screen.PrimaryScreen!;
-        var position = CornerPosition(corner, ToDips(screen.WorkingArea, dpi), sizePixels);
-        (Left, Top) = (position.X - headroomPad, position.Y - headroomPad);
+        var workArea = ToDips(screen.WorkingArea, dpi);
+        var position = CornerPosition(corner, workArea, sizePixels);
+        (Left, Top) = (Math.Clamp(position.X - headroomPad, workArea.Left, Math.Max(workArea.Left, workArea.Right - windowSize)),
+            Math.Clamp(position.Y - headroomPad, workArea.Top, Math.Max(workArea.Top, workArea.Bottom - windowSize)));
 
         // Moving/resizing a window can drop it behind others; re-top it right away instead of
         // waiting for the next foreground switch.
@@ -381,12 +404,105 @@ public partial class OverlayWindow : Window
     /// installer already requires. Used only as DpiFor's pre-Show fallback.
     [DllImport("user32.dll")] private static extern uint GetDpiForSystem();
 
-    public void PlayPetReaction() => PlayBounce(peakScale: 1.15, durationMs: 300, glyph: "❤");
+    public void PlayPetReaction()
+    {
+        PlayBounce(peakScale: 1.15, durationMs: 300);
+        PlayParticles(HeartEffects, HeartLeft, HeartMiddle, HeartRight);
+    }
 
-    public void PlayFeedReaction() => PlayBounce(peakScale: 1.3, durationMs: 400, glyph: "+2250");
+    public void PlayFeedReaction()
+    {
+        PlayBounce(peakScale: 1.3, durationMs: 400);
+        PlayParticles(CrumbEffects, CrumbLeft, CrumbMiddle, CrumbRight);
+    }
+
+    public void UpdateThought(DateTimeOffset lastInteractionUtc, DateTimeOffset nowUtc)
+    {
+        var idle = nowUtc - lastInteractionUtc;
+        var stage = idle >= TimeSpan.FromHours(5.75) ? 3 :
+            idle >= TimeSpan.FromHours(4.5) ? 2 : idle >= TimeSpan.FromHours(3) ? 1 : 0;
+        if (stage != _thoughtStage)
+        {
+            _thoughtStage = stage;
+            ThoughtBubble.Tag = stage;
+            ThoughtBubble.Visibility = stage == 0 ? Visibility.Collapsed : Visibility.Visible;
+            ThoughtStage.Text = new string('⌁', stage);
+        }
+        UpdateThoughtMotion();
+    }
+
+    private void SystemParameters_StaticPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(SystemParameters.ClientAreaAnimation)) return;
+        if (!Dispatcher.CheckAccess()) { Dispatcher.BeginInvoke(UpdateMotion); return; }
+        UpdateMotion();
+    }
+
+    private void UpdateMotion()
+    {
+        if (!SystemParameters.ClientAreaAnimation)
+        {
+            ClearScaleAnimations();
+            foreach (var shape in HeartEffects.Children.OfType<Shape>().Concat(CrumbEffects.Children.OfType<Shape>()))
+            {
+                shape.BeginAnimation(OpacityProperty, null);
+                shape.Opacity = 0;
+            }
+        }
+        UpdateThoughtMotion();
+    }
+
+    private void UpdateThoughtMotion()
+    {
+        var animate = _thoughtStage > 0 && SystemParameters.ClientAreaAnimation;
+        if (animate == _thoughtAnimated) return;
+        _thoughtAnimated = animate;
+        ThoughtStage.BeginAnimation(OpacityProperty, animate
+            ? new DoubleAnimation(.65, 1, TimeSpan.FromSeconds(1))
+                { AutoReverse = true, RepeatBehavior = RepeatBehavior.Forever }
+            : null);
+        if (!animate) ThoughtStage.Opacity = 1;
+    }
+
+    private void PlayParticles(Canvas canvas, params Shape[] particles)
+    {
+        var size = _spriteSizeDips > 0 ? _spriteSizeDips : 96;
+        canvas.Width = canvas.Height = size;
+        for (var i = 0; i < particles.Length; i++)
+        {
+            var particle = particles[i];
+            Canvas.SetLeft(particle, size * (.32 + .16 * i));
+            Canvas.SetTop(particle, size * (canvas == HeartEffects ? .12 : .38));
+            particle.BeginAnimation(OpacityProperty, null);
+            var shift = particle.RenderTransform as TranslateTransform ?? new TranslateTransform();
+            particle.RenderTransform = shift;
+            shift.BeginAnimation(TranslateTransform.XProperty, null);
+            shift.BeginAnimation(TranslateTransform.YProperty, null);
+            shift.X = shift.Y = 0;
+            if (!SystemParameters.ClientAreaAnimation)
+            {
+                particle.Opacity = 1;
+                continue;
+            }
+            var opacity = new DoubleAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(650) };
+            opacity.KeyFrames.Add(new DiscreteDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.Zero)));
+            opacity.KeyFrames.Add(new LinearDoubleKeyFrame(0, KeyTime.FromPercent(1)));
+            particle.BeginAnimation(OpacityProperty, opacity);
+            shift.BeginAnimation(TranslateTransform.XProperty,
+                new DoubleAnimation(0, (i - 1) * 14, TimeSpan.FromMilliseconds(650)));
+            shift.BeginAnimation(TranslateTransform.YProperty,
+                new DoubleAnimation(0, -Math.Min(24, size * .2), TimeSpan.FromMilliseconds(650)));
+        }
+        if (!SystemParameters.ClientAreaAnimation)
+        {
+            _stillEffectTimer.Stop();
+            _stillEffectTimer.Start();
+        }
+    }
 
     public void PlayEvolutionFlash()
     {
+        if (!SystemParameters.ClientAreaAnimation) return;
         KeepAboveAppsBelowShell(this); // scales to 1.4 — same clipping risk as PlayBounce
 
         // Same held-animation precedence problem as in SetSpriteFrames: a still-holding
@@ -409,8 +525,9 @@ public partial class OverlayWindow : Window
         SpriteScaleTransform.ScaleY = 1.0;
     }
 
-    private void PlayBounce(double peakScale, int durationMs, string glyph)
+    private void PlayBounce(double peakScale, int durationMs)
     {
+        if (!SystemParameters.ClientAreaAnimation) return;
         // The sprite scales up past its normal footprint here, into the space the progress
         // panel occupies. These are two independent top-level windows with independent
         // z-order, so being merely "usually above" the panel is not enough — a bounce that
@@ -428,14 +545,6 @@ public partial class OverlayWindow : Window
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, bounce);
         SpriteScaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, bounce);
 
-        // Same reason as above: the previous fade holds Opacity at 0, which would outrank
-        // this plain assignment and make the bubble invisible on every bounce after the first.
-        // The whole bubble (backing shape + glyph) fades as one unit — see ThoughtBubbleStyle.
-        ReactionBubble.BeginAnimation(OpacityProperty, null);
-        ReactionGlyphText.Text = glyph;
-        ReactionBubble.Opacity = 1.0;
-        var fadeUp = new DoubleAnimation(1.0, 0.0, TimeSpan.FromMilliseconds(durationMs * 2));
-        ReactionBubble.BeginAnimation(OpacityProperty, fadeUp);
     }
 }
 
