@@ -1,0 +1,129 @@
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+[xUnit.net 00:00:07.58]     PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 25, shiny: False) [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 25, shiny: False) [6 s]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 150 (rounded from 150)
+Actual:   96 (rounded from 96)
+---- Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 150 (rounded from 150)
+Actual:   96 (rounded from 96)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Int32 speciesId, Boolean shiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 119
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.<>c__DisplayClass7_0.<RoomRegistersDecodedSpriteFramesAtApprovedFoot>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 132
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+[xUnit.net 00:00:08.27]     PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 143, shiny: False) [FAIL]
+[xUnit.net 00:00:08.86]     PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 133, shiny: True) [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 143, shiny: False) [686 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 222 (rounded from 222)
+Actual:   96 (rounded from 96)
+---- Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 222 (rounded from 222)
+Actual:   96 (rounded from 96)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Int32 speciesId, Boolean shiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 119
+   at InvokeStub_RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.<>c__DisplayClass7_0.<RoomRegistersDecodedSpriteFramesAtApprovedFoot>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 132
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 133, shiny: True) [589 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 138 (rounded from 138)
+Actual:   96 (rounded from 96)
+---- Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 138 (rounded from 138)
+Actual:   96 (rounded from 96)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Int32 speciesId, Boolean shiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 119
+   at InvokeStub_RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.<>c__DisplayClass7_0.<RoomRegistersDecodedSpriteFramesAtApprovedFoot>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 132
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+[xUnit.net 00:00:09.43]     PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 143, shiny: True) [FAIL]
+[xUnit.net 00:00:10.01]     PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 25, shiny: True) [FAIL]
+[xUnit.net 00:00:10.57]     PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 133, shiny: False) [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 143, shiny: True) [573 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 222 (rounded from 222)
+Actual:   96 (rounded from 96)
+---- Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 222 (rounded from 222)
+Actual:   96 (rounded from 96)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Int32 speciesId, Boolean shiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 119
+   at InvokeStub_RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.<>c__DisplayClass7_0.<RoomRegistersDecodedSpriteFramesAtApprovedFoot>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 132
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 25, shiny: True) [576 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 150 (rounded from 150)
+Actual:   96 (rounded from 96)
+---- Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 150 (rounded from 150)
+Actual:   96 (rounded from 96)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Int32 speciesId, Boolean shiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 119
+   at InvokeStub_RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.<>c__DisplayClass7_0.<RoomRegistersDecodedSpriteFramesAtApprovedFoot>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 132
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(speciesId: 133, shiny: False) [560 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 138 (rounded from 138)
+Actual:   96 (rounded from 96)
+---- Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 138 (rounded from 138)
+Actual:   96 (rounded from 96)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Int32 speciesId, Boolean shiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 119
+   at InvokeStub_RoomAlbumTests.RoomRegistersDecodedSpriteFramesAtApprovedFoot(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.<>c__DisplayClass7_0.<RoomRegistersDecodedSpriteFramesAtApprovedFoot>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 132
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+[xUnit.net 00:00:11.27]     PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.LockedAlbumArtKeepsTheSameAspectAndPositionAsEarnedArt [FAIL]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.LockedAlbumArtKeepsTheSameAspectAndPositionAsEarnedArt [106 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values differ
+Expected: Uniform
+Actual:   Fill
+---- Assert.Equal() Failure: Values differ
+Expected: Uniform
+Actual:   Fill
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.LockedAlbumArtKeepsTheSameAspectAndPositionAsEarnedArt() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 90
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RoomAlbumTests.<>c.<LockedAlbumArtKeepsTheSameAspectAndPositionAsEarnedArt>b__6_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\room_albumTests.cs:line 100
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass2_0.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 29
+
+Не пройден!: не пройдено     7, пройдено     9, пропущено     0, всего    16, длительность 5 s. - PokeCorner.App.Tests.dll (net8.0)
