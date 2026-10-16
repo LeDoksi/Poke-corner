@@ -49,6 +49,7 @@ public partial class App : System.Windows.Application
     private bool _isFullscreenMonitorRunning;
     private int _overlayRefreshGeneration;
     private AppMenuWindow? _menuWindow;
+    private readonly HashSet<string> _pendingHintKeys = [];
     private CatchReveal? _pendingCatchReveal;
     private ShopService _shopService = null!;
     private ScreenCorner _appliedCorner;
@@ -140,7 +141,7 @@ public partial class App : System.Windows.Application
                     ? LegacyLookup.Load(dataRoot)
                     : LegacyLookup.Load(dataRoot, catalogPath, preserved);
                 loaded = await SaveMigration.LoadAsync(AppPaths.GetSaveFilePath(_profileDirectory), AppPaths.GetV2SaveFilePath(_profileDirectory), _legacyLookup, _catalogPackage, _saveStore);
-                isNewGame = loaded is null || loaded.StarterSelectionPending;
+                isNewGame = loaded is null || loaded.StarterSelectionPending && loaded.Individuals.Count == 0;
                 if (loaded is null)
                 {
                     loaded = SaveMigration.Migrate(new SaveData { Individuals = [], Settings = new() }, _legacyLookup, _catalogPackage);
@@ -173,7 +174,7 @@ public partial class App : System.Windows.Application
         for (var missing = _catchReadyCount - _appState.Encounters.Count(e => e.Source == "activity" && e.Phase == "sealed"); missing > 0; missing--)
             _encounterService.Reserve(_appState.Encounters, "activity", Guid.NewGuid());
 
-        if (FirstRunFlow.NeedsOnboarding(loaded))
+        if (FirstRunFlow.NeedsStarter(loaded!))
         {
             // The bundled full catalog makes this work with no network on a first launch.
             var allChains = GetDirectIssueChains();
@@ -193,24 +194,47 @@ public partial class App : System.Windows.Application
                 commonCandidates,
                 speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
                 GetAnimatedFramesAsync);
-            var dialogChoseOne = selectionWindow.ShowDialog() == true;
-            var chosenChain = dialogChoseOne ? selectionWindow.Chosen! : commonCandidates[0]; // window closed without a pick (e.g. Alt+F4) still needs a starter
-
-            var starter = FirstRunFlow.HatchChosen(chosenChain, _catchRoller, DateTimeOffset.UtcNow, _catalogPackage);
-            starter.AcquisitionSource = "starter";
-            SaveMigration.InitializeIndividual(starter, _legacyLookup, _catalogPackage);
-            _appState.Collection.Add(starter);
-            if (isNewGame)
+            if (selectionWindow.ShowDialog() != true)
             {
-                _appState.Shop.Coins = 20;
-                _appState.Feeding.Treats = 5;
+                Shutdown(); return;
             }
+            var chosenChain = selectionWindow.Chosen!;
 
-            new OnboardingWindow().ShowDialog();
-            try { await _appState.CommitAsync(_saveWriter, next => next.StarterSelectionPending = false, () => _catchReadyCount); }
+            try
+            {
+                var starter = FirstRunFlow.HatchChosen(chosenChain, _catchRoller, DateTimeOffset.UtcNow, _catalogPackage);
+                starter.AcquisitionSource = "starter";
+                SaveMigration.InitializeIndividual(starter, _legacyLookup, _catalogPackage);
+                await _appState.CommitAsync(_saveWriter, next => FirstRunFlow.CompleteStarter(next, starter, isNewGame, _catalogPackage), () => _catchReadyCount);
+            }
             catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
             {
                 System.Windows.MessageBox.Show(ex.Message + "\nНовая игра не записана. Данные защищены; при следующем запуске выберите восстановление.", "PokéCorner — ошибка сохранения");
+                Shutdown(); return;
+            }
+        }
+        else if (loaded!.ActiveIndividualId is null || loaded.Gift.Gifts.Count == 0)
+        {
+            var companion = FirstRunFlow.AvailableCompanion(loaded, _catalogPackage);
+            try
+            {
+                await _appState.CommitAsync(_saveWriter, next => FirstRunFlow.RestoreCompanionAndGift(next, _catalogPackage), () => _catchReadyCount);
+            }
+            catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+            {
+                System.Windows.MessageBox.Show(ex.Message + "\nКоллекция не изменена. Повторите запуск или восстановите сохранение.", "PokéCorner — ошибка сохранения");
+                Shutdown(); return;
+            }
+            if (companion is null && _appState.Collection.GetActive() is null)
+                System.Windows.MessageBox.Show("Все сохранённые питомцы сейчас недоступны. Коллекция сохранена без замены; питомца можно выбрать позже.", "PokéCorner — питомец недоступен");
+        }
+
+        if (FirstRunFlow.NeedsTour(_appState.ToSaveData(_catchReadyCount)))
+        {
+            try { await ShowUpdateTourAsync(); }
+            catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
+            {
+                System.Windows.MessageBox.Show(ex.Message + "\nШаг обучения не сохранён. При следующем запуске обучение продолжится.", "PokéCorner — ошибка сохранения");
                 Shutdown(); return;
             }
         }
@@ -868,6 +892,39 @@ public partial class App : System.Windows.Application
         return result!;
     }
 
+    private async Task ShowUpdateTourAsync()
+    {
+        var tour = _appState.ToSaveData(_catchReadyCount).Tutorial;
+        if (tour.Status == "not-started")
+            await _appState.CommitAsync(_saveWriter, next => FirstRunFlow.SetTourProgress(next, 1, "in-progress"), () => _catchReadyCount);
+        var step = _appState.ToSaveData(_catchReadyCount).Tutorial.CurrentStep;
+        new OnboardingWindow(step, (nextStep, status) =>
+            _appState.CommitAsync(_saveWriter, next => FirstRunFlow.SetTourProgress(next, nextStep, status), () => _catchReadyCount)).ShowDialog();
+    }
+
+    private async void ShowContextHint(MenuSection section)
+    {
+        var hint = section switch
+        {
+            MenuSection.Pokedex => ("view:pokedex", "Покедекс: открой экземпляр, чтобы увидеть кличку, уход и условия эволюции."),
+            MenuSection.Expeditions => ("view:expeditions", "Экспедиция: выбери команду и длительность; одновременно доступен один поход."),
+            MenuSection.Nursery => ("view:nursery", "Питомник: сначала проверь совместимость, варианты потомства и цену."),
+            MenuSection.Shop => ("view:shop", "Магазин: лакомства и шесть ягод учитываются отдельно; яйца здесь не продаются."),
+            MenuSection.Achievements => ("view:achievements", "Альбом: три открытых трофея можно бесплатно выставить на полку."),
+            _ => ("", "")
+        };
+        if (_isExiting || hint.Item1.Length == 0 || _appState.ToSaveData(_catchReadyCount).Tutorial.SeenHintKeys.Contains(hint.Item1)
+            || !_pendingHintKeys.Add(hint.Item1)) return;
+        try
+        {
+            await _appState.CommitAsync(_saveWriter, next => next.Tutorial.SeenHintKeys.Add(hint.Item1), () => _catchReadyCount);
+            if (!_isExiting) _trayIconService.ShowNotification("PokéCorner — подсказка", hint.Item2);
+        }
+        catch (Exception ex)
+        { if (!_isExiting) _trayIconService.ShowNotification("PokéCorner — ошибка сохранения", "Подсказка не сохранена: " + ex.Message); }
+        finally { _pendingHintKeys.Remove(hint.Item1); }
+    }
+
     private List<SpeciesEvolutionChain> GetDirectIssueChains() =>
         _speciesCatalog.LoadCachedOrFallback().Where(c => _catalogPackage.CanIssueDirectly(c.StarterSpeciesId, false)).ToList();
 
@@ -928,6 +985,7 @@ public partial class App : System.Windows.Application
                     update => CommitStateAsync(update, closeMenu: false), () => _menuWindow?.Navigate(MenuSection.Corner));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView,
                     nurseryView, roomView, achievementsView);
+                _menuWindow.SectionViewed += ShowContextHint;
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.SetCatchReady(_catchReadyCount); // picks up a count queued before the menu ever opened
                 _menuWindow.Show();

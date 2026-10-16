@@ -9,28 +9,28 @@ public class FirstRunFlowTests
 {
     private static readonly Lazy<CatalogPackage> Package = new(() => CatalogPackage.Load(Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..")), "src", "PokeCorner.App", "bin", Directory.GetParent(AppContext.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar))!.Name, "net8.0-windows", "Data")));
     [Fact]
-    public void NeedsOnboarding_NullSaveData_ReturnsTrue()
+    public void NeedsStarter_EmptySaveData_ReturnsTrue()
     {
-        Assert.True(FirstRunFlow.NeedsOnboarding(null));
+        Assert.True(FirstRunFlow.NeedsStarter(new SaveData { Individuals = [], Settings = new() }));
     }
 
     [Fact]
-    public void NeedsOnboarding_EmptyIndividuals_ReturnsFalse()
+    public void NeedsStarter_EmptyIndividuals_ReturnsTrue()
     {
         var data = new SaveData { Individuals = new(), Settings = new PokeCorner.Core.AppSettings() };
 
-        Assert.False(FirstRunFlow.NeedsOnboarding(data));
+        Assert.True(FirstRunFlow.NeedsStarter(data));
     }
 
     [Fact]
-    public void NeedsOnboarding_ExplicitResetPendingStarter_ReturnsTrue()
+    public void NeedsStarter_ExplicitResetPendingStarter_ReturnsTrue()
     {
         var data = new SaveData { Individuals = [], Settings = new(), StarterSelectionPending = true };
-        Assert.True(FirstRunFlow.NeedsOnboarding(data));
+        Assert.True(FirstRunFlow.NeedsStarter(data));
     }
 
     [Fact]
-    public void NeedsOnboarding_HasIndividuals_ReturnsFalse()
+    public void NeedsStarter_HasIndividuals_ReturnsFalse()
     {
         var individual = new PokemonIndividual
         {
@@ -39,7 +39,7 @@ public class FirstRunFlowTests
         };
         var data = new SaveData { Individuals = new() { individual }, Settings = new PokeCorner.Core.AppSettings() };
 
-        Assert.False(FirstRunFlow.NeedsOnboarding(data));
+        Assert.False(FirstRunFlow.NeedsStarter(data));
     }
 
     [Fact]

@@ -8,6 +8,7 @@ public enum MenuSection { Corner, Pokedex, Shop, Expeditions, Nursery, Settings,
 
 public partial class AppMenuWindow : Window
 {
+    public event Action<MenuSection>? SectionViewed;
     private readonly CatchView _catchView;
     private MenuSection _lastSection = MenuSection.Corner;
 
@@ -44,6 +45,10 @@ public partial class AppMenuWindow : Window
             NurseryTab.Content = nurseryView;
         }
         _catchView = catchView;
+        MenuTabControl.SelectionChanged += (_, _) =>
+        {
+            if (IsLoaded) SectionViewed?.Invoke(SelectedSection());
+        };
     }
 
     /// Drag and double-click-to-maximize for the custom title bar: WindowChrome's CaptionHeight

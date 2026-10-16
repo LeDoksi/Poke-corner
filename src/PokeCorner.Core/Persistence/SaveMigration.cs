@@ -67,6 +67,7 @@ public static class SaveMigration
         catch (JsonException ex) { throw new InvalidDataException(ex.Message, ex); }
         if (v1.SchemaVersion != 1) throw new InvalidDataException("Миграция принимает только v1.");
         var next = JsonSaveStore.Clone(v1);
+        next.StarterSelectionPending = false;
         JsonSaveStore.NormalizeLegacyCare(next);
         var rulesPath = Path.Combine(catalog.DataRoot, "final", "catalog-rules.json");
         var balancePath = Path.Combine(catalog.DataRoot, "final", "balance.json");
@@ -192,6 +193,16 @@ public static class SaveMigration
                 }
             });
         }
+    }
+
+    public static void EnsureGift(SaveData next, int? excludedSpeciesId, CatalogPackage catalog)
+    {
+        if (next.Gift.Gifts.Count == 2) return;
+        if (next.Gift.Gifts.Count != 0) throw new InvalidDataException("Неполный журнал подарка.");
+        using var rules = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "catalog-rules.json")));
+        using var balance = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "balance.json")));
+        ReserveGift(next, excludedSpeciesId ?? 0, catalog, rules.RootElement, balance.RootElement);
+        next.Gift.ExcludedSpeciesId = excludedSpeciesId;
     }
 
     public static async Task<SaveData?> LoadAsync(string v1Path, string v2Path, LegacyLookup lookup, CatalogPackage catalog, JsonSaveStore? store = null)

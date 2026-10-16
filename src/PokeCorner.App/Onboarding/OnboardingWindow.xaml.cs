@@ -11,13 +11,12 @@ public partial class OnboardingWindow : Window
 {
     private static readonly (string Title, string Body)[] Steps =
     {
-        ("Добро пожаловать в PokéCorner!", "Это твой личный покемон-питомец, который живёт в углу экрана и растёт вместе с тобой."),
-        ("Рост от активности", "Питомец растёт от твоей активности за ПК — кликов мышкой, клавиатуры и геймпада. Чем больше ты играешь и работаешь, тем быстрее он эволюционирует."),
-        ("Погладить и покормить", "Клик по питомцу на рабочем столе гладит его — бесплатно и всегда доступно. Кормление даёт больше очков роста, но требует лакомство — открой меню и загляни на вкладку «Коллекция»."),
-        ("Поимка новых покемонов", "Когда шкала поимки заполнится, в трее появится пункт «Поймать!» — открой его и лови нового покемона на вкладке «Поймать»."),
-        ("Коллекция и Pokédex", "Все пойманные покемоны хранятся в «Коллекции». Вкладка «Pokédex» показывает все виды, которых ты когда-либо поймал."),
-        ("Магазин", "Зарабатывай монеты активностью и трать их на лакомства, бустеры или яйца редких покемонов — яйца вылупляются через час."),
-        ("Меню приложения", "Двойной клик по питомцу на рабочем столе или иконка в трее открывают это меню в любой момент — все вкладки в одном окне.")
+        ("Питомец на рабочем столе", "Нажми на питомца, чтобы погладить его. Двойной клик открывает меню. Кольца прогресса можно включить в настройках. Подарок к крупному обновлению — два закрытых покебола — уже сохранён отдельно от обучения."),
+        ("Уголок", "Здесь видны активность, уход, закрытые покеболы и заработанные лакомства. Поимка раскрывает вид только после броска; делать это сейчас не нужно. В комнате можно бесплатно выставить три открытых трофея."),
+        ("Покедекс", "Смотри экземпляры и открытые виды, ищи и фильтруй коллекцию. У питомца можно выбрать кличку и избранное, покормить его и узнать условия эволюции. Здесь только пример: ничего менять не нужно."),
+        ("Экспедиции", "Одновременно проходит одна экспедиция. Выбери команду, бонусы и сложность; путь длится 30 минут, 1,5 часа, 3 часа или 6 часов. Основная награда гарантирована, встреча бывает бонусом. Начинать поход сейчас не нужно."),
+        ("Питомник", "Совместимая пара может дать несколько вариантов потомства. Перед запуском видны цена, случайный исход и предмет выбора. Яйца в магазине больше не продаются; во время обучения ресурсы не тратятся."),
+        ("Предметы и открытия", "Лакомства и шесть видов ягод — разные запасы. Рецепты эволюции покажут условия и камень выбора ветки. В магазине есть расходники, а в альбоме — награды и три места на полке. Покупать и эволюционировать для обучения не нужно.")
     };
 
     /// The dot for the current step stretches into a short pill in the accent color; the rest
@@ -27,13 +26,17 @@ public partial class OnboardingWindow : Window
     private const double ActiveDotWidth = 18;
 
     private int _stepIndex;
+    private bool _closed;
+    private readonly Func<int, string, Task>? _commitProgress;
     private readonly List<Border> _stepDots = new();
 
-    public OnboardingWindow()
+    public OnboardingWindow(int startStep = 1, Func<int, string, Task>? commitProgress = null)
     {
         InitializeComponent();
+        Closed += (_, _) => _closed = true;
+        _commitProgress = commitProgress;
         BuildStepDots();
-        ShowStep(0);
+        ShowStep(startStep - 1);
     }
 
     /// One dot per entry in Steps, so the indicator can never drift out of sync with the
@@ -74,17 +77,48 @@ public partial class OnboardingWindow : Window
         }
     }
 
-    private void BackButton_Click(object sender, RoutedEventArgs e) => ShowStep(_stepIndex - 1);
+    private async void BackButton_Click(object sender, RoutedEventArgs e) => await MoveAsync(_stepIndex - 1, "in-progress");
 
-    private void NextButton_Click(object sender, RoutedEventArgs e)
+    private async void NextButton_Click(object sender, RoutedEventArgs e)
     {
         if (_stepIndex == Steps.Length - 1)
         {
-            Close();
+            await MoveAsync(_stepIndex, "completed");
             return;
         }
-        ShowStep(_stepIndex + 1);
+        await MoveAsync(_stepIndex + 1, "in-progress");
     }
 
-    private void SkipButton_Click(object sender, RoutedEventArgs e) => Close();
+    private async void SkipButton_Click(object sender, RoutedEventArgs e) => await MoveAsync(_stepIndex, "skipped");
+
+    private async Task MoveAsync(int index, string status)
+    {
+        SkipButton.IsEnabled = BackButton.IsEnabled = NextButton.IsEnabled = false;
+        try
+        {
+            if (_commitProgress is not null) await _commitProgress(index + 1, status);
+            if (_closed) return;
+            if (status is "completed" or "skipped") Close();
+            else ShowStep(index);
+        }
+        catch (Exception ex)
+        {
+            if (!_closed) System.Windows.MessageBox.Show(this, ex.Message + "\nШаг не сохранён. Повторите действие или закройте окно.", "PokéCorner — ошибка сохранения");
+        }
+        finally
+        {
+            if (!_closed)
+            {
+                SkipButton.IsEnabled = NextButton.IsEnabled = true;
+                BackButton.IsEnabled = _stepIndex > 0;
+            }
+        }
+    }
+
+    private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key != System.Windows.Input.Key.Escape) return;
+        Close();
+        e.Handled = true;
+    }
 }
