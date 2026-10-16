@@ -100,6 +100,7 @@ public partial class RoomView : UserControl
     private SpriteAnimator? _animator;
     private string _sceneSignature = "";
     private string _spriteSignature = "";
+    private (int Width, int Height, int Left, int Right, int Bottom) _spriteBounds;
 
     public RoomView(RoomArt art, Func<SaveData> snapshot, Func<IReadOnlyList<byte[]>?> spriteFrames, Action openAchievements,
         Func<int, string>? speciesName = null)
@@ -155,10 +156,6 @@ public partial class RoomView : UserControl
             }
         }
         var active = data.Individuals.FirstOrDefault(p => p.Id == data.ActiveIndividualId);
-        var size = data.Settings.PetSizePixels;
-        PetImage.Width = PetImage.Height = size;
-        Canvas.SetLeft(PetImage, 800 - size / 2.0);
-        Canvas.SetTop(PetImage, 524 - size);
         PetCaption.Text = active is null ? "Выберите спутника в Покедексе." :
             (active.Nickname is null ? _speciesName(active.CurrentSpeciesId) :
                 active.Nickname + " · " + _speciesName(active.CurrentSpeciesId)) +
@@ -166,16 +163,68 @@ public partial class RoomView : UserControl
         var frames = _spriteFrames();
         var spriteSignature = active is null || frames is null || frames.Count == 0 ? "" :
             $"{active.Id}:{active.CurrentSpeciesId}:{active.IsShiny}:{frames.Count}:{System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(frames)}";
-        if (spriteSignature == _spriteSignature) return;
-        _spriteSignature = spriteSignature;
-        _animator?.Stop();
-        _animator = null;
-        if (spriteSignature.Length == 0) { PetImage.Source = null; return; }
-        var decoded = frames!.Select(SpriteImages.Decode).ToList();
-        PetImage.Source = decoded[0];
-        if (decoded.Count == 1) return;
-        _animator = new SpriteAnimator(PetImage, new FrameSequencer(decoded.Count, TimeSpan.FromMilliseconds(150)), decoded);
-        if (IsLoaded) _animator.Start();
+        if (spriteSignature != _spriteSignature)
+        {
+            _spriteSignature = spriteSignature;
+            _animator?.Stop();
+            _animator = null;
+            if (spriteSignature.Length == 0)
+            {
+                PetImage.Source = null;
+                _spriteBounds = default;
+            }
+            else
+            {
+                var decoded = frames!.Select(SpriteImages.Decode).ToList();
+                _spriteBounds = MeasureSpriteBounds(decoded);
+                PetImage.Source = decoded[0];
+                if (decoded.Count > 1)
+                {
+                    _animator = new SpriteAnimator(PetImage, new FrameSequencer(decoded.Count, TimeSpan.FromMilliseconds(150)), decoded);
+                    if (IsLoaded) _animator.Start();
+                }
+            }
+        }
+        PositionPet(data.Settings.PetSizePixels);
+    }
+
+    private void PositionPet(int savedDesktopSize)
+    {
+        // Approved Eevee: 46x47 at 3x, top-left (731,383), hence visible foot (800,524).
+        // The desktop size remains a saved preference; in this scene it is a relative scale.
+        var scale = 3d * savedDesktopSize / 96d;
+        PetImage.Width = _spriteBounds.Width * scale;
+        PetImage.Height = _spriteBounds.Height * scale;
+        Canvas.SetLeft(PetImage, 800 - (_spriteBounds.Left + _spriteBounds.Right) * scale / 2);
+        Canvas.SetTop(PetImage, 524 - _spriteBounds.Bottom * scale);
+    }
+
+    private static (int Width, int Height, int Left, int Right, int Bottom) MeasureSpriteBounds(IReadOnlyList<ImageSource> frames)
+    {
+        var first = (BitmapSource)frames[0];
+        var left = first.PixelWidth;
+        var right = 0;
+        var bottom = 0;
+        foreach (var frame in frames)
+        {
+            var source = (BitmapSource)frame;
+            if (source.PixelWidth != first.PixelWidth || source.PixelHeight != first.PixelHeight)
+                throw new InvalidDataException("Animated sprite frames have inconsistent dimensions.");
+            var bitmap = new FormatConvertedBitmap(source, PixelFormats.Bgra32, null, 0);
+            var stride = bitmap.PixelWidth * 4;
+            var pixels = new byte[stride * bitmap.PixelHeight];
+            bitmap.CopyPixels(pixels, stride, 0);
+            for (var y = 0; y < bitmap.PixelHeight; y++)
+                for (var x = 0; x < bitmap.PixelWidth; x++)
+                    if (pixels[y * stride + x * 4 + 3] != 0)
+                    {
+                        left = Math.Min(left, x);
+                        right = Math.Max(right, x + 1);
+                        bottom = Math.Max(bottom, y + 1);
+                    }
+        }
+        if (right == 0) { left = 0; right = first.PixelWidth; bottom = first.PixelHeight; }
+        return (first.PixelWidth, first.PixelHeight, left, right, bottom);
     }
 
     private void AchievementsButton_Click(object sender, RoutedEventArgs e) => _openAchievements();

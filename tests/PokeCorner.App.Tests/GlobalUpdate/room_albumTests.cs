@@ -87,6 +87,93 @@ public sealed class RoomAlbumTests
     });
 
     [Fact]
+    public void LockedAlbumArtKeepsTheSameAspectAndPositionAsEarnedArt() => WpfTestHost.Run(() =>
+    {
+        var data = new SaveData { Individuals = [], Settings = new() };
+        var album = new AchievementsView(Art.Value, () => data, _ => Task.CompletedTask, () => { });
+        WpfTestHost.Layout(album, 640, 480);
+        var cards = (WrapPanel)album.FindName("CardsPanel");
+        var card = (StackPanel)cards.Children[0];
+        var art = Art.Value.Awards[Art.Value.Cards[0]];
+        Assert.NotEqual(132d / 94d, art.Width / art.Height);
+        var mask = Assert.IsType<Rectangle>(card.Children[0]);
+        Assert.Equal(Stretch.Uniform, Assert.IsType<ImageBrush>(mask.OpacityMask).Stretch);
+        var lockedBounds = mask.TransformToAncestor(card).TransformBounds(new Rect(0, 0, mask.ActualWidth, mask.ActualHeight));
+        var lockedPixels = RenderArt(card);
+        data.AwardLedger[art.Id] = new();
+        album.Refresh();
+        WpfTestHost.Layout(album, 640, 480);
+        card = (StackPanel)cards.Children[0];
+        var earned = Assert.IsType<Image>(card.Children[0]);
+        var earnedBounds = earned.TransformToAncestor(card).TransformBounds(new Rect(0, 0, earned.ActualWidth, earned.ActualHeight));
+        var earnedPixels = RenderArt(card);
+        Assert.Equal(earnedBounds.X, lockedBounds.X, 3);
+        Assert.Equal(earnedBounds.Y, lockedBounds.Y, 3);
+        Assert.Equal(OpaqueBounds(earnedPixels), OpaqueBounds(lockedPixels));
+    });
+
+    [Theory]
+    [InlineData(25, false)]
+    [InlineData(25, true)]
+    [InlineData(133, false)]
+    [InlineData(133, true)]
+    [InlineData(143, false)]
+    [InlineData(143, true)]
+    public void RoomRegistersDecodedSpriteFramesAtApprovedFoot(int speciesId, bool shiny) => WpfTestHost.Run(() =>
+    {
+        var catalog = CatalogPackage.Load(DataRoot);
+        var path = catalog.GetAssetPath(speciesId, shiny)!;
+        var frames = GifFrameDecoder.DecodeFramesAsPng(File.ReadAllBytes(path));
+        var first = ReadPng(frames[0]);
+        var person = new PokemonIndividual { SpeciesId = speciesId, CurrentSpeciesId = speciesId,
+            FamilyRootId = speciesId, EvolutionChainId = speciesId, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = shiny, CaughtAtUtc = DateTimeOffset.UtcNow };
+        var data = new SaveData { Individuals = [person], ActiveIndividualId = person.Id, Settings = new() };
+        var room = new RoomView(Art.Value, () => data, () => frames, () => { });
+        WpfTestHost.Layout(room, 1448, 750);
+        var image = (Image)room.FindName("PetImage");
+        Assert.Equal(first.PixelWidth * 3d, image.Width, 3);
+        Assert.Equal(first.PixelHeight * 3d, image.Height, 3);
+        var alpha = OpaqueBounds(frames);
+        Assert.Equal(800, Canvas.GetLeft(image) + (alpha.Left + alpha.Right) * 1.5, 3);
+        Assert.Equal(524, Canvas.GetTop(image) + alpha.Bottom * 3d, 3);
+        if (speciesId == 133)
+        {
+            Assert.Equal(731, Canvas.GetLeft(image), 3);
+            Assert.Equal(383, Canvas.GetTop(image), 3);
+        }
+        Assert.Equal(96, data.Settings.PetSizePixels);
+    });
+
+    [Fact]
+    public void TransparentAnimationUsesOneStableVisibleFootAndRelativeSavedSize() => WpfTestHost.Run(() =>
+    {
+        var person = new PokemonIndividual { SpeciesId = 25, CurrentSpeciesId = 25,
+            FamilyRootId = 25, EvolutionChainId = 25, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow };
+        var data = new SaveData { Individuals = [person], ActiveIndividualId = person.Id, Settings = new() };
+        var frames = new[] { SinglePixelPng(4, 4, 1, 1), SinglePixelPng(4, 4, 2, 2) };
+        var room = new RoomView(Art.Value, () => data, () => frames, () => { });
+        WpfTestHost.Layout(room, 1448, 750);
+        var image = (Image)room.FindName("PetImage");
+        Assert.Equal(12, image.Width);
+        Assert.Equal(12, image.Height);
+        Assert.Equal(794, Canvas.GetLeft(image));
+        Assert.Equal(515, Canvas.GetTop(image));
+        var source = image.Source;
+        room.Refresh();
+        Assert.Same(source, image.Source);
+        Assert.Equal(794, Canvas.GetLeft(image));
+        Assert.Equal(515, Canvas.GetTop(image));
+        data.Settings.PetSizePixels = 192;
+        room.Refresh();
+        Assert.Equal(24, image.Width);
+        Assert.Equal(788, Canvas.GetLeft(image));
+        Assert.Equal(506, Canvas.GetTop(image));
+        Assert.Equal(192, data.Settings.PetSizePixels);
+    });
+
+    [Fact]
     public void ManualPlacementReplacementAndRemovalAreFreeAndKeepHistory()
     {
         var data = new SaveData { Individuals = [], Settings = new() };
@@ -191,7 +278,7 @@ public sealed class RoomAlbumTests
         WpfTestHost.Layout(room, 640, 360);
         Assert.Equal(1448, ((Canvas)room.FindName("Scene")).Width);
         Assert.Single(((Canvas)room.FindName("AwardLayer")).Children);
-        Assert.Equal(384, ((Image)room.FindName("PetImage")).Width);
+        Assert.Null(((Image)room.FindName("PetImage")).Source);
         Assert.Equal(384, data.Settings.PetSizePixels);
         foreach (var (width, height, scale) in new[] { (820, 420, 1.5), (640, 360, 2.0) })
         {
@@ -266,11 +353,82 @@ public sealed class RoomAlbumTests
         return bitmap;
     }
 
+    private static BitmapImage ReadPng(byte[] png)
+    {
+        using var stream = new MemoryStream(png);
+        var bitmap = new BitmapImage();
+        bitmap.BeginInit();
+        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+        bitmap.StreamSource = stream;
+        bitmap.EndInit();
+        bitmap.Freeze();
+        return bitmap;
+    }
+
     private static byte[] Pixels(BitmapSource source)
     {
         var converted = new FormatConvertedBitmap(source, PixelFormats.Bgra32, null, 0);
         var pixels = new byte[converted.PixelWidth * converted.PixelHeight * 4];
         converted.CopyPixels(pixels, converted.PixelWidth * 4, 0);
         return pixels;
+    }
+
+    private static (int Left, int Right, int Bottom) OpaqueBounds(IReadOnlyList<byte[]> frames)
+    {
+        var left = int.MaxValue;
+        var right = 0;
+        var bottom = 0;
+        foreach (var frame in frames)
+        {
+            var bitmap = ReadPng(frame);
+            var pixels = Pixels(bitmap);
+            for (var y = 0; y < bitmap.PixelHeight; y++)
+                for (var x = 0; x < bitmap.PixelWidth; x++)
+                    if (pixels[(y * bitmap.PixelWidth + x) * 4 + 3] != 0)
+                    {
+                        left = Math.Min(left, x);
+                        right = Math.Max(right, x + 1);
+                        bottom = Math.Max(bottom, y + 1);
+                    }
+        }
+        return (left, right, bottom);
+    }
+
+    private static byte[] SinglePixelPng(int width, int height, int x, int y)
+    {
+        var pixels = new byte[width * height * 4];
+        pixels[(y * width + x) * 4 + 3] = 255;
+        var source = BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgra32, null, pixels, width * 4);
+        var encoder = new PngBitmapEncoder();
+        encoder.Frames.Add(BitmapFrame.Create(source));
+        using var stream = new MemoryStream();
+        encoder.Save(stream);
+        return stream.ToArray();
+    }
+
+    private static BitmapSource RenderArt(FrameworkElement element)
+    {
+        var bitmap = new RenderTargetBitmap(270, 94, 96, 96, PixelFormats.Pbgra32);
+        bitmap.Render(element);
+        return bitmap;
+    }
+
+    private static (int Left, int Top, int Right, int Bottom) OpaqueBounds(BitmapSource bitmap)
+    {
+        var pixels = Pixels(bitmap);
+        var left = bitmap.PixelWidth;
+        var top = bitmap.PixelHeight;
+        var right = 0;
+        var bottom = 0;
+        for (var y = 0; y < bitmap.PixelHeight; y++)
+            for (var x = 0; x < bitmap.PixelWidth; x++)
+                if (pixels[(y * bitmap.PixelWidth + x) * 4 + 3] != 0)
+                {
+                    left = Math.Min(left, x);
+                    top = Math.Min(top, y);
+                    right = Math.Max(right, x + 1);
+                    bottom = Math.Max(bottom, y + 1);
+                }
+        return (left, top, right, bottom);
     }
 }

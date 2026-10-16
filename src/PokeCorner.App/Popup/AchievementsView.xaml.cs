@@ -99,7 +99,8 @@ public partial class AchievementsView : UserControl
                 {
                     Width = 132, Height = 94, HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
                     Fill = (Brush)FindResource("PrimaryTextBrush"),
-                    OpacityMask = new ImageBrush(RoomView.LoadImage(_art.PathFor(appearance.MaskFile))) { Stretch = Stretch.Fill }
+                    OpacityMask = new ImageBrush(RoomView.LoadImage(_art.PathFor(appearance.MaskFile)))
+                    { Stretch = Stretch.Uniform, AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top }
                 });
             else
                 panel.Children.Add(new Image { Source = RoomView.LoadImage(_art.PathFor(appearance.File)),
