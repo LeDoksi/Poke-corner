@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
      xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui"
      xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
@@ -23,22 +23,47 @@
   <Package
       Name="PokeCorner"
       Manufacturer="PokeCorner"
-      Version="1.0.18.0"
+      Version="1.1.0.0"
       UpgradeCode="ABEC4F80-F721-4D76-85F5-BCFF1CCBD9B4"
       Scope="perMachine"
       Compressed="yes"
       InstallerVersion="500">
 
-    <!-- Uninstalls the older version before laying down the new files, so a rebuilt
-         installer upgrades in place instead of duplicating the product.
+    <!-- Copy the installed v1 lookup before replacing payload files. Late removal keeps
+         both products in the transaction; shared payload components retain their identities. -->
+    <MajorUpgrade Schedule="afterInstallExecute"
+                  DowngradeErrorMessage="A newer version of PokeCorner is already installed. Uninstall it first if you really want to go back." />
 
-         Note on save data: state.json lives in %APPDATA%\PokeCorner, NOT in this package.
-         An MSI never manages a user profile, so save progress is untouched by upgrade and
-         uninstall alike, and each Windows account keeps its own. Only the shared assets
-         (sprites, animated, cries, catalog.json) are owned components here, and they are correctly
-         replaced on upgrade and removed on uninstall. -->
-    <MajorUpgrade DowngradeErrorMessage="A newer version of PokeCorner is already installed. Uninstall it first if you really want to go back." />
+    <Property Id="LEGACY_CATALOG_PATH" Secure="yes">
+      <ComponentSearch Id="InstalledLegacyCatalog" Guid="1207EAD2-3F07-5CC9-A702-CF851310D8CD" Type="file">
+        <FileSearch Id="InstalledLegacyCatalogFile" Name="catalog.json" />
+      </ComponentSearch>
+    </Property>
+    <!-- No FileSearch signature: AppSearch returns the parent directory of the file key path. -->
+    <Property Id="LEGACY_DATA_DIRECTORY" Secure="yes">
+      <ComponentSearch Id="InstalledLegacyDataDirectory" Guid="1207EAD2-3F07-5CC9-A702-CF851310D8CD" Type="file" />
+    </Property>
+    <!-- Keep late upgrades at the existing custom location, preserving component key paths. -->
+    <SetDirectory Id="INSTALLFOLDER" Value="[LEGACY_DATA_DIRECTORY]..\"
+                  Sequence="both" Condition="LEGACY_DATA_DIRECTORY" />
 
+    <Property Id="PRESERVED_LEGACY_LOOKUP" Secure="yes">
+      <DirectorySearch Id="PreservedLegacyFolder" Path="[CommonAppDataFolder]PokeCorner" Depth="0">
+        <FileSearch Id="PreservedLegacyFile" Name="legacy-v1-lookup.json" />
+      </DirectorySearch>
+    </Property>
+    <StandardDirectory Id="CommonAppDataFolder">
+      <Directory Id="LEGACYLOOKUPFOLDER" Name="PokeCorner" />
+    </StandardDirectory>
+    <!-- Standard ProgramData ACLs give users read access; only the elevated installer writes.
+         MoveFile copies are not owned payload files and survive uninstall/later upgrades. -->
+    <Component Id="LegacyLookupPreservation" Directory="LEGACYLOOKUPFOLDER"
+               Guid="7151B049-7796-4A12-B6DE-96408567C650" Permanent="yes"
+               Condition="LEGACY_CATALOG_PATH AND NOT PRESERVED_LEGACY_LOOKUP">
+      <CreateFolder />
+      <CopyFile Id="PreserveLegacyLookup" SourceProperty="LEGACY_CATALOG_PATH"
+                DestinationDirectory="LEGACYLOOKUPFOLDER" DestinationName="legacy-v1-lookup.json" Delete="no" />
+    </Component>
     <MediaTemplate EmbedCab="yes" />
 
     <!-- Add/Remove Programs metadata. ARPPRODUCTICON is what Settings > Installed apps
@@ -75,6 +100,7 @@
       <ComponentGroupRef Id="AppPayload" />
       <ComponentGroupRef Id="SeedData" />
       <ComponentRef Id="DataFolderPermissions" />
+      <ComponentRef Id="LegacyLookupPreservation" />
       <ComponentRef Id="StartMenuShortcut" />
       <ComponentRef Id="DesktopShortcut" />
       <ComponentRef Id="ArpDisplayIcon" />

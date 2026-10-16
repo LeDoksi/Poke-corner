@@ -1,0 +1,61 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "id": "nursery-waiting",
+      "file": "assets/nursery-waiting.png",
+      "sourceImage": "exec-b5b9150e-8060-4526-a14b-0c9e87f7dea3.png",
+      "bytes": 2938368,
+      "sha256": "d4ee9563d04e58d5ffae19eec59969d5718ec604fbbbcdba81eea017816672fc",
+      "width": 2048,
+      "height": 768,
+      "approval": "approved-by-user-2026-10-17",
+      "runtimeRegistered": false
+    },
+    {
+      "id": "nursery-ready",
+      "file": "assets/nursery-ready.png",
+      "sourceImage": "exec-087b499f-ce49-4654-9263-c924d8ca6a0c.png",
+      "bytes": 2635858,
+      "sha256": "41b071a34e4b1f499389521217876adba215f8a2df4534e0abec249cabf381b9",
+      "width": 2048,
+      "height": 768,
+      "approval": "approved-by-user-2026-10-17",
+      "runtimeRegistered": false
+    },
+    {
+      "id": "coin",
+      "file": "assets/coin.png",
+      "sourceImage": "exec-6e72214e-5b41-4f22-9f41-942bafbaa7d9.png",
+      "bytes": 717048,
+      "sha256": "54de9cf37e3b218712a6354b45aae02da25d0796fc6ad3306029289e3ee62c6b",
+      "width": 1312,
+      "height": 1199,
+      "approval": "approved-by-user-2026-10-17",
+      "runtimeRegistered": false
+    }
+  ],
+  "prompts": [
+    {
+      "id": "nursery-waiting",
+      "prompt": "Edit this approved greenhouse illustration into the WAITING nursery state. Preserve the exact 2048x768 wide composition, potting bench, empty straw nest position, warm afternoon light, plants, window view, watering can and lantern, and consistent detailed 16-bit pixel-art style. Add ONE upright ivory egg with irregular sage-green spots sitting naturally INSIDE the existing straw nest. Paint the egg into the illustration with consistent pixel density and lighting, soft ambient occlusion and contact shadows, the lower portion occluded by the front nest straw. Egg height roughly 30% of the frame, centered within nest, not an oversized object pasted on top. It must feel like one completed scene painted together, not an independent sharp-edged sticker. Egg is intact and uncracked. No Pokemon/creatures, text, time, UI, glow effect, border or watermark. Return the whole opaque greenhouse scene with egg integrated.",
+      "referenced_image_paths": [
+        "C:\\Users\\Georgy\\.codex\\worktrees\\global-update\\PokeTokenBar-Windows\\docs\\design-v2\\ui-system\\assets\\nursery.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "nursery-ready",
+      "prompt": "Use the approved greenhouse illustration as the location identity for a NEW CLOSE-UP READY-TO-HATCH state. Recompose the camera: stand right at the potting bench, look closely at one large straw nest and ONE ivory egg with irregular sage-green spots. Full opaque 2048x768 wide illustration. Egg and nest are the dominant subject, egg centered and about 65% of frame height, nest fills most of the bottom of the frame. Egg has clear several fine jagged cracks spreading from a small star-shaped crack near its upper middle, shell still mostly closed, no occupant visible. Beautiful warm light from the same greenhouse windows, consistent straw/egg contact shadows and front-rim occlusion. Behind, recognizable greenhouse window grid, lush plants and honey wood, cropped close and less detailed so they support the egg. Fully integrated handcrafted detailed 16-bit pixel art with consistent pixel scale; no isolated-object sticker appearance. This is a much closer camera than the waiting panorama. No Pokemon, character, UI, buttons, labels, countdown, words, rays of light, bloom, border or watermark. Paint the egg, nest, background together as one scene.",
+      "referenced_image_paths": [
+        "C:\\Users\\Georgy\\.codex\\worktrees\\global-update\\PokeTokenBar-Windows\\docs\\design-v2\\ui-system\\assets\\nursery.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "coin",
+      "prompt": "One charming gold COIN for a cozy polished pixel-art adventure-game interface. Standalone transparent background. Three-quarter view, complete circular silhouette with visible narrow ridged gold edge, a raised five-point star embossed on its face, warm top-left highlight and deep amber lower-right shading. Clean handcrafted 16-bit pixel clusters, matching richly shaded pixel-art item icons, readable at just 24px. This must unmistakably be a gold currency coin, NOT a crossed circle, prohibition/cancel symbol or line-art icon. No diagonal slash, no currency letters, numbers, text, background, ground, UI, border, watermark, multiple coins or particles. Generous transparent padding with centered single object.",
+      "transparent_background": true
+    }
+  ]
+}

@@ -75,20 +75,20 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// Animated-GIF frames for one species, or null when it has none. Optional so the
     /// theme/layout tests can construct this view without an App behind them; a null delegate
     /// simply leaves every card on its static frame.
-    private readonly Func<int, Task<IReadOnlyList<byte[]>?>>? _getAnimatedFrames;
+    private readonly Func<int, bool, Task<IReadOnlyList<byte[]>?>>? _getAnimatedFrames;
 
     /// Decoded animated frames per species id, and the set of species a fetch has already
     /// been kicked off for. Both are needed: Refresh() runs once a second over every visible
     /// card, so without the "already started" set the grid would re-request the same GIFs
     /// every tick, and without the decoded memo it would re-decode them every rebuild.
-    private readonly Dictionary<int, IReadOnlyList<ImageSource>> _animatedFrames = new();
-    private readonly HashSet<int> _animatedFetchStarted = new();
+    private readonly Dictionary<(int, bool), IReadOnlyList<ImageSource>> _animatedFrames = new();
+    private readonly HashSet<(int, bool)> _animatedFetchStarted = new();
     private readonly Func<int, Task<byte[]?>>? _fetchSprite;
     private readonly HashSet<int> _thumbnailFetchStarted = new();
-    private readonly Func<int, string?>? _getSpeciesAssetPath;
+    private readonly Func<int, bool, string?>? _getSpeciesAssetPath;
     private readonly Func<Action<SaveData>, Task>? _commitState;
-    private readonly Dictionary<int, ImageSource> _packageSprites = new();
-    private readonly HashSet<int> _missingPackageSprites = new();
+    private readonly Dictionary<(int, bool), ImageSource> _packageSprites = new();
+    private readonly HashSet<(int, bool)> _missingPackageSprites = new();
     private int _speciesPageIndex;
     private const int SpeciesPageSize = 12;
     private int? _selectedSpeciesId;
@@ -119,8 +119,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     // when a cheap signature of its content actually changes.
     private string _pokedexSignature = string.Empty;
 
-    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null,
-        Func<int, string?>? getSpeciesAssetPath = null, Func<Action<SaveData>, Task>? commitState = null,
+    public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, bool, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null,
+        Func<int, bool, string?>? getSpeciesAssetPath = null, Func<Action<SaveData>, Task>? commitState = null,
         Func<Guid, EvolutionPreview>? previewEvolution = null,
         Func<Guid, int?, Guid, Task<EvolutionAction>>? evolveIndividual = null,
         Action<MenuSection>? navigate = null, Action<string, int>? buyBerries = null,
@@ -305,11 +305,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (_selectedSpeciesId is { } id) ShowSpeciesDetail(all.FirstOrDefault(e => e.SpeciesId == id));
     }
 
-    private ImageSource? GetPackageSprite(int speciesId)
+    private ImageSource? GetPackageSprite(int speciesId, bool isShiny = false)
     {
-        if (_packageSprites.TryGetValue(speciesId, out var cached)) return cached;
-        if (_missingPackageSprites.Contains(speciesId)) return null;
-        var path = _getSpeciesAssetPath?.Invoke(speciesId);
+        if (_packageSprites.TryGetValue((speciesId, isShiny), out var cached)) return cached;
+        if (_missingPackageSprites.Contains((speciesId, isShiny))) return null;
+        var path = _getSpeciesAssetPath?.Invoke(speciesId, isShiny);
         if (path is null) return null;
         try
         {
@@ -319,12 +319,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             bitmap.UriSource = new Uri(path);
             bitmap.EndInit();
             bitmap.Freeze();
-            _packageSprites[speciesId] = bitmap;
+            _packageSprites[(speciesId, isShiny)] = bitmap;
             return bitmap;
         }
         catch (Exception error) when (error is IOException or NotSupportedException or System.Runtime.InteropServices.COMException)
         {
-            _missingPackageSprites.Add(speciesId);
+            _missingPackageSprites.Add((speciesId, isShiny));
             return null;
         }
     }
@@ -604,7 +604,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         // Kick off the animated-sprite fetches for whatever is on screen. Cheap after the
         // first pass: EnsureAnimatedFrames is a no-op for any species already requested.
-        foreach (var entry in page) EnsureAnimatedFrames(entry.DisplaySpeciesId);
+        foreach (var entry in page) EnsureAnimatedFrames(entry.DisplaySpeciesId, entry.IsShiny);
 
         // The sprite's presence is part of the signature — both the static thumbnail and the
         // animated frames — so a card that rendered its placeholder before the species was
@@ -612,7 +612,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // until some unrelated field changes. The nickname is in there for the same reason:
         // renaming from the detail overlay must repaint the card behind it.
         var signature = $"{_rarityFilter}|{_searchQuery}|{_hideFullyEvolved}|{_sortOrder}|{_pageIndex}|" + string.Join("|", page.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId) is not null}:{_animatedFrames.ContainsKey(e.DisplaySpeciesId)}"));
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId, e.IsShiny) is not null}:{_animatedFrames.ContainsKey((e.DisplaySpeciesId, e.IsShiny))}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
@@ -643,8 +643,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         IsFavorite = entry.IsFavorite,
         TypeBadges = TypeDisplay.ToBadges(entry.Types),
         EvolutionStages = BuildEvolutionStageCards(entry),
-        SpriteImage = TryGetThumbnail(entry.DisplaySpeciesId),
-        SpriteFrames = _animatedFrames.GetValueOrDefault(entry.DisplaySpeciesId)
+        SpriteImage = TryGetThumbnail(entry.DisplaySpeciesId, entry.IsShiny),
+        SpriteFrames = _animatedFrames.GetValueOrDefault((entry.DisplaySpeciesId, entry.IsShiny))
     };
 
     /// Turns the view-model's spoiler-masked chain into renderable cards. The sprite lookup is
@@ -656,7 +656,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             StageIndex = stage.StageIndex,
             IsRevealed = stage.IsRevealed,
             NameText = stage.IsRevealed ? stage.SpeciesName ?? "???" : "???",
-            SpriteImage = stage.IsRevealed && stage.SpeciesId is { } id ? TryGetThumbnail(id) : null,
+            SpriteImage = stage.IsRevealed && stage.SpeciesId is { } id ? TryGetThumbnail(id, entry.IsShiny) : null,
             TypeBadges = TypeDisplay.ToBadges(stage.Types),
             IsCurrent = stage.IsCurrent,
             IsDisplayed = stage.IsDisplayed,
@@ -667,10 +667,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// Fire-and-forget on purpose: the cards already show their static frame, so there is
     /// nothing to wait for — when frames land, clearing the signature makes the next refresh
     /// tick rebuild the grid and pick them up.
-    private void EnsureAnimatedFrames(int speciesId)
+    private void EnsureAnimatedFrames(int speciesId, bool isShiny)
     {
         if (_getAnimatedFrames is null) return;
-        if (!_animatedFetchStarted.Add(speciesId)) return;
+        if (!_animatedFetchStarted.Add((speciesId, isShiny))) return;
 
         _ = LoadAsync();
 
@@ -679,7 +679,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             IReadOnlyList<byte[]>? frames;
             try
             {
-                frames = await _getAnimatedFrames(speciesId);
+                frames = await _getAnimatedFrames(speciesId, isShiny);
             }
             catch
             {
@@ -695,7 +695,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
             // Off the UI thread: SpriteImages.Decode freezes each bitmap, which is what makes it legal
             // to hand them back here.
-            _animatedFrames[speciesId] = await Task.Run(() => frames.Select(SpriteImages.Decode).ToList());
+            _animatedFrames[(speciesId, isShiny)] = await Task.Run(() => frames.Select(SpriteImages.Decode).ToList());
             _pokedexSignature = string.Empty; // force the next tick to rebuild with the frames
         }
     }
@@ -1325,8 +1325,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     /// Cache-only sprite lookup, safe on the UI thread. A species with no usable cached PNG
     /// returns null (the card shows its pokéball placeholder) and is fetched in the background.
-    private ImageSource? TryGetThumbnail(int speciesId)
+    private ImageSource? TryGetThumbnail(int speciesId, bool isShiny = false)
     {
+        if (_getSpeciesAssetPath is not null) return GetPackageSprite(speciesId, isShiny);
         if (_spriteThumbnails.TryGetValue(speciesId, out var cached)) return cached;
 
         var bytes = _spriteCache.TryGetCachedBytes(speciesId);

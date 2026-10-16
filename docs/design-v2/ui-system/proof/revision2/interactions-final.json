@@ -1,0 +1,45 @@
+{
+  "duplicates": [
+    "Росток",
+    "Клевер"
+  ],
+  "removedOwnership": true,
+  "items": [
+    "Применить бустер ухода?\n\nУвеличит уход для эволюции.\nПитомец: Росток\n\nОтмена\nПрименить",
+    "Использовать зелье опыта?\n\nДобавит 300 опыта.\nПитомец: Росток\n\nОтмена\nПрименить"
+  ],
+  "confirmations": [
+    {
+      "context": "expedition-running",
+      "focus": "Отмена",
+      "heading": "Прервать поход?",
+      "inert": true,
+      "overlay": true
+    },
+    {
+      "context": "save-history",
+      "focus": "Отмена",
+      "heading": "Вернуться к этой копии?",
+      "inert": true,
+      "overlay": true
+    },
+    {
+      "context": "detail",
+      "focus": "Отмена",
+      "heading": "Найти новый дом?",
+      "inert": true,
+      "overlay": true
+    }
+  ],
+  "stone": "Эволюция в выбранную форму\n\nВыбрана ветвь #0134. Понадобятся 6 ягод Oran и один камень.\n\nОтмена\nЭволюционировать",
+  "parent": "Клевер",
+  "shelf": "../art-production/last-attempt/final-assets/assets/trophies/trophy-species-1.png",
+  "charm": "Активен на следующую поимку",
+  "shake": "Покебол покачивается…",
+  "catchResult": "catch-result",
+  "remainingCharm": "Талисман использован · в запасе 1",
+  "hiddenSearch": 0,
+  "shiny": [
+    "Pikachu"
+  ]
+}

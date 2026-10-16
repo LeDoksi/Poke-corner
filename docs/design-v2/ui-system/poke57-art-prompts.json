@@ -1,0 +1,18 @@
+[
+  {
+    "id": "nursery",
+    "prompt": "Create one finished standalone landscape asset for a cozy pixel-art desktop Pokemon companion game. A warm, lush greenhouse nursery interior, 2048x768 pixels, 8:3 wide banner. Handcrafted detailed 16-bit adventure-game pixel art matching sunny forest game scenery: crisp deliberate pixel clusters, rich warm wooden texture, inviting plants and natural depth, not vector/cartoon/3D. Camera faces a broad honey-wood potting workbench in the lower half. A shallow EMPTY straw nest sits centered on its table surface, its interior visibly empty and large enough for a separate egg or small game sprite. Nest center about 52% image width and 73% image height; front rim should remain low enough to see a separately composited egg. Rear greenhouse window grids frame glowing afternoon greenery; a watering can and potting tools at far left, flowering pots and climbing vines at sides, small warm lantern to right. Beautiful detailed greenhouse composition as a complete location, not an empty colored panel. Keep table and empty nest sharply readable at 800px display width. Absolutely no egg, no Pokemon/creature/people, no interface, no labels, no text, no buttons, no border, no watermark. Full bleed opaque rectangular scene. No objects placed in the empty center of the nest."
+  },
+  {
+    "id": "egg",
+    "prompt": "One standalone off-white egg with a few irregular sage-green spots, transparent background, centered with generous transparent padding. Asset for a cozy polished 16-bit pixel-art adventure pet game. Slight three-quarter front view, top illuminated from upper left by warm greenhouse sunlight. Distinct crisp hand-placed pixel clusters and clean silhouette, gentle pixel shading, charming tactile shell, no outline around the canvas. Egg upright, whole and uncracked. No nest, floor, scenery, shadow cast onto a background, UI, text, label, frame, watermark, glow or sparkle particles. Exactly one egg, no duplicates, no Pokemon/characters. It will be composited on an existing straw nest."
+  },
+  {
+    "id": "ball-closed",
+    "prompt": "One CLOSED classic red-and-white Pokeball as a standalone transparent-background game asset. Polished handcrafted 16-bit adventure-game pixel art; crisp consistent pixel clusters, round red upper hemisphere, ivory-white lower hemisphere, dark charcoal equatorial band and circular light front button. Three-quarter front view with subtle top-left natural lighting; button faces viewer. Clean complete circular silhouette, generous transparent padding around ball. No hand, Pokemon, character, ground, grass, scenery, words, numbers, logo text, border, frame, watermark, glow, particles, extra balls or UI. The object itself is recognizable and tactile rather than a flat vector circle."
+  },
+  {
+    "id": "ball-open",
+    "prompt": "One OPEN classic red-and-white Pokeball as a standalone transparent-background game asset. Polished handcrafted 16-bit adventure-game pixel art; crisp consistent pixel clusters. Same classic ball: red upper hemisphere hinged up and behind, white lower hemisphere resting open facing viewer, charcoal equatorial band, circular light button at front. Three-quarter front view, top-left warm natural lighting; inside is softly shaded empty ivory shell, no occupant. Complete object silhouette with generous transparent padding. No Pokemon, character, hands, ground, grass, scenery, beams, particles, glow, text, label, border, frame, watermark, extra balls or UI. Charming tactile pixel art with visible hinge/opening, not a vector diagram."
+  }
+]

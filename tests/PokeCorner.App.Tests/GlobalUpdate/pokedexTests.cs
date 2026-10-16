@@ -34,7 +34,7 @@ public class PokedexTests
         var view = new CollectionView(vm, state,
             new SpriteCache(Path.Combine(Path.GetTempPath(), "pokedex-test", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => false,
-            getSpeciesAssetPath: id => catalog.GetAssetPath(id, false));
+            getSpeciesAssetPath: (id, shiny) => catalog.GetAssetPath(id, shiny));
         ((TabControl)((Grid)view.Content).Children[0]).SelectedIndex = 1;
         ((Button)view.FindName("SpeciesModeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         WpfTestHost.Layout(view, 560, 480);
@@ -265,7 +265,7 @@ public class PokedexTests
         var view = new CollectionView(CreateVm(state.Collection), state,
             new SpriteCache(Path.Combine(Path.GetTempPath(), "pokedex-test", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => false,
-            getSpeciesAssetPath: _ => Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".gif"));
+            getSpeciesAssetPath: (_, _) => Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".gif"));
         ((TabControl)((Grid)view.Content).Children[0]).SelectedIndex = 1;
         ((Button)view.FindName("SpeciesModeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         WpfTestHost.Layout(view, 420, 420);

@@ -16440,6 +16440,54 @@
       "target": "fonts/nunito.ttf",
       "bytes": 276932,
       "sha256": "bb55a5ca5c2042335b3991af27c4d0705d0ef41cac6164ac737fd8f2a1e85207"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/grove.png",
+      "target": "expeditions/grove.png",
+      "bytes": 3029427,
+      "sha256": "846e44e10598e727eb4a2f559a52c97aeff416178a81dc65f311c5a366b0a6e3"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/lake.png",
+      "target": "expeditions/lake.png",
+      "bytes": 3605853,
+      "sha256": "9eaaf538512fc37e18873e5e4657db9ab30cde2dc8de89d867b75b8603c1d316"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/coast.png",
+      "target": "expeditions/coast.png",
+      "bytes": 2397338,
+      "sha256": "0572a84d3195a3385ca14cfe4cfce1c9c662a3b0c877d3757225c674453c9009"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/mountains.png",
+      "target": "expeditions/mountains.png",
+      "bytes": 3022198,
+      "sha256": "0c1e819c794e1b3f79e4403e2a29ae21c15a3a4b264ce07316307c42c21201ff"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/desert.png",
+      "target": "expeditions/desert.png",
+      "bytes": 1990513,
+      "sha256": "5c65e16aae188750e510cfd6a7a481a8b286bf31a3f062e12b80ff451e994ee7"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/volcano.png",
+      "target": "expeditions/volcano.png",
+      "bytes": 2670609,
+      "sha256": "3b0c73f5bf0f160deaf9b5d1ae048a40762efa8dabbd79b78b8a1fbfbf2df4f9"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/snow.png",
+      "target": "expeditions/snow.png",
+      "bytes": 2679916,
+      "sha256": "8c8b9cd4554e60a47747f0cc574e101dc3eda9e4da2366bba31993da86985672"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/ruins.png",
+      "target": "expeditions/ruins.png",
+      "bytes": 2998745,
+      "sha256": "9fe81bf6ed8dffef2ad17240392967b7396b7825aaf7dab8aef0e47f870319a3"
     }
   ],
   "totalBytes": 255721533

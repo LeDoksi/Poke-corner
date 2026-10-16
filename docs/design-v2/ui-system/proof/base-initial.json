@@ -1,0 +1,234 @@
+[
+  {
+    "broken": [],
+    "h": 652,
+    "id": "corner",
+    "sh": 657,
+    "sw": 988,
+    "w": 988
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "collection",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "species",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "detail",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "evolution",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "expedition",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "expedition-running",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "expedition-ready",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "expedition-result",
+    "sh": 687,
+    "sw": 988,
+    "w": 988
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "nursery",
+    "sh": 760,
+    "sw": 988,
+    "w": 988
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "nursery-running",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "nursery-ready",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "nursery-result",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "shop",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "achievements",
+    "sh": 1506,
+    "sw": 988,
+    "w": 988
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "catch",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "catch-result",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "settings",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "save-history",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "confirm-cancel",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "confirm-restore",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "confirm-rehome",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "tour-1",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "tour-2",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "tour-3",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "tour-4",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "tour-5",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "tour-6",
+    "sh": 652,
+    "sw": 998,
+    "w": 998
+  },
+  {
+    "broken": [],
+    "h": 652,
+    "id": "components",
+    "sh": 1490,
+    "sw": 988,
+    "w": 988
+  }
+]

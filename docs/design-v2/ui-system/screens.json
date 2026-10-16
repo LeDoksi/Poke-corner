@@ -1,0 +1,215 @@
+{
+  "baseWindowDip": [
+    1000,
+    760
+  ],
+  "compactReviewDip": [
+    840,
+    650
+  ],
+  "status": "proposed-design-not-runtime",
+  "screens": [
+    {
+      "id": "corner",
+      "name": "Уголок",
+      "tab": "corner"
+    },
+    {
+      "id": "collection",
+      "name": "Покедекс · мои",
+      "tab": "pokedex"
+    },
+    {
+      "id": "species",
+      "name": "Покедекс · все виды",
+      "tab": "pokedex"
+    },
+    {
+      "id": "detail",
+      "name": "Личная карточка",
+      "tab": "pokedex"
+    },
+    {
+      "id": "evolution",
+      "name": "Эволюция",
+      "tab": "pokedex"
+    },
+    {
+      "id": "expedition",
+      "name": "Экспедиция · первая команда",
+      "tab": "expeditions"
+    },
+    {
+      "id": "expedition-running",
+      "name": "Экспедиция · в пути",
+      "tab": "expeditions"
+    },
+    {
+      "id": "expedition-ready",
+      "name": "Экспедиция · готова",
+      "tab": "expeditions"
+    },
+    {
+      "id": "expedition-result",
+      "name": "Экспедиция · результат",
+      "tab": "expeditions"
+    },
+    {
+      "id": "nursery",
+      "name": "Питомник · подготовка",
+      "tab": "nursery"
+    },
+    {
+      "id": "nursery-running",
+      "name": "Питомник · ожидание",
+      "tab": "nursery"
+    },
+    {
+      "id": "nursery-ready",
+      "name": "Питомник · готово",
+      "tab": "nursery"
+    },
+    {
+      "id": "nursery-result",
+      "name": "Питомник · малыш",
+      "tab": "nursery"
+    },
+    {
+      "id": "shop",
+      "name": "Магазин",
+      "tab": "shop"
+    },
+    {
+      "id": "achievements",
+      "name": "Достижения",
+      "tab": "corner"
+    },
+    {
+      "id": "catch",
+      "name": "Поимка · закрытый покебол",
+      "tab": "corner"
+    },
+    {
+      "id": "catch-result",
+      "name": "Поимка · результат",
+      "tab": "corner"
+    },
+    {
+      "id": "settings",
+      "name": "Настройки",
+      "tab": ""
+    },
+    {
+      "id": "save-history",
+      "name": "История сохранений",
+      "tab": ""
+    },
+    {
+      "id": "confirm-cancel",
+      "name": "Подтверждение · прервать",
+      "tab": "expeditions"
+    },
+    {
+      "id": "confirm-restore",
+      "name": "Подтверждение · восстановить",
+      "tab": ""
+    },
+    {
+      "id": "confirm-rehome",
+      "name": "Подтверждение · передать",
+      "tab": "pokedex"
+    },
+    {
+      "id": "tour-1",
+      "name": "Знакомство · шаг 1",
+      "tab": ""
+    },
+    {
+      "id": "tour-2",
+      "name": "Знакомство · шаг 2",
+      "tab": ""
+    },
+    {
+      "id": "tour-3",
+      "name": "Знакомство · шаг 3",
+      "tab": ""
+    },
+    {
+      "id": "tour-4",
+      "name": "Знакомство · шаг 4",
+      "tab": ""
+    },
+    {
+      "id": "tour-5",
+      "name": "Знакомство · шаг 5",
+      "tab": ""
+    },
+    {
+      "id": "tour-6",
+      "name": "Знакомство · шаг 6",
+      "tab": ""
+    },
+    {
+      "id": "components",
+      "name": "Компоненты и состояния",
+      "tab": ""
+    },
+    {
+      "id": "evolution-branch",
+      "name": "Эволюция · варианты и камень",
+      "tab": "pokedex"
+    },
+    {
+      "id": "catch-animation",
+      "name": "Поимка · полная сцена",
+      "tab": "corner"
+    },
+    {
+      "id": "encounter",
+      "name": "Встреча · знакомый вид из похода",
+      "tab": "expeditions"
+    },
+    {
+      "id": "nursery-hatching",
+      "name": "Питомник · появление малыша",
+      "tab": "nursery"
+    },
+    {
+      "id": "nursery-select",
+      "name": "Питомник · первый выбор из 800",
+      "tab": "nursery"
+    },
+    {
+      "id": "catch-reduced",
+      "name": "Поимка · уменьшение движения",
+      "tab": "corner"
+    },
+    {
+      "id": "expedition-selected",
+      "name": "Экспедиция · команда выбрана",
+      "tab": "expeditions"
+    },
+    {
+      "id": "expedition-team",
+      "name": "Экспедиция · подбор команды",
+      "tab": "expeditions"
+    }
+  ],
+  "nurseryExample": {
+    "recipeId": "1-152",
+    "parentIds": [
+      1,
+      152
+    ],
+    "outcomeSpeciesIds": [
+      114,
+      187,
+      798
+    ],
+    "berries": {
+      "rawst": 6,
+      "pecha": 4
+    },
+    "hours": 6
+  }
+}

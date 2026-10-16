@@ -29,6 +29,45 @@ public sealed class ShopTests : IDisposable
     };
 
     [Fact]
+    public async Task FailedCharmActivationShowsFailureAndPreservesLiveAndDiskInventory()
+    {
+        var data = State();
+        data.Items["lucky-charm"] = 1;
+        var path = Path.Combine(root, "activation-v2.json");
+        var store = new JsonSaveStore(path);
+        store.Save(data);
+        var bytes = File.ReadAllBytes(path);
+        Directory.CreateDirectory(path + ".tmp");
+        var live = new AppState(); live.Hydrate(data);
+        var writer = new BackgroundSaveWriter(store);
+        Task? activation = null;
+        ShopView? view = null;
+        try
+        {
+            WpfTestHost.Run(() =>
+            {
+                view = new ShopView(live, shop, change => live.CommitAsync(writer, change, () => 0), () => { });
+                activation = (Task)typeof(ShopView).GetMethod("ActivateLuckyCharm",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [])!;
+            });
+            await activation!;
+            WpfTestHost.Run(() =>
+            {
+                Assert.Equal(System.Windows.Visibility.Visible, ((System.Windows.FrameworkElement)view!.FindName("MessagePanel")).Visibility);
+                var message = ((TextBlock)view.FindName("MessageText")).Text;
+                Assert.False(string.IsNullOrWhiteSpace(message));
+                Assert.DoesNotContain("активирован", message, StringComparison.OrdinalIgnoreCase);
+                Assert.False(live.Shop.CatchLuckyCharmActive);
+                Assert.Equal(1, live.Shop.Items["lucky-charm"]);
+                Assert.Equal(100, live.Shop.Coins);
+            });
+            Assert.Equal(bytes, File.ReadAllBytes(path));
+            Assert.False(store.Load()!.ShopCatchLuckyCharmActive);
+            Assert.Equal(1, store.Load()!.Items["lucky-charm"]);
+        }
+        finally { writer.Stop(); }
+    }
+    [Fact]
     public void AllTwelveGoodsUseBalanceAndSharedInventory()
     {
         Assert.Equal(12, shop.Goods.Count);

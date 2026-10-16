@@ -1,0 +1,40 @@
+:root{--ease-out:cubic-bezier(.23,1,.32,1);--ease-in-out:cubic-bezier(.77,0,.175,1)}
+.capture-scene{position:relative;overflow:hidden;isolation:isolate}
+.capture-scene .capture-pet{position:absolute;left:58%;top:24%;width:22%;height:55%;object-fit:contain;image-rendering:pixelated;transform-origin:50% 65%;z-index:2}
+.capture-scene .capture-ball{position:absolute;left:65%;top:70%;width:8.5%;height:22.667%;object-fit:contain;transform-origin:50% 90%;z-index:4}
+.capture-shadow{position:absolute;left:64%;top:90%;width:11%;height:5%;border-radius:50%;background:#28362142;z-index:1;opacity:0}
+.capture-beam{position:absolute;left:56%;top:23%;width:26%;height:58%;border-radius:50%;background:radial-gradient(ellipse,#fffbea 0%,#ffe9afbc 25%,#ffd8ab55 50%,transparent 70%);opacity:0;z-index:3}
+.capture-click{position:absolute;left:68.6%;top:81%;width:1.4%;height:3.733%;border-radius:50%;background:#ffe397;box-shadow:0 0 14px 5px #ffe7a390;opacity:0;z-index:5}
+.capture-star{position:absolute;left:67.7%;top:71%;width:3%;height:8%;opacity:0;color:#f3ce6c;z-index:6}
+.capture-star .i{width:100%;height:100%;fill:#f3ce6c;stroke:#fff2c6;stroke-width:1.5}
+.capture-scene[data-phase=flight] .capture-ball{animation:capture-flight 1100ms var(--ease-in-out) both}
+.capture-scene[data-phase=capture] .capture-ball{transform:translate(-15%,-140%)}
+.capture-scene[data-phase=capture] .capture-pet{animation:capture-absorb 650ms var(--ease-in-out) both}
+.capture-scene[data-phase=capture] .capture-beam{animation:capture-flash 650ms var(--ease-out) both}
+.capture-scene[data-phase=landing] .capture-ball{animation:capture-land 800ms var(--ease-out) both}
+.capture-scene[data-phase=landing] .capture-pet,.capture-scene[data-phase=wobble] .capture-pet,.capture-scene[data-phase=success] .capture-pet{opacity:0}
+.capture-scene[data-phase=landing] .capture-shadow,.capture-scene[data-phase=wobble] .capture-shadow,.capture-scene[data-phase=success] .capture-shadow{opacity:1}
+.capture-scene[data-phase=wobble] .capture-ball{animation:capture-wobble 1000ms var(--ease-in-out) 3}
+.capture-scene[data-phase=success] .capture-click{animation:capture-click 700ms var(--ease-out) both}
+.capture-scene[data-phase=success] .capture-star-0{animation:capture-star-left 700ms var(--ease-out) both}
+.capture-scene[data-phase=success] .capture-star-1{animation:capture-star-up 700ms var(--ease-out) both}
+.capture-scene[data-phase=success] .capture-star-2{animation:capture-star-right 700ms var(--ease-out) both}
+.capture-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px}.capture-footer p{font-weight:800;color:#315e44;margin:0}
+@keyframes capture-flight{0%{transform:translate(-490%,170%) rotate(-80deg) scale(1.1)}42%{transform:translate(-210%,-235%) rotate(140deg) scale(.95)}100%{transform:translate(-15%,-140%) rotate(360deg)}}
+@keyframes capture-absorb{0%{opacity:1;transform:none}35%{opacity:1;transform:translate(4%,3%) scale(.95)}100%{opacity:0;transform:translate(18%,20%) scale(.18)}}
+@keyframes capture-flash{0%{opacity:0;transform:scale(.9)}35%{opacity:.95;transform:scale(1.08)}100%{opacity:0;transform:scale(1.2)}}
+@keyframes capture-land{0%{transform:translate(-15%,-140%) rotate(-8deg)}62%{transform:translate(0,0) rotate(8deg)}80%{transform:translate(0,-32%) rotate(-4deg)}100%{transform:none}}
+@keyframes capture-wobble{0%,45%,100%{transform:none}12%{transform:rotate(-15deg) translateX(-8%)}23%{transform:rotate(11deg) translateX(5%)}34%{transform:rotate(-5deg)}}
+@keyframes capture-click{0%{opacity:0;transform:scale(.95)}25%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(.95)}}
+@keyframes capture-star-left{0%{opacity:0;transform:translate(-30%,0) scale(.95)}15%{opacity:1}100%{opacity:0;transform:translate(-230%,-170%) rotate(-25deg)}}
+@keyframes capture-star-up{0%{opacity:0;transform:scale(.95)}15%{opacity:1}100%{opacity:0;transform:translate(0,-280%) rotate(15deg)}}
+@keyframes capture-star-right{0%{opacity:0;transform:translate(30%,0) scale(.95)}15%{opacity:1}100%{opacity:0;transform:translate(230%,-170%) rotate(25deg)}}
+.capture-reduced-motion .capture-ball,.capture-reduced-motion .capture-pet{animation:none!important;transform:none!important;opacity:1!important}
+.capture-reduced-motion .capture-beam,.capture-reduced-motion .capture-star,.capture-reduced-motion .capture-click{display:none}
+.capture-stone-choice{display:flex;width:100%;align-items:center;gap:12px;margin-top:12px;padding:12px;text-align:left;background:#fbf8ef;border:1px solid #d9d4c8;border-radius:10px;transition:background-color 160ms ease,border-color 160ms ease}
+.capture-stone-choice>img{width:46px;height:46px;object-fit:contain;flex:none}.capture-stone-choice>span:nth-child(2){flex:1}.capture-stone-choice strong{display:block;font-size:15px}.capture-stone-choice small{display:block;margin-top:4px;color:#53624f;font-size:12px;white-space:normal;line-height:1.4}
+.capture-choice-mark{width:22px;height:22px;border:1px solid #a8b6a3;border-radius:50%;display:grid;place-items:center;flex:none}.capture-choice-mark .i{width:14px;height:14px;opacity:0}
+.capture-stone-choice[aria-pressed=true]{background:#e1edd9;border-color:#31694d}.capture-stone-choice[aria-pressed=true] .capture-choice-mark{background:#31694d;border-color:#31694d;color:#fff}.capture-stone-choice[aria-pressed=true] .capture-choice-mark .i{opacity:1}
+body.compact .capture-stone-choice{padding:8px;gap:8px}body.compact .capture-stone-choice>img{width:36px;height:36px}
+@media(hover:hover) and (pointer:fine){.capture-stone-choice:hover{border-color:#31694d;background:#edf3e6}}
+@media(prefers-reduced-motion:reduce){.capture-scene .capture-ball,.capture-scene .capture-pet{animation:none!important;transform:none!important}.capture-scene .capture-beam,.capture-scene .capture-star,.capture-scene .capture-click{display:none}.capture-stone-choice{transition:none}}

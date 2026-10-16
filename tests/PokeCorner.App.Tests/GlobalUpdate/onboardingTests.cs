@@ -405,20 +405,24 @@ public class onboardingTests
     });
 
     [Fact]
-    public void ClosingDuringPendingStepCommitKeepsDisplayedStepUntilRestart()
+    public async Task ClosingDuringPendingStepCommitKeepsDisplayedStepUntilRestart()
     {
         var pending = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         OnboardingWindow? window = null;
         string? beforeClose = null;
+        Task? move = null;
         WpfTestHost.Run(() =>
         {
             window = new OnboardingWindow(2, (_, _) => pending.Task);
             window.Show();
-            ((Button)window.FindName("NextButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            move = (Task)typeof(OnboardingWindow).GetMethod("MoveAsync",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+                .Invoke(window, [2, "in-progress"])!;
             beforeClose = ((TextBlock)window.FindName("StepCounterText")!).Text;
             window.Close();
         });
         pending.SetResult();
+        await move!; // The actual move has completed before the closed window is inspected.
         WpfTestHost.Run(() =>
         {
             Assert.False(window!.IsVisible);

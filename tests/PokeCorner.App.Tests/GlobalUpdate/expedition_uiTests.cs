@@ -41,6 +41,37 @@ public sealed class ExpeditionUiTests
             _ => Task.FromResult(default(EncounterOpenResult)!), Catalog.Value, confirmCancel);
 
     [Fact]
+    public void RunningPanelKeepsLandscapeTraitsAndNonExpiringRewardsVisible() => WpfTestHost.Run(() =>
+    {
+        var data = State();
+        new ExpeditionService(Catalog.Value, data).Start(new ExpeditionRequest("grove", "easy", 30,
+            [data.Individuals[0].Id], Guid.NewGuid(), DateTimeOffset.UtcNow));
+        var view = View(data);
+        WpfTestHost.Layout(view, 600, 600);
+        var image = Assert.IsType<Image>(view.FindName("LandscapeImage"));
+        var panel = (System.Windows.FrameworkElement)view.FindName("Landscape");
+        Assert.NotSame(view.FindName("PreparationPanel"), panel.Parent);
+        Assert.Contains("Собиратель", ((TextBlock)view.FindName("TripTeam")).Text);
+        Assert.Contains("Лёгкая", ((TextBlock)view.FindName("TripTerms")).Text);
+        Assert.Contains("не сгорают", ((TextBlock)view.FindName("TripRewards")).Text);
+        Assert.Equal("Лесная роща", ((TextBlock)view.FindName("LandscapeName")).Text);
+    });
+
+    [Fact]
+    public void ResultCoinLabelSaysExtrasAreIncludedInTotal() => WpfTestHost.Run(() =>
+    {
+        var data = State(3);
+        var service = new ExpeditionService(Catalog.Value, data);
+        var id = Guid.NewGuid();
+        service.Start(new ExpeditionRequest("grove", "easy", 30, data.Individuals.Select(p => p.Id).ToArray(),
+            id, DateTimeOffset.UtcNow.AddHours(-2)));
+        data.Expedition!.Status = "ready";
+        data.Expedition.Rewards.ExtraCoins = 7;
+        service.Claim(id, Guid.NewGuid());
+        var view = View(data);
+        Assert.Contains("монеты всего (включая дополнительные)", ((TextBlock)view.FindName("ResultText")).Text);
+    });
+    [Fact]
     public void PreparationShowsEightRoutes()
     {
         WpfTestHost.Run(() =>
@@ -293,7 +324,7 @@ public sealed class ExpeditionUiTests
             var view = View(loaded);
             var text = ((TextBlock)view.FindName("ResultText")!).Text;
             Assert.Contains($"×{loaded.Expedition!.Receipt!.PrimaryBerries}", text);
-            Assert.Contains($"монеты: {loaded.Expedition.Receipt.Coins}", text);
+            Assert.Contains($"монеты всего (включая дополнительные): {loaded.Expedition.Receipt.Coins}", text);
             Assert.Contains($"+{loaded.Expedition.Receipt.XpByParticipant[request.ParticipantIds[0]]} XP", text);
             loaded.Expedition.Receipt = null;
             view.Refresh();

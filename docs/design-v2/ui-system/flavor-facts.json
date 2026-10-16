@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "scope": "curated facts for visible design fixtures; full runtime coverage tracked in POKE-58",
+  "source": "PokeAPI/pokeapi pokemon_species_flavor_text.csv",
+  "sourceFileSha256": "059b24f07ccce256df1295b5d2fa19b82129cb6d5cfdf6a83455b6dffbcc5e9b",
+  "englishSpeciesInSource": 1025,
+  "curatedRussianSpecies": 11,
+  "facts": [
+    {
+      "speciesId": 1,
+      "textRu": "В луковице на спине хранится запас энергии. Благодаря ему этот покемон может несколько дней обходиться без еды.",
+      "sourceText": "It can go for days without eating a single morsel. In the bulb on its back, it stores energy.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 3,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/3/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 4,
+      "textRu": "Пламя на хвосте показывает его самочувствие: когда покемон здоров, оно горит ярко.",
+      "sourceText": "The flame on its tail indicates CHARMANDER's life force. If it is healthy, the flame burns brightly.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 5,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/5/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/4/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 7,
+      "textRu": "Округлый панцирь с бороздками уменьшает сопротивление воды. Он помогает быстро плавать и служит защитой.",
+      "sourceText": "SQUIRTLE’s shell is not merely used for protection. The shell’s rounded shape and the grooves on its surface help minimize resistance in water, enabling this POKéMON to swim at high speeds.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 7,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/7/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/7/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 16,
+      "textRu": "У него удивительное чувство направления: даже далеко от знакомых мест он безошибочно находит дорогу к своему гнезду.",
+      "sourceText": "PIDGEY has an extremely sharp sense of direction. It is capable of unerringly returning home to its nest, however far it may be removed from its familiar surroundings.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 7,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/7/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/16/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 25,
+      "textRu": "Пока он спит, мешочки на щеках накапливают электричество. Иногда спросонья он случайно выпускает небольшой разряд.",
+      "sourceText": "This POKéMON has electricity-storing pouches on its cheeks. These appear to become electrically charged during the night while PIKACHU sleeps. It occasionally discharges electricity when it is dozy after waking up.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 8,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/8/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/25/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 43,
+      "textRu": "Лунный свет пробуждает его: по ночам он бродит вокруг, а днём спокойно прячется под землёй.",
+      "sourceText": "Awakened by moon light, it roams actively at night. In the day, it stays quietly underground.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 4,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/4/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/43/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 131,
+      "textRu": "Он перевозит людей через море на своей спине. А когда у него хорошее настроение, может запеть чарующим голосом.",
+      "sourceText": "It ferries people across the sea on its back. It may sing an enchanting cry if it is in a good mood.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 5,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/5/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/131/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 133,
+      "textRu": "Он умеет менять строение своего тела, приспосабливаясь к окружающей среде.",
+      "sourceText": "It has the ability to alter the com position of its body to suit its surrounding envi ronment.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 4,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/4/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/133/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 152,
+      "textRu": "Ароматный лист помогает ему чувствовать температуру и влажность воздуха.",
+      "sourceText": "Its pleasantly aromatic leaves have the ability to check the hu midity and tem perature.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 5,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/5/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/152/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 114,
+      "textRu": "Его тело скрыто густыми синими лианами. Говорят, эти лианы никогда не перестают расти.",
+      "sourceText": "Its identity is obscured by masses of thick, blue vines. The vines are said to never stop growing.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 3,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/3/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/114/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 187,
+      "textRu": "Почувствовав приближение сильного ветра, эти покемоны сцепляются листьями друг с другом, чтобы их не унесло.",
+      "sourceText": "This POKéMON drifts and floats with the wind. If it senses the approach of strong winds, HOPPIP links its leaves with other HOPPIP to prepare against being blown away.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 7,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/7/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/187/",
+      "officialRussianTranslation": false
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+const round3=reviewData.round3;
+let dexForm='normal',parentSlot=0,parentPage=0,chosenParents=[null,null],hatchTimer=null,readyNotice=false,chosenBaby=null,expeditionPending=false,captureKnown=false,nestChild=187;
+const parentSize=24;
+function parentRecipe(a,b){return a&&b&&a.key!==b.key?round3.recipes.find(r=>(r.parents[0]===a.sid&&r.parents[1]===b.sid)||(r.parents[1]===a.sid&&r.parents[0]===b.sid)):null;}
+function tinyPet(p){return '<img loading="lazy" src="../catalog-package/assets/'+(p.shiny?'shiny':'normal')+'/'+p.sid+'.gif" alt="'+safe(p.name)+'">';}
+function discoveryName(sid){return document.querySelector('#collection [data-sid="'+sid+'"]')?round3.species[sid].name:'#'+String(sid).padStart(4,'0');}
+function renderPreparation(){
+ const container=document.querySelector('[data-r3-parents]');container.innerHTML=chosenParents.map((p,i)=>'<div class="pc-slot-pet">'+(p?tinyPet(p)+'<div><strong>'+safe(p.name)+'</strong><small>Ур. '+p.level+'</small>':'<div><strong>'+(i?'Второй родитель':'Первый родитель')+'</strong><small>'+(i?'Сначала выбери первого':'Выбери из коллекции')+'</small>')+'<button type="button" class="pc-button small" data-r3-parent="'+i+'" '+(i&&!chosenParents[0]?'disabled':'')+'>'+(p?'Сменить':'Выбрать')+'</button></div></div>').join('');
+ const r=parentRecipe(...chosenParents),target=document.querySelector('[data-r3-offspring]');
+ if(!r){target.innerHTML='<h2>Кто может появиться?</h2><p class="pc-muted">После выбора пары здесь будут малыши, время и точная цена.</p>';return;}
+ const price={...r.berries};if(chosenBaby)for(const [berry,n] of Object.entries(r.surcharge))price[berry]=(price[berry]||0)+n;
+ target.innerHTML='<h2>Возможные малыши</h2><div class="r3-offspring">'+r.outcomes.map(sid=>'<button type="button" class="pc-button small" data-r3-baby="'+sid+'" aria-pressed="'+String(chosenBaby===sid)+'" '+(!r.selectionUseful?'disabled':'')+'><img src="../catalog-package/assets/normal/'+sid+'.gif" alt="Возможный малыш"><small>#'+String(sid).padStart(4,'0')+'</small></button>').join('')+'</div><p class="pc-muted">'+(r.selectionUseful?'Можно выбрать малыша с талисманом гнезда · в запасе 1. Нажми на вариант.':'У пары один возможный малыш. Талисман не нужен.')+'</p><h3>Удача питомника</h3>'+round3.luck+'<p class="pc-muted">Обычные вылупления приближают shiny.</p><div class="pc-rewards">'+Object.entries(price).map(([berry,n])=>'<span class="pc-item"><img src="../final/assets/shop/'+berry+'.png" alt="Ягода '+berry+'">× '+n+'</span>').join('')+(chosenBaby?'<span class="pc-item"><img src="../final/assets/shop/offspring-charm.png" alt="Талисман гнезда">× 1</span>':'')+'</div><p class="pc-muted">Ожидание · '+r.hours+' ч. Малыш унаследует особенности родителей.</p><button type="button" class="pc-button primary wide" data-r3-start-nest>Подготовить гнездо</button>';
+}
+function parentGroups(){
+ const page=document.getElementById('nursery-select'),query=page.querySelector('[data-parent-search]').value.trim().toLowerCase(),rarity=page.querySelector('[data-parent-rarity]').value,shiny=page.querySelector('[data-parent-shiny]').checked;
+ let candidates=round3.parents.filter(p=>(!query||(p.name+' '+round3.species[p.sid].name+' '+p.sid).toLowerCase().includes(query))&&(!rarity||round3.species[p.sid].rarity===rarity)&&(!shiny||p.shiny));
+ if(parentSlot===1)candidates=candidates.filter(p=>parentRecipe(chosenParents[0],p));
+ const groups=new Map();for(const p of candidates){if(!groups.has(p.sid))groups.set(p.sid,[]);groups.get(p.sid).push(p);}return [...groups.entries()].sort((a,b)=>a[0]-b[0]);
+}
+function renderParentGroups(){
+ const page=document.getElementById('nursery-select'),groups=parentGroups();parentPage=Math.min(parentPage,Math.max(0,Math.ceil(groups.length/parentSize)-1));
+ page.querySelector('h1').textContent=parentSlot?'Второй родитель':'Первый родитель';page.querySelector('.pc-title p').textContent=parentSlot?'Первый родитель: '+chosenParents[0].name+'. Ниже — совместимые питомцы.':'800 питомцев · одинаковые виды собраны вместе.';
+ page.querySelector('[data-parent-summary]').textContent='Виды: '+groups.length+' · Питомцы: '+groups.reduce((n,[,ps])=>n+ps.length,0)+(parentSlot?' · только совместимые':'');
+ page.querySelector('[data-parent-groups]').innerHTML=groups.slice(parentPage*parentSize,(parentPage+1)*parentSize).map(([sid,ps])=>'<button type="button" class="pc-pet-card" data-parent-group="'+sid+'">'+tinyPet(ps[0])+'<strong>'+safe(round3.species[sid].name)+'</strong><small>#'+String(sid).padStart(4,'0')+' · '+ps.length+' '+(ps.length===1?'экземпляр':'экземпляра')+'</small></button>').join('')||'<p class="pc-muted">Подходящих питомцев нет. Попробуй другой поиск или первого родителя.</p>';
+ page.querySelector('[data-parent-page-label]').textContent=(parentPage+1)+' / '+Math.max(1,Math.ceil(groups.length/parentSize));page.querySelector('[data-parent-page="-1"]').disabled=parentPage===0;page.querySelector('[data-parent-page="1"]').disabled=(parentPage+1)*parentSize>=groups.length;
+}
+function setDexForm(form){
+ dexForm=form;const page=document.getElementById('species');for(const b of page.querySelectorAll('[data-dex-form]'))b.setAttribute('aria-pressed',String(b.dataset.dexForm===form));
+ for(const card of page.querySelectorAll('[data-species-card]')){const sid=card.dataset.sid,opened=form==='normal'||sid==='1'||sid==='25';card.dataset.variantClosed=String(!opened);card.dataset.currentForm=form;const img=card.querySelector('img'),caption=card.querySelector('.pc-name');img.src='../catalog-package/assets/'+(opened&&form==='shiny'?'shiny':'normal')+'/'+sid+'.gif';img.classList.toggle('silhouette',!opened);img.alt=opened?round3.species[sid].name:'Неоткрытая shiny-форма';caption.textContent=opened?round3.species[sid].name:'Shiny пока не встречали';for(const badge of card.querySelectorAll('.pc-badges'))badge.hidden=!opened;}
+}
+const previousSelectPet=selectPet;
+selectPet=function(card){previousSelectPet(card);if(subject.sid===133)document.querySelector('[data-detail-evolution]').innerHTML=round3.crossroads;const route=round3.locations.filter(r=>round3.species[subject.sid].types.some(t=>r.types.includes(t))).map(r=>r.name);document.querySelector('#detail .pc-trait:last-child h3').textContent='Подходит: '+route.join(', ');};
+const beforeRound3Screen=showScreen;
+showScreen=function(id){
+ clearTimeout(hatchTimer);beforeRound3Screen(id);
+ const encounters=document.querySelector('.pc-wallet [data-open="catch"],.pc-header [data-open="catch"],header [data-open="catch"]');if(encounters){encounters.classList.add('r3-encounter-alert');encounters.setAttribute('aria-label','Встречи: 2 ждут знакомства');}
+ if(id==='expedition-ready')expeditionPending=true;if(['expedition-running','expedition-result'].includes(id))expeditionPending=false;
+ const nav=document.querySelector('nav [data-tab="expeditions"],nav [data-open="expedition"]');if(nav){nav.classList.toggle('r3-ready-tab',expeditionPending);let mark=nav.querySelector('.r3-ready-label');if(!mark){mark=document.createElement('span');mark.className='r3-ready-label';mark.textContent='Готово';nav.append(mark);}mark.hidden=!expeditionPending;if(expeditionPending&&!readyNotice){readyNotice=true;toast('Команда вернулась! Можно забрать находки.');}}
+ if(id==='nursery')renderPreparation();if(id==='nursery-select')renderParentGroups();
+ if(id==='nursery-hatching')hatchTimer=setTimeout(()=>showScreen('nursery-result'),1800);
+ if(id==='nursery-result'){document.getElementById(id).classList.remove('r3-reveal');void document.getElementById(id).offsetWidth;document.getElementById(id).classList.add('r3-reveal');}
+};
+// Intercept only form cards; the previous round's handler listed every form together.
+document.addEventListener('click',event=>{
+ const card=event.target.closest('#species [data-species-card]');if(!card)return;event.stopImmediatePropagation();
+ const sid=card.dataset.sid;if(card.dataset.variantClosed==='true'){modal('Shiny-форма ещё не открыта','<p>Её можно встретить или получить в питомнике. Обычный экземпляр не открывает shiny-форму.</p>');return;}
+ const owned=[...document.querySelectorAll('#collection [data-personal-card]')].filter(x=>x.dataset.sid===sid&&(x.dataset.shiny==='true')===(dexForm==='shiny'));
+ modal(round3.species[sid].name+' · '+(dexForm==='shiny'?'Shiny':'обычная форма'),'<p>Мои экземпляры этой формы</p><div class="v2-owned-list">'+(owned.map(el=>'<button type="button" class="pc-button" data-form-pet="'+safe(el.dataset.name)+'">'+safe(el.dataset.name)+' · ур. '+el.dataset.level+'</button>').join('')||'<p>Форма открыта в покедексе. В коллекции сейчас нет экземпляров.</p>')+'</div>');
+},true);
+document.addEventListener('click',event=>{
+ const t=event.target;const form=t.closest('[data-dex-form]');if(form)setDexForm(form.dataset.dexForm);
+ const formPet=t.closest('[data-form-pet]');if(formPet){const card=[...document.querySelectorAll('#collection [data-personal-card]')].find(x=>x.dataset.name===formPet.dataset.formPet);closeModal();selectPet(card);}
+ const stone=t.closest('[data-use-stone]');if(stone){const enabled=stone.getAttribute('aria-pressed')!=='true';stone.setAttribute('aria-pressed',String(enabled));const mode=document.querySelector('[data-evo-mode="'+(enabled?'stone':'random')+'"]');mode.click();}
+ const pick=t.closest('[data-r3-parent]');if(pick){parentSlot=Number(pick.dataset.r3Parent);parentPage=0;document.querySelector('[data-parent-search]').value='';document.querySelector('[data-parent-rarity]').value='';document.querySelector('[data-parent-shiny]').checked=false;showScreen('nursery-select');}
+ const paging=t.closest('[data-parent-page]');if(paging){parentPage+=Number(paging.dataset.parentPage);renderParentGroups();}
+ const group=t.closest('[data-parent-group]');if(group){const members=parentGroups().find(([sid])=>sid===Number(group.dataset.parentGroup))[1];modal('Выбрать экземпляр · '+round3.species[group.dataset.parentGroup].name,members.map(p=>'<button type="button" class="pc-button v2-parent-option" data-r3-individual="'+p.key+'" '+(p.busy?'disabled':'')+'>'+tinyPet(p)+'<span>'+safe(p.name)+'<small>Ур. '+p.level+(p.shiny?' · Shiny':'')+(p.busy?' · В походе':'')+'</small></span>Выбрать</button>').join(''));}
+ const individual=t.closest('[data-r3-individual]');if(individual){chosenParents[parentSlot]=round3.parents.find(p=>p.key===individual.dataset.r3Individual);if(parentSlot===0&&!parentRecipe(...chosenParents))chosenParents[1]=null;chosenBaby=null;closeModal();showScreen('nursery');}
+ const baby=t.closest('[data-r3-baby]');if(baby){const sid=Number(baby.dataset.r3Baby);chosenBaby=chosenBaby===sid?null:sid;renderPreparation();}
+ if(t.closest('[data-r3-start-nest]')){nestChild=chosenBaby||parentRecipe(...chosenParents).outcomes[0];for(const [i,p] of chosenParents.entries())for(const el of document.querySelectorAll('[data-parent-name="'+(i?'second':'first')+'"]')){el.textContent=p.name;const image=el.closest('.pc-slot-pet').querySelector('img');image.src='../catalog-package/assets/'+(p.shiny?'shiny':'normal')+'/'+p.sid+'.gif';image.alt=p.name;}const result=document.querySelector('#nursery-result');const baby=result.querySelector('.pc-baby');if(baby){baby.src='../catalog-package/assets/normal/'+nestChild+'.gif';baby.alt=round3.species[nestChild].name;}const heading=result.querySelector('h1');heading.textContent='Привет, '+round3.species[nestChild].name+'!';result.querySelector('.pc-center h2').textContent=round3.species[nestChild].name;showScreen('nursery-running');}
+ const acquire=t.closest('[data-acquire]');if(acquire){const sid=Number(acquire.dataset.acquire),s=round3.species[sid];const routes=round3.locations.filter(r=>s.types.some(type=>r.types.includes(type))).map(r=>r.name);const recipes=round3.recipes.filter(r=>r.outcomes.includes(sid)&&r.parents[0]!==r.parents[1]);modal('Где найти #'+String(sid).padStart(4,'0')+'?','<h3>Экспедиции</h3><p>'+safe(routes.join(', ')||'Пока нет доступных маршрутов')+'. Встречи появляются у команды из трёх питомцев.</p><h3>Питомник</h3><p>'+ (recipes.length?'Возможный малыш у '+recipes.length+' совместимых пар. Например: '+recipes.slice(0,2).map(r=>r.parents.map(p=>safe(discoveryName(p))).join(' + ')).join('; '):'Подходящих смешанных пар нет. Два экземпляра одного вида дают малыша корня своей семьи.')+'</p><p class="pc-muted">Подсказка описывает способы получения; имя и изображение откроются после знакомства.</p>');}
+});
+for(const control of document.querySelectorAll('[data-parent-search],[data-parent-rarity],[data-parent-shiny]'))control.addEventListener('input',()=>{parentPage=0;renderParentGroups();});
+setDexForm('normal');renderPreparation();showScreen(scenario.value);

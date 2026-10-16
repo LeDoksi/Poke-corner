@@ -1,4 +1,5 @@
 using System.Globalization;
+using PokeCorner.App.Imaging;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,17 +18,13 @@ namespace PokeCorner.App.Popup;
 
 public partial class ExpeditionView : UserControl
 {
-    private static readonly (string Id, string Name, Color Sky, Color Ground)[] Routes =
+    private static readonly (string Id, string Name)[] Routes =
     [
-        ("grove", "Лесная роща", Colors.SkyBlue, Color.FromRgb(43, 96, 57)),
-        ("lake", "Озёрный берег", Color.FromRgb(131, 187, 209), Color.FromRgb(41, 108, 133)),
-        ("coast", "Морское побережье", Color.FromRgb(132, 199, 226), Color.FromRgb(34, 115, 142)),
-        ("mountains", "Горные тропы", Color.FromRgb(154, 185, 201), Color.FromRgb(84, 104, 98)),
-        ("desert", "Пустынные дюны", Color.FromRgb(233, 195, 141), Color.FromRgb(166, 111, 61)),
-        ("volcano", "Вулканическая долина", Color.FromRgb(161, 122, 113), Color.FromRgb(89, 64, 64)),
-        ("snow", "Снежный перевал", Color.FromRgb(169, 207, 218), Color.FromRgb(122, 158, 168)),
-        ("ruins", "Древние руины", Color.FromRgb(184, 166, 137), Color.FromRgb(104, 91, 79))
+        ("grove", "Лесная роща"), ("lake", "Озёрный берег"), ("coast", "Морское побережье"),
+        ("mountains", "Горные тропы"), ("desert", "Пустынные дюны"), ("volcano", "Вулканическая долина"),
+        ("snow", "Снежный перевал"), ("ruins", "Древние руины")
     ];
+    private string? _displayedRoute;
     private readonly Func<SaveData> _snapshot;
     private readonly Func<ExpeditionRequest, ExpeditionPreview> _preview;
     private readonly Func<ExpeditionRequest, Task<ExpeditionAction>> _start;
@@ -123,19 +120,17 @@ public partial class ExpeditionView : UserControl
         var active = trip?.Status is "running" or "ready";
         foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
-        PreparationPanel.Visibility = active ? Visibility.Collapsed : Visibility.Visible;
+        PreparationPanel.Visibility = RouteSelectionPanel.Visibility = active ? Visibility.Collapsed : Visibility.Visible;
         TripPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
         ResultPanel.Visibility = !active && trip?.Status == "claimed" ? Visibility.Visible : Visibility.Collapsed;
+        if (!active) SubtitleText.Text = "Выберите маршрут, время и команду.";
+        RefreshLandscape(active ? trip!.LocationId : _route);
         if (active)
         {
             RefreshTrip(data, trip!);
             return;
         }
 
-        var route = Routes.First(r => r.Id == _route);
-        LandscapeName.Text = route.Name;
-        SkyTop.Color = route.Sky;
-        SkyBottom.Color = route.Ground;
         foreach (Button button in RouteButtons.Children)
         {
             button.FontWeight = Equals(button.Tag, _route) ? FontWeights.Bold : FontWeights.Normal;
@@ -186,7 +181,7 @@ public partial class ExpeditionView : UserControl
                 {
                     var member = data.Individuals.Single(p => p.Id == id);
                     return $"{SpeciesName(member.CurrentSpeciesId)} · ур. {_levels?.LevelForXp(member.TotalXp) ?? 1}: {preview.XpByParticipant[id]} XP, " +
-                        $"особенности {member.FirstTraitId ?? "нет"}{(member.SecondTraitId is null ? "" : $", {member.SecondTraitId}")}";
+                        $"особенности {CollectionView.TraitLabel(member.FirstTraitId)}{(member.SecondTraitId is null ? "" : $", {CollectionView.TraitLabel(member.SecondTraitId)}")}";
                 })) + (_selected.Count == 1 ? " · Один участник: −20% добычи, без встречи и дополнительных находок." :
                     _selected.Count == 2 ? " · Двое: без встречи и дополнительных находок." :
                     " · Полная тройка: встреча и дополнительные находки возможны.");
@@ -202,15 +197,27 @@ public partial class ExpeditionView : UserControl
         if (trip?.Status == "claimed") RefreshResult(data, trip);
     }
 
+    private void RefreshLandscape(string routeId)
+    {
+        LandscapeName.Text = RouteName(routeId);
+        if (_displayedRoute == routeId) return;
+        _displayedRoute = routeId;
+        var path = _catalog is null ? null : System.IO.Path.Combine(_catalog.DataRoot, "expeditions", routeId + ".png");
+        LandscapeImage.Source = path is not null && System.IO.File.Exists(path)
+            ? SpriteImages.Decode(System.IO.File.ReadAllBytes(path)) : null;
+        Landscape.Visibility = LandscapeImage.Source is null ? Visibility.Collapsed : Visibility.Visible;
+    }
     private void RefreshTrip(SaveData data, ExpeditionState trip)
     {
         var ready = trip.Status == "ready" || DateTimeOffset.UtcNow >= trip.ReadyAtUtc;
         TripTitle.Text = ready ? "С возвращением!" : "Команда в походе";
-        TripTerms.Text = $"{RouteName(trip.LocationId)} · {trip.Difficulty} · {trip.DurationMinutes} мин";
+        SubtitleText.Text = ready ? "Находки готовы и ждут получения." : "Условия похода сохранены. Команда вернётся сама.";
+        var difficulty = DifficultyBox.Items.OfType<ComboBoxItem>().FirstOrDefault(item => Equals(item.Tag, trip.Difficulty));
+        TripTerms.Text = $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
         TripTeam.Text = string.Join(" · ", trip.ParticipantIds.Select(id =>
         {
             var member = data.Individuals.FirstOrDefault(p => p.Id == id);
-            return member is null ? "Участник" : SpeciesName(member.CurrentSpeciesId);
+            return member is null ? "Участник" : $"{SpeciesName(member.CurrentSpeciesId)} · особенности {CollectionView.TraitLabel(member.FirstTraitId)}{(member.SecondTraitId is null ? "" : $", {CollectionView.TraitLabel(member.SecondTraitId)}")}";
         }));
         var reward = trip.Rewards;
         var berryRemainder = data.BerryRemainders[reward.PrimaryBerryId];
@@ -225,7 +232,7 @@ public partial class ExpeditionView : UserControl
             return $"{SpeciesName(member.CurrentSpeciesId)} +{new RationalRemainder { Numerator = member.XpRemainder.Numerator, Denominator = member.XpRemainder.Denominator }.Settle(reward.XpNumerator, reward.XpDenominator)} XP";
         }));
         TripRewards.Text = $"Сохранённые условия: {berries} {reward.PrimaryBerryId}, {coins} монет; " +
-            $"{xp}. Дополнительные находки и встреча откроются при получении.";
+            $"{xp}. Дополнительные находки и встреча откроются при получении. Награды не сгорают.";
         TripTime.Text = ready ? "Поход завершён. Находки ждут получения." :
             $"Вернутся: {trip.ReadyAtUtc.ToLocalTime():g} · осталось {Math.Ceiling((trip.ReadyAtUtc - DateTimeOffset.UtcNow).TotalMinutes)} мин";
         var total = (trip.ReadyAtUtc - trip.StartedAtUtc).TotalSeconds;
@@ -239,7 +246,7 @@ public partial class ExpeditionView : UserControl
     {
         var reward = trip.Rewards;
         var receiptText = trip.Receipt is { } receipt
-            ? $"Основная ягода: {reward.PrimaryBerryId} ×{receipt.PrimaryBerries}; монеты: {receipt.Coins}; опыт: " +
+            ? $"Основная ягода: {reward.PrimaryBerryId} ×{receipt.PrimaryBerries}; монеты всего (включая дополнительные): {receipt.Coins}; опыт: " +
               string.Join(", ", receipt.XpByParticipant.Select(x =>
               {
                   var member = data.Individuals.FirstOrDefault(p => p.Id == x.Key);
@@ -248,7 +255,7 @@ public partial class ExpeditionView : UserControl
             : "Точные количества ягод, монет и опыта этого старого похода не сохранены. ";
         ResultText.Text = $"{RouteName(trip.LocationId)} · {trip.DurationMinutes} мин · находки и XP сохранены. " +
             receiptText +
-            "Дополнительные: " +
+            "Состав дополнительных находок (уже включены в итог): " +
             (reward.ExtraBerries.Count == 0 && reward.ExtraItems.Count == 0 && reward.ExtraCoins == 0 ? "нет" :
                 string.Join(", ", reward.ExtraBerries.Select(x => $"{x.Key} ×{x.Value}")
                     .Concat(reward.ExtraItems.Select(x => $"{x.Key} ×{x.Value}"))

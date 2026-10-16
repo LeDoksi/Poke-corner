@@ -1,0 +1,16 @@
+{
+  "charm": {
+    "cost": "× 10\n× 4\n× 1",
+    "selected": 1
+  },
+  "nest": "nursery-running",
+  "quantity": {
+    "quantity": "2",
+    "total": "10"
+  },
+  "route": {
+    "id": "expedition-running",
+    "scene": "Древние руины",
+    "subtitle": "Древние руины · обычная сложность"
+  }
+}

@@ -1,13 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\PokeCorner.Core\PokeCorner.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Legacy v1 display assets remain until T02 migrates stored forms. -->
-    <Content Include="Data\sprites\*.png;Data\animated\*.gif;Data\cries\*.wav" CopyToOutputDirectory="PreserveNewest" />
-
     <!-- Frozen v1 chain lookup for existing saves; canonical eligibility comes from RuntimePackage.props. -->
     <Content Include="..\PokeCorner.Core\PokeApi\OfflineStarterFallback.json"
              Link="Data\catalog.json" CopyToOutputDirectory="PreserveNewest" />
@@ -15,6 +12,9 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <!-- Ships as <InstallDir>\PokeCorner.exe. Nothing hardcodes the file name (restart and
          autostart both use Environment.ProcessPath), so this is purely cosmetic-but-required
          packaging: the shortcut target the user sees should not say "PokeCorner.App". -->

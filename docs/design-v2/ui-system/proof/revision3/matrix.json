@@ -1,0 +1,682 @@
+[
+  {
+    "requested": "corner",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "corner",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "collection",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "collection",
+    "scrollWidth": 988,
+    "width": 988,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "species",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "species",
+    "scrollWidth": 988,
+    "width": 988,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "detail",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "detail",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "evolution",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "evolution",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition-running",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-running",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition-ready",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-ready",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition-result",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-result",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-running",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-running",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-ready",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-ready",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-result",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-result",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "shop",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "shop",
+    "scrollWidth": 988,
+    "width": 988,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "achievements",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "achievements",
+    "scrollWidth": 988,
+    "width": 988,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "catch",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "catch",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "catch-result",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "catch-result",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "settings",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "settings",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "save-history",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "save-history",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "confirm-cancel",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-running",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "confirm-restore",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "save-history",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "confirm-rehome",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "detail",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-1",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-1",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-2",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-2",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-3",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-3",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-4",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-4",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-5",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-5",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-6",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-6",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "components",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "components",
+    "scrollWidth": 988,
+    "width": 988,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "evolution-branch",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "evolution-branch",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "catch-animation",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "catch-animation",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "encounter",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "encounter",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-hatching",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-hatching",
+    "scrollWidth": 998,
+    "width": 998,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-select",
+    "size": "base",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-select",
+    "scrollWidth": 988,
+    "width": 988,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "corner",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "corner",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "collection",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "collection",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "species",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "species",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "detail",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "detail",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "evolution",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "evolution",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition-running",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-running",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition-ready",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-ready",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "expedition-result",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-result",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-running",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-running",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-ready",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-ready",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-result",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-result",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "shop",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "shop",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "achievements",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "achievements",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "catch",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "catch",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "catch-result",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "catch-result",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "settings",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "settings",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "save-history",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "save-history",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "confirm-cancel",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "expedition-running",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "confirm-restore",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "save-history",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "confirm-rehome",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "detail",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-1",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-1",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-2",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-2",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-3",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-3",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-4",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-4",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-5",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-5",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "tour-6",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "tour-6",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "components",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "components",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "evolution-branch",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "evolution-branch",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "catch-animation",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "catch-animation",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "encounter",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "encounter",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-hatching",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-hatching",
+    "scrollWidth": 838,
+    "width": 838,
+    "windowOverflow": 0
+  },
+  {
+    "requested": "nursery-select",
+    "size": "compact",
+    "broken": [],
+    "gameMath": false,
+    "page": "nursery-select",
+    "scrollWidth": 828,
+    "width": 828,
+    "windowOverflow": 0
+  }
+]

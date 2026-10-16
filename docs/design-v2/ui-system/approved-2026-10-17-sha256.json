@@ -1,0 +1,98 @@
+{
+  "build.py": {
+    "sha256": "541f03a75ef365386bb8282b6fcfc76e2fa12cff62cccb63e99d03035eb141bc",
+    "bytes": 40828
+  },
+  "review.html": {
+    "sha256": "18fe2157df8b57e24821749f0eba4e78a8f82be277b59d4d2edf9676420fdc3a",
+    "bytes": 696774
+  },
+  "review.css": {
+    "sha256": "f1c1cd4648468185f196f2a2409aa00a5cb8cb89130f950199009523f554aeeb",
+    "bytes": 14919
+  },
+  "review.js": {
+    "sha256": "c91e47621ef17ee59e218e92431fbfbdf9c1c34ce6f42b86b78b6efdbd8d5e2b",
+    "bytes": 3518
+  },
+  "revision2.py": {
+    "sha256": "e4a2ec22b110ec10dacc02d03ad091f4aa152d6129cafb3bdc465e7cdd62828e",
+    "bytes": 20075
+  },
+  "revision2.css": {
+    "sha256": "5ac6bbbe594412a1d29cfcd7619cd673fc4ea22f624d3055b63d69a3a3c725bf",
+    "bytes": 6345
+  },
+  "revision2.js": {
+    "sha256": "6f31259ed5e757546c9a2ace229fbfd721a02bd7216b47ce46d7940a6fd7d425",
+    "bytes": 18297
+  },
+  "revision3.py": {
+    "sha256": "a334d992195dd6757e16aa74a009b682ed404c682399c0e174682b0aae9b64b2",
+    "bytes": 10753
+  },
+  "revision3.css": {
+    "sha256": "af9da69fdaa1786f3b014f61d524b303efdd1c1670305c41e92da2a3e52892b8",
+    "bytes": 3271
+  },
+  "revision3.js": {
+    "sha256": "d6002c4c0e32dd3e997c699c504a17279823698fe79d8395850c3cd8767e6217",
+    "bytes": 13807
+  },
+  "capture.js": {
+    "sha256": "5156dd0a9cf95d8d061ba720c6976bb7ff44a1fd6ab12719b255e8af0289d18c",
+    "bytes": 3122
+  },
+  "capture.css": {
+    "sha256": "28916a59198f5ef11f142b9879062b8f4d779b0ccabbc3d1ef942d3e8a6096b2",
+    "bytes": 5884
+  },
+  "expedition_team.py": {
+    "sha256": "9006d6545f340f3702099928e11ea6dbe1cd1b1856e945733e10651a5f03b6b5",
+    "bytes": 6269
+  },
+  "expedition-team.js": {
+    "sha256": "d8ac9e6864b7d31acffd2d550adbd1934cf9cd0db4641055347ede9e259b6691",
+    "bytes": 9418
+  },
+  "expedition-team.css": {
+    "sha256": "945171b6f01aa3a595a1782a41f4cfacf616efae01c9ca2990ef651c0e7307e8",
+    "bytes": 3918
+  },
+  "flavor-facts.json": {
+    "sha256": "e60a5169c912bcf2ccacb4d2ba963e648156049b27a192b2e69411ef10c2b8c5",
+    "bytes": 7313
+  },
+  "screens.json": {
+    "sha256": "998e0df37b14a1564fb3d6d03d5a504bdda14225fcca04c0cb8063c429b7a124",
+    "bytes": 4935
+  },
+  "assets/ball-closed.png": {
+    "sha256": "6feba7eac92071518496373a65a7722a0629f8bed605e70cc8043cb56848b834",
+    "bytes": 727670
+  },
+  "assets/ball-open.png": {
+    "sha256": "f7ce15e3823753a6b8d6dcc8d1bc60e30b05a15bd9c7621d850c0da92fc83cd9",
+    "bytes": 762151
+  },
+  "assets/coin.png": {
+    "sha256": "54de9cf37e3b218712a6354b45aae02da25d0796fc6ad3306029289e3ee62c6b",
+    "bytes": 717048
+  },
+  "assets/egg.png": {
+    "sha256": "35c263c565fd925a2ac32dc17cdcc688eb396ec1c2686c2818fc9db2d531a0e2",
+    "bytes": 650138
+  },
+  "assets/nursery-ready.png": {
+    "sha256": "41b071a34e4b1f499389521217876adba215f8a2df4534e0abec249cabf381b9",
+    "bytes": 2635858
+  },
+  "assets/nursery-waiting.png": {
+    "sha256": "d4ee9563d04e58d5ffae19eec59969d5718ec604fbbbcdba81eea017816672fc",
+    "bytes": 2938368
+  },
+  "assets/nursery.png": {
+    "sha256": "ea57d82de4f1f7d9afcc04fc4ebb14ff56bc177530b9a4ade1f2b2a8cdc005bc",
+    "bytes": 3136784
+  }
+}

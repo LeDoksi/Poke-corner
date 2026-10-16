@@ -2740,5 +2740,13 @@
     <Content Include="..\..\docs\design-v2\voice-preview\delivery.json" Link="Data\voice-preview\delivery.json" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\prototype-v1\assets\Nunito-OFL.txt" Link="Data\fonts\Nunito-OFL.txt" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\prototype-v1\assets\nunito.ttf" Link="Data\fonts\nunito.ttf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\grove.png" Link="Data\expeditions\grove.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\lake.png" Link="Data\expeditions\lake.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\coast.png" Link="Data\expeditions\coast.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\mountains.png" Link="Data\expeditions\mountains.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\desert.png" Link="Data\expeditions\desert.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\volcano.png" Link="Data\expeditions\volcano.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\snow.png" Link="Data\expeditions\snow.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\ruins.png" Link="Data\expeditions\ruins.png" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,29 @@
+{
+  "shiny": [
+    "Pikachu"
+  ],
+  "ready": [
+    "Росток"
+  ],
+  "rarity": [
+    "Lapras"
+  ],
+  "care": "Бустер для Росток\n\nУвеличит уход для эволюции.\nПитомец: Росток\n\nОтмена\nПрименить",
+  "xp": "Опыт для Росток\n\nДобавит 300 опыта.\nПитомец: Росток\n\nОтмена\nПрименить",
+  "stone": "Эволюция в выбранную форму\n\nВыбрана ветвь #0134. Понадобятся 6 ягод Oran и один камень.\n\nОтмена\nЭволюционировать",
+  "parent": "Клевер",
+  "shelf": {
+    "album": "../art-production/last-attempt/final-assets/assets/trophies/trophy-species-1.png",
+    "room": "../art-production/last-attempt/final-assets/assets/trophies/trophy-species-1.png"
+  },
+  "overlay": {
+    "context": "expedition-running",
+    "modal": true
+  },
+  "charm": "Активен на следующую поимку",
+  "shake": "Покебол покачивается…",
+  "catchResult": {
+    "charm": "Талисман использован · в запасе 1",
+    "page": "catch-result"
+  }
+}

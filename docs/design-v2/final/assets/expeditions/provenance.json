@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "tool": "built-in image_gen",
+  "purpose": "Actual WPF preview; pending art is not release-approved.",
+  "userDirection": "Redraw all routes in the approved new grove style; review the remaining seven inside the actual app.",
+  "routes": [
+    {
+      "id": "grove",
+      "name": "Лесная роща",
+      "file": "grove.png",
+      "sourceImage": "exec-1a57f2ac-0081-47ef-b09d-402979ced8a1.png",
+      "width": 2048,
+      "height": 768,
+      "bytes": 3029427,
+      "sha256": "846e44e10598e727eb4a2f559a52c97aeff416178a81dc65f311c5a366b0a6e3",
+      "approval": "approved"
+    },
+    {
+      "id": "lake",
+      "name": "Озёрный берег",
+      "file": "lake.png",
+      "sourceImage": "exec-f8030c06-68ff-425d-aaeb-067045a218dc.png",
+      "width": 2048,
+      "height": 768,
+      "bytes": 3605853,
+      "sha256": "9eaaf538512fc37e18873e5e4657db9ab30cde2dc8de89d867b75b8603c1d316",
+      "approval": "approved",
+      "history": [
+        {
+          "sourceImage": "exec-1ae74d1d-ec92-4ffe-ac6c-91e851684265.png",
+          "width": 2048,
+          "height": 768,
+          "bytes": 2926225,
+          "sha256": "ae6fb0a5ea45c02c0c575116d4d7c60bb9a9aab5a8b67b8d38b9487124630b97",
+          "approval": "pending-in-app-review"
+        }
+      ],
+      "approvalNote": "User accepted revised expedition illustrations on 2026-10-16 while stopping UI/release work."
+    },
+    {
+      "id": "coast",
+      "name": "Морское побережье",
+      "file": "coast.png",
+      "sourceImage": "exec-80f0f0f8-707f-4f2d-83d0-d882d28c34a8.png",
+      "width": 2046,
+      "height": 768,
+      "bytes": 2397338,
+      "sha256": "0572a84d3195a3385ca14cfe4cfce1c9c662a3b0c877d3757225c674453c9009",
+      "approval": "pending-in-app-review"
+    },
+    {
+      "id": "mountains",
+      "name": "Горные тропы",
+      "file": "mountains.png",
+      "sourceImage": "exec-8e237326-e49c-40be-87f1-4ba9e2cba23a.png",
+      "width": 2048,
+      "height": 768,
+      "bytes": 3022198,
+      "sha256": "0c1e819c794e1b3f79e4403e2a29ae21c15a3a4b264ce07316307c42c21201ff",
+      "approval": "pending-in-app-review"
+    },
+    {
+      "id": "desert",
+      "name": "Пустынные дюны",
+      "file": "desert.png",
+      "sourceImage": "exec-efa95434-c7cd-4213-a2c7-754fe7406b82.png",
+      "width": 2048,
+      "height": 768,
+      "bytes": 1990513,
+      "sha256": "5c65e16aae188750e510cfd6a7a481a8b286bf31a3f062e12b80ff451e994ee7",
+      "approval": "pending-in-app-review"
+    },
+    {
+      "id": "volcano",
+      "name": "Вулканическая долина",
+      "file": "volcano.png",
+      "sourceImage": "exec-7849a9de-af1e-446d-9d9a-db2f75cb292f.png",
+      "width": 2048,
+      "height": 768,
+      "bytes": 2670609,
+      "sha256": "3b0c73f5bf0f160deaf9b5d1ae048a40762efa8dabbd79b78b8a1fbfbf2df4f9",
+      "approval": "approved",
+      "history": [
+        {
+          "sourceImage": "exec-7189e8a7-3091-423b-8891-19b4409dad6c.png",
+          "width": 2048,
+          "height": 768,
+          "bytes": 2746321,
+          "sha256": "52a3a229129d7e149821a24a0aa1b8cc3c28d80cdb0fdc55d0a3a8c6fb87d34f",
+          "approval": "pending-in-app-review"
+        }
+      ],
+      "approvalNote": "User accepted revised expedition illustrations on 2026-10-16 while stopping UI/release work."
+    },
+    {
+      "id": "snow",
+      "name": "Снежный перевал",
+      "file": "snow.png",
+      "sourceImage": "exec-9edf2d50-49f4-48a2-8ee8-385b9e0cbebd.png",
+      "width": 2048,
+      "height": 768,
+      "bytes": 2679916,
+      "sha256": "8c8b9cd4554e60a47747f0cc574e101dc3eda9e4da2366bba31993da86985672",
+      "approval": "pending-in-app-review"
+    },
+    {
+      "id": "ruins",
+      "name": "Древние руины",
+      "file": "ruins.png",
+      "sourceImage": "exec-424eb34f-33e9-4f1c-865a-05e2d4f2f6c8.png",
+      "width": 2048,
+      "height": 768,
+      "bytes": 2998745,
+      "sha256": "9fe81bf6ed8dffef2ad17240392967b7396b7825aaf7dab8aef0e47f870319a3",
+      "approval": "approved",
+      "history": [
+        {
+          "sourceImage": "exec-ba185949-0d81-4d61-af0f-c249bec45da2.png",
+          "width": 2048,
+          "height": 768,
+          "bytes": 3342348,
+          "sha256": "853c0b213da93fd216ba6b785bbe1f86e3dc4fb709286ac8d620a33b47f1062e",
+          "approval": "pending-in-app-review"
+        }
+      ],
+      "approvalNote": "User accepted revised expedition illustrations on 2026-10-16 while stopping UI/release work."
+    }
+  ]
+}

@@ -13,6 +13,7 @@ namespace PokeCorner.App.Tests.Theme;
 internal static class WpfTestHost
 {
     private static readonly object Gate = new();
+    private static readonly object ExecutionGate = new();
     private static Dispatcher? _dispatcher;
 
     /// Runs <paramref name="action"/> on the shared UI thread, rethrowing anything it threw
@@ -21,22 +22,32 @@ internal static class WpfTestHost
     {
         EnsureStarted();
 
-        Exception? failure = null;
-        _dispatcher!.Invoke(() =>
+        if (_dispatcher!.CheckAccess())
         {
-            try
-            {
-                action();
-            }
-            catch (Exception ex)
-            {
-                failure = ex;
-            }
-        });
+            action();
+            return;
+        }
 
-        if (failure is not null)
+        // A nested dispatcher pump must not execute another test's UI action mid-fixture.
+        lock (ExecutionGate)
         {
-            throw new InvalidOperationException($"UI-thread action failed: {failure.Message}", failure);
+            Exception? failure = null;
+            _dispatcher!.Invoke(() =>
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception ex)
+                {
+                    failure = ex;
+                }
+            });
+
+            if (failure is not null)
+            {
+                throw new InvalidOperationException($"UI-thread action failed: {failure.Message}", failure);
+            }
         }
     }
 

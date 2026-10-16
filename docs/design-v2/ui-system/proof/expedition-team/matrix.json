@@ -1,0 +1,668 @@
+[
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "corner",
+    "size": "base",
+    "visible": "corner",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "collection",
+    "size": "base",
+    "visible": "collection",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "species",
+    "size": "base",
+    "visible": "species",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "detail",
+    "size": "base",
+    "visible": "detail",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "evolution",
+    "size": "base",
+    "visible": "evolution",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition",
+    "size": "base",
+    "visible": "expedition",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-running",
+    "size": "base",
+    "visible": "expedition-running",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-ready",
+    "size": "base",
+    "visible": "expedition-ready",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-result",
+    "size": "base",
+    "visible": "expedition-result",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery",
+    "size": "base",
+    "visible": "nursery",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-running",
+    "size": "base",
+    "visible": "nursery-running",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-ready",
+    "size": "base",
+    "visible": "nursery-ready",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-result",
+    "size": "base",
+    "visible": "nursery-result",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "shop",
+    "size": "base",
+    "visible": "shop",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "achievements",
+    "size": "base",
+    "visible": "achievements",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch",
+    "size": "base",
+    "visible": "catch",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch-result",
+    "size": "base",
+    "visible": "catch-result",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "settings",
+    "size": "base",
+    "visible": "settings",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "save-history",
+    "size": "base",
+    "visible": "save-history",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "confirm-cancel",
+    "size": "base",
+    "visible": "expedition-running",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "confirm-restore",
+    "size": "base",
+    "visible": "save-history",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "confirm-rehome",
+    "size": "base",
+    "visible": "detail",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-1",
+    "size": "base",
+    "visible": "tour-1",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-2",
+    "size": "base",
+    "visible": "tour-2",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-3",
+    "size": "base",
+    "visible": "tour-3",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-4",
+    "size": "base",
+    "visible": "tour-4",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-5",
+    "size": "base",
+    "visible": "tour-5",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-6",
+    "size": "base",
+    "visible": "tour-6",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "components",
+    "size": "base",
+    "visible": "components",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "evolution-branch",
+    "size": "base",
+    "visible": "evolution-branch",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch-animation",
+    "size": "base",
+    "visible": "catch-animation",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "encounter",
+    "size": "base",
+    "visible": "encounter",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-hatching",
+    "size": "base",
+    "visible": "nursery-hatching",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-select",
+    "size": "base",
+    "visible": "nursery-select",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch-reduced",
+    "size": "base",
+    "visible": "catch-reduced",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-selected",
+    "size": "base",
+    "visible": "expedition-selected",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-team",
+    "size": "base",
+    "visible": "expedition-team",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "corner",
+    "size": "compact",
+    "visible": "corner",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "collection",
+    "size": "compact",
+    "visible": "collection",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "species",
+    "size": "compact",
+    "visible": "species",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "detail",
+    "size": "compact",
+    "visible": "detail",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "evolution",
+    "size": "compact",
+    "visible": "evolution",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition",
+    "size": "compact",
+    "visible": "expedition",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-running",
+    "size": "compact",
+    "visible": "expedition-running",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-ready",
+    "size": "compact",
+    "visible": "expedition-ready",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-result",
+    "size": "compact",
+    "visible": "expedition-result",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery",
+    "size": "compact",
+    "visible": "nursery",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-running",
+    "size": "compact",
+    "visible": "nursery-running",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-ready",
+    "size": "compact",
+    "visible": "nursery-ready",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-result",
+    "size": "compact",
+    "visible": "nursery-result",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "shop",
+    "size": "compact",
+    "visible": "shop",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "achievements",
+    "size": "compact",
+    "visible": "achievements",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch",
+    "size": "compact",
+    "visible": "catch",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch-result",
+    "size": "compact",
+    "visible": "catch-result",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "settings",
+    "size": "compact",
+    "visible": "settings",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "save-history",
+    "size": "compact",
+    "visible": "save-history",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "confirm-cancel",
+    "size": "compact",
+    "visible": "expedition-running",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "confirm-restore",
+    "size": "compact",
+    "visible": "save-history",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "confirm-rehome",
+    "size": "compact",
+    "visible": "detail",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-1",
+    "size": "compact",
+    "visible": "tour-1",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-2",
+    "size": "compact",
+    "visible": "tour-2",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-3",
+    "size": "compact",
+    "visible": "tour-3",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-4",
+    "size": "compact",
+    "visible": "tour-4",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-5",
+    "size": "compact",
+    "visible": "tour-5",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "tour-6",
+    "size": "compact",
+    "visible": "tour-6",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "components",
+    "size": "compact",
+    "visible": "components",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "evolution-branch",
+    "size": "compact",
+    "visible": "evolution-branch",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch-animation",
+    "size": "compact",
+    "visible": "catch-animation",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "encounter",
+    "size": "compact",
+    "visible": "encounter",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-hatching",
+    "size": "compact",
+    "visible": "nursery-hatching",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "nursery-select",
+    "size": "compact",
+    "visible": "nursery-select",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "catch-reduced",
+    "size": "compact",
+    "visible": "catch-reduced",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-selected",
+    "size": "compact",
+    "visible": "expedition-selected",
+    "windowX": 0
+  },
+  {
+    "broken": [],
+    "math": false,
+    "pageX": 0,
+    "scenario": "expedition-team",
+    "size": "compact",
+    "visible": "expedition-team",
+    "windowX": 0
+  }
+]

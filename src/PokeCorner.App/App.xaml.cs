@@ -950,7 +950,8 @@ public partial class App : System.Windows.Application
                         next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual, _catalogPackage);
                 var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, () => false, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
-                    speciesId => _catalogPackage.GetAssetPath(speciesId, false),
+                    (speciesId, shiny) => _catalogPackage.GetAssetPath(speciesId, shiny)
+                        ?? (shiny ? _catalogPackage.GetAssetPath(speciesId, false) : null),
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount),
                     PreviewEvolution, EvolveIndividualAsync, section => _menuWindow?.Navigate(section),
                     (berry, required) => shopView.SelectBerryShortage(berry, required), PreviewRehome, RehomeIndividualAsync,
