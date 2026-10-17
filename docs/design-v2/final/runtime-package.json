@@ -16444,8 +16444,8 @@
     {
       "path": "docs/design-v2/final/assets/expeditions/grove.png",
       "target": "expeditions/grove.png",
-      "bytes": 3029427,
-      "sha256": "846e44e10598e727eb4a2f559a52c97aeff416178a81dc65f311c5a366b0a6e3"
+      "bytes": 3634982,
+      "sha256": "d3962771a460e1f228f8e72d8b9d998060ea1b5e7f5e88704b67984e73d358ff"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/lake.png",
@@ -16456,20 +16456,20 @@
     {
       "path": "docs/design-v2/final/assets/expeditions/coast.png",
       "target": "expeditions/coast.png",
-      "bytes": 2397338,
-      "sha256": "0572a84d3195a3385ca14cfe4cfce1c9c662a3b0c877d3757225c674453c9009"
+      "bytes": 3552931,
+      "sha256": "26a9fe1b64f910adee962dd1efb1b0e354de7edaed2957413c04683b62a6af01"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/mountains.png",
       "target": "expeditions/mountains.png",
-      "bytes": 3022198,
-      "sha256": "0c1e819c794e1b3f79e4403e2a29ae21c15a3a4b264ce07316307c42c21201ff"
+      "bytes": 3377835,
+      "sha256": "9899023cd92cbe4661dff2fcbdbccb7dc279d3ddecb97be032e84fb891bf07d2"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/desert.png",
       "target": "expeditions/desert.png",
-      "bytes": 1990513,
-      "sha256": "5c65e16aae188750e510cfd6a7a481a8b286bf31a3f062e12b80ff451e994ee7"
+      "bytes": 2131241,
+      "sha256": "618edfcedd6f4439aa3341872bccc304d9c781a3260c8697a3666cc23a1bcefb"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/volcano.png",
@@ -16480,8 +16480,8 @@
     {
       "path": "docs/design-v2/final/assets/expeditions/snow.png",
       "target": "expeditions/snow.png",
-      "bytes": 2679916,
-      "sha256": "8c8b9cd4554e60a47747f0cc574e101dc3eda9e4da2366bba31993da86985672"
+      "bytes": 2658503,
+      "sha256": "1f5d87bc17f31dab1303bfedaefc656508bf3862a3c5a6fa60197abbd5b57252"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/ruins.png",
@@ -16490,5 +16490,5 @@
       "sha256": "9fe81bf6ed8dffef2ad17240392967b7396b7825aaf7dab8aef0e47f870319a3"
     }
   ],
-  "totalBytes": 255721533
+  "totalBytes": 280352232
 }
