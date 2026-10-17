@@ -48,7 +48,9 @@
 
 ## Task 2: Corner, collection, personal card, evolution and shelf
 
-**Files:** Popup/RoomView.*, CollectionView.*, CollectionViewModel.cs, CollectionCardModels.cs, AchievementsView.*, existing Theme resources; add a narrowly scoped fact reader under Catalog only if no existing API; GlobalUpdate/pokedexTests.cs, roomAchievementsTests.cs, evolution_uiTests.cs and ThemeRenderingTests.cs.
+Execution has two feature batches: **2A Corner+album/shelf**, then **2B Pokédex+personal card/evolution**. Each has its own functional test cycle and task review; shared App wiring is edited sequentially. Task2 completes only when both are accepted. This is technical decomposition of the approved whole-screen sequence, not a fresh design review.
+
+**Files:** Popup/RoomView.*, CollectionView.*, CollectionViewModel.cs, CollectionCardModels.cs, AchievementsView.*, existing Theme resources; add a narrowly scoped fact reader under Catalog only if no existing API; GlobalUpdate/pokedexTests.cs, room_albumTests.cs, evolutionTests.cs and ThemeRenderingTests.cs.
 **Interfaces:** consumes Task1 resource keys/ConfirmAsync and existing production mutation delegates; preserves individual GUID identity and existing read/commit services. Fact source is prepared POKE-58 offline data, not descriptionRu. No rewritten evolution/achievement rules.
 
 - [ ] Pin failing behavior tests for independent Normal/Shiny discovery and individual selection, species-based duplicates, closed-root acquisition hint, forked Eevee tree/stone selection, item confirmations and unearned trophy restrictions. Retain previously passing save-failure/retry tests.
