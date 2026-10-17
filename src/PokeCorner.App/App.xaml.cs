@@ -987,7 +987,7 @@ public partial class App : System.Windows.Application
                 var achievementsView = new AchievementsView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
                     update => CommitStateAsync(update, closeMenu: false), () => _menuWindow?.Navigate(MenuSection.Corner));
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView,
-                    nurseryView, roomView, achievementsView);
+                    nurseryView, roomView, achievementsView, () => _appState.ToSaveData(_catchReadyCount));
                 _menuWindow.SectionViewed += ShowContextHint;
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
                 _menuWindow.SetCatchReady(ReadyBallCount()); // picks up activity and gift balls queued before opening

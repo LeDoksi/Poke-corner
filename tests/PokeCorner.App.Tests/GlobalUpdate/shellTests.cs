@@ -122,7 +122,7 @@ public class ShellTests
         foreach (var section in new[] { MenuSection.Corner, MenuSection.Pokedex, MenuSection.Shop, MenuSection.Expeditions, MenuSection.Nursery })
         {
             menu.Navigate(section);
-            Assert.Equal((int)section, tabs.SelectedIndex);
+            Assert.Equal(section switch { MenuSection.Corner => 0, MenuSection.Pokedex => 1, MenuSection.Expeditions => 2, MenuSection.Nursery => 3, _ => 4 }, tabs.SelectedIndex);
             Assert.False(string.IsNullOrWhiteSpace(AutomationProperties.GetName((TabItem)tabs.SelectedItem)));
         }
 
@@ -158,7 +158,7 @@ public class ShellTests
         menu.RaiseEvent(escape);
         Assert.True(escape.Handled);
         Assert.Equal(Visibility.Visible, tabs.Visibility);
-        Assert.Same((TabItem)tabs.Items[2], tabs.SelectedItem);
+        Assert.Same((TabItem)tabs.Items[4], tabs.SelectedItem);
     });
 
     [Fact]
@@ -176,14 +176,14 @@ public class ShellTests
         var output = Environment.GetEnvironmentVariable("POKE_SHELL_CAPTURE_DIR");
         foreach (var (width, height, scale, section, name) in new[]
         {
-            (820, 660, 1.5, MenuSection.Corner, "regular-150"),
-            (640, 480, 2.0, MenuSection.Corner, "compact-200"),
-            (640, 480, 2.0, MenuSection.Settings, "settings-compact-200"),
-            (820, 660, 1.5, MenuSection.Pokedex, "pokedex-regular-150"),
-            (820, 660, 1.5, MenuSection.Shop, "shop-regular-150"),
-            (820, 660, 1.5, MenuSection.Catch, "catch-regular-150"),
-            (640, 480, 2.0, MenuSection.Expeditions, "expeditions-compact-200"),
-            (640, 480, 2.0, MenuSection.Nursery, "nursery-compact-200")
+            (1000, 760, 1.5, MenuSection.Corner, "regular-150"),
+            (840, 650, 2.0, MenuSection.Corner, "compact-200"),
+            (840, 650, 2.0, MenuSection.Settings, "settings-compact-200"),
+            (1000, 760, 1.5, MenuSection.Pokedex, "pokedex-regular-150"),
+            (1000, 760, 1.5, MenuSection.Shop, "shop-regular-150"),
+            (1000, 760, 1.5, MenuSection.Catch, "catch-regular-150"),
+            (840, 650, 2.0, MenuSection.Expeditions, "expeditions-compact-200"),
+            (840, 650, 2.0, MenuSection.Nursery, "nursery-compact-200")
         })
         {
             var menu = CreateMenu(new AppState());
@@ -275,7 +275,7 @@ public class ShellTests
         encoder.Save(stream);
     }
 
-    private static AppMenuWindow CreateMenu(AppState state)
+    internal static AppMenuWindow CreateMenu(AppState state, Func<PokeCorner.Core.Persistence.SaveData>? getSnapshot = null)
     {
         var settings = state.Settings;
         var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(),
@@ -284,6 +284,6 @@ public class ShellTests
             () => { }, () => { }, () => { }, () => null, () => true, () => true);
         return new AppMenuWindow(collection, new SettingsView(new SettingsViewModel(settings), () => { }),
             new ShopView(state, new ShopService(), _ => Task.CompletedTask, () => { }),
-            new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"));
+            new CatchView(state, () => null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, id => $"Pokemon #{id}"), getSnapshot: getSnapshot);
     }
 }

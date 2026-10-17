@@ -34,4 +34,13 @@
     <Content Include="..\..\docs\design-v2\final\runtime-package.json" Link="Data\final\runtime-package.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <Import Project="RuntimePackage.props" />
+
+  <ItemGroup>
+    <Resource Include="..\..\docs\design-v2\ui-system\assets\coin.png" Link="Assets\UiSystem\coin.png" />
+    <Resource Include="..\..\docs\design-v2\ui-system\assets\nursery.png" Link="Assets\UiSystem\nursery.png" />
+    <Resource Include="..\..\docs\design-v2\ui-system\assets\nursery-waiting.png" Link="Assets\UiSystem\nursery-waiting.png" />
+    <Resource Include="..\..\docs\design-v2\ui-system\assets\nursery-ready.png" Link="Assets\UiSystem\nursery-ready.png" />
+    <Resource Include="..\..\docs\design-v2\ui-system\assets\ball-closed.png" Link="Assets\UiSystem\ball-closed.png" />
+    <Resource Include="..\..\docs\design-v2\ui-system\assets\ball-open.png" Link="Assets\UiSystem\ball-open.png" />
+  </ItemGroup>
 </Project>

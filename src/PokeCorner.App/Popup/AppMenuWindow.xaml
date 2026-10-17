@@ -1,7 +1,8 @@
 <Window x:Class="PokeCorner.App.Popup.AppMenuWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PokéCorner" Width="820" Height="660" MinWidth="640" MinHeight="480"
+        xmlns:local="clr-namespace:PokeCorner.App.Popup"
+        Title="PokéCorner" Width="1000" Height="760" MinWidth="840" MinHeight="650"
         Style="{StaticResource AppWindowStyle}"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown">
@@ -15,7 +16,8 @@
                       CornerRadius="0" GlassFrameThickness="0" UseAeroCaptionButtons="False" />
     </WindowChrome.WindowChrome>
 
-    <Grid Background="{StaticResource WindowBackgroundBrush}">
+    <Grid>
+    <Grid x:Name="ShellContent" Background="{StaticResource WindowBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -23,7 +25,7 @@
 
         <!-- Brand strip, doubling as the window's title bar (the OS one is gone) — hence the drag
              handler and the three chrome buttons. -->
-        <Border Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}" Padding="18,10,8,10"
+        <Border Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}" Padding="24,0,8,0" Height="52"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -39,14 +41,20 @@
                              Stroke="{StaticResource AccentRedBrush}" StrokeThickness="2.5"
                              HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
-                <TextBlock VerticalAlignment="Center" FontSize="17" FontWeight="SemiBold">
-                    <Run Text="Poké" Foreground="{StaticResource AccentGoldBrush}" /><Run Text="Corner" Foreground="{StaticResource PrimaryTextBrush}" />
+                <TextBlock VerticalAlignment="Center" FontSize="23" FontWeight="SemiBold">
+                    <Run Text="Poké" Foreground="{StaticResource PrimaryTextBrush}" /><Run Text="Corner" Foreground="{StaticResource PrimaryTextBrush}" />
                 </TextBlock>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button x:Name="SettingsButton" Content="Настройки" Click="SettingsButton_Click"
-                            Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,10,0"
+                    <StackPanel Orientation="Horizontal" Margin="0,0,18,0" VerticalAlignment="Center">
+                        <Image Source="{StaticResource UiCoinImage}" Width="24" Height="24" Margin="0,0,6,0" />
+                        <TextBlock x:Name="WalletText" FontWeight="Bold" VerticalAlignment="Center" AutomationProperties.Name="Монеты" />
+                    </StackPanel>
+                    <Button x:Name="EncountersButton" Content="Встречи · 0" Click="EncountersButton_Click"
+                            Style="{StaticResource UiHeaderButtonStyle}" ContentTemplate="{StaticResource UiEncounterHeaderTemplate}" Margin="0,0,10,0" AutomationProperties.Name="Встречи" />
+                    <Button x:Name="SettingsButton" Content="Настройки" ContentTemplate="{StaticResource UiSettingsHeaderTemplate}" ToolTip="Настройки" Click="SettingsButton_Click"
+                            Style="{StaticResource UiHeaderButtonStyle}" Margin="0,0,10,0"
                             AutomationProperties.Name="Открыть настройки" />
                     <Button x:Name="MinimizeButton" Style="{StaticResource TitleBarButtonStyle}"
                             Content="&#xE921;" Click="MinimizeButton_Click" ToolTip="Свернуть" AutomationProperties.Name="Свернуть" />
@@ -59,30 +67,30 @@
         </Border>
 
         <Grid Grid.Row="1" Background="{StaticResource WindowBackgroundBrush}">
-        <TabControl x:Name="MenuTabControl">
+        <TabControl x:Name="MenuTabControl" Style="{StaticResource UiShellTabsStyle}">
             <TabItem x:Name="CornerTab" AutomationProperties.Name="Уголок">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="Уголок" VerticalAlignment="Center" />
+                        <Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M3 10L12 3 21 10 M5 9V21H19V9 M9 21V13H15V21" /><TextBlock Text="Уголок" VerticalAlignment="Center" />
                         <Ellipse x:Name="CatchBadge" Width="7" Height="7" Margin="6,0,0,0"
                                  VerticalAlignment="Center" Fill="{StaticResource AccentRedBrush}"
                                  Visibility="Collapsed" />
                     </StackPanel>
                 </TabItem.Header>
-                <TabControl x:Name="CornerTabs">
+                <TabControl x:Name="CornerTabs" Style="{StaticResource UiContentTabsStyle}">
                     <TabItem x:Name="CornerHomeTab" Header="Питомец" AutomationProperties.Name="Питомец" />
                     <TabItem x:Name="CatchTab" Header="Поимка" AutomationProperties.Name="Поимка" />
                     <TabItem x:Name="AlbumTab" Header="Достижения" AutomationProperties.Name="Достижения" Visibility="Collapsed" />
                 </TabControl>
             </TabItem>
-            <TabItem x:Name="CollectionTab" Header="Покедекс" AutomationProperties.Name="Покедекс" />
-            <TabItem x:Name="ShopTab" Header="Магазин" AutomationProperties.Name="Магазин" />
-            <TabItem x:Name="ExpeditionsTab" Header="Экспедиции" AutomationProperties.Name="Экспедиции">
-            </TabItem>
-            <TabItem x:Name="NurseryTab" Header="Питомник" AutomationProperties.Name="Питомник">
-            </TabItem>
+            <TabItem x:Name="CollectionTab" AutomationProperties.Name="Покедекс"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M12 5V21 M3 4C7 3 9 4 12 6 C15 4 17 3 21 4 V19 C17 18 15 19 12 21 C9 19 7 18 3 19Z" /><TextBlock Text="Покедекс" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="ExpeditionsTab" AutomationProperties.Name="Экспедиции"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M3 6L9 3 15 6 21 3 V18 L15 21 9 18 3 21Z M9 3V18 M15 6V21" /><TextBlock Text="Экспедиции" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="NurseryTab" AutomationProperties.Name="Питомник"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M19 15C19 20 16 22 12 22 S5 20 5 15 S9 2 12 2 S19 10 19 15Z M9 11L11 13 M15 16L16 14" /><TextBlock Text="Питомник" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="ShopTab" AutomationProperties.Name="Магазин"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M4 10V21H20V10 M3 4H21L22 10H2Z M9 21V14H15V21 M7 4L6 10 M12 4V10 M17 4L18 10" /><TextBlock Text="Магазин" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
         </TabControl>
         <ContentControl x:Name="SettingsContent" Visibility="Collapsed" />
         </Grid>
+    </Grid>
+    <local:ConfirmationOverlay x:Name="ConfirmationHost" Visibility="Collapsed" Panel.ZIndex="10" />
     </Grid>
 </Window>

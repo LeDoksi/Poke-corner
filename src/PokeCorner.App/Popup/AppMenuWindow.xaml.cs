@@ -1,4 +1,6 @@
 using System.Windows;
+using System.Windows.Threading;
+using PokeCorner.Core.Persistence;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -15,12 +17,35 @@ public partial class AppMenuWindow : Window
     /// Whether the badge's breathing pulse is currently running, so SetCatchReady doesn't
     /// restart the animation (and its phase) on every catch-ready refresh tick.
     private bool _catchBadgePulsing;
+    private readonly Func<SaveData>? _getSnapshot;
+    private readonly DispatcherTimer _snapshotTimer = new() { Interval = TimeSpan.FromSeconds(1) };
+    private TaskCompletionSource<bool>? _confirmation;
+    private IInputElement? _previousFocus;
+    private bool _closed;
+
 
     public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView,
         ExpeditionView? expeditionView = null, NurseryView? nurseryView = null,
-        RoomView? roomView = null, AchievementsView? achievementsView = null)
+        RoomView? roomView = null, AchievementsView? achievementsView = null, Func<SaveData>? getSnapshot = null)
     {
         InitializeComponent();
+        _getSnapshot = getSnapshot;
+        var workArea = SystemParameters.WorkArea;
+        MinWidth = Math.Min(MinWidth, workArea.Width);
+        MinHeight = Math.Min(MinHeight, workArea.Height);
+        Width = Math.Min(Width, workArea.Width);
+        Height = Math.Min(Height, workArea.Height);
+        ConfirmationHost.Completed += CompleteConfirmation;
+        _snapshotTimer.Tick += SnapshotTimer_Tick;
+        Loaded += (_, _) => { RefreshSnapshot(); UpdateCatchBadgeAnimation(); _snapshotTimer.Start(); };
+        Unloaded += (_, _) => { StopPresentation(); CompleteConfirmation(false); };
+        Closed += (_, _) =>
+        {
+            _closed = true;
+            StopPresentation();
+            CompleteConfirmation(false);
+        };
+        RefreshSnapshot();
         SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
         Closed += (_, _) => SystemParameters.StaticPropertyChanged -= SystemParameters_StaticPropertyChanged;
         var contentInk = (System.Windows.Media.Brush)FindResource("PrimaryTextBrush");
@@ -47,8 +72,51 @@ public partial class AppMenuWindow : Window
         _catchView = catchView;
         MenuTabControl.SelectionChanged += (_, _) =>
         {
+            RefreshSnapshot();
             if (IsLoaded) SectionViewed?.Invoke(SelectedSection());
         };
+    }
+
+    public Task<bool> ConfirmAsync(string title, string body, string confirmCaption)
+    {
+        Dispatcher.VerifyAccess();
+        if (_closed) return Task.FromResult(false);
+        if (_confirmation is not null) throw new InvalidOperationException("A confirmation is already active.");
+        _previousFocus = Keyboard.FocusedElement;
+        _confirmation = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var task = _confirmation.Task;
+        ShellContent.IsEnabled = false;
+        ConfirmationHost.Present(title, body, confirmCaption);
+        return task;
+    }
+
+    private void CompleteConfirmation(bool result)
+    {
+        var pending = _confirmation;
+        if (pending is null) return;
+        _confirmation = null;
+        ConfirmationHost.Visibility = Visibility.Collapsed;
+        ShellContent.IsEnabled = true;
+        if (!_closed && _previousFocus is not null) Keyboard.Focus(_previousFocus);
+        _previousFocus = null;
+        pending.TrySetResult(result);
+    }
+
+    private void EncountersButton_Click(object sender, RoutedEventArgs e) => Navigate(MenuSection.Catch);
+
+    private void SnapshotTimer_Tick(object? sender, EventArgs e) => RefreshSnapshot();
+
+    private void RefreshSnapshot()
+    {
+        WalletText.Text = _getSnapshot?.Invoke().ShopCoins.ToString(System.Globalization.CultureInfo.CurrentCulture) ?? "—";
+    }
+
+    private void StopPresentation()
+    {
+        _snapshotTimer.Stop();
+        CatchBadge.BeginAnimation(OpacityProperty, null);
+        CatchBadge.Opacity = 1;
+        _catchBadgePulsing = false;
     }
 
     /// Drag and double-click-to-maximize for the custom title bar: WindowChrome's CaptionHeight
@@ -72,6 +140,12 @@ public partial class AppMenuWindow : Window
     private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
         if (e.Key != Key.Escape) return;
+        if (_confirmation is not null)
+        {
+            CompleteConfirmation(false);
+            e.Handled = true;
+            return;
+        }
         if (SettingsContent.Visibility == Visibility.Visible) Navigate(_lastSection);
         else Close();
         e.Handled = true;
@@ -95,12 +169,15 @@ public partial class AppMenuWindow : Window
 
     public void Navigate(MenuSection section)
     {
+        if (_confirmation is not null) return;
+        RefreshSnapshot();
         if (section == MenuSection.Settings)
         {
             if (SettingsContent.Visibility != Visibility.Visible) _lastSection = SelectedSection();
             MenuTabControl.Visibility = Visibility.Collapsed;
             SettingsContent.Visibility = Visibility.Visible;
             SettingsButton.Content = "К разделам";
+            SettingsButton.ToolTip = "К разделам";
             System.Windows.Automation.AutomationProperties.SetName(SettingsButton, "Вернуться к разделам");
             return;
         }
@@ -109,6 +186,7 @@ public partial class AppMenuWindow : Window
         MenuTabControl.Visibility = Visibility.Visible;
         _lastSection = section;
         SettingsButton.Content = "Настройки";
+        SettingsButton.ToolTip = "Настройки";
         System.Windows.Automation.AutomationProperties.SetName(SettingsButton, "Открыть настройки");
         if (section is MenuSection.Catch or MenuSection.Achievements)
         {
@@ -165,6 +243,7 @@ public partial class AppMenuWindow : Window
     /// breathing pulse, claiming the last one hides both.
     public void SetCatchReady(int count)
     {
+        EncountersButton.Content = $"Встречи · {Math.Max(0, count)}";
         var ready = count > 0;
         CatchBadge.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
         UpdateCatchBadgeAnimation();
@@ -179,7 +258,7 @@ public partial class AppMenuWindow : Window
 
     private void UpdateCatchBadgeAnimation()
     {
-        var pulseEnabled = CatchBadge.Visibility == Visibility.Visible && SystemParameters.ClientAreaAnimation;
+        var pulseEnabled = IsLoaded && CatchBadge.Visibility == Visibility.Visible && SystemParameters.ClientAreaAnimation;
         if (pulseEnabled == _catchBadgePulsing) return;
         _catchBadgePulsing = pulseEnabled;
         if (!pulseEnabled)
