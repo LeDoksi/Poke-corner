@@ -4,6 +4,8 @@ using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.Core.Domain;
 
+public sealed record AchievementProgress(string AwardId, string Condition, long? Value, long Target, int? MinimumLevel, bool Complete);
+
 public sealed class AchievementService
 {
     private readonly CatalogPackage catalog;
@@ -46,6 +48,29 @@ public sealed class AchievementService
             throw new InvalidDataException("Achievement reward catalog is inconsistent.");
     }
 
+    public AchievementProgress Preview(SaveData state, string firstAwardId)
+    {
+        var goals = rewards.GetProperty("chainGoals").EnumerateArray()
+            .Where(g => g.GetProperty("awardId").GetString()![..^1] == firstAwardId[..^1]).ToArray();
+        if (goals.Length == 0)
+        {
+            if (!rewards.GetProperty("specials").TryGetProperty(firstAwardId, out _))
+                throw new ArgumentException("Unknown award.", nameof(firstAwardId));
+            var complete = state.AwardLedger.ContainsKey(firstAwardId);
+            long? value = state.Metrics.TryGetValue("special:" + firstAwardId, out var metric) && metric is null
+                ? null : SpecialEarned(state, firstAwardId) ? 1 : 0;
+            return new(firstAwardId, firstAwardId, value, 1, null, complete);
+        }
+        var next = goals.FirstOrDefault(g => !state.AwardLedger.ContainsKey(g.GetProperty("awardId").GetString()!));
+        var allEarned = next.ValueKind == JsonValueKind.Undefined;
+        if (allEarned) next = goals[^1];
+        var id = next.GetProperty("awardId").GetString()!;
+        var condition = next.GetProperty("condition").GetString()!;
+        return new(id, condition, GoalValue(state, next, condition),
+            condition == "all-normal-species-in-award-revision" ? reachable.Length : next.GetProperty("count").GetInt32(),
+            next.TryGetProperty("minimumLevel", out var level) ? level.GetInt32() : null, allEarned);
+    }
+
     // Call only on the proposed save snapshot, before the confirmed commit publishes it.
     public void Evaluate(SaveData snapshot)
     {
@@ -74,7 +99,7 @@ public sealed class AchievementService
     private long? GoalValue(SaveData state, JsonElement goal, string condition) => condition switch
     {
         "discovered-species" => state.DiscoveredSpeciesIds.Count,
-        "all-normal-species-in-award-revision" => reachable.Length > 0 && reachable.All(state.DiscoveredSpeciesIds.Contains) ? reachable.Length : 0,
+        "all-normal-species-in-award-revision" => reachable.Count(state.DiscoveredSpeciesIds.Contains),
         "owned-individuals" => state.Individuals.Count,
         "successful-catches" or "claimed-expeditions" or "visited-regions" or "hard-expedition-in-each-region"
             or "first-expedition-xp" or "first-feeding" or "first-care-evolution-ready"

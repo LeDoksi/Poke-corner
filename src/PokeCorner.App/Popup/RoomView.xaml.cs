@@ -10,6 +10,9 @@ using System.Windows.Threading;
 using PokeCorner.App.Imaging;
 using PokeCorner.App.Overlay;
 using PokeCorner.Core.Persistence;
+using PokeCorner.Core.Domain;
+using PokeCorner.Core.PokeApi;
+using PokeCorner.Core.Activity;
 
 namespace PokeCorner.App.Popup;
 
@@ -73,6 +76,8 @@ public sealed class RoomArt
             anchors, awards, cards);
     }
 
+    public string DataRoot => Path.GetFullPath(Path.Combine(Root, "..", "..", ".."));
+
     public string PathFor(string relative) => Path.Combine(Root, relative.Replace('/', Path.DirectorySeparatorChar));
 
     public string? LatestEarned(SaveData save, string cardId)
@@ -96,6 +101,12 @@ public partial class RoomView : UserControl
     private readonly Func<IReadOnlyList<byte[]>?> _spriteFrames;
     private readonly Action _openAchievements;
     private readonly Func<int, string> _speciesName;
+    private readonly CatalogPackage? _catalog;
+    private readonly LevelProgression? _levels;
+    private readonly Action? _pet;
+    private readonly Action? _feed;
+    private readonly Action<Guid>? _openIndividual;
+    private readonly Action? _openPokedex;
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
     private SpriteAnimator? _animator;
     private string _sceneSignature = "";
@@ -103,13 +114,20 @@ public partial class RoomView : UserControl
     private (int Width, int Height, int Left, int Right, int Bottom) _spriteBounds;
 
     public RoomView(RoomArt art, Func<SaveData> snapshot, Func<IReadOnlyList<byte[]>?> spriteFrames, Action openAchievements,
-        Func<int, string>? speciesName = null)
+        Func<int, string>? speciesName = null, CatalogPackage? catalog = null,
+        Action? pet = null, Action? feed = null, Action<Guid>? openIndividual = null, Action? openPokedex = null)
     {
         _art = art;
         _snapshot = snapshot;
         _spriteFrames = spriteFrames;
         _openAchievements = openAchievements;
         _speciesName = speciesName ?? (id => $"№{id:D4}");
+        _catalog = catalog;
+        _levels = catalog is null ? null : new LevelProgression(catalog.DataRoot);
+        _pet = pet;
+        _feed = feed;
+        _openIndividual = openIndividual;
+        _openPokedex = openPokedex;
         InitializeComponent();
         RoomBackground.Source = LoadImage(art.PathFor(art.Background));
         ShelfFrontlip.Source = LoadImage(art.PathFor(art.Frontlip));
@@ -148,7 +166,7 @@ public partial class RoomView : UserControl
                 if (id is null || !data.AwardLedger.ContainsKey(id) || !_art.Awards.TryGetValue(id, out var award)) continue;
                 var image = new Image { Source = LoadImage(_art.PathFor(award.File)),
                     Width = award.Width, Height = award.Height, Stretch = Stretch.Fill,
-                    ToolTip = "Награда " + id };
+                    ToolTip = "Заработанная награда" };
                 var position = _art.Position(award, slot);
                 Canvas.SetLeft(image, position.X);
                 Canvas.SetTop(image, position.Y);
@@ -160,7 +178,41 @@ public partial class RoomView : UserControl
             (active.Nickname is null ? _speciesName(active.CurrentSpeciesId) :
                 active.Nickname + " · " + _speciesName(active.CurrentSpeciesId)) +
             $" · №{active.CurrentSpeciesId:D4}" + (active.IsShiny ? " · shiny" : "");
-        var frames = _spriteFrames();
+        var species = active is null ? null : _catalog?.Species.FirstOrDefault(s => s.Id == active.CurrentSpeciesId);
+        if (active is not null)
+        {
+            var level = _levels?.LevelForXp(active.TotalXp);
+            PetCaption.Text += (species is null ? "" : " · " + string.Join(" · ", species.Types.Select(TypeDisplay.GetLabel)) +
+                " · " + (Enum.TryParse<RarityTier>(species.Rarity, out var tier) ? RarityDisplay.GetName(tier) : species.Rarity)) +
+                (level is null ? "" : $" · Ур. {level}");
+            CareText.Text = active.ChainLength <= 1 ? EvolutionProgressDisplay.NeverEvolvesLabel :
+                (int)active.CurrentStage >= active.ChainLength - 1 ? EvolutionProgressDisplay.FinalFormLabel :
+                EvolutionCalculator.StageForPoints(active.AccumulatedCarePoints, active.ChainLength) > active.CurrentStage
+                    ? "Готов к эволюции · откройте карточку" : "Проводите время вместе и кормите питомца";
+            var previous = active.CurrentStage == EvolutionStage.Stage2 ? EvolutionThresholds.Stage2Threshold : 0;
+            CareBar.Value = active.ChainLength <= 1 ? 0 : (int)active.CurrentStage >= active.ChainLength - 1 ? 1 :
+                Math.Clamp((double)(active.AccumulatedCarePoints - previous) /
+                    (EvolutionCalculator.RequiredCareForNext(active.CurrentStage) - previous), 0, 1);
+            XpText.Text = level is null ? $"{active.TotalXp} XP" : level >= 40 ? $"Ур. {level} · максимум опыта" :
+                $"Ур. {level} · {active.TotalXp} / {_levels!.XpForLevel(level.Value + 1)} XP";
+        }
+        else
+        {
+            CareText.Text = "Выберите спутника";
+            CareBar.Value = 0;
+            XpText.Text = "Выберите питомца в Покедексе";
+        }
+        XpText.Text += data.PendingCatchCount > 0 ? $" · Покеболов: {data.PendingCatchCount}" : " · За активность";
+        CatchBar.Value = Math.Clamp((double)data.CatchAccumulatorUnits / ActivityAccumulator.CatchCheckIntervalUnits, 0, 1);
+        TreatBar.Value = Math.Clamp((double)data.FeedingRemainderUnits / FeedingService.ActivityUnitsPerTreatEarned, 0, 1);
+        TreatText.Text = $"{data.FeedingTreats} в запасе · новые за активность";
+        PetButton.IsEnabled = active is not null && _pet is not null;
+        FeedButton.IsEnabled = active is not null && data.FeedingTreats > 0 && _feed is not null;
+        DetailButton.Content = active is null ? "Открыть Покедекс" : "Карточка питомца";
+        DetailButton.IsEnabled = active is null ? _openPokedex is not null : _openIndividual is not null;
+        var frames = active is null ? null : _spriteFrames();
+        MissingSpriteText.Visibility = active is not null && (frames is null || frames.Count == 0)
+            ? Visibility.Visible : Visibility.Collapsed;
         var spriteSignature = active is null || frames is null || frames.Count == 0 ? "" :
             $"{active.Id}:{active.CurrentSpeciesId}:{active.IsShiny}:{frames.Count}:{System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(frames)}";
         if (spriteSignature != _spriteSignature)
@@ -185,14 +237,13 @@ public partial class RoomView : UserControl
                 }
             }
         }
-        PositionPet(data.Settings.PetSizePixels);
+        PositionPet();
     }
 
-    private void PositionPet(int savedDesktopSize)
+    private void PositionPet()
     {
-        // Approved Eevee: 46x47 at 3x, top-left (731,383), hence visible foot (800,524).
-        // The desktop size remains a saved preference; in this scene it is a relative scale.
-        var scale = 3d * savedDesktopSize / 96d;
+        // Accepted revision3 keeps the visible foot at (800,524), independent of desktop size.
+        const double scale = 5.07;
         PetImage.Width = _spriteBounds.Width * scale;
         PetImage.Height = _spriteBounds.Height * scale;
         Canvas.SetLeft(PetImage, 800 - (_spriteBounds.Left + _spriteBounds.Right) * scale / 2);
@@ -225,6 +276,26 @@ public partial class RoomView : UserControl
         }
         if (right == 0) { left = 0; right = first.PixelWidth; bottom = first.PixelHeight; }
         return (first.PixelWidth, first.PixelHeight, left, right, bottom);
+    }
+
+    private void PetButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_snapshot().ActiveIndividualId is not null) _pet?.Invoke();
+        Refresh();
+    }
+
+    private void FeedButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_snapshot().ActiveIndividualId is not null) _feed?.Invoke();
+        Refresh();
+    }
+
+    private void DetailButton_Click(object sender, RoutedEventArgs e)
+    {
+        var data = _snapshot();
+        var active = data.Individuals.FirstOrDefault(p => p.Id == data.ActiveIndividualId);
+        if (active is null) _openPokedex?.Invoke();
+        else _openIndividual?.Invoke(active.Id);
     }
 
     private void AchievementsButton_Click(object sender, RoutedEventArgs e) => _openAchievements();

@@ -983,9 +983,13 @@ public partial class App : System.Windows.Application
                 var roomArt = RoomArt.Load(_catalogPackage.DataRoot);
                 var roomView = new RoomView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
                     () => _activeSpriteFrames, () => _menuWindow?.Navigate(MenuSection.Achievements),
-                    id => _catalogPackage.Species.FirstOrDefault(species => species.Id == id)?.DisplayName ?? $"№{id:D4}");
+                    id => _catalogPackage.Species.FirstOrDefault(species => species.Id == id)?.DisplayName ?? $"№{id:D4}",
+                    catalog: _catalogPackage, pet: PetActiveIndividual, feed: FeedActiveIndividual,
+                    openIndividual: id => { _menuWindow?.Navigate(MenuSection.Pokedex); collectionView.OpenIndividual(id); },
+                    openPokedex: () => _menuWindow?.Navigate(MenuSection.Pokedex));
                 var achievementsView = new AchievementsView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
-                    update => CommitStateAsync(update, closeMenu: false), () => _menuWindow?.Navigate(MenuSection.Corner));
+                    update => CommitStateAsync(update, closeMenu: false), () => _menuWindow?.Navigate(MenuSection.Corner),
+                    _appState.Achievements);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView,
                     nurseryView, roomView, achievementsView, () => _appState.ToSaveData(_catchReadyCount));
                 _menuWindow.SectionViewed += ShowContextHint;

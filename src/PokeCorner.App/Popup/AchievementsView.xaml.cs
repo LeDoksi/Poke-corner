@@ -8,6 +8,8 @@ using Rectangle = System.Windows.Shapes.Rectangle;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using PokeCorner.Core.Persistence;
+using PokeCorner.Core.Domain;
+using PokeCorner.Core.PokeApi;
 using Brush = System.Windows.Media.Brush;
 
 namespace PokeCorner.App.Popup;
@@ -18,6 +20,7 @@ public partial class AchievementsView : UserControl
     private readonly Func<SaveData> _snapshot;
     private readonly Func<Action<SaveData>, Task> _commit;
     private readonly Action _back;
+    private readonly AchievementService _achievements;
     private string? _selectedAwardId;
     private bool _busy;
 
@@ -31,12 +34,13 @@ public partial class AchievementsView : UserControl
         "В добрые руки", "Сила в капле"
     ];
 
-    public AchievementsView(RoomArt art, Func<SaveData> snapshot, Func<Action<SaveData>, Task> commit, Action back)
+    public AchievementsView(RoomArt art, Func<SaveData> snapshot, Func<Action<SaveData>, Task> commit, Action back, AchievementService? achievements = null)
     {
         _art = art;
         _snapshot = snapshot;
         _commit = commit;
         _back = back;
+        _achievements = achievements ?? new AchievementService(CatalogPackage.Load(art.DataRoot));
         InitializeComponent();
         Loaded += (_, _) => Refresh();
         Refresh();
@@ -66,8 +70,8 @@ public partial class AchievementsView : UserControl
         {
             var index = slot;
             var id = slot < data.TrophyShelfIds.Count ? data.TrophyShelfIds[slot] : null;
-            var panel = new StackPanel { Width = 174, Margin = new Thickness(0, 0, 10, 10) };
-            if (id is not null && _art.Awards.TryGetValue(id, out var award))
+            var panel = new StackPanel { Margin = new Thickness(6, 0, 6, 6) };
+            if (id is not null && data.AwardLedger.ContainsKey(id) && _art.Awards.TryGetValue(id, out var award))
                 panel.Children.Add(new Image { Source = RoomView.LoadImage(_art.PathFor(award.File)),
                     Width = 132, Height = 94, Stretch = Stretch.Uniform });
             else
@@ -93,7 +97,7 @@ public partial class AchievementsView : UserControl
             var card = _art.Cards[i];
             var earned = _art.LatestEarned(data, card);
             var appearance = _art.Awards[earned ?? card];
-            var panel = new StackPanel { Width = 270, Margin = new Thickness(0, 0, 14, 14) };
+            var panel = new StackPanel { Width = 164, Margin = new Thickness(12, 12, 12, 16) };
             if (earned is null)
                 panel.Children.Add(new Rectangle
                 {
@@ -106,12 +110,25 @@ public partial class AchievementsView : UserControl
                 panel.Children.Add(new Image { Source = RoomView.LoadImage(_art.PathFor(appearance.File)),
                     Width = 132, Height = 94, HorizontalAlignment = System.Windows.HorizontalAlignment.Left, Stretch = Stretch.Uniform });
             panel.Children.Add(new TextBlock { Text = Names[i], FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap });
+            var progress = _achievements.Preview(data, card);
             panel.Children.Add(new TextBlock
             {
-                Text = earned is null ? "Ещё не открыто" :
-                    appearance.Id.StartsWith("trophy-special-", StringComparison.Ordinal) ? "Открыто" :
-                    $"Ступень {appearance.Id[^1]} открыта",
-                TextWrapping = TextWrapping.Wrap
+                Text = progress.Complete ? "Открыто" : progress.Value is null ? "Прогресс неизвестен" :
+                    $"{progress.Value} / {progress.Target}",
+                Foreground = (Brush)FindResource("UiSecondaryInkBrush"), TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(0, 8, 0, 0)
+            });
+            panel.Children.Add(new System.Windows.Controls.ProgressBar
+            {
+                Height = 7, Maximum = Math.Max(1, progress.Target),
+                Value = progress.Value ?? 0, Margin = new Thickness(0, 6, 0, 8),
+                Visibility = progress.Value is null ? Visibility.Collapsed : Visibility.Visible
+            });
+            panel.Children.Add(new TextBlock
+            {
+                Text = progress.Complete ? "Награда ваша" : ConditionText(progress),
+                Foreground = (Brush)FindResource("UiSecondaryInkBrush"), TextWrapping = TextWrapping.Wrap,
+                MinHeight = 40
             });
             var button = new Button
             {
@@ -142,6 +159,7 @@ public partial class AchievementsView : UserControl
         if (_busy) return;
         var selected = _selectedAwardId;
         _busy = true;
+        Refresh();
         try
         {
             await _commit(next => ApplyShelfSelection(next, _art, selected, slot));
@@ -158,6 +176,42 @@ public partial class AchievementsView : UserControl
             Refresh();
         }
     }
+
+    private static string ConditionText(AchievementProgress progress) => progress.Condition switch
+    {
+        "discovered-species" => $"Откройте {progress.Target} видов",
+        "all-normal-species-in-award-revision" => "Откройте все доступные обычные виды",
+        "owned-individuals" => $"Соберите {progress.Target} питомцев",
+        "successful-catches" => $"Поймайте {progress.Target} покемонов",
+        "claimed-expeditions" => $"Заберите награды из {progress.Target} походов",
+        "visited-regions" => $"Побывайте в {progress.Target} местностях",
+        "hard-expedition-in-each-region" => "Пройдите сложный маршрут в каждой местности",
+        "first-expedition-xp" => "Получите первый опыт в походе",
+        "individuals-at-required-level" => $"Вырастите {progress.Target} питомцев до ур. {progress.MinimumLevel}",
+        "first-feeding" => "Впервые покормите питомца",
+        "first-care-evolution-ready" => "Подготовьте питомца к эволюции заботой",
+        "distinct-cared-individuals" => $"Позаботьтесь о {progress.Target} питомцах",
+        "distinct-hatched-root-species" => $"Выведите {progress.Target} разных видов",
+        "distinct-species-transitions" => $"Откройте {progress.Target} новых эволюций",
+        "distinct-shiny-species" => $"Откройте {progress.Target} shiny-видов",
+        "trophy-special-nick" => "Дайте питомцу кличку",
+        "trophy-special-favorite" => "Добавьте питомца в избранное",
+        "trophy-special-type-team" => "Отправьте команду одного типа",
+        "trophy-special-bonus-find" => "Принесите особую находку из похода",
+        "trophy-special-nursery-expedition" => "Отправьте малыша из питомника в поход",
+        "trophy-special-family-expedition" => "Отправьте семью в поход",
+        "trophy-special-evolved-expedition" => "Отправьте развитого питомца в поход",
+        "trophy-special-all-berries" => "Соберите все виды ягод",
+        "trophy-special-berry-evolution" => "Используйте ягоды для эволюции",
+        "trophy-special-branch-choice" => "Выберите ветвь эволюции",
+        "trophy-special-offspring-choice" => "Выберите вид малыша",
+        "trophy-special-all-legends" => "Откройте все доступные легендарные виды",
+        "trophy-special-second-trait" => "Откройте вторую особенность",
+        "trophy-special-retrain" => "Измените особенность питомца",
+        "trophy-special-rehome" => "Отпустите питомца в добрые руки",
+        "trophy-special-xp-potion" => "Используйте зелье опыта",
+        _ => "Продолжайте путешествие"
+    };
 
     private void BackButton_Click(object sender, RoutedEventArgs e) => _back();
 }

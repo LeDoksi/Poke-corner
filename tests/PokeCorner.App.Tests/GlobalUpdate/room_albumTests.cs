@@ -132,21 +132,21 @@ public sealed class RoomAlbumTests
         var room = new RoomView(Art.Value, () => data, () => frames, () => { });
         WpfTestHost.Layout(room, 1448, 750);
         var image = (Image)room.FindName("PetImage");
-        Assert.Equal(first.PixelWidth * 3d, image.Width, 3);
-        Assert.Equal(first.PixelHeight * 3d, image.Height, 3);
+        Assert.Equal(first.PixelWidth * 5.07, image.Width, 3);
+        Assert.Equal(first.PixelHeight * 5.07, image.Height, 3);
         var alpha = OpaqueBounds(frames);
-        Assert.Equal(800, Canvas.GetLeft(image) + (alpha.Left + alpha.Right) * 1.5, 3);
-        Assert.Equal(524, Canvas.GetTop(image) + alpha.Bottom * 3d, 3);
+        Assert.Equal(800, Canvas.GetLeft(image) + (alpha.Left + alpha.Right) * 5.07 / 2, 3);
+        Assert.Equal(524, Canvas.GetTop(image) + alpha.Bottom * 5.07, 3);
         if (speciesId == 133)
         {
-            Assert.Equal(731, Canvas.GetLeft(image), 3);
-            Assert.Equal(383, Canvas.GetTop(image), 3);
+            Assert.Equal(683.39, Canvas.GetLeft(image), 3);
+            Assert.Equal(285.71, Canvas.GetTop(image), 3);
         }
         Assert.Equal(96, data.Settings.PetSizePixels);
     });
 
     [Fact]
-    public void TransparentAnimationUsesOneStableVisibleFootAndRelativeSavedSize() => WpfTestHost.Run(() =>
+    public void TransparentAnimationUsesOneStableVisibleFootIndependentOfDesktopSize() => WpfTestHost.Run(() =>
     {
         var person = new PokemonIndividual { SpeciesId = 25, CurrentSpeciesId = 25,
             FamilyRootId = 25, EvolutionChainId = 25, ChainLength = 1,
@@ -156,20 +156,20 @@ public sealed class RoomAlbumTests
         var room = new RoomView(Art.Value, () => data, () => frames, () => { });
         WpfTestHost.Layout(room, 1448, 750);
         var image = (Image)room.FindName("PetImage");
-        Assert.Equal(12, image.Width);
-        Assert.Equal(12, image.Height);
-        Assert.Equal(794, Canvas.GetLeft(image));
-        Assert.Equal(515, Canvas.GetTop(image));
+        Assert.Equal(20.28, image.Width, 3);
+        Assert.Equal(20.28, image.Height, 3);
+        Assert.Equal(789.86, Canvas.GetLeft(image), 3);
+        Assert.Equal(508.79, Canvas.GetTop(image), 3);
         var source = image.Source;
         room.Refresh();
         Assert.Same(source, image.Source);
-        Assert.Equal(794, Canvas.GetLeft(image));
-        Assert.Equal(515, Canvas.GetTop(image));
+        Assert.Equal(789.86, Canvas.GetLeft(image), 3);
+        Assert.Equal(508.79, Canvas.GetTop(image), 3);
         data.Settings.PetSizePixels = 192;
         room.Refresh();
-        Assert.Equal(24, image.Width);
-        Assert.Equal(788, Canvas.GetLeft(image));
-        Assert.Equal(506, Canvas.GetTop(image));
+        Assert.Equal(20.28, image.Width, 3);
+        Assert.Equal(789.86, Canvas.GetLeft(image), 3);
+        Assert.Equal(508.79, Canvas.GetTop(image), 3);
         Assert.Equal(192, data.Settings.PetSizePixels);
     });
 

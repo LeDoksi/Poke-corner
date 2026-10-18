@@ -6,18 +6,20 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <DockPanel Margin="20,14,20,12">
+        <DockPanel Margin="24,16,24,12">
             <Button Content="Назад в уголок" DockPanel.Dock="Right" Click="BackButton_Click"
                     Style="{StaticResource SecondaryButtonStyle}"
                     AutomationProperties.Name="Вернуться в уголок" />
-            <TextBlock Text="Достижения" Style="{StaticResource ScreenTitleTextStyle}" VerticalAlignment="Center" />
+            <TextBlock Text="Мои маленькие победы" Style="{StaticResource ScreenTitleTextStyle}" VerticalAlignment="Center" />
         </DockPanel>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="20,0,20,20">
-                <TextBlock Text="10 цепочек и 16 самостоятельных целей. В каждой цепочке одна карточка; будущий вид награды скрыт."
+            <StackPanel Margin="24,0,24,20">
+                <TextBlock Text="Три любимые награды можно поставить на полку."
                            TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,12" />
                 <TextBlock Text="Моя полка" Style="{StaticResource SectionHeaderTextStyle}" Margin="0,0,0,8" />
-                <WrapPanel x:Name="ShelfPanel" Margin="0,0,0,10" />
+                <Border Background="#EEE9D9" CornerRadius="10" Padding="16,8" Margin="0,0,0,10">
+                    <UniformGrid x:Name="ShelfPanel" Columns="3" />
+                </Border>
                 <TextBlock x:Name="MessageText" Text="Выберите открытую награду, затем место на полке. Нажмите занятое место без выбора, чтобы снять награду."
                            TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,16" />
                 <TextBlock Text="Альбом" Style="{StaticResource SectionHeaderTextStyle}" Margin="0,0,0,8" />

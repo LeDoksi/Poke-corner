@@ -6,14 +6,18 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <DockPanel Margin="20,14,20,12">
-            <Button x:Name="AchievementsButton" Content="Достижения" DockPanel.Dock="Right"
+        <DockPanel Margin="24,16,24,12">
+            <Button x:Name="AchievementsButton" Content="☆  Достижения" DockPanel.Dock="Right"
                     Style="{StaticResource SecondaryButtonStyle}" Click="AchievementsButton_Click"
                     AutomationProperties.Name="Открыть достижения и мою полку" />
-            <TextBlock Text="Мой уголок" Style="{StaticResource ScreenTitleTextStyle}" VerticalAlignment="Center" />
+            <StackPanel Margin="0,0,16,0">
+                <TextBlock Text="Мой уголок" Style="{StaticResource ScreenTitleTextStyle}" />
+                <TextBlock x:Name="PetCaption" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" MaxHeight="44" />
+            </StackPanel>
         </DockPanel>
-        <Viewbox Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+        <Grid Grid.Row="1" Margin="24,0"><Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                  SnapsToDevicePixels="True">
             <Canvas x:Name="Scene" Width="1448" Height="582" ClipToBounds="True">
                 <Image x:Name="RoomBackground" Width="1448" Height="582" Stretch="Fill" />
@@ -23,7 +27,34 @@
                 <Image x:Name="PetImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
             </Canvas>
         </Viewbox>
-        <TextBlock x:Name="PetCaption" Grid.Row="2" Margin="20,10,20,16"
-                   Style="{StaticResource CaptionTextStyle}" TextAlignment="Center" />
+            <TextBlock x:Name="MissingSpriteText" Text="Изображение питомца недоступно" Visibility="Collapsed"
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="12"
+                       Background="{StaticResource UiPaperBrush}" Padding="10" TextWrapping="Wrap" />
+        </Grid>
+        <UniformGrid Grid.Row="2" Columns="3" Margin="24,14,24,8">
+            <StackPanel Margin="0,0,16,0">
+                <TextBlock Text="Уход для эволюции" FontWeight="Bold" />
+                <TextBlock x:Name="CareText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
+                <ProgressBar x:Name="CareBar" Maximum="1" Height="7" Margin="0,6,0,0" />
+            </StackPanel>
+            <StackPanel Margin="0,0,16,0">
+                <TextBlock Text="Опыт и следующий покебол" FontWeight="Bold" />
+                <TextBlock x:Name="XpText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
+                <ProgressBar x:Name="CatchBar" Maximum="1" Height="7" Margin="0,6,0,0" />
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Лакомства" FontWeight="Bold" />
+                <TextBlock x:Name="TreatText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
+                <ProgressBar x:Name="TreatBar" Maximum="1" Height="7" Margin="0,6,0,0" />
+            </StackPanel>
+        </UniformGrid>
+        <DockPanel Grid.Row="3" Margin="24,8,24,18" LastChildFill="False">
+            <Button x:Name="DetailButton" Content="Карточка питомца" DockPanel.Dock="Left" Click="DetailButton_Click"
+                    Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0" />
+            <Button x:Name="FeedButton" Content="Покормить" DockPanel.Dock="Right" Click="FeedButton_Click"
+                    Style="{StaticResource UiPrimaryButtonStyle}" Margin="8,0,0,0" />
+            <Button x:Name="PetButton" Content="♡  Погладить" DockPanel.Dock="Right" Click="PetButton_Click"
+                    Style="{StaticResource SecondaryButtonStyle}" />
+        </DockPanel>
     </Grid>
 </UserControl>
