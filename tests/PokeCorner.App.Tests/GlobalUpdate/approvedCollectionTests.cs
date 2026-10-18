@@ -165,4 +165,24 @@ public sealed class ApprovedCollectionTests
         ((Button)view.FindName("DetailEvolveButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         Assert.Equal(new int?[] { 3, null }, selected);
     });
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MissingOrUnreadableArtworkKeepsExactIndividualReachable(bool corrupt) => WpfTestHost.Run(() =>
+    {
+        var directory = Path.Combine(Path.GetTempPath(), "collection-art-" + Guid.NewGuid()); Directory.CreateDirectory(directory);
+        try
+        {
+            var path = Path.Combine(directory, "pet.gif"); if (corrupt) File.WriteAllBytes(path, [1, 2, 3, 4]);
+            var state = new AppState(); var pet = Pet(1); state.Collection.Add(pet);
+            var view = new CollectionView(Vm(state), state, new SpriteCache(directory), () => {}, () => {}, () => {}, () => null, () => false, () => false,
+                getSpeciesAssetPath: (_, _) => path);
+            var card = Assert.IsType<PokedexCard>(Assert.Single(((ItemsControl)view.FindName("PokedexGrid")).Items));
+            Assert.Null(card.SpriteImage); Assert.True(view.OpenIndividual(pet.Id));
+            Assert.Equal(pet.Id, view.SelectedIndividualId);
+            Assert.Equal(Visibility.Visible, ((FrameworkElement)view.FindName("DetailSpritePlaceholder")).Visibility);
+        }
+        finally { Directory.Delete(directory, true); }
+    });
 }

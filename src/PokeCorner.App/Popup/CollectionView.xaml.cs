@@ -336,10 +336,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (path is null) return null;
         try
         {
+            // A failed URI decode can retain WPF's file cache handle. Scope the stream even on failure.
+            using var stream = File.OpenRead(path);
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.UriSource = new Uri(path);
+            bitmap.StreamSource = stream;
             bitmap.EndInit();
             bitmap.Freeze();
             _packageSprites[(speciesId, isShiny)] = bitmap;
