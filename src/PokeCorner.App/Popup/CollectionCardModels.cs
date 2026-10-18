@@ -25,7 +25,7 @@ public sealed class PokedexCard
     public string? SecondTraitId { get; init; }
     public string? DescriptionRu { get; init; }
     public string LevelText => $"Ур. {Level}";
-    public string AvailabilityText => IsBusy ? "Занят" : IsActive ? "На столе" : "Свободен";
+    public string AvailabilityText => IsBusy ? "Занят" : IsActive ? "На столе" : string.Empty;
     public required Guid IndividualId { get; init; }
 
     /// The individual's CURRENT evolution stage — what the sprite, dex number and name all
@@ -110,6 +110,8 @@ public sealed class EvolutionStageCard
     /// Which stage of the chain this card is, 0-based — needed so the click handler knows
     /// which stage was picked without re-deriving it from position in the ItemsControl.
     public required int StageIndex { get; init; }
+    public int Depth { get; init; }
+    public bool IsParallel { get; init; }
 
     public required bool IsRevealed { get; init; }
 

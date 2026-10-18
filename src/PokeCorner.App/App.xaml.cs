@@ -942,20 +942,63 @@ public partial class App : System.Windows.Application
                 // for individuals sitting on a migrated legacy chain id, not just real ones.
                 var lookupChains = _speciesCatalog.LoadForLookup();
                 var levels = new LevelProgression(_catalogPackage.DataRoot);
+                var collectionPresentation = new CollectionPresentation(_catalogPackage);
                 var collectionVm = new CollectionViewModel(_appState.Collection, _appState.CareStateByIndividualId, _careModeService, lookupChains, _appState.PendingEggs,
                     () => _appState.BusyIndividualIds, _catalogPackage.Species, () => _appState.DiscoveredSpeciesIds,
-                    _catalogPackage.GetRouteHints(), individual => levels.LevelForXp(individual.TotalXp));
+                    _catalogPackage.GetRouteHints(), individual => levels.LevelForXp(individual.TotalXp),
+                    () => _appState.NormalSpeciesIds, () => _appState.ShinySpeciesIds, collectionPresentation);
                 var shopView = new ShopView(_appState, _shopService,
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount,
                         next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual, _catalogPackage);
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, () => false, IsActiveIndividualReadyToEvolve, GetAnimatedFramesAsync,
+                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, () => false, IsActiveIndividualReadyToEvolve,
+                    (id, shiny) => _catalogPackage.CanObtain(id, shiny) ? GetAnimatedFramesAsync(id, shiny) : Task.FromResult<IReadOnlyList<byte[]>?>(null),
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
-                    (speciesId, shiny) => _catalogPackage.GetAssetPath(speciesId, shiny)
-                        ?? (shiny ? _catalogPackage.GetAssetPath(speciesId, false) : null),
+                    (speciesId, shiny) => _catalogPackage.GetAssetPath(speciesId, shiny),
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount),
                     PreviewEvolution, EvolveIndividualAsync, section => _menuWindow?.Navigate(section),
                     (berry, required) => shopView.SelectBerryShortage(berry, required), PreviewRehome, RehomeIndividualAsync,
-                    PreviewRetraining, RetrainIndividualAsync);
+                    PreviewRetraining, RetrainIndividualAsync,
+                    (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false),
+                    (id, item) =>
+                    {
+                        var pet = _appState.Collection.Individuals.FirstOrDefault(p => p.Id == id);
+                        var good = _shopService.Goods.Single(g => g.Id == item);
+                        var stock = _appState.Shop.Items.GetValueOrDefault(item);
+                        var reason = pet is null ? "Питомец не найден." : _appState.BusyIndividualIds.Contains(id)
+                            ? "Питомец занят в походе или питомнике." : !_catalogPackage.CanObtain(pet.CurrentSpeciesId, pet.IsShiny)
+                            ? "Для этой формы предмет пока недоступен." : stock < 1 ? "Предмета нет в запасе." : null;
+                        var effect = item == "care-booster" ? $"+{good.Units:N0} ухода для эволюции выбранному питомцу." : "Добавляет опыт выбранному питомцу.";
+                        if (pet is not null && item == "xp-potion")
+                        {
+                            var (useful, excess) = _shopService.PotionPreview(pet, levels);
+                            effect = $"Получит {useful} XP." + (excess > 0 ? $" Излишек {excess} XP будет потерян." : "");
+                            if (useful == 0) reason = "Максимальный уровень: зелье не расходуется.";
+                        }
+                        return new IndividualItemPreview(item, good.Name, stock, effect, reason);
+                    },
+                    async (id, item, operation) =>
+                    {
+                        PurchaseResult? result = null;
+                        await _appState.CommitAsync(_saveWriter, next =>
+                        {
+                            var pet = next.Individuals.FirstOrDefault(p => p.Id == id) ?? throw new InvalidOperationException("Питомец не найден.");
+                            if (ExpeditionService.BusyIndividualIds(next).Contains(id)) throw new InvalidOperationException("Питомец занят в походе или питомнике.");
+                            if (!_catalogPackage.CanObtain(pet.CurrentSpeciesId, pet.IsShiny)) throw new InvalidOperationException("Для этой формы предмет пока недоступен.");
+                            result = item == "care-booster" ? _shopService.TryUseCareBooster(next, id, operation)
+                                : _shopService.TryUseXpPotion(next, id, operation, levels, _catalogPackage);
+                            if (!result.Success) throw new InvalidOperationException(result.Message);
+                        }, () => _catchReadyCount);
+                        return result!;
+                    },
+                    id =>
+                    {
+                        var pet = _appState.Collection.Individuals.Single(p => p.Id == id);
+                        var level = levels.LevelForXp(pet.TotalXp);
+                        var start = levels.XpForLevel(level); var end = level == 40 ? start : levels.XpForLevel(level + 1);
+                        return level == 40 ? ("Опыт · максимальный уровень", 1d)
+                            : ($"Опыт · {pet.TotalXp - start} / {end - start} XP до уровня {level + 1}", (pet.TotalXp - start) / (double)(end - start));
+                    },
+                    (id, shiny) => collectionPresentation.WhereFind(id, shiny, shiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
                 var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync, () => _pendingCatchReveal = null);
                 if (_pendingCatchReveal is { } pendingCatchReveal) catchView.RestoreReveal(pendingCatchReveal);

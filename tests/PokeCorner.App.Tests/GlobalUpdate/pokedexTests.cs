@@ -273,13 +273,13 @@ public class PokedexTests
         Assert.Equal(3, grid.Items.Count);
         grid.SelectedIndex = 0;
         WpfTestHost.Layout(view, 420, 420);
-        Assert.Equal(2, ((ItemsControl)view.FindName("SpeciesOwnedList")).Items.Count);
+        Assert.Single(((ItemsControl)view.FindName("SpeciesOwnedList")).Items);
         Assert.True(view.OpenIndividual(second.Id));
         Assert.Equal(second.Id, view.SelectedIndividualId);
         WpfTestHost.Layout(view, 320, 420);
         Assert.True(((Border)view.FindName("DetailCard")).ActualWidth <= 320);
         Assert.Contains("Собиратель", ((TextBlock)view.FindName("DetailTraitsText")).Text);
-        Assert.Equal("Факт", ((TextBlock)view.FindName("DetailDescriptionText")).Text);
+        Assert.Equal(CollectionPresentation.Fact(1), ((TextBlock)view.FindName("DetailDescriptionText")).Text);
         Assert.False(view.OpenIndividual(Guid.NewGuid()));
 
         var card = Assert.IsType<Border>(((ItemsControl)view.FindName("PokedexGrid")).ItemTemplate.LoadContent());

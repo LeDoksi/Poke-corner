@@ -80,6 +80,7 @@ public static class SaveMigration
         next.PendingEggs.Clear();
         next.DiscoveredSpeciesIds = [];
         next.ShinySpeciesIds = [];
+        next.NormalSpeciesIds = [];
         next.EvolutionTransitions = [];
         next.AwardLedger = [];
         next.TrophyShelfIds = [];
@@ -106,6 +107,7 @@ public static class SaveMigration
             InitializeIndividual(individual, legacyLookup, catalog, rules.RootElement, balance.RootElement);
             next.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             if (individual.IsShiny) next.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+            next.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             for (var i = 1; i < individual.ReachedSpeciesIds.Count; i++)
                 next.EvolutionTransitions.Add($"{individual.ReachedSpeciesIds[i - 1]}->{individual.ReachedSpeciesIds[i]}");
         }
@@ -250,7 +252,7 @@ public static class SaveMigration
             if (!species.TryGetValue(individual.CurrentSpeciesId, out var current) ||
                 current.FamilyRootId != individual.FamilyRootId || individual.ReachedSpeciesIds.Any(id => !species.ContainsKey(id)))
                 throw new SaveLoadException(path, $"неверный вид/семья v2: {individual.Id}");
-        if (data.DiscoveredSpeciesIds.Concat(data.ShinySpeciesIds).Any(id => !species.ContainsKey(id)))
+        if (data.DiscoveredSpeciesIds.Concat(data.ShinySpeciesIds).Concat(data.NormalSpeciesIds).Any(id => !species.ContainsKey(id)))
             throw new SaveLoadException(path, "неверный открытый вид v2");
         if (data.Encounters.Any(e => e.KnownSpeciesId is { } id && !catalog.CanIssueDirectly(id, false)))
             throw new SaveLoadException(path, "недоступный вид в сохранённой встрече");

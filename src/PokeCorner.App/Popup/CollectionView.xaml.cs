@@ -36,6 +36,17 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Func<Guid, int, Guid, Task<RetrainingAction>>? _retrainIndividual;
     private readonly Action<MenuSection>? _navigate;
     private readonly Action<string, int>? _buyBerries;
+    private readonly Func<string, string, string, Task<bool>>? _confirm;
+    private readonly Func<Guid, string, IndividualItemPreview>? _previewItem;
+    private readonly Func<Guid, string, Guid, Task<PurchaseResult>>? _useItem;
+    private readonly Func<Guid, (string Text, double Fraction)>? _xpProgress;
+    private readonly Func<int, bool, string>? _whereFind;
+    private TaskCompletionSource<bool>? _localConfirmation;
+    private bool _detailPending;
+    private bool _speciesShiny;
+    private (Guid Pet, int? Branch, Guid Operation)? _pendingEvolution;
+    private (Guid Pet, Guid Operation)? _pendingRehome;
+    private readonly Dictionary<(Guid Pet, string Item), Guid> _pendingItems = new();
     private DispatcherTimer? _liveRefreshTimer;
 
     /// Same idle cadence the desktop overlay animates at, so the hero sprite and the pet on
@@ -126,7 +137,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Action<MenuSection>? navigate = null, Action<string, int>? buyBerries = null,
         Func<Guid, RehomeQuote>? previewRehome = null, Func<Guid, Guid, Task<RehomeAction>>? rehomeIndividual = null,
         Func<Guid, int, RetrainingPreview>? previewRetraining = null,
-        Func<Guid, int, Guid, Task<RetrainingAction>>? retrainIndividual = null)
+        Func<Guid, int, Guid, Task<RetrainingAction>>? retrainIndividual = null,
+        Func<string, string, string, Task<bool>>? confirmAsync = null,
+        Func<Guid, string, IndividualItemPreview>? previewItem = null,
+        Func<Guid, string, Guid, Task<PurchaseResult>>? useItem = null,
+        Func<Guid, (string Text, double Fraction)>? xpProgress = null,
+        Func<int, bool, string>? whereFind = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -150,6 +166,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _retrainIndividual = retrainIndividual;
         _navigate = navigate;
         _buyBerries = buyBerries;
+        _confirm = confirmAsync; _previewItem = previewItem; _useItem = useItem;
+        _xpProgress = xpProgress; _whereFind = whereFind;
+        LocalConfirmationHost.Completed += CompleteLocalConfirmation;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
         // rename there can never leave the filter pills saying something different.
@@ -166,6 +185,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void StartLiveRefresh()
     {
+        _liveRefreshTimer?.Stop();
         _liveRefreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _liveRefreshTimer.Tick += (_, _) => Refresh();
         _liveRefreshTimer.Start();
@@ -173,6 +193,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void StopLiveRefresh()
     {
+        _detailGeneration++;
+        CompleteLocalConfirmation(false);
         _liveRefreshTimer?.Stop();
         _liveRefreshTimer = null;
 
@@ -222,6 +244,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             RefreshDetailEvolution();
             RefreshDetailRetraining();
             RefreshDetailRehome();
+            RefreshDetailItems();
         }
     }
 
@@ -267,7 +290,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void RefreshSpecies()
     {
         if (!_isReady) return;
-        var all = _viewModel.GetSpeciesEntries();
+        var all = _viewModel.GetSpeciesEntries(_speciesShiny);
         var types = all.Where(e => e.IsDiscovered).SelectMany(e => e.Types).Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(typeName => typeName, StringComparer.OrdinalIgnoreCase).ToArray();
         var typeSignature = string.Join("|", types);
@@ -286,7 +309,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var rarity = (SpeciesRarityCombo.SelectedItem as ComboBoxItem)?.Tag as string;
         var sort = SpeciesSortCombo.SelectedIndex switch { 1 => SpeciesSortOrder.CatchDate, 2 => SpeciesSortOrder.Type, _ => SpeciesSortOrder.Number };
         var visible = CollectionViewModel.FilterSpecies(all, SpeciesSearchBox.Text, type, rarity,
-            SpeciesCanEvolve.IsChecked == true, sort);
+            false, sort);
         var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)SpeciesPageSize));
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
         SpeciesCountText.Text = $"Открыто видов: {all.Count(e => e.IsDiscovered)} · показано: {visible.Count}";
@@ -295,12 +318,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
         SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
         var page = visible.Skip(_speciesPageIndex * SpeciesPageSize).Take(SpeciesPageSize).ToList();
-        var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{SpeciesCanEvolve.IsChecked}|" +
+        var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{_speciesShiny}|" +
             string.Join("|", page.Select(e => $"{e.SpeciesId}:{e.IsDiscovered}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
         if (signature != _speciesSignature)
         {
             _speciesSignature = signature;
-            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId))).ToList();
+            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId, _speciesShiny))).ToList();
         }
         if (_selectedSpeciesId is { } id) ShowSpeciesDetail(all.FirstOrDefault(e => e.SpeciesId == id));
     }
@@ -322,7 +345,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             _packageSprites[(speciesId, isShiny)] = bitmap;
             return bitmap;
         }
-        catch (Exception error) when (error is IOException or NotSupportedException or System.Runtime.InteropServices.COMException)
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException or NotSupportedException or FormatException or System.Runtime.InteropServices.COMException)
         {
             _missingPackageSprites.Add((speciesId, isShiny));
             return null;
@@ -334,6 +357,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (SpeciesGrid.SelectedItem is not SpeciesCard card) return;
         _selectedSpeciesId = card.Entry.SpeciesId;
         ShowSpeciesDetail(card.Entry);
+        SpeciesDialog.Visibility = Visibility.Visible;
     }
 
     private void ShowSpeciesDetail(PokedexSpeciesEntry? entry)
@@ -341,12 +365,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesDetail.Visibility = entry is null ? Visibility.Collapsed : Visibility.Visible;
         if (entry is null) return;
         SpeciesDetailName.Text = entry.IsDiscovered ? $"{entry.Number} · {entry.DisplayName}" : entry.Number;
-        SpeciesDetailDescription.Text = entry.IsDiscovered ? entry.DescriptionRu : $"Подсказка: {entry.RouteHint}";
+        SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : entry.RouteHint;
         SpeciesDetailTypes.Text = entry.IsDiscovered ? string.Join(" · ", entry.Types.Select(TypeDisplay.GetLabel)) : string.Empty;
         SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : "Мои экземпляры";
         SpeciesOwnedList.ItemsSource = entry.OwnedIndividuals.Select(i => new IndividualChoice(i.IndividualId,
-            $"{(i.Nickname ?? entry.DisplayName)} · ур. {i.Level} · {(i.IsBusy ? "Занят" : i.IsActive ? "На столе" : "Свободен")} · {FormatCaughtDate(i.CaughtAtUtc)}{(i.IsShiny ? " · Shiny" : "")}"))
+            $"{(i.Nickname ?? entry.DisplayName)} · ур. {i.Level} · {(i.IsBusy ? "Занят" : i.IsActive ? "На столе" : "")} · {FormatCaughtDate(i.CaughtAtUtc)}{(i.IsShiny ? " · Shiny" : "")}"))
             .ToList();
     }
 
@@ -362,6 +386,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         var entry = _viewModel.GetEntry(id, DateTimeOffset.UtcNow);
         if (entry is null) return false;
+        SpeciesDialog.Visibility = Visibility.Collapsed;
         ShowDetail(BuildCard(entry));
         return true;
     }
@@ -373,8 +398,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         public string AccessibleName => Entry.AccessibleName;
         public string NameText => Entry.DisplayName ?? "Неизвестный вид";
         public string SubText => Entry.IsDiscovered
-            ? $"{string.Join(" · ", Entry.Types.Select(TypeDisplay.GetLabel))} · {RarityName} · {Entry.OwnedIndividuals.Count} моих"
+            ? $"{string.Join(" · ", Entry.Types.Select(TypeDisplay.GetLabel))} · {RarityName}"
             : Entry.HasSilhouette ? Entry.RouteHint : "Этот вид ещё никто не встречал";
+        public Visibility WhereVisibility => !Entry.IsDiscovered && !Entry.RouteHint.StartsWith("Эволюция") ? Visibility.Visible : Visibility.Collapsed;
         private string RarityName => Enum.TryParse<RarityTier>(Entry.Rarity, true, out var tier)
             ? RarityDisplay.GetName(tier) : Entry.Rarity ?? string.Empty;
         public Visibility RevealedVisibility => Entry.IsDiscovered && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
@@ -541,8 +567,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         _sortOrder = PokedexSortCombo.SelectedIndex switch
         {
-            1 => PokedexSortOrder.Type,
+            1 => PokedexSortOrder.Level,
             2 => PokedexSortOrder.CatchDate,
+            3 => PokedexSortOrder.Care,
             _ => PokedexSortOrder.Number
         };
         _pageIndex = 0;
@@ -575,13 +602,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
 
         // Filters narrow the owned list together before number, type, or catch-date sorting.
-        var visible = CollectionViewModel.ApplySort(entries
-            .Where(entry => _rarityFilter is null || entry.Rarity == _rarityFilter.Value)
-            .Where(entry => !_hideFullyEvolved || entry.HasEvolutionsRemaining)
-             .Where(entry => FavoritesFilterToggle.IsChecked != true || entry.IsFavorite)
-             .Where(entry => ShinyFilterToggle.IsChecked != true || entry.IsShiny)
-            .Where(entry => CollectionViewModel.MatchesSearch(entry, _searchQuery))
-            .ToList(), _sortOrder);
+        if (IndividualTypeCombo.Items.Count == 1)
+        {
+            foreach (var typeName in new[] { "normal", "grass", "poison", "fire", "water", "electric", "flying", "bug", "ground", "rock", "ice", "psychic", "dark", "ghost", "dragon", "fairy", "steel", "fighting" })
+                IndividualTypeCombo.Items.Add(new ComboBoxItem { Content = TypeDisplay.GetLabel(typeName), Tag = typeName });
+        }
+        var visible = CollectionViewModel.FilterIndividuals(entries, _searchQuery,
+            (IndividualTypeCombo.SelectedItem as ComboBoxItem)?.Tag as string, _rarityFilter,
+            _hideFullyEvolved, DuplicatesFilterToggle.IsChecked == true, FavoritesFilterToggle.IsChecked == true,
+            ShinyFilterToggle.IsChecked == true, _sortOrder);
 
         // Clamped rather than reset: releasing a Pokémon (or narrowing a filter) can shrink the
         // list past the page being read, and dumping the player back to page 1 for that would
@@ -637,7 +666,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         EvolutionState = entry.EvolutionState,
         CaughtAtText = FormatCaughtDate(entry.CaughtAtUtc),
         NatureText = entry.Nature.ToString(),
-        CanSelect = !entry.IsActive,
+        CanSelect = !entry.IsActive && !entry.IsBusy,
         IsShiny = entry.IsShiny,
         IsActive = entry.IsActive,
         IsFavorite = entry.IsFavorite,
@@ -654,13 +683,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         entry.EvolutionStages.Select(stage => new EvolutionStageCard
         {
             StageIndex = stage.StageIndex,
+            Depth = stage.Depth,
+            IsParallel = stage.IsParallel,
             IsRevealed = stage.IsRevealed,
             NameText = stage.IsRevealed ? stage.SpeciesName ?? "???" : "???",
             SpriteImage = stage.IsRevealed && stage.SpeciesId is { } id ? TryGetThumbnail(id, entry.IsShiny) : null,
             TypeBadges = TypeDisplay.ToBadges(stage.Types),
             IsCurrent = stage.IsCurrent,
             IsDisplayed = stage.IsDisplayed,
-            ShowArrow = stage.StageIndex < entry.EvolutionStages.Count - 1
+            ShowArrow = !stage.IsParallel && stage.StageIndex < entry.EvolutionStages.Count - 1
         }).ToList();
 
     /// Fires the one-per-species animated-sprite fetch, at most once per species per session.
@@ -753,7 +784,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void CollectionView_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
-        if (e.Key != System.Windows.Input.Key.Escape || DetailOverlay.Visibility != Visibility.Visible) return;
+        if (e.Key != System.Windows.Input.Key.Escape) return;
+        if (_localConfirmation is not null) { CompleteLocalConfirmation(false); e.Handled = true; return; }
+        if (SpeciesDialog.Visibility == Visibility.Visible) { SpeciesDialog.Visibility = Visibility.Collapsed; e.Handled = true; return; }
+        if (DetailOverlay.Visibility != Visibility.Visible) return;
         HideDetail();
         e.Handled = true;
     }
@@ -812,13 +846,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailLevelText.Text = card.LevelText;
         DetailBusyText.Text = card.AvailabilityText;
         DetailTraitsText.Text = "Особенности: " + string.Join(" · ",
-            new[] { card.FirstTraitId, card.SecondTraitId }.Where(id => !string.IsNullOrWhiteSpace(id)).Select(TraitLabel));
+            new[] { card.FirstTraitId, card.SecondTraitId }.Where(id => !string.IsNullOrWhiteSpace(id)).Select(id => TraitLabel(id) + " — " + TraitEffect(id)));
         DetailTraitsText.Visibility = card.FirstTraitId is null && card.SecondTraitId is null ? Visibility.Collapsed : Visibility.Visible;
-        DetailDescriptionText.Text = card.DescriptionRu ?? "Описание вида пока недоступно.";
+        DetailDescriptionText.Text = card.DescriptionRu ?? string.Empty;
+        DetailFactSection.Visibility = card.DescriptionRu is null ? Visibility.Collapsed : Visibility.Visible;
         DetailEvolutionBar.Value = card.EvolutionBarValue;
         DetailEvolutionBar.Opacity = card.EvolutionBarOpacity;
         DetailEvolutionBar.ToolTip = card.EvolutionToolTip;
-        DetailEvolutionText.Text = card.EvolutionLabel;
+        DetailEvolutionText.Text = card.EvolutionState == EvolutionProgressState.InProgress ? "Накопленный уход · точные условия ниже" : card.EvolutionLabel;
         DetailEvolutionText.Foreground = card.EvolutionState == EvolutionProgressState.InProgress
             ? ThemeBrushes.Get("SecondaryTextBrush")
             : ThemeBrushes.Get("MutedTextBrush");
@@ -836,10 +871,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailEvolutionChainSection.Visibility = card.EvolutionStages.Count > 0
             ? Visibility.Visible
             : Visibility.Collapsed;
-        DetailEvolutionChainStrip.ItemsSource = card.EvolutionStages;
+        RenderEvolutionGraph(card);
         _evolutionChoicesSignature = string.Empty;
         RefreshDetailEvolution();
         RefreshDetailRetraining();
+        RefreshDetailItems();
 
         DetailShinyBadge.Visibility = card.ShinyVisibility;
         DetailActiveBadge.Visibility = card.ActiveBadgeVisibility;
@@ -852,6 +888,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         ShowDetailSprite(card);
 
         DetailOverlay.Visibility = Visibility.Visible;
+        DetailScroll.ScrollToTop();
     }
 
     private void RefreshDetailEvolution()
@@ -866,20 +903,28 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _detailEvolutionPreview = preview;
         DetailEvolutionActionSection.Visibility = preview.Branches.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
         if (preview.Branches.Count == 0) return;
+        DetailEvolutionBar.Value = Math.Clamp(preview.CareOwned / (double)Math.Max(1, preview.CareRequired), 0, 1);
+        DetailEvolutionText.Text = $"{preview.CareOwned:N0} / {preview.CareRequired:N0} ухода";
         DetailEvolutionCostText.Text = $"Уход: {preview.CareOwned:N0} / {preview.CareRequired:N0} · Ягоды {preview.BerryId}: {preview.BerriesOwned} / {preview.BerryCost} · Камни: {preview.StonesOwned}";
         DetailEvolutionBlockedText.Text = preview.Branches.Any(x => !x.Available)
             ? "Недоступные ветви отмечены в списке; вариант без ресурса не подменяется."
             : string.Empty;
         UpdateEvolutionActionState();
+        var choicePossible = preview.Branches.Count(x => x.Available) > 1;
+        DetailEvolutionStoneToggle.Visibility = choicePossible ? Visibility.Visible : Visibility.Collapsed;
+        DetailEvolutionStoneToggle.IsEnabled = choicePossible && preview.StonesOwned > 0 && !_detailPending;
+        if (!choicePossible || preview.StonesOwned == 0) DetailEvolutionStoneToggle.IsChecked = false;
+        DetailStoneStockText.Text = $"В запасе: {preview.StonesOwned}";
+        DetailEvolutionBranchPicker.IsEnabled = DetailEvolutionStoneToggle.IsChecked == true && !_detailPending;
         var signature = string.Join("|", preview.Branches.Select(x => $"{x.SpeciesId}:{x.Available}"))
-            + ":" + string.Join("|", _appState.DiscoveredSpeciesIds.Order());
+            + ":" + string.Join("|", (_detailCard.IsShiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds).Order());
         if (signature == _evolutionChoicesSignature) return;
         var selected = (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int?;
         DetailEvolutionBranchPicker.Items.Clear();
         DetailEvolutionBranchPicker.Items.Add(new ComboBoxItem { Content = "Случайная доступная ветвь · без камня" });
         foreach (var branch in preview.Branches)
         {
-            var known = _appState.DiscoveredSpeciesIds.Contains(branch.SpeciesId);
+            var known = (_detailCard.IsShiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds).Contains(branch.SpeciesId);
             DetailEvolutionBranchPicker.Items.Add(new ComboBoxItem
             {
                 Tag = branch.SpeciesId,
@@ -892,6 +937,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             .FirstOrDefault(x => x.IsEnabled && x.Tag is int id && id == selected)
             ?? DetailEvolutionBranchPicker.Items[0];
         _evolutionChoicesSignature = signature;
+        RenderEvolutionTargets(preview);
         UpdateEvolutionActionState();
     }
 
@@ -901,47 +947,38 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void UpdateEvolutionActionState()
     {
         if (_detailEvolutionPreview is null) return;
-        var branch = (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int?;
+        var branch = SelectedEvolutionBranch;
         var needsStone = branch is not null && _detailEvolutionPreview.Branches.Count(x => x.Available) > 1;
         var reason = _detailEvolutionPreview.Reason
             ?? (needsStone && _detailEvolutionPreview.StonesOwned == 0 ? "Для выбора ветви нужен камень эволюции." : null);
         DetailEvolutionReasonText.Text = reason ?? string.Empty;
-        DetailEvolveButton.IsEnabled = reason is null && (_detailCard is null || !_evolvingIndividuals.Contains(_detailCard.IndividualId));
+        DetailEvolveButton.IsEnabled = reason is null && !_detailPending && (_detailCard is null || !_evolvingIndividuals.Contains(_detailCard.IndividualId));
     }
 
     private async void DetailEvolveButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_detailCard is null || _previewEvolution is null || _evolveIndividual is null) return;
-        var id = _detailCard.IndividualId;
-        var generation = _detailGeneration;
-        var branch = (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int?;
+        if (_detailPending || _detailCard is null || _previewEvolution is null || _evolveIndividual is null) return;
+        var id = _detailCard.IndividualId; var generation = _detailGeneration; var branch = SelectedEvolutionBranch;
         var preview = _previewEvolution(id);
         if (preview.Reason is not null) { DetailErrorText.Text = preview.Reason; return; }
-        if (branch is not null && !preview.Branches.Any(x => x.SpeciesId == branch && x.Available))
-        { DetailErrorText.Text = "Выбранная ветвь недоступна."; return; }
-        var choice = branch is null ? "случайную доступную ветвь" : $"ветвь #{branch}";
-        if (!ConfirmDialog.Ask("Подтвердить эволюцию?",
-            $"Потратить {preview.BerryCost} ягод {preview.BerryId} на {choice}?" +
-            (branch is not null && preview.Branches.Count(x => x.Available) > 1 ? " Будет потрачен камень выбора." : string.Empty),
-            "Эволюционировать", System.Windows.Window.GetWindow(this))) return;
-        if (!IsCurrentDetail(id, generation)) return;
-        _evolvingIndividuals.Add(id);
-        DetailEvolveButton.IsEnabled = false;
+        if (branch is not null && !preview.Branches.Any(x => x.SpeciesId == branch && x.Available)) return;
+        _detailPending = true; RefreshDetailItems(); UpdateEvolutionActionState();
         try
         {
-            await _evolveIndividual(id, branch, Guid.NewGuid());
-            Refresh();
-            if (IsCurrentDetail(id, generation)) OpenIndividual(id);
+            var choice = branch is null ? "случайную доступную ветвь" : $"ветвь #{branch:D4}";
+            if (!await ConfirmAsync("Подтвердить эволюцию?", $"Потратить {preview.BerryCost} ягод {preview.BerryId} на {choice}?"
+                + (branch is not null && preview.Branches.Count(x => x.Available) > 1 ? " Будет потрачен камень выбора." : ""), "Эволюционировать")) return;
+            if (!IsCurrentDetail(id, generation)) return;
+            if (_pendingEvolution is not { } pending || pending.Pet != id || pending.Branch != branch)
+                _pendingEvolution = (id, branch, Guid.NewGuid());
+            _evolvingIndividuals.Add(id);
+            var result = await _evolveIndividual(id, branch, _pendingEvolution.Value.Operation);
+            if (result.Success) _pendingEvolution = null;
+            _onStateChanged(); Refresh();
+            if (IsCurrentDetail(id, generation)) { OpenIndividual(id); DetailErrorText.Text = result.Message; }
         }
-        catch (Exception error)
-        {
-            if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message;
-        }
-        finally
-        {
-            _evolvingIndividuals.Remove(id);
-            if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailEvolution();
-        }
+        catch (Exception error) { if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message; }
+        finally { _detailPending = false; _evolvingIndividuals.Remove(id); Refresh(); }
     }
 
     private void DetailEvolutionShopButton_Click(object sender, RoutedEventArgs e)
@@ -975,7 +1012,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _detailRetrainingPreview = preview;
         DetailRetrainingCostText.Text = "Стоимость: " + string.Join(" · ",
             preview.Costs.Select(x => $"{x.BerryId}: {x.Owned} / {x.Required}"));
-        DetailRetrainingOutcomesText.Text = "Возможные новые особенности (равный шанс): " +
+        DetailRetrainingOutcomesText.Text = "Возможные новые особенности: " +
             string.Join(" · ", preview.Outcomes.Select(TraitLabel));
         DetailRetrainingReasonText.Text = preview.Reason ?? string.Empty;
         DetailRetrainButton.IsEnabled = preview.Reason is null && !_retrainingIndividuals.Contains(_detailCard.IndividualId);
@@ -988,24 +1025,26 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private async void DetailRetrainButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_detailCard is null || _previewRetraining is null || _retrainIndividual is null) return;
+        if (_detailPending || _detailCard is null || _previewRetraining is null || _retrainIndividual is null) return;
         var id = _detailCard.IndividualId;
         var generation = _detailGeneration;
         var slot = (DetailRetrainingSlotPicker.SelectedItem as ComboBoxItem)?.Tag as int? ?? 1;
         var preview = _previewRetraining(id, slot);
         if (preview.Reason is not null) { DetailRetrainingReasonText.Text = preview.Reason; return; }
         var cost = string.Join(", ", preview.Costs.Select(x => $"{x.Required} {x.BerryId}"));
-        if (!ConfirmDialog.Ask("Подтвердить переобучение?",
+        _detailPending = true;
+        DetailRetrainButton.IsEnabled = false;
+        try
+        {
+        if (!await ConfirmAsync("Подтвердить переобучение?",
             $"Потратить {cost} и случайно заменить {TraitLabel(preview.CurrentTraitId!)}? Возможные результаты: " +
-            string.Join(", ", preview.Outcomes.Select(TraitLabel)), "Переобучить", System.Windows.Window.GetWindow(this))) return;
+            string.Join(", ", preview.Outcomes.Select(TraitLabel)), "Переобучить")) return;
         if (!IsCurrentDetail(id, generation)) return;
         if (_pendingRetraining is not { } pending || pending.IndividualId != id || pending.Slot != slot)
             _pendingRetraining = (id, slot, Guid.NewGuid());
         var operationId = _pendingRetraining.Value.OperationId;
         _retrainingIndividuals.Add(id);
         DetailRetrainButton.IsEnabled = false;
-        try
-        {
             var result = await _retrainIndividual(id, slot, operationId);
             _pendingRetraining = null;
             Refresh();
@@ -1021,6 +1060,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         }
         finally
         {
+            _detailPending = false;
             _retrainingIndividuals.Remove(id);
             if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailRetraining();
         }
@@ -1036,6 +1076,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void HideDetail()
     {
+        CompleteLocalConfirmation(false);
         _detailGeneration++;
         DetailOverlay.Visibility = Visibility.Collapsed;
         _detailCard = null;
@@ -1159,7 +1200,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (IsCurrentDetail(individual.Id, generation))
         {
             var entry = _viewModel.GetEntry(individual.Id, DateTimeOffset.UtcNow);
-            if (entry is not null) DetailEvolutionChainStrip.ItemsSource = BuildEvolutionStageCards(entry);
+            if (entry is not null) RenderEvolutionGraph(BuildCard(entry));
             else HideDetail();
         }
 
@@ -1212,7 +1253,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// active (select), so the snapshot the overlay is rendering is stale the moment they run.
     private async void DetailSelectButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_detailCard is null) return;
+        if (_detailPending || _detailCard is null || _appState.BusyIndividualIds.Contains(_detailCard.IndividualId)) return;
         var id = _detailCard.IndividualId;
         var generation = _detailGeneration;
         if (_commitState is null) SelectIndividual(id);
@@ -1222,6 +1263,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             var committed = await CommitMutationAsync(next =>
             {
                 if (!next.Individuals.Any(i => i.Id == id)) throw new InvalidOperationException("Этот покемон больше не найден.");
+                if (ExpeditionService.BusyIndividualIds(next).Contains(id)) throw new InvalidOperationException("Питомец занят в походе или питомнике.");
                 next.ActiveIndividualId = id;
                 if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
                 care.LastInteractionUtc = DateTimeOffset.UtcNow;
@@ -1246,48 +1288,34 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailRehomeButton.Visibility = Visibility.Visible;
         DetailRehomeReasonText.Visibility = Visibility.Visible;
         DetailRehomeReasonText.Text = quote.Reason ?? $"Передача: +{quote.Coins} монет. Необратимо.";
-        DetailRehomeButton.IsEnabled = quote.Reason is null && !_rehomingIndividuals.Contains(_detailCard.IndividualId);
+        DetailRehomeButton.IsEnabled = quote.Reason is null && !_detailPending && !_rehomingIndividuals.Contains(_detailCard.IndividualId);
     }
 
     private async void DetailRehomeButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_detailCard is null || _previewRehome is null || _rehomeIndividual is null) return;
-        var id = _detailCard.IndividualId;
-        var generation = _detailGeneration;
-        if (_rehomingIndividuals.Contains(id)) return;
+        if (_detailPending || _detailCard is null || _previewRehome is null || _rehomeIndividual is null) return;
+        var id = _detailCard.IndividualId; var generation = _detailGeneration;
         var quote = _previewRehome(id);
-        if (quote.Reason is not null) { DetailErrorText.Text = quote.Reason; RefreshDetailRehome(); return; }
+        if (quote.Reason is not null) { DetailErrorText.Text = quote.Reason; return; }
         var nickname = LiveNickname(id);
         var name = nickname is null ? _detailCard.SpeciesName : $"{nickname} ({_detailCard.SpeciesName})";
-        if (!ConfirmDialog.Ask("Найти новый дом?",
-            $"Передать {name} за {quote.Coins} монет? Покемон покинет коллекцию навсегда. Это нельзя отменить.",
-            "Передать", System.Windows.Window.GetWindow(this))) return;
-        if (!IsCurrentDetail(id, generation)) return;
-        var current = _previewRehome(id);
-        if (current.Reason is not null || current.Coins != quote.Coins)
-        {
-            DetailErrorText.Text = current.Reason ?? "Условия передачи изменились. Проверьте сумму ещё раз.";
-            RefreshDetailRehome();
-            return;
-        }
-        _rehomingIndividuals.Add(id);
-        DetailRehomeButton.IsEnabled = false;
+        _detailPending = true; DetailRehomeButton.IsEnabled = false;
         try
         {
-            await _rehomeIndividual(id, Guid.NewGuid());
-            _onStateChanged();
-            Refresh();
-            if (IsCurrentDetail(id, generation)) HideDetail();
+            if (!await ConfirmAsync("Найти новый дом?", $"Передать {name} за {quote.Coins} монет? Покемон покинет коллекцию навсегда. Открытая форма останется в покедексе. Это нельзя отменить.", "Передать")) return;
+            if (!IsCurrentDetail(id, generation)) return;
+            var current = _previewRehome(id);
+            if (current.Reason is not null || current.Coins != quote.Coins)
+            { DetailErrorText.Text = current.Reason ?? "Условия передачи изменились. Проверьте сумму ещё раз."; return; }
+            if (_pendingRehome is not { } pending || pending.Pet != id) _pendingRehome = (id, Guid.NewGuid());
+            _rehomingIndividuals.Add(id);
+            var result = await _rehomeIndividual(id, _pendingRehome.Value.Operation);
+            if (result.Success) _pendingRehome = null;
+            _onStateChanged(); Refresh();
+            if (IsCurrentDetail(id, generation)) { if (result.Success) HideDetail(); else DetailErrorText.Text = result.Message; }
         }
-        catch (Exception error)
-        {
-            if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message;
-        }
-        finally
-        {
-            _rehomingIndividuals.Remove(id);
-            if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) RefreshDetailRehome();
-        }
+        catch (Exception error) { if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message; }
+        finally { _detailPending = false; _rehomingIndividuals.Remove(id); Refresh(); }
     }
 
     private async Task<bool> CommitMutationAsync(Action<SaveData> update, Guid id, int generation)
@@ -1328,6 +1356,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private ImageSource? TryGetThumbnail(int speciesId, bool isShiny = false)
     {
         if (_getSpeciesAssetPath is not null) return GetPackageSprite(speciesId, isShiny);
+        if (isShiny) return null; // Legacy PNG cache contains only ordinary artwork.
         if (_spriteThumbnails.TryGetValue(speciesId, out var cached)) return cached;
 
         var bytes = _spriteCache.TryGetCachedBytes(speciesId);
@@ -1369,6 +1398,125 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private static string FormatCaughtDate(DateTimeOffset caughtAtUtc) =>
         caughtAtUtc.ToLocalTime().ToString("dd.MM.yyyy", CultureInfo.CurrentCulture);
 
+    private void SpeciesForm_Changed(object sender, RoutedEventArgs e)
+    {
+        if (!_isReady) return;
+        _speciesShiny = SpeciesShinyToggle.IsChecked == true;
+        _selectedSpeciesId = null; SpeciesDialog.Visibility = Visibility.Collapsed;
+        _speciesPageIndex = 0; _speciesSignature = string.Empty; RefreshSpecies();
+    }
+    private void IndividualType_Changed(object sender, SelectionChangedEventArgs e) => IndividualExtraFilter_Changed(sender, e);
+    private void DetailBack_Click(object sender, RoutedEventArgs e) => HideDetail();
+    private void SpeciesBack_Click(object sender, RoutedEventArgs e) => SpeciesDialog.Visibility = Visibility.Collapsed;
+    private void SpeciesWhere_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not System.Windows.Controls.Button { Tag: int id }) return;
+        var entry = _viewModel.GetSpeciesEntries(_speciesShiny).FirstOrDefault(x => x.SpeciesId == id);
+        _selectedSpeciesId = id; ShowSpeciesDetail(entry); SpeciesDialog.Visibility = Visibility.Visible;
+        if (entry is not null) SpeciesDetailDescription.Text = _whereFind?.Invoke(id, _speciesShiny) ?? entry.RouteHint;
+    }
+    private Task<bool> ConfirmAsync(string title, string body, string caption)
+    {
+        if (_confirm is not null) return _confirm(title, body, caption);
+        if (System.Windows.Window.GetWindow(this) is AppMenuWindow shell) return shell.ConfirmAsync(title, body, caption);
+        if (_localConfirmation is not null) return Task.FromResult(false);
+        _localConfirmation = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        var task = _localConfirmation.Task; LocalConfirmationHost.Present(title, body, caption); return task;
+    }
+    private void CompleteLocalConfirmation(bool result)
+    {
+        var pending = _localConfirmation; _localConfirmation = null;
+        LocalConfirmationHost.Visibility = Visibility.Collapsed; pending?.TrySetResult(result);
+    }
+    private int? SelectedEvolutionBranch => DetailEvolutionStoneToggle.IsChecked == true
+        ? (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int? : null;
+    private void EvolutionStone_Changed(object sender, RoutedEventArgs e)
+    {
+        if (!_isReady) return;
+        if (DetailEvolutionStoneToggle.IsChecked != true) DetailEvolutionBranchPicker.SelectedIndex = 0;
+        else if ((DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag is not int)
+            DetailEvolutionBranchPicker.SelectedItem = DetailEvolutionBranchPicker.Items.Cast<ComboBoxItem>().FirstOrDefault(x => x.IsEnabled && x.Tag is int);
+        DetailEvolutionBranchPicker.IsEnabled = DetailEvolutionStoneToggle.IsChecked == true && !_detailPending;
+        UpdateEvolutionActionState();
+    }
+    private void RefreshDetailItems()
+    {
+        if (_detailCard is null) return;
+        var xp = _xpProgress?.Invoke(_detailCard.IndividualId);
+        DetailXpText.Text = xp?.Text ?? $"Опыт · уровень {_detailCard.Level}"; DetailXpBar.Value = xp?.Fraction ?? 0;
+        foreach (var item in new[] { "care-booster", "xp-potion" })
+        {
+            var preview = _previewItem?.Invoke(_detailCard.IndividualId, item);
+            var text = item == "care-booster" ? DetailCareBoosterText : DetailXpPotionText;
+            var button = item == "care-booster" ? DetailCareBoosterButton : DetailXpPotionButton;
+            text.Text = preview is null ? (item == "care-booster" ? "Бустер ухода" : "Зелье опыта") + " · нет в запасе"
+                : $"{preview.Name} · в запасе: {preview.Stock}\n{preview.Effect}" + (preview.Reason is null ? "" : $"\n{preview.Reason}");
+            button.IsEnabled = !_detailPending && preview is { Stock: > 0, Reason: null } && _useItem is not null;
+        }
+    }
+    private async void DetailItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailPending || _detailCard is null || _previewItem is null || _useItem is null || sender is not System.Windows.Controls.Button { Tag: string item }) return;
+        var id = _detailCard.IndividualId; var generation = _detailGeneration; var preview = _previewItem(id, item);
+        if (preview.Reason is not null || preview.Stock < 1) return;
+        _detailPending = true; RefreshDetailItems();
+        try
+        {
+            if (!await ConfirmAsync(preview.Name, $"Применить к {_detailCard.DisplayName}? {preview.Effect} Будет потрачен 1 предмет.", "Применить")) return;
+            if (!IsCurrentDetail(id, generation)) return;
+            var key = (id, item);
+            if (!_pendingItems.TryGetValue(key, out var operation)) _pendingItems[key] = operation = Guid.NewGuid();
+            var result = await _useItem(id, item, operation);
+            if (result.Success) _pendingItems.Remove(key);
+            _onStateChanged(); Refresh();
+            if (IsCurrentDetail(id, generation)) { OpenIndividual(id); DetailErrorText.Text = result.Message; }
+        }
+        catch (Exception error) { if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message; }
+        finally { _detailPending = false; Refresh(); }
+    }
+    private void RenderEvolutionGraph(PokedexCard card)
+    {
+        DetailEvolutionChainStrip.ItemsSource = card.EvolutionStages.GroupBy(x => x.IsParallel ? x.Depth : x.StageIndex).Select(group =>
+        {
+            var row = new WrapPanel { HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
+            foreach (var stage in group)
+            {
+                var contents = new StackPanel(); contents.Children.Add(new System.Windows.Controls.Image { Source = stage.SpriteImage, Width = 64, Height = 64 });
+                contents.Children.Add(new TextBlock { Text = stage.NameText, TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center });
+                if (stage.IsCurrent) contents.Children.Add(new TextBlock { Text = "Сейчас", TextAlignment = TextAlignment.Center });
+                var tile = new Border { Child = contents, Width = 96, Padding = new Thickness(6), Margin = new Thickness(3), BorderThickness = new Thickness(1), BorderBrush = stage.BorderBrush, DataContext = stage };
+                if (stage.IsRevealed) tile.MouseLeftButtonDown += DetailEvolutionStage_Click;
+                row.Children.Add(tile);
+            }
+            return row;
+        }).ToArray();
+    }
+    private void RenderEvolutionTargets(EvolutionPreview preview)
+    {
+        if (_detailCard is null) return;
+        var targets = preview.Branches.Select(branch =>
+        {
+            var known = (_detailCard.IsShiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds).Contains(branch.SpeciesId);
+            var panel = new StackPanel { Width = 108, Margin = new Thickness(4) };
+            panel.Children.Add(new System.Windows.Controls.Image { Source = known ? TryGetThumbnail(branch.SpeciesId, _detailCard.IsShiny) : null, Width = 80, Height = 80 });
+            panel.Children.Add(new TextBlock { Text = known ? branch.Name : $"#{branch.SpeciesId:D4} · ?", TextAlignment = TextAlignment.Center, TextWrapping = TextWrapping.Wrap });
+            if (!branch.Available) panel.Children.Add(new TextBlock { Text = "Недоступно", TextAlignment = TextAlignment.Center });
+            return panel;
+        }).ToList();
+        var current = new StackPanel { Width = 108, Margin = new Thickness(4) };
+        current.Children.Add(new System.Windows.Controls.Image { Source = _detailCard.SpriteImage, Width = 80, Height = 80 });
+        current.Children.Add(new TextBlock { Text = _detailCard.SpeciesName + " →", TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center });
+        targets.Insert(0, current); DetailEvolutionTargets.ItemsSource = targets;
+    }
+    internal static string TraitEffect(string? id) => id switch
+    {
+        "gatherer" => "Больше ягод", "treasure-hunter" => "Больше монет", "tracker" => "Больше встреч",
+        "finder" => "Больше находок", "mentor" => "Больше опыта команде", "collector" => "Больше новых видов",
+        "relic-finder" => "Больше особых предметов", "terrain-expert" => "Быстрее проходит маршрут",
+        "fast-grower" => "Быстрее готовится к эволюции", "rarity-expert" => "Помогает встретить редкий вид",
+        "caring-parent" => "Ускоряет ожидание в питомнике", _ => ""
+    };
+
     internal static string TraitLabel(string? id) => id switch
     {
         "gatherer" => "Собиратель",
@@ -1389,5 +1537,5 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
 internal static class CollectionEntryFormatting
 {
-    public static string DexNumberText(this CollectionEntry entry) => $"#{entry.DisplaySpeciesId:D3}";
+    public static string DexNumberText(this CollectionEntry entry) => $"#{entry.DisplaySpeciesId:D4}";
 }

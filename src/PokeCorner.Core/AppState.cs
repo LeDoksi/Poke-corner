@@ -30,6 +30,8 @@ public sealed class AppState
     public Guid? RunningExpeditionId => HasRunningExpedition ? _metadata!.Expedition!.Id : null;
     public DateTimeOffset? ExpeditionReadyAtUtc => _metadata?.Expedition?.Status == "running" ? _metadata.Expedition.ReadyAtUtc : null;
     public IReadOnlySet<Guid> BusyIndividualIds => _metadata is null ? new HashSet<Guid>() : ExpeditionService.BusyIndividualIds(_metadata);
+    public IReadOnlySet<int> NormalSpeciesIds => _metadata?.NormalSpeciesIds ?? new HashSet<int>();
+    public IReadOnlySet<int> ShinySpeciesIds => _metadata?.ShinySpeciesIds ?? new HashSet<int>();
     public IReadOnlySet<int> DiscoveredSpeciesIds => _metadata?.DiscoveredSpeciesIds ?? new HashSet<int>();
 
     public void QueueActivityEncounter(Guid operationId)
@@ -282,9 +284,11 @@ public sealed class AppState
             {
                 data.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
                 if (individual.IsShiny) data.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+                else data.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             }
             _metadata!.DiscoveredSpeciesIds.UnionWith(data.DiscoveredSpeciesIds);
             _metadata.ShinySpeciesIds.UnionWith(data.ShinySpeciesIds);
+            _metadata.NormalSpeciesIds.UnionWith(data.NormalSpeciesIds);
         }
         return JsonSaveStore.Clone(data);
     }

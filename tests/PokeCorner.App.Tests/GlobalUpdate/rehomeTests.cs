@@ -220,7 +220,8 @@ public sealed class RehomeTests
             new SpriteCache(Path.Combine(Path.GetTempPath(), "rehome-card", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => false,
             previewRehome: individualId => new RehomingService(Catalog.Value, live.ToSaveData(0)).Quote(individualId),
-            rehomeIndividual: (_, _) => { commits++; return Task.FromResult(new RehomeAction(true, "test")); });
+            rehomeIndividual: (_, _) => { commits++; return Task.FromResult(new RehomeAction(true, "test")); },
+            confirmAsync: (_, body, _) => { Assert.Contains("навсегда", body); Assert.Contains("12 монет", body); return Task.FromResult(false); });
         Assert.True(view.OpenIndividual(data.Individuals[0].Id));
         Assert.False(((Button)view.FindName("DetailRehomeButton")).IsEnabled);
         Assert.Contains("замен", ((TextBlock)view.FindName("DetailRehomeReasonText")).Text);
@@ -228,21 +229,8 @@ public sealed class RehomeTests
         WpfTestHost.Layout(view, 320, 420);
         Assert.True(((Border)view.FindName("DetailCard")).ActualWidth <= 320);
         Assert.Contains("12 монет", ((TextBlock)view.FindName("DetailRehomeReasonText")).Text);
-        var opened = false;
-        var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-        timer.Tick += (_, _) =>
-        {
-            var dialog = Application.Current.Windows.OfType<ConfirmDialog>().FirstOrDefault(x => x.IsVisible &&
-                ((TextBlock)x.FindName("TitleText")).Text == "Найти новый дом?");
-            if (dialog is null) return;
-            opened = true;
-            timer.Stop();
-            dialog.Close();
-        };
-        timer.Start();
         ((Button)view.FindName("DetailRehomeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        timer.Stop();
-        Assert.True(opened);
+
         Assert.Equal(0, commits);
         Assert.Equal(id, view.SelectedIndividualId);
         Assert.Equal(2, live.Collection.Individuals.Count);
@@ -267,20 +255,9 @@ public sealed class RehomeTests
                 new SpriteCache(Path.Combine(Path.GetTempPath(), "rehome-delayed", Guid.NewGuid().ToString("N"))),
                 () => { }, () => { }, () => { }, () => null, () => false, () => false,
                 previewRehome: id => new RehomingService(Catalog.Value, live.ToSaveData(0)).Quote(id),
-                rehomeIndividual: (_, _) => gate.Task);
+                rehomeIndividual: (_, _) => gate.Task, confirmAsync: (_, _, _) => Task.FromResult(true));
             Assert.True(view.OpenIndividual(target));
-            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-            timer.Tick += (_, _) =>
-            {
-                var dialog = Application.Current.Windows.OfType<ConfirmDialog>().FirstOrDefault(x => x.IsVisible &&
-                    ((TextBlock)x.FindName("TitleText")).Text == "Найти новый дом?");
-                if (dialog is null) return;
-                timer.Stop();
-                ((Button)dialog.FindName("ConfirmButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-            };
-            timer.Start();
             ((Button)view.FindName("DetailRehomeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-            timer.Stop();
             Assert.True(view.OpenIndividual(other));
         });
         gate.SetException(new IOException("delayed write failure"));

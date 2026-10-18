@@ -182,7 +182,7 @@ public class ThemeRenderingTests
             var grid = (ItemsControl)view.FindName("PokedexGrid");
             var card = Assert.IsType<PokedexCard>(Assert.Single(grid.ItemsSource.Cast<object>()));
 
-            Assert.Equal("#004", card.DexNumber);
+            Assert.Equal("#0004", card.DexNumber);
             Assert.Equal("Hardy", card.NatureText);
             Assert.Equal(DateTimeOffset.UtcNow.ToLocalTime().ToString("dd.MM.yyyy"), card.CaughtAtText);
             Assert.NotNull(card.RarityBrush);
@@ -483,6 +483,10 @@ public class ThemeRenderingTests
 
             foreach (var name in new[] { "DetailSelectButton", "DetailRehomeButton" })
             {
+                // Approved whole card puts desktop selection near the name and rehome at the end.
+                // Check each at its reachable scroll position, retaining the actual viewport bounds assertion.
+                if (name == "DetailSelectButton") scroller.ScrollToTop(); else scroller.ScrollToBottom();
+                WpfTestHost.Layout(view, windowWidth, windowHeight);
                 var button = (System.Windows.Controls.Button)view.FindName(name)!;
                 var transform = button.TransformToAncestor(view);
                 var top = transform.Transform(new Point(0, 0)).Y;
@@ -1000,6 +1004,7 @@ public class ThemeRenderingTests
         WpfTestHost.Run(() =>
         {
             var view = BuildCollectionView();
+            CollectionTabs(view).SelectedIndex = 0; // Explicitly exercise the retained legacy hero.
             WpfTestHost.Layout(view);
 
             var iconStyles = Descendants(view).OfType<ContentControl>()
@@ -1383,9 +1388,10 @@ public class ThemeRenderingTests
                     new[] { new[] { "fire" }, new[] { "fire" }, new[] { "fire", "flying" } })
             };
             var view = BuildCollectionView(appState, chains);
+            Assert.True(view.OpenIndividual(appState.Collection.Individuals.Single().Id));
             WpfTestHost.Layout(view);
 
-            var badges = (System.Windows.Controls.ItemsControl)view.FindName("ActiveTypeBadges")!;
+            var badges = (System.Windows.Controls.ItemsControl)view.FindName("DetailTypeBadges")!;
             var labels = Descendants<TextBlock>(badges).Select(t => t.Text).ToList();
 
             Assert.Contains("Огонь", labels);

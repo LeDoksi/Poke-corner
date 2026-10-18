@@ -128,6 +128,7 @@ public sealed class EncounterService
         state.Individuals.Add(individual);
         state.DiscoveredSpeciesIds.Add(individual.SpeciesId);
         if (individual.IsShiny) state.ShinySpeciesIds.Add(individual.SpeciesId);
+        else state.NormalSpeciesIds.Add(individual.SpeciesId);
         if (state.ActiveIndividualId is null && state.Individuals.Count == 1) state.ActiveIndividualId = individual.Id;
         if (encounter.Source == "gift")
         {

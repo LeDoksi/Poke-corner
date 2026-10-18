@@ -37,6 +37,8 @@ public sealed record CollectionEntry(
 {
     public int Level { get; init; } = 1;
     public bool IsBusy { get; init; }
+    public int CurrentSpeciesId { get; init; }
+    public int CarePoints { get; init; }
     public string? FirstTraitId { get; init; }
     public string? SecondTraitId { get; init; }
     public string? DescriptionRu { get; init; }
@@ -62,6 +64,8 @@ public sealed record EvolutionStagePreview(
     /// Reached stages are revealed; everything past the individual's current stage is a
     /// silhouette. Derived from the presence of the identity rather than stored separately, so
     /// the two can never contradict each other.
+    public int Depth { get; init; }
+    public bool IsParallel { get; init; }
     public bool IsRevealed => SpeciesId is not null;
 }
 
@@ -91,12 +95,17 @@ public sealed class CollectionViewModel
     private readonly Func<IReadOnlySet<int>> _discoveredSpeciesIds;
     private readonly IReadOnlyDictionary<int, string> _routeHints;
     private readonly Func<PokemonIndividual, int> _levelFor;
+    private readonly CollectionPresentation? _presentation;
+    private readonly Func<IReadOnlySet<int>> _normalSpeciesIds;
+    private readonly Func<IReadOnlySet<int>> _shinySpeciesIds;
 
     public CollectionViewModel(PokemonCollection collection, IDictionary<Guid, CareState> careStates, CareModeService careModeService, IReadOnlyList<SpeciesEvolutionChain> chains, IReadOnlyList<PendingEgg> pendingEggs, Func<IReadOnlySet<Guid>>? busyIndividualIds = null,
         IReadOnlyList<CatalogSpecies>? species = null, Func<IReadOnlySet<int>>? discoveredSpeciesIds = null,
-        IReadOnlyDictionary<int, string>? routeHints = null, Func<PokemonIndividual, int>? levelFor = null)
+        IReadOnlyDictionary<int, string>? routeHints = null, Func<PokemonIndividual, int>? levelFor = null,
+        Func<IReadOnlySet<int>>? normalSpeciesIds = null, Func<IReadOnlySet<int>>? shinySpeciesIds = null, CollectionPresentation? presentation = null)
     {
         _collection = collection;
+        _presentation = presentation;
         _careStates = careStates;
         _careModeService = careModeService;
         _chains = chains;
@@ -107,6 +116,8 @@ public sealed class CollectionViewModel
         _discoveredSpeciesIds = discoveredSpeciesIds ?? (() => new HashSet<int>());
         _routeHints = routeHints ?? new Dictionary<int, string>();
         _levelFor = levelFor ?? (_ => 1);
+        _normalSpeciesIds = normalSpeciesIds ?? _discoveredSpeciesIds;
+        _shinySpeciesIds = shinySpeciesIds ?? (() => new HashSet<int>());
     }
 
     public CollectionEntry? GetEntry(Guid id, DateTimeOffset nowUtc) =>
@@ -119,17 +130,17 @@ public sealed class CollectionViewModel
         return ids.Length == 1 ? ids[0] : null;
     }
 
-    public IReadOnlyList<PokedexSpeciesEntry> GetSpeciesEntries()
+    public IReadOnlyList<PokedexSpeciesEntry> GetSpeciesEntries(bool isShiny = false)
     {
-        var discovered = _discoveredSpeciesIds().ToHashSet();
-        foreach (var individual in _collection.Individuals)
+        var discovered = (isShiny ? _shinySpeciesIds() : _normalSpeciesIds()).ToHashSet();
+        foreach (var individual in _collection.Individuals.Where(i => i.IsShiny == isShiny))
         {
             discovered.Add(individual.SpeciesId);
             discovered.UnionWith(individual.ReachedSpeciesIds);
             discovered.Add(ResolveCurrentSpeciesId(individual));
         }
         var busy = _busyIndividualIds();
-        var ownedBySpecies = _collection.Individuals.GroupBy(ResolveCurrentSpeciesId)
+        var ownedBySpecies = _collection.Individuals.Where(i => i.IsShiny == isShiny).GroupBy(ResolveCurrentSpeciesId)
             .ToDictionary(group => group.Key, group => group.ToArray());
         return _species.OrderBy(species => species.Id).Select(species =>
         {
@@ -143,8 +154,9 @@ public sealed class CollectionViewModel
                 open ? species.DescriptionRu : null,
                 open ? species.Types : [],
                 open ? species.Rarity : null,
-                _routeHints.GetValueOrDefault(species.Id) ?? "Местность пока неизвестна",
-                open, species.NormalAvailable,
+                _presentation?.WhereFind(species.Id, isShiny, discovered) ??
+                    (species.FamilyRootId > 0 && species.FamilyRootId != species.Id ? $"Эволюция из #{species.FamilyRootId:D4}" : _routeHints.GetValueOrDefault(species.Id) ?? "Местность пока неизвестна"),
+                open, isShiny ? species.ShinyAvailable : species.NormalAvailable,
                 open && current.Any(i => (int)i.CurrentStage < i.ChainLength - 1), owned);
         }).ToList();
     }
@@ -212,10 +224,12 @@ public sealed class CollectionViewModel
                 HasEvolutionsRemaining: (int)individual.CurrentStage < individual.ChainLength - 1)
             {
                 Level = _levelFor(individual),
+                CurrentSpeciesId = ResolveCurrentSpeciesId(individual),
+                CarePoints = individual.AccumulatedCarePoints,
                 IsBusy = _busyIndividualIds().Contains(individual.Id),
                 FirstTraitId = individual.FirstTraitId,
                 SecondTraitId = individual.SecondTraitId,
-                DescriptionRu = _speciesById.GetValueOrDefault(displaySpeciesId)?.DescriptionRu
+                DescriptionRu = CollectionPresentation.Fact(displaySpeciesId)
             };
         }).ToList();
 
@@ -227,6 +241,26 @@ public sealed class CollectionViewModel
     /// simply doesn't render.
     private IReadOnlyList<EvolutionStagePreview> BuildEvolutionPreview(PokemonIndividual individual)
     {
+        if (_presentation is not null)
+        {
+            var root = individual.FamilyRootId > 0 ? individual.FamilyRootId : individual.SpeciesId;
+            var reached = individual.ReachedSpeciesIds.Count > 0 ? individual.ReachedSpeciesIds : [individual.SpeciesId];
+            var queue = new Queue<(int Id, int Depth)>(); queue.Enqueue((root, 0));
+            var visited = new HashSet<int>(); var graph = new List<EvolutionStagePreview>();
+            while (queue.TryDequeue(out var node))
+            {
+                if (!visited.Add(node.Id)) continue;
+                var revealed = reached.Contains(node.Id);
+                var stage = reached.IndexOf(node.Id);
+                graph.Add(new EvolutionStagePreview(stage, revealed ? node.Id : null,
+                    revealed ? _speciesById.GetValueOrDefault(node.Id)?.DisplayName : null,
+                    revealed ? _speciesById.GetValueOrDefault(node.Id)?.Types ?? [] : [],
+                    node.Id == ResolveCurrentSpeciesId(individual), node.Id == ResolveDisplaySpeciesId(individual))
+                    { Depth = node.Depth, IsParallel = true });
+                foreach (var target in _presentation.Targets.GetValueOrDefault(node.Id) ?? []) queue.Enqueue((target, node.Depth + 1));
+            }
+            return graph.Count > 1 ? graph : [];
+        }
         var chain = _chains.FirstOrDefault(c => c.ChainId == individual.EvolutionChainId);
         var explicitSpecies = individual.CurrentSpeciesId > 0;
         if (!explicitSpecies && (chain is null || chain.ChainLength <= 1)) return Array.Empty<EvolutionStagePreview>();
@@ -338,7 +372,23 @@ public sealed class CollectionViewModel
         var needle = query.Trim();
 
         return entry.SpeciesName.Contains(needle, StringComparison.OrdinalIgnoreCase)
-            || (entry.Nickname?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false);
+            || (entry.Nickname?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false)
+            || entry.DexNumberText().Contains(needle, StringComparison.OrdinalIgnoreCase)
+            || entry.DisplaySpeciesId.ToString().Contains(needle.TrimStart('#'), StringComparison.OrdinalIgnoreCase);
+    }
+
+    public static IReadOnlyList<CollectionEntry> FilterIndividuals(IReadOnlyList<CollectionEntry> entries,
+        string? query, string? type, RarityTier? rarity, bool growth, bool duplicates, bool favorite, bool shiny,
+        PokedexSortOrder sort = PokedexSortOrder.Number)
+    {
+        var duplicateIds = entries.GroupBy(e => e.CurrentSpeciesId > 0 ? e.CurrentSpeciesId : e.DisplaySpeciesId)
+            .Where(g => g.Count() > 1).Select(g => g.Key).ToHashSet();
+        return ApplySort(entries.Where(e => MatchesSearch(e, query))
+            .Where(e => type is null || e.Types.Contains(type, StringComparer.OrdinalIgnoreCase))
+            .Where(e => rarity is null || e.Rarity == rarity)
+            .Where(e => !growth || e.HasEvolutionsRemaining)
+            .Where(e => !duplicates || duplicateIds.Contains(e.CurrentSpeciesId > 0 ? e.CurrentSpeciesId : e.DisplaySpeciesId))
+            .Where(e => !favorite || e.IsFavorite).Where(e => !shiny || e.IsShiny).ToList(), sort);
     }
 
     /// Re-orders an already-filtered entry list. Default leaves GetEntries' own banded order
@@ -347,6 +397,8 @@ public sealed class CollectionViewModel
     /// newest-first, matching "what did I just get" being the more common reason to sort by it.
     public static IReadOnlyList<CollectionEntry> ApplySort(IReadOnlyList<CollectionEntry> entries, PokedexSortOrder order) => order switch
     {
+        PokedexSortOrder.Level => entries.OrderByDescending(e => e.Level).ThenBy(e => e.DisplaySpeciesId).ToList(),
+        PokedexSortOrder.Care => entries.OrderByDescending(e => e.CarePoints).ThenBy(e => e.DisplaySpeciesId).ToList(),
         PokedexSortOrder.Alphabetical => entries.OrderBy(e => e.SpeciesName, StringComparer.OrdinalIgnoreCase).ToList(),
         PokedexSortOrder.CatchDate => entries.OrderByDescending(e => e.CaughtAtUtc).ToList(),
         PokedexSortOrder.Number => entries.OrderBy(e => e.DisplaySpeciesId).ThenBy(e => e.CaughtAtUtc).ToList(),
@@ -357,5 +409,5 @@ public sealed class CollectionViewModel
 }
 
 /// The Pokédex grid's sort choice — see CollectionViewModel.ApplySort.
-public enum PokedexSortOrder { Default, Alphabetical, CatchDate, Number, Type }
+public enum PokedexSortOrder { Default, Alphabetical, CatchDate, Number, Type, Level, Care }
 public enum SpeciesSortOrder { Number, CatchDate, Type }

@@ -12,6 +12,8 @@ public sealed class SaveData
     public HashSet<int> DiscoveredSpeciesIds { get; set; } = [];
     public HashSet<string> EvolutionTransitions { get; set; } = [];
     public HashSet<int> ShinySpeciesIds { get; set; } = [];
+    // Exact ordinary history. Missing OLD JSON is inferred once at deserialization.
+    public HashSet<int> NormalSpeciesIds { get; set; } = [];
     public Dictionary<string, long?> Metrics { get; set; } = [];
     public Dictionary<string, AwardEntry> AwardLedger { get; set; } = [];
     public List<string?> TrophyShelfIds { get; set; } = [];

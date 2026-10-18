@@ -196,6 +196,8 @@ public sealed class JsonSaveStore
                 Require(root.TryGetProperty(field, out var property) && property.ValueKind != JsonValueKind.Null, $"отсутствует {field} v2");
         var data = JsonSerializer.Deserialize<SaveData>(json, Options);
         Require(data is not null, "пустое сохранение");
+        // A legacy file cannot reveal exact form history. Preserve its old opening state once.
+        if (!root.TryGetProperty("NormalSpeciesIds", out _)) data!.NormalSpeciesIds = new(data.DiscoveredSpeciesIds);
         ValidateData(data!);
         NormalizeLegacyCare(data!);
         return data!;
@@ -233,6 +235,7 @@ public sealed class JsonSaveStore
 
     public static void ValidateData(SaveData data)
     {
+        Require(data.NormalSpeciesIds is not null && data.NormalSpeciesIds.All(id => id > 0), "неверная история обычных форм");
         Require(data.Individuals is not null && data.Settings is not null
             && data.CareStates is not null && data.PendingEggs is not null && data.Encounters is not null, "обязательное поле равно null");
         Require(data.FeedingTreats >= 0 && data.CatchAccumulatorUnits >= 0 && data.FeedingRemainderUnits >= 0
@@ -282,6 +285,7 @@ public sealed class JsonSaveStore
     {
         Require(!string.IsNullOrWhiteSpace(data.CatalogRevision) && !string.IsNullOrWhiteSpace(data.BalanceRevision)
             && data.MigrationId == SaveMigration.MigrationId, "неверные ревизии v2");
+        Require(data.NormalSpeciesIds is not null, "отсутствует история обычных форм");
         Require(data.DiscoveredSpeciesIds is not null && data.EvolutionTransitions is not null && data.ShinySpeciesIds is not null
             && data.Metrics is not null && data.AwardLedger is not null && data.Berries is not null && data.Items is not null
             && data.BerryRemainders is not null && data.Tutorial is not null && data.Gift is not null
@@ -320,7 +324,7 @@ public sealed class JsonSaveStore
         Require(double.IsFinite(data.NurseryLuckBonus) && data.NurseryLuckBonus >= 0
             && data.NurseryLuckBonus <= ShinyRules.NurseryChanceCap - ShinyRules.BaseChance,
             "неверная удача питомника");
-        Require(data.DiscoveredSpeciesIds!.All(id => id > 0) && data.ShinySpeciesIds!.All(id => id > 0)
+        Require(data.NormalSpeciesIds!.All(id => id > 0) && data.DiscoveredSpeciesIds!.All(id => id > 0) && data.ShinySpeciesIds!.All(id => id > 0)
             && data.Metrics!.Values.All(n => n is null or >= 0), "неверная метрика v2");
         Require(data.AwardLedger!.Values.All(a => a is not null && a.CoinsGranted >= 0 && a.ClaimStatus is "claimed" or "unclaimed"
             && a.AvailableSpeciesIds is not null), "неверный журнал наград");

@@ -14,16 +14,19 @@ public static class AchievementMetrics
         {
             state.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             if (individual.IsShiny) state.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+            else state.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
         }
         foreach (var encounter in state.Encounters.Where(e => e.Phase == "opened" && e.Individual is not null))
         {
             state.DiscoveredSpeciesIds.UnionWith(encounter.Individual!.ReachedSpeciesIds);
             if (encounter.Individual.IsShiny) state.ShinySpeciesIds.UnionWith(encounter.Individual.ReachedSpeciesIds);
+            else state.NormalSpeciesIds.UnionWith(encounter.Individual.ReachedSpeciesIds);
         }
         foreach (var child in state.HatchedNurseryResults.Values)
         {
             state.DiscoveredSpeciesIds.UnionWith(child.ReachedSpeciesIds);
             if (child.IsShiny) state.ShinySpeciesIds.UnionWith(child.ReachedSpeciesIds);
+            else state.NormalSpeciesIds.UnionWith(child.ReachedSpeciesIds);
         }
 
         var openedCatches = state.Encounters.Count(e => e.Phase == "opened" && e.Source is "activity" or "expedition");

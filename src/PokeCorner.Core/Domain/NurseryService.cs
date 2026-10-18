@@ -160,6 +160,7 @@ public sealed class NurseryService
         state.HatchedNurseryResults[id] = Copy(nest.Child);
         state.DiscoveredSpeciesIds.Add(nest.Child.SpeciesId);
         if (nest.Child.IsShiny) state.ShinySpeciesIds.Add(nest.Child.SpeciesId);
+        else state.NormalSpeciesIds.Add(nest.Child.SpeciesId);
         nest.LuckBeforeHatch = state.NurseryLuckBonus;
         state.NurseryLuckBonus = ShinyRules.NextNurseryLuck(state.NurseryLuckBonus, nest.Child.IsShiny, nest.ShinySupported);
         nest.Status = "hatched";

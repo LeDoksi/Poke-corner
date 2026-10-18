@@ -101,7 +101,7 @@ public sealed class EvolutionTests
         WpfTestHost.Layout(view, 320, 420);
         Assert.Equal(Visibility.Visible, ((Border)view.FindName("DetailRetrainingSection")).Visibility);
         Assert.Contains("20 / 20", ((TextBlock)view.FindName("DetailRetrainingCostText")).Text);
-        Assert.Contains("равный шанс", ((TextBlock)view.FindName("DetailRetrainingOutcomesText")).Text);
+        Assert.Contains("Возможные новые особенности", ((TextBlock)view.FindName("DetailRetrainingOutcomesText")).Text);
         Assert.True(((Button)view.FindName("DetailRetrainButton")).IsEnabled);
         data.Berries["rawst"] = 0;
         view.Refresh();
@@ -129,20 +129,9 @@ public sealed class EvolutionTests
             {
                 operation = operationId;
                 return Task.FromResult(new RetrainingService(Catalog.Value, data).Retrain(individualId, slot, operationId));
-            });
+            }, confirmAsync: (_, body, _) => { Assert.Contains("20", body); return Task.FromResult(true); });
         Assert.True(view.OpenIndividual(id));
-        var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-        timer.Tick += (_, _) =>
-        {
-            var dialog = VisibleRetrainingConfirmation();
-            if (dialog is null) return;
-            timer.Stop();
-            Assert.Contains("20", ((TextBlock)dialog.FindName("BodyText")).Text);
-            ((Button)dialog.FindName("ConfirmButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        };
-        timer.Start();
         ((Button)view.FindName("DetailRetrainButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        timer.Stop();
         Assert.NotEqual(Guid.Empty, operation);
         Assert.Equal(0, data.Berries["rawst"]);
         Assert.True(data.Metrics.ContainsKey("special:trophy-special-retrain"));
@@ -304,8 +293,9 @@ public sealed class EvolutionTests
         var picker = (ComboBox)view.FindName("DetailEvolutionBranchPicker");
         Assert.True(picker.TranslatePoint(new Point(picker.ActualWidth, 0), card).X <= card.ActualWidth);
         Assert.Equal(9, picker.Items.Count);
-        picker.SelectedIndex = 1;
-        Assert.Contains("камень", ((TextBlock)view.FindName("DetailEvolutionReasonText")).Text);
+        Assert.False(((CheckBox)view.FindName("DetailEvolutionStoneToggle")).IsEnabled);
+        picker.SelectedIndex = 1; // A stale forced selection cannot override random without the optional stone.
+        Assert.True(((Button)view.FindName("DetailEvolveButton")).IsEnabled);
         picker.SelectedIndex = 0;
         data.Berries["oran"] = 2;
         view.Refresh();
@@ -334,23 +324,12 @@ public sealed class EvolutionTests
             new SpriteCache(Path.Combine(Path.GetTempPath(), "evolution-cancel", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => true,
             previewEvolution: individualId => new EvolutionService(Catalog.Value, data).Preview(individualId),
-            evolveIndividual: (_, _, _) => { commits++; return Task.FromResult(new EvolutionAction(true, "test")); });
+            evolveIndividual: (_, _, _) => { commits++; return Task.FromResult(new EvolutionAction(true, "test")); },
+            confirmAsync: (_, _, _) => Task.FromResult(false));
         Assert.True(view.OpenIndividual(id));
         WpfTestHost.Layout(view, 420, 420);
-        var opened = false;
-        var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-        timer.Tick += (_, _) =>
-        {
-            var dialog = Application.Current.Windows.OfType<ConfirmDialog>().FirstOrDefault();
-            if (dialog is null) return;
-            opened = true;
-            timer.Stop();
-            dialog.Close();
-        };
-        timer.Start();
         ((Button)view.FindName("DetailEvolveButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        timer.Stop();
-        Assert.True(opened);
+
         Assert.Equal(0, commits);
         Assert.Equal(20, data.Berries["rawst"]);
         Assert.Equal(id, view.SelectedIndividualId);
