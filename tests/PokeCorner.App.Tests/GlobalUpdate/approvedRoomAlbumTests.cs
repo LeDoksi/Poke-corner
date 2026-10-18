@@ -75,6 +75,38 @@ public class ApprovedRoomAlbumTests
         Assert.Equal(384, data.Settings.PetSizePixels);
     });
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CompletedCareDoesNotClaimEvolutionReadyWhenCanonicalRecipeIsBlocked(bool unavailableBranches) => WpfTestHost.Run(() =>
+    {
+        var pet = Pet();
+        pet.AccumulatedCarePoints = EvolutionThresholds.Stage2Threshold;
+        var data = State(pet);
+        var catalog = CatalogPackage.Load(DataRoot);
+        var evolution = new EvolutionService(catalog, data);
+        var preview = evolution.Preview(pet.Id);
+        if (unavailableBranches)
+        {
+            data.Berries[preview.BerryId] = preview.BerryCost;
+            foreach (var branch in preview.Branches)
+                catalog.Species.Single(species => species.Id == branch.SpeciesId).NormalAvailable = false;
+            preview = evolution.Preview(pet.Id);
+            Assert.All(preview.Branches, branch => Assert.False(branch.Available));
+        }
+        else
+        {
+            Assert.Equal(0, preview.BerriesOwned);
+            Assert.Contains(preview.Branches, branch => branch.Available);
+        }
+        Assert.NotNull(preview.Reason);
+        var view = new RoomView(Art.Value, () => data, () => null, () => { }, catalog: catalog);
+        var caption = ((TextBlock)view.FindName("CareText")).Text;
+        Assert.DoesNotContain("Готов к эволюции", caption);
+        Assert.Contains("Уход накоплен", caption);
+        Assert.Equal(1, ((System.Windows.Controls.ProgressBar)view.FindName("CareBar")).Value);
+    });
+
     [Fact]
     public void ButtonsTargetCurrentPetAndEmptyStateOpensPokedex() => WpfTestHost.Run(() =>
     {

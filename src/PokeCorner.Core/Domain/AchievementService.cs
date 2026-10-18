@@ -57,8 +57,8 @@ public sealed class AchievementService
             if (!rewards.GetProperty("specials").TryGetProperty(firstAwardId, out _))
                 throw new ArgumentException("Unknown award.", nameof(firstAwardId));
             var complete = state.AwardLedger.ContainsKey(firstAwardId);
-            long? value = state.Metrics.TryGetValue("special:" + firstAwardId, out var metric) && metric is null
-                ? null : SpecialEarned(state, firstAwardId) ? 1 : 0;
+            var earned = SpecialEarned(state, firstAwardId);
+            long? value = earned is null ? null : earned.Value ? 1 : 0;
             return new(firstAwardId, firstAwardId, value, 1, null, complete);
         }
         var next = goals.FirstOrDefault(g => !state.AwardLedger.ContainsKey(g.GetProperty("awardId").GetString()!));
@@ -91,7 +91,7 @@ public sealed class AchievementService
         foreach (var special in rewards.GetProperty("specials").EnumerateObject())
         {
             var id = special.Name;
-            if (snapshot.AwardLedger.ContainsKey(id) || !SpecialEarned(snapshot, id)) continue;
+            if (snapshot.AwardLedger.ContainsKey(id) || SpecialEarned(snapshot, id) != true) continue;
             Award(snapshot, id, special.Value.GetInt32(), id == "trophy-special-all-legends" ? legends : []);
         }
     }
@@ -110,7 +110,7 @@ public sealed class AchievementService
         _ => throw new InvalidDataException("Unknown achievement condition: " + condition)
     };
 
-    private bool SpecialEarned(SaveData state, string id) => id switch
+    private bool? SpecialEarned(SaveData state, string id) => id switch
     {
         "trophy-special-nick" => state.Individuals.Any(i => i.Nickname is not null),
         "trophy-special-favorite" => state.Individuals.Any(i => i.IsFavorite),
@@ -124,7 +124,7 @@ public sealed class AchievementService
             or "trophy-special-family-expedition" or "trophy-special-evolved-expedition"
             or "trophy-special-berry-evolution" or "trophy-special-branch-choice"
             or "trophy-special-offspring-choice" or "trophy-special-retrain"
-            => state.Metrics.GetValueOrDefault("special:" + id) == 1,
+            => AchievementMetrics.Get(state, "special:" + id) is { } metric ? metric == 1 : null,
         _ => throw new InvalidDataException("Unknown special achievement: " + id)
     };
 

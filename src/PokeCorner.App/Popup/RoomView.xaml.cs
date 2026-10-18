@@ -188,7 +188,7 @@ public partial class RoomView : UserControl
             CareText.Text = active.ChainLength <= 1 ? EvolutionProgressDisplay.NeverEvolvesLabel :
                 (int)active.CurrentStage >= active.ChainLength - 1 ? EvolutionProgressDisplay.FinalFormLabel :
                 EvolutionCalculator.StageForPoints(active.AccumulatedCarePoints, active.ChainLength) > active.CurrentStage
-                    ? "Готов к эволюции · откройте карточку" : "Проводите время вместе и кормите питомца";
+                    ? "Уход накоплен · условия эволюции в карточке" : "Проводите время вместе и кормите питомца";
             var previous = active.CurrentStage == EvolutionStage.Stage2 ? EvolutionThresholds.Stage2Threshold : 0;
             CareBar.Value = active.ChainLength <= 1 ? 0 : (int)active.CurrentStage >= active.ChainLength - 1 ? 1 :
                 Math.Clamp((double)(active.AccumulatedCarePoints - previous) /

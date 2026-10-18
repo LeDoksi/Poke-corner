@@ -7,6 +7,30 @@ namespace PokeCorner.Core.Tests.GlobalUpdate;
 
 public sealed class AchievementPreviewTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MigratedEventSpecialHistoryStaysUnknownUntilRecorded(bool explicitNull)
+    {
+        using var fixture = new NurseryCoreTests();
+        var catalog = fixture.Catalog([1, 2]);
+        File.Copy(Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../..")),
+            "docs/design-v2/final/achievement-rewards.json"), Path.Combine(catalog.DataRoot, "final/achievement-rewards.json"));
+        var legacy = new SaveData { Individuals = [], Settings = new() };
+        var lookup = new LegacyLookup([new SpeciesEvolutionChain(1, 1, 200, 1, [1], ["Bulbasaur"])], "[]"u8.ToArray());
+        var migrated = SaveMigration.Migrate(legacy, lookup, catalog);
+        const string key = "special:trophy-special-type-team";
+        Assert.False(migrated.Metrics.ContainsKey(key));
+        if (explicitNull) migrated.Metrics[key] = null;
+        var service = new AchievementService(catalog);
+        var before = JsonSerializer.Serialize(migrated);
+        Assert.Null(service.Preview(migrated, "trophy-special-type-team").Value);
+        Assert.Equal(0, service.Preview(migrated, "trophy-special-nick").Value);
+        Assert.Equal(before, JsonSerializer.Serialize(migrated));
+        AchievementMetrics.Record(migrated, key);
+        Assert.Equal(1, service.Preview(migrated, "trophy-special-type-team").Value);
+    }
+
     [Fact]
     public void PreviewUsesCanonicalNextThresholdAndDoesNotMutateSave()
     {
