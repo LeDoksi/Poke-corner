@@ -1,82 +1,95 @@
 <UserControl x:Class="PokeCorner.App.Popup.ExpeditionView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="16" MaxWidth="900">
-            <TextBlock Text="Экспедиции" Style="{StaticResource ScreenTitleTextStyle}" />
-            <TextBlock x:Name="SubtitleText" Text="Выберите маршрут, время и команду." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,12" />
-            <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
-                <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
-            </Border>
-            <StackPanel x:Name="RouteSelectionPanel">
-                <TextBlock Text="Куда отправимся?" Style="{StaticResource SectionHeaderTextStyle}" />
-                <WrapPanel x:Name="RouteButtons" x:FieldModifier="public" Margin="0,6,0,10" />
-            </StackPanel>
-            <Border x:Name="Landscape" CornerRadius="10" ClipToBounds="True" Margin="0,0,0,12">
-                <Viewbox Stretch="Uniform">
-                    <Grid Width="800" Height="300">
-                        <Image x:Name="LandscapeImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                               AutomationProperties.Name="Пейзаж выбранного маршрута" />
-                        <Border Background="#B3172C27" VerticalAlignment="Bottom" Padding="12,6">
-                            <TextBlock x:Name="LandscapeName" Foreground="White" FontWeight="Bold" FontSize="18" />
-                        </Border>
-                    </Grid>
-                </Viewbox>
-            </Border>
-            <StackPanel x:Name="PreparationPanel">
-                <WrapPanel Margin="0,0,0,12">
-                    <StackPanel Width="240" Margin="0,0,10,8">
-                        <TextBlock Text="Сложность" FontWeight="Bold" />
-                        <ComboBox x:Name="DifficultyBox" SelectionChanged="ChoiceChanged" AutomationProperties.Name="Сложность похода">
-                            <ComboBoxItem Content="Лёгкая · уровень 1" Tag="easy" />
-                            <ComboBoxItem Content="Обычная · уровень 10" Tag="normal" />
-                            <ComboBoxItem Content="Сложная · уровень 25" Tag="hard" />
-                        </ComboBox>
-                    </StackPanel>
-                    <StackPanel Width="190" Margin="0,0,0,8">
-                        <TextBlock Text="Длительность" FontWeight="Bold" />
-                        <ComboBox x:Name="DurationBox" SelectionChanged="ChoiceChanged" AutomationProperties.Name="Длительность похода">
-                            <ComboBoxItem Content="30 минут" Tag="30" />
-                            <ComboBoxItem Content="1,5 часа" Tag="90" />
-                            <ComboBoxItem Content="3 часа" Tag="180" />
-                            <ComboBoxItem Content="6 часов" Tag="360" />
-                        </ComboBox>
-                    </StackPanel>
-                </WrapPanel>
-                <TextBlock Text="Команда · выберите 1–3 конкретных покемонов" Style="{StaticResource SectionHeaderTextStyle}" />
-                <WrapPanel x:Name="TeamPanel" Margin="0,6,0,8" />
-                <Border Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,10">
-                    <StackPanel>
-                        <TextBlock Text="Перед отправкой" FontWeight="Bold" />
-                        <TextBlock x:Name="PreviewText" TextWrapping="Wrap" Margin="0,5,0,0" AutomationProperties.LiveSetting="Polite" />
-                        <TextBlock x:Name="ContributionsText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,5,0,0" />
-                    </StackPanel>
-                </Border>
-                <Button x:Name="StartButton" Content="Отправить команду" Click="StartButton_Click" />
-            </StackPanel>
-            <StackPanel x:Name="TripPanel" Visibility="Collapsed">
-                <Border Style="{StaticResource HeroCardStyle}" Padding="14" Margin="0,0,0,10">
-                    <StackPanel>
-                        <TextBlock x:Name="TripTitle" Style="{StaticResource SectionHeaderTextStyle}" />
-                        <TextBlock x:Name="TripTerms" TextWrapping="Wrap" Margin="0,4,0,0" />
-                        <TextBlock x:Name="TripTeam" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,5,0,0" />
-                        <TextBlock x:Name="TripRewards" TextWrapping="Wrap" Margin="0,5,0,0" />
-                        <TextBlock x:Name="TripTime" FontWeight="Bold" Margin="0,8,0,0" />
-                        <ProgressBar x:Name="TripProgress" Minimum="0" Maximum="1" Height="8" Margin="0,7,0,0" />
-                    </StackPanel>
-                </Border>
-                <Button x:Name="ClaimButton" Content="Забрать находки" Click="ClaimButton_Click" Visibility="Collapsed" />
-                <Button x:Name="CancelButton" Content="Прервать поход" Style="{StaticResource SecondaryButtonStyle}" Click="CancelButton_Click" Visibility="Collapsed" />
-            </StackPanel>
-            <StackPanel x:Name="ResultPanel" Visibility="Collapsed">
-                <Border Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,10">
-                    <StackPanel>
-                        <TextBlock Text="Последний поход" Style="{StaticResource SectionHeaderTextStyle}" />
-                        <TextBlock x:Name="ResultText" TextWrapping="Wrap" Margin="0,6,0,0" />
-                    </StackPanel>
-                </Border>
-                <Button x:Name="OpenEncounterButton" Content="Открыть встречу" Click="OpenEncounterButton_Click" Visibility="Collapsed" />
-            </StackPanel>
-        </StackPanel>
-    </ScrollViewer>
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:local="clr-namespace:PokeCorner.App.Popup">
+ <Grid Margin="24,16">
+  <ScrollViewer x:Name="ScenarioScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+   <StackPanel MaxWidth="920">
+    <TextBlock Text="Экспедиции" Style="{StaticResource ScreenTitleTextStyle}" />
+    <TextBlock x:Name="SubtitleText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,12" />
+    <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
+     <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+    </Border>
+    <StackPanel x:Name="RouteSelectionPanel"><WrapPanel x:Name="RouteButtons" x:FieldModifier="public" Margin="0,0,0,6" /></StackPanel>
+    <Border x:Name="Landscape" CornerRadius="12" ClipToBounds="True" Margin="0,0,0,12">
+     <Grid Height="208"><Image x:Name="LandscapeImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута" />
+      <Border Background="#AA26352D" VerticalAlignment="Bottom" Padding="16,9"><TextBlock x:Name="LandscapeName" Foreground="White" FontWeight="Bold" FontSize="20" /></Border>
+     </Grid>
+    </Border>
+    <StackPanel x:Name="PreparationPanel">
+     <DockPanel Margin="0,0,0,7"><Button x:Name="ChooseTeamButton" Content="Выбрать команду" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource SecondaryButtonStyle}" />
+      <TextBlock Text="Команда экспедиции" Style="{StaticResource SectionHeaderTextStyle}" VerticalAlignment="Center" /></DockPanel>
+     <UniformGrid x:Name="TeamSlots" Columns="3" Margin="0,0,0,12" />
+     <Grid Margin="0,0,0,12"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+      <StackPanel Margin="0,0,12,0"><StackPanel Orientation="Horizontal"><Path Width="15" Height="15" Stretch="Uniform" Stroke="{StaticResource UiForestBrush}" StrokeThickness="1.6" Data="M3 7H21 M3 17H21 M8 3V11 M16 13V21" Margin="0,0,6,0"/><TextBlock Text="Сложность" FontWeight="Bold" /></StackPanel>
+       <ComboBox x:Name="DifficultyBox" SelectionChanged="ChoiceChanged" AutomationProperties.Name="Сложность похода">
+        <ComboBoxItem Content="Лёгкая" Tag="easy"/><ComboBoxItem Content="Обычная" Tag="normal"/><ComboBoxItem Content="Сложная" Tag="hard"/>
+       </ComboBox></StackPanel>
+      <StackPanel Grid.Column="1"><TextBlock Text="Длительность" FontWeight="Bold" />
+       <ComboBox x:Name="DurationBox" SelectionChanged="ChoiceChanged" AutomationProperties.Name="Длительность похода">
+        <ComboBoxItem Content="30 минут" Tag="30"/><ComboBoxItem Content="1,5 часа" Tag="90"/><ComboBoxItem Content="3 часа" Tag="180"/><ComboBoxItem Content="6 часов" Tag="360"/>
+       </ComboBox></StackPanel>
+     </Grid>
+     <TextBlock x:Name="RouteHintText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,10" />
+     <Border Style="{StaticResource CardStyle}" Padding="14" Margin="0,0,0,12"><StackPanel>
+      <StackPanel Orientation="Horizontal" Margin="0,0,0,5"><Image Source="{StaticResource UiCoinImage}" Width="22" Height="22" Margin="0,0,8,0"/><TextBlock Text="Ожидаемая добыча" FontWeight="Bold" VerticalAlignment="Center" /></StackPanel>
+      <UniformGrid x:Name="PreviewRewardCards" Columns="3" Margin="0,5,0,10"/><TextBlock x:Name="PreviewText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+      <TextBlock x:Name="ContributionsText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,7,0,0" />
+     </StackPanel></Border>
+     <Button x:Name="StartButton" Content="Отправить в экспедицию" Click="StartButton_Click" />
+    </StackPanel>
+    <StackPanel x:Name="TripPanel" Visibility="Collapsed">
+     <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12"><StackPanel>
+      <TextBlock x:Name="TripTitle" Style="{StaticResource SectionHeaderTextStyle}" />
+      <TextBlock x:Name="TripTerms" TextWrapping="Wrap" Margin="0,5,0,0" />
+      <UniformGrid x:Name="TripSlots" Columns="3" Margin="0,12,0,8" />
+      <TextBlock x:Name="TripTeam" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" />
+      <TextBlock x:Name="TripTime" TextWrapping="Wrap" FontWeight="Bold" Margin="0,10,0,0" />
+      <ProgressBar x:Name="TripProgress" Minimum="0" Maximum="1" Height="8" Margin="0,9,0,12" />
+      <UniformGrid x:Name="TripRewardCards" Columns="3" Margin="0,0,0,10"/><TextBlock x:Name="TripRewards" TextWrapping="Wrap" />
+     </StackPanel></Border>
+     <Button x:Name="ClaimButton" Content="Забрать находки" Click="ClaimButton_Click" Visibility="Collapsed" />
+     <Button x:Name="CancelButton" Content="Прервать поход" Click="CancelButton_Click" Style="{StaticResource SecondaryButtonStyle}" Visibility="Collapsed" />
+    </StackPanel>
+    <StackPanel x:Name="ResultPanel" Visibility="Collapsed" Margin="0,12,0,0">
+     <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12"><StackPanel>
+      <TextBlock Text="Экспедиция завершена" Style="{StaticResource SectionHeaderTextStyle}" />
+      <TextBlock Text="Находки уже в запасах" Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10" />
+      <UniformGrid x:Name="ResultSlots" Columns="3" Margin="0,0,0,12"/><UniformGrid x:Name="ResultRewardCards" Columns="3" Margin="0,0,0,12"/><TextBlock x:Name="ResultText" TextWrapping="Wrap" />
+     </StackPanel></Border>
+     <Button x:Name="OpenEncounterButton" Content="Открыть встречу" Click="OpenEncounterButton_Click" Visibility="Collapsed" />
+     <Button x:Name="ContinueButton" Content="Продолжить" Click="Continue_Click" Margin="0,10,0,0"/>
+    </StackPanel>
+   </StackPanel>
+  </ScrollViewer>
+  <Grid x:Name="PickerPanel" Visibility="Collapsed" Background="{StaticResource WindowBackgroundBrush}">
+   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+   <StackPanel><TextBlock Text="Команда экспедиции" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PickerRouteHintText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,10"/></StackPanel>
+   <UniformGrid x:Name="PickerSlots" Grid.Row="1" Columns="3" Margin="0,0,0,10"/>
+   <StackPanel Grid.Row="2">
+    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="2*"/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+     <TextBox x:Name="PickerSearchBox" MinHeight="36" TextChanged="PickerFilterChanged" AutomationProperties.Name="Имя, кличка или номер" Margin="0,0,8,6"/>
+     <ComboBox x:Name="PickerTypeBox" Grid.Column="1" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Тип" Margin="0,0,8,6"/>
+     <ComboBox x:Name="PickerTraitBox" Grid.Column="2" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Особенность" Margin="0,0,0,6"/>
+    </Grid>
+    <WrapPanel Margin="0,0,0,8"><CheckBox x:Name="PickerAvailableBox" Content="Доступные" IsChecked="True" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center" Margin="0,0,14,0"/>
+     <CheckBox x:Name="PickerRouteBox" Content="Подходят маршруту" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center" Margin="0,0,14,0"/>
+     <ComboBox x:Name="PickerSortBox" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Сортировка команды" MinWidth="156" Margin="0,0,10,0"><ComboBoxItem Content="Рекомендованные"/><ComboBoxItem Content="Высокий уровень"/><ComboBoxItem Content="Номер"/></ComboBox>
+     <Button x:Name="PickerResetButton" Content="Сбросить" Style="{StaticResource SecondaryButtonStyle}" Click="PickerReset_Click"/>
+    </WrapPanel>
+   </StackPanel>
+   <ScrollViewer x:Name="PickerScroll" Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"><StackPanel>
+    <TextBlock x:Name="PickerEmptyText" Text="Никого не нашли. Измените фильтры." Visibility="Collapsed" Margin="0,12"/>
+    <WrapPanel x:Name="PickerMembers" />
+   </StackPanel></ScrollViewer>
+   <Grid Grid.Row="4" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+    <StackPanel><TextBlock x:Name="PickerCountText" FontWeight="Bold" AutomationProperties.LiveSetting="Polite"/><StackPanel Orientation="Horizontal">
+     <Button x:Name="PickerPreviousButton" Content="Назад" Style="{StaticResource SecondaryButtonStyle}" Click="PickerPrevious_Click"/><TextBlock x:Name="PickerPageText" Margin="10,0" VerticalAlignment="Center"/><Button x:Name="PickerNextButton" Content="Дальше" Style="{StaticResource SecondaryButtonStyle}" Click="PickerNext_Click"/>
+    </StackPanel></StackPanel>
+    <Button x:Name="PickerCancelButton" Grid.Column="1" Content="Отмена" Style="{StaticResource SecondaryButtonStyle}" Click="PickerCancel_Click" Margin="10,0" MinWidth="90"/>
+    <Button x:Name="PickerDoneButton" Grid.Column="2" Content="Готово" Click="PickerDone_Click" MinWidth="110"/>
+   </Grid>
+  </Grid>
+  <local:ConfirmationOverlay x:Name="LocalConfirmation" Visibility="Collapsed"/>
+ </Grid>
 </UserControl>

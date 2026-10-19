@@ -108,7 +108,11 @@ public partial class AppMenuWindow : Window
 
     private void RefreshSnapshot()
     {
-        WalletText.Text = _getSnapshot?.Invoke().ShopCoins.ToString(System.Globalization.CultureInfo.CurrentCulture) ?? "—";
+        var snapshot = _getSnapshot?.Invoke();
+        WalletText.Text = snapshot?.ShopCoins.ToString(System.Globalization.CultureInfo.CurrentCulture) ?? "—";
+        var trip = snapshot?.Expedition;
+        ExpeditionReadyBadge.Visibility = trip is not null && (trip.Status == "ready" || trip.Status == "running" && DateTimeOffset.UtcNow >= trip.ReadyAtUtc)
+            ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void StopPresentation()

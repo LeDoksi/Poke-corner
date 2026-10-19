@@ -60,6 +60,7 @@ public partial class App : System.Windows.Application
     private int _catchReadyCount;
     private Task _activityReservationTask = Task.CompletedTask;
     private Task _expeditionProgressTask = Task.CompletedTask;
+    private readonly ExpeditionReadyNotifications _expeditionReadyNotifications = new();
     private readonly ExpeditionActivityBuffer _expeditionActivity = new();
     /// Every decoded frame of the active individual's sprite — the list the overlay animates
     /// from. One element means a static sprite; null means nothing is cached yet.
@@ -303,6 +304,7 @@ public partial class App : System.Windows.Application
         // (see _catchReadyCount's hydration above) — the AppMenuWindow badge doesn't need the
         // same treatment since it's created lazily and reads the live count when it is.
         _trayIconService.SetCatchReady(ReadyBallCount() > 0);
+        NotifyCommittedExpeditionReady();
 
         // MUST come after _trayIconService exists. This async void runs straight through to
         // _trayIconService.SetSpriteIcon when the sprite is already memoized — which it is right after
@@ -1004,7 +1006,8 @@ public partial class App : System.Windows.Application
                 if (_pendingCatchReveal is { } pendingCatchReveal) catchView.RestoreReveal(pendingCatchReveal);
                 var expeditionView = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
                     PreviewExpedition, StartExpeditionAsync, CancelExpeditionAsync, ClaimExpeditionAsync,
-                    OpenExpeditionEncounterAsync, _catalogPackage);
+                    OpenExpeditionEncounterAsync, _catalogPackage, confirmAsync:
+                    (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false));
                 var nurseryView = new NurseryView(() => _appState.ToSaveData(_catchReadyCount), PreviewNursery,
                     StartNurseryAsync, HatchNurseryAsync, RefreshNurseryReadyAsync, _catalogPackage,
                     (good, required) =>
@@ -1185,9 +1188,19 @@ public partial class App : System.Windows.Application
         }
     }
 
-    private Task CommitBufferedExpeditionActivityAsync() =>
-        _expeditionActivity.CommitAsync(_appState, _saveWriter, _catalogPackage,
+    private async Task CommitBufferedExpeditionActivityAsync()
+    {
+        await _expeditionActivity.CommitAsync(_appState, _saveWriter, _catalogPackage,
             () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount, DateTimeOffset.UtcNow);
+        // This is after CommitAndPublish, never after a proposed/refused ready transition.
+        NotifyCommittedExpeditionReady();
+    }
+
+    private void NotifyCommittedExpeditionReady()
+    {
+        if (!_isExiting && _hasLoadedState && _trayIconService is not null)
+            _expeditionReadyNotifications.ObserveCommitted(_appState.ToSaveData(_catchReadyCount), _trayIconService.ShowNotification);
+    }
 
     private SaveData SnapshotIncludingPendingExpeditionActivity()
     {

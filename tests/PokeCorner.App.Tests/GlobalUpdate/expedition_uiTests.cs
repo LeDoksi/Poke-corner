@@ -95,18 +95,22 @@ public sealed class ExpeditionUiTests
             data.Nest = new NurseryState { Status = "running", ParticipantIds = [data.Individuals[1].Id], Child = data.Individuals[1] };
             var view = View(data);
             WpfTestHost.Layout(view, 600, 420);
-            var team = (WrapPanel)view.FindName("TeamPanel")!;
+            ApprovedExpeditionTests.Click(view, "ChooseTeamButton");
+            var team = (WrapPanel)view.FindName("PickerMembers")!;
+            ((CheckBox)view.FindName("PickerAvailableBox")!).IsChecked = false;
+            ((ComboBox)view.FindName("PickerSortBox")!).SelectedIndex = 2;
             var buttons = team.Children.OfType<Button>().ToArray();
             Assert.True(buttons[0].IsEnabled);
             Assert.False(buttons[1].IsEnabled);
             buttons[0].RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            ApprovedExpeditionTests.Click(view, "PickerDoneButton");
             var expected = new ExpeditionService(Catalog.Value, data).Preview(new ExpeditionRequest("grove", "normal", 90,
                 [data.Individuals[0].Id], Guid.NewGuid(), DateTimeOffset.UtcNow));
             var shown = ((TextBlock)view.FindName("PreviewText")!).Text;
-            Assert.Contains($"{expected.PrimaryBerries} {expected.PrimaryBerryId}", shown);
+            Assert.StartsWith($"Гарантировано: {expected.PrimaryBerries} ", shown);
             Assert.Contains($"{expected.Coins} монет", shown);
             Assert.Contains($"{expected.XpPerParticipant} XP", shown);
-            Assert.Contains("−20%", ((TextBlock)view.FindName("ContributionsText")!).Text);
+            Assert.Contains("Для встреч и дополнительных находок нужны трое", ((TextBlock)view.FindName("ContributionsText")!).Text);
         });
     }
 
@@ -124,7 +128,7 @@ public sealed class ExpeditionUiTests
                 (_, _) => { cancelCalls++; return Task.FromResult(new ExpeditionAction(true, "unexpected")); });
             WpfTestHost.Layout(view, 600, 420);
             var before = ((TextBlock)view.FindName("TripRewards")!).Text;
-            data.Individuals[0].TotalXp = 100_000;
+            data.Individuals[0].TotalXp = new LevelProgression(Catalog.Value.DataRoot).XpForLevel(20);
             view.Refresh();
             Assert.Equal(before, ((TextBlock)view.FindName("TripRewards")!).Text);
             ((Button)view.FindName("CancelButton")!).RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
@@ -192,8 +196,10 @@ public sealed class ExpeditionUiTests
                 (_, _) => Task.FromResult(new ExpeditionAction(true, "cancelled")),
                 (_, _) => Task.FromResult(new ExpeditionAction(true, "claimed")),
                 _ => Task.FromResult(default(EncounterOpenResult)!), Catalog.Value);
-            var team = (WrapPanel)view.FindName("TeamPanel")!;
+            ApprovedExpeditionTests.Click(view, "ChooseTeamButton");
+            var team = (WrapPanel)view.FindName("PickerMembers")!;
             team.Children.OfType<Button>().Single().RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            ApprovedExpeditionTests.Click(view, "PickerDoneButton");
             var start = (Button)view.FindName("StartButton")!;
             start.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
             start.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
@@ -297,8 +303,10 @@ public sealed class ExpeditionUiTests
                 (_, _) => Task.FromResult(new ExpeditionAction(true, "cancelled")),
                 (_, _) => Task.FromResult(new ExpeditionAction(true, "claimed")),
                 _ => Task.FromResult(default(EncounterOpenResult)!), Catalog.Value);
-            ((WrapPanel)view.FindName("TeamPanel")!).Children.OfType<Button>().Single()
+            ApprovedExpeditionTests.Click(view, "ChooseTeamButton");
+            ((WrapPanel)view.FindName("PickerMembers")!).Children.OfType<Button>().Single()
                 .RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+            ApprovedExpeditionTests.Click(view, "PickerDoneButton");
             var start = (Button)view.FindName("StartButton")!;
             start.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
             Assert.Equal("Лесная роща", ((TextBlock)view.FindName("LandscapeName")!).Text);
