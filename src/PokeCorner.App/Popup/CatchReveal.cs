@@ -3,4 +3,4 @@ using PokeCorner.Core.Domain;
 
 namespace PokeCorner.App.Popup;
 
-public sealed record CatchReveal(CatchResult Result, RarityTier Rarity);
+public sealed record CatchReveal(CatchResult Result, RarityTier Rarity, Guid? EncounterId = null);

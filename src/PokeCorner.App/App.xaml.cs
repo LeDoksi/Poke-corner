@@ -653,23 +653,52 @@ public partial class App : System.Windows.Application
         }
     }
 
-    private async Task<CatchReveal?> TryPerformCatchAsync()
+    private Task<CatchReveal?> TryPerformCatchAsync()
+    {
+        var encounter = CatchBallQueue.NextReady(_appState.Encounters);
+        return encounter is null ? Task.FromResult<CatchReveal?>(null) : TryPerformEncounterAsync(encounter.Id);
+    }
+
+    private async Task<CatchReveal?> TryPerformEncounterAsync(Guid encounterId)
     {
         if (_isExiting || _appState.IsCommitting) return null;
-        var encounter = CatchBallQueue.NextReady(_appState.Encounters);
-        if (encounter is null) return null;
+        if (_pendingCatchReveal is { } pending)
+            return pending.EncounterId == encounterId ? pending
+                : throw new InvalidOperationException("Сначала завершите знакомство с пойманным покемоном.");
+        var encounter = _appState.Encounters.SingleOrDefault(e => e.Id == encounterId);
+        if (encounter is null || !CatchBallQueue.IsReady(encounter))
+            throw new InvalidOperationException("Выбранная встреча ещё не готова к открытию.");
         EncounterOpenResult? result = null;
         CatchReveal? reveal = null;
-        await _appState.CommitAsync(_saveWriter, next => result = _encounterService.Open(next, encounter.Id),
-            () => _catchReadyCount, next =>
-            {
-                _catchReadyCount = next.PendingCatchCount;
-                reveal = PublishConfirmedCatch(result!);
-            });
-        _trayIconService.SetCatchReady(ReadyBallCount() > 0);
+        await _appState.CommitAsync(_saveWriter, next => {
+            var selected = next.Encounters.SingleOrDefault(e => e.Id == encounterId);
+            if (selected is null || selected.Source != encounter.Source || !CatchBallQueue.IsReady(selected))
+                throw new InvalidOperationException("Выбранная встреча ещё не готова к открытию.");
+            result = _encounterService.Open(next, encounterId);
+        }, () => _catchReadyCount, next => {
+            _catchReadyCount = next.PendingCatchCount;
+            _pendingCatchReveal = reveal = PublishConfirmedCatch(result!) with { EncounterId = encounterId };
+        });
+        _trayIconService?.SetCatchReady(ReadyBallCount() > 0);
         _menuWindow?.SetCatchReady(ReadyBallCount());
         RefreshOverlayForActiveIndividual();
         return reveal;
+    }
+
+    private async Task<byte[]?> FetchCatchSpriteAsync(int speciesId, bool shiny)
+    {
+        // Canonical variant first; a missing shiny never falls through to normal/network art.
+        var path = _catalogPackage.GetAssetPath(speciesId, shiny);
+        if (path is not null && File.Exists(path)) return await File.ReadAllBytesAsync(path);
+        return shiny ? null : await _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId));
+    }
+
+    private byte[]? FetchCatchScene(Guid? encounterId)
+    {
+        var trip = _appState.ToSaveData(_catchReadyCount).Expedition;
+        var route = trip is not null && trip.Id == encounterId ? trip.LocationId : "grove";
+        var path = Path.Combine(_catalogPackage.DataRoot, "expeditions", route + ".png");
+        return File.Exists(path) ? File.ReadAllBytes(path) : null;
     }
 
     private int ReadyBallCount() => CatchBallQueue.ReadyCount(_appState.Encounters, _catchReadyCount);
@@ -1002,12 +1031,24 @@ public partial class App : System.Windows.Application
                     },
                     (id, shiny) => collectionPresentation.WhereFind(id, shiny, shiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
-                var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)), () => _catchReadyCount, RefreshOverlayForActiveIndividual, speciesId => _speciesCatalog.LoadForLookup().ResolveSpeciesName(speciesId), TryPerformCatchAsync, () => _pendingCatchReveal = null);
+                var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
+                    () => _catchReadyCount, RefreshOverlayForActiveIndividual,
+                    speciesId => _catalogPackage.Species.FirstOrDefault(s => s.Id == speciesId)?.DisplayName ?? $"№{speciesId}",
+                    TryPerformCatchAsync, () => _pendingCatchReveal = null, TryPerformEncounterAsync, FetchCatchSpriteAsync,
+                    () => CommitStateAsync(next => {
+                        var result = _shopService.TryActivateLuckyCharm(next);
+                        if (!result.Success) throw new InvalidOperationException(result.Message);
+                    }, closeMenu: false), fetchScene: FetchCatchScene,
+                    luckyCharmArtPath: Path.Combine(_catalogPackage.DataRoot, "final", "assets", "shop", "lucky-charm.png"));
                 if (_pendingCatchReveal is { } pendingCatchReveal) catchView.RestoreReveal(pendingCatchReveal);
                 var expeditionView = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
                     PreviewExpedition, StartExpeditionAsync, CancelExpeditionAsync, ClaimExpeditionAsync,
                     OpenExpeditionEncounterAsync, _catalogPackage, confirmAsync:
-                    (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false));
+                    (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false),
+                    enterEncounter: id => {
+                        catchView.SelectEncounter(id);
+                        _menuWindow?.Navigate(MenuSection.Catch);
+                    });
                 var nurseryView = new NurseryView(() => _appState.ToSaveData(_catchReadyCount), PreviewNursery,
                     StartNurseryAsync, HatchNurseryAsync, RefreshNurseryReadyAsync, _catalogPackage,
                     (good, required) =>
@@ -1040,7 +1081,7 @@ public partial class App : System.Windows.Application
                     nurseryView, roomView, achievementsView, () => _appState.ToSaveData(_catchReadyCount));
                 _menuWindow.SectionViewed += ShowContextHint;
                 _menuWindow.Closed += (_, _) => _menuWindow = null;
-                _menuWindow.SetCatchReady(ReadyBallCount()); // picks up activity and gift balls queued before opening
+                _menuWindow.SetCatchReady(ReadyBallCount()); // picks up all unopened ready encounters
                 _menuWindow.Show();
             }
             _menuWindow.Navigate(section);
@@ -1182,6 +1223,8 @@ public partial class App : System.Windows.Application
             if (!result.Success) throw new InvalidOperationException(result.Message);
         }, closeMenu: false);
         _expeditionActivity.Sync(_appState.RunningExpeditionId);
+        _trayIconService?.SetCatchReady(ReadyBallCount() > 0);
+        _menuWindow?.SetCatchReady(ReadyBallCount());
         return result!;
     }
 

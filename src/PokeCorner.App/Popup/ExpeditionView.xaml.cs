@@ -36,6 +36,7 @@ public partial class ExpeditionView : UserControl
     private readonly Func<Guid, DateTimeOffset, Task<ExpeditionAction>> _cancel;
     private readonly Func<Guid, Guid, Task<ExpeditionAction>> _claim;
     private readonly Func<Guid, Task<EncounterOpenResult>> _open;
+    private readonly Action<Guid>? _enterEncounter;
     private readonly CatalogPackage? _catalog;
     private readonly LevelProgression? _levels;
     private readonly Func<bool>? _confirmCancel;
@@ -62,7 +63,7 @@ public partial class ExpeditionView : UserControl
         Func<ExpeditionRequest, Task<ExpeditionAction>> start, Func<Guid, DateTimeOffset, Task<ExpeditionAction>> cancel,
         Func<Guid, Guid, Task<ExpeditionAction>> claim, Func<Guid, Task<EncounterOpenResult>> open,
         CatalogPackage? catalog = null, Func<bool>? confirmCancel = null,
-        Func<string, string, string, Task<bool>>? confirmAsync = null)
+        Func<string, string, string, Task<bool>>? confirmAsync = null, Action<Guid>? enterEncounter = null)
     {
         _snapshot = snapshot;
         _preview = preview;
@@ -70,6 +71,7 @@ public partial class ExpeditionView : UserControl
         _cancel = cancel;
         _claim = claim;
         _open = open;
+        _enterEncounter = enterEncounter;
         _catalog = catalog;
         _levels = catalog is null ? null : new LevelProgression(catalog.DataRoot);
         _confirmCancel = confirmCancel;
@@ -500,6 +502,7 @@ public partial class ExpeditionView : UserControl
     private async void OpenEncounterButton_Click(object sender, RoutedEventArgs e)
     {
         if (_busy || _suspended || OpenEncounterButton.Tag is not Guid id) return;
+        if (_enterEncounter is not null) { _enterEncounter(id); return; }
         var generation = _generation;
         _busy = true;
         OpenEncounterButton.IsEnabled = false;
