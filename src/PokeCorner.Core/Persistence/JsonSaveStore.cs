@@ -27,7 +27,12 @@ public sealed class JsonSaveStore
 
     public static string Serialize(SaveData data) => JsonSerializer.Serialize(data, Options);
 
-    public static SaveData Clone(SaveData data) => JsonSerializer.Deserialize<SaveData>(Serialize(data), Options)!;
+    public static SaveData Clone(SaveData data)
+    {
+        var clone = JsonSerializer.Deserialize<SaveData>(Serialize(data), Options)!;
+        clone.UsesLegacyNormalDiscoveryInference = data.UsesLegacyNormalDiscoveryInference;
+        return clone;
+    }
 
     public void Save(SaveData data) => SaveSerialized(Serialize(data));
 
@@ -197,7 +202,11 @@ public sealed class JsonSaveStore
         var data = JsonSerializer.Deserialize<SaveData>(json, Options);
         Require(data is not null, "пустое сохранение");
         // A legacy file cannot reveal exact form history. Preserve its old opening state once.
-        if (!root.TryGetProperty("NormalSpeciesIds", out _)) data!.NormalSpeciesIds = new(data.DiscoveredSpeciesIds);
+        if (!root.TryGetProperty("NormalSpeciesIds", out _))
+        {
+            data!.NormalSpeciesIds = new(data.DiscoveredSpeciesIds);
+            data.UsesLegacyNormalDiscoveryInference = true;
+        }
         ValidateData(data!);
         NormalizeLegacyCare(data!);
         return data!;

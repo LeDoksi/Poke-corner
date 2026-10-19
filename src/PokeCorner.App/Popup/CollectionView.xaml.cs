@@ -43,6 +43,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Func<int, bool, string>? _whereFind;
     private TaskCompletionSource<bool>? _localConfirmation;
     private bool _detailPending;
+    // Initial construction supports standalone fixtures; after Unloaded only Loaded resumes presentation.
+    private bool _presentationSuspended;
     private bool _speciesShiny;
     private (Guid Pet, int? Branch, Guid Operation)? _pendingEvolution;
     private (Guid Pet, Guid Operation)? _pendingRehome;
@@ -185,6 +187,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void StartLiveRefresh()
     {
+        _presentationSuspended = false;
+        Refresh();
+        if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) ShowDetailSprite(_detailCard);
         _liveRefreshTimer?.Stop();
         _liveRefreshTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _liveRefreshTimer.Tick += (_, _) => Refresh();
@@ -193,6 +198,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void StopLiveRefresh()
     {
+        _presentationSuspended = true;
         _detailGeneration++;
         CompleteLocalConfirmation(false);
         _liveRefreshTimer?.Stop();
@@ -231,6 +237,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     public void Refresh()
     {
+        if (_presentationSuspended) return;
         var nowUtc = DateTimeOffset.UtcNow;
         var active = _appState.Collection.GetActive();
         var entries = _viewModel.GetEntries(nowUtc);
@@ -239,6 +246,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshProgress(active);
         RefreshPokedex(entries);
         if (SpeciesPane.Visibility == Visibility.Visible) RefreshSpecies();
+        if (_detailCard is not null && !_appState.Collection.Individuals.Any(i => i.Id == _detailCard.IndividualId)) HideDetail();
         if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible)
         {
             RefreshDetailEvolution();
@@ -388,7 +396,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         var entry = _viewModel.GetEntry(id, DateTimeOffset.UtcNow);
         if (entry is null) return false;
-        SpeciesDialog.Visibility = Visibility.Collapsed;
+        CloseSpeciesDialog();
         ShowDetail(BuildCard(entry));
         return true;
     }
@@ -737,6 +745,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// resolved per container: the frames come from the card the Image is bound to.
     private void PokedexSprite_Loaded(object sender, RoutedEventArgs e)
     {
+        if (_presentationSuspended) return;
         var image = (System.Windows.Controls.Image)sender;
         StopCardAnimator(image);
 
@@ -788,7 +797,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         if (e.Key != System.Windows.Input.Key.Escape) return;
         if (_localConfirmation is not null) { CompleteLocalConfirmation(false); e.Handled = true; return; }
-        if (SpeciesDialog.Visibility == Visibility.Visible) { SpeciesDialog.Visibility = Visibility.Collapsed; e.Handled = true; return; }
+        if (SpeciesDialog.Visibility == Visibility.Visible) { CloseSpeciesDialog(); e.Handled = true; return; }
         if (DetailOverlay.Visibility != Visibility.Visible) return;
         HideDetail();
         e.Handled = true;
@@ -1104,6 +1113,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void ShowDetailSprite(PokedexCard card)
     {
+        if (_presentationSuspended) return;
         _detailAnimator?.Stop();
         _detailAnimator = null;
 
@@ -1312,9 +1322,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             if (_pendingRehome is not { } pending || pending.Pet != id) _pendingRehome = (id, Guid.NewGuid());
             _rehomingIndividuals.Add(id);
             var result = await _rehomeIndividual(id, _pendingRehome.Value.Operation);
-            if (result.Success) _pendingRehome = null;
+            if (result.Success)
+            {
+                _pendingRehome = null;
+                // Publication removed this GUID. Invalidate its card before any XP/item refresh or callback.
+                if (_detailCard?.IndividualId == id) HideDetail();
+            }
             _onStateChanged(); Refresh();
-            if (IsCurrentDetail(id, generation)) { if (result.Success) HideDetail(); else DetailErrorText.Text = result.Message; }
+            if (!result.Success && IsCurrentDetail(id, generation)) DetailErrorText.Text = result.Message;
         }
         catch (Exception error) { if (IsCurrentDetail(id, generation)) DetailErrorText.Text = error.Message; }
         finally { _detailPending = false; _rehomingIndividuals.Remove(id); Refresh(); }
@@ -1409,7 +1424,13 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     }
     private void IndividualType_Changed(object sender, SelectionChangedEventArgs e) => IndividualExtraFilter_Changed(sender, e);
     private void DetailBack_Click(object sender, RoutedEventArgs e) => HideDetail();
-    private void SpeciesBack_Click(object sender, RoutedEventArgs e) => SpeciesDialog.Visibility = Visibility.Collapsed;
+    private void SpeciesBack_Click(object sender, RoutedEventArgs e) => CloseSpeciesDialog();
+    private void CloseSpeciesDialog()
+    {
+        SpeciesDialog.Visibility = Visibility.Collapsed;
+        _selectedSpeciesId = null;
+        SpeciesGrid.SelectedIndex = -1;
+    }
     private void SpeciesWhere_Click(object sender, RoutedEventArgs e)
     {
         if (sender is not System.Windows.Controls.Button { Tag: int id }) return;
@@ -1444,6 +1465,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void RefreshDetailItems()
     {
         if (_detailCard is null) return;
+        if (!_appState.Collection.Individuals.Any(i => i.Id == _detailCard.IndividualId)) { HideDetail(); return; }
         var xp = _xpProgress?.Invoke(_detailCard.IndividualId);
         DetailXpText.Text = xp?.Text ?? $"Опыт · уровень {_detailCard.Level}"; DetailXpBar.Value = xp?.Fraction ?? 0;
         foreach (var item in new[] { "care-booster", "xp-potion" })

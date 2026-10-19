@@ -19,11 +19,15 @@ public sealed class EvolutionService
     private readonly CatalogPackage catalog;
     private readonly SaveData state;
     private readonly Dictionary<int, Edge[]> edges;
+    private readonly TraitRules traits;
+    private readonly LevelProgression levels;
 
     public EvolutionService(CatalogPackage catalog, SaveData state)
     {
         this.catalog = catalog;
         this.state = state;
+        traits = new TraitRules(catalog.DataRoot);
+        levels = new LevelProgression(catalog.DataRoot);
         using var rules = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "catalog-rules.json")));
         using var balance = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "balance.json")));
         var cost = balance.RootElement.GetProperty("evolutionBerries").GetInt32();
@@ -50,7 +54,7 @@ public sealed class EvolutionService
                 available ? null : "Вариант этого вида пока недоступен.");
         }).ToArray();
         var busy = ExpeditionService.BusyIndividualIds(state).Contains(individualId);
-        var required = EvolutionCalculator.RequiredCareForNext(individual.CurrentStage);
+        var required = EvolutionCalculator.RequiredCareForNext(individual, traits, levels, catalog);
         var berry = next.FirstOrDefault()?.Berry ?? string.Empty;
         var count = next.FirstOrDefault()?.Quantity ?? 0;
         var owned = state.Berries.GetValueOrDefault(berry);

@@ -185,4 +185,139 @@ public sealed class ApprovedCollectionTests
         }
         finally { Directory.Delete(directory, true); }
     });
+
+    [Fact]
+    public async Task Fix1SuccessfulPublishedRehomeNeverRefreshesRemovedXpOrEscapesHandler()
+    {
+        var state = new AppState(); var survivor = Pet(1); var removed = Pet(1); state.Collection.Add(survivor); state.Collection.Add(removed);
+        var errors = new List<Exception>(); var missingXpLookups = 0; CollectionView? view = null;
+        DispatcherUnhandledExceptionEventHandler observer = (_, e) => { errors.Add(e.Exception); e.Handled = true; };
+        WpfTestHost.Run(() =>
+        {
+            Application.Current.DispatcherUnhandledException += observer;
+            view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
+                () => {}, () => {}, () => {}, () => null, () => false, () => false,
+                previewRehome: _ => new(12, null), confirmAsync: (_, _, _) => Task.FromResult(true),
+                rehomeIndividual: (id, _) => { state.Collection.Release(id); return Task.FromResult(new RehomeAction(true, "saved")); },
+                xpProgress: id => { if (!state.Collection.Individuals.Any(p => p.Id == id)) missingXpLookups++;
+                    var pet = state.Collection.Individuals.Single(p => p.Id == id); return ($"XP {pet.TotalXp}", 0d); });
+            Assert.True(view.OpenIndividual(removed.Id));
+            ((Button)view.FindName("DetailRehomeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        });
+        await view!.Dispatcher.InvokeAsync(() => {}, DispatcherPriority.ContextIdle).Task;
+        WpfTestHost.Run(() =>
+        {
+            Application.Current.DispatcherUnhandledException -= observer;
+            Assert.DoesNotContain(state.Collection.Individuals, p => p.Id == removed.Id);
+            Assert.Equal(0, missingXpLookups); Assert.Null(view.SelectedIndividualId); Assert.Empty(errors);
+            Assert.Equal(Visibility.Collapsed, ((Border)view.FindName("DetailOverlay")).Visibility);
+        });
+    }
+
+    [Theory]
+    [InlineData("item", false)] [InlineData("item", true)] [InlineData("local-item", false)]
+    [InlineData("evolution", false)] [InlineData("evolution", true)]
+    [InlineData("rehome", false)] [InlineData("rehome", true)]
+    public async Task Fix1PendingActionNeverRestartsAnimationsAfterUnload(string action, bool pendingCommit)
+    {
+        var state = new AppState(); var pet = Pet(1); state.Collection.Add(pet);
+        var confirm = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var item = new TaskCompletionSource<PurchaseResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var evolution = new TaskCompletionSource<EvolutionAction>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var rehome = new TaskCompletionSource<RehomeAction>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var calls = 0; CollectionView? view = null;
+        WpfTestHost.Run(() =>
+        {
+            var frames = new[] { Fix1Png(20), Fix1Png(200) };
+            view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
+                () => {}, () => {}, () => {}, () => frames, () => false, () => false,
+                previewEvolution: _ => new([new(2, "masked", true, null)], "oran", 6, 6, 1, 100, 0, false, null),
+                evolveIndividual: (_, _, _) => { calls++; return evolution.Task; },
+                previewRehome: _ => new(12, null), rehomeIndividual: (_, _) => { calls++; return rehome.Task; },
+                confirmAsync: action == "local-item" ? null : (_, _, _) => pendingCommit ? Task.FromResult(true) : confirm.Task,
+                previewItem: (_, id) => new(id, id, 1, "effect", null), useItem: (_, _, _) => { calls++; return item.Task; });
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.LoadedEvent)); view.OpenIndividual(pet.Id);
+            Assert.NotNull(Fix1Private(view, "_heroAnimator"));
+            var buttonName = action.EndsWith("item") ? "DetailCareBoosterButton" : action == "evolution" ? "DetailEvolveButton" : "DetailRehomeButton";
+            ((Button)view.FindName(buttonName)).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+            Assert.Null(Fix1Private(view, "_heroAnimator")); Assert.Null(Fix1Private(view, "_detailAnimator"));
+        });
+        if (pendingCommit) { item.TrySetResult(new(true, "saved")); evolution.TrySetResult(new(true, "saved")); rehome.TrySetResult(new(true, "saved")); }
+        else confirm.SetResult(false);
+        await view!.Dispatcher.InvokeAsync(() => {}, DispatcherPriority.ContextIdle).Task;
+        WpfTestHost.Run(() =>
+        {
+            try
+            {
+                Assert.Equal(pendingCommit ? 1 : 0, calls);
+                Assert.Null(Fix1Private(view, "_heroAnimator")); Assert.Null(Fix1Private(view, "_detailAnimator")); Assert.Null(Fix1Private(view, "_liveRefreshTimer"));
+                Assert.Equal(0, ((System.Collections.IDictionary)Fix1Private(view, "_cardAnimators")!).Count);
+                view.Refresh(); Assert.Null(Fix1Private(view, "_heroAnimator")); // Even an external refresh must respect unload.
+                view.RaiseEvent(new RoutedEventArgs(FrameworkElement.LoadedEvent)); Assert.NotNull(Fix1Private(view, "_heroAnimator"));
+            }
+            finally { view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent)); }
+        });
+    }
+
+    [Theory]
+    [InlineData(false, "back")] [InlineData(true, "back")]
+    [InlineData(false, "escape")] [InlineData(true, "escape")]
+    [InlineData(false, "individual")] [InlineData(true, "individual")]
+    public void Fix1SameSpeciesTileReopensAfterClosingOrConsumingPicker(bool shiny, string close) => WpfTestHost.Run(() =>
+    {
+        var state = new AppState(); var exact = Pet(13, shiny); state.Collection.Add(exact);
+        var species = Enumerable.Range(1, 24).Select(id => new CatalogSpecies { Id = id, DisplayName = "Вид " + id, Types = ["grass"], NormalAvailable = true, ShinyAvailable = true }).ToArray();
+        var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], species: species);
+        var view = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())), () => {}, () => {}, () => {}, () => null, () => false, () => false);
+        ((Button)view.FindName("SpeciesModeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        ((RadioButton)view.FindName(shiny ? "SpeciesShinyToggle" : "SpeciesNormalToggle")).IsChecked = true;
+        ((TextBox)view.FindName("SpeciesSearchBox")).Text = "#00";
+        ((Button)view.FindName("SpeciesNextButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        var grid = (ListBox)view.FindName("SpeciesGrid"); var originalItems = grid.ItemsSource; var page = ((TextBlock)view.FindName("SpeciesPageText")).Text;
+        using var input = new System.Windows.Interop.HwndSource(new System.Windows.Interop.HwndSourceParameters("species-repeat") { WindowStyle = 0 });
+        for (var repeat = 0; repeat < 2; repeat++)
+        {
+            grid.SelectedIndex = 0; Assert.Equal(Visibility.Visible, ((Border)view.FindName("SpeciesDialog")).Visibility);
+            var choice = Assert.Single(((ItemsControl)view.FindName("SpeciesOwnedList")).Items);
+            Assert.Equal(exact.Id, choice.GetType().GetProperty("IndividualId")!.GetValue(choice));
+            if (close == "individual")
+            {
+                WpfTestHost.Layout(view, 650, 500);
+                var button = new Button { Tag = exact.Id };
+                typeof(CollectionView).GetMethod("SpeciesOwned_Click", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [button, new RoutedEventArgs()]);
+                Assert.Equal(exact.Id, view.SelectedIndividualId);
+                typeof(CollectionView).GetMethod("DetailBack_Click", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [view, new RoutedEventArgs()]);
+            }
+            else if (close == "escape") view.RaiseEvent(new System.Windows.Input.KeyEventArgs(System.Windows.Input.Keyboard.PrimaryDevice, input, 0, System.Windows.Input.Key.Escape) { RoutedEvent = System.Windows.Input.Keyboard.PreviewKeyDownEvent });
+            else typeof(CollectionView).GetMethod("SpeciesBack_Click", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [view, new RoutedEventArgs()]);
+            Assert.Equal(Visibility.Collapsed, ((Border)view.FindName("SpeciesDialog")).Visibility); view.Refresh();
+            Assert.Same(originalItems, grid.ItemsSource); Assert.Equal(page, ((TextBlock)view.FindName("SpeciesPageText")).Text);
+            Assert.Equal(shiny, ((RadioButton)view.FindName("SpeciesShinyToggle")).IsChecked == true); Assert.Equal("#00", ((TextBox)view.FindName("SpeciesSearchBox")).Text);
+        }
+    });
+
+
+    [Fact]
+    public void Fix1CardCareUsesActualFastGrowerPreviewWithoutGameplayPercentages() => WpfTestHost.Run(() =>
+    {
+        var catalog = CatalogPackage.Load(Path.Combine(AppContext.BaseDirectory, "Data")); var state = new AppState();
+        var species = catalog.Species.Single(s => s.Id == 1);
+        var pet = new PokemonIndividual { SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1, ReachedSpeciesIds = [1], EvolutionChainId = species.EvolutionChainId,
+            ChainLength = 3, Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = "fast-grower", AccumulatedCarePoints = 66500 };
+        state.Collection.Add(pet); var view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
+            () => {}, () => {}, () => {}, () => null, () => false, () => false,
+            previewEvolution: id => new EvolutionService(catalog, state.ToSaveData(0)).Preview(id), evolveIndividual: (_, _, _) => Task.FromResult(new EvolutionAction(false, "unused")));
+        view.OpenIndividual(pet.Id); var text = ((TextBlock)view.FindName("DetailEvolutionText")).Text;
+        Assert.Contains(66500.ToString("N0"), text); Assert.DoesNotContain(70000.ToString("N0"), text); Assert.DoesNotContain("%", text);
+        Assert.Equal(1d, ((ProgressBar)view.FindName("DetailEvolutionBar")).Value);
+    });
+
+    private static object? Fix1Private(CollectionView view, string field) => typeof(CollectionView).GetField(field, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.GetValue(view);
+    private static byte[] Fix1Png(byte blue)
+    {
+        var bitmap = System.Windows.Media.Imaging.BitmapSource.Create(1, 1, 96, 96, System.Windows.Media.PixelFormats.Bgra32, null, new byte[] { blue, 10, 10, 255 }, 4);
+        var encoder = new System.Windows.Media.Imaging.PngBitmapEncoder(); encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bitmap));
+        using var stream = new MemoryStream(); encoder.Save(stream); return stream.ToArray();
+    }
 }

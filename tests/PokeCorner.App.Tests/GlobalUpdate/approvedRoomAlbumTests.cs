@@ -221,4 +221,21 @@ public class ApprovedRoomAlbumTests
         Assert.Equal(before.AwardLedger.Keys, data.AwardLedger.Keys);
         Assert.Null(data.Metrics["successful-catches"]);
     });
+
+    [Fact]
+    public void Fix1CornerFastGrowerCareBoundaryRemainsCareSpecificAndTerminalSafe() => WpfTestHost.Run(() =>
+    {
+        var pet = Pet(); pet.FirstTraitId = "fast-grower"; pet.AccumulatedCarePoints = 66499;
+        var data = State(pet); var view = new RoomView(Art.Value, () => data, () => null, () => {}, catalog: Catalog.Value);
+        Assert.True(((System.Windows.Controls.ProgressBar)view.FindName("CareBar")).Value < 1);
+        pet.AccumulatedCarePoints = 66500; view.Refresh();
+        Assert.Equal(1d, ((System.Windows.Controls.ProgressBar)view.FindName("CareBar")).Value);
+        var text = ((TextBlock)view.FindName("CareText")).Text; Assert.Contains("Уход накоплен", text); Assert.DoesNotContain("Готов к эволюции", text); Assert.DoesNotContain("%", text);
+        pet.CurrentStage = EvolutionStage.Stage2; view.Refresh();
+        Assert.Equal(EvolutionProgressDisplay.FinalFormLabel, ((TextBlock)view.FindName("CareText")).Text); Assert.Equal(1d, ((System.Windows.Controls.ProgressBar)view.FindName("CareBar")).Value);
+        var standalone = new PokemonIndividual { SpeciesId = 143, CurrentSpeciesId = 143, FamilyRootId = 143, EvolutionChainId = 72, ChainLength = 1,
+            Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = "fast-grower", AccumulatedCarePoints = 196000 };
+        data = State(standalone); view.Refresh(); Assert.Equal(EvolutionProgressDisplay.NeverEvolvesLabel, ((TextBlock)view.FindName("CareText")).Text);
+        Assert.Equal(0d, ((System.Windows.Controls.ProgressBar)view.FindName("CareBar")).Value);
+    });
 }

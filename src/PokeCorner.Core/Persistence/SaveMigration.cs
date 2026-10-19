@@ -78,9 +78,8 @@ public static class SaveMigration
         next.BalanceRevision = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(balancePath))).ToLowerInvariant();
         next.MigrationId = MigrationId;
         next.PendingEggs.Clear();
-        next.DiscoveredSpeciesIds = [];
-        next.ShinySpeciesIds = [];
-        next.NormalSpeciesIds = [];
+        // Keep history-only discoveries, including supported IDs with currently unavailable artwork.
+        // Exact ordinary metadata was already seeded once by the OLD-file loader, if absent.
         next.EvolutionTransitions = [];
         next.AwardLedger = [];
         next.TrophyShelfIds = [];
@@ -107,7 +106,8 @@ public static class SaveMigration
             InitializeIndividual(individual, legacyLookup, catalog, rules.RootElement, balance.RootElement);
             next.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             if (individual.IsShiny) next.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
-            next.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+            if (!individual.IsShiny || v1.UsesLegacyNormalDiscoveryInference)
+                next.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             for (var i = 1; i < individual.ReachedSpeciesIds.Count; i++)
                 next.EvolutionTransitions.Add($"{individual.ReachedSpeciesIds[i - 1]}->{individual.ReachedSpeciesIds[i]}");
         }

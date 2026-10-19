@@ -103,6 +103,7 @@ public partial class RoomView : UserControl
     private readonly Func<int, string> _speciesName;
     private readonly CatalogPackage? _catalog;
     private readonly LevelProgression? _levels;
+    private readonly TraitRules? _careTraits;
     private readonly Action? _pet;
     private readonly Action? _feed;
     private readonly Action<Guid>? _openIndividual;
@@ -124,6 +125,7 @@ public partial class RoomView : UserControl
         _speciesName = speciesName ?? (id => $"№{id:D4}");
         _catalog = catalog;
         _levels = catalog is null ? null : new LevelProgression(catalog.DataRoot);
+        _careTraits = catalog is null ? null : new TraitRules(catalog.DataRoot);
         _pet = pet;
         _feed = feed;
         _openIndividual = openIndividual;
@@ -185,14 +187,17 @@ public partial class RoomView : UserControl
             PetCaption.Text += (species is null ? "" : " · " + string.Join(" · ", species.Types.Select(TypeDisplay.GetLabel)) +
                 " · " + (Enum.TryParse<RarityTier>(species.Rarity, out var tier) ? RarityDisplay.GetName(tier) : species.Rarity)) +
                 (level is null ? "" : $" · Ур. {level}");
+            var required = _catalog is null ? EvolutionCalculator.RequiredCareForNext(active.CurrentStage)
+                : EvolutionCalculator.RequiredCareForNext(active, _careTraits!, _levels!, _catalog);
             CareText.Text = active.ChainLength <= 1 ? EvolutionProgressDisplay.NeverEvolvesLabel :
                 (int)active.CurrentStage >= active.ChainLength - 1 ? EvolutionProgressDisplay.FinalFormLabel :
-                EvolutionCalculator.StageForPoints(active.AccumulatedCarePoints, active.ChainLength) > active.CurrentStage
+                active.AccumulatedCarePoints >= required
                     ? "Уход накоплен · условия эволюции в карточке" : "Проводите время вместе и кормите питомца";
-            var previous = active.CurrentStage == EvolutionStage.Stage2 ? EvolutionThresholds.Stage2Threshold : 0;
+            var previous = active.CurrentStage != EvolutionStage.Stage2 ? 0 : _catalog is null ? EvolutionThresholds.Stage2Threshold
+                : EvolutionCalculator.RequiredCareForNext(active, _careTraits!, _levels!, _catalog, EvolutionStage.Stage1);
             CareBar.Value = active.ChainLength <= 1 ? 0 : (int)active.CurrentStage >= active.ChainLength - 1 ? 1 :
                 Math.Clamp((double)(active.AccumulatedCarePoints - previous) /
-                    (EvolutionCalculator.RequiredCareForNext(active.CurrentStage) - previous), 0, 1);
+                    (required - previous), 0, 1);
             XpText.Text = level is null ? $"{active.TotalXp} XP" : level >= 40 ? $"Ур. {level} · максимум опыта" :
                 $"Ур. {level} · {active.TotalXp} / {_levels!.XpForLevel(level.Value + 1)} XP";
         }

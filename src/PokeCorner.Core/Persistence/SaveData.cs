@@ -1,4 +1,5 @@
 using PokeCorner.Core.Domain;
+using System.Text.Json.Serialization;
 
 namespace PokeCorner.Core.Persistence;
 
@@ -14,6 +15,8 @@ public sealed class SaveData
     public HashSet<int> ShinySpeciesIds { get; set; } = [];
     // Exact ordinary history. Missing OLD JSON is inferred once at deserialization.
     public HashSet<int> NormalSpeciesIds { get; set; } = [];
+    // Transient provenance for the one-time OLD v1 display inference; never a saved gameplay field.
+    [JsonIgnore] internal bool UsesLegacyNormalDiscoveryInference { get; set; }
     public Dictionary<string, long?> Metrics { get; set; } = [];
     public Dictionary<string, AwardEntry> AwardLedger { get; set; } = [];
     public List<string?> TrophyShelfIds { get; set; } = [];

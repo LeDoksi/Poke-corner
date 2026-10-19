@@ -1,3 +1,5 @@
+using PokeCorner.Core.PokeApi;
+
 namespace PokeCorner.Core.Domain;
 
 public static class EvolutionThresholds
@@ -17,6 +19,18 @@ public static class EvolutionCalculator
         EvolutionStage.Stage2 => EvolutionThresholds.Stage3Threshold,
         _ => int.MaxValue
     };
+
+    /// Canonical cumulative care threshold. The trait is personal (unique slots), not a team bonus.
+    public static int RequiredCareForNext(PokemonIndividual individual, TraitRules traits, LevelProgression levels,
+        CatalogPackage catalog, EvolutionStage? stage = null)
+    {
+        var required = RequiredCareForNext(stage ?? individual.CurrentStage);
+        if (required == int.MaxValue || individual.FirstTraitId != "fast-grower" && individual.SecondTraitId != "fast-grower"
+            || !traits.Allowed(individual.CurrentSpeciesId, individual.IsShiny, catalog).Contains("fast-grower")) return required;
+        var effect = TraitRules.Stack([traits.Value("fast-grower", levels.TraitTierForXp(individual.TotalXp))]);
+        // Accepted thresholds and tier values produce integral care requirements.
+        return decimal.ToInt32(required * (1m - effect));
+    }
 
     public static EvolutionStage StageForPoints(int accumulatedCarePoints, int chainLength)
     {
