@@ -1,0 +1,64 @@
+{
+  "coverage": 800,
+  "missing": 225,
+  "completedRanges": [
+    [
+      1,
+      800
+    ]
+  ],
+  "newRanges": [
+    [
+      201,
+      800
+    ]
+  ],
+  "unchangedCheckpointFacts200": true,
+  "unchangedPriorBatchBytesAgainstCheckpointHashes": true,
+  "changedSourceIdsOnly": [
+    383,
+    492,
+    532,
+    720,
+    795,
+    797,
+    798
+  ],
+  "sourceSelectionsSha256": "ed23e5b672e1e46b1afb3f6887527c5f47703aa4dbe75cd94476b5f26e4ff535",
+  "longestFactId": 689,
+  "longestLength": 157,
+  "longestNewFactId": 689,
+  "longestNewLength": 157,
+  "longestNewSourceVersion": 34,
+  "longestNewFact": "Глаза на каждой ладони позволяют ему следить за всеми направлениями. В опасности конечности начинают действовать самостоятельно, добиваясь победы над врагом.",
+  "manifestCount": 2749,
+  "manifestTotalBytes": 281277646,
+  "runtimeManifestSourceByteProof": [
+    {
+      "path": "docs/design-v2/catalog-package/russian-facts.json",
+      "target": "catalog-package/russian-facts.json",
+      "bytes": 508143,
+      "sha256": "f2a65851b9f986134d87a361aa841239fbd68331d1316fcae9375932e8c3ca2d"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/russian-facts-provenance.json",
+      "target": "catalog-package/russian-facts-provenance.json",
+      "bytes": 417271,
+      "sha256": "b38cba14b7ed616d91be5c580b5373dd073c4545e4283de8f467bb0df14c5e77"
+    }
+  ],
+  "files": {
+    "docs\\design-v2\\catalog-package\\russian-facts.json": {
+      "bytes": 508143,
+      "sha256": "f2a65851b9f986134d87a361aa841239fbd68331d1316fcae9375932e8c3ca2d"
+    },
+    "docs\\design-v2\\catalog-package\\russian-facts-provenance.json": {
+      "bytes": 417271,
+      "sha256": "b38cba14b7ed616d91be5c580b5373dd073c4545e4283de8f467bb0df14c5e77"
+    },
+    "src\\PokeCorner.App\\Assets\\UiSystem\\curated-russian-facts.json": {
+      "bytes": 7470,
+      "sha256": "c00ea0289dd4f411faca017463d64931b3121867dcfc4f85a0d72cf2dd3ef3f8"
+    }
+  }
+}

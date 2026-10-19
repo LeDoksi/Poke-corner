@@ -1,0 +1,79 @@
+{
+  "coverage": 1025,
+  "missing": 0,
+  "completedRanges": [
+    [
+      1,
+      1025
+    ]
+  ],
+  "newRange": [
+    801,
+    1025
+  ],
+  "unchangedFirst800Objects": true,
+  "unchangedFirst800BatchRawBytes": true,
+  "approved11ObjectsAndPinned7470Bytes": true,
+  "all1025ExactRawSourceRowsAndUtf8Sha": true,
+  "sourceCsvSha256": "059b24f07ccce256df1295b5d2fa19b82129cb6d5cfdf6a83455b6dffbcc5e9b",
+  "sourceSelectionsSha256": "db7e4d0670dd149f99feb267207e78319c16857e6724026251c3a772271a6726",
+  "changedSourceIdsOnly": [
+    953,
+    990,
+    991,
+    992,
+    993,
+    994,
+    995,
+    1006,
+    1022
+  ],
+  "manifestCount": 2749,
+  "manifestTotalBytes": 281542519,
+  "packageByteProof": [
+    {
+      "path": "docs/design-v2/catalog-package/russian-facts.json",
+      "bytes": 655281,
+      "sha256": "88aaa589de061fe1943e21d36b0d2e3805f7873eb6e3801837e4978552effd21",
+      "copies": [
+        {
+          "path": "src/PokeCorner.App/bin/Debug/net8.0-windows/Data/catalog-package/russian-facts.json",
+          "bytes": 655281,
+          "sha256": "88aaa589de061fe1943e21d36b0d2e3805f7873eb6e3801837e4978552effd21"
+        },
+        {
+          "path": "tests/PokeCorner.App.Tests/bin/Debug/net8.0-windows/Data/catalog-package/russian-facts.json",
+          "bytes": 655281,
+          "sha256": "88aaa589de061fe1943e21d36b0d2e3805f7873eb6e3801837e4978552effd21"
+        }
+      ]
+    },
+    {
+      "path": "docs/design-v2/catalog-package/russian-facts-provenance.json",
+      "bytes": 535006,
+      "sha256": "14943b9669b1dbd877de6ded9bbac2ae4d480fc29d29281367f80dc46d07ada1",
+      "copies": [
+        {
+          "path": "src/PokeCorner.App/bin/Debug/net8.0-windows/Data/catalog-package/russian-facts-provenance.json",
+          "bytes": 535006,
+          "sha256": "14943b9669b1dbd877de6ded9bbac2ae4d480fc29d29281367f80dc46d07ada1"
+        },
+        {
+          "path": "tests/PokeCorner.App.Tests/bin/Debug/net8.0-windows/Data/catalog-package/russian-facts-provenance.json",
+          "bytes": 535006,
+          "sha256": "14943b9669b1dbd877de6ded9bbac2ae4d480fc29d29281367f80dc46d07ada1"
+        }
+      ]
+    }
+  ],
+  "longestFact": {
+    "speciesId": 689,
+    "length": 157,
+    "textRu": "Глаза на каждой ладони позволяют ему следить за всеми направлениями. В опасности конечности начинают действовать самостоятельно, добиваясь победы над врагом."
+  },
+  "longestNewFact": {
+    "speciesId": 818,
+    "length": 152,
+    "textRu": "Мигательные перепонки помогают ему замечать слабые места врага. Из кончиков пальцев он точно стреляет водой со скоростью в три раза выше скорости звука."
+  }
+}

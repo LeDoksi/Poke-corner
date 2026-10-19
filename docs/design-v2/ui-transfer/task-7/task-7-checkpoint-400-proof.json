@@ -1,0 +1,28 @@
+{
+  "coverage": 400,
+  "missing": 625,
+  "completedRanges": [
+    [
+      1,
+      400
+    ]
+  ],
+  "unchangedCheckpointFacts200": true,
+  "sourceSelectionsSha256": "83ca46bc1b7c9bfb9cf015344e1af3de6cefd4619c58e52882990100f66b697a",
+  "longestFactId": 156,
+  "longestLength": 155,
+  "files": {
+    "docs\\design-v2\\catalog-package\\russian-facts.json": {
+      "bytes": 256765,
+      "sha256": "d9e6aa10e1eef44752de07ee06e21d7a94da07f02fd42c81d8967388b0b4e8a3"
+    },
+    "docs\\design-v2\\catalog-package\\russian-facts-provenance.json": {
+      "bytes": 209731,
+      "sha256": "32afc94ad04d1353339bfe4d1d4ffcfd4c71e2f171120dc87d95b85d66358ccc"
+    },
+    "src\\PokeCorner.App\\Assets\\UiSystem\\curated-russian-facts.json": {
+      "bytes": 7470,
+      "sha256": "c00ea0289dd4f411faca017463d64931b3121867dcfc4f85a0d72cf2dd3ef3f8"
+    }
+  }
+}

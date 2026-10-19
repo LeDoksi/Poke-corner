@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\docs\design-v2\catalog-package\prepare-russian-facts.py", line 181, in <module>
+    build(args.allow_partial, args.check)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\docs\design-v2\catalog-package\prepare-russian-facts.py", line 145, in build
+    assert manifest["totalBytes"] == total_bytes, "Manifest totalBytes stale"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Manifest totalBytes stale

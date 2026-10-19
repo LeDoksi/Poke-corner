@@ -1,0 +1,19 @@
+COMMAND: rtk proxy python -X utf8 docs/design-v2/catalog-package/prepare-russian-facts.py --review 849 849
+849|v34|This short-tempered and aggressive Pokémon chugs stagnant water to absorb any toxins it might contain.
+RU: Этот вспыльчивый и агрессивный покемон пьёт стоячую воду, чтобы впитать токсины, которые могут в ней содержаться.
+EXIT: 0
+
+COMMAND: rtk proxy python -X utf8 docs/design-v2/catalog-package/prepare-russian-facts.py --review 953 953
+953|v40|This Pokémon creates a mud ball by mixing sand and dirt with psychic energy. It treasures its mud ball more than its own life.
+RU: Он смешивает песок и землю с психической энергией, создавая грязевой шар. Этот шар ему дороже собственной жизни.
+EXIT: 0
+
+COMMAND: rtk proxy python -X utf8 docs/design-v2/catalog-package/prepare-russian-facts.py --review 981 981
+981|v41|The hardened head from the tail protects the head of the main body as Farigiraf whips its long neck around to headbutt enemies.
+RU: Затвердевшая голова на хвосте защищает основную голову. Он размахивает длинной шеей и бодает врагов.
+EXIT: 0
+
+COMMAND: rtk proxy python -X utf8 docs/design-v2/catalog-package/prepare-russian-facts.py --review 1018 1018
+1018|v41|It digs holes on mountains, searching for food. It’s so durable that being caught in a cave-in won’t faze it.
+RU: Он роет норы в горах в поисках пищи. Он настолько крепок, что даже обвал пещеры не выводит его из равновесия.
+EXIT: 0

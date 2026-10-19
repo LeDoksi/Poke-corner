@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\docs\design-v2\catalog-package\prepare-russian-facts.py", line 176, in <module>
+    build(args.allow_partial, args.check)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\docs\design-v2\catalog-package\prepare-russian-facts.py", line 117, in build
+    assert allow_partial or len(facts) == 1025, f"Russian coverage {len(facts)}/1025; checkpoint only"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Russian coverage 800/1025; checkpoint only

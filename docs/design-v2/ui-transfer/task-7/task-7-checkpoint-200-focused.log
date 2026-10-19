@@ -1,0 +1,117 @@
+  Определение проектов для восстановления...
+  Все проекты обновлены для восстановления.
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)
+[xUnit.net 00:00:00.23]   Discovering: PokeCorner.App.Tests
+[xUnit.net 00:00:00.30]   Discovered:  PokeCorner.App.Tests
+[xUnit.net 00:00:00.30]   Starting:    PokeCorner.App.Tests
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "[]") [4 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "{\"facts\":[{\"speciesId\":\"1\",\"textRu\":\"Русс"···) [8 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "{}") [< 1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "{\"facts\":[{\"speciesId\":1,\"textRu\":\" \"}]}") [1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "{\"facts\":[{\"speciesId\":1026,\"textRu\":\"Русск"···) [1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.OwnedBusyStateReflectsLiveProviderWithoutChangingItsGuid [19 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "{\"facts\":[{\"speciesId\":1,\"textRu\":\"English "···) [8 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "{\"facts\":[{\"speciesId\":1,\"textRu\":\"Русский "···) [6 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: null) [< 1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.MissingOrMalformedDatasetFailsSafelyWithoutFiller(content: "{") [1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.UnsafePathOrHash(path: "../escape.gif", hash: null) [38 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.UnsafePathOrHash(path: "catalog-package/assets/normal/1.gif", hash: "bad-hash") [10 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.UnsupportedVariant [4 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.WrongFormat [3 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.MissingRequiredAsset [4 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.OfflineInformationAndAsset [3 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.ExistingShinyRemainsShinyWhenNewShinyIsUnavailable [2 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1SameSpeciesTileReopensAfterClosingOrConsumingPicker(shiny: False, close: "individual") [419 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.OwnedCardRefreshesWhenOnlyBusyStateOrLevelChanges [420 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(ownedShiny: True) [417 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1SameSpeciesTileReopensAfterClosingOrConsumingPicker(shiny: False, close: "escape") [52 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(ownedShiny: False) [38 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1SameSpeciesTileReopensAfterClosingOrConsumingPicker(shiny: True, close: "escape") [38 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1SameSpeciesTileReopensAfterClosingOrConsumingPicker(shiny: True, close: "back") [17 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1SameSpeciesTileReopensAfterClosingOrConsumingPicker(shiny: True, close: "individual") [54 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1SameSpeciesTileReopensAfterClosingOrConsumingPicker(shiny: False, close: "back") [19 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1PendingActionNeverRestartsAnimationsAfterUnload(action: "local-item", pendingCommit: False) [36 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1PendingActionNeverRestartsAnimationsAfterUnload(action: "item", pendingCommit: False) [12 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1PendingActionNeverRestartsAnimationsAfterUnload(action: "rehome", pendingCommit: False) [14 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1PendingActionNeverRestartsAnimationsAfterUnload(action: "evolution", pendingCommit: True) [22 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1PendingActionNeverRestartsAnimationsAfterUnload(action: "rehome", pendingCommit: True) [11 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1PendingActionNeverRestartsAnimationsAfterUnload(action: "item", pendingCommit: True) [13 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1PendingActionNeverRestartsAnimationsAfterUnload(action: "evolution", pendingCommit: False) [16 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.FailedItemCommitKeepsInventoryAndPetAndRetriesSameOperation [27 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.MissingOrUnreadableArtworkKeepsExactIndividualReachable(corrupt: True) [13 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.MissingOrUnreadableArtworkKeepsExactIndividualReachable(corrupt: False) [10 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.NewShinyOnlyDoesNotOpenOrdinaryMode [< 1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.ApprovedSelectorsAndWholeCardAreAvailableAtBothSizes(width: 1000, height: 760) [35 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.GiftCandidatesHaveTwoAvailableFamilyRootsIncludingStandalone [773 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.ApprovedSelectorsAndWholeCardAreAvailableAtBothSizes(width: 840, height: 650) [24 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.DirectIssueIncludesSingleRootAndRespectsVariant [3 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.PendingConfirmationBlocksDuplicateAndCannotApplyToAnotherCard [19 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.ModesSelectOnlyTheirOwnIndividualsAndHistorySurvivesRemoval [1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.BuildMappingMatchesManifest [37 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.UnreferencedManifestFileMustMatchHash [5 ms]
+[xUnit.net 00:00:01.57]     PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.EveryCatalogSpeciesHasRussianFactOffline [FAIL]
+[xUnit.net 00:00:01.57]       Missing Russian facts: 825; first IDs: 201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216
+[xUnit.net 00:00:01.57]       Stack Trace:
+[xUnit.net 00:00:01.58]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs(22,0): at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.EveryCatalogSpeciesHasRussianFactOffline()
+[xUnit.net 00:00:01.58]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:01.58]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.59]     PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.DataAndExactSourceProvenanceShipThroughManifest [FAIL]
+[xUnit.net 00:00:01.59]       Assert.Equal() Failure: Collections differ
+[xUnit.net 00:00:01.59]                                                                        ↓ (pos 200)
+[xUnit.net 00:00:01.59]       Expected: RangeIterator                          [···, 199, 200, 201, 202, 203, ···]
+[xUnit.net 00:00:01.59]       Actual:   OrderedImplicitlyStableEnumerable<int> [···, 199, 200]
+[xUnit.net 00:00:01.59]       Stack Trace:
+[xUnit.net 00:00:01.59]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs(43,0): at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.DataAndExactSourceProvenanceShipThroughManifest()
+[xUnit.net 00:00:01.59]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:01.59]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.EveryCatalogSpeciesHasRussianFactOffline [753 ms]
+  Сообщение об ошибке:
+   Missing Russian facts: 825; first IDs: 201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.EveryCatalogSpeciesHasRussianFactOffline() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs:line 22
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.PackagedRouteHintsCoverTheCanonicalSpecies [812 ms]
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.DataAndExactSourceProvenanceShipThroughManifest [20 ms]
+  Сообщение об ошибке:
+   Assert.Equal() Failure: Collections differ
+                                                                 ↓ (pos 200)
+Expected: RangeIterator                          [···, 199, 200, 201, 202, 203, ···]
+Actual:   OrderedImplicitlyStableEnumerable<int> [···, 199, 200]
+  Трассировка стека:
+     at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.DataAndExactSourceProvenanceShipThroughManifest() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs:line 43
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.ShippedPackageCounts [679 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.CatalogTests.LegacyLookupShape [1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.CanonicalEeveeGraphHasEightParallelChildrenAndFactsArePreparedOnly [744 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.ClosedPackagedSpeciesUsesAnActualVerifiedSilhouette [641 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.MultipleOwnedIndividualsRequireStableExplicitChoice [2 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.ClosedSpeciesExposeOnlyPublicSearchAndSortFields [3 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.CosmeticDisplayOverrideDoesNotMoveTheOwnedIndividualToAnEarlierSpecies [< 1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.StoneSelectsExactTargetAndTurningItOffForcesCanonicalRandom [306 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.NewSpeciesScreenRendersClosedSearchAndExplicitOwnedChoicesAtCompactSize [60 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.EightHundredIndividualsUseCurrentSpeciesForDuplicatesAndAndEveryFilter [64 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1CardCareUsesActualFastGrowerPreviewWithoutGameplayPercentages [723 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.DelayedFavoriteCommitDoesNotRepaintAnotherOpenedDetail [782 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.UnsupportedClosedSpeciesHasNoSilhouetteAndDiscoverySurvivesRelease [< 1 ms]
+[xUnit.net 00:00:03.12]   Finished:    PokeCorner.App.Tests
+  Пройден PokeCorner.App.Tests.GlobalUpdate.ApprovedCollectionTests.Fix1SuccessfulPublishedRehomeNeverRefreshesRemovedXpOrEscapesHandler [42 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.SpeciesSortPutsClosedEntriesAfterOpenTypesWithoutDisclosingType [< 1 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.FailedCommitKeepsTheIndividualAndOpenDetailUnchanged [16 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.FavoriteCompletionToleratesItsIndividualBeingReleased [16 ms]
+  Пройден PokeCorner.App.Tests.GlobalUpdate.PokedexTests.DelayedCommitErrorStaysOffAnotherDetailAndSelectKeepsItsOriginalGuid [17 ms]
+
+Сбой тестового запуска.
+Всего тестов: 66
+     Пройдено: 64
+     Не пройдено: 2
+ Общее время: 3.4759 Секунды

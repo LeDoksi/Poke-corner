@@ -1,0 +1,43 @@
+{
+  "russianSpecies": 200,
+  "completedIdRanges": [
+    [
+      1,
+      200
+    ]
+  ],
+  "newEditorialRows": 189,
+  "longestNewFact": {
+    "speciesId": 156,
+    "characters": 155,
+    "textRu": "Он держит врагов на расстоянии жарким пламенем и потоками раскалённого воздуха. Ловкость позволяет ему уклоняться от ударов, продолжая обжигать противника."
+  },
+  "approvedArtifactSha256": "c00ea0289dd4f411faca017463d64931b3121867dcfc4f85a0d72cf2dd3ef3f8",
+  "sourceSelectionsSha256": "3c0995ebb11ec9377398ee65110c3895ac4640e45a2f1c8c01342e06903f0316",
+  "files": [
+    {
+      "project": "src/PokeCorner.App",
+      "name": "russian-facts.json",
+      "bytes": 125203,
+      "sha256": "1537d4af5955504c8790efacd65545e0afac512c5cef848ca4bf9ac2629650a9"
+    },
+    {
+      "project": "tests/PokeCorner.App.Tests",
+      "name": "russian-facts.json",
+      "bytes": 125203,
+      "sha256": "1537d4af5955504c8790efacd65545e0afac512c5cef848ca4bf9ac2629650a9"
+    },
+    {
+      "project": "src/PokeCorner.App",
+      "name": "russian-facts-provenance.json",
+      "bytes": 103259,
+      "sha256": "752ee3dc00ab233fe5924703d940d4eab72d5a4a3a3ef85b0848ed8359dc4874"
+    },
+    {
+      "project": "tests/PokeCorner.App.Tests",
+      "name": "russian-facts-provenance.json",
+      "bytes": 103259,
+      "sha256": "752ee3dc00ab233fe5924703d940d4eab72d5a4a3a3ef85b0848ed8359dc4874"
+    }
+  ]
+}

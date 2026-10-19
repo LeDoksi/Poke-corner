@@ -1,0 +1,100 @@
+  Определение проектов для восстановления...
+  Все проекты обновлены для восстановления.
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(283,36): warning CS8602: Разыменование вероятной пустой ссылки. [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(255,17): warning xUnit2013: Do not use Assert.Equal() to check for collection size. Use Assert.Empty instead. (https://xunit.net/xunit.analyzers/rules/xUnit2013) [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Тестовый запуск для C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+Версия VSTest 17.11.1 (x64)
+
+Запуск выполнения тестов; подождите...
+Общее количество тестовых файлов (1), соответствующих указанному шаблону.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)
+[xUnit.net 00:00:00.05]   Discovering: PokeCorner.App.Tests
+[xUnit.net 00:00:00.11]   Discovered:  PokeCorner.App.Tests
+[xUnit.net 00:00:00.11]   Starting:    PokeCorner.App.Tests
+[xUnit.net 00:00:00.45]     PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(ownedShiny: True) [FAIL]
+[xUnit.net 00:00:00.45]       System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.45]                  ↓ (pos 0)
+[xUnit.net 00:00:00.45]       Expected: "В луковице на спине хранится запас энерги"···
+[xUnit.net 00:00:00.45]       Actual:   "Служебная сводка типов"
+[xUnit.net 00:00:00.45]                  ↑ (pos 0)
+[xUnit.net 00:00:00.45]       ---- Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.45]                  ↓ (pos 0)
+[xUnit.net 00:00:00.45]       Expected: "В луковице на спине хранится запас энерги"···
+[xUnit.net 00:00:00.45]       Actual:   "Служебная сводка типов"
+[xUnit.net 00:00:00.45]                  ↑ (pos 0)
+[xUnit.net 00:00:00.45]       Stack Trace:
+[xUnit.net 00:00:00.45]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:00.45]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs(52,0): at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(Boolean ownedShiny)
+[xUnit.net 00:00:00.45]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.45]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.45]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.45]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs(66,0): at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.<>c__DisplayClass2_0.<HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt>b__0()
+[xUnit.net 00:00:00.45]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:00.46]     PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(ownedShiny: False) [FAIL]
+[xUnit.net 00:00:00.46]       System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.46]                  ↓ (pos 0)
+[xUnit.net 00:00:00.46]       Expected: "В луковице на спине хранится запас энерги"···
+[xUnit.net 00:00:00.46]       Actual:   "Служебная сводка типов"
+[xUnit.net 00:00:00.46]                  ↑ (pos 0)
+[xUnit.net 00:00:00.46]       ---- Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:00.46]                  ↓ (pos 0)
+[xUnit.net 00:00:00.46]       Expected: "В луковице на спине хранится запас энерги"···
+[xUnit.net 00:00:00.46]       Actual:   "Служебная сводка типов"
+[xUnit.net 00:00:00.46]                  ↑ (pos 0)
+[xUnit.net 00:00:00.46]       Stack Trace:
+[xUnit.net 00:00:00.46]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:00.46]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs(52,0): at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(Boolean ownedShiny)
+[xUnit.net 00:00:00.46]            at InvokeStub_RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(Object, Span`1)
+[xUnit.net 00:00:00.46]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.46]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.46]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs(66,0): at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.<>c__DisplayClass2_0.<HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt>b__0()
+[xUnit.net 00:00:00.46]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:00.46]   Finished:    PokeCorner.App.Tests
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(ownedShiny: True) [310 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "В луковице на спине хранится запас энерги"···
+Actual:   "Служебная сводка типов"
+           ↑ (pos 0)
+---- Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "В луковице на спине хранится запас энерги"···
+Actual:   "Служебная сводка типов"
+           ↑ (pos 0)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(Boolean ownedShiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs:line 52
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.<>c__DisplayClass2_0.<HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs:line 66
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+  Не пройден PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(ownedShiny: False) [10 ms]
+  Сообщение об ошибке:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "В луковице на спине хранится запас энерги"···
+Actual:   "Служебная сводка типов"
+           ↑ (pos 0)
+---- Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "В луковице на спине хранится запас энерги"···
+Actual:   "Служебная сводка типов"
+           ↑ (pos 0)
+  Трассировка стека:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(Boolean ownedShiny) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs:line 52
+   at InvokeStub_RussianFactsTests.HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.RussianFactsTests.<>c__DisplayClass2_0.<HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\russianFactsTests.cs:line 66
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+
+Сбой тестового запуска.
+Всего тестов: 2
+     Не пройдено: 2
+ Общее время: 0.9832 Секунды
