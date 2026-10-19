@@ -260,8 +260,18 @@ public sealed class ReactionsTests
             Assert.Single(data.Individuals.Where(p => p.Id == child.Id));
             var continueButton = (Button)view.FindName("HatchContinueButton")!;
             Assert.Equal(Visibility.Visible, continueButton.Visibility);
+            var hiddenResult = ((FrameworkElement)view.FindName("ResultPanel")!).Visibility;
             continueButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            view.Refresh();
+            Assert.Equal(hiddenResult, ((FrameworkElement)view.FindName("ResultPanel")!).Visibility);
+            Assert.False(((Image)view.FindName("BabyImage")!).HasAnimatedProperties);
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.LoadedEvent));
             Assert.Equal(Visibility.Visible, ((FrameworkElement)view.FindName("ResultPanel")!).Visibility);
+            Assert.NotNull(((Image)view.FindName("BabyImage")!).Source);
+            Assert.Equal("hatched", data.Nest!.Status);
+            Assert.Equal(child.Id, data.Nest.Child.Id);
+            Assert.Single(data.CompletedOperations.Keys.Where(key => key == $"nursery:hatch:{data.Nest.Id}"));
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
             Assert.Single(data.Individuals.Where(p => p.Id == child.Id));
             Assert.Equal(Visibility.Visible, ((FrameworkElement)View().FindName("ResultPanel")!).Visibility);
         });

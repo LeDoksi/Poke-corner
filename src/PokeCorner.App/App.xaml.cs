@@ -1108,7 +1108,7 @@ public partial class App : System.Windows.Application
             .Preview(parentIds, selectedSpeciesId);
 
     public Task<NurseryAction> StartNurseryAsync(NurseryRequest request) =>
-        CommitNurseryAsync(service => service.Start(request));
+        CommitNurseryAsync(service => service.Start(request), next => ValidateNurseryStartCandidate(_catalogPackage, next, request));
 
     public Task<NurseryAction> HatchNurseryAsync(Guid id, Guid operationId) =>
         CommitNurseryAsync(service => service.Hatch(id, operationId));
@@ -1123,12 +1123,28 @@ public partial class App : System.Windows.Application
         return changed;
     }
 
-    private async Task<NurseryAction> CommitNurseryAsync(Func<NurseryService, NurseryAction> action)
+    private static void ValidateNurseryStartCandidate(CatalogPackage catalog, SaveData candidate, NurseryRequest request)
+    {
+        // Completed-operation replay/fingerprint belongs to canonical Start, even if parents are now busy/active.
+        if (candidate.CompletedOperations.ContainsKey($"nursery:start:{request.OperationId}")) return;
+        foreach (var id in request.ParentIds)
+        {
+            var parent = candidate.Individuals.SingleOrDefault(p => p.Id == id)
+                ?? throw new InvalidOperationException("Родитель не найден.");
+            if (candidate.ActiveIndividualId == id)
+                throw new InvalidOperationException("Спутник на рабочем столе не может стать родителем.");
+            if (!catalog.CanObtain(parent.CurrentSpeciesId, parent.IsShiny))
+                throw new InvalidOperationException("Изображение этой формы пока недоступно.");
+        }
+    }
+
+    private async Task<NurseryAction> CommitNurseryAsync(Func<NurseryService, NurseryAction> action, Action<SaveData>? validate = null)
     {
         NurseryAction? result = null;
         await _expeditionProgressTask;
         await CommitStateAsync(next =>
         {
+            validate?.Invoke(next);
             result = action(new NurseryService(_catalogPackage, next));
             if (!result.Success) throw new InvalidOperationException(result.Message);
         }, closeMenu: false);

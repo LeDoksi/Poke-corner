@@ -8,7 +8,7 @@ using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.App.Tests.GlobalUpdate;
 
-public sealed class NurseryUiTests
+public sealed partial class NurseryUiTests
 {
     private static readonly Lazy<CatalogPackage> Catalog = new(() => CatalogPackage.Load(Path.Combine(AppContext.BaseDirectory, "Data")));
 
@@ -27,14 +27,14 @@ public sealed class NurseryUiTests
         return (data, data.Individuals[0].Id, data.Individuals[1].Id);
     }
 
-    private static PokemonIndividual Individual(int speciesId)
+    private static PokemonIndividual Individual(int speciesId, bool shiny = false)
     {
         var species = Catalog.Value.Species.Single(s => s.Id == speciesId);
         return new PokemonIndividual
         {
             SpeciesId = speciesId, CurrentSpeciesId = speciesId, FamilyRootId = species.FamilyRootId,
             EvolutionChainId = species.EvolutionChainId, ChainLength = 1, ReachedSpeciesIds = [speciesId],
-            Nature = Nature.Bold, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = "gatherer"
+            Nature = Nature.Bold, IsShiny = shiny, CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = "gatherer"
         };
     }
 
@@ -48,12 +48,25 @@ public sealed class NurseryUiTests
             shortage ?? ((_, _) => { }), openPokedex ?? (_ => { }),
             activate ?? (id => { data.ActiveIndividualId = id; return Task.CompletedTask; }));
 
+    private static Button ShowIndividual(NurseryView view, Guid id)
+    {
+        var back=(Button)view.FindName("BackToGroupsButton")!;
+        if(back.Visibility==Visibility.Visible) back.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        foreach(var group in ((WrapPanel)view.FindName("SpeciesGroupsPanel")!).Children.OfType<Button>().ToArray())
+        {
+            group.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            var found=((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().FirstOrDefault(b=>Equals(b.Tag,id));
+            if(found is not null)return found;
+            back.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
+        throw new InvalidOperationException("Exact specimen absent from this picker page.");
+    }
     private static void Choose(NurseryView view, Guid first, Guid second)
     {
-        ((WrapPanel)view.FindName("FirstParentsPanel")!).Children.OfType<Button>().Single(b => Equals(b.Tag, first))
-            .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-        ((WrapPanel)view.FindName("SecondParentsPanel")!).Children.OfType<Button>().Single(b => Equals(b.Tag, second))
-            .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        ((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        ShowIndividual(view,first).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        ShowIndividual(view,second).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        ((Button)view.FindName("PickerSaveButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
     }
 
     [Fact]
@@ -66,13 +79,16 @@ public sealed class NurseryUiTests
             WpfTestHost.Layout(view, 600, 420);
             Assert.True(view.DesiredSize.Width <= 600);
             Choose(view, first, second);
-            var same = ((WrapPanel)view.FindName("SecondParentsPanel")!).Children.OfType<Button>().Single(b => Equals(b.Tag, first));
-            Assert.False(same.IsEnabled);
-            Assert.Contains("уже выбран", same.Content.ToString());
+            ((Button)view.FindName("ChooseSecondButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Assert.DoesNotContain(((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>(), b=>Equals(b.Tag,first));
+            ((Button)view.FindName("PickerCancelButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             var expected = new NurseryService(Catalog.Value, data).Preview([first, second]);
             var cost = ((TextBlock)view.FindName("CostText")!).Text;
             Assert.Contains($"{expected.Hours} ч", cost);
-            Assert.All(expected.Berries, berry => Assert.Contains($"{berry.Key} ×{berry.Value}", cost));
+            var prices=((WrapPanel)view.FindName("ResourcePricesPanel")!).Children.OfType<StackPanel>().SelectMany(row=>row.Children.OfType<TextBlock>()).Select(row=>row.Text).ToArray();
+            Assert.Equal(expected.Berries.Count,prices.Length);
+            var berryNames=new Dictionary<string,string> { ["rawst"]="Равст",["oran"]="Оран",["pecha"]="Печа",["cheri"]="Чери",["chesto"]="Често",["aspear"]="Аспир" };
+            Assert.All(expected.Berries, berry => Assert.Contains($"{berryNames[berry.Key]} ×{berry.Value}",prices));
             Assert.All(((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<Button>(),
                 button => { Assert.True(button.Focusable); Assert.True(button.IsTabStop); });
             Assert.True(((Button)view.FindName("StartButton")!).IsTabStop);
@@ -87,8 +103,8 @@ public sealed class NurseryUiTests
             var (data, first, second) = State();
             data.Expedition = new ExpeditionState { Status = "running", ParticipantIds = [second] };
             var view = View(data);
-            Assert.False(((WrapPanel)view.FindName("FirstParentsPanel")!).Children.OfType<Button>()
-                .Single(b => Equals(b.Tag, second)).IsEnabled);
+            ((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Assert.False(ShowIndividual(view,second).IsEnabled);
             data.Expedition = null;
             data.Berries = data.Berries.ToDictionary(x => x.Key, _ => 0);
             var opened = (Berry: "", Required: 0);
@@ -190,8 +206,8 @@ public sealed class NurseryUiTests
             view = View(data, start: request =>
             {
                 sent.Add(request);
-                ((WrapPanel)view!.FindName("FirstParentsPanel")!).Children.OfType<Button>().Last()
-                    .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                ((Button)view!.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                Assert.Equal(Visibility.Collapsed,((Grid)view.FindName("PickerPanel")!).Visibility);
                 return Task.FromResult(new NurseryAction(true, "ok"));
             });
             Choose(view, first, second);
@@ -258,7 +274,7 @@ public sealed class NurseryUiTests
     }
 
     [Fact]
-    public void UnsupportedShinyOutcomeRendersZeroPercent()
+    public void UnsupportedShinyOutcomeExplainsUnavailableFormWithoutMath()
     {
         WpfTestHost.Run(() =>
         {
@@ -269,7 +285,8 @@ public sealed class NurseryUiTests
             var text = ((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<StackPanel>()
                 .SelectMany(card => card.Children.OfType<TextBlock>())
                 .Single(row => row.Text.Contains($"№{recipe.AvailableOutcomes.First(o => !o.ShinyAvailable).SpeciesId} ·"));
-            Assert.Contains($"shiny {0:P2} ·", text.Text);
+            Assert.Contains("Shiny-форма пока недоступна", text.Text);
+            Assert.DoesNotContain("%",text.Text);
         });
     }
 
