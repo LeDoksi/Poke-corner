@@ -89,6 +89,7 @@
             <TabItem x:Name="ShopTab" AutomationProperties.Name="Магазин"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M4 10V21H20V10 M3 4H21L22 10H2Z M9 21V14H15V21 M7 4L6 10 M12 4V10 M17 4L18 10" /><TextBlock Text="Магазин" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
         </TabControl>
         <ContentControl x:Name="SettingsContent" Visibility="Collapsed" />
+        <ContentControl x:Name="HostedContent" Visibility="Collapsed" />
         </Grid>
     </Grid>
     <local:ConfirmationOverlay x:Name="ConfirmationHost" Visibility="Collapsed" Panel.ZIndex="10" />

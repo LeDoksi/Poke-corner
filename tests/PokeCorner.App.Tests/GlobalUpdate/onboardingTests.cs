@@ -429,4 +429,299 @@ public class onboardingTests
             Assert.Equal(beforeClose, ((TextBlock)window.FindName("StepCounterText")!).Text);
         });
     }
+
+    [Fact]
+    public async Task RepeatedTourActionWhileCommitPendingOnlySavesOnce()
+    {
+        var pending = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var calls = 0;
+        Task? moving = null;
+        OnboardingWindow? window = null;
+        WpfTestHost.Run(() =>
+        {
+            window = new OnboardingWindow(1, (_, _) => { calls++; return pending.Task; });
+            var method = typeof(OnboardingWindow).GetMethod("MoveAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+            moving = (Task)method.Invoke(window, [1, "in-progress"])!;
+            _ = (Task)method.Invoke(window, [1, "in-progress"])!;
+            Assert.Equal(1, calls);
+        });
+        pending.SetResult();
+        await moving!;
+        WpfTestHost.Run(() => window!.Close());
+    }
+
+    [Theory]
+    [InlineData(false, false, 1, false)]
+    [InlineData(true, false, 2, false)]
+    [InlineData(true, true, 2, true)]
+    public async Task ResetRequiresBothDeliberateConfirmations(bool first, bool second, int expectedPrompts, bool reset)
+    {
+        var calls = 0; var prompts = 0; Task? action = null;
+        WpfTestHost.Run(() =>
+        {
+            var view = new SettingsView(new SettingsViewModel(new AppSettings()), () => { }, () => calls++,
+                confirmAsync: (_, _, _) => Task.FromResult(++prompts == 1 ? first : second),
+                getAutostart: () => false, setAutostart: _ => throw new Exception("OS must not be touched"));
+            action = (Task)typeof(SettingsView).GetMethod("ResetAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [])!;
+        });
+        await action!;
+        Assert.Equal(expectedPrompts, prompts); Assert.Equal(reset ? 1 : 0, calls);
+    }
+
+    [Fact]
+    public async Task ResetCannotContinueAfterSettingsUnloads()
+    {
+        var pending = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var calls = 0; var prompts = 0; Task? action = null;
+        WpfTestHost.Run(() =>
+        {
+            var view = new SettingsView(new SettingsViewModel(new AppSettings()), () => { }, () => calls++,
+                confirmAsync: (_, _, _) => { prompts++; return pending.Task; }, getAutostart: () => false);
+            var method = typeof(SettingsView).GetMethod("ResetAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+            action = (Task)method.Invoke(view, [])!; _ = (Task)method.Invoke(view, [])!;
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+        });
+        pending.SetResult(true); await action!;
+        Assert.Equal(1, prompts); Assert.Equal(0, calls);
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public async Task HistorySelectionRequiresTwoConfirmationsAndUsesExactCopy(bool first, bool second)
+    {
+        var entry = new SaveHistoryEntry("synthetic-private-path", DateTimeOffset.UtcNow, 2, 123, 45);
+        var prompts = 0; Task? selection = null; SaveHistoryWindow? window = null;
+        WpfTestHost.Run(() =>
+        {
+            window = new SaveHistoryWindow([entry], 1, (_, body, _) =>
+            {
+                Assert.Contains("123", body); Assert.DoesNotContain(entry.Path, body);
+                return Task.FromResult(++prompts == 1 ? first : second);
+            });
+            ((ListBox)window.FindName("HistoryList")).SelectedIndex = 0;
+            selection = (Task)typeof(SaveHistoryWindow).GetMethod("SelectAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [])!;
+        });
+        await selection!;
+        WpfTestHost.Run(() => { Assert.Equal(first && second ? entry : null, window!.SelectedEntry); window.Close(); });
+        Assert.Equal(first ? 2 : 1, prompts);
+    }
+
+    [Fact]
+    public async Task ClosingHistoryDuringPendingConfirmationKeepsSelectionEmpty()
+    {
+        var pending = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        SaveHistoryWindow? window = null; Task? selection = null; var prompts = 0;
+        WpfTestHost.Run(() =>
+        {
+            window = new SaveHistoryWindow([new("synthetic", DateTimeOffset.UtcNow, 2, 10, 2)], 0,
+                (_, _, _) => { prompts++; return pending.Task; });
+            ((ListBox)window.FindName("HistoryList")).SelectedIndex = 0;
+            selection = (Task)typeof(SaveHistoryWindow).GetMethod("SelectAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [])!;
+            window.Close();
+        });
+        pending.SetResult(true); await selection!;
+        Assert.Equal(1, prompts); Assert.Null(window!.SelectedEntry);
+    }
+
+    [Fact]
+    public void SettingsAutostartSeamNeverNeedsRealRegistryAndFailureIsActionable() => WpfTestHost.Run(() =>
+    {
+        var writes = new List<bool>();
+        var view = new SettingsView(new SettingsViewModel(new AppSettings()), () => { },
+            getAutostart: () => false, setAutostart: enabled => { writes.Add(enabled); throw new IOException("synthetic registry denial"); });
+        var check = (CheckBox)view.FindName("AutostartCheck");
+        Assert.False(check.IsChecked); Assert.Empty(writes);
+        check.IsChecked = true;
+        Assert.Equal([true], writes); Assert.False(check.IsChecked);
+        Assert.Contains("synthetic registry denial", ((TextBlock)view.FindName("FeedbackText")).Text);
+    });
+
+    [Fact]
+    public async Task HostedHistoryKeepsMenuUsableAndCancelsPendingConfirmation()
+    {
+        AppMenuWindow? menu = null; SaveHistoryWindow? history = null; Task? hosted = null; Task? selection = null;
+        WpfTestHost.Run(() =>
+        {
+            menu = ShellTests.CreateMenu(new AppState());
+            menu.Navigate(MenuSection.Settings);
+            history = new SaveHistoryWindow([new("synthetic", DateTimeOffset.UtcNow, 2, 8, 20)], 0, menu.ConfirmAsync);
+            hosted = menu.ShowHostedAsync(history.TakeHostedContent());
+            Assert.True(menu.IsEnabled);
+            Assert.Equal(Visibility.Visible, ((ContentControl)menu.FindName("HostedContent")).Visibility);
+            ((ListBox)history.FindName("HistoryList")).SelectedIndex = 0;
+            selection = (Task)typeof(SaveHistoryWindow).GetMethod("SelectAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(history, [])!;
+            Assert.Equal(Visibility.Visible, ((ConfirmationOverlay)menu.FindName("ConfirmationHost")).Visibility);
+            menu.CompleteHostedContent();
+        });
+        await Task.WhenAll(hosted!, selection!);
+        WpfTestHost.Run(() =>
+        {
+            Assert.Null(history!.SelectedEntry);
+            Assert.True(menu!.IsEnabled);
+            Assert.Equal(Visibility.Visible, ((ContentControl)menu.FindName("SettingsContent")).Visibility);
+            history.Close(); menu.Close();
+        });
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    [InlineData(4)]
+    [InlineData(5)]
+    [InlineData(6)]
+    public void SixIllustratedStepsShowCommittedGiftQueueWithoutGranting(int step) => WpfTestHost.Run(() =>
+    {
+        var window = new OnboardingWindow(step, dataRoot: DataRoot, giftQueueCount: () => 1);
+        WpfTestHost.Layout((FrameworkElement)window.Content, 360, 320);
+        var illustration = (StackPanel)window.FindName("Illustration");
+        Assert.NotEmpty(illustration.Children.OfType<System.Windows.Controls.Image>());
+        Assert.Contains($"ШАГ {step} ИЗ 6", ((TextBlock)window.FindName("StepCounterText")).Text);
+        if (step == 6) Assert.Contains("в очереди: 1", ((TextBlock)window.FindName("BodyText")).Text);
+        window.Close();
+    });
+
+    [Fact]
+    public async Task TourSaveFailureRemainsOnCurrentStepAndAllowsRetry()
+    {
+        OnboardingWindow? window = null; Task? moving = null; var calls = 0;
+        WpfTestHost.Run(() =>
+        {
+            window = new OnboardingWindow(2, (_, _) => ++calls == 1 ? Task.FromException(new IOException("synthetic save refusal")) : Task.CompletedTask);
+            moving = (Task)typeof(OnboardingWindow).GetMethod("MoveAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [2, "in-progress"])!;
+        });
+        await moving!;
+        WpfTestHost.Run(() =>
+        {
+            Assert.Contains("ШАГ 2", ((TextBlock)window!.FindName("StepCounterText")).Text);
+            Assert.Contains("synthetic save refusal", ((TextBlock)window.FindName("ErrorText")).Text);
+            moving = (Task)typeof(OnboardingWindow).GetMethod("MoveAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [2, "in-progress"])!;
+        });
+        await moving!;
+        WpfTestHost.Run(() => { Assert.Contains("ШАГ 3", ((TextBlock)window!.FindName("StepCounterText")).Text); window.Close(); });
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    public async Task StarterFallsBackOnlyWhenCanonicalFramesUnavailable(int canonicalCount)
+    {
+        var chains = LegacyLookup.Load(DataRoot).Chains.Where(c => Package.Value.CanIssueDirectly(c.StarterSpeciesId, false)).Take(1).ToArray();
+        var frame = GifFrameDecoder.DecodeFramesAsPng(File.ReadAllBytes(Package.Value.GetAssetPath(chains[0].StarterSpeciesId, false)!))[0];
+        var legacyCalls = 0; StarterSelectionWindow? window = null; Task? loading = null;
+        WpfTestHost.Run(() =>
+        {
+            window = new StarterSelectionWindow(chains, _ => { legacyCalls++; return Task.FromResult<byte[]?>(frame); },
+                _ => Task.FromResult<IReadOnlyList<byte[]>?>(Enumerable.Repeat(frame, canonicalCount).ToArray()));
+            loading = (Task)typeof(StarterSelectionWindow).GetMethod("LoadSpritesAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [])!;
+        });
+        await loading!;
+        WpfTestHost.Run(() => { Assert.NotNull(((System.Windows.Controls.Image)window!.FindName("Candidate1Image")).Source); window.Close(); });
+        Assert.Equal(canonicalCount == 0 ? 1 : 0, legacyCalls);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task MissingStarterFramesPreserveNullAndFailureFallbackSemantics(bool fail)
+    {
+        var chains = LegacyLookup.Load(DataRoot).Chains.Where(c => Package.Value.CanIssueDirectly(c.StarterSpeciesId, false)).Take(1).ToArray();
+        StarterSelectionWindow? window = null; Task? loading = null; var calls = 0;
+        WpfTestHost.Run(() =>
+        {
+            window = new StarterSelectionWindow(chains, _ =>
+            {
+                calls++;
+                return fail ? Task.FromException<byte[]?>(new IOException("synthetic legacy failure")) : Task.FromResult<byte[]?>(null);
+            }, _ => Task.FromResult<IReadOnlyList<byte[]>?>(null));
+            loading = (Task)typeof(StarterSelectionWindow).GetMethod("LoadSpritesAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [])!;
+        });
+        if (fail) await Assert.ThrowsAsync<IOException>(() => loading!);
+        else await loading!;
+        WpfTestHost.Run(() => { Assert.Null(((System.Windows.Controls.Image)window!.FindName("Candidate1Image")).Source); window.Close(); });
+        Assert.Equal(1, calls);
+    }
+
+    [Fact]
+    public async Task ClosingStarterDuringFrameFetchNeverRequestsFallbackOrStartsAnimator()
+    {
+        var chains = LegacyLookup.Load(DataRoot).Chains.Where(c => Package.Value.CanIssueDirectly(c.StarterSpeciesId, false)).Take(1).ToArray();
+        var pending = new TaskCompletionSource<IReadOnlyList<byte[]>?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        StarterSelectionWindow? window = null; Task? loading = null; var calls = 0;
+        WpfTestHost.Run(() =>
+        {
+            window = new StarterSelectionWindow(chains, _ => { calls++; return Task.FromResult<byte[]?>(null); }, _ => pending.Task);
+            loading = (Task)typeof(StarterSelectionWindow).GetMethod("LoadSpritesAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [])!;
+            window.Close();
+        });
+        pending.SetResult(null); await loading!;
+        Assert.Equal(0, calls);
+    }
+
+    [Fact]
+    public async Task ClosingSecondHistoryPromptCannotSelectOrRestore()
+    {
+        var pending = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        SaveHistoryWindow? window = null; Task? selection = null; var prompts = 0;
+        WpfTestHost.Run(() =>
+        {
+            window = new SaveHistoryWindow([new("synthetic", DateTimeOffset.UtcNow, 2, 10, 2)], 0,
+                (_, _, _) => ++prompts == 1 ? Task.FromResult(true) : pending.Task);
+            ((ListBox)window.FindName("HistoryList")).SelectedIndex = 0;
+            selection = (Task)typeof(SaveHistoryWindow).GetMethod("SelectAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(window, [])!;
+            Assert.Equal(2, prompts); window.Close();
+        });
+        pending.SetResult(true); await selection!;
+        Assert.Null(window!.SelectedEntry);
+    }
+
+    [Theory]
+    [InlineData(1000, 760)]
+    [InlineData(840, 650)]
+    public void SettingsActionsAndHistoryRemainReachableAtAcceptedSizes(double width, double height) => WpfTestHost.Run(() =>
+    {
+        var settings = new SettingsView(new SettingsViewModel(new AppSettings()), () => { }, getAutostart: () => false);
+        WpfTestHost.Layout(settings, width - 40, height - 140);
+        var root = (Grid)settings.Content;
+        var scroll = (ScrollViewer)root.Children[0];
+        scroll.ScrollToEnd(); settings.UpdateLayout();
+        foreach (var name in new[] { "RecoverDataButton", "ResetDataButton", "ShowOnboardingButton" })
+        {
+            var button = (Button)settings.FindName(name);
+            var bounds = button.TransformToAncestor(scroll).TransformBounds(new Rect(0, 0, button.ActualWidth, button.ActualHeight));
+            Assert.True(bounds.Left >= 0 && bounds.Right <= scroll.ActualWidth + 1);
+            Assert.True(bounds.Top >= 0 && bounds.Bottom <= scroll.ActualHeight + 1);
+        }
+        var history = new SaveHistoryWindow(Enumerable.Range(0, 30).Select(i => new SaveHistoryEntry("private-" + i, DateTimeOffset.UtcNow.AddDays(-i), 2, i, i)).ToArray(), 2);
+        try
+        {
+            WpfTestHost.Layout((FrameworkElement)history.Content, width - 40, height - 140);
+            ((ListBox)history.FindName("HistoryList")).SelectedIndex = 29;
+            Assert.True(((Button)history.FindName("RestoreButton")).IsEnabled);
+            Assert.True(((FrameworkElement)history.Content).DesiredSize.Width <= width - 40);
+        }
+        finally { history.Close(); }
+    });
+
+    [Fact]
+    public async Task OldHostedCompletionCannotCloseNewContent()
+    {
+        AppMenuWindow? menu = null; Task? first = null; Task? second = null;
+        WpfTestHost.Run(() =>
+        {
+            menu = ShellTests.CreateMenu(new AppState());
+            var old = new Grid(); var current = new Grid();
+            first = menu.ShowHostedAsync(old);
+            second = menu.ShowHostedAsync(current);
+            menu.CompleteHostedContent(old);
+            Assert.True(first.IsCompleted); Assert.False(second.IsCompleted);
+            Assert.Same(current, ((ContentControl)menu.FindName("HostedContent")).Content);
+            menu.CompleteHostedContent(current);
+        });
+        await Task.WhenAll(first!, second!);
+        WpfTestHost.Run(() => menu!.Close());
+    }
 }

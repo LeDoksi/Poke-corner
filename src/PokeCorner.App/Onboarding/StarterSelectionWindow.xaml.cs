@@ -25,6 +25,7 @@ public partial class StarterSelectionWindow : Window
     /// closes — each owns a DispatcherTimer that would otherwise keep ticking (and keep
     /// every decoded frame alive) after the dialog is gone.
     private readonly List<SpriteAnimator> _animators = new();
+    private bool _closed;
 
     public SpeciesEvolutionChain? Chosen { get; private set; }
 
@@ -46,6 +47,7 @@ public partial class StarterSelectionWindow : Window
         Loaded += async (_, _) => await LoadSpritesAsync();
         Closed += (_, _) =>
         {
+            _closed = true;
             foreach (var animator in _animators) animator.Stop();
             _animators.Clear();
         };
@@ -83,21 +85,18 @@ public partial class StarterSelectionWindow : Window
             var speciesId = _candidates[i].StarterSpeciesId;
             names[i].Text = _candidates.ResolveSpeciesName(speciesId);
 
-            // Static frame first: it is usually already on disk, so the card has real artwork
-            // immediately instead of an empty well while the GIF downloads.
-            var bytes = await _fetchSprite(speciesId);
-            if (bytes is not null) images[i].Source = SpriteImages.Decode(bytes);
-
-            if (_fetchAnimatedFrames is null) continue;
-
-            var frames = await _fetchAnimatedFrames(speciesId);
-            // null (no animated sprite for this species) or a single frame both mean "nothing
-            // to cycle" — leave the static image in place rather than starting a timer that
-            // would repaint the same bitmap 30 times a second.
-            if (frames is null || frames.Count < 2) continue;
-
+            var frames = _fetchAnimatedFrames is null ? null : await _fetchAnimatedFrames(speciesId);
+            if (_closed) return;
+            if (frames is null || frames.Count == 0)
+            {
+                var bytes = await _fetchSprite(speciesId);
+                if (_closed) return;
+                if (bytes is not null) images[i].Source = SpriteImages.Decode(bytes);
+                continue;
+            }
             var decoded = frames.Select(SpriteImages.Decode).ToList();
             images[i].Source = decoded[0];
+            if (decoded.Count < 2) continue;
 
             var animator = new SpriteAnimator(images[i], new FrameSequencer(decoded.Count, FrameDuration), decoded);
             animator.Start();

@@ -392,6 +392,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     public Guid? SelectedIndividualId => _detailCard?.IndividualId;
 
+    public void OpenItemSelection()
+    {
+        HideDetail();
+        CloseSpeciesDialog();
+        ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectedIndex = 1;
+        IndividualsMode_Click(this, new RoutedEventArgs());
+        Refresh();
+    }
+
     public bool OpenIndividual(Guid id)
     {
         var entry = _viewModel.GetEntry(id, DateTimeOffset.UtcNow);

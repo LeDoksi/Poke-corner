@@ -22,6 +22,8 @@ public partial class AppMenuWindow : Window
     private TaskCompletionSource<bool>? _confirmation;
     private IInputElement? _previousFocus;
     private bool _closed;
+    private TaskCompletionSource? _hosted;
+    private bool _hostedFromSettings;
 
 
     public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView,
@@ -38,12 +40,13 @@ public partial class AppMenuWindow : Window
         ConfirmationHost.Completed += CompleteConfirmation;
         _snapshotTimer.Tick += SnapshotTimer_Tick;
         Loaded += (_, _) => { RefreshSnapshot(); UpdateCatchBadgeAnimation(); _snapshotTimer.Start(); };
-        Unloaded += (_, _) => { StopPresentation(); CompleteConfirmation(false); };
+        Unloaded += (_, _) => { StopPresentation(); CompleteConfirmation(false); CompleteHostedContent(); };
         Closed += (_, _) =>
         {
             _closed = true;
             StopPresentation();
             CompleteConfirmation(false);
+            CompleteHostedContent();
         };
         RefreshSnapshot();
         SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
@@ -75,6 +78,33 @@ public partial class AppMenuWindow : Window
             RefreshSnapshot();
             if (IsLoaded) SectionViewed?.Invoke(SelectedSection());
         };
+    }
+
+    public Task ShowHostedAsync(FrameworkElement content)
+    {
+        Dispatcher.VerifyAccess();
+        if (_closed) return Task.CompletedTask;
+        CompleteHostedContent();
+        _hostedFromSettings = SettingsContent.Visibility == Visibility.Visible;
+        _hosted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        MenuTabControl.Visibility = SettingsContent.Visibility = Visibility.Collapsed;
+        HostedContent.Content = content;
+        HostedContent.Visibility = Visibility.Visible;
+        return _hosted.Task;
+    }
+
+    public void CompleteHostedContent(FrameworkElement? expectedContent = null)
+    {
+        if (expectedContent is not null && !ReferenceEquals(HostedContent.Content, expectedContent)) return;
+        var pending = _hosted;
+        if (pending is null) return;
+        _hosted = null;
+        CompleteConfirmation(false);
+        HostedContent.Visibility = Visibility.Collapsed;
+        HostedContent.Content = null;
+        SettingsContent.Visibility = _hostedFromSettings ? Visibility.Visible : Visibility.Collapsed;
+        MenuTabControl.Visibility = _hostedFromSettings ? Visibility.Collapsed : Visibility.Visible;
+        pending.TrySetResult();
     }
 
     public Task<bool> ConfirmAsync(string title, string body, string confirmCaption)
@@ -150,7 +180,8 @@ public partial class AppMenuWindow : Window
             e.Handled = true;
             return;
         }
-        if (SettingsContent.Visibility == Visibility.Visible) Navigate(_lastSection);
+        if (_hosted is not null) CompleteHostedContent();
+        else if (SettingsContent.Visibility == Visibility.Visible) Navigate(_lastSection);
         else Close();
         e.Handled = true;
     }
@@ -174,6 +205,7 @@ public partial class AppMenuWindow : Window
     public void Navigate(MenuSection section)
     {
         if (_confirmation is not null) return;
+        CompleteHostedContent();
         RefreshSnapshot();
         if (section == MenuSection.Settings)
         {

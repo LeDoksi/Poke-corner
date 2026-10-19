@@ -77,6 +77,8 @@ public partial class App : System.Windows.Application
     /// Suppresses old-process writes after an explicit replacement and before restart.
     private bool _isWipingSaveData;
     private bool _hasLoadedState;
+    private bool _replacementPending;
+    private bool _tourPending;
 
     /// Decoded PNG frames per display species id (null = no usable animation), in front of the
     /// on-disk GIF cache. A GIF costs ~22 ms to decode, so each species is decoded once.
@@ -925,14 +927,30 @@ public partial class App : System.Windows.Application
         return result!;
     }
 
-    private async Task ShowUpdateTourAsync()
+    private async Task ShowUpdateTourAsync(bool replay = false)
     {
-        var tour = _appState.ToSaveData(_catchReadyCount).Tutorial;
-        if (tour.Status == "not-started")
-            await _appState.CommitAsync(_saveWriter, next => FirstRunFlow.SetTourProgress(next, 1, "in-progress"), () => _catchReadyCount);
-        var step = _appState.ToSaveData(_catchReadyCount).Tutorial.CurrentStep;
-        new OnboardingWindow(step, (nextStep, status) =>
-            _appState.CommitAsync(_saveWriter, next => FirstRunFlow.SetTourProgress(next, nextStep, status), () => _catchReadyCount)).ShowDialog();
+        if (_tourPending) return;
+        _tourPending = true;
+        try
+        {
+            var tour = _appState.ToSaveData(_catchReadyCount).Tutorial;
+            if (replay || tour.Status == "not-started")
+                await _appState.CommitAsync(_saveWriter, next => FirstRunFlow.SetTourProgress(next, 1, "in-progress"), () => _catchReadyCount);
+            var step = _appState.ToSaveData(_catchReadyCount).Tutorial.CurrentStep;
+            var window = new OnboardingWindow(step, (nextStep, status) =>
+                _appState.CommitAsync(_saveWriter, next => FirstRunFlow.SetTourProgress(next, nextStep, status), () => _catchReadyCount),
+                _catalogPackage.DataRoot, () => _appState.ToSaveData(_catchReadyCount).Encounters.Count(e => e.Source == "gift" && e.Phase != "opened"));
+            var menu = _menuWindow;
+            if (menu is null) window.ShowDialog();
+            else
+            {
+                var content = window.TakeHostedContent();
+                window.Closed += (_, _) => menu.CompleteHostedContent(content);
+                try { await menu.ShowHostedAsync(content); }
+                finally { window.Close(); }
+            }
+        }
+        finally { _tourPending = false; }
     }
 
     private async void ShowContextHint(MenuSection section)
@@ -978,10 +996,14 @@ public partial class App : System.Windows.Application
                     () => _appState.BusyIndividualIds, _catalogPackage.Species, () => _appState.DiscoveredSpeciesIds,
                     _catalogPackage.GetRouteHints(), individual => levels.LevelForXp(individual.TotalXp),
                     () => _appState.NormalSpeciesIds, () => _appState.ShinySpeciesIds, collectionPresentation);
+                CollectionView? collectionView = null;
                 var shopView = new ShopView(_appState, _shopService,
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount,
-                        next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual, _catalogPackage);
-                var collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, () => false, IsActiveIndividualReadyToEvolve,
+                        next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual, _catalogPackage,
+                    confirmAsync: (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false),
+                    openPetItems: _ => { _menuWindow?.Navigate(MenuSection.Pokedex); collectionView?.OpenItemSelection(); },
+                    openCharm: () => _menuWindow?.Navigate(MenuSection.Catch));
+                collectionView = new CollectionView(collectionVm, _appState, _spriteCache, PetActiveIndividual, FeedActiveIndividual, RefreshOverlayForActiveIndividual, () => _activeSpriteFrames, () => false, IsActiveIndividualReadyToEvolve,
                     (id, shiny) => _catalogPackage.CanObtain(id, shiny) ? GetAnimatedFramesAsync(id, shiny) : Task.FromResult<IReadOnlyList<byte[]>?>(null),
                     speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
                     (speciesId, shiny) => _catalogPackage.GetAssetPath(speciesId, shiny),
@@ -1030,7 +1052,13 @@ public partial class App : System.Windows.Application
                             : ($"Опыт · {pet.TotalXp - start} / {end - start} XP до уровня {level + 1}", (pet.TotalXp - start) / (double)(end - start));
                     },
                     (id, shiny) => collectionPresentation.WhereFind(id, shiny, shiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds));
-                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart);
+                var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart,
+                    confirmAsync: (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false),
+                    showOnboarding: async () =>
+                    {
+                        try { await ShowUpdateTourAsync(replay: true); }
+                        catch (Exception error) { System.Windows.MessageBox.Show(error.Message + "\nЗнакомство не сохранено. Повторите действие.", "PokéCorner — ошибка сохранения"); }
+                    });
                 var catchView = new CatchView(_appState, null, speciesId => _spriteCache.GetOrFetchAsync(speciesId, () => _pokeApiClient.FetchSpriteAsync(speciesId)),
                     () => _catchReadyCount, RefreshOverlayForActiveIndividual,
                     speciesId => _catalogPackage.Species.FirstOrDefault(s => s.Id == speciesId)?.DisplayName ?? $"№{speciesId}",
@@ -1336,20 +1364,45 @@ public partial class App : System.Windows.Application
     {
         var entries = _saveStore.History.List();
         var dialog = new SaveHistoryWindow(entries, _saveStore.History.UnreadableCount);
-        if (_menuWindow is not null) { dialog.Owner = _menuWindow; dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner; }
         if (dialog.ShowDialog() != true || dialog.SelectedEntry is null) return false;
         SaveMigration.RestoreHistory(_saveStore, dialog.SelectedEntry, _catalogPackage, AppPaths.GetAppDataDirectory());
         return true;
     }
 
+    private async Task<SaveHistoryEntry?> SelectHistoryAsync()
+    {
+        var menu = _menuWindow;
+        if (menu is null) return null;
+        var dialog = new SaveHistoryWindow(_saveStore.History.List(), _saveStore.History.UnreadableCount,
+            (title, body, caption) => menu.ConfirmAsync(title, body, caption));
+        var content = dialog.TakeHostedContent();
+        dialog.Closed += (_, _) => menu.CompleteHostedContent(content);
+        try { await menu.ShowHostedAsync(content); }
+        finally { dialog.Close(); }
+        return dialog.SelectedEntry;
+    }
+
     private async void RecoverSaveDataAndRestart()
     {
+        if (_replacementPending) return;
         if (_appState.IsCommitting) { _appState.RunWhenReady(RecoverSaveDataAndRestart); return; }
-        _growthTickTimer.Stop();
-        if (_menuWindow is not null) _menuWindow.IsEnabled = false;
-        if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
+        _replacementPending = true;
+        var frozen = false;
         try
         {
+            if (_saveWriter.HasFailed) _saveStore.History.Capture(SnapshotIncludingPendingExpeditionActivity());
+            var selected = await SelectHistoryAsync();
+            if (selected is null) return;
+            _growthTickTimer.Stop();
+            frozen = true;
+            if (_menuWindow is not null) _menuWindow.IsEnabled = false;
+            if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
+            if (_appState.IsCommitting)
+            {
+                var ready = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+                _appState.RunWhenReady(() => ready.TrySetResult());
+                await ready.Task;
+            }
             if (_saveWriter.HasFailed) _saveStore.History.Capture(SnapshotIncludingPendingExpeditionActivity());
             else
             {
@@ -1358,14 +1411,15 @@ public partial class App : System.Windows.Application
                     await CommitBufferedExpeditionActivityAsync();
                 await _appState.FlushAsync(_saveWriter, () => _catchReadyCount);
             }
-            if (!RestoreFromHistory()) return;
+            SaveMigration.RestoreHistory(_saveStore, selected, _catalogPackage, AppPaths.GetAppDataDirectory());
             RestartAfterReplacement();
         }
         catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
-        { System.Windows.MessageBox.Show(ex.Message, "PokéCorner — восстановление не выполнено"); }
+        { System.Windows.MessageBox.Show(ex.Message + "\nОткройте историю и выберите другую копию.", "PokéCorner — восстановление не выполнено"); }
         finally
         {
-            if (!_isWipingSaveData)
+            _replacementPending = false;
+            if (frozen && !_isWipingSaveData)
             {
                 if (_menuWindow is not null) _menuWindow.IsEnabled = true;
                 if (_overlayWindow is not null) _overlayWindow.IsEnabled = true;
@@ -1376,7 +1430,9 @@ public partial class App : System.Windows.Application
 
     private async void ResetSaveDataAndRestart()
     {
+        if (_replacementPending) return;
         if (_appState.IsCommitting) { _appState.RunWhenReady(ResetSaveDataAndRestart); return; }
+        _replacementPending = true;
         _growthTickTimer.Stop();
         if (_menuWindow is not null) _menuWindow.IsEnabled = false;
         if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
@@ -1392,6 +1448,7 @@ public partial class App : System.Windows.Application
         { System.Windows.MessageBox.Show(ex.Message + "\nНовая игра не начата.", "PokéCorner — ошибка сохранения"); }
         finally
         {
+            _replacementPending = false;
             if (!_isWipingSaveData)
             {
                 if (_menuWindow is not null) _menuWindow.IsEnabled = true;

@@ -1,26 +1,42 @@
 <Window x:Class="PokeCorner.App.Popup.SaveHistoryWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="История сохранений" Width="660" Height="480"
-        Style="{StaticResource DialogWindowStyle}" WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResize" MinWidth="480" MinHeight="350" ShowInTaskbar="False">
-    <Grid Margin="20">
-        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-        <StackPanel Margin="0,0,0,16">
-            <TextBlock Text="История сохранений" Style="{StaticResource ScreenTitleTextStyle}"/>
-            <TextBlock x:Name="Explanation" TextWrapping="Wrap" Margin="0,8,0,0"
-                       Foreground="{StaticResource SecondaryTextBrush}"/>
-        </StackPanel>
-        <ListBox x:Name="HistoryList" Grid.Row="1" SelectionChanged="SelectionChanged"
-                 AutomationProperties.Name="Резервные копии: дата, коллекция, монеты и схема"
-                 Background="{StaticResource CardBackgroundBrush}" Foreground="{StaticResource PrimaryTextBrush}"
-                 BorderBrush="{StaticResource SecondaryTextBrush}" BorderThickness="1"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <ListBox.ItemContainerStyle><Style TargetType="ListBoxItem"><Setter Property="Padding" Value="10,10"/></Style></ListBox.ItemContainerStyle>
-        </ListBox>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
-            <Button Content="Отмена" IsCancel="True" Click="Cancel_Click" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}"/>
-            <Button x:Name="RestoreButton" Content="Восстановить…" Click="Restore_Click" IsEnabled="False"/>
-        </StackPanel>
-    </Grid>
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:local="clr-namespace:PokeCorner.App.Popup"
+ Title="История сохранений" Width="840" Height="650" MinWidth="480" MinHeight="350"
+ Style="{StaticResource DialogWindowStyle}" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" ShowInTaskbar="False">
+ <Grid>
+ <Grid Margin="24,18">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Margin="0,0,0,18">
+   <TextBlock Text="Твоя коллекция под защитой" Style="{StaticResource ScreenTitleTextStyle}" TextWrapping="Wrap"/>
+   <TextBlock x:Name="Explanation" TextWrapping="Wrap" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,8,0,0"/>
+   <TextBlock x:Name="ErrorText" TextWrapping="Wrap" Foreground="{StaticResource DangerTextBrush}" AutomationProperties.LiveSetting="Polite"/>
+  </StackPanel>
+  <ListBox x:Name="HistoryList" Grid.Row="1" SelectionChanged="SelectionChanged"
+   AutomationProperties.Name="Резервные копии: дата, коллекция и монеты"
+   Background="Transparent" Foreground="{StaticResource PrimaryTextBrush}" BorderThickness="0"
+   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+   <ListBox.ItemContainerStyle><Style TargetType="ListBoxItem"><Setter Property="Padding" Value="12,16"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/></Style></ListBox.ItemContainerStyle>
+   <ListBox.ItemTemplate><DataTemplate>
+    <StackPanel>
+     <TextBlock Text="{Binding SavedAtUtc.LocalDateTime, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" FontWeight="Bold"/>
+     <WrapPanel Margin="0,5,0,0">
+      <TextBlock Text="{Binding CollectionCount, StringFormat={}{0} питомцев · }"/>
+      <TextBlock Text="{Binding Coins, StringFormat={}{0} монет}" Foreground="{StaticResource SecondaryTextBrush}"/>
+      <TextBlock Text=" · копия из памяти" Foreground="{StaticResource SecondaryTextBrush}">
+       <TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding FromMemory}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+      </TextBlock>
+     </WrapPanel>
+    </StackPanel>
+   </DataTemplate></ListBox.ItemTemplate>
+  </ListBox>
+  <StackPanel Grid.Row="2" Margin="0,16,0,0">
+   <Expander Header="Технические сведения" IsExpanded="False" Margin="0,0,0,12"><TextBlock x:Name="Diagnostics" TextWrapping="Wrap"/></Expander>
+   <WrapPanel HorizontalAlignment="Right">
+    <Button Content="Отмена" Click="Cancel_Click" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}"/>
+    <Button x:Name="RestoreButton" Content="Восстановить…" Click="Restore_Click" IsEnabled="False" Style="{StaticResource UiPrimaryButtonStyle}"/>
+   </WrapPanel>
+  </StackPanel>
+ </Grid>
+ <local:ConfirmationOverlay x:Name="LocalConfirmationHost" Visibility="Collapsed"/>
+ </Grid>
 </Window>

@@ -294,7 +294,7 @@ public sealed class ShopTests : IDisposable
         live.Hydrate(State());
         var pending = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var calls = 0;
-        var view = new ShopView(live, shop, _ => { calls++; return pending.Task; }, () => { });
+        var view = new ShopView(live, shop, _ => { calls++; return pending.Task; }, () => { }, confirmAsync: (_, _, _) => Task.FromResult(true));
         var berries = (StackPanel)view.FindName("BerriesPanel");
         var grid = (Grid)((Border)berries.Children[0]).Child;
         var buy = (Button)((StackPanel)grid.Children[2]).Children[2];
@@ -303,4 +303,229 @@ public sealed class ShopTests : IDisposable
         Assert.Equal(1, calls);
         pending.SetResult();
     });
+
+    [Fact]
+    public async Task RefusedPurchaseRetryRetainsOperationIdentity()
+    {
+        var live = new AppState(); live.Hydrate(State());
+        var operations = new List<string>();
+        var attempts = 0;
+        ShopView? view = null;
+        Task? buying = null;
+        WpfTestHost.Run(() =>
+        {
+            view = new ShopView(live, shop, change =>
+            {
+                var next = live.ToSaveData(0);
+                change(next);
+                operations.Add(next.CompletedOperations.Keys.Single());
+                if (++attempts == 1) throw new IOException("synthetic refusal");
+                live.Hydrate(next);
+                return Task.CompletedTask;
+            }, () => { }, confirmAsync: (_, _, _) => Task.FromResult(true));
+            buying = (Task)typeof(ShopView).GetMethod("Buy", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+                .Invoke(view, [shop.Goods.First(g => g.Id == "oran")])!;
+        });
+        await buying!;
+        WpfTestHost.Run(() => buying = (Task)typeof(ShopView).GetMethod("Buy", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+            .Invoke(view, [shop.Goods.First(g => g.Id == "oran")])!);
+        await buying!;
+        Assert.Equal(2, operations.Count);
+        Assert.Equal(operations[0], operations[1]);
+        Assert.Equal(95, live.Shop.Coins);
+        Assert.Equal(1, live.Shop.Berries["oran"]);
+    }
+
+    [Fact]
+    public async Task PurchaseConfirmationCancelAndShortageNeverCommit()
+    {
+        var live = new AppState(); live.Hydrate(State(10));
+        var commits = 0; var prompts = 0;
+        ShopView? view = null; Task? buying = null;
+        WpfTestHost.Run(() =>
+        {
+            view = new ShopView(live, shop, _ => { commits++; return Task.CompletedTask; }, () => { },
+                confirmAsync: (_, body, _) => { prompts++; Assert.Contains("5 монет", body); return Task.FromResult(false); });
+            buying = InvokeBuy(view, "oran");
+        });
+        await buying!;
+        WpfTestHost.Run(() =>
+        {
+            view!.SelectBerryShortage("oran", 3);
+            buying = InvokeBuy(view, "oran");
+        });
+        await buying!;
+        Assert.Equal(1, prompts); Assert.Equal(0, commits);
+        Assert.Equal(10, live.Shop.Coins); Assert.Equal(0, live.Shop.Berries["oran"]);
+    }
+
+    [Fact]
+    public async Task LeavingWhilePurchaseConfirmationPendingDoesNotSpend()
+    {
+        var live = new AppState(); live.Hydrate(State());
+        var pending = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var commits = 0; Task? buying = null;
+        WpfTestHost.Run(() =>
+        {
+            var view = new ShopView(live, shop, _ => { commits++; return Task.CompletedTask; }, () => { },
+                confirmAsync: (_, _, _) => pending.Task);
+            buying = InvokeBuy(view, "oran");
+            _ = InvokeBuy(view, "oran");
+            view.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.FrameworkElement.UnloadedEvent));
+        });
+        pending.SetResult(true); await buying!;
+        Assert.Equal(0, commits); Assert.Equal(100, live.Shop.Coins);
+    }
+
+    [Theory]
+    [InlineData("care-booster")]
+    [InlineData("xp-potion")]
+    public void ApplyRoutesToPetSelectionWithoutTouchingActivePet(string item) => WpfTestHost.Run(() =>
+    {
+        var live = new AppState(); live.Hydrate(State());
+        string? routed = null; var commits = 0;
+        var view = new ShopView(live, shop, _ => { commits++; return Task.CompletedTask; }, () => { },
+            openPetItems: id => routed = id);
+        typeof(ShopView).GetMethod("OpenPetItems", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [item]);
+        Assert.Equal(item, routed); Assert.Equal(0, commits);
+    });
+
+    [Theory]
+    [InlineData(1000, 760)]
+    [InlineData(840, 650)]
+    public void IllustratedShopHasAllGoodsAndReachableQuantityActions(double width, double height) => WpfTestHost.Run(() =>
+    {
+        var live = new AppState(); live.Hydrate(State());
+        var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
+        WpfTestHost.Layout(view, width - 40, height - 140);
+        foreach (var panel in new[] { (StackPanel)view.FindName("ItemsPanel"), (StackPanel)view.FindName("BerriesPanel") })
+        {
+            Assert.Equal(6, panel.Children.Count);
+            foreach (Border card in panel.Children)
+            {
+                var grid = (Grid)card.Child;
+                Assert.NotNull(((System.Windows.Controls.Image)grid.Children[0]).Source);
+                var actions = (StackPanel)grid.Children[2];
+                Assert.True(actions.ActualWidth <= grid.ActualWidth - grid.ColumnDefinitions[0].ActualWidth + 1);
+                Assert.True(((TextBox)actions.Children[0]).IsEnabled);
+                Assert.True(((Button)actions.Children[2]).IsEnabled);
+            }
+        }
+    });
+
+    private Task InvokeBuy(ShopView view, string id) => (Task)typeof(ShopView).GetMethod("Buy",
+        System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [shop.Goods.Single(g => g.Id == id)])!;
+
+    [Fact]
+    public void ShopApplyClosesOldDetailAndReturnsToOwnedRecipientCatalog() => WpfTestHost.Run(() =>
+    {
+        var live = new AppState(); live.Hydrate(State());
+        var pet = new PokemonIndividual { SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1,
+            EvolutionChainId = 1, ChainLength = 1, Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, Nickname = "Мой питомец" };
+        live.Collection.Add(pet);
+        var menu = ShellTests.CreateMenu(live);
+        try
+        {
+            var collection = (CollectionView)((TabItem)menu.FindName("CollectionTab")).Content;
+            ((TextBox)collection.FindName("PokedexSearchBox")).Text = "Мой";
+            collection.OpenIndividual(pet.Id);
+            Assert.Equal(System.Windows.Visibility.Visible, ((Border)collection.FindName("DetailOverlay")).Visibility);
+            menu.Navigate(MenuSection.Shop);
+            var view = new ShopView(live, shop, _ => throw new Exception("Route cannot mutate inventory"), () => { },
+                openPetItems: _ =>
+                {
+                    menu.Navigate(MenuSection.Pokedex);
+                    collection.OpenItemSelection();
+                });
+            typeof(ShopView).GetMethod("OpenPetItems", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, ["care-booster"]);
+            Assert.Equal(System.Windows.Visibility.Collapsed, ((Border)collection.FindName("DetailOverlay")).Visibility);
+            Assert.Equal(System.Windows.Visibility.Visible, ((StackPanel)collection.FindName("IndividualsPane")).Visibility);
+            Assert.Equal(System.Windows.Visibility.Collapsed, ((StackPanel)collection.FindName("SpeciesPane")).Visibility);
+            Assert.Equal("Мой", ((TextBox)collection.FindName("PokedexSearchBox")).Text);
+            Assert.Null(collection.SelectedIndividualId);
+        }
+        finally { menu.Close(); }
+    });
+
+    [Fact]
+    public async Task UiPurchaseRefusedDiskWriteKeepsStockAndReusesIdentityAfterWriterRepair()
+    {
+        var path = Path.Combine(root, "retry.json");
+        var store = new JsonSaveStore(path); store.Save(State());
+        var before = File.ReadAllBytes(path);
+        var live = new AppState(); live.Hydrate(store.Load()!);
+        var writer = new BackgroundSaveWriter(store);
+        Directory.CreateDirectory(path + ".tmp");
+        var operations = new List<string>();
+        ShopView? view = null; Task? purchase = null;
+        try
+        {
+            WpfTestHost.Run(() =>
+            {
+                view = new ShopView(live, shop, change => live.CommitAsync(writer, next =>
+                {
+                    change(next); operations.Add(next.CompletedOperations.Keys.Single());
+                }, () => 0), () => { }, confirmAsync: (_, _, _) => Task.FromResult(true));
+                purchase = InvokeBuy(view, "oran");
+            });
+            await purchase!;
+            WpfTestHost.Run(() =>
+            {
+                var message = ((TextBlock)view!.FindName("MessageText")).Text;
+                Assert.Contains("историю сохранений", message);
+                Assert.DoesNotContain("Повторите покупку", message);
+            });
+            Assert.True(writer.HasFailed);
+            Assert.Equal(before, File.ReadAllBytes(path)); Assert.Equal(100, live.Shop.Coins); Assert.Equal(0, live.Shop.Berries["oran"]);
+            writer.Stop(); Directory.Delete(path + ".tmp");
+            Assert.Equal(100, store.Load()!.ShopCoins);
+            writer = new BackgroundSaveWriter(store);
+            WpfTestHost.Run(() => purchase = InvokeBuy(view!, "oran"));
+            await purchase!;
+            Assert.Equal(2, operations.Count); Assert.Equal(operations[0], operations[1]);
+            Assert.Equal(95, live.Shop.Coins); Assert.Equal(1, live.Shop.Berries["oran"]);
+            Assert.Equal(95, store.Load()!.ShopCoins); Assert.Equal(1, store.Load()!.Berries["oran"]);
+        }
+        finally { writer.Stop(); }
+    }
+
+    [Fact]
+    public void ShopHelpNeverDisplaysGameplayChanceFormulas() => WpfTestHost.Run(() =>
+    {
+        var live = new AppState(); live.Hydrate(State());
+        var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
+        var items = (StackPanel)view.FindName("ItemsPanel");
+        foreach (Border card in items.Children)
+        {
+            var detail = (StackPanel)((Grid)card.Child).Children[1];
+            var effect = ((TextBlock)detail.Children[1]).Text;
+            Assert.DoesNotContain("шанс", effect, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("раза", effect, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("%", effect);
+        }
+    });
+
+    [Fact]
+    public async Task RefreshFailureAfterConfirmedPurchaseNeverReportsRefusedWrite()
+    {
+        var live = new AppState(); live.Hydrate(State());
+        ShopView? view = null; Task? purchase = null;
+        WpfTestHost.Run(() =>
+        {
+            view = new ShopView(live, shop, change =>
+            {
+                var next = live.ToSaveData(0); change(next); live.Hydrate(next); return Task.CompletedTask;
+            }, () => throw new InvalidOperationException("synthetic repaint failure"),
+                confirmAsync: (_, _, _) => Task.FromResult(true));
+            purchase = InvokeBuy(view, "oran");
+        });
+        await purchase!;
+        WpfTestHost.Run(() =>
+        {
+            var message = ((TextBlock)view!.FindName("MessageText")).Text;
+            Assert.Contains("Покупка сохранена", message);
+            Assert.DoesNotContain("Повторите покупку", message);
+        });
+        Assert.Equal(95, live.Shop.Coins); Assert.Equal(1, live.Shop.Berries["oran"]);
+    }
 }

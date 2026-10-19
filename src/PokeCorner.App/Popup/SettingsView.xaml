@@ -1,23 +1,22 @@
 <UserControl x:Class="PokeCorner.App.Popup.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PokeCorner.App.Popup">
+    <Grid>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="14">
+        <StackPanel Margin="24,18">
+            <TextBlock Text="Настроим под тебя" Style="{StaticResource ScreenTitleTextStyle}"/>
+            <TextBlock Text="Только то, что нужно каждый день." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,0,0,18"/>
+            <TextBlock x:Name="FeedbackText" TextWrapping="Wrap" Foreground="{StaticResource DangerTextBrush}" AutomationProperties.LiveSetting="Polite"/>
+            <TextBlock Text="Chill · спокойный ритм" FontWeight="Bold" Foreground="{StaticResource UiForestBrush}" Margin="0,0,0,12"/>
 
             <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
                 <StackPanel>
-                    <!-- Informational, not a toggle. Claude Code token tracking is gone, and
-                         activity at the PC is the app's whole premise rather than an option, so
-                         there is nothing left here to switch on or off. The card stays because
-                         the privacy statement below is worth keeping visible: this app installs
-                         a global keyboard hook, and the user is entitled to read, in Settings,
-                         exactly what it does and does not record. -->
                     <TextBlock Text="Что растит питомца" Style="{StaticResource SectionHeaderTextStyle}" />
 
                     <TextBlock Text="Активность за компьютером — клики мышью, нажатия клавиш и кнопки геймпада."
-                               Style="{StaticResource StatLabelTextStyle}" Margin="2,0,0,6" />
+                               Style="{StaticResource StatLabelTextStyle}" TextWrapping="Wrap" Margin="2,0,0,6" />
                     <TextBlock Text="Считается только количество кликов и нажатий — никогда не то, что именно нажато."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0" />
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="2,0,0,0" />
                 </StackPanel>
             </Border>
 
@@ -28,12 +27,12 @@
                     <CheckBox x:Name="FullscreenHideCheck" Content="Скрывать в полноэкранных приложениях"
                               Checked="FullscreenHideCheck_Changed" Unchecked="FullscreenHideCheck_Changed" />
                     <TextBlock Text="Питомец автоматически прячется, пока открыта игра или видео на весь экран."
-                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,12" />
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="29,4,0,12" />
 
                     <CheckBox x:Name="ShowProgressPanelCheck" Content="Показывать прогресс рядом с питомцем"
                               Checked="ShowProgressPanelCheck_Changed" Unchecked="ShowProgressPanelCheck_Changed" />
                     <TextBlock Text="Компактный виджет слева от питомца: три кружка — поимка, эволюция, лакомство."
-                               Style="{StaticResource CaptionTextStyle}" Margin="29,4,0,14" />
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="29,4,0,14" />
 
                     <Grid>
                         <TextBlock Text="Размер питомца" Style="{StaticResource StatLabelTextStyle}"
@@ -43,13 +42,6 @@
                     </Grid>
                     <Slider x:Name="PetSizeSlider" Minimum="48" Maximum="384" ValueChanged="PetSizeSlider_ValueChanged"
                             ToolTip="Питомец на рабочем столе меняет размер сразу, пока тянешь ползунок" />
-
-                    <!-- Lives in this card rather than in a "Звук" card of its own: the cry is
-                         played by petting the pet on the desktop, so it belongs with the rest of
-                         the desktop-pet settings, and one control does not fill a card. Same
-                         markup shape as the pet-size slider above (implicit themed Slider style,
-                         label/value header Grid), and applied live for the same reason — the
-                         next pet click uses it, with no restart and no delayed tick. -->
                     <Grid Margin="0,14,0,0">
                         <TextBlock Text="Громкость крика питомца" Style="{StaticResource StatLabelTextStyle}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -59,7 +51,7 @@
                     <Slider x:Name="CrySoundVolumeSlider" Minimum="0" Maximum="100" ValueChanged="CrySoundVolumeSlider_ValueChanged"
                             ToolTip="Громкость звука, который издаёт питомец, когда его гладишь. 0 — совсем без звука." />
                     <TextBlock Text="Питомец подаёт голос, когда его гладишь. Поставь 0, если хочешь тишины."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,5,0,0" />
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="2,5,0,0" />
                     <Grid Margin="0,14,0,0">
                         <TextBlock Text="Громкость эффектов" Style="{StaticResource StatLabelTextStyle}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -70,7 +62,7 @@
                             ValueChanged="EffectsSoundVolumeSlider_ValueChanged"
                             AutomationProperties.Name="Громкость эффектов" />
                     <TextBlock Text="Звуки действий регулируются отдельно от голоса питомца. 0 — без эффектов."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,5,0,0" />
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="2,5,0,0" />
                 </StackPanel>
             </Border>
 
@@ -78,32 +70,27 @@
                 <StackPanel>
                     <TextBlock Text="Система" Style="{StaticResource SectionHeaderTextStyle}" />
                     <TextBlock Text="Анимации следуют настройке движения Windows."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,12" />
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="2,0,0,12" />
                     <CheckBox x:Name="AutostartCheck" Content="Запускать при входе в Windows"
                               Checked="AutostartCheck_Changed" Unchecked="AutostartCheck_Changed" />
-                    <Button x:Name="ShowOnboardingButton" Content="Показать обучение" Click="ShowOnboardingButton_Click"
+                    <Button x:Name="ShowOnboardingButton" Content="Повторить знакомство" Click="ShowOnboardingButton_Click"
                             Margin="0,16,0,0" HorizontalAlignment="Left"
                             Style="{StaticResource SecondaryButtonStyle}" />
 
-                    <Button x:Name="RecoverDataButton" Content="История сохранений и восстановление" Click="RecoverDataButton_Click"
+                    <Button x:Name="RecoverDataButton" Content="История сохранений" Click="RecoverDataButton_Click"
                             Margin="0,10,0,0" HorizontalAlignment="Left" Style="{StaticResource SecondaryButtonStyle}" />
                     <TextBlock Text="Автоматические копии: последние 20 версий, ежедневные за 30 дней и начальная версия."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,0" />
-
-                    <!-- SecondaryButtonStyle with a red foreground/border rather than a whole
-                         new "danger" button system for one button: the ghost shape keeps it
-                         from competing with the real CTAs on other screens (it must not be
-                         the most clickable thing in Settings), while the accent colour stops
-                         it reading as just another routine action next to "Показать обучение".
-                         The double confirmation, not the styling, is the actual safety net. -->
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="2,7,0,0" />
                     <Button x:Name="ResetDataButton" Content="Очистить сохранённые данные" Click="ResetDataButton_Click"
                             Margin="0,10,0,0" HorizontalAlignment="Left"
                             Style="{StaticResource SecondaryButtonStyle}"
                             Foreground="{StaticResource DangerTextBrush}" />
                     <TextBlock Text="Начинает новую игру с выбором стартового покемона. Предыдущие данные остаются в истории для восстановления."
-                               Style="{StaticResource CaptionTextStyle}" Margin="2,7,0,0" />
+                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="2,7,0,0" />
                 </StackPanel>
             </Border>
         </StackPanel>
     </ScrollViewer>
+    <local:ConfirmationOverlay x:Name="LocalConfirmationHost" Visibility="Collapsed"/>
+    </Grid>
 </UserControl>

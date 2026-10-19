@@ -21,14 +21,40 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     private readonly Action? _onResetSaveData;
     private readonly Action? _onRecoverSaveData;
     private bool _isLoadingInitialState = true;
+    private bool _pending;
+    private bool _suspended;
+    private int _generation;
+    private readonly Func<bool> _getAutostart;
+    private readonly Action<bool> _setAutostart;
+    private readonly Action? _showOnboarding;
+    private readonly Func<string, string, string, Task<bool>> _confirm;
+    private TaskCompletionSource<bool>? _localConfirmation;
 
-    public SettingsView(SettingsViewModel viewModel, Action onPetSizeChanged, Action? onResetSaveData = null, Action? onRecoverSaveData = null)
+    public SettingsView(SettingsViewModel viewModel, Action onPetSizeChanged, Action? onResetSaveData = null, Action? onRecoverSaveData = null,
+        Func<string, string, string, Task<bool>>? confirmAsync = null, Action? showOnboarding = null,
+        Func<bool>? getAutostart = null, Action<bool>? setAutostart = null)
     {
         InitializeComponent();
         _viewModel = viewModel;
         _onPetSizeChanged = onPetSizeChanged;
         _onResetSaveData = onResetSaveData;
         _onRecoverSaveData = onRecoverSaveData;
+        _getAutostart = getAutostart ?? AutostartRegistry.IsEnabled;
+        _setAutostart = setAutostart ?? (enabled =>
+        {
+            if (enabled) AutostartRegistry.Enable(Environment.ProcessPath!);
+            else AutostartRegistry.Disable();
+        });
+        _showOnboarding = showOnboarding;
+        _confirm = confirmAsync ?? ConfirmLocally;
+        LocalConfirmationHost.Completed += CompleteLocalConfirmation;
+        PreviewKeyDown += (_, e) =>
+        {
+            if (e.Key != System.Windows.Input.Key.Escape || _localConfirmation is null) return;
+            CompleteLocalConfirmation(false); e.Handled = true;
+        };
+        Loaded += (_, _) => _suspended = false;
+        Unloaded += (_, _) => { _suspended = true; _generation++; CompleteLocalConfirmation(false); };
         LoadFromSettings();
         _isLoadingInitialState = false;
     }
@@ -37,7 +63,7 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     {
         var settings = _viewModel.Settings;
         FullscreenHideCheck.IsChecked = settings.AutoHideInFullscreen;
-        AutostartCheck.IsChecked = AutostartRegistry.IsEnabled();
+        AutostartCheck.IsChecked = _getAutostart();
         PetSizeSlider.Value = settings.PetSizePixels;
         PetSizeValueText.Text = $"{settings.PetSizePixels} px";
         CrySoundVolumeSlider.Value = settings.CrySoundVolume;
@@ -56,13 +82,13 @@ public partial class SettingsView : System.Windows.Controls.UserControl
     private void AutostartCheck_Changed(object sender, System.Windows.RoutedEventArgs e)
     {
         if (_isLoadingInitialState) return;
-        if (AutostartCheck.IsChecked == true)
+        try { _setAutostart(AutostartCheck.IsChecked == true); FeedbackText.Text = "Настройка запуска сохранена."; }
+        catch (Exception error)
         {
-            AutostartRegistry.Enable(Environment.ProcessPath!);
-        }
-        else
-        {
-            AutostartRegistry.Disable();
+            _isLoadingInitialState = true;
+            try { AutostartCheck.IsChecked = _getAutostart(); }
+            finally { _isLoadingInitialState = false; }
+            FeedbackText.Text = "Не удалось изменить запуск: " + error.Message;
         }
     }
 
@@ -100,33 +126,43 @@ public partial class SettingsView : System.Windows.Controls.UserControl
 
     private void ShowOnboardingButton_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        new PokeCorner.App.Onboarding.OnboardingWindow().Show();
+        if (_pending) return;
+        if (_showOnboarding is not null) _showOnboarding();
+        else new PokeCorner.App.Onboarding.OnboardingWindow().Show();
     }
 
     private void RecoverDataButton_Click(object sender, System.Windows.RoutedEventArgs e) => _onRecoverSaveData?.Invoke();
 
-    /// Two confirmations, not one: this throws away everything the player has, and the
-    /// short-circuiting && means backing out of either one leaves the save file untouched.
-    /// The second prompt is worded to make the finality explicit rather than just repeating
-    /// the first, so it can't be dismissed as a duplicate click-through.
-    private void ResetDataButton_Click(object sender, System.Windows.RoutedEventArgs e)
+    private Task<bool> ConfirmLocally(string title, string body, string caption)
     {
-        if (_onResetSaveData is null) return;
+        _localConfirmation = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        LocalConfirmationHost.Present(title, body, caption);
+        return _localConfirmation.Task;
+    }
 
-        var owner = System.Windows.Window.GetWindow(this);
+    private void CompleteLocalConfirmation(bool result)
+    {
+        var pending = _localConfirmation; _localConfirmation = null;
+        LocalConfirmationHost.Visibility = System.Windows.Visibility.Collapsed;
+        pending?.TrySetResult(result);
+    }
 
-        var confirmedOnce = ConfirmDialog.Ask(
-            "Очистить сохранённые данные?",
-            "Начать заново с пустой коллекцией? Текущие данные останутся в истории сохранений.",
-            "Удалить", owner);
-        if (!confirmedOnce) return;
+    private async void ResetDataButton_Click(object sender, System.Windows.RoutedEventArgs e) => await ResetAsync();
 
-        var confirmedTwice = ConfirmDialog.Ask(
-            "Последнее предупреждение",
-            "Точно начать новую игру? Текущая коллекция и прогресс будут заменены. Приложение перезапустится и начнёт с выбора стартового покемона.",
-            "Да, удалить всё", owner);
-        if (!confirmedTwice) return;
-
-        _onResetSaveData();
+    private async Task ResetAsync()
+    {
+        if (_pending || _suspended || _onResetSaveData is null) return;
+        _pending = true;
+        var generation = _generation;
+        try
+        {
+            if (!await _confirm("Начать заново?", "Текущая коллекция и прогресс будут заменены. Данные останутся в истории сохранений.", "Продолжить")
+                || _suspended || generation != _generation) return;
+            if (!await _confirm("Последнее предупреждение", "Новая игра начнётся с выбора стартового покемона. Приложение перезапустится.", "Начать новую игру")
+                || _suspended || generation != _generation) return;
+            _onResetSaveData();
+        }
+        catch (Exception error) { if (!_suspended) FeedbackText.Text = error.Message; }
+        finally { _pending = false; }
     }
 }
