@@ -1,0 +1,303 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(283,36): warning CS8602: Dereference of a possibly null reference. [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(255,17): warning xUnit2013: Do not use Assert.Equal() to check for collection size. Use Assert.Empty instead. (https://xunit.net/xunit.analyzers/rules/xUnit2013) [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Test run for C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)
+[xUnit.net 00:00:00.35]   Discovering: PokeCorner.App.Tests
+[xUnit.net 00:00:00.42]   Discovered:  PokeCorner.App.Tests
+[xUnit.net 00:00:00.42]   Starting:    PokeCorner.App.Tests
+[xUnit.net 00:00:00.45]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReadinessIncludesUnopenedResolvedExpedition [FAIL]
+[xUnit.net 00:00:00.45]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.45]       Expected: 1
+[xUnit.net 00:00:00.45]       Actual:   0
+[xUnit.net 00:00:00.45]       Stack Trace:
+[xUnit.net 00:00:00.45]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(75,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReadinessIncludesUnopenedResolvedExpedition()
+[xUnit.net 00:00:00.45]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.45]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.68]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(source: "gift") [FAIL]
+[xUnit.net 00:00:00.68]       System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:00.68]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:00.68]       Actual:   null
+[xUnit.net 00:00:00.68]       ---- Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:00.68]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:00.68]       Actual:   null
+[xUnit.net 00:00:00.68]       Stack Trace:
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(48,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(String source)
+[xUnit.net 00:00:00.68]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.68]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.68]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(14,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name)
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(51,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass5_0.<UnknownSourceStartsClosedWithoutSpeciesAccess>b__0()
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:00.68]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(source: "activity") [FAIL]
+[xUnit.net 00:00:00.68]       System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:00.68]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:00.68]       Actual:   null
+[xUnit.net 00:00:00.68]       ---- Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:00.68]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:00.68]       Actual:   null
+[xUnit.net 00:00:00.68]       Stack Trace:
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(48,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(String source)
+[xUnit.net 00:00:00.68]            at InvokeStub_CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(Object, Span`1)
+[xUnit.net 00:00:00.68]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.68]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(14,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name)
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(51,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass5_0.<UnknownSourceStartsClosedWithoutSpeciesAccess>b__0()
+[xUnit.net 00:00:00.68]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:00.69]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReducedMotionUsesCalm250MillisecondReveal [FAIL]
+[xUnit.net 00:00:00.69]       Assert.Single() Failure: The collection was empty
+[xUnit.net 00:00:00.69]       Stack Trace:
+[xUnit.net 00:00:00.69]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(113,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReducedMotionUsesCalm250MillisecondReveal()
+[xUnit.net 00:00:00.69]         --- End of stack trace from previous location ---
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReadinessIncludesUnopenedResolvedExpedition [4 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 1
+Actual:   0
+  Stack Trace:
+     at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReadinessIncludesUnopenedResolvedExpedition() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 75
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(source: "gift") [224 ms]
+  Error Message:
+   System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+---- Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+  Stack Trace:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(String source) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 48
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 14
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass5_0.<UnknownSourceStartsClosedWithoutSpeciesAccess>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 51
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(source: "activity") [2 ms]
+  Error Message:
+   System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+---- Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+  Stack Trace:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(String source) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 48
+   at InvokeStub_CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 14
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass5_0.<UnknownSourceStartsClosedWithoutSpeciesAccess>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 51
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReducedMotionUsesCalm250MillisecondReveal [8 ms]
+  Error Message:
+   Assert.Single() Failure: The collection was empty
+  Stack Trace:
+     at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReducedMotionUsesCalm250MillisecondReveal() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 113
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:02.70]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.ApprovedPhasesKeepUnknownClosedUntil6250Milliseconds [FAIL]
+[xUnit.net 00:00:02.70]       Expected catch transition did not occur
+[xUnit.net 00:00:02.70]       Stack Trace:
+[xUnit.net 00:00:02.70]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(221,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Until(Func`1 predicate)
+[xUnit.net 00:00:02.70]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(91,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ApprovedPhasesKeepUnknownClosedUntil6250Milliseconds()
+[xUnit.net 00:00:02.70]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:02.71]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.RapidClickSkipReopenKeepsOneConfirmedResult [FAIL]
+[xUnit.net 00:00:02.71]       System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:02.71]       Expected: typeof(System.Windows.Controls.Button)
+[xUnit.net 00:00:02.71]       Actual:   null
+[xUnit.net 00:00:02.71]       ---- Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:02.71]       Expected: typeof(System.Windows.Controls.Button)
+[xUnit.net 00:00:02.71]       Actual:   null
+[xUnit.net 00:00:02.71]       Stack Trace:
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(124,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.RapidClickSkipReopenKeepsOneConfirmedResult()
+[xUnit.net 00:00:02.71]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:02.71]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(14,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name)
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(15,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Click(CatchView view, String name)
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(126,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass10_0.<RapidClickSkipReopenKeepsOneConfirmedResult>b__0()
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:02.71]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.KnownExpeditionStartsVisibleWithoutGrant [FAIL]
+[xUnit.net 00:00:02.71]       System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:02.71]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:02.71]       Actual:   null
+[xUnit.net 00:00:02.71]       ---- Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:02.71]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:02.71]       Actual:   null
+[xUnit.net 00:00:02.71]       Stack Trace:
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(59,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.KnownExpeditionStartsVisibleWithoutGrant()
+[xUnit.net 00:00:02.71]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:02.71]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:02.71]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(14,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name)
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(64,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c.<KnownExpeditionStartsVisibleWithoutGrant>b__6_0()
+[xUnit.net 00:00:02.71]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ApprovedPhasesKeepUnknownClosedUntil6250Milliseconds [2 s]
+  Error Message:
+   Expected catch transition did not occur
+  Stack Trace:
+     at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Until(Func`1 predicate) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 221
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ApprovedPhasesKeepUnknownClosedUntil6250Milliseconds() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 91
+--- End of stack trace from previous location ---
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.RapidClickSkipReopenKeepsOneConfirmedResult [3 ms]
+  Error Message:
+   System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.Button)
+Actual:   null
+---- Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.Button)
+Actual:   null
+  Stack Trace:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.RapidClickSkipReopenKeepsOneConfirmedResult() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 124
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 14
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Click(CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 15
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass10_0.<RapidClickSkipReopenKeepsOneConfirmedResult>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 126
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.KnownExpeditionStartsVisibleWithoutGrant [1 ms]
+  Error Message:
+   System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+---- Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+  Stack Trace:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.KnownExpeditionStartsVisibleWithoutGrant() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 59
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 14
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c.<KnownExpeditionStartsVisibleWithoutGrant>b__6_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 64
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+[xUnit.net 00:00:04.72]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.SaveRefusalRetriesThePinnedEncounterInsteadOfOldestGift [FAIL]
+[xUnit.net 00:00:04.72]       Expected catch transition did not occur
+[xUnit.net 00:00:04.72]       Stack Trace:
+[xUnit.net 00:00:04.72]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(221,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Until(Func`1 predicate)
+[xUnit.net 00:00:04.72]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(149,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.SaveRefusalRetriesThePinnedEncounterInsteadOfOldestGift()
+[xUnit.net 00:00:04.72]         --- End of stack trace from previous location ---
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.SaveRefusalRetriesThePinnedEncounterInsteadOfOldestGift [2 s]
+  Error Message:
+   Expected catch transition did not occur
+  Stack Trace:
+     at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Until(Func`1 predicate) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 221
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.SaveRefusalRetriesThePinnedEncounterInsteadOfOldestGift() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 149
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:04.80]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.NavigationDuringPendingCommitCannotAnimateHiddenScenario [FAIL]
+[xUnit.net 00:00:04.80]       System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:04.80]       Expected: Продолжить
+[xUnit.net 00:00:04.80]       Actual:   Открыть покебол
+[xUnit.net 00:00:04.80]       ---- Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:04.80]       Expected: Продолжить
+[xUnit.net 00:00:04.80]       Actual:   Открыть покебол
+[xUnit.net 00:00:04.80]       Stack Trace:
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(175,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.NavigationDuringPendingCommitCannotAnimateHiddenScenario()
+[xUnit.net 00:00:04.80]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:04.80]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(176,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass12_0.<NavigationDuringPendingCommitCannotAnimateHiddenScenario>b__2()
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:04.80]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.ContinueResetsCaptionsSceneAndResultArt [FAIL]
+[xUnit.net 00:00:04.80]       System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:04.80]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:04.80]       Actual:   null
+[xUnit.net 00:00:04.80]       ---- Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:04.80]       Expected: typeof(System.Windows.Controls.TextBlock)
+[xUnit.net 00:00:04.80]       Actual:   null
+[xUnit.net 00:00:04.80]       Stack Trace:
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(184,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ContinueResetsCaptionsSceneAndResultArt()
+[xUnit.net 00:00:04.80]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:04.80]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:04.80]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(14,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name)
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(188,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c.<ContinueResetsCaptionsSceneAndResultArt>b__13_0()
+[xUnit.net 00:00:04.80]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:04.81]     PokeCorner.App.Tests.GlobalUpdate.CatchTests.CharmStockChangesOnlyAfterConfirmedActivation [FAIL]
+[xUnit.net 00:00:04.81]       System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:04.81]       Expected: typeof(System.Windows.Controls.Button)
+[xUnit.net 00:00:04.81]       Actual:   null
+[xUnit.net 00:00:04.81]       ---- Assert.IsType() Failure: Value is null
+[xUnit.net 00:00:04.81]       Expected: typeof(System.Windows.Controls.Button)
+[xUnit.net 00:00:04.81]       Actual:   null
+[xUnit.net 00:00:04.81]       Stack Trace:
+[xUnit.net 00:00:04.81]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(49,0): at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action)
+[xUnit.net 00:00:04.81]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(201,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.CharmStockChangesOnlyAfterConfirmedActivation()
+[xUnit.net 00:00:04.81]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:04.81]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:04.81]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(14,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name)
+[xUnit.net 00:00:04.81]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(15,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Click(CatchView view, String name)
+[xUnit.net 00:00:04.81]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(203,0): at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass14_0.<CharmStockChangesOnlyAfterConfirmedActivation>b__0()
+[xUnit.net 00:00:04.81]         C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs(39,0): at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0()
+[xUnit.net 00:00:04.81]   Finished:    PokeCorner.App.Tests
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.NavigationDuringPendingCommitCannotAnimateHiddenScenario [76 ms]
+  Error Message:
+   System.InvalidOperationException : UI-thread action failed: Assert.Equal() Failure: Values differ
+Expected: Продолжить
+Actual:   Открыть покебол
+---- Assert.Equal() Failure: Values differ
+Expected: Продолжить
+Actual:   Открыть покебол
+  Stack Trace:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.NavigationDuringPendingCommitCannotAnimateHiddenScenario() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 175
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass12_0.<NavigationDuringPendingCommitCannotAnimateHiddenScenario>b__2() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 176
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ContinueResetsCaptionsSceneAndResultArt [1 ms]
+  Error Message:
+   System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+---- Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.TextBlock)
+Actual:   null
+  Stack Trace:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.ContinueResetsCaptionsSceneAndResultArt() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 184
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 14
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c.<ContinueResetsCaptionsSceneAndResultArt>b__13_0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 188
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+  Failed PokeCorner.App.Tests.GlobalUpdate.CatchTests.CharmStockChangesOnlyAfterConfirmedActivation [1 ms]
+  Error Message:
+   System.InvalidOperationException : UI-thread action failed: Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.Button)
+Actual:   null
+---- Assert.IsType() Failure: Value is null
+Expected: typeof(System.Windows.Controls.Button)
+Actual:   null
+  Stack Trace:
+     at PokeCorner.App.Tests.Theme.WpfTestHost.Run(Action action) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 49
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.CharmStockChangesOnlyAfterConfirmedActivation() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 201
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Find[T](CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 14
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.Click(CatchView view, String name) in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 15
+   at PokeCorner.App.Tests.GlobalUpdate.CatchTests.<>c__DisplayClass14_0.<CharmStockChangesOnlyAfterConfirmedActivation>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs:line 203
+   at PokeCorner.App.Tests.Theme.WpfTestHost.<>c__DisplayClass3_1.<Run>b__0() in C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\Theme\WpfTestHost.cs:line 39
+
+Test Run Failed.
+Total tests: 11
+     Failed: 11
+ Total time: 5.1869 Seconds

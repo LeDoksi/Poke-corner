@@ -1,0 +1,7 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\catchTests.cs(214,49): error CS9035: Required member 'SaveData.Individuals' must be set in the object initializer or attribute constructor. [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(283,36): warning CS8602: Dereference of a possibly null reference. [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(255,17): warning xUnit2013: Do not use Assert.Equal() to check for collection size. Use Assert.Empty instead. (https://xunit.net/xunit.analyzers/rules/xUnit2013) [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]

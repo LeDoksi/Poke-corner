@@ -1,0 +1,104 @@
+[
+  {
+    "log": "red.log",
+    "env": false,
+    "filter": "FullyQualifiedName~CatchTests",
+    "exit": 1,
+    "result": "Build failed: 3 CS9035 required fixture fields (Nature, IsShiny, CaughtAtUtc); no tests executed.",
+    "nativeCommand": "['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal']",
+    "shellPrefix": "rtk proxy python -c",
+    "wrapper": "import subprocess,pathlib,sys; p=pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs');p.mkdir(exist_ok=True); r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(p/'red.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)",
+    "shellCommand": "rtk proxy python -c \"import subprocess,pathlib,sys; p=pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs');p.mkdir(exist_ok=True); r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(p/'red.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)\"",
+    "processOnlyEnv": {},
+    "POKE_SHELL_CAPTURE_DIR": "not set"
+  },
+  {
+    "log": "red-behavior.log",
+    "env": true,
+    "filter": "FullyQualifiedName~CatchTests",
+    "exit": 1,
+    "result": "Behavioral RED: 11 total, 11 failed.",
+    "nativeCommand": "['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal']",
+    "shellPrefix": "rtk proxy python -c",
+    "wrapper": "import subprocess,pathlib,sys,os; os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/red-behavior.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)",
+    "shellCommand": "rtk proxy python -c \"import subprocess,pathlib,sys,os; os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/red-behavior.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)\"",
+    "processOnlyEnv": {
+      "DOTNET_CLI_UI_LANGUAGE": "en-US"
+    },
+    "POKE_SHELL_CAPTURE_DIR": "not set"
+  },
+  {
+    "log": "green-1.log",
+    "env": true,
+    "filter": "FullyQualifiedName~CatchTests",
+    "exit": 0,
+    "result": "11 total, 11 passed.",
+    "nativeCommand": "['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal']",
+    "shellPrefix": "rtk proxy python -c",
+    "wrapper": "import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/green-1.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)",
+    "shellCommand": "rtk proxy python -c \"import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/green-1.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)\"",
+    "processOnlyEnv": {
+      "DOTNET_CLI_UI_LANGUAGE": "en-US"
+    },
+    "POKE_SHELL_CAPTURE_DIR": "not set"
+  },
+  {
+    "log": "focused-2.log",
+    "env": true,
+    "filter": "FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests",
+    "exit": 1,
+    "result": "Build failed: required SaveData.Settings and missing RationalRemainder import; no tests executed.",
+    "nativeCommand": "['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal']",
+    "shellPrefix": "rtk proxy python -c",
+    "wrapper": "import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/focused-2.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)",
+    "shellCommand": "rtk proxy python -c \"import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/focused-2.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)\"",
+    "processOnlyEnv": {
+      "DOTNET_CLI_UI_LANGUAGE": "en-US"
+    },
+    "POKE_SHELL_CAPTURE_DIR": "not set"
+  },
+  {
+    "log": "focused-3.log",
+    "env": true,
+    "filter": "FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests",
+    "exit": 1,
+    "result": "Build failed: required SaveData.Individuals in new entry fixture; no tests executed.",
+    "nativeCommand": "['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal']",
+    "shellPrefix": "rtk proxy python -c",
+    "wrapper": "import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/focused-3.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)",
+    "shellCommand": "rtk proxy python -c \"import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/focused-3.log').write_bytes(r.stdout);print(r.stdout.decode('utf-8',errors='replace'));print('EXIT',r.returncode);sys.exit(r.returncode)\"",
+    "processOnlyEnv": {
+      "DOTNET_CLI_UI_LANGUAGE": "en-US"
+    },
+    "POKE_SHELL_CAPTURE_DIR": "not set"
+  },
+  {
+    "log": "focused-4.log",
+    "env": true,
+    "filter": "FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests",
+    "exit": 0,
+    "result": "101 total, 101 passed (21 CatchTests included).",
+    "nativeCommand": "['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal']",
+    "shellPrefix": "rtk proxy python -c",
+    "wrapper": "import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/focused-4.log').write_bytes(r.stdout);s=r.stdout.decode('utf-8',errors='replace');print(s[-18000:]);print('EXIT',r.returncode);sys.exit(r.returncode)",
+    "shellCommand": "rtk proxy python -c \"import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--filter','FullyQualifiedName~CatchTests|FullyQualifiedName~EncountersTests|FullyQualifiedName~OnboardingTests|FullyQualifiedName~ReactionsTests|FullyQualifiedName~ShopTests|FullyQualifiedName~ExpeditionCoreTests','--logger','console;verbosity=normal'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/focused-4.log').write_bytes(r.stdout);s=r.stdout.decode('utf-8',errors='replace');print(s[-18000:]);print('EXIT',r.returncode);sys.exit(r.returncode)\"",
+    "processOnlyEnv": {
+      "DOTNET_CLI_UI_LANGUAGE": "en-US"
+    },
+    "POKE_SHELL_CAPTURE_DIR": "not set"
+  },
+  {
+    "log": "final-app-gate.log",
+    "env": true,
+    "exit": 1,
+    "result": "638 total: 635 passed, 3 failed; all 21 CatchTests passed; elapsed 46.5648 seconds.",
+    "nativeCommand": "['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--logger','console;verbosity=normal','--logger','trx;LogFileName=task5-app.trx','--results-directory','.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/results']",
+    "shellPrefix": "rtk proxy python -c",
+    "wrapper": "import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--logger','console;verbosity=normal','--logger','trx;LogFileName=task5-app.trx','--results-directory','.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/results'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/final-app-gate.log').write_bytes(r.stdout);s=r.stdout.decode('utf-8',errors='replace');print(s[-19000:]);print('EXIT',r.returncode);sys.exit(r.returncode)",
+    "shellCommand": "rtk proxy python -c \"import subprocess,pathlib,sys,os;os.environ['DOTNET_CLI_UI_LANGUAGE']='en-US';r=subprocess.run(['dotnet','test','tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj','--logger','console;verbosity=normal','--logger','trx;LogFileName=task5-app.trx','--results-directory','.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/results'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT);pathlib.Path('.superpowers/sdd/2026-10-17-approved-ui-transfer/task-5-logs/final-app-gate.log').write_bytes(r.stdout);s=r.stdout.decode('utf-8',errors='replace');print(s[-19000:]);print('EXIT',r.returncode);sys.exit(r.returncode)\"",
+    "processOnlyEnv": {
+      "DOTNET_CLI_UI_LANGUAGE": "en-US"
+    },
+    "POKE_SHELL_CAPTURE_DIR": "not set"
+  }
+]

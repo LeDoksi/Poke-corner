@@ -1,0 +1,33 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  PokeCorner.Core -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.Core\bin\Debug\net8.0\PokeCorner.Core.dll
+  PokeCorner.App -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\src\PokeCorner.App\bin\Debug\net8.0-windows\PokeCorner.dll
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(283,36): warning CS8602: Dereference of a possibly null reference. [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\GlobalUpdate\approvedCollectionTests.cs(255,17): warning xUnit2013: Do not use Assert.Equal() to check for collection size. Use Assert.Empty instead. (https://xunit.net/xunit.analyzers/rules/xUnit2013) [C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\PokeCorner.App.Tests.csproj]
+  PokeCorner.App.Tests -> C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll
+Test run for C:\Users\Georgy\.codex\worktrees\global-update\PokeTokenBar-Windows\tests\PokeCorner.App.Tests\bin\Debug\net8.0-windows\PokeCorner.App.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.30)
+[xUnit.net 00:00:00.22]   Discovering: PokeCorner.App.Tests
+[xUnit.net 00:00:00.28]   Discovered:  PokeCorner.App.Tests
+[xUnit.net 00:00:00.28]   Starting:    PokeCorner.App.Tests
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReadinessIncludesUnopenedResolvedExpedition [5 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(source: "gift") [228 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.UnknownSourceStartsClosedWithoutSpeciesAccess(source: "activity") [3 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ReducedMotionUsesCalm250MillisecondReveal [10 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ApprovedPhasesKeepUnknownClosedUntil6250Milliseconds [106 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.RapidClickSkipReopenKeepsOneConfirmedResult [4 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.KnownExpeditionStartsVisibleWithoutGrant [4 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.SaveRefusalRetriesThePinnedEncounterInsteadOfOldestGift [4 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.NavigationDuringPendingCommitCannotAnimateHiddenScenario [76 ms]
+[xUnit.net 00:00:00.77]   Finished:    PokeCorner.App.Tests
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.ContinueResetsCaptionsSceneAndResultArt [1 ms]
+  Passed PokeCorner.App.Tests.GlobalUpdate.CatchTests.CharmStockChangesOnlyAfterConfirmedActivation [13 ms]
+
+Test Run Successful.
+Total tests: 11
+     Passed: 11
+ Total time: 1.1940 Seconds
