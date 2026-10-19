@@ -19,7 +19,7 @@ FACTS = ROOT / "russian-facts.json"
 PROVENANCE = ROOT / "russian-facts-provenance.json"
 CHECKS = ROOT / "russian-facts-checks.json"
 APPROVED_SHA = "c00ea0289dd4f411faca017463d64931b3121867dcfc4f85a0d72cf2dd3ef3f8"
-SOURCE_VERSION_OVERRIDES = {35: 33, 383: 9, 492: 25, 532: 33, 720: 24, 795: 28, 797: 28, 798: 28}  # Distinctive baseline lore; avoid alternate-form focus and numeric evolution rules.
+SOURCE_VERSION_OVERRIDES = {35: 33, 383: 9, 492: 25, 532: 33, 720: 24, 795: 28, 797: 28, 798: 28, 990: 40, 991: 40, 992: 40, 993: 40, 994: 40, 995: 40, 953: 40, 1006: 40, 1022: 40}  # Distinctive baseline lore; avoid alternate-form focus and numeric evolution rules.
 EXPECTED_SHA = "059b24f07ccce256df1295b5d2fa19b82129cb6d5cfdf6a83455b6dffbcc5e9b"
 
 def sha(data):

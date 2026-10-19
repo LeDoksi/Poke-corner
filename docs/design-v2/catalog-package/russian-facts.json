@@ -5,8 +5,8 @@
   "runtimeDatasetVersion": "editorial-ru-2026-10-19-v1",
   "sourceFileSha256": "059b24f07ccce256df1295b5d2fa19b82129cb6d5cfdf6a83455b6dffbcc5e9b",
   "approvedSubsetSha256": "c00ea0289dd4f411faca017463d64931b3121867dcfc4f85a0d72cf2dd3ef3f8",
-  "russianSpecies": 800,
-  "scope": "INCOMPLETE checkpoint; POKE-58 remains open",
+  "russianSpecies": 1025,
+  "scope": "Complete offline species facts",
   "facts": [
     {
       "speciesId": 1,
@@ -8006,6 +8006,2256 @@
       "sourceVersionId": 34,
       "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/800/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 801,
+      "textRu": "Учёный создал его около 500 лет назад. Настоящая живая сущность в нём — часть, которую называют Сердцем души.",
+      "sourceText": "Built roughly 500 years ago by a scientist, the part called the Soul-Heart is the actual life-form.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/801/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 802,
+      "textRu": "Он умеет прятаться в любой тени, поэтому долго оставался необнаруженным.",
+      "sourceText": "This Pokémon can conceal itself in any shadow, so it went undiscovered for a long time.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/802/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 803,
+      "textRu": "Это Ультрачудовище из другого мира дико хохочет, обрызгивая врагов ядом из игл на голове.",
+      "sourceText": "An Ultra Beast that lives in a different world, it cackles wildly as it sprays its opponents with poison from the needles on its head.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/803/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 804,
+      "textRu": "Из его игл вылетает светящаяся ядовитая жидкость, которая к тому же чрезвычайно липкая.",
+      "sourceText": "One kind of Ultra Beast, it fires a glowing, venomous liquid from its needles. This liquid is also immensely adhesive.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/804/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 805,
+      "textRu": "За каменными стенами, которые вдруг начинали двигаться и нападать, скрывалась эта загадочная форма жизни, напоминающая Ультрачудовище.",
+      "sourceText": "When stone walls started moving and attacking, the brute’s true identity was this mysterious life-form, which brings to mind an Ultra Beast.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/805/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 806,
+      "textRu": "Появившись из Ультраразлома, он устраивает взрывы и пользуется замешательством врагов, чтобы похитить их жизненную силу.",
+      "sourceText": "A UB that appeared from an Ultra Wormhole, it causes explosions, then takes advantage of opponents’ surprise to rob them of their vitality.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/806/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 807,
+      "textRu": "Из подушечек на его конечностях сыплются электрические искры. Там, где он пробегает, сверкают молнии и гремит гром.",
+      "sourceText": "Electricity sparks from the pads on its limbs. Wherever Zeraora runs, lightning flashes and thunder echoes.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/807/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 808,
+      "textRu": "Они живут группами. Когда приходит время, один сильный Мелтан поглощает остальных и эволюционирует.",
+      "sourceText": "They live as a group, but when the time comes, one strong Meltan will absorb all the others and evolve.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/808/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 809,
+      "textRu": "Его тяжёлые руки в форме шестигранных гаек бьют с помощью центробежной силы. Говорят, сильнее него не бьёт ни один покемон.",
+      "sourceText": "Centrifugal force is behind the punches of Melmetal’s heavy hex-nut arms. Melmetal is said to deliver the strongest punches of all Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/809/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 810,
+      "textRu": "Он нападает быстрыми ударами палочки и всё больше воодушевляется по мере того, как ускоряется его ритм.",
+      "sourceText": "It attacks with rapid beats of its stick. As it strikes with amazing speed, it gets more and more pumped.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/810/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 811,
+      "textRu": "В бою он так увлекается быстрым барабанным ритмом, что может не заметить, как уже вырубил противника.",
+      "sourceText": "When it’s drumming out rapid beats in battle, it gets so caught up in the rhythm that it won’t even notice that it’s already knocked out its opponent.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/811/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 812,
+      "textRu": "Вожаком стаи становится лучший барабанщик. У него мягкий нрав, и он ценит согласие в группе.",
+      "sourceText": "The one with the best drumming techniques becomes the boss of the troop. It has a gentle disposition and values harmony among its group.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/812/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 813,
+      "textRu": "На тыльной стороне его ступней и на носу есть особые подушечки. Когда он рвётся в бой, они излучают сильнейший жар.",
+      "sourceText": "It has special pads on the backs of its feet, and one on its nose. Once it’s raring to fight, these pads radiate tremendous heat.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/813/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 814,
+      "textRu": "Он сбивает ягоды с ветвей ударами ног, а затем жонглирует ими ступнями, отрабатывая движения.",
+      "sourceText": "It kicks berries right off the branches of trees and then juggles them with its feet, practicing its footwork.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/814/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 815,
+      "textRu": "Поддержка зрителей воодушевляет его в бою. Но если он начинает красоваться, то рискует попасть в трудное положение.",
+      "sourceText": "It’s skilled at both offense and defense, and it gets pumped up when cheered on. But if it starts showboating, it could put itself in a tough spot.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/815/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 816,
+      "textRu": "Намокнув, его кожа меняет цвет, и он становится невидимым, словно сливаясь с окружением.",
+      "sourceText": "When it gets wet, its skin changes color, and this Pokémon becomes invisible as if it were camouflaged.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/816/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 817,
+      "textRu": "Он очень умён, но ленив. Чтобы не пускать врагов на свою территорию, он повсюду расставляет ловушки.",
+      "sourceText": "Highly intelligent but also very lazy, it keeps enemies out of its territory by laying traps everywhere.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/817/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 818,
+      "textRu": "Мигательные перепонки помогают ему замечать слабые места врага. Из кончиков пальцев он точно стреляет водой со скоростью в три раза выше скорости звука.",
+      "sourceText": "Its nictitating membranes let it pick out foes’ weak points so it can precisely blast them with water that shoots from its fingertips at Mach 3.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/818/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 819,
+      "textRu": "Он без конца ест ягоды и потому выносливее, чем кажется. В поисках новых ягод он забредает на фермы.",
+      "sourceText": "It eats berries nonstop—a habit that has made it more resilient than it looks. It’ll show up on farms, searching for yet more berries.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/819/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 820,
+      "textRu": "Его крепкие зубы разгрызают даже самую твёрдую ягодную скорлупу. Этот покемон широко распространён в Галаре.",
+      "sourceText": "Common throughout the Galar region, this Pokémon has strong teeth and can chew through the toughest of berry shells.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/820/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 821,
+      "textRu": "Ловко прыгая, он использует малейшую возможность сбить с толку противников, которые гораздо крупнее его.",
+      "sourceText": "Jumping nimbly about, this small-bodied Pokémon takes advantage of even the slightest opportunity to disorient larger opponents.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/821/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 822,
+      "textRu": "Множество суровых боёв научило его точно оценивать силу противника.",
+      "sourceText": "The lessons of many harsh battles have taught it how to accurately judge an opponent’s strength.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/822/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 823,
+      "textRu": "Благодаря уму и лётному мастерству эти покемоны успешно работают воздушным такси в Галаре.",
+      "sourceText": "With their great intellect and flying skills, these Pokémon very successfully act as the Galar region’s airborne taxi service.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/823/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 824,
+      "textRu": "Его часто встречают в садах. Волоски на теле помогают ему оценивать, что происходит вокруг.",
+      "sourceText": "Often found in gardens, this Pokémon has hairs on its body that it uses to assess its surroundings.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/824/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 825,
+      "textRu": "Пока он растёт внутри панциря, его психические способности следят за внешним миром и помогают готовиться к эволюции.",
+      "sourceText": "As it grows inside its shell, it uses its psychic abilities to monitor the outside world and prepare for evolution.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/825/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 826,
+      "textRu": "Он испускает психическую энергию, чтобы изучать окружение, и замечает даже то, что находится более чем в девяти километрах от него.",
+      "sourceText": "It emits psychic energy to observe and study what’s around it—and what’s around it can include things over six miles away.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/826/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 827,
+      "textRu": "Он выживает за счёт хитрости и краж чужой еды. Убегая с добычей, он заметает следы хвостом.",
+      "sourceText": "Cunning and cautious, this Pokémon survives by stealing food from others. It erases its tracks with swipes of its tail as it makes off with its plunder.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/827/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 828,
+      "textRu": "Гибкое тело и острые когти помогают ему воровать пищу и яйца. Его естественный враг — Болтанд.",
+      "sourceText": "With a lithe body and sharp claws, it goes around stealing food and eggs. Boltund is its natural enemy.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/828/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 829,
+      "textRu": "Ветер кружит его, пока он поёт радостную песню. Это зрелище очаровало многих людей и побудило растить такого покемона.",
+      "sourceText": "It whirls around in the wind while singing a joyous song. This delightful display has charmed many into raising this Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/829/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 830,
+      "textRu": "Из хлопка на его голове прядут красивую блестящую пряжу — одну из особенностей Галара.",
+      "sourceText": "The cotton on the head of this Pokémon can be spun into a glossy, gorgeous yarn—a Galar regional specialty.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/830/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 831,
+      "textRu": "Слишком длинная шерсть мешает ему двигаться. Ткань из этой шерсти удивительно прочная.",
+      "sourceText": "If its fleece grows too long, Wooloo won’t be able to move. Cloth made with the wool of this Pokémon is surprisingly strong.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/831/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 832,
+      "textRu": "Его величественные рога служат лишь для привлечения противоположного пола. В бою он ими не пользуется.",
+      "sourceText": "Its majestic horns are meant only to impress the opposite gender. They never see use in battle.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/832/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 833,
+      "textRu": "В начале боя он атакует твёрдым, как камень, рогом. Стоит врагу дрогнуть, как он вцепляется зубами и больше не отпускает.",
+      "sourceText": "It starts off battles by attacking with its rock-hard horn, but as soon as the opponent flinches, this Pokémon bites down and never lets go.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/833/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 834,
+      "textRu": "Он резко вытягивает втяжную шею, чтобы вонзить острые клыки даже в далёкого противника и повалить его.",
+      "sourceText": "This Pokémon rapidly extends its retractable neck to sink its sharp fangs into distant enemies and take them down.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/834/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 835,
+      "textRu": "Он помогает людям работать ради лакомств. Когда этот обжора бежит, вокруг него потрескивает электричество.",
+      "sourceText": "This gluttonous Pokémon only assists people with their work because it wants treats. As it runs, it crackles with electricity.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/835/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 836,
+      "textRu": "Он пропускает электричество через ноги, усиливая их. На полной скорости он легко разгоняется быстрее 80 километров в час.",
+      "sourceText": "It sends electricity through its legs to boost their strength. Running at top speed, it easily breaks 50 mph.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/836/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 837,
+      "textRu": "Он мчится словно одноколёсный велосипед даже по неровной каменистой местности. Силы ему даёт горящий уголь.",
+      "sourceText": "It can race around like a unicycle, even on rough, rocky terrain. Burning coal sustains it.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/837/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 838,
+      "textRu": "Быстро перебирая ногами-колёсами, он едет быстрее 28 километров в час. Температура выдыхаемого пламени превышает 980 градусов.",
+      "sourceText": "By rapidly rolling its legs, it can travel at over 18 mph. The temperature of the flames it breathes exceeds 1,800 degrees Fahrenheit.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/838/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 839,
+      "textRu": "Во время боя угольная гора на его теле раскаляется докрасна. Искры из неё обжигают всё вокруг.",
+      "sourceText": "While it’s engaged in battle, its mountain of coal will burn bright red, sending off sparks that scorch the surrounding area.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/839/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 840,
+      "textRu": "Сразу после рождения он зарывается в яблоко. Оно служит ему пищей, а вкус плода определяет его дальнейшую эволюцию.",
+      "sourceText": "As soon as it’s born, it burrows into an apple. Not only does the apple serve as its food source, but the flavor of the fruit determines its evolution.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/840/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 841,
+      "textRu": "Он летает на крыльях из яблочной кожуры и плюётся сильной кислотой. Ещё он умеет принимать форму яблока.",
+      "sourceText": "It flies on wings of apple skin and spits a powerful acid. It can also change its shape into that of an apple.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/841/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 842,
+      "textRu": "Его тело покрыто сладким нектаром, а кожица на спине особенно вкусна. Когда-то дети ели её как лакомство.",
+      "sourceText": "Its body is covered in sweet nectar, and the skin on its back is especially yummy. Children used to have it as a snack.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/842/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 843,
+      "textRu": "Он выпускает песок из ноздрей. Пока враг ослеплён, он зарывается в землю и прячется.",
+      "sourceText": "It spews sand from its nostrils. While the enemy is blinded, it burrows into the ground to hide.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/843/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 844,
+      "textRu": "Особая манера сворачиваться в кольца помогает ему эффективнее выстреливать песком из песчаного мешка.",
+      "sourceText": "Its unique style of coiling allows it to blast sand out of its sand sac more efficiently.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/844/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 845,
+      "textRu": "Он глотает Аррокуд целиком. Иногда от голода ошибается и пытается проглотить другого покемона вместо привычной добычи.",
+      "sourceText": "This hungry Pokémon swallows Arrokuda whole. Occasionally, it makes a mistake and tries to swallow a Pokémon other than its preferred prey.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/845/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 846,
+      "textRu": "Наевшись, он становится крайне неповоротливым. Именно тогда его и проглатывает Краморант.",
+      "sourceText": "After it’s eaten its fill, its movements become extremely sluggish. That’s when Cramorant swallows it up.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/846/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 847,
+      "textRu": "Вращая хвостовыми плавниками, он разгоняется быстрее 180 километров в час, а затем таранит добычу и пронзает её.",
+      "sourceText": "It spins its tail fins to propel itself, surging forward at speeds of over 100 knots before ramming prey and spearing into them.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/847/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 848,
+      "textRu": "Он меняет химический состав своего яда, чтобы получать электричество. Напряжение невелико, но вызывает покалывающий паралич.",
+      "sourceText": "It manipulates the chemical makeup of its poison to produce electricity. The voltage is weak, but it can cause a tingling paralysis.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/848/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 849,
+      "textRu": "Этот вспыльчивый и агрессивный покемон пьёт стоячую воду, чтобы впитать токсины, которые могут в ней содержаться.",
+      "sourceText": "This short-tempered and aggressive Pokémon chugs stagnant water to absorb any toxins it might contain.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/849/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 850,
+      "textRu": "Он обвивает добычу горячим телом и готовит её в своих кольцах. Когда она как следует прожарится, он жадно съедает всё до последнего кусочка.",
+      "sourceText": "It wraps prey up with its heated body, cooking them in its coils. Once they’re well-done, it will voraciously nibble them down to the last morsel.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/850/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 851,
+      "textRu": "Его пылающее тело опасно само по себе, но у этого крайне враждебного покемона есть ещё и большие острые клыки.",
+      "sourceText": "While its burning body is already dangerous on its own, this excessively hostile Pokémon also has large and very sharp fangs.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/851/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 852,
+      "textRu": "Его щупальца легко отрываются, но он не тревожится: они отрастут снова. По уму он примерно равен трёхлетнему ребёнку.",
+      "sourceText": "Its tentacles tear off easily, but it isn’t alarmed when that happens—it knows they’ll grow back. It’s about as smart as a three-year-old.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/852/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 853,
+      "textRu": "Он выходит на сушу в поисках противника, на котором можно испытать своё мастерство. После боя возвращается в море.",
+      "sourceText": "Searching for an opponent to test its skills against, it emerges onto land. Once the battle is over, it returns to the sea.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/853/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 854,
+      "textRu": "Чайная чашка, в которой он живёт, — известный предмет старинной посуды. В обращении много подделок.",
+      "sourceText": "The teacup in which this Pokémon makes its home is a famous piece of antique tableware. Many forgeries are in circulation.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/854/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 855,
+      "textRu": "Если оставить недопитый чёрный чай без присмотра, он может влиться в него и превратить чай в нового Полтигейста.",
+      "sourceText": "Leaving leftover black tea unattended is asking for this Pokémon to come along and pour itself into it, turning the tea into a new Polteageist.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/855/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 856,
+      "textRu": "Почувствовав сильную эмоцию, он убегает со всех ног. Ему больше нравятся места без людей.",
+      "sourceText": "If this Pokémon senses a strong emotion, it will run away as fast as it can. It prefers areas without people.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/856/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 857,
+      "textRu": "Косами на голове он колотит врагов, чтобы те угомонились. Одного такого удара хватило бы, чтобы вырубить профессионального боксёра.",
+      "sourceText": "Using the braids on its head, it pummels foes to get them to quiet down. One blow from those braids would knock out a professional boxer.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/857/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 858,
+      "textRu": "Шуметь рядом с ним опасно: когти на его щупальце могут растерзать нарушителя тишины. Его также называют Лесной ведьмой.",
+      "sourceText": "If you’re too loud around it, you risk being torn apart by the claws on its tentacle. This Pokémon is also known as the Forest Witch.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/858/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 859,
+      "textRu": "Он тайком проникает в дома, ворует вещи и питается отрицательной энергией расстроенных жильцов.",
+      "sourceText": "It sneaks into people’s homes, stealing things and feasting on the negative energy of the frustrated occupants.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/859/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 860,
+      "textRu": "Он хитростью заманивает людей в лес. Некоторые верят, что он способен заставлять посевы расти.",
+      "sourceText": "With sly cunning, it tries to lure people into the woods. Some believe it to have the power to make crops grow.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/860/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 861,
+      "textRu": "Его волосы работают как мышечные волокна. Распускаясь, они цепляются за врагов и опутывают их, словно щупальца.",
+      "sourceText": "Its hairs work like muscle fibers. When its hairs unfurl, they latch on to opponents, ensnaring them as tentacles would.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/861/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 862,
+      "textRu": "Пройдя через множество схваток, он эволюционировал. Скрестив руки, он издаёт крик, от которого дрогнет любой враг.",
+      "sourceText": "It evolved after experiencing numerous fights. While crossing its arms, it lets out a shout that would make any opponent flinch.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/862/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 863,
+      "textRu": "После множества боёв у него развились опасные когти. Выдвигаясь, они складываются вместе и образуют кинжалы.",
+      "sourceText": "After many battles, it evolved dangerous claws that come together to form daggers when extended.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/863/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 864,
+      "textRu": "К эктоплазменному телу вокруг его души опасно прикасаться: прикоснувшийся становится неподвижным, словно камень.",
+      "sourceText": "Be cautious of the ectoplasmic body surrounding its soul. You’ll become stiff as stone if you touch it.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/864/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 865,
+      "textRu": "Он отражает удары щитом из твёрдого листа и отвечает острым стеблем лука-порея. Этот стебель служит ему и оружием, и едой.",
+      "sourceText": "After deflecting attacks with its hard leaf shield, it strikes back with its sharp leek stalk. The leek stalk is both weapon and food.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/865/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 866,
+      "textRu": "Его забавные движения сделали его очень популярным. Психическую силу он выпускает через узор на животе.",
+      "sourceText": "Its amusing movements make it very popular. It releases its psychic power from the pattern on its belly.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/866/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 867,
+      "textRu": "Прикоснувшись к его похожему на тень телу, можно увидеть ужасающие воспоминания, скрытые за высеченным на нём изображением.",
+      "sourceText": "Never touch its shadowlike body, or you’ll be shown the horrific memories behind the picture carved into it.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/867/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 868,
+      "textRu": "Говорят, кондитерской, которую посетит Милсери, обеспечены успех и удача.",
+      "sourceText": "They say that any patisserie visited by Milcery is guaranteed success and good fortune.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/868/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 869,
+      "textRu": "Когда он доволен, крем, который выделяют его руки, становится слаще и насыщеннее.",
+      "sourceText": "When Alcremie is content, the cream it secretes from its hands becomes sweeter and richer.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/869/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 870,
+      "textRu": "Шестеро действуют сообща как один покемон. В бою они полагаются на слаженность и постоянно меняют строй.",
+      "sourceText": "The six of them work together as one Pokémon. Teamwork is also their battle strategy, and they constantly change their formation as they fight.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/870/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 871,
+      "textRu": "В каждой колючке он хранит электричество. Даже отломанная колючка продолжает испускать его не меньше трёх часов.",
+      "sourceText": "It stores electricity in each spine. Even if one gets broken off, it still continues to emit electricity for at least three hours.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/871/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 872,
+      "textRu": "Он ест снег, лежащий на земле. Чем больше снега он съест, тем крупнее и внушительнее вырастают шипы на спине.",
+      "sourceText": "It eats snow that piles up on the ground. The more snow it eats, the bigger and more impressive the spikes on its back grow.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/872/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 873,
+      "textRu": "Он не щадит тех, кто оскверняет поля и горы. Взмахами ледяных крыльев он поднимает метель и прогоняет нарушителей.",
+      "sourceText": "It shows no mercy to any who desecrate fields and mountains. It will fly around on its icy wings, causing a blizzard to chase offenders away.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/873/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 874,
+      "textRu": "Раз в год, в определённый день и час, они появляются словно из ниоткуда и выстраиваются в круг.",
+      "sourceText": "Once a year, on a specific date and at a specific time, they gather out of nowhere and form up in a circle.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/874/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 875,
+      "textRu": "Лёд охлаждает его чувствительную к теплу голову. Он ловит рыбу, опуская в море единственный волосок как приманку.",
+      "sourceText": "This Pokémon keeps its heat-sensitive head cool with ice. It fishes for its food, dangling its single hair into the sea to lure in prey.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/875/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 876,
+      "textRu": "Рога улавливают эмоции окружающих существ. Положительные чувства служат ему источником сил.",
+      "sourceText": "Through its horns, it can pick up on the emotions of creatures around it. Positive emotions are the source of its strength.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/876/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 877,
+      "textRu": "Он носит с собой поджаренные электричеством семена, словно драгоценности. Сколько бы он ни съел, вскоре снова проголодается.",
+      "sourceText": "It carries electrically roasted seeds with it as if they’re precious treasures. No matter how much it eats, it always gets hungry again in short order.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/877/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 878,
+      "textRu": "Ему прекрасно удаётся работа, требующая большой силы. Под дождём его медное тело покрывается ярко-зелёным налётом.",
+      "sourceText": "If a job requires serious strength, this Pokémon will excel at it. Its copper body tarnishes in the rain, turning a vibrant green color.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/878/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 879,
+      "textRu": "Они живут стадами. Хоботы сжимают с такой невероятной силой, что могут растереть огромные камни в порошок.",
+      "sourceText": "These Pokémon live in herds. Their trunks have incredible grip strength, strong enough to crush giant rocks into powder.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/879/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 880,
+      "textRu": "Мощные мышцы хвоста вырабатывают электричество. По сравнению с нижней частью тела его верхняя половина слишком мала.",
+      "sourceText": "The powerful muscles in its tail generate its electricity. Compared to its lower body, its upper half is entirely too small.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/880/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 881,
+      "textRu": "Он жил на доисторических побережьях и хранил пищу во льду на своём теле. Причиной его вымирания стала медлительность.",
+      "sourceText": "This Pokémon lived on prehistoric seashores and was able to preserve food with the ice on its body. It went extinct because it moved so slowly.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/881/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 882,
+      "textRu": "Могучие ноги позволяют ему бежать быстрее 64 километров в час. Но дышать он может только под водой.",
+      "sourceText": "Its mighty legs are capable of running at speeds exceeding 40 mph, but this Pokémon can’t breathe unless it’s underwater.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/882/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 883,
+      "textRu": "Кожа на его лице неуязвима для атак. Однако трудности с дыханием всё равно привели этот вид к вымиранию.",
+      "sourceText": "The skin on its face is impervious to attack, but breathing difficulties made this Pokémon go extinct anyway.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/883/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 884,
+      "textRu": "Его тело состоит из очень лёгкого особого металла, поэтому он весьма проворен. Из-за нелюбви к дождю он живёт в пещерах.",
+      "sourceText": "The special metal that composes its body is very light, so this Pokémon has considerable agility. It lives in caves because it dislikes the rain.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/884/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 885,
+      "textRu": "В одиночку он так слаб, что его победит даже ребёнок. Но с друзьями, помогающими тренироваться, он может эволюционировать и стать сильнее.",
+      "sourceText": "If this weak Pokémon is by itself, a mere child could defeat it. But if Dreepy has friends to help it train, it can evolve and become much stronger.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/885/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 886,
+      "textRu": "Если на его голове нет Дрипи, о котором можно заботиться, он так тревожится, что пытается заменить его любым найденным покемоном.",
+      "sourceText": "Without a Dreepy to place on its head and care for, it gets so uneasy it’ll try to substitute any Pokémon it finds for the missing Dreepy.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/886/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 887,
+      "textRu": "По-видимому, Дрипи в его рогах с нетерпением ждут, когда их запустят со скоростью звука.",
+      "sourceText": "Apparently the Dreepy inside Dragapult’s horns eagerly look forward to being launched out at Mach speeds.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/887/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 888,
+      "textRu": "Он проспал много лет. Одни называют его старшей сестрой Замазенты, другие считают этих покемонов соперниками.",
+      "sourceText": "This Pokémon has slumbered for many years. Some say it’s Zamazenta’s elder sister—others say the two Pokémon are rivals.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/888/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 889,
+      "textRu": "Он спал целую вечность в облике статуи. Сон длился так долго, что люди забыли о его существовании.",
+      "sourceText": "This Pokémon slept for aeons while in the form of a statue. It was asleep for so long, people forgot that it ever existed.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/889/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 890,
+      "textRu": "Он находился внутри метеорита, упавшего 20 000 лет назад. Похоже, этот покемон как-то связан с явлением динамакса.",
+      "sourceText": "It was inside a meteorite that fell 20,000 years ago. There seems to be a connection between this Pokémon and the Dynamax phenomenon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/890/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 891,
+      "textRu": "Если он дёргает длинный белый волос на голове, его боевой дух крепнет, а из глубины живота поднимается сила.",
+      "sourceText": "If Kubfu pulls the long white hair on its head, its fighting spirit heightens and power wells up from the depths of its belly.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/891/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 892,
+      "textRu": "Он живёт в горах далёкого региона и мчится по отвесным скалам, тренируя ноги и оттачивая движения.",
+      "sourceText": "Inhabiting the mountains of a distant region, this Pokémon races across sheer cliffs, training its legs and refining its moves.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/892/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 893,
+      "textRu": "Оторвавшиеся от его тела лозы становятся питательными веществами в почве. Это помогает лесным растениям расти.",
+      "sourceText": "Once the vines on Zarude’s body tear off, they become nutrients in the soil. This helps the plants of the forest grow.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/893/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 894,
+      "textRu": "Всё его тело — единый орган, вырабатывающий электричество. Он способен обеспечить электроэнергией весь Галар.",
+      "sourceText": "Its entire body is made up of a single organ that generates electrical energy. Regieleki is capable of creating all Galar’s electricity.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/894/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 895,
+      "textRu": "Его тело состоит из кристаллизованной драконьей энергии. Говорят, он обладает силами всех драконьих покемонов.",
+      "sourceText": "Its body is composed of crystallized dragon energy. Regidrago is said to have the powers of every dragon Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/895/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 896,
+      "textRu": "Он невероятно силён физически. Ледяная маска на его морде в сто раз твёрже алмаза.",
+      "sourceText": "Glastrier has tremendous physical strength, and the mask of ice covering its face is 100 times harder than diamond.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/896/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 897,
+      "textRu": "Проносясь сквозь ночь, он поглощает жизненную силу спящих существ. Ему нужны тишина и одиночество.",
+      "sourceText": "As it dashes through the night, Spectrier absorbs the life-force of sleeping creatures. It craves silence and solitude.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/897/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 898,
+      "textRu": "Легенды называют его королём древнего Галара. Он умеет исцелять сердца и пробуждать рост растений.",
+      "sourceText": "Calyrex is known in legend as a king that ruled over Galar in ancient times. It has the power to cause hearts to mend and plants to spring forth.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/898/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 899,
+      "textRu": "Когда он создаёт невидимые преграды, чёрные шары сияют жутким светом. Выпавшая шерсть его бороды хорошо хранит тепло и годится для зимней одежды.",
+      "sourceText": "The black orbs shine with an uncanny light when the Pokémon is erecting invisible barriers. The fur shed from its beard retains heat well and is a highly useful material for winter clothing.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/899/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 900,
+      "textRu": "Он валит огромные деревья грубыми топорами и защищается твёрдым камнем. Встретив этого свирепого покемона в дикой природе, остаётся лишь бежать.",
+      "sourceText": "A violent creature that fells towering trees with its crude axes and shields itself with hard stone. If one should chance upon this Pokémon in the wilds, one's only recourse is to flee.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/900/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 901,
+      "textRu": "По предположению наблюдателя, болотистые земли Хисуи дали ему могучее тело и способность по своей воле управлять торфом.",
+      "sourceText": "I believe it was Hisui's swampy terrain that gave Ursaluna its burly physique and newfound capacity to manipulate peat at will.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/901/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 902,
+      "textRu": "Его окутывают души сородичей, погибших по пути вверх по течению. В реках Хисуи ни один другой вид не может с ним сравниться.",
+      "sourceText": "Clads itself in the souls of comrades that perished before fulfilling their goals of journeying upstream. No other species throughout all Hisui's rivers is Basculegion's equal.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/902/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 903,
+      "textRu": "Ядовитость и огромная физическая сила делают его непревзойдённым на ледяных высокогорьях. Он предпочитает одиночество и не собирается в стаи.",
+      "sourceText": "Because of Sneasler's virulent poison and daunting physical prowess, no other species could hope to best it on the frozen highlands. Preferring solitude, this species does not form packs.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/903/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 904,
+      "textRu": "Копьевидные шипы и свирепый нрав принесли ему прозвище «морской бес». Он втягивает яд, чтобы питаться им.",
+      "sourceText": "Its lancelike spikes and savage temperament have earned it the nickname ”sea fiend.” It slurps up poison to nourish itself.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/904/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 905,
+      "textRu": "Его прилёт из-за моря возвещает конец суровой зимы. По легенде, его любовь пробуждает новую жизнь по всему Хисуи.",
+      "sourceText": "When it flies to this land from across the sea, the bitter winter comes to an end. According to legend, this Pokémon's love gives rise to the budding of fresh life across Hisui.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/905/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 906,
+      "textRu": "Сладкий запах его тела завораживает окружающих. На солнце этот аромат становится сильнее.",
+      "sourceText": "The sweet scent its body gives off mesmerizes those around it. The scent grows stronger when this Pokémon is in the sun.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/906/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 907,
+      "textRu": "Жёсткость его шерсти зависит от настроения. Когда он готовится к бою, шерсть заостряется и становится колючей, как иглы.",
+      "sourceText": "The hardness of Floragato’s fur depends on the Pokémon’s mood. When Floragato is prepared to battle, its fur becomes pointed and needle sharp.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/907/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 908,
+      "textRu": "Отвлекая внимание врагов, он незаметно подбрасывает им цветочные бомбы с пыльцой. Взрыв происходит раньше, чем они понимают, что случилось.",
+      "sourceText": "With skillful misdirection, it rigs foes with pollen-packed flower bombs. Meowscarada sets off the bombs before its foes realize what’s going on.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/908/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 909,
+      "textRu": "Из маленького огненного мешка постоянно утекает энергия. Она выходит из углубления на макушке и колышется из стороны в сторону.",
+      "sourceText": "Its flame sac is small, so energy is always leaking out. This energy is released from the dent atop Fuecoco’s head and flickers to and fro.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/909/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 910,
+      "textRu": "Клапан его огненного мешка тесно связан с голосовыми связками. Изрыгая пламя во все стороны, он издаёт гортанный крик.",
+      "sourceText": "The valve in Crocalor’s flame sac is closely connected to its vocal cords. This Pokémon utters a guttural cry as it spews flames every which way.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/910/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 911,
+      "textRu": "Его нежное пение успокаивает души слушателей. Врагов он испепеляет пламенем с температурой выше 2980 градусов.",
+      "sourceText": "Skeledirge’s gentle singing soothes the souls of all that hear it. It burns its enemies to a crisp with flames of over 5,400 degrees Fahrenheit.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/911/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 912,
+      "textRu": "Сильные ноги позволяют ему легко плавать даже в бурных реках. Он любит порядок и склонен слишком много обдумывать.",
+      "sourceText": "Its strong legs let it easily swim around in even fast-flowing rivers. It likes to keep things tidy and is prone to overthinking things.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/912/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 913,
+      "textRu": "Он старательно наблюдает за людьми и покемонами из разных регионов и вплетает их движения в собственные танцы.",
+      "sourceText": "The hardworking Quaxwell observes people and Pokémon from various regions and incorporates their movements into its own dance routines.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/913/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 914,
+      "textRu": "Его танцы напоминают о далёких землях и завораживают зрителей. Взмахи декоративных водяных перьев рассекают врагов.",
+      "sourceText": "Dancing in ways that evoke far-away places, this Pokémon mesmerizes all that see it. Flourishes of its decorative water feathers slice into its foes.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/914/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 915,
+      "textRu": "Он признаёт только самую изысканную пищу. Его тело источает травяной запах, который ненавидят покемоны-насекомые.",
+      "sourceText": "This Pokémon spurns all but the finest of foods. Its body gives off an herblike scent that bug Pokémon detest.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/915/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 916,
+      "textRu": "Всё его тело источает сладкий манящий аромат, которым он очаровывает самок покемонов.",
+      "sourceText": "It entrances female Pokémon with the sweet, alluring scent that wafts from all over its body.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/916/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 917,
+      "textRu": "Нить, которую он выделяет сзади, прочна как проволока. Учёные до сих пор исследуют секрет её прочности.",
+      "sourceText": "The thread it secretes from its rear is as strong as wire. The secret behind the thread’s strength is the topic of ongoing research.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/917/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 918,
+      "textRu": "Он покрывает свою территорию крепкими липкими нитями, устраивая ловушки для непрошеных гостей.",
+      "sourceText": "Spidops covers its territory in tough, sticky threads to set up traps for intruders.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/918/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 919,
+      "textRu": "Он искусно сражается в прыжках: уворачивается от атак и одновременно наносит удары противнику.",
+      "sourceText": "It’s highly skilled at a fighting style in which it uses its jumping capabilities to dodge incoming attacks while also dealing damage to opponents.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/919/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 920,
+      "textRu": "В режиме решающей схватки он использует третью пару ног, обычно сложенную. Это сильно нагружает тело, поэтому долго так сражаться он не может.",
+      "sourceText": "It uses its normally folded third set of legs when in Showdown Mode. This places a huge burden on its body, so it can’t stay in this mode for long.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/920/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 921,
+      "textRu": "Подушечки лап служат органами электрического разряда. Неуверенно стоя на задних лапах, он выпускает электричество из передних.",
+      "sourceText": "The pads of its paws are electricity-discharging organs. Pawmi fires electricity from its forepaws while standing unsteadily on its hind legs.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/921/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 922,
+      "textRu": "Он владеет особой техникой: бьёт врага передними лапами и одновременно поражает электричеством из их подушечек.",
+      "sourceText": "Pawmo uses a unique fighting technique in which it uses its forepaws to strike foes and zap them with electricity from its paw pads simultaneously.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/922/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 923,
+      "textRu": "Его пушистая шерсть работает как аккумулятор. Она способна запасать столько же электричества, сколько электромобиль.",
+      "sourceText": "Pawmot’s fluffy fur acts as a battery. It can store the same amount of electricity as an electric car.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/923/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 924,
+      "textRu": "Эта пара неразлучна при любых обстоятельствах. Всю найденную еду они делят строго пополам и едят вместе.",
+      "sourceText": "The pair sticks together no matter what. They split any food they find exactly in half and then eat it together.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/924/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 925,
+      "textRu": "Во время боя большая пара защищает малышей. Если противник силён, в схватку вступает вся группа.",
+      "sourceText": "The larger pair protects the little ones during battles. When facing strong opponents, the whole group will join the fight.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/925/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 926,
+      "textRu": "Дрожжи в его дыхании полезны в кулинарии, поэтому люди издавна оберегают этого покемона.",
+      "sourceText": "The yeast in Fidough’s breath is useful for cooking, so this Pokémon has been protected by people since long ago.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/926/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 927,
+      "textRu": "От сильного жара поверхность его кожи твердеет. Его тело при этом обладает аппетитным ароматом.",
+      "sourceText": "The surface of this Pokémon’s skin hardens when exposed to intense heat, and its body has an appetizing aroma.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/927/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 928,
+      "textRu": "Он превращает питательные вещества в масло и хранит его в плоде на голове. Он легко обходится без еды и питья целую неделю.",
+      "sourceText": "This Pokémon converts nutrients into oil, which it stores in the fruit on its head. It can easily go a whole week without eating or drinking.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/928/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 929,
+      "textRu": "Он вволю греется на солнце, пока плоды на голове не созреют. Затем покидает людские поселения и отправляется в путь.",
+      "sourceText": "It basks in the sun to its heart’s content until the fruits on its head ripen. After that, Dolliv departs from human settlements and goes on a journey.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/929/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 930,
+      "textRu": "Он отгоняет врагов струями насыщенного ароматного масла. Сила этих струй достаточна, чтобы расколоть валун.",
+      "sourceText": "This Pokémon drives back enemies by launching its rich, aromatic oil at them with enough force to smash a boulder.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/930/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 931,
+      "textRu": "Наибольшим влиянием пользуются зеленопёрые стаи. Утром и вечером, когда они ищут пищу, вокруг становится очень шумно.",
+      "sourceText": "Green-feathered flocks hold the most sway. When they’re out searching for food in the mornings and evenings, it gets very noisy.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/931/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 932,
+      "textRu": "Во время движения земля стирает его тело, оставляя соляной след. Соль внутри него постоянно образуется заново.",
+      "sourceText": "The ground scrapes its body as it travels, causing it to leave salt behind. Salt is constantly being created and replenished inside Nacli’s body.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/932/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 933,
+      "textRu": "Он сжимает каменную соль внутри тела и выстреливает затвердевшими соляными пулями. Они способны пробить железный лист.",
+      "sourceText": "It compresses rock salt inside its body and shoots out hardened salt pellets with enough force to perforate an iron sheet.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/933/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 934,
+      "textRu": "Вокруг него собирается множество покемонов в надежде полизать его богатую минералами соль.",
+      "sourceText": "Many Pokémon gather around Garganacl, hoping to lick at its mineral-rich salt.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/934/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 935,
+      "textRu": "В бою его пламя разгорается сильнее и достигает температуры выше 980 градусов. Ему нравятся жирные ягоды.",
+      "sourceText": "Its firepower increases when it fights, reaching over 1,800 degrees Fahrenheit. It likes berries that are rich in fat.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/935/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 936,
+      "textRu": "Он облачается в доспехи, укреплённые психической и огненной энергией, и стреляет пылающими огненными шарами.",
+      "sourceText": "This Pokémon clads itself in armor that has been fortified by psychic and fire energy, and it shoots blazing fireballs.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/936/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 937,
+      "textRu": "Старинные доспехи, пропитанные злобой, стали причиной его эволюции. Он безжалостно рубит врагов на куски.",
+      "sourceText": "An old set of armor steeped in grudges caused this Pokémon’s evolution. Ceruledge cuts its enemies to pieces without mercy.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/937/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 938,
+      "textRu": "Запасённое в теле электричество держит его в воздухе. При появлении грозовых туч он поднимается выше над землёй.",
+      "sourceText": "It floats using the electricity stored in its body. When thunderclouds are around, Tadbulb will float higher off the ground.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/938/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 939,
+      "textRu": "То, что кажется глазами, на самом деле — органы разряда. Они выпускают электричество, выработанное генератором в его пупке.",
+      "sourceText": "What appear to be eyeballs are actually organs for discharging the electricity generated by Bellibolt’s belly-button dynamo.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/939/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 940,
+      "textRu": "Они строят гнёзда на прибрежных утёсах. Эти гнёзда странно похрустывают и считаются популярным деликатесом.",
+      "sourceText": "These Pokémon make their nests on coastal cliffs. The nests have a strange, crackling texture, and they’re a popular delicacy.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/940/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 941,
+      "textRu": "В горловом мешке он хранит электричество, которое вырабатывают крылья. В его перьях почти нет жира, поэтому плавает он плохо.",
+      "sourceText": "It uses its throat sac to store electricity generated by its wings. There’s hardly any oil in its feathers, so it is a poor swimmer.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/941/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 942,
+      "textRu": "Мощная челюсть и клыки позволяют ему разгрызать валуны. Толстый слой жира служит отличной защитой.",
+      "sourceText": "Its well-developed jaw and fangs are strong enough to crunch through boulders, and its thick fat makes for an excellent defense.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/942/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 943,
+      "textRu": "Он любит играть с детьми. Обычно он мягок, но, защищая семью, принимает устрашающий вид.",
+      "sourceText": "Mabosstiff loves playing with children. Though usually gentle, it takes on an intimidating look when protecting its family.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/943/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 944,
+      "textRu": "Чтобы отпугнуть врагов, он оставляет вокруг гнезда метки ядовитой жидкостью с едким запахом.",
+      "sourceText": "To keep enemies away from its territory, it paints markings around its nest using a poisonous liquid that has an acrid odor.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/944/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 945,
+      "textRu": "У каждого свой рисунок. Всю жизнь он снова и снова воспроизводит один и тот же узор.",
+      "sourceText": "Each Grafaiai paints its own individual pattern, and it will paint that same pattern over and over again throughout its life.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/945/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 946,
+      "textRu": "Даже он сам не знает, куда ветер унесёт его по пустошам. Он терпеть не может промокать.",
+      "sourceText": "Not even Bramblin knows where it is headed as it tumbles across the wilderness, blown by the wind. It loathes getting wet.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/946/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 947,
+      "textRu": "Он бродит по засушливым землям. Изредка массовое нашествие этих покемонов погребает под собой целый город.",
+      "sourceText": "Brambleghast wanders around arid regions. On rare occasions, mass outbreaks of these Pokémon will bury an entire town.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/947/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 948,
+      "textRu": "Несмотря на сходство с Тентакулом, это совершенно другой вид. Тонкие ноги позволяют ему бегать со скоростью около 48 километров в час.",
+      "sourceText": "Though it looks like Tentacool, Toedscool is a completely different species. Its legs may be thin, but it can run at a speed of 30 mph.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/948/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 949,
+      "textRu": "Он обвивает добычу десятью щупальцами и болезненно высасывает из неё питательные вещества. Складки по краю его головы считаются деликатесом.",
+      "sourceText": "It coils its 10 tentacles around prey and sucks out their nutrients, causing the prey pain. The folds along the rim of its head are a popular delicacy.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/949/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 950,
+      "textRu": "Он живёт на отвесных скалах. Уклоняется от атак шагом в сторону, а затем бросается к слабому месту врага с выставленными клешнями.",
+      "sourceText": "This Pokémon lives on sheer cliffs. It sidesteps opponents’ attacks, then lunges for their weak spots with its claws.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/950/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 951,
+      "textRu": "Традиционные блюда Палдеи бывают очень острыми: в них добавляют выпавшие передние зубы этого покемона.",
+      "sourceText": "Traditional Paldean dishes can be extremely spicy because they include the shed front teeth of Capsakid among their ingredients.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/951/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 952,
+      "textRu": "Острые вещества воздействуют на мозг зелёной головы и делают её злобной. Если она приходит в ярость, остановить её невозможно.",
+      "sourceText": "The green head has turned vicious due to the spicy chemicals stimulating its brain. Once it goes on a rampage, there is no stopping it.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/952/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 953,
+      "textRu": "Он смешивает песок и землю с психической энергией, создавая грязевой шар. Этот шар ему дороже собственной жизни.",
+      "sourceText": "This Pokémon creates a mud ball by mixing sand and dirt with psychic energy. It treasures its mud ball more than its own life.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/953/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 954,
+      "textRu": "Внутри шара спит малыш. Он плавно перекатывает шар ногами, чтобы младенцу было уютно спать.",
+      "sourceText": "An infant sleeps inside the ball. Rabsca rolls the ball soothingly with its legs to ensure the infant sleeps comfortably.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/954/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 955,
+      "textRu": "Он бегает по пустошам. Если кто-то украдёт его любимые ягоды, он настигнет вора и отомстит.",
+      "sourceText": "It spends its time running around wastelands. If anyone steals its beloved berries, it will chase them down and exact its revenge.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/955/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 956,
+      "textRu": "Психическая сила выходит из промежутков между разноцветными оборками. Он бегает быстрее 190 километров в час.",
+      "sourceText": "It emits psychic power from the gaps between its multicolored frills and sprints at speeds greater than 120 mph.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/956/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 957,
+      "textRu": "Он сбивает железные обломки в молот и переделывает его снова и снова, пока не останется доволен результатом.",
+      "sourceText": "This Pokémon pounds iron scraps together to make a hammer. It will remake the hammer again and again until it’s satisfied with the result.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/957/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 958,
+      "textRu": "Они селятся в грудах металлолома. Ударяя молотами друг о друга, они проверяют их прочность.",
+      "sourceText": "These Pokémon make their homes in piles of scrap metal. They test the strength of each other’s hammers by smashing them together.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/958/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 959,
+      "textRu": "Он легко размахивает молотом весом свыше 99 килограммов. Он крадёт всё, что захочет, и уносит добычу домой.",
+      "sourceText": "The hammer tops 220 pounds, yet it gets swung around easily by Tinkaton as it steals whatever it pleases and carries its plunder back home.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/959/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 960,
+      "textRu": "Несмотря на сходство с Диглеттом, это другой вид. По-видимому, похожий облик случайно возник из-за приспособления к среде.",
+      "sourceText": "Though it looks like Diglett, Wiglett is an entirely different species. The resemblance seems to be a coincidental result of environmental adaptation.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/960/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 961,
+      "textRu": "Это рыбный покемон, которого когда-то считали региональной формой Дагтрио.",
+      "sourceText": "A variety of fish Pokémon, Wugtrio was once considered to be a regional form of Dugtrio.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/961/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 962,
+      "textRu": "В нагрудный фартук он складывает еду, чтобы отнести её в гнездо. Ему нравится сбрасывать предметы, издающие громкие звуки.",
+      "sourceText": "Bombirdier uses the apron on its chest to bundle up food, which it carries back to its nest. It enjoys dropping things that make loud noises.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/962/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 963,
+      "textRu": "Кольцо воды вокруг него состоит из морской воды и липкой жидкости, которую выделяет его дыхало.",
+      "sourceText": "Its water ring is made from seawater mixed with a sticky fluid that Finizen secretes from its blowhole.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/963/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 964,
+      "textRu": "Обычно его физические возможности такие же, как у Финизена. Но когда друзьям грозит опасность, он превращается и становится сильнее.",
+      "sourceText": "Its physical capabilities are no different than a Finizen’s, but when its allies are in danger, it transforms and powers itself up.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/964/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 965,
+      "textRu": "Его настоящее тело — стальная часть. Цепляясь за камни, он превращает содержащиеся в них минералы в энергию для движения.",
+      "sourceText": "The steel section is Varoom’s actual body. This Pokémon clings to rocks and converts the minerals within into energy to fuel its activities.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/965/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 966,
+      "textRu": "Он грозно пугает окружающих звуком выхлопа. Из цилиндрического рта он высовывает язык и разбрызгивает ядовитую жидкость.",
+      "sourceText": "Revavroom viciously threatens others with the sound of its exhaust. It sticks its tongue out from its cylindrical mouth and sprays toxic fluids.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/966/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 967,
+      "textRu": "Он несёт человека и бежит быстрее 110 километров в час. Тепло тела всадника согревает ему спину и поднимает настроение.",
+      "sourceText": "It can sprint at over 70 mph while carrying a human. The rider’s body heat warms Cyclizar’s back and lifts the Pokémon’s spirit.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/967/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 968,
+      "textRu": "Он живёт в засушливых пустынях. Чтобы поддерживать своё металлическое тело, он поглощает железо из почвы.",
+      "sourceText": "This Pokémon lives in arid deserts. It maintains its metal body by consuming iron from the soil.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/968/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 969,
+      "textRu": "Его ядовитые минеральные кристаллы похожи на цветочные лепестки. Защищаясь, он рассеивает ядовитый порошок, словно пыльцу.",
+      "sourceText": "Glimmet’s toxic mineral crystals look just like flower petals. This Pokémon scatters poisonous powder like pollen to protect itself.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/969/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 970,
+      "textRu": "Его лепестки состоят из кристаллизованной ядовитой энергии. Недавно стало ясно, что они похожи на тера-кристаллы.",
+      "sourceText": "Glimmora’s petals are made of crystallized poison energy. It has recently become evident that these petals resemble Tera Jewels.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/970/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 971,
+      "textRu": "Этот дружелюбный покемон не любит одиночества. Стоит уделить ему хоть немного внимания, и он будет следовать за вами всегда.",
+      "sourceText": "This friendly Pokémon doesn’t like being alone. Pay it even the slightest bit of attention, and it will follow you forever.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/971/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 972,
+      "textRu": "В него переродился покемон, которого оплакивали с любовью. Он не любит, когда трогают выступ у него на голове.",
+      "sourceText": "A lovingly mourned Pokémon was reborn as Houndstone. It doesn’t like anyone touching the protuberance atop its head.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/972/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 973,
+      "textRu": "Благодаря поведению, известному как синхронизация, вся стая способна атаковать одновременно и совершенно слаженно.",
+      "sourceText": "Thanks to a behavior of theirs known as “synchronizing,” an entire flock of these Pokémon can attack simultaneously in perfect harmony.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/973/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 974,
+      "textRu": "Он живёт в холодных краях группами примерно по пять особей. Ему нравятся минералы из снега и льда.",
+      "sourceText": "It lives in frigid regions in pods of five or so individuals. It loves the minerals found in snow and ice.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/974/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 975,
+      "textRu": "Ледяная энергия скапливается в роге на верхней челюсти. Он охлаждается до столь низкой температуры, что замораживает всё вокруг.",
+      "sourceText": "Ice energy builds up in the horn on its upper jaw, causing the horn to reach cryogenic temperatures that freeze its surroundings.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/975/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 976,
+      "textRu": "Он замечательно восстанавливает ткани. Сбрасывая лишнюю плоть, он становится проворнее и бросается на добычу.",
+      "sourceText": "Veluza has excellent regenerative capabilities. It sheds spare flesh from its body to boost its agility, then charges at its prey.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/976/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 977,
+      "textRu": "Он преданно слушается Тацугири, считая его начальником. При всей своей силе он, по-видимому, не слишком умён.",
+      "sourceText": "It treats Tatsugiri like its boss and follows it loyally. Though powerful, Dondozo is apparently not very smart.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/977/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 978,
+      "textRu": "Он чрезвычайно хитёр: притворяется слабым, чтобы приманить добычу, а затем приказывает напарнику напасть.",
+      "sourceText": "Tatsugiri is an extremely cunning Pokémon. It feigns weakness to lure in prey, then orders its partner to attack.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/978/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 979,
+      "textRu": "Он наполняет кулаки яростью, которую долго скрывал в сердце. Удары таких кулаков сокрушают врага до самой сути.",
+      "sourceText": "It imbues its fists with the power of the rage that it kept hidden in its heart. Opponents struck by these imbued fists will be shattered to their core.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/979/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 980,
+      "textRu": "Он живёт на дне прудов и болот. Вуперов он берёт на спину и перевозит через воду с берега на берег.",
+      "sourceText": "It lives at the bottom of ponds and swamps. It will carry Wooper on its back and ferry them across water from one shore to the other.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/980/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 981,
+      "textRu": "Затвердевшая голова на хвосте защищает основную голову. Он размахивает длинной шеей и бодает врагов.",
+      "sourceText": "The hardened head from the tail protects the head of the main body as Farigiraf whips its long neck around to headbutt enemies.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/981/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 982,
+      "textRu": "Он наполняет длинные узкие лёгкие воздухом, а затем резко выдыхает мощную струю, выгоняя врагов из гнезда.",
+      "sourceText": "It drives enemies out of its nest by sucking in enough air to fill its long, narrow lungs, then releasing the air in an intense blast.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/982/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 983,
+      "textRu": "Он ведёт в бой огромную армию, но сложные стратегии даются ему плохо. Вместо них он упорно продвигается вперёд грубой силой.",
+      "sourceText": "Though it commands a massive army in battle, it’s not skilled at devising complex strategies. It just uses brute strength to keep pushing.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/983/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 984,
+      "textRu": "Он похож на загадочного покемона, который, по утверждению журнала о паранормальном, живёт с древнейших времён.",
+      "sourceText": "This creature resembles a mysterious Pokémon that, according to a paranormal magazine, has lived since ancient times.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/984/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 985,
+      "textRu": "Он напоминает загадочного покемона, которого журнал о паранормальном назвал Джигглипуфом миллиардолетней давности.",
+      "sourceText": "It resembles a mysterious Pokémon described in a paranormal magazine as a Jigglypuff from one billion years ago.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/985/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 986,
+      "textRu": "Он немного похож на покемона, описанного в сомнительном журнале как нечто среднее между динозавром и грибом.",
+      "sourceText": "It bears a slight resemblance to a Pokémon described in a dubious magazine as a cross between a dinosaur and a mushroom.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/986/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 987,
+      "textRu": "У него есть черты призрачного птерозавра из журнала о паранормальном. Но в остальном сходства между ними мало.",
+      "sourceText": "It has similar features to a ghostly pterosaur that was covered in a paranormal magazine, but the two have little else in common.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/987/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 988,
+      "textRu": "Он отчасти напоминает древнюю форму Волкароны, о которой рассказывал сомнительный журнал.",
+      "sourceText": "This Pokémon somewhat resembles an ancient form of Volcarona that was introduced in a dubious magazine.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/988/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 989,
+      "textRu": "Он немного похож на Магнетона, прожившего 10 000 лет и описанного в статье журнала о паранормальном.",
+      "sourceText": "It slightly resembles a Magneton that lived for 10,000 years and was featured in an article in a paranormal magazine.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/989/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 990,
+      "textRu": "Он похож на научное оружие, которое, по утверждению журнала о паранормальном, было отправлено на эту планету инопланетянами.",
+      "sourceText": "This Pokémon closely resembles a scientific weapon that a paranormal magazine claimed was sent to this planet by aliens.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/990/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 991,
+      "textRu": "Его облик напоминает робота из статьи журнала о паранормальном. По словам журнала, того робота создала древняя цивилизация.",
+      "sourceText": "Its shape is similar to a robot featured in a paranormal magazine article. The robot was said to have been created by an ancient civilization.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/991/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 992,
+      "textRu": "Он похож на киборга, о котором писал лишь журнал о паранормальном. Там утверждали, что киборг — переделанный спортсмен.",
+      "sourceText": "It is very similar to a cyborg covered exclusively by a paranormal magazine. The cyborg was said to be the modified form of a certain athlete.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/992/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 993,
+      "textRu": "Он напоминает покемона из журнала о паранормальном, где его назвали потомком Гидрайгона, влюбившегося в робота.",
+      "sourceText": "It resembles a certain Pokémon introduced in a paranormal magazine, described as the offspring of a Hydreigon that fell in love with a robot.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/993/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 994,
+      "textRu": "Он похож на неизвестный объект, описанный журналом о паранормальном как НЛО, отправленный наблюдать за человечеством.",
+      "sourceText": "This Pokémon resembles an unknown object described in a paranormal magazine as a UFO sent to observe humanity.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/994/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 995,
+      "textRu": "Он напоминает покемона, которого сомнительный журнал назвал Тиранитаром из будущего, отстоящего на миллиард лет.",
+      "sourceText": "It has some similarities to a Pokémon introduced in a dubious magazine as a Tyranitar from one billion years into the future.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/995/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 996,
+      "textRu": "Он живёт в лесах и среди скал. Силой спинного плавника он охлаждает гнездо изнутри, словно холодильник.",
+      "sourceText": "This Pokémon lives in forests and craggy areas. Using the power of its dorsal fin, it cools the inside of its nest like a refrigerator.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/996/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 997,
+      "textRu": "Делая сальто вперёд в воздухе, он атакует ледяным лезвием спинного плавника. Этот приём удаётся благодаря сильным спине и ногам.",
+      "sourceText": "It attacks with the blade of its frozen dorsal fin by doing a front flip in the air. Arctibax’s strong back and legs allow it to pull off this technique.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/997/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 998,
+      "textRu": "Он бросается в бой, перевернувшись вверх ногами и выпуская изо рта ледяной воздух. Врагов он добивает спинным лезвием.",
+      "sourceText": "It launches itself into battle by flipping upside down and spewing frigid air from its mouth. It finishes opponents off with its dorsal blade.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/998/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 999,
+      "textRu": "Он живёт в старом сундуке с сокровищами. Иногда сундук оставляют в углу лавки, не подозревая, что это покемон.",
+      "sourceText": "It lives inside an old treasure chest. Sometimes it gets left in shop corners since no one realizes it’s actually a Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/999/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1000,
+      "textRu": "Его прочное тело сложено из монет. Он подавляет врагов, выпуская в них монету за монетой в быстрой череде.",
+      "sourceText": "It has a sturdy body made up of stacked coins. Gholdengo overwhelms its enemies by firing coin after coin at them in quick succession.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1000/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1001,
+      "textRu": "Он высасывает жизненную силу растений. От этого соседние леса мгновенно увядают, а поля становятся бесплодными.",
+      "sourceText": "It drains the life-force from vegetation, causing nearby forests to instantly wither and fields to turn barren.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1001/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1002,
+      "textRu": "Ненависть тех, кто давно погиб от меча, облачилась в снег и стала этим покемоном.",
+      "sourceText": "The hatred of those who perished by the sword long ago has clad itself in snow and become a Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1002/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1003,
+      "textRu": "Он медленно опускает невероятно тяжёлую голову на землю. От этого земля раскалывается трещинами глубиной более 48 метров.",
+      "sourceText": "It slowly brings its exceedingly heavy head down upon the ground, splitting the earth open with huge fissures that run over 160 feet deep.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1003/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1004,
+      "textRu": "Зависть, накопившаяся в изогнутых бусинах, из-за которых вспыхивало множество конфликтов, облачилась в огонь и стала этим покемоном.",
+      "sourceText": "The envy accumulated within curved beads that sparked multiple conflicts has clad itself in fire and become a Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1004/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1005,
+      "textRu": "Статья в сомнительном журнале связывает его с неким явлением, происходящим в одном из регионов.",
+      "sourceText": "According to an article in a dubious magazine, this Pokémon has some connection to a phenomenon that occurs in a certain region.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1005/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1006,
+      "textRu": "Он отчасти похож на изобретение безумного учёного, о котором писал журнал о паранормальном.",
+      "sourceText": "It has some similarities to a mad scientist’s invention covered in a paranormal magazine.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1006/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1007,
+      "textRu": "Он похож на Сайклизара, но гораздо массивнее и свирепее. О его образе жизни и других особенностях ничего не известно.",
+      "sourceText": "This Pokémon resembles Cyclizar, but it is far burlier and more ferocious. Nothing is known about its ecology or other features.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1007/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1008,
+      "textRu": "Похоже, это Железный змей из старой книги. По преданию, тот обращал землю в пепел своими молниями.",
+      "sourceText": "This seems to be the Iron Serpent mentioned in an old book. The Iron Serpent is said to have turned the land to ash with its lightning.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1008/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1009,
+      "textRu": "Он напоминает рисунок из журнала о паранормальном, который, как утверждалось, изображал Суйкуна из глубочайшей древности.",
+      "sourceText": "It resembles an illustration published in a paranormal magazine, said to be a depiction of a super-ancient Suicune.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1009/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1010,
+      "textRu": "По немногочисленным свидетельствам очевидцев, его сияющие лезвия шинковали крупные деревья и валуны на тонкие полоски.",
+      "sourceText": "According to the few eyewitness accounts that exist, it used its shining blades to julienne large trees and boulders.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1010/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1011,
+      "textRu": "Голова принадлежит одному змею, а хвост — другому. Они делят одно яблоко и помогают друг другу.",
+      "sourceText": "The head sticking out belongs to the fore-wyrm, while the tail belongs to the core-wyrm. The two share one apple and help each other out.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1011/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1012,
+      "textRu": "Он похож на региональную форму Синисти. Однако недавно выяснилось, что эти два покемона совершенно не родственны.",
+      "sourceText": "Poltchageist looks like a regional form of Sinistea, but it was recently discovered that the two Pokémon are entirely unrelated.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1012/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1013,
+      "textRu": "Он любит прохладные тёмные места: глубину полки или пространство под половицами. После заката он выходит искать добычу.",
+      "sourceText": "It prefers cool, dark places, such as the back of a shelf or the space beneath a home's floorboards. It wanders in search of prey after sunset.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1013/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1014,
+      "textRu": "Этот вспыльчивый буян размахивает цепью на шее с такой силой, что может превратить что угодно в порошок.",
+      "sourceText": "Okidogi is a ruffian with a short temper. It can pulverize anything by swinging around the chain on its neck.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1014/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1015,
+      "textRu": "Он остаётся в безопасном месте и забавляется с врагами, вызывая у них сильное головокружение психокинезом.",
+      "sourceText": "Munkidori keeps itself somewhere safe while it toys with its foes, using psychokinesis to induce intense dizziness.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1015/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1016,
+      "textRu": "Взмахами блестящих крыльев он рассеивает феромоны, которые пленяют людей и покемонов.",
+      "sourceText": "Fezandipiti beats its glossy wings to scatter pheromones that captivate people and Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1016/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1017,
+      "textRu": "Этот любопытный покемон любит проказы. В бою он извлекает заключённую в масках энергию разных типов.",
+      "sourceText": "This mischief-loving Pokémon is full of curiosity. It battles by drawing out the type-based energy contained within its masks.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1017/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1018,
+      "textRu": "Он роет норы в горах в поисках пищи. Он настолько крепок, что даже обвал пещеры не выводит его из равновесия.",
+      "sourceText": "It digs holes on mountains, searching for food. It’s so durable that being caught in a cave-in won’t faze it.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1018/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1019,
+      "textRu": "Эти капризные змеи объединились. Лишь в редкие моменты, когда их настроения совпадают, раскрывается их истинная сила.",
+      "sourceText": "These capricious syrpents have banded together. On the rare occasion that their moods align, their true power is unleashed.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1019/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1020,
+      "textRu": "Он похож на жуткого покемона из журнала о паранормальном. Журнал утверждал, что это Энтей, восстановленный из окаменелости.",
+      "sourceText": "It resembles an eerie Pokémon once shown in a paranormal magazine. That Pokémon was said to be an Entei regenerated from a fossil.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1020/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1021,
+      "textRu": "Он напоминает покемона, который ненадолго стал предметом обсуждений после того, как журнал о паранормальном объявил его предком Райкоу.",
+      "sourceText": "It bears resemblance to a Pokémon that became a hot topic for a short while after a paranormal magazine touted it as Raikou's ancestor.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1021/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1022,
+      "textRu": "Он похож на покемона, которого сомнительный журнал описал как Терракиона, переделанного злой организацией.",
+      "sourceText": "It resembles a Pokémon described in a dubious magazine as a Terrakion that had been modified by an evil organization.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1022/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1023,
+      "textRu": "Говорят, однажды он выпустил сияющие лезвия и изрезал всё вокруг на куски. В остальном о нём мало что известно.",
+      "sourceText": "There was supposedly an incident in which it launched shining blades to cut everything around it to pieces. Little else is known about it.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1023/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1024,
+      "textRu": "Считается, что он жил в древней Палдее, пока сдвиги земной коры не погубили этот вид.",
+      "sourceText": "It’s thought that this Pokémon lived in ancient Paldea until it got caught in seismic shifts and went extinct.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1024/",
+      "officialRussianTranslation": false
+    },
+    {
+      "speciesId": 1025,
+      "textRu": "В панцире, похожем на персик, он хранит сильный яд. Он готовит ядовитые моти и угощает ими людей и покемонов.",
+      "sourceText": "Its peach-shaped shell serves as storage for a potent poison. It makes poisonous mochi and serves them to people and Pokémon.",
+      "sourceLanguage": "en",
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1025/",
       "officialRussianTranslation": false
     }
   ]

@@ -8002,6 +8002,2256 @@
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/800/",
       "sourceRawText": "It needs light to survive, and it goes on a\r\nrampage seeking it out. Its laser beams will\r\ncut anything to pieces.",
       "sourceRawTextSha256": "41a90f196e1fcb633c90912052ef246d9fece341ac0290daac47ae937f55e3b1"
+    },
+    {
+      "speciesId": 801,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/801/",
+      "sourceRawText": "Built roughly 500 years ago by a scientist,\r\nthe part called the Soul-Heart is the\r\nactual life-form.",
+      "sourceRawTextSha256": "898499a54d7bf5e71782aa1a946fce4e0425eac310f027e744267d92d1925ca6"
+    },
+    {
+      "speciesId": 802,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/802/",
+      "sourceRawText": "This Pokémon can conceal itself in any shadow,\r\nso it went undiscovered for a long time.",
+      "sourceRawTextSha256": "006b162b36bb67baf8f982914861eae8ef849c9abb5e962f296bc935d6ac1585"
+    },
+    {
+      "speciesId": 803,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/803/",
+      "sourceRawText": "An Ultra Beast that lives in a different world, it\r\ncackles wildly as it sprays its opponents with\r\npoison from the needles on its head.",
+      "sourceRawTextSha256": "c788bc31031c32aad3dedc80d4cb4c586883cbe99e0d09d7064fd85f6a5680ab"
+    },
+    {
+      "speciesId": 804,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/804/",
+      "sourceRawText": "One kind of Ultra Beast, it fires a glowing,\r\nvenomous liquid from its needles. This liquid\r\nis also immensely adhesive.",
+      "sourceRawTextSha256": "77099cbed780e94e57698fe6d2552d2ba90366574a1a16f2fc0553464d550093"
+    },
+    {
+      "speciesId": 805,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/805/",
+      "sourceRawText": "When stone walls started moving and attacking,\r\nthe brute’s true identity was this mysterious\r\nlife-form, which brings to mind an Ultra Beast.",
+      "sourceRawTextSha256": "eac4bac6618aa7b5ae27d6c6df9010f07b130923491a085fbd2e7c6876609b1c"
+    },
+    {
+      "speciesId": 806,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 30,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/806/",
+      "sourceRawText": "A UB that appeared from an Ultra Wormhole, it\r\ncauses explosions, then takes advantage of\r\nopponents’ surprise to rob them of their vitality.",
+      "sourceRawTextSha256": "5df43b6c0b814a2a5c9f881d181b784bf3119f6da20d040613872f02459eee7c"
+    },
+    {
+      "speciesId": 807,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/807/",
+      "sourceRawText": "Electricity sparks from the pads on its limbs.\r\nWherever Zeraora runs, lightning flashes and\r\nthunder echoes.",
+      "sourceRawTextSha256": "9181f303f9ac8102c903ff8df00fd65abd993ef9e46c0b9b28d8fc3c8454480e"
+    },
+    {
+      "speciesId": 808,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/808/",
+      "sourceRawText": "They live as a group, but when the time comes,\r\none strong Meltan will absorb all the others\r\nand evolve.",
+      "sourceRawTextSha256": "f0ed1e70c536e51f2e32f63d9ad97aa4061ab13c14831073a0077ee39e30decf"
+    },
+    {
+      "speciesId": 809,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/809/",
+      "sourceRawText": "Centrifugal force is behind the punches of\r\nMelmetal’s heavy hex-nut arms. Melmetal is said\r\nto deliver the strongest punches of all Pokémon.",
+      "sourceRawTextSha256": "8a825012afeb84913eb06771327c8e05fc7d4f03b4c605c4bc678726f248ed1f"
+    },
+    {
+      "speciesId": 810,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/810/",
+      "sourceRawText": "It attacks with rapid beats of its stick.\r\nAs it strikes with amazing speed, it gets\r\nmore and more pumped.",
+      "sourceRawTextSha256": "7181af4a56b033bc0254145b9933cd70d317b2a0f30c3c1618af930835cc3bfe"
+    },
+    {
+      "speciesId": 811,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/811/",
+      "sourceRawText": "When it’s drumming out rapid beats in battle, it\r\ngets so caught up in the rhythm that it won’t even\r\nnotice that it’s already knocked out its opponent.",
+      "sourceRawTextSha256": "58d41490368e6a39a2ac7aea609d6893e872cd26e5e4c38e2b032c1e1e3d0ba5"
+    },
+    {
+      "speciesId": 812,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/812/",
+      "sourceRawText": "The one with the best drumming techniques\r\nbecomes the boss of the troop. It has a gentle\r\ndisposition and values harmony among its group.",
+      "sourceRawTextSha256": "52c492aab59649990a034866815bedc0dfd45bd9708516e99bab5dcf01ae0fb2"
+    },
+    {
+      "speciesId": 813,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/813/",
+      "sourceRawText": "It has special pads on the backs of its feet, and\r\none on its nose. Once it’s raring to fight, these\r\npads radiate tremendous heat.",
+      "sourceRawTextSha256": "27c62c56d73311c247fa901a57aa3b9897b90fc0a08afdbd3832871bd3e040cf"
+    },
+    {
+      "speciesId": 814,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/814/",
+      "sourceRawText": "It kicks berries right off the branches of trees\r\nand then juggles them with its feet, practicing\r\nits footwork.",
+      "sourceRawTextSha256": "57d21f29244c2e068d3d2b3b11ecfa93a899c94c4e96decb09ffbda9302bf89f"
+    },
+    {
+      "speciesId": 815,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/815/",
+      "sourceRawText": "It’s skilled at both offense and defense, and it\r\ngets pumped up when cheered on. But if it starts\r\nshowboating, it could put itself in a tough spot.",
+      "sourceRawTextSha256": "c089df83fc5fe799714e99e8b620b728ac68b08fd3799a807d8559abe3caeb2b"
+    },
+    {
+      "speciesId": 816,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/816/",
+      "sourceRawText": "When it gets wet, its skin changes color,\r\nand this Pokémon becomes invisible as if\r\nit were camouflaged.",
+      "sourceRawTextSha256": "d670a61a0751e49d203cd66d6397c4615e740b743be925865a1f09d16135f938"
+    },
+    {
+      "speciesId": 817,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/817/",
+      "sourceRawText": "Highly intelligent but also very lazy,\r\nit keeps enemies out of its territory\r\nby laying traps everywhere.",
+      "sourceRawTextSha256": "e1f36d6b6c09cc0c046353c9ceb242ea83dbb77a43938ffc154e92603f14fceb"
+    },
+    {
+      "speciesId": 818,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/818/",
+      "sourceRawText": "Its nictitating membranes let it pick out foes’\r\nweak points so it can precisely blast them with\r\nwater that shoots from its fingertips at Mach 3.",
+      "sourceRawTextSha256": "769e4be36dadda71699e299417abfbdc6e0f7741fa7a470850127d28eade6ee7"
+    },
+    {
+      "speciesId": 819,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/819/",
+      "sourceRawText": "It eats berries nonstop—a habit that has made\r\nit more resilient than it looks. It’ll show up on\r\nfarms, searching for yet more berries.",
+      "sourceRawTextSha256": "b6179637e1d0a41162364106c408821705d9e4ebf44752c19b4badbb99a54da3"
+    },
+    {
+      "speciesId": 820,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/820/",
+      "sourceRawText": "Common throughout the Galar region, this\r\nPokémon has strong teeth and can chew\r\nthrough the toughest of berry shells.",
+      "sourceRawTextSha256": "91341d8b90c193b6b96c0daa9269d8f896375f535697ceea2f10f67458194b1d"
+    },
+    {
+      "speciesId": 821,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/821/",
+      "sourceRawText": "Jumping nimbly about, this small-bodied\r\nPokémon takes advantage of even the slightest\r\nopportunity to disorient larger opponents.",
+      "sourceRawTextSha256": "795f80f0571958c15a92c9fa077407f5cb491273f6e078506e1186c83e14fa40"
+    },
+    {
+      "speciesId": 822,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/822/",
+      "sourceRawText": "The lessons of many harsh battles have taught it\r\nhow to accurately judge an opponent’s strength.",
+      "sourceRawTextSha256": "2887a5ec9cf69a4fa32964792c929a5129d5968a609d78a5182f2593c9edf811"
+    },
+    {
+      "speciesId": 823,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/823/",
+      "sourceRawText": "With their great intellect and flying skills, these\r\nPokémon very successfully act as the Galar\r\nregion’s airborne taxi service.",
+      "sourceRawTextSha256": "baf904854efc5fdb2bacacaddba0be9fee3192fa382698329476c08f54e314a1"
+    },
+    {
+      "speciesId": 824,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/824/",
+      "sourceRawText": "Often found in gardens, this Pokémon has hairs\r\non its body that it uses to assess its surroundings.",
+      "sourceRawTextSha256": "a645199a11c488abc4889fdec917836e19140812351ad65d8687a88d3865d55e"
+    },
+    {
+      "speciesId": 825,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/825/",
+      "sourceRawText": "As it grows inside its shell, it uses its psychic\r\nabilities to monitor the outside world and\r\nprepare for evolution.",
+      "sourceRawTextSha256": "2ad7d4fa779c62528c59d3815703ed3d11a4864d259e8f2eef85438fba3e7607"
+    },
+    {
+      "speciesId": 826,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/826/",
+      "sourceRawText": "It emits psychic energy to observe and study\r\nwhat’s around it—and what’s around it can\r\ninclude things over six miles away.",
+      "sourceRawTextSha256": "4c8929483b1c2b67d3592b836a43e6b785be7a8f4de88b2f53a59e34ec234586"
+    },
+    {
+      "speciesId": 827,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/827/",
+      "sourceRawText": "Cunning and cautious, this Pokémon survives by\r\nstealing food from others. It erases its tracks with\r\nswipes of its tail as it makes off with its plunder.",
+      "sourceRawTextSha256": "bd81b55898177b6a6b397bb3e971ccf3e60fba9754d313d780b358e67a35fb80"
+    },
+    {
+      "speciesId": 828,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/828/",
+      "sourceRawText": "With a lithe body and sharp claws, it goes\r\naround stealing food and eggs. Boltund\r\nis its natural enemy.",
+      "sourceRawTextSha256": "4ad9ab89b7480f8cc564d3579ad8bbac7498bace20012dc958005e9aa82a60f8"
+    },
+    {
+      "speciesId": 829,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/829/",
+      "sourceRawText": "It whirls around in the wind while singing a joyous\r\nsong. This delightful display has charmed many\r\ninto raising this Pokémon.",
+      "sourceRawTextSha256": "2579236c988a936c74c2c1965ac52b2b3aca6c24e76c29f86e5a65973d9727ad"
+    },
+    {
+      "speciesId": 830,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/830/",
+      "sourceRawText": "The cotton on the head of this Pokémon can be\r\nspun into a glossy, gorgeous yarn—a Galar\r\nregional specialty.",
+      "sourceRawTextSha256": "1d953e10d77cd56daec14ccdd58c463965dce641e8a16d2ec54b135642538f1c"
+    },
+    {
+      "speciesId": 831,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/831/",
+      "sourceRawText": "If its fleece grows too long, Wooloo won’t be\r\nable to move. Cloth made with the wool of this\r\nPokémon is surprisingly strong.",
+      "sourceRawTextSha256": "23d2f4b26fa0a9962e5eb6a8f344853d5567fe7d49b334f79fc91e951efd88f8"
+    },
+    {
+      "speciesId": 832,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/832/",
+      "sourceRawText": "Its majestic horns are meant only to impress the\r\nopposite gender. They never see use in battle.",
+      "sourceRawTextSha256": "24ade9fa601dc474a228aeb6753fced86c183416e41cbec3f0acbb950f2f8a4d"
+    },
+    {
+      "speciesId": 833,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/833/",
+      "sourceRawText": "It starts off battles by attacking with its rock-hard\r\nhorn, but as soon as the opponent flinches, this\r\nPokémon bites down and never lets go.",
+      "sourceRawTextSha256": "79ad1c520bd4b388902384a484394a2c80dda5646fd60658bd9a1b60320cd41f"
+    },
+    {
+      "speciesId": 834,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/834/",
+      "sourceRawText": "This Pokémon rapidly extends its retractable neck\r\nto sink its sharp fangs into distant enemies and\r\ntake them down.",
+      "sourceRawTextSha256": "9bf98d56122b8abeecdd578841732e911ff9afbbb5b128e7eb80c0256714dcdd"
+    },
+    {
+      "speciesId": 835,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/835/",
+      "sourceRawText": "This gluttonous Pokémon only assists people with\r\ntheir work because it wants treats. As it runs,\r\nit crackles with electricity.",
+      "sourceRawTextSha256": "901075acb2de6d363af2dbb5d7d6f82a8bcfbfdb734b7b0fd222563f852c2504"
+    },
+    {
+      "speciesId": 836,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/836/",
+      "sourceRawText": "It sends electricity through its legs to boost their\r\nstrength. Running at top speed, it easily breaks\r\n50 mph.",
+      "sourceRawTextSha256": "363e2aaa31630967200b8229153ad60078e3818a7d2d7d801bed99c75b0edd1f"
+    },
+    {
+      "speciesId": 837,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/837/",
+      "sourceRawText": "It can race around like a unicycle, even on rough,\r\nrocky terrain. Burning coal sustains it.",
+      "sourceRawTextSha256": "6214faa6f41e1ab27d54ae3e2efbb2030a503e79a51b07a8d32315d6051226ad"
+    },
+    {
+      "speciesId": 838,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/838/",
+      "sourceRawText": "By rapidly rolling its legs, it can travel at over\r\n18 mph. The temperature of the flames it\r\nbreathes exceeds 1,800 degrees Fahrenheit.",
+      "sourceRawTextSha256": "3da0206c4b231908e52dcc3e93b9f5b83f70f1138df6feb13a90f80399f04ffd"
+    },
+    {
+      "speciesId": 839,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/839/",
+      "sourceRawText": "While it’s engaged in battle, its mountain of coal\r\nwill burn bright red, sending off sparks that\r\nscorch the surrounding area.",
+      "sourceRawTextSha256": "191ff9ff183879adb07cdaa302318bcc6386c90b0ab9ce8616d0b56ffc4c4af3"
+    },
+    {
+      "speciesId": 840,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/840/",
+      "sourceRawText": "As soon as it’s born, it burrows into an apple. Not\r\nonly does the apple serve as its food source, but\r\nthe flavor of the fruit determines its evolution.",
+      "sourceRawTextSha256": "3e707112186e0b7826f17037196ba78d35fd2bc7a2ac3f5ea46ae9f5bdbebf7e"
+    },
+    {
+      "speciesId": 841,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/841/",
+      "sourceRawText": "It flies on wings of apple skin and spits a\r\npowerful acid. It can also change its shape\r\ninto that of an apple.",
+      "sourceRawTextSha256": "ce15c3b0d3ae3692b60762848d79ce00d854d4bb77a9bb9a8dd0103300356df1"
+    },
+    {
+      "speciesId": 842,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/842/",
+      "sourceRawText": "Its body is covered in sweet nectar, and the\r\nskin on its back is especially yummy. Children\r\nused to have it as a snack.",
+      "sourceRawTextSha256": "7e168f728d0a7078e6f0be63a60295789bf0cc2d4f2aa754985ebced6a1f59a3"
+    },
+    {
+      "speciesId": 843,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/843/",
+      "sourceRawText": "It spews sand from its nostrils. While the enemy\r\nis blinded, it burrows into the ground to hide.",
+      "sourceRawTextSha256": "19a3bb54128b356bdbc6b03f2211ea6c34097546934e959180bf29500bf5370e"
+    },
+    {
+      "speciesId": 844,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/844/",
+      "sourceRawText": "Its unique style of coiling allows it to blast sand\r\nout of its sand sac more efficiently.",
+      "sourceRawTextSha256": "e0b9ae3229b4666c5b70413a4de0bd9dc85ef17cc17a2be6bda32fe274ed543e"
+    },
+    {
+      "speciesId": 845,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/845/",
+      "sourceRawText": "This hungry Pokémon swallows Arrokuda whole.\r\nOccasionally, it makes a mistake and tries to\r\nswallow a Pokémon other than its preferred prey.",
+      "sourceRawTextSha256": "33303d19b40c6eed4c07ef580646424e6bf22f5b99402070be80fa980e84bc87"
+    },
+    {
+      "speciesId": 846,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/846/",
+      "sourceRawText": "After it’s eaten its fill, its movements become\r\nextremely sluggish. That’s when Cramorant\r\nswallows it up.",
+      "sourceRawTextSha256": "9a47df0d967308fa001ca1f9ce71aeef808b555c9291df5bbc2f5a0e96f9a6fd"
+    },
+    {
+      "speciesId": 847,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/847/",
+      "sourceRawText": "It spins its tail fins to propel itself, surging\r\nforward at speeds of over 100 knots before\r\nramming prey and spearing into them.",
+      "sourceRawTextSha256": "2f3069ca8166e4602ac29ed70f87df1df0707f5c9a7d351af964ac97ca919d8d"
+    },
+    {
+      "speciesId": 848,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/848/",
+      "sourceRawText": "It manipulates the chemical makeup of its poison\r\nto produce electricity. The voltage is weak, but it\r\ncan cause a tingling paralysis.",
+      "sourceRawTextSha256": "d3fbec14487706e5a40b80816f0e372703d69f15ec3735cb65412ff4ee53c60e"
+    },
+    {
+      "speciesId": 849,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/849/",
+      "sourceRawText": "This short-tempered and aggressive Pokémon\r\nchugs stagnant water to absorb any toxins it\r\nmight contain.",
+      "sourceRawTextSha256": "e59a9534ec02cf7450a0c638c82c76a4f8bae01d836b740fad2b22a21e9914ac"
+    },
+    {
+      "speciesId": 850,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/850/",
+      "sourceRawText": "It wraps prey up with its heated body, cooking\r\nthem in its coils. Once they’re well-done, it will\r\nvoraciously nibble them down to the last morsel.",
+      "sourceRawTextSha256": "d639bd249c09b22a7c655fe6fd6fa6893791a9c4cad634810897b00403301c4b"
+    },
+    {
+      "speciesId": 851,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/851/",
+      "sourceRawText": "While its burning body is already dangerous on\r\nits own, this excessively hostile Pokémon also has\r\nlarge and very sharp fangs.",
+      "sourceRawTextSha256": "cfef08319dfa72a234ce7bc6daf969b1432dbc5fce1985949c6d913b31b21f06"
+    },
+    {
+      "speciesId": 852,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/852/",
+      "sourceRawText": "Its tentacles tear off easily, but it isn’t alarmed\r\nwhen that happens—it knows they’ll grow back.\r\nIt’s about as smart as a three-year-old.",
+      "sourceRawTextSha256": "462590fc2a353ed4026575267d9911f2b98effb751c8710cd34aeb17288e3329"
+    },
+    {
+      "speciesId": 853,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/853/",
+      "sourceRawText": "Searching for an opponent to test its skills\r\nagainst, it emerges onto land. Once the battle\r\nis over, it returns to the sea.",
+      "sourceRawTextSha256": "12b897dd9d3d9ecbf198d33d5b9050c60948eff09da4ec739f8fa75e0553db0b"
+    },
+    {
+      "speciesId": 854,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/854/",
+      "sourceRawText": "The teacup in which this Pokémon makes its\r\nhome is a famous piece of antique tableware.\r\nMany forgeries are in circulation.",
+      "sourceRawTextSha256": "e53dfa1163a2fd81c2618236e6a1cfa750897466c1a134741535d6ba14b4de51"
+    },
+    {
+      "speciesId": 855,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/855/",
+      "sourceRawText": "Leaving leftover black tea unattended is asking\r\nfor this Pokémon to come along and pour itself\r\ninto it, turning the tea into a new Polteageist.",
+      "sourceRawTextSha256": "b05a217fe159ff5471a83ea5dd23a6112ad1a87ff511bb9a06f34b36cd04aa22"
+    },
+    {
+      "speciesId": 856,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/856/",
+      "sourceRawText": "If this Pokémon senses a strong emotion, it\r\nwill run away as fast as it can. It prefers areas\r\nwithout people.",
+      "sourceRawTextSha256": "f20e4d8d4bf87276ea0272b61488015fa1ae028be4ea9128e9520c73f5c936bc"
+    },
+    {
+      "speciesId": 857,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/857/",
+      "sourceRawText": "Using the braids on its head, it pummels foes to\r\nget them to quiet down. One blow from those\r\nbraids would knock out a professional boxer.",
+      "sourceRawTextSha256": "a75fc62678926308f29e33f74d195f2769f2948fa1cf581dcf15afcde8f9d2a8"
+    },
+    {
+      "speciesId": 858,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/858/",
+      "sourceRawText": "If you’re too loud around it, you risk being torn\r\napart by the claws on its tentacle. This Pokémon\r\nis also known as the Forest Witch.",
+      "sourceRawTextSha256": "f6a4fcb35e206c0ae28c962376becc2b7c1f94932504862fd75c7ed6697fa393"
+    },
+    {
+      "speciesId": 859,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/859/",
+      "sourceRawText": "It sneaks into people’s homes, stealing things\r\nand feasting on the negative energy of the\r\nfrustrated occupants.",
+      "sourceRawTextSha256": "47a88248628e4b6ab6d531b8dd8bbcf53ba77a1b56f533b91ca9d713147d76a9"
+    },
+    {
+      "speciesId": 860,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/860/",
+      "sourceRawText": "With sly cunning, it tries to lure people into the\r\nwoods. Some believe it to have the power to\r\nmake crops grow.",
+      "sourceRawTextSha256": "e565b159fae0299b169b69582f21367b42eeb651b9163be8f2f74cac6073425e"
+    },
+    {
+      "speciesId": 861,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/861/",
+      "sourceRawText": "Its hairs work like muscle fibers. When its hairs\r\nunfurl, they latch on to opponents, ensnaring\r\nthem as tentacles would.",
+      "sourceRawTextSha256": "2ac583d5e8a3f60f485402befe029c32d55205694c144d1477395294617b336c"
+    },
+    {
+      "speciesId": 862,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/862/",
+      "sourceRawText": "It evolved after experiencing numerous fights.\r\nWhile crossing its arms, it lets out a shout that\r\nwould make any opponent flinch.",
+      "sourceRawTextSha256": "162b9ade69579bebdf171c3068e4f8a76651124c734b104cac027615bdcd279e"
+    },
+    {
+      "speciesId": 863,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/863/",
+      "sourceRawText": "After many battles, it evolved dangerous\r\nclaws that come together to form daggers\r\nwhen extended.",
+      "sourceRawTextSha256": "5e895bef1587ffa22d8f5b1acd84f3a66e5a693a90aec7d12a58644dfb01acee"
+    },
+    {
+      "speciesId": 864,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/864/",
+      "sourceRawText": "Be cautious of the ectoplasmic body\r\nsurrounding its soul. You’ll become\r\nstiff as stone if you touch it.",
+      "sourceRawTextSha256": "cfaa7fd4ef8bf20e5c77a408d6d3f4170947b0617786735547bc715e869e1bb9"
+    },
+    {
+      "speciesId": 865,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/865/",
+      "sourceRawText": "After deflecting attacks with its hard leaf shield,\r\nit strikes back with its sharp leek stalk. The leek\r\nstalk is both weapon and food.",
+      "sourceRawTextSha256": "29dafdf9c344081a9f8d916ebf4b0fe1e26ee71c76ade0634a59f17f9ca66165"
+    },
+    {
+      "speciesId": 866,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/866/",
+      "sourceRawText": "Its amusing movements make it very popular.\r\nIt releases its psychic power from the pattern\r\non its belly.",
+      "sourceRawTextSha256": "c2028cd8fe0ea3cc0031fd606d3c012762169d6e05fb4bbdeb23e830fbf3c13c"
+    },
+    {
+      "speciesId": 867,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/867/",
+      "sourceRawText": "Never touch its shadowlike body, or you’ll be\r\nshown the horrific memories behind the picture\r\ncarved into it.",
+      "sourceRawTextSha256": "aee9c80073307d41e2e34013e2fb96a07305edee68c1162eaaaf99f05982561a"
+    },
+    {
+      "speciesId": 868,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/868/",
+      "sourceRawText": "They say that any patisserie visited by Milcery\r\nis guaranteed success and good fortune.",
+      "sourceRawTextSha256": "bc0c3a8e3302113667d0c857e2bd9a8285501e066802bffd06fdba6140f0d524"
+    },
+    {
+      "speciesId": 869,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/869/",
+      "sourceRawText": "When Alcremie is content, the cream it\r\nsecretes from its hands becomes sweeter\r\nand richer.",
+      "sourceRawTextSha256": "343e6ca5164ab69be01cab46d6ec84839f1b911b10d07d411a586c027273beed"
+    },
+    {
+      "speciesId": 870,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/870/",
+      "sourceRawText": "The six of them work together as one Pokémon.\r\nTeamwork is also their battle strategy, and they\r\nconstantly change their formation as they fight.",
+      "sourceRawTextSha256": "2cf18effae8c2d6a0ff3ede1579a5db911f2d2c0c806f212c5fd6c3aa702a26a"
+    },
+    {
+      "speciesId": 871,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/871/",
+      "sourceRawText": "It stores electricity in each spine. Even if one gets\r\nbroken off, it still continues to emit electricity for\r\nat least three hours.",
+      "sourceRawTextSha256": "8ece7b5b4d74f6c10ca021a2c9e3c0c1f7696f4d980790db18567640ae141339"
+    },
+    {
+      "speciesId": 872,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/872/",
+      "sourceRawText": "It eats snow that piles up on the ground.\r\nThe more snow it eats, the bigger and more\r\nimpressive the spikes on its back grow.",
+      "sourceRawTextSha256": "c7cbcedb34c43bc0058e1f52b61416c0d2e16ecb2852566d5aec4a085b7a1dd1"
+    },
+    {
+      "speciesId": 873,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/873/",
+      "sourceRawText": "It shows no mercy to any who desecrate fields\r\nand mountains. It will fly around on its icy wings,\r\ncausing a blizzard to chase offenders away.",
+      "sourceRawTextSha256": "7dd7ee97306ef9982ac137ef13c673cd0bf1fcc9e1c019f9df4f456c13453393"
+    },
+    {
+      "speciesId": 874,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/874/",
+      "sourceRawText": "Once a year, on a specific date and at a specific\r\ntime, they gather out of nowhere and form up in\r\na circle.",
+      "sourceRawTextSha256": "452c5a24d416ebe50f835465c648dd43ba6c11dc506cc36f42f2486da4ec8ada"
+    },
+    {
+      "speciesId": 875,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/875/",
+      "sourceRawText": "This Pokémon keeps its heat-sensitive head cool\r\nwith ice. It fishes for its food, dangling its single\r\nhair into the sea to lure in prey.",
+      "sourceRawTextSha256": "bf92d80b5e75b2301eeffb99ceb8038d8253b7a0d18e37571531b35a63f76426"
+    },
+    {
+      "speciesId": 876,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/876/",
+      "sourceRawText": "Through its horns, it can pick up on the emotions\r\nof creatures around it. Positive emotions are the\r\nsource of its strength.",
+      "sourceRawTextSha256": "1e1a8e67be38020489b6c43b6f87d83ec6ee65f4da06d03238d6064d3bce2c60"
+    },
+    {
+      "speciesId": 877,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/877/",
+      "sourceRawText": "It carries electrically roasted seeds with it as if\r\nthey’re precious treasures. No matter how much\r\nit eats, it always gets hungry again in short order.",
+      "sourceRawTextSha256": "fc4eede7818c0768f2355cfe68bc8eb7b70d4a1a1572898a7d29dc62403ebaff"
+    },
+    {
+      "speciesId": 878,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/878/",
+      "sourceRawText": "If a job requires serious strength, this Pokémon\r\nwill excel at it. Its copper body tarnishes in the\r\nrain, turning a vibrant green color.",
+      "sourceRawTextSha256": "3c8bd734a939651f2ddc98d1114506d499d78515f824d8cf78cd00546276ae5b"
+    },
+    {
+      "speciesId": 879,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/879/",
+      "sourceRawText": "These Pokémon live in herds. Their trunks have\r\nincredible grip strength, strong enough to crush\r\ngiant rocks into powder.",
+      "sourceRawTextSha256": "83052f72377cb86d4952ea1a1014fb8f29f7c4ca3b54b149a03c6585c7c64a4e"
+    },
+    {
+      "speciesId": 880,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/880/",
+      "sourceRawText": "The powerful muscles in its tail generate its\r\nelectricity. Compared to its lower body,\r\nits upper half is entirely too small.",
+      "sourceRawTextSha256": "0ece41dff670d60da8cd829d93064200c64407cd0c1de137702bee73c83354b4"
+    },
+    {
+      "speciesId": 881,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/881/",
+      "sourceRawText": "This Pokémon lived on prehistoric seashores and\r\nwas able to preserve food with the ice on its\r\nbody. It went extinct because it moved so slowly.",
+      "sourceRawTextSha256": "c0356dd29892b932e7e7e7d9ffb07afa3d1d514fa9726ec213fd366152580be5"
+    },
+    {
+      "speciesId": 882,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/882/",
+      "sourceRawText": "Its mighty legs are capable of running at\r\nspeeds exceeding 40 mph, but this Pokémon\r\ncan’t breathe unless it’s underwater.",
+      "sourceRawTextSha256": "304da5ad44b2dc1709e7d8f40f0e6531280f7e4ac2d84753bc7e35c77098be3b"
+    },
+    {
+      "speciesId": 883,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/883/",
+      "sourceRawText": "The skin on its face is impervious to attack, but\r\nbreathing difficulties made this Pokémon go\r\nextinct anyway.",
+      "sourceRawTextSha256": "a7d3a75394022f817b22e10a3b39f06a94bce3b12bbbe60fb0b2b7d542e9a994"
+    },
+    {
+      "speciesId": 884,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/884/",
+      "sourceRawText": "The special metal that composes its body is very\r\nlight, so this Pokémon has considerable agility.\r\nIt lives in caves because it dislikes the rain.",
+      "sourceRawTextSha256": "bba88556f503b05a0f75f0b39114bdcdcb91d60e5a94f572834b6dfad0024e15"
+    },
+    {
+      "speciesId": 885,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/885/",
+      "sourceRawText": "If this weak Pokémon is by itself, a mere child\r\ncould defeat it. But if Dreepy has friends to help\r\nit train, it can evolve and become much stronger.",
+      "sourceRawTextSha256": "237f95f7a6d669e19a83c9c03cbfdbb4926d11058199b99c08aaec2597822f5a"
+    },
+    {
+      "speciesId": 886,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/886/",
+      "sourceRawText": "Without a Dreepy to place on its head and\r\ncare for, it gets so uneasy it’ll try to substitute\r\nany Pokémon it finds for the missing Dreepy.",
+      "sourceRawTextSha256": "0515a04e0b082792b24830b684bbaa335043ae8e55a00a5676d19a03347a4909"
+    },
+    {
+      "speciesId": 887,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/887/",
+      "sourceRawText": "Apparently the Dreepy inside Dragapult’s\r\nhorns eagerly look forward to being launched out\r\nat Mach speeds.",
+      "sourceRawTextSha256": "2118a21794e59437ce34e97c5549159631f1e9873805aba3e376f89ba3ac8ad1"
+    },
+    {
+      "speciesId": 888,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/888/",
+      "sourceRawText": "This Pokémon has slumbered for many years.\r\nSome say it’s Zamazenta’s elder sister—others\r\nsay the two Pokémon are rivals.",
+      "sourceRawTextSha256": "999d1997c35f2613741206db76c05438598b6557d26288a2061755a73dc788b2"
+    },
+    {
+      "speciesId": 889,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/889/",
+      "sourceRawText": "This Pokémon slept for aeons while in the form of\r\na statue. It was asleep for so long, people forgot\r\nthat it ever existed.",
+      "sourceRawTextSha256": "478a152124a4f0ed57faa9a4a7614ef9dbe7ecc772c95d962e7bcfb2627f5502"
+    },
+    {
+      "speciesId": 890,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/890/",
+      "sourceRawText": "It was inside a meteorite that fell 20,000 years\r\nago. There seems to be a connection between\r\nthis Pokémon and the Dynamax phenomenon.",
+      "sourceRawTextSha256": "52dcd9b8da665a37dac29b7edbb9ec0038cf12fb109913fdf693ae2adc9a110c"
+    },
+    {
+      "speciesId": 891,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/891/",
+      "sourceRawText": "If Kubfu pulls the long white hair on its head,\r\nits fighting spirit heightens and power wells up\r\nfrom the depths of its belly.",
+      "sourceRawTextSha256": "b736f655dc47db4ff67811b01523f253af83a3c57c99d0ec93db8433134264c0"
+    },
+    {
+      "speciesId": 892,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/892/",
+      "sourceRawText": "Inhabiting the mountains of a distant region, this\r\nPokémon races across sheer cliffs, training its legs\r\nand refining its moves.",
+      "sourceRawTextSha256": "9958989e4308d9cd999a84fbc1ef93af6b9fc9ec5ebdbe7d868c4821c5ff4ed7"
+    },
+    {
+      "speciesId": 893,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/893/",
+      "sourceRawText": "Once the vines on Zarude’s body tear off, they\r\nbecome nutrients in the soil. This helps the plants\r\nof the forest grow.",
+      "sourceRawTextSha256": "8f1086d9d0986cad1fade51287fd4d536b972a2bb72e8c39dc350e45378816ac"
+    },
+    {
+      "speciesId": 894,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/894/",
+      "sourceRawText": "Its entire body is made up of a single organ that\r\ngenerates electrical energy. Regieleki is capable\r\nof creating all Galar’s electricity.",
+      "sourceRawTextSha256": "29863f64e024980bf7c6e463c32f0f89e36f035690bba63d7bba2728e212917e"
+    },
+    {
+      "speciesId": 895,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/895/",
+      "sourceRawText": "Its body is composed of crystallized dragon\r\nenergy. Regidrago is said to have the powers of\r\nevery dragon Pokémon.",
+      "sourceRawTextSha256": "0c6223f459b98837af696600dd57cc4ecc423fd951c073391c0f49beaf727da3"
+    },
+    {
+      "speciesId": 896,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/896/",
+      "sourceRawText": "Glastrier has tremendous physical strength, and\r\nthe mask of ice covering its face is 100 times\r\nharder than diamond.",
+      "sourceRawTextSha256": "2bb78819189c93a0c5748ac32fcf26462650090a8a635c9249edb96e9438ea15"
+    },
+    {
+      "speciesId": 897,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/897/",
+      "sourceRawText": "As it dashes through the night, Spectrier absorbs\r\nthe life-force of sleeping creatures. It craves\r\nsilence and solitude.",
+      "sourceRawTextSha256": "d40ec91a76b9be77a078363f8633d7195ba7b92c0908dd4625dcd81604c9f0de"
+    },
+    {
+      "speciesId": 898,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 34,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/898/",
+      "sourceRawText": "Calyrex is known in legend as a king that ruled\r\nover Galar in ancient times. It has the power to\r\ncause hearts to mend and plants to spring forth.",
+      "sourceRawTextSha256": "e265bf2075f0fd35782b87bc3f28be92c58310390306e4a865c38ae63040a743"
+    },
+    {
+      "speciesId": 899,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/899/",
+      "sourceRawText": "The black orbs shine with an uncanny light when the Pokémon is\r\nerecting invisible barriers. The fur shed from its beard retains\r\nheat well and is a highly useful material for winter clothing.",
+      "sourceRawTextSha256": "c3ab5c24381285fa6f14f6c44d9c4510f27bc7484cc5fe3222361695ae44052d"
+    },
+    {
+      "speciesId": 900,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/900/",
+      "sourceRawText": "A violent creature that fells towering trees with its crude axes\r\nand shields itself with hard stone. If one should chance upon\r\nthis Pokémon in the wilds, one's only recourse is to flee.",
+      "sourceRawTextSha256": "d93123521644b35e44a6beb8bf2932ed5d10723cc2b26dd8bfcb4725aa0382af"
+    },
+    {
+      "speciesId": 901,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/901/",
+      "sourceRawText": "I believe it was Hisui's swampy terrain that gave Ursaluna its\r\nburly physique and newfound capacity to manipulate peat\r\nat will.",
+      "sourceRawTextSha256": "d9d9aea4638a8116a229ab889989b2f08133eea8ea0504754c810c66b6d209aa"
+    },
+    {
+      "speciesId": 902,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/902/",
+      "sourceRawText": "Clads itself in the souls of comrades that perished before\r\nfulfilling their goals of journeying upstream. No other species\r\nthroughout all Hisui's rivers is Basculegion's equal.",
+      "sourceRawTextSha256": "bf6830120df74037a6a7074a2e3025cd9ebc50dedc3b45372b623ac832b2beea"
+    },
+    {
+      "speciesId": 903,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/903/",
+      "sourceRawText": "Because of Sneasler's virulent poison and daunting physical\r\nprowess, no other species could hope to best it on the frozen\r\nhighlands. Preferring solitude, this species does not form packs.",
+      "sourceRawTextSha256": "8a5861c340a9f41d82076d11040a95bbe2e903b191e94e653bca9ddc9c81e2e5"
+    },
+    {
+      "speciesId": 904,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/904/",
+      "sourceRawText": "Its lancelike spikes and savage temperament have earned it the\r\nnickname ”sea fiend.” It slurps up poison to nourish itself.",
+      "sourceRawTextSha256": "1b68805ca7e94df2f40161518d7c4c0dfd504b449a38750d5795c8ace0d89ac0"
+    },
+    {
+      "speciesId": 905,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 39,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/39/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/905/",
+      "sourceRawText": "When it flies to this land from across the sea, the bitter winter\r\ncomes to an end. According to legend, this Pokémon's love\r\ngives rise to the budding of fresh life across Hisui.",
+      "sourceRawTextSha256": "6399b3009501e2447547285fc975bff2f03d9cb01dd2cfb51c4b0aa45085211e"
+    },
+    {
+      "speciesId": 906,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/906/",
+      "sourceRawText": "The sweet scent its body gives off mesmerizes those around it. The scent grows stronger when this Pokémon is in the sun.",
+      "sourceRawTextSha256": "70af2ba767f45b1c62c0a46946639686c49fc37df12cf68b91b5118c5e14c80f"
+    },
+    {
+      "speciesId": 907,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/907/",
+      "sourceRawText": "The hardness of Floragato’s fur depends on the Pokémon’s mood. When Floragato is prepared to battle, its fur becomes pointed and needle sharp.",
+      "sourceRawTextSha256": "16d79c4f4c1570620e489e75979f86b3c09c5d96e6b7fe95dcef633d351c90db"
+    },
+    {
+      "speciesId": 908,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/908/",
+      "sourceRawText": "With skillful misdirection, it rigs foes with pollen-packed flower bombs. Meowscarada sets off the bombs before its foes realize what’s going on.",
+      "sourceRawTextSha256": "2cd26babe54740377d5e0be60dcf9ecf316c56375796c07291575f0c5585d78a"
+    },
+    {
+      "speciesId": 909,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/909/",
+      "sourceRawText": "Its flame sac is small, so energy is always leaking out. This energy is released from the dent atop Fuecoco’s head and flickers to and fro.",
+      "sourceRawTextSha256": "1271856e08ad36e8a61bfb9b2a69e765307384c917f03d31e684a0a42b72ad62"
+    },
+    {
+      "speciesId": 910,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/910/",
+      "sourceRawText": "The valve in Crocalor’s flame sac is closely connected to its vocal cords. This Pokémon utters a guttural cry as it spews flames every which way.",
+      "sourceRawTextSha256": "bb30b3309f7c1de12f95baf8c27e396567eed9fce6ee29d35fff47f8bcb606c8"
+    },
+    {
+      "speciesId": 911,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/911/",
+      "sourceRawText": "Skeledirge’s gentle singing soothes the souls of all that hear it. It burns its enemies to a crisp with flames of over 5,400 degrees Fahrenheit.",
+      "sourceRawTextSha256": "ea3958235839931580d35e44866d20595b8668427df2131c5cc5f7e3e8631676"
+    },
+    {
+      "speciesId": 912,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/912/",
+      "sourceRawText": "Its strong legs let it easily swim around in even fast-flowing rivers. It likes to keep things tidy and is prone to overthinking things.",
+      "sourceRawTextSha256": "2cfc2f335841b293ae4d03a2284c4092a0379670360de46ea825584f2732a647"
+    },
+    {
+      "speciesId": 913,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/913/",
+      "sourceRawText": "The hardworking Quaxwell observes people and Pokémon from various regions and incorporates their movements into its own dance routines.",
+      "sourceRawTextSha256": "ec76bf9b47b3ecb377495680459d3cf52010e7b04de3aec2adaa3e3db5590515"
+    },
+    {
+      "speciesId": 914,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/914/",
+      "sourceRawText": "Dancing in ways that evoke far-away places, this Pokémon mesmerizes all that see it. Flourishes of its decorative water feathers slice into its foes.",
+      "sourceRawTextSha256": "f50f1a150797bc1ee9371cab1b209ea6b3aced2fd33f577c502820c309a9d733"
+    },
+    {
+      "speciesId": 915,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/915/",
+      "sourceRawText": "This Pokémon spurns all but the finest of foods. Its body gives off an herblike scent that bug Pokémon detest.",
+      "sourceRawTextSha256": "0fd5e498c5a798f8ce3c68cf42bf2b775754ada77e55f53ff9504d261e43e548"
+    },
+    {
+      "speciesId": 916,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/916/",
+      "sourceRawText": "It entrances female Pokémon with the sweet, alluring scent that wafts from all over its body.",
+      "sourceRawTextSha256": "8797ed575e3273ac011d1f5b31432616c403944fbbb192ad7aca13255ec7e8c0"
+    },
+    {
+      "speciesId": 917,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/917/",
+      "sourceRawText": "The thread it secretes from its rear is as strong as wire. The secret behind the thread’s strength is the topic of ongoing research.",
+      "sourceRawTextSha256": "4a97383195541115608d8ad09c35aa37d1bcdd914b767e44f4a5bb0f5077a550"
+    },
+    {
+      "speciesId": 918,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/918/",
+      "sourceRawText": "Spidops covers its territory in tough, sticky threads to set up traps for intruders.",
+      "sourceRawTextSha256": "2abc9b974769358e72ac17a6ea4242b9b433d446e04dda8adaf03a6e9c42b06a"
+    },
+    {
+      "speciesId": 919,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/919/",
+      "sourceRawText": "It’s highly skilled at a fighting style in which it uses its jumping capabilities to dodge incoming attacks while also dealing damage to opponents.",
+      "sourceRawTextSha256": "7fc272b6fab79545ee9b5bca87ecc5143e8dc3bf36791f9e64c40a9386a5e8c8"
+    },
+    {
+      "speciesId": 920,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/920/",
+      "sourceRawText": "It uses its normally folded third set of legs when in Showdown Mode. This places a huge burden on its body, so it can’t stay in this mode for long.",
+      "sourceRawTextSha256": "e6c6d5e88011fa2dfd3b10c66853bb5d05184cd9ed3fa3d80c1207ad00c96ed4"
+    },
+    {
+      "speciesId": 921,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/921/",
+      "sourceRawText": "The pads of its paws are electricity-discharging organs. Pawmi fires electricity from its forepaws while standing unsteadily on its hind legs.",
+      "sourceRawTextSha256": "ffeb1dd4dcc7d02e2a87c1f8b1421c86d75015a6b9d588cba28f653cdb47338a"
+    },
+    {
+      "speciesId": 922,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/922/",
+      "sourceRawText": "Pawmo uses a unique fighting technique in which it uses its forepaws to strike foes and zap them with electricity from its paw pads simultaneously.",
+      "sourceRawTextSha256": "a6aa84785066549183b7ee4701834ea8be67fcd5aff85ee56be9586e21a7b50e"
+    },
+    {
+      "speciesId": 923,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/923/",
+      "sourceRawText": "Pawmot’s fluffy fur acts as a battery. It can store the same amount of electricity as an electric car.",
+      "sourceRawTextSha256": "31080f30f51011ccbd1bbaa3ff4138035de01df6d99b6326adde93dbf0de249c"
+    },
+    {
+      "speciesId": 924,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/924/",
+      "sourceRawText": "The pair sticks together no matter what. They split any food they find exactly in half and then eat it together.",
+      "sourceRawTextSha256": "6561ad30779111ee33033e7cdde19126a5284298f3556866902cf6f50adb6d05"
+    },
+    {
+      "speciesId": 925,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/925/",
+      "sourceRawText": "The larger pair protects the little ones during battles. When facing strong opponents, the whole group will join the fight.",
+      "sourceRawTextSha256": "ed87aabb9750c70ae4cde3c02c4124a6e42e4dbadb4350444f8c5a4f4897fb1a"
+    },
+    {
+      "speciesId": 926,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/926/",
+      "sourceRawText": "The yeast in Fidough’s breath is useful for cooking, so this Pokémon has been protected by people since long ago.",
+      "sourceRawTextSha256": "0d08ec547eaa52ad924f76b2bd5a6377d3d97b98a17b8fcf8127da30e81fed5c"
+    },
+    {
+      "speciesId": 927,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/927/",
+      "sourceRawText": "The surface of this Pokémon’s skin hardens when exposed to intense heat, and its body has an appetizing aroma.",
+      "sourceRawTextSha256": "62a3afaed3459daee424601c8c0d30aa24986e392d57084d8f74359a422a2d7e"
+    },
+    {
+      "speciesId": 928,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/928/",
+      "sourceRawText": "This Pokémon converts nutrients into oil, which it stores in the fruit on its head. It can easily go a whole week without eating or drinking.",
+      "sourceRawTextSha256": "08560c81ec45d3330152f8705bacceec7d322d8caa274980f69ca5d1b41d975b"
+    },
+    {
+      "speciesId": 929,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/929/",
+      "sourceRawText": "It basks in the sun to its heart’s content until the fruits on its head ripen. After that, Dolliv departs from human settlements and goes on a journey.",
+      "sourceRawTextSha256": "982ebc2997a2611162505e4ede18f47b5e31c708a8252f1a26a83e284321286b"
+    },
+    {
+      "speciesId": 930,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/930/",
+      "sourceRawText": "This Pokémon drives back enemies by launching its rich, aromatic oil at them with enough force to smash a boulder.",
+      "sourceRawTextSha256": "5750cbfafa1fbb745d720b893813dfab4283f9689a6ca4a5c013e8a88a04405c"
+    },
+    {
+      "speciesId": 931,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/931/",
+      "sourceRawText": "Green-feathered flocks hold the most sway. When they’re out searching for food in the mornings and evenings, it gets very noisy.",
+      "sourceRawTextSha256": "3cf16265b10d61f5917776db41cba64fcebc707b2b721b3a766720b285a60439"
+    },
+    {
+      "speciesId": 932,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/932/",
+      "sourceRawText": "The ground scrapes its body as it travels, causing it to leave salt behind. Salt is constantly being created and replenished inside Nacli’s body.",
+      "sourceRawTextSha256": "453c6e0619801d338ee372b11031c18dc2c3d13503e01eb3f3bf3a96a79bf63c"
+    },
+    {
+      "speciesId": 933,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/933/",
+      "sourceRawText": "It compresses rock salt inside its body and shoots out hardened salt pellets with enough force to perforate an iron sheet.",
+      "sourceRawTextSha256": "ba11a51efaf8243ff0dbbfe89081d57194acaef8d2d22e8fdc02597fdd8c0159"
+    },
+    {
+      "speciesId": 934,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/934/",
+      "sourceRawText": "Many Pokémon gather around Garganacl, hoping to lick at its mineral-rich salt.",
+      "sourceRawTextSha256": "57987769d0ab2e087352baf3180749fc54d6a6aeec33b27fcaa3d9559de71e34"
+    },
+    {
+      "speciesId": 935,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/935/",
+      "sourceRawText": "Its firepower increases when it fights, reaching over 1,800 degrees Fahrenheit. It likes berries that are rich in fat.",
+      "sourceRawTextSha256": "c6f1615759a843ddfa38b08cec2d6f7c69c09ecafafc62bad7046578988629f5"
+    },
+    {
+      "speciesId": 936,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/936/",
+      "sourceRawText": "This Pokémon clads itself in armor that has been fortified by psychic and fire energy, and it shoots blazing fireballs.",
+      "sourceRawTextSha256": "18b82b4ff81bfd28f60c6c7efcc09ab217dd0daa105deef95bb5bd1dc97ab2ff"
+    },
+    {
+      "speciesId": 937,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/937/",
+      "sourceRawText": "An old set of armor steeped in grudges caused this Pokémon’s evolution. Ceruledge cuts its enemies to pieces without mercy.",
+      "sourceRawTextSha256": "5fbdf6265fb5f27a0249a09a7d354d503bcc634ae417fb6603024427a78f7a46"
+    },
+    {
+      "speciesId": 938,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/938/",
+      "sourceRawText": "It floats using the electricity stored in its body. When thunderclouds are around, Tadbulb will float higher off the ground.",
+      "sourceRawTextSha256": "12418d6c83097204dbf99f30ec234466c54759ba1ef9bace847d27c3209067f1"
+    },
+    {
+      "speciesId": 939,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/939/",
+      "sourceRawText": "What appear to be eyeballs are actually organs for discharging the electricity generated by Bellibolt’s belly-button dynamo.",
+      "sourceRawTextSha256": "5f74c09b843b334ae3c517b42a48e2c0e3648921e2c4cbbe2d3fac9cd787b7c5"
+    },
+    {
+      "speciesId": 940,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/940/",
+      "sourceRawText": "These Pokémon make their nests on coastal cliffs. The nests have a strange, crackling texture, and they’re a popular delicacy.",
+      "sourceRawTextSha256": "acb264c45832217501370f17dd698c1e583f6b01e9fc794a4d8a33de5988098a"
+    },
+    {
+      "speciesId": 941,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/941/",
+      "sourceRawText": "It uses its throat sac to store electricity generated by its wings. There’s hardly any oil in its feathers, so it is a poor swimmer.",
+      "sourceRawTextSha256": "e2064ee23f4c278c41495e2117fa79c4d2b9a6f9633940c7e646939b6928e874"
+    },
+    {
+      "speciesId": 942,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/942/",
+      "sourceRawText": "Its well-developed jaw and fangs are strong enough to crunch through boulders, and its thick fat makes for an excellent defense.",
+      "sourceRawTextSha256": "33daa31ad3388e28de6c4101311ee10d6ed06a114086f3eac97e577bf4e60b24"
+    },
+    {
+      "speciesId": 943,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/943/",
+      "sourceRawText": "Mabosstiff loves playing with children. Though usually gentle, it takes on an intimidating look when protecting its family.",
+      "sourceRawTextSha256": "0bf2dff886df1689f8abccfedc486f5822edbf71c3592085c9db5763190a2d87"
+    },
+    {
+      "speciesId": 944,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/944/",
+      "sourceRawText": "To keep enemies away from its territory, it paints markings around its nest using a poisonous liquid that has an acrid odor.",
+      "sourceRawTextSha256": "8362d47581ed09e40409595e934f00a37924b91766d4fff9553733180666afa5"
+    },
+    {
+      "speciesId": 945,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/945/",
+      "sourceRawText": "Each Grafaiai paints its own individual pattern, and it will paint that same pattern over and over again throughout its life.",
+      "sourceRawTextSha256": "41002a52b8cba8bfc6c1d218262d755ab889894374be03e1c3da9d7a55efe0c0"
+    },
+    {
+      "speciesId": 946,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/946/",
+      "sourceRawText": "Not even Bramblin knows where it is headed as it tumbles across the wilderness, blown by the wind. It loathes getting wet.",
+      "sourceRawTextSha256": "05ac8fe58bf2d6f5e8b23f34b4d906174c33e1222267e9c1ccfe98bccb7b2615"
+    },
+    {
+      "speciesId": 947,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/947/",
+      "sourceRawText": "Brambleghast wanders around arid regions. On rare occasions, mass outbreaks of these Pokémon will bury an entire town.",
+      "sourceRawTextSha256": "f7a258cac09cc400e0d0d9a4edf774bc5cba1e07fc2d34e02a2b56af81db6d48"
+    },
+    {
+      "speciesId": 948,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/948/",
+      "sourceRawText": "Though it looks like Tentacool, Toedscool is a completely different species. Its legs may be thin, but it can run at a speed of 30 mph.",
+      "sourceRawTextSha256": "29537864663d3798907647e251df4728aa684f23d25e5eb2ec9bda7eafd79335"
+    },
+    {
+      "speciesId": 949,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/949/",
+      "sourceRawText": "It coils its 10 tentacles around prey and sucks out their nutrients, causing the prey pain. The folds along the rim of its head are a popular delicacy.",
+      "sourceRawTextSha256": "2bd482af232aeae19b0af6ab77545e014a5510466eb70873f021b0a5362733b4"
+    },
+    {
+      "speciesId": 950,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/950/",
+      "sourceRawText": "This Pokémon lives on sheer cliffs. It sidesteps opponents’ attacks, then lunges for their weak spots with its claws.",
+      "sourceRawTextSha256": "f2885925213569122e00284b31da64e4a609fb713c883f71a4e209d8be0daa9e"
+    },
+    {
+      "speciesId": 951,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/951/",
+      "sourceRawText": "Traditional Paldean dishes can be extremely spicy because they include the shed front teeth of Capsakid among their ingredients.",
+      "sourceRawTextSha256": "147bc2eea9332b2e519ba6107cb5965a2eb20c9838f019342d5902e86001b32a"
+    },
+    {
+      "speciesId": 952,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/952/",
+      "sourceRawText": "The green head has turned vicious due to the spicy chemicals stimulating its brain. Once it goes on a rampage, there is no stopping it.",
+      "sourceRawTextSha256": "84015a571d5dcc79f7bbf636ca8d61bfc553ef62bc1d3a7fb050e40ec3432e69"
+    },
+    {
+      "speciesId": 953,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/953/",
+      "sourceRawText": "This Pokémon creates a mud ball by mixing sand and dirt with psychic energy. It treasures its mud ball more than its own life.",
+      "sourceRawTextSha256": "45aca209928acbd71205e0f99b35d7a1b142fbeace68924e207f98ed7c1949f6"
+    },
+    {
+      "speciesId": 954,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/954/",
+      "sourceRawText": "An infant sleeps inside the ball. Rabsca rolls the ball soothingly with its legs to ensure the infant sleeps comfortably.",
+      "sourceRawTextSha256": "7c97989ef75a986ee0da89939291e144aa340e2730a0564be46045e4fdb3f087"
+    },
+    {
+      "speciesId": 955,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/955/",
+      "sourceRawText": "It spends its time running around wastelands. If anyone steals its beloved berries, it will chase them down and exact its revenge.",
+      "sourceRawTextSha256": "79a0d9f9c1296908afce05efdd8c27ce616fe5ef28ca866598f47401803e1f18"
+    },
+    {
+      "speciesId": 956,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/956/",
+      "sourceRawText": "It emits psychic power from the gaps between its multicolored frills and sprints at speeds greater than 120 mph.",
+      "sourceRawTextSha256": "60f95aacf34aff5d75edb904ddd2b5d6810aed4cb3469790aa28fa652abe5c5a"
+    },
+    {
+      "speciesId": 957,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/957/",
+      "sourceRawText": "This Pokémon pounds iron scraps together to make a hammer. It will remake the hammer again and again until it’s satisfied with the result.",
+      "sourceRawTextSha256": "089d1e3ebc78e9f9e1a4031543306077d7ee8ed1f5f0c91dc009fa24e124f507"
+    },
+    {
+      "speciesId": 958,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/958/",
+      "sourceRawText": "These Pokémon make their homes in piles of scrap metal. They test the strength of each other’s hammers by smashing them together.",
+      "sourceRawTextSha256": "54a3a78e1d3b7e7acb4a79bbd0cf7840ef81c7a91799893219f6a517ecd09e17"
+    },
+    {
+      "speciesId": 959,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/959/",
+      "sourceRawText": "The hammer tops 220 pounds, yet it gets swung around easily by Tinkaton as it steals whatever it pleases and carries its plunder back home.",
+      "sourceRawTextSha256": "1651f85460ece7fc5580389346e68d843508be95b09b9a53dd16e11b77c34d42"
+    },
+    {
+      "speciesId": 960,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/960/",
+      "sourceRawText": "Though it looks like Diglett, Wiglett is an entirely different species. The resemblance seems to be a coincidental result of environmental adaptation.",
+      "sourceRawTextSha256": "f1bccdc408cfb88b08f1d57c134ef9bb63c649aa694e13c0ee47473ca497f843"
+    },
+    {
+      "speciesId": 961,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/961/",
+      "sourceRawText": "A variety of fish Pokémon, Wugtrio was once considered to be a regional form of Dugtrio.",
+      "sourceRawTextSha256": "9688e5fdf96321fe1b5dc55c7ad07c7dcf3cb9b9aaa9b70db28b769e398ffb4e"
+    },
+    {
+      "speciesId": 962,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/962/",
+      "sourceRawText": "Bombirdier uses the apron on its chest to bundle up food, which it carries back to its nest. It enjoys dropping things that make loud noises.",
+      "sourceRawTextSha256": "d72d9603c8f79ecde69cafce7976bce3deb73fb6e85d468b15b85bca1ac450ee"
+    },
+    {
+      "speciesId": 963,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/963/",
+      "sourceRawText": "Its water ring is made from seawater mixed with a sticky fluid that Finizen secretes from its blowhole.",
+      "sourceRawTextSha256": "aa8434827aef1b1140b2e632dcb1062a235fc22f7baf75e214311b35647996c4"
+    },
+    {
+      "speciesId": 964,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/964/",
+      "sourceRawText": "Its physical capabilities are no different than a Finizen’s, but when its allies are in danger, it transforms and powers itself up.",
+      "sourceRawTextSha256": "0dd6d33fd246899274351d90d4d34ee6dcdc4e5688d417ce2a318538d6dad3d1"
+    },
+    {
+      "speciesId": 965,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/965/",
+      "sourceRawText": "The steel section is Varoom’s actual body. This Pokémon clings to rocks and converts the minerals within into energy to fuel its activities.",
+      "sourceRawTextSha256": "6f2d782df71043a53693323c4d8b02a839f1b942241d572632a1d1ba61dabe8e"
+    },
+    {
+      "speciesId": 966,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/966/",
+      "sourceRawText": "Revavroom viciously threatens others with the sound of its exhaust. It sticks its tongue out from its cylindrical mouth and sprays toxic fluids.",
+      "sourceRawTextSha256": "abbc79ebe67e4076a3363d7464504045f561e54584d4dfbf78bb9c01cb9f337f"
+    },
+    {
+      "speciesId": 967,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/967/",
+      "sourceRawText": "It can sprint at over 70 mph while carrying a human. The rider’s body heat warms Cyclizar’s back and lifts the Pokémon’s spirit.",
+      "sourceRawTextSha256": "3d9e86244686f11d40822ca671ae55112d0f2a564689f535a90ec03b9e4921bb"
+    },
+    {
+      "speciesId": 968,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/968/",
+      "sourceRawText": "This Pokémon lives in arid deserts. It maintains its metal body by consuming iron from the soil.",
+      "sourceRawTextSha256": "6daed2f0900f22429f344bea61e422bd5106cd4b527f23d6661b2668d923e609"
+    },
+    {
+      "speciesId": 969,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/969/",
+      "sourceRawText": "Glimmet’s toxic mineral crystals look just like flower petals. This Pokémon scatters poisonous powder like pollen to protect itself.",
+      "sourceRawTextSha256": "888557282b4a992850663eb901a51bbf8816911dd276c049296b424fc1f91fd6"
+    },
+    {
+      "speciesId": 970,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/970/",
+      "sourceRawText": "Glimmora’s petals are made of crystallized poison energy. It has recently become evident that these petals resemble Tera Jewels.",
+      "sourceRawTextSha256": "5c14468026f4aadf8613d7d910fc905c069f8b47147e6c450f7cb3108fbd4435"
+    },
+    {
+      "speciesId": 971,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/971/",
+      "sourceRawText": "This friendly Pokémon doesn’t like being alone. Pay it even the slightest bit of attention, and it will follow you forever.",
+      "sourceRawTextSha256": "1f3f2c791f0d0aa52d8526b6951ce0ca44fcb5aa8546c86c133e7c153177c4bc"
+    },
+    {
+      "speciesId": 972,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/972/",
+      "sourceRawText": "A lovingly mourned Pokémon was reborn as Houndstone. It doesn’t like anyone touching the protuberance atop its head.",
+      "sourceRawTextSha256": "9541bce1be26139f442a31a6869e00bcc7ebc3b25c343d8d4adfcad435d53527"
+    },
+    {
+      "speciesId": 973,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/973/",
+      "sourceRawText": "Thanks to a behavior of theirs known as “synchronizing,” an entire flock of these Pokémon can attack simultaneously in perfect harmony.",
+      "sourceRawTextSha256": "47fcc37524ab3c6dd9b3aa98c44fd338e6154c84a4f33ce36dd5e0fd7928109d"
+    },
+    {
+      "speciesId": 974,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/974/",
+      "sourceRawText": "It lives in frigid regions in pods of five or so individuals. It loves the minerals found in snow and ice.",
+      "sourceRawTextSha256": "cf80b46910eced3a58a67e8f16cd42d76fb4eb89efb3082dd4a03a09373e7717"
+    },
+    {
+      "speciesId": 975,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/975/",
+      "sourceRawText": "Ice energy builds up in the horn on its upper jaw, causing the horn to reach cryogenic temperatures that freeze its surroundings.",
+      "sourceRawTextSha256": "0ba5a31326a24e8664847e67fd75013b76bae8678d3b97bc689e7ee97ea1d256"
+    },
+    {
+      "speciesId": 976,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/976/",
+      "sourceRawText": "Veluza has excellent regenerative capabilities. It sheds spare flesh from its body to boost its agility, then charges at its prey.",
+      "sourceRawTextSha256": "55aaf8c92f41ead2b5aabce6728e85528fb1073b7367ab164923578cb3668a06"
+    },
+    {
+      "speciesId": 977,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/977/",
+      "sourceRawText": "It treats Tatsugiri like its boss and follows it loyally. Though powerful, Dondozo is apparently not very smart.",
+      "sourceRawTextSha256": "9823f51c7b780eb70e305f4b0766ee471edf5e8c2e3512551c6f7d1f3b98dff7"
+    },
+    {
+      "speciesId": 978,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/978/",
+      "sourceRawText": "Tatsugiri is an extremely cunning Pokémon. It feigns weakness to lure in prey, then orders its partner to attack.",
+      "sourceRawTextSha256": "68e7c50b1ad0bce3912eeb4da1a6293cc1f7bb29181e0adc23cac6dcc1a5f9d2"
+    },
+    {
+      "speciesId": 979,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/979/",
+      "sourceRawText": "It imbues its fists with the power of the rage that it kept hidden in its heart. Opponents struck by these imbued fists will be shattered to their core.",
+      "sourceRawTextSha256": "3206d33a1c431806eb0b88fd3bc70f32032ab8f48423e10ed6a4a0448ac7310f"
+    },
+    {
+      "speciesId": 980,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/980/",
+      "sourceRawText": "It lives at the bottom of ponds and swamps. It will carry Wooper on its back and ferry them across water from one shore to the other.",
+      "sourceRawTextSha256": "20a8930c719dd425a70558a89d0c6365fc8ffb3d8e4c80f51336979b7ee3a3da"
+    },
+    {
+      "speciesId": 981,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/981/",
+      "sourceRawText": "The hardened head from the tail protects the head of the main body as Farigiraf whips its long neck around to headbutt enemies.",
+      "sourceRawTextSha256": "9852e044e74ca312f2ccd6a63be48a8b27837306c4683f267e95a157fabb5486"
+    },
+    {
+      "speciesId": 982,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/982/",
+      "sourceRawText": "It drives enemies out of its nest by sucking in enough air to fill its long, narrow lungs, then releasing the air in an intense blast.",
+      "sourceRawTextSha256": "a2023934a53905c9a893dcd82dddd1df85f402f6edeb751d9bab970ed1ddc9b7"
+    },
+    {
+      "speciesId": 983,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/983/",
+      "sourceRawText": "Though it commands a massive army in battle, it’s not skilled at devising complex strategies. It just uses brute strength to keep pushing.",
+      "sourceRawTextSha256": "1c600a3cf41c936ffafc7919a3388db186bbfdd5a2898afdce7bacefd254c613"
+    },
+    {
+      "speciesId": 984,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/984/",
+      "sourceRawText": "This creature resembles a mysterious Pokémon that, according to a paranormal magazine, has lived since ancient times.",
+      "sourceRawTextSha256": "2777ffba8e1751885beb6cb86ac32370bf22a8b9483083f8fee6d746dcd38951"
+    },
+    {
+      "speciesId": 985,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/985/",
+      "sourceRawText": "It resembles a mysterious Pokémon described in a paranormal magazine as a Jigglypuff from one billion years ago.",
+      "sourceRawTextSha256": "0ba9dec88be2cb1adf085e5a3c395f2f970c12cd8cc0ba02536cb5cf5d3e841b"
+    },
+    {
+      "speciesId": 986,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/986/",
+      "sourceRawText": "It bears a slight resemblance to a Pokémon described in a dubious magazine as a cross between a dinosaur and a mushroom.",
+      "sourceRawTextSha256": "d7e1103fadb124fbbf43e30c02f2c74a4dd8fac2ce65099e243900b93ec34171"
+    },
+    {
+      "speciesId": 987,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/987/",
+      "sourceRawText": "It has similar features to a ghostly pterosaur that was covered in a paranormal magazine, but the two have little else in common.",
+      "sourceRawTextSha256": "ebcac917e88795a2656faab452811e6b4aac97ff284e150de51591d37874f214"
+    },
+    {
+      "speciesId": 988,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/988/",
+      "sourceRawText": "This Pokémon somewhat resembles an ancient form of Volcarona that was introduced in a dubious magazine.",
+      "sourceRawTextSha256": "8b3813136bf9cab58c565b36e72d50ac64b93d9dd8dbfb824d324bb02fc441fe"
+    },
+    {
+      "speciesId": 989,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/989/",
+      "sourceRawText": "It slightly resembles a Magneton that lived for 10,000 years and was featured in an article in a paranormal magazine.",
+      "sourceRawTextSha256": "6f1eb5ee0215ac43ca8e98579068467e5fa240901e9ead22e7e5b23320c4c8bc"
+    },
+    {
+      "speciesId": 990,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/990/",
+      "sourceRawText": "This Pokémon closely resembles a scientific weapon that a paranormal magazine claimed was sent to this planet by aliens.",
+      "sourceRawTextSha256": "9a59654a324ac248d152e59764e55b80f48f88fc9f7ba0aaaf645ee83c3e39ce"
+    },
+    {
+      "speciesId": 991,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/991/",
+      "sourceRawText": "Its shape is similar to a robot featured in a paranormal magazine article. The robot was said to have been created by an ancient civilization.",
+      "sourceRawTextSha256": "622278d2794e3dabbc7cef50af3ec8a12373728d508222623c0c1514096119f9"
+    },
+    {
+      "speciesId": 992,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/992/",
+      "sourceRawText": "It is very similar to a cyborg covered exclusively by a paranormal magazine. The cyborg was said to be the modified form of a certain athlete.",
+      "sourceRawTextSha256": "81cce34bc537c7fcf60cef44b105f38bcc5ea85883a4b412343129e9097b78b4"
+    },
+    {
+      "speciesId": 993,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/993/",
+      "sourceRawText": "It resembles a certain Pokémon introduced in a paranormal magazine, described as the offspring of a Hydreigon that fell in love with a robot.",
+      "sourceRawTextSha256": "95f0537e08eb182bb36908f0664a16f2c804df379736da8eca6d5afa89244d46"
+    },
+    {
+      "speciesId": 994,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/994/",
+      "sourceRawText": "This Pokémon resembles an unknown object described in a paranormal magazine as a UFO sent to observe humanity.",
+      "sourceRawTextSha256": "ecb14bd39b520846bbde3be2d0011d7ed0beddc4dcfd279989976b62948824d6"
+    },
+    {
+      "speciesId": 995,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/995/",
+      "sourceRawText": "It has some similarities to a Pokémon introduced in a dubious magazine as a Tyranitar from one billion years into the future.",
+      "sourceRawTextSha256": "2ee2b293b4845622ec6070e952c4260d3b76077e5cef97d7f5d8377567c3b3a3"
+    },
+    {
+      "speciesId": 996,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/996/",
+      "sourceRawText": "This Pokémon lives in forests and craggy areas. Using the power of its dorsal fin, it cools the inside of its nest like a refrigerator.",
+      "sourceRawTextSha256": "1acd4ff002b5f70981b4a26951484682a53be94a6a1863a98f247e7c2ecc6472"
+    },
+    {
+      "speciesId": 997,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/997/",
+      "sourceRawText": "It attacks with the blade of its frozen dorsal fin by doing a front flip in the air. Arctibax’s strong back and legs allow it to pull off this technique.",
+      "sourceRawTextSha256": "7aae0fda39edf68b5beae7db49a7958345322da5387e71ce783981a80cd89a99"
+    },
+    {
+      "speciesId": 998,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/998/",
+      "sourceRawText": "It launches itself into battle by flipping upside down and spewing frigid air from its mouth. It finishes opponents off with its dorsal blade.",
+      "sourceRawTextSha256": "8cbc82c38d7884520319f020623289f29515e327ead691b1218e131b51fbe896"
+    },
+    {
+      "speciesId": 999,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/999/",
+      "sourceRawText": "It lives inside an old treasure chest. Sometimes it gets left in shop corners since no one realizes it’s actually a Pokémon.",
+      "sourceRawTextSha256": "bcc4e36f15f589317a63923f73f5f2430ddb4d064abb65cd9d3abbb882f8b541"
+    },
+    {
+      "speciesId": 1000,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1000/",
+      "sourceRawText": "It has a sturdy body made up of stacked coins. Gholdengo overwhelms its enemies by firing coin after coin at them in quick succession.",
+      "sourceRawTextSha256": "1adb5216590a1577e73ff12185c1bf065ce37f6900b46562ac28d869ea88da7d"
+    },
+    {
+      "speciesId": 1001,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1001/",
+      "sourceRawText": "It drains the life-force from vegetation, causing nearby forests to instantly wither and fields to turn barren.",
+      "sourceRawTextSha256": "c3882a313efdeba946ea08c1711ef2f3a7cd83bb05991364f79c457e4780f27b"
+    },
+    {
+      "speciesId": 1002,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1002/",
+      "sourceRawText": "The hatred of those who perished by the sword long ago has clad itself in snow and become a Pokémon.",
+      "sourceRawTextSha256": "b91980e25f1a9a81e26d90b884a28334e24b6bc7729fe320f7904a92ab017be6"
+    },
+    {
+      "speciesId": 1003,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1003/",
+      "sourceRawText": "It slowly brings its exceedingly heavy head down upon the ground, splitting the earth open with huge fissures that run over 160 feet deep.",
+      "sourceRawTextSha256": "d3bfe6e6ce4f0f468bf3b70a2195d3bac428932d1fcf19d0e80af7256beb99de"
+    },
+    {
+      "speciesId": 1004,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1004/",
+      "sourceRawText": "The envy accumulated within curved beads that sparked multiple conflicts has clad itself in fire and become a Pokémon.",
+      "sourceRawTextSha256": "eb6ff791a3330005c2a87695f0a74556ac398adf8f82d816d97ca68581efcd18"
+    },
+    {
+      "speciesId": 1005,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1005/",
+      "sourceRawText": "According to an article in a dubious magazine, this Pokémon has some connection to a phenomenon that occurs in a certain region.",
+      "sourceRawTextSha256": "587e94dd2b9df0ee03b776992aa53c23d2d9dc5dfa4226114697116db674f6c0"
+    },
+    {
+      "speciesId": 1006,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1006/",
+      "sourceRawText": "It has some similarities to a mad scientist’s invention covered in a paranormal magazine.",
+      "sourceRawTextSha256": "034efaf39dfc3b34038352d8eb2ed6f0042884ae72790f9879b77037d64f787c"
+    },
+    {
+      "speciesId": 1007,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1007/",
+      "sourceRawText": "This Pokémon resembles Cyclizar, but it is far burlier and more ferocious. Nothing is known about its ecology or other features.",
+      "sourceRawTextSha256": "770c0b94b9fc9d8be618c9cca52e2354cddab1d4520fe8efdf030fc7c7f02320"
+    },
+    {
+      "speciesId": 1008,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1008/",
+      "sourceRawText": "This seems to be the Iron Serpent mentioned in an old book. The Iron Serpent is said to have turned the land to ash with its lightning.",
+      "sourceRawTextSha256": "fa712636ded7370a8c6958973a9bf0f55ad2f19456a061a5977bdc8e5740a291"
+    },
+    {
+      "speciesId": 1009,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1009/",
+      "sourceRawText": "It resembles an illustration published in a paranormal magazine, said to be a depiction of a super-ancient Suicune.",
+      "sourceRawTextSha256": "89aeb3472c47986a9bb3890378f991c38c33d014623c507e352de5dda1c02436"
+    },
+    {
+      "speciesId": 1010,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1010/",
+      "sourceRawText": "According to the few eyewitness accounts that exist, it used its shining blades to julienne large trees and boulders.",
+      "sourceRawTextSha256": "13b9b225f19f9e844a8530bcd7a35fcd3c41d3a247971b02a07e401bbf7e77ad"
+    },
+    {
+      "speciesId": 1011,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1011/",
+      "sourceRawText": "The head sticking out belongs to the fore-wyrm, while the tail belongs to the core-wyrm. The two share one apple and help each other out.",
+      "sourceRawTextSha256": "c191db2d2edf0f7ff73122bc4e2d2105095b075c9e014e0eb4cd9571379a4088"
+    },
+    {
+      "speciesId": 1012,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1012/",
+      "sourceRawText": "Poltchageist looks like a regional form of Sinistea, but it was recently discovered that the two Pokémon are entirely unrelated.",
+      "sourceRawTextSha256": "29ad57bf1ab30d683ede7134e3728342ffd97a0923464c17b9693abb4f81a028"
+    },
+    {
+      "speciesId": 1013,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1013/",
+      "sourceRawText": "It prefers cool, dark places, such as the back of a shelf or the space beneath a home's floorboards. It wanders in search of prey after sunset.",
+      "sourceRawTextSha256": "4d5630a8bdd714093a7efee717b4da503fe8aca192ac61dd51bfacd9fa4aba9b"
+    },
+    {
+      "speciesId": 1014,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1014/",
+      "sourceRawText": "Okidogi is a ruffian with a short temper. It can pulverize anything by swinging around the chain on its neck.",
+      "sourceRawTextSha256": "31b017eda5e50e80b33f4d065f85ed3eedfdaa9c51726ac09a272a1b70478840"
+    },
+    {
+      "speciesId": 1015,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1015/",
+      "sourceRawText": "Munkidori keeps itself somewhere safe while it toys with its foes, using psychokinesis to induce intense dizziness.",
+      "sourceRawTextSha256": "382d58b52e1acb5c9c8088d99c1ad748b8b0410cbd6839cdc6b2311c4c8fb331"
+    },
+    {
+      "speciesId": 1016,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1016/",
+      "sourceRawText": "Fezandipiti beats its glossy wings to scatter pheromones that captivate people and Pokémon.",
+      "sourceRawTextSha256": "b31c6a008b3a80edfcc1fa355a2a9e4809d05a6892a9968be4f4566824e5a1ec"
+    },
+    {
+      "speciesId": 1017,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1017/",
+      "sourceRawText": "This mischief-loving Pokémon is full of curiosity. It battles by drawing out the type-based energy contained within its masks.",
+      "sourceRawTextSha256": "faeb179cf447f91fcfdc77bd79f057a31a1c385ee85a92d9185b639341735f9f"
+    },
+    {
+      "speciesId": 1018,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1018/",
+      "sourceRawText": "It digs holes on mountains, searching for food. It’s so durable that being caught in a cave-in won’t faze it.",
+      "sourceRawTextSha256": "353676754f7c761c372568c6221d1d7f63ccd0c0df0f0d848d5c27a99254788e"
+    },
+    {
+      "speciesId": 1019,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1019/",
+      "sourceRawText": "These capricious syrpents have banded together. On the rare occasion that their moods align, their true power is unleashed.",
+      "sourceRawTextSha256": "3ec75c66e81c13c1c5ae00c25e442410d3b2119d9ef3fa439388b6dccf9b011e"
+    },
+    {
+      "speciesId": 1020,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1020/",
+      "sourceRawText": "It resembles an eerie Pokémon once shown in a paranormal magazine. That Pokémon was said to be an Entei regenerated from a fossil.",
+      "sourceRawTextSha256": "627fa44ed4fc537a74e6d4bc00e5cba51d2c21760343f7f1a0e0ed1d217f442d"
+    },
+    {
+      "speciesId": 1021,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1021/",
+      "sourceRawText": "It bears resemblance to a Pokémon that became a hot topic for a short while after a paranormal magazine touted it as Raikou's ancestor.",
+      "sourceRawTextSha256": "6827119131dfceb38a022174d7ce55fdb30570bba5b38d7954f2912319e04caa"
+    },
+    {
+      "speciesId": 1022,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 40,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/40/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1022/",
+      "sourceRawText": "It resembles a Pokémon described in a dubious magazine as a Terrakion that had been modified by an evil organization.",
+      "sourceRawTextSha256": "befcc0520ffd56fd9e34cef0a26ad21e56da91848fc51b7cf84beee9f342487d"
+    },
+    {
+      "speciesId": 1023,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1023/",
+      "sourceRawText": "There was supposedly an incident in which it launched shining blades to cut everything around it to pieces. Little else is known about it.",
+      "sourceRawTextSha256": "36e3b2cc00a1c40cf06985bbe6b2c2d27a148c550f8ea449f9fdc6ac1182f773"
+    },
+    {
+      "speciesId": 1024,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1024/",
+      "sourceRawText": "It’s thought that this Pokémon lived in ancient Paldea until it got caught in seismic shifts and went extinct.",
+      "sourceRawTextSha256": "42e95abed0bde98e1dd0fd78eb486ffd99952d19bd99c40b4353616f4c0f5cdf"
+    },
+    {
+      "speciesId": 1025,
+      "sourceLanguage": "en",
+      "sourceLanguageId": 9,
+      "sourceVersionId": 41,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/41/",
+      "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/1025/",
+      "sourceRawText": "Its peach-shaped shell serves as storage for a potent poison. It makes poisonous mochi and serves them to people and Pokémon.",
+      "sourceRawTextSha256": "3f7a563002fae350066845d901f8a5da7bc673017b39f2843555cf7ebcb79443"
     }
   ]
 }

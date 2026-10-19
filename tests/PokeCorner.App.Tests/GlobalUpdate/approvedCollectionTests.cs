@@ -106,7 +106,7 @@ public sealed class ApprovedCollectionTests
         var graph = vm.GetEntry(eevee.Id, DateTimeOffset.UtcNow)!.EvolutionStages;
         Assert.Single(graph.Where(n => n.Depth == 0)); Assert.Equal(8, graph.Count(n => n.Depth == 1));
         Assert.All(graph.Where(n => n.Depth == 1), n => { Assert.Null(n.SpeciesName); Assert.Null(n.SpeciesId); });
-        Assert.NotNull(CollectionPresentation.Fact(1)); Assert.Null(CollectionPresentation.Fact(1025));
+        Assert.NotNull(CollectionPresentation.Fact(1)); Assert.Equal("В панцире, похожем на персик, он хранит сильный яд. Он готовит ядовитые моти и угощает ими людей и покемонов.", CollectionPresentation.Fact(1025));
         Assert.StartsWith("Эволюция из", presentation.WhereFind(134, false, new HashSet<int>()));
         Assert.DoesNotContain("Eevee", presentation.WhereFind(134, false, new HashSet<int>()));
         Assert.Contains("Питомник", presentation.WhereFind(1, false, new HashSet<int>()));

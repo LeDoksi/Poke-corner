@@ -1,18 +1,18 @@
 {
-  "status": "INCOMPLETE",
-  "russianSpecies": 800,
-  "missingSpecies": 225,
+  "status": "COMPLETE",
+  "russianSpecies": 1025,
+  "missingSpecies": 0,
   "completedIdRanges": [
     [
       1,
-      800
+      1025
     ]
   ],
   "selectedEnglishSources": 1025,
   "approvedPreserved": 11,
   "sourceFileSha256": "059b24f07ccce256df1295b5d2fa19b82129cb6d5cfdf6a83455b6dffbcc5e9b",
-  "datasetSha256": "f2a65851b9f986134d87a361aa841239fbd68331d1316fcae9375932e8c3ca2d",
-  "provenanceSha256": "b38cba14b7ed616d91be5c580b5373dd073c4545e4283de8f467bb0df14c5e77",
+  "datasetSha256": "88aaa589de061fe1943e21d36b0d2e3805f7873eb6e3801837e4978552effd21",
+  "provenanceSha256": "14943b9669b1dbd877de6ded9bbac2ae4d480fc29d29281367f80dc46d07ada1",
   "batches": [
     {
       "path": "docs/design-v2/catalog-package/facts-ru/0001-0050.json",
@@ -77,6 +77,26 @@
     {
       "path": "docs/design-v2/catalog-package/facts-ru/0751-0800.json",
       "sha256": "0c3f458b7316fa7fa9148984f7bdba9e9b0299edefcc5f84f7963ab3933cf9bc"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0801-0850.json",
+      "sha256": "a84375cd72f47bc08c41e34dee020b4c0b26775149a480176f8c69154716f99a"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0851-0900.json",
+      "sha256": "738248bf1b0df9d78e6f8689a9c16bc7f72791948b7090d57ff3d5edf3b2527b"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0901-0950.json",
+      "sha256": "3047e2dc9ede3e5b2884188f84e7d0812c81698716cfddc514c90cf85c50754f"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0951-1000.json",
+      "sha256": "46d508aa9bffa1a63067c9bbd1e2a18ef10a910965d7bd54e1e38f2c90d0a317"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/1001-1025.json",
+      "sha256": "2b72ab9e7e8af70b45b161c2101bfde1bcb642530a2c5e9b4058d90ea5e0bf0c"
     }
   ],
   "selfReview": "See batch selfReview fields; structural validation is not editorial certification."
