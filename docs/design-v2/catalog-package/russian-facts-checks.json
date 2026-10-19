@@ -1,0 +1,35 @@
+{
+  "status": "INCOMPLETE",
+  "russianSpecies": 200,
+  "missingSpecies": 825,
+  "completedIdRanges": [
+    [
+      1,
+      200
+    ]
+  ],
+  "selectedEnglishSources": 1025,
+  "approvedPreserved": 11,
+  "sourceFileSha256": "059b24f07ccce256df1295b5d2fa19b82129cb6d5cfdf6a83455b6dffbcc5e9b",
+  "datasetSha256": "1537d4af5955504c8790efacd65545e0afac512c5cef848ca4bf9ac2629650a9",
+  "provenanceSha256": "752ee3dc00ab233fe5924703d940d4eab72d5a4a3a3ef85b0848ed8359dc4874",
+  "batches": [
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0001-0050.json",
+      "sha256": "c52f7aa8a3b05005ad6a21be7512063b36c6ddd4fc0a8cbcdd1f90830f6afd09"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0051-0100.json",
+      "sha256": "727ba58298c011ca79df3f9f936aa74593a747e55210bc8d63369d48099acc5c"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0101-0150.json",
+      "sha256": "7e5185c42a8e6990201daf05b3d40749b4a1c6f88380ac5aca65456448869dbf"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0151-0200.json",
+      "sha256": "ed94d092b54f818d0ef7b1e641751528d94d341cc534e6109510ee7aca5a323d"
+    }
+  ],
+  "selfReview": "See batch selfReview fields; structural validation is not editorial certification."
+}

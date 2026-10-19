@@ -16,17 +16,38 @@ public sealed class CollectionPresentation
     public IReadOnlyDictionary<int, int[]> Targets { get; }
     private readonly IReadOnlyDictionary<int, string> _routes;
     private static readonly Lazy<IReadOnlyDictionary<int, string>> Facts = new(() =>
-    {
-        using var stream = typeof(CollectionPresentation).Assembly.GetManifestResourceStream(
-            "PokeCorner.Assets.UiSystem.curated-russian-facts.json")
-            ?? typeof(CollectionPresentation).Assembly.GetManifestResourceStream(
-            "PokeCorner.App.Assets.UiSystem.curated-russian-facts.json");
-        if (stream is null) return new Dictionary<int, string>();
-        using var json = JsonDocument.Parse(stream);
-        return json.RootElement.GetProperty("facts").EnumerateArray()
-            .ToDictionary(row => row.GetProperty("speciesId").GetInt32(), row => row.GetProperty("textRu").GetString()!);
-    });
+        LoadFacts(Path.Combine(AppContext.BaseDirectory, "Data", "catalog-package", "russian-facts.json")));
     public static string? Fact(int speciesId) => Facts.Value.GetValueOrDefault(speciesId);
+
+    private static IReadOnlyDictionary<int, string> LoadFacts(string path)
+    {
+        var facts = new Dictionary<int, string>();
+        try
+        {
+            using var stream = File.OpenRead(path);
+            using var json = JsonDocument.Parse(stream);
+            var root = json.RootElement;
+            if (root.ValueKind != JsonValueKind.Object
+                || !root.TryGetProperty("facts", out var rows) || rows.ValueKind != JsonValueKind.Array)
+                return facts;
+            foreach (var row in rows.EnumerateArray())
+            {
+                if (row.ValueKind != JsonValueKind.Object
+                    || !row.TryGetProperty("speciesId", out var id) || id.ValueKind != JsonValueKind.Number || !id.TryGetInt32(out var speciesId)
+                    || speciesId is < 1 or > 1025
+                    || !row.TryGetProperty("textRu", out var text) || text.ValueKind != JsonValueKind.String
+                    || string.IsNullOrWhiteSpace(text.GetString())
+                    || !text.GetString()!.Any(c => c is >= '\u0400' and <= '\u04ff')
+                    || !facts.TryAdd(speciesId, text.GetString()!))
+                    return new Dictionary<int, string>();
+            }
+            return facts;
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException or JsonException)
+        {
+            return new Dictionary<int, string>();
+        }
+    }
 
     public CollectionPresentation(CatalogPackage catalog)
     {

@@ -2748,5 +2748,7 @@
     <Content Include="..\..\docs\design-v2\final\assets\expeditions\volcano.png" Link="Data\expeditions\volcano.png" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\design-v2\final\assets\expeditions\snow.png" Link="Data\expeditions\snow.png" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\design-v2\final\assets\expeditions\ruins.png" Link="Data\expeditions\ruins.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\catalog-package\russian-facts.json" Link="Data\catalog-package\russian-facts.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\catalog-package\russian-facts-provenance.json" Link="Data\catalog-package\russian-facts-provenance.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

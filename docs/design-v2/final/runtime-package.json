@@ -16488,6 +16488,18 @@
       "target": "expeditions/ruins.png",
       "bytes": 2998745,
       "sha256": "9fe81bf6ed8dffef2ad17240392967b7396b7825aaf7dab8aef0e47f870319a3"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/russian-facts.json",
+      "target": "catalog-package/russian-facts.json",
+      "bytes": 125203,
+      "sha256": "1537d4af5955504c8790efacd65545e0afac512c5cef848ca4bf9ac2629650a9"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/russian-facts-provenance.json",
+      "target": "catalog-package/russian-facts-provenance.json",
+      "bytes": 103259,
+      "sha256": "752ee3dc00ab233fe5924703d940d4eab72d5a4a3a3ef85b0848ed8359dc4874"
     }
   ],
   "totalBytes": 280352232

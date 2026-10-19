@@ -34,7 +34,7 @@
     <Content Include="..\..\docs\design-v2\final\runtime-package.json" Link="Data\final\runtime-package.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <Import Project="RuntimePackage.props" />
-  <ItemGroup><EmbeddedResource Include="Assets\UiSystem\curated-russian-facts.json" /><Resource Include="..\..\docs\design-v2\final\assets\shop\evolution-stone.png" Link="Assets\UiSystem\evolution-stone.png" /></ItemGroup>
+  <ItemGroup><Resource Include="..\..\docs\design-v2\final\assets\shop\evolution-stone.png" Link="Assets\UiSystem\evolution-stone.png" /></ItemGroup>
 
   <ItemGroup>
     <Resource Include="..\..\docs\design-v2\ui-system\assets\coin.png" Link="Assets\UiSystem\coin.png" />

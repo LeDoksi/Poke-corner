@@ -151,7 +151,7 @@ public sealed class CollectionViewModel
                     busy.Contains(i.Id), i.Id == _collection.ActiveIndividualId, i.CaughtAtUtc)).ToList();
             return new PokedexSpeciesEntry(species.Id,
                 open ? species.DisplayName : null,
-                open ? species.DescriptionRu : null,
+                open ? CollectionPresentation.Fact(species.Id) : null,
                 open ? species.Types : [],
                 open ? species.Rarity : null,
                 _presentation?.WhereFind(species.Id, isShiny, discovered) ??
