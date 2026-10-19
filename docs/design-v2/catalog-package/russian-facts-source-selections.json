@@ -3827,11 +3827,11 @@
       "speciesId": 383,
       "sourceLanguage": "en",
       "sourceLanguageId": 9,
-      "sourceVersionId": 26,
-      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/26/",
+      "sourceVersionId": 9,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/9/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/383/",
-      "sourceRawText": "Through Primal Reversion and with nature’s full power,\r\nit will take back its true form. It can cause magma to\r\nerupt and expand the landmass of the world.",
-      "sourceRawTextSha256": "02b6fbb915356d7af277572427cf72feabc4e847c50692d7a2d2af0afef52574"
+      "sourceRawText": "GROUDON has appeared in mythology as the\r\ncreator of the land. It sleeps in magma\r\nunderground and is said to make volcanoes\r\nerupt on awakening.",
+      "sourceRawTextSha256": "cccab90abe82d015615cd77c12600a3c735dd178e87d92de2b0a0162bf890471"
     },
     {
       "speciesId": 384,
@@ -4917,11 +4917,11 @@
       "speciesId": 492,
       "sourceLanguage": "en",
       "sourceLanguageId": 9,
-      "sourceVersionId": 26,
-      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/26/",
+      "sourceVersionId": 25,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/25/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/492/",
-      "sourceRawText": "The blooming of Gracidea flowers confers the\r\npower of flight upon it. Feelings of gratitude are\r\nthe message it delivers.",
-      "sourceRawTextSha256": "03c3a57debf981def3c1bba00f845f7ae2842a1bb19bcfa4ca884fc0bfe634d4"
+      "sourceRawText": "It can dissolve toxins in the air to instantly\r\ntransform ruined land into a lush field of flowers.",
+      "sourceRawTextSha256": "9308752ebccd680593f7de8e775cac47eaa9fec38c99e7fa8d899625e961fcd7"
     },
     {
       "speciesId": 493,
@@ -5317,11 +5317,11 @@
       "speciesId": 532,
       "sourceLanguage": "en",
       "sourceLanguageId": 9,
-      "sourceVersionId": 34,
-      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/34/",
+      "sourceVersionId": 33,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/33/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/532/",
-      "sourceRawText": "Timburr that have started carrying logs that are\r\nabout three times their size are nearly ready\r\nto evolve.",
-      "sourceRawTextSha256": "d868ae4e64b65131676506773831d41712bc0d52b99bfe92d22a8c75d5040008"
+      "sourceRawText": "It loves helping out with construction projects.\r\nIt loves it so much that if rain causes work to halt,\r\nit swings its log around and throws a tantrum.",
+      "sourceRawTextSha256": "0043b8174a8200b5274be78ad667210cb1f2bb5511cd7a5c4b81bb6fdd79603b"
     },
     {
       "speciesId": 533,
@@ -7197,11 +7197,11 @@
       "speciesId": 720,
       "sourceLanguage": "en",
       "sourceLanguageId": 9,
-      "sourceVersionId": 26,
-      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/26/",
+      "sourceVersionId": 24,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/24/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/720/",
-      "sourceRawText": "It is said to be able to seize anything it desires\r\nwith its six rings and six huge arms. With its power\r\nsealed, it is transformed into a much smaller form.",
-      "sourceRawTextSha256": "beec36622ec3d2d3735f56341aa5e64f3931258f2c4ca71d597be9f04931a714"
+      "sourceRawText": "It gathers things it likes and passes them through\r\nits loop to teleport them to a secret place.",
+      "sourceRawTextSha256": "926ec13c31a27d22704cf86da106276a794ff2fb98b4ea98ea221fcb3c1cb33b"
     },
     {
       "speciesId": 721,
@@ -7947,11 +7947,11 @@
       "speciesId": 795,
       "sourceLanguage": "en",
       "sourceLanguageId": 9,
-      "sourceVersionId": 30,
-      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceVersionId": 28,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/28/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/795/",
-      "sourceRawText": "Although it’s alien to this world and a danger\r\nhere, it’s apparently a common organism in the\r\nworld where it normally lives.",
-      "sourceRawTextSha256": "5d3c4500944ba9e6c81e15fb5024841b91169b6562fee647488a271a9ae25b20"
+      "sourceRawText": "One of the Ultra Beasts. It refuses to touch\r\nanything, perhaps because it senses some\r\nuncleanness in this world.",
+      "sourceRawTextSha256": "52625eb69bea1b2524e057a55050786387753dcba3668f1d753c4e09ecfd5c07"
     },
     {
       "speciesId": 796,
@@ -7967,21 +7967,21 @@
       "speciesId": 797,
       "sourceLanguage": "en",
       "sourceLanguageId": 9,
-      "sourceVersionId": 30,
-      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceVersionId": 28,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/28/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/797/",
-      "sourceRawText": "Although it’s alien to this world and a danger\r\nhere, it’s apparently a common organism in the\r\nworld where it normally lives.",
-      "sourceRawTextSha256": "5d3c4500944ba9e6c81e15fb5024841b91169b6562fee647488a271a9ae25b20"
+      "sourceRawText": "One kind of Ultra Beast. Witnesses have seen it\r\nburn down a forest by expelling gas from its\r\ntwo arms.",
+      "sourceRawTextSha256": "2dc7e7b8858f6adc04c40511c081cbd24ed2a276224faa11f55070d5783b8455"
     },
     {
       "speciesId": 798,
       "sourceLanguage": "en",
       "sourceLanguageId": 9,
-      "sourceVersionId": 30,
-      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/30/",
+      "sourceVersionId": 28,
+      "sourceVersionUrl": "https://pokeapi.co/api/v2/version/28/",
       "sourceUrl": "https://pokeapi.co/api/v2/pokemon-species/798/",
-      "sourceRawText": "Although it’s alien to this world and a danger\r\nhere, it’s apparently a common organism in the\r\nworld where it normally lives.",
-      "sourceRawTextSha256": "5d3c4500944ba9e6c81e15fb5024841b91169b6562fee647488a271a9ae25b20"
+      "sourceRawText": "One of the Ultra Beast life-forms, it was\r\nobserved cutting down a gigantic steel tower\r\nwith one stroke of its blade.",
+      "sourceRawTextSha256": "ff8b0fa85a62b71e6a738222396ec38fce18953a0327553afd165def2ab152a2"
     },
     {
       "speciesId": 799,

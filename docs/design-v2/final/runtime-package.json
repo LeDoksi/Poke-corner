@@ -16492,15 +16492,15 @@
     {
       "path": "docs/design-v2/catalog-package/russian-facts.json",
       "target": "catalog-package/russian-facts.json",
-      "bytes": 125203,
-      "sha256": "1537d4af5955504c8790efacd65545e0afac512c5cef848ca4bf9ac2629650a9"
+      "bytes": 508143,
+      "sha256": "f2a65851b9f986134d87a361aa841239fbd68331d1316fcae9375932e8c3ca2d"
     },
     {
       "path": "docs/design-v2/catalog-package/russian-facts-provenance.json",
       "target": "catalog-package/russian-facts-provenance.json",
-      "bytes": 103259,
-      "sha256": "752ee3dc00ab233fe5924703d940d4eab72d5a4a3a3ef85b0848ed8359dc4874"
+      "bytes": 417271,
+      "sha256": "b38cba14b7ed616d91be5c580b5373dd073c4545e4283de8f467bb0df14c5e77"
     }
   ],
-  "totalBytes": 280352232
+  "totalBytes": 281277646
 }

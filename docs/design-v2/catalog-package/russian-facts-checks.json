@@ -1,18 +1,18 @@
 {
   "status": "INCOMPLETE",
-  "russianSpecies": 200,
-  "missingSpecies": 825,
+  "russianSpecies": 800,
+  "missingSpecies": 225,
   "completedIdRanges": [
     [
       1,
-      200
+      800
     ]
   ],
   "selectedEnglishSources": 1025,
   "approvedPreserved": 11,
   "sourceFileSha256": "059b24f07ccce256df1295b5d2fa19b82129cb6d5cfdf6a83455b6dffbcc5e9b",
-  "datasetSha256": "1537d4af5955504c8790efacd65545e0afac512c5cef848ca4bf9ac2629650a9",
-  "provenanceSha256": "752ee3dc00ab233fe5924703d940d4eab72d5a4a3a3ef85b0848ed8359dc4874",
+  "datasetSha256": "f2a65851b9f986134d87a361aa841239fbd68331d1316fcae9375932e8c3ca2d",
+  "provenanceSha256": "b38cba14b7ed616d91be5c580b5373dd073c4545e4283de8f467bb0df14c5e77",
   "batches": [
     {
       "path": "docs/design-v2/catalog-package/facts-ru/0001-0050.json",
@@ -29,6 +29,54 @@
     {
       "path": "docs/design-v2/catalog-package/facts-ru/0151-0200.json",
       "sha256": "ed94d092b54f818d0ef7b1e641751528d94d341cc534e6109510ee7aca5a323d"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0201-0250.json",
+      "sha256": "7c14fa729bac031b9628b6e4c2ac461d3204385feff95d40bdb36bf1f09cf16d"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0251-0300.json",
+      "sha256": "a4874cea4f2ed9cd6a17d03e2c6c3e2cd30c2b1aff481dbf8dabf291cef814f1"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0301-0350.json",
+      "sha256": "d135504b9d4d53387381156f2cae663c287bb75228d7dabb64dbd950a2c262ec"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0351-0400.json",
+      "sha256": "8c6a8a23c062f4e2dd849f869ceb453ad107fd1f29ecd17402bff687bd76657d"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0401-0450.json",
+      "sha256": "82e025a7d9ddd68bf2c86328ab5cc97b2dbe2a5ebdc7264f4c84de3e9f4b7c9d"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0451-0500.json",
+      "sha256": "d30f720bf56c021c8b10ea0c50d7fa0c46b87e1a47d9b125ae0a2e67c7870f7a"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0501-0550.json",
+      "sha256": "3684910cdb8ea3c7567f9ffae10db53d0793badf1e24e8e88cfd6ce1714e388e"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0551-0600.json",
+      "sha256": "2c5d386377dec4ca39f867eb922bedc981f07d1f171b691569d728c077190262"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0601-0650.json",
+      "sha256": "7ea02cb49561692f46cf5c29732ba795e7829997ebfc5c9d37658db88c0175b7"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0651-0700.json",
+      "sha256": "4ae47224c5073eca2c379d4814d74de12877f701bdc3e5e50900a5cad11926fb"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0701-0750.json",
+      "sha256": "7765434f7d65c791fad298a4f15fcc9503408f51a3eb8873b311d17bee2bcf66"
+    },
+    {
+      "path": "docs/design-v2/catalog-package/facts-ru/0751-0800.json",
+      "sha256": "0c3f458b7316fa7fa9148984f7bdba9e9b0299edefcc5f84f7963ab3933cf9bc"
     }
   ],
   "selfReview": "See batch selfReview fields; structural validation is not editorial certification."
