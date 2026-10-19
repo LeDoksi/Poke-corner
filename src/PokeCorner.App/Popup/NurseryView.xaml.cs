@@ -278,43 +278,134 @@ public partial class NurseryView : UserControl
         HatchButton.Visibility=ready?Visibility.Visible:Visibility.Collapsed;HatchButton.IsEnabled=!_busy;
     }
     private bool Live(int generation)=>!_suspended && generation==_lifetimeGeneration;
-    private async Task TickAsync() {
-        if(_suspended||_busy||_refreshingReady)return;var nest=_snapshot().Nest;
-        if(nest?.Status!="running"||DateTimeOffset.UtcNow<nest.ReadyAtUtc){if(nest is not null)Refresh();return;}
-        var life=_lifetimeGeneration;_refreshingReady=true;
-        try{await _refreshReady(DateTimeOffset.UtcNow);}catch(Exception ex){if(Live(life))Show(ex.Message);}finally{_refreshingReady=false;if(Live(life))Refresh();}
+    private void ReleaseBusy()
+    {
+        _busy = false;
+        // Result messages/reveals belong to the captured lifetime; enabled controls belong to the current one.
+        if (!_suspended) Refresh();
     }
-    private async void StartButton_Click(object sender,RoutedEventArgs e) {
-        if(_busy||_suspended||!PairValid(_snapshot(),_first,_second))return;
-        var generation=_selectionGeneration;var life=_lifetimeGeneration;
-        _pendingStart??=new NurseryRequest([_first,_second],_choice,Guid.NewGuid(),DateTimeOffset.UtcNow);var request=_pendingStart;_busy=true;Refresh();
-        try {
-            var result=await _start(request);if(!Live(life)||generation!=_selectionGeneration)return;
-            if(_snapshot().Nest?.Id!=request.OperationId||!result.Success||!_snapshot().CompletedOperations.ContainsKey($"nursery:start:{request.OperationId}"))throw new InvalidOperationException("Запуск не подтверждён сохранением.");
-            _pendingStart=null;Show(result.Message);
-        }catch(Exception ex){if(Live(life)&&generation==_selectionGeneration)Show(ex.Message);}finally{_busy=false;if(Live(life))Refresh();}
+
+    private async Task TickAsync()
+    {
+        if (_suspended || _busy || _refreshingReady) return;
+        var nest = _snapshot().Nest;
+        if (nest?.Status != "running" || DateTimeOffset.UtcNow < nest.ReadyAtUtc)
+        {
+            if (nest is not null) Refresh();
+            return;
+        }
+
+        var life = _lifetimeGeneration;
+        _refreshingReady = true;
+        try
+        {
+            await _refreshReady(DateTimeOffset.UtcNow);
+        }
+        catch (Exception ex)
+        {
+            if (Live(life)) Show(ex.Message);
+        }
+        finally
+        {
+            _refreshingReady = false;
+            if (!_suspended) Refresh();
+        }
     }
-    private async void HatchButton_Click(object sender,RoutedEventArgs e) {
-        if(_busy||_suspended||_snapshot().Nest is not {Status:"ready"} nest)return;
-        if(_pendingHatchNest!=nest.Id){_pendingHatchNest=nest.Id;_pendingHatchOperation=Guid.NewGuid();}
-        var life=_lifetimeGeneration;_busy=true;Refresh();
-        try {
-            var result=await _hatch(nest.Id,_pendingHatchOperation);if(!Live(life))return;
-            var current=_snapshot().Nest;
-            if(!result.Success||current?.Id!=nest.Id||current.Status!="hatched"||current.HatchOperationId!=_pendingHatchOperation||result.Child is null||!_snapshot().HatchedNurseryResults.TryGetValue(nest.Id,out var child)||child.Id!=result.Child.Id)
+
+    private async void StartButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_busy || _suspended || !PairValid(_snapshot(), _first, _second)) return;
+        var generation = _selectionGeneration;
+        var life = _lifetimeGeneration;
+        _pendingStart ??= new NurseryRequest([_first, _second], _choice, Guid.NewGuid(), DateTimeOffset.UtcNow);
+        var request = _pendingStart;
+        _busy = true;
+        Refresh();
+        try
+        {
+            var result = await _start(request);
+            if (!Live(life) || generation != _selectionGeneration) return;
+            if (_snapshot().Nest?.Id != request.OperationId || !result.Success ||
+                !_snapshot().CompletedOperations.ContainsKey($"nursery:start:{request.OperationId}"))
+                throw new InvalidOperationException("Запуск не подтверждён сохранением.");
+            _pendingStart = null;
+            Show(result.Message);
+        }
+        catch (Exception ex)
+        {
+            if (Live(life) && generation == _selectionGeneration) Show(ex.Message);
+        }
+        finally
+        {
+            ReleaseBusy();
+        }
+    }
+
+    private async void HatchButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_busy || _suspended || _snapshot().Nest is not { Status: "ready" } nest) return;
+        if (_pendingHatchNest != nest.Id)
+        {
+            _pendingHatchNest = nest.Id;
+            _pendingHatchOperation = Guid.NewGuid();
+        }
+        var life = _lifetimeGeneration;
+        _busy = true;
+        Refresh();
+        try
+        {
+            var result = await _hatch(nest.Id, _pendingHatchOperation);
+            if (!Live(life)) return;
+            var current = _snapshot().Nest;
+            if (!result.Success || current?.Id != nest.Id || current.Status != "hatched" ||
+                current.HatchOperationId != _pendingHatchOperation || result.Child is null ||
+                !_snapshot().HatchedNurseryResults.TryGetValue(nest.Id, out var child) || child.Id != result.Child.Id)
                 throw new InvalidOperationException("Вылупление не подтверждено сохранением.");
-            _pendingHatchNest=_pendingHatchOperation=Guid.Empty;_awaitingHatchContinue=true;Refresh();
-            if(IsLoaded&&SystemParameters.ClientAreaAnimation)BabyImage.BeginAnimation(OpacityProperty,new DoubleAnimation(0,1,TimeSpan.FromMilliseconds(450)){FillBehavior=FillBehavior.Stop});
-        }catch(Exception ex){if(Live(life))Show(ex.Message);}finally{_busy=false;if(Live(life))Refresh();}
+            _pendingHatchNest = _pendingHatchOperation = Guid.Empty;
+            _awaitingHatchContinue = true;
+            Refresh();
+            if (IsLoaded && SystemParameters.ClientAreaAnimation)
+                BabyImage.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(450))
+                {
+                    FillBehavior = FillBehavior.Stop
+                });
+        }
+        catch (Exception ex)
+        {
+            if (Live(life)) Show(ex.Message);
+        }
+        finally
+        {
+            ReleaseBusy();
+        }
     }
     private void HatchContinueButton_Click(object sender,RoutedEventArgs e){if(_suspended||!_awaitingHatchContinue)return;_awaitingHatchContinue=false;BabyImage.BeginAnimation(OpacityProperty,null);Refresh();}
     private void NewNest_Click(object sender,RoutedEventArgs e){if(_busy||_suspended)return;_dismissedResult=_snapshot().Nest?.Id??Guid.Empty;_first=_second=Guid.Empty;_choice=null;_pendingStart=null;Refresh();}
     private void ShopButton_Click(object sender,RoutedEventArgs e){if(!_busy&&!_suspended&&_shortageBerry is {} berry)_shopShortage(berry,_shortageRequired);}
     private void OpenPokedexButton_Click(object sender,RoutedEventArgs e){var data=_snapshot();if(!_busy&&!_suspended&&data.Nest is {Status:"hatched"} nest&&data.HatchedNurseryResults.TryGetValue(nest.Id,out var child))_openPokedex(child.Id);}
-    private async void ActivateButton_Click(object sender,RoutedEventArgs e) {
-        var data=_snapshot();if(_busy||_suspended||data.Nest is not {Status:"hatched"} nest||!data.HatchedNurseryResults.TryGetValue(nest.Id,out var child))return;
-        var life=_lifetimeGeneration;_busy=true;Refresh();
-        try{await _activate(child.Id);if(!Live(life))return;if(_snapshot().ActiveIndividualId!=child.Id)throw new InvalidOperationException("Спутник не подтверждён сохранением.");Show($"{SpeciesName(child.SpeciesId)} теперь на рабочем столе.");}
-        catch(Exception ex){if(Live(life))Show(ex.Message);}finally{_busy=false;if(Live(life))Refresh();}
+    private async void ActivateButton_Click(object sender, RoutedEventArgs e)
+    {
+        var data = _snapshot();
+        if (_busy || _suspended || data.Nest is not { Status: "hatched" } nest ||
+            !data.HatchedNurseryResults.TryGetValue(nest.Id, out var child)) return;
+        var life = _lifetimeGeneration;
+        _busy = true;
+        Refresh();
+        try
+        {
+            await _activate(child.Id);
+            if (!Live(life)) return;
+            if (_snapshot().ActiveIndividualId != child.Id)
+                throw new InvalidOperationException("Спутник не подтверждён сохранением.");
+            Show($"{SpeciesName(child.SpeciesId)} теперь на рабочем столе.");
+        }
+        catch (Exception ex)
+        {
+            if (Live(life)) Show(ex.Message);
+        }
+        finally
+        {
+            ReleaseBusy();
+        }
     }
 }
