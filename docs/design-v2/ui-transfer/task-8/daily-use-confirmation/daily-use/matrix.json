@@ -1,0 +1,622 @@
+[
+  {
+    "reference": "collection",
+    "variant": null,
+    "file": "collection-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 17
+  },
+  {
+    "reference": "collection",
+    "variant": null,
+    "file": "collection-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 17
+  },
+  {
+    "reference": "species",
+    "variant": null,
+    "file": "species-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 18
+  },
+  {
+    "reference": "species",
+    "variant": null,
+    "file": "species-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 18
+  },
+  {
+    "reference": "species",
+    "variant": "where-find",
+    "file": "species-where-find-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 18
+  },
+  {
+    "reference": "species",
+    "variant": "where-find",
+    "file": "species-where-find-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 18
+  },
+  {
+    "reference": "detail",
+    "variant": "supported-eevee",
+    "file": "detail-supported-eevee-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 22
+  },
+  {
+    "reference": "detail",
+    "variant": "supported-eevee",
+    "file": "detail-supported-eevee-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 22
+  },
+  {
+    "reference": "detail",
+    "variant": "name-editor",
+    "file": "detail-name-editor-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 22
+  },
+  {
+    "reference": "detail",
+    "variant": "name-editor",
+    "file": "detail-name-editor-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 22
+  },
+  {
+    "reference": "detail",
+    "variant": "retraining",
+    "file": "detail-retraining-base-150.png",
+    "actionFile": "detail-retraining-base-150-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 534,
+        "Y": 620
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 123,
+        "Height": 48
+      },
+      "X": 534,
+      "Y": 620,
+      "Width": 123,
+      "Height": 48,
+      "Left": 534,
+      "Top": 620,
+      "Right": 657,
+      "Bottom": 668,
+      "TopLeft": {
+        "X": 534,
+        "Y": 620
+      },
+      "TopRight": {
+        "X": 657,
+        "Y": 620
+      },
+      "BottomLeft": {
+        "X": 534,
+        "Y": 668
+      },
+      "BottomRight": {
+        "X": 657,
+        "Y": 668
+      }
+    },
+    "action": "DetailRetrainButton",
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 22
+  },
+  {
+    "reference": "detail",
+    "variant": "retraining",
+    "file": "detail-retraining-compact-200.png",
+    "actionFile": "detail-retraining-compact-200-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 446.7272727272727,
+        "Y": 588
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 123,
+        "Height": 48
+      },
+      "X": 446.7272727272727,
+      "Y": 588,
+      "Width": 123,
+      "Height": 48,
+      "Left": 446.7272727272727,
+      "Top": 588,
+      "Right": 569.7272727272727,
+      "Bottom": 636,
+      "TopLeft": {
+        "X": 446.7272727272727,
+        "Y": 588
+      },
+      "TopRight": {
+        "X": 569.7272727272727,
+        "Y": 588
+      },
+      "BottomLeft": {
+        "X": 446.7272727272727,
+        "Y": 636
+      },
+      "BottomRight": {
+        "X": 569.7272727272727,
+        "Y": 636
+      }
+    },
+    "action": "DetailRetrainButton",
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 22
+  },
+  {
+    "reference": "evolution",
+    "variant": "linear",
+    "file": "evolution-linear-base-150.png",
+    "actionFile": "evolution-linear-base-150-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 804,
+        "Y": 698
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 172,
+        "Height": 48
+      },
+      "X": 804,
+      "Y": 698,
+      "Width": 172,
+      "Height": 48,
+      "Left": 804,
+      "Top": 698,
+      "Right": 976,
+      "Bottom": 746,
+      "TopLeft": {
+        "X": 804,
+        "Y": 698
+      },
+      "TopRight": {
+        "X": 976,
+        "Y": 698
+      },
+      "BottomLeft": {
+        "X": 804,
+        "Y": 746
+      },
+      "BottomRight": {
+        "X": 976,
+        "Y": 746
+      }
+    },
+    "action": "DetailEvolveButton",
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 24
+  },
+  {
+    "reference": "evolution",
+    "variant": "linear",
+    "file": "evolution-linear-compact-200.png",
+    "actionFile": "evolution-linear-compact-200-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 644,
+        "Y": 588
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 172,
+        "Height": 48
+      },
+      "X": 644,
+      "Y": 588,
+      "Width": 172,
+      "Height": 48,
+      "Left": 644,
+      "Top": 588,
+      "Right": 816,
+      "Bottom": 636,
+      "TopLeft": {
+        "X": 644,
+        "Y": 588
+      },
+      "TopRight": {
+        "X": 816,
+        "Y": 588
+      },
+      "BottomLeft": {
+        "X": 644,
+        "Y": 636
+      },
+      "BottomRight": {
+        "X": 816,
+        "Y": 636
+      }
+    },
+    "action": "DetailEvolveButton",
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 24
+  },
+  {
+    "reference": "nursery",
+    "variant": "unselected",
+    "file": "nursery-unselected-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 2
+  },
+  {
+    "reference": "nursery",
+    "variant": "unselected",
+    "file": "nursery-unselected-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 2
+  },
+  {
+    "reference": "nursery",
+    "variant": "selected-pinned-footer",
+    "file": "nursery-selected-pinned-footer-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 6
+  },
+  {
+    "reference": "nursery",
+    "variant": "selected-pinned-footer",
+    "file": "nursery-selected-pinned-footer-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 6
+  },
+  {
+    "reference": "nursery",
+    "variant": "selected-charm",
+    "file": "nursery-selected-charm-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 6
+  },
+  {
+    "reference": "nursery",
+    "variant": "selected-charm",
+    "file": "nursery-selected-charm-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 6
+  },
+  {
+    "reference": "expedition",
+    "variant": "unselected",
+    "file": "expedition-unselected-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 2
+  },
+  {
+    "reference": "expedition",
+    "variant": "unselected",
+    "file": "expedition-unselected-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 2
+  },
+  {
+    "reference": "expedition-team",
+    "variant": "duplicates",
+    "file": "expedition-team-duplicates-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 14
+  },
+  {
+    "reference": "expedition-team",
+    "variant": "duplicates",
+    "file": "expedition-team-duplicates-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 14
+  },
+  {
+    "reference": "expedition-selected",
+    "variant": "pinned-footer",
+    "file": "expedition-selected-pinned-footer-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 11
+  },
+  {
+    "reference": "expedition-selected",
+    "variant": "pinned-footer",
+    "file": "expedition-selected-pinned-footer-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 11
+  },
+  {
+    "reference": "shop",
+    "variant": "stepper",
+    "file": "shop-stepper-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 14
+  },
+  {
+    "reference": "shop",
+    "variant": "stepper",
+    "file": "shop-stepper-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 14
+  },
+  {
+    "reference": "confirm-rehome",
+    "variant": "actual-caller",
+    "file": "confirm-rehome-actual-caller-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 23
+  },
+  {
+    "reference": "confirm-rehome",
+    "variant": "actual-caller",
+    "file": "confirm-rehome-actual-caller-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 23
+  },
+  {
+    "reference": "encounter",
+    "variant": "source-explanation",
+    "file": "encounter-source-explanation-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 4
+  },
+  {
+    "reference": "encounter",
+    "variant": "source-explanation",
+    "file": "encounter-source-explanation-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 4
+  }
+]

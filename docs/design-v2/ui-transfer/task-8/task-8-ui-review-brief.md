@@ -1,0 +1,34 @@
+# Task 8 — one holistic native UI finish review, 20 October
+Role: independent reviewer, read-only source and existing captures. No source edits, builds, tests, recaptures, new scripts/art or child agents. Write only task-8-ui-review.md in this workspace. You are not alone: do not revert or stage another agent's changes.
+Worktree C:/Users/Georgy/.codex/worktrees/global-update/PokeTokenBar-Windows, codex/global-update. All shell commands prefix rtk; use rtk proxy git (rtk git fails environment config). Python runtime C:/Users/Georgy/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe.
+Review range original Task8 BASE66544f7586491908b94f3ddcb74e0b3c2531041d through HEAD2fc48377c12e1ebbdde61a60ff179ce46fcd41c4.
+Read requirements first: docs/design-v2/UI-SYSTEM.md, ui-system/LATEST-REVIEW.md and actual ui-system/review.html. Use docs/design-v2/final where referenced. Approved 37-state kit and eight route pictures are fixed authority. Existing PRODUCT.md is older; no redesign/new visual world. Impeccable context already ran once; do not rerun. For quality guidance read C:/Users/Georgy/.agents/skills/impeccable/reference/polish.md and operate.md; preserve accepted world.
+Then read task-8-report.md latest continuation and Authoritative latest picture override index, and task-8-ui-review-package.md. Source inspect named risks after visual evidence, not an unbounded crawl.
+Human binding quality requirement: EVERY label/button/list should occupy a logical, attractive, discoverable position; app simple and user-friendly, beautiful modern UI consistent with concepts. Personal feedback specifically Nature randomly in corner, rarity larger than types, missing shop item illustrations. Current source intends to fix these; verify independently.
+Design constraints: cream/Nunito/forest, actual accepted illustrations/sprites, no technical gameplay percentages/probabilities/formulas/coefficients including tips; prices/counts/levels/time are valid. Native desktop base1000x760 DIP, compact840x650, fit/clamp workarea. Clear identity/types/rarity/facts, simple visible actions; support long names/text and 800 individuals incl200duplicates. Body scrolling okay if intentional, verify key action and necessary decision information visible/discoverable. Keep canonical mechanics, exact-form masking and retained evolved/shiny ownership. Do not infer installed save-safety from UI.
+Evidence general matrix: docs/design-v2/ui-transfer/task-8/confirmation/assembled:116records37keys210PNGs/contact sheets. Use matrix.json to select relevant full-size images; view_image actual frames, not just filenames/contact thumbnails.
+CRITICAL evidence freshness: latest report override index supersedes OLD personal/evolution/selected nursery/selected expedition/input/header/tour5/catalog pictures. Latest prefix docs/design-v2/ui-transfer/task-8/targeted-continuation:
+human-confirmation/hierarchy/detail-supported-eevee-base-150.png
+human-confirmation/hierarchy/detail-supported-eevee-compact-200.png
+human-confirmation/hierarchy/expedition-selected-pinned-footer-compact-200.png
+human-confirmation/hierarchy/nursery-selected-pinned-footer-compact-200.png
+human-confirmation/hierarchy/expedition-team-search-role-compact-200.png
+human-confirmation/hierarchy/nursery-select-search-role-compact-200.png
+human-confirmation/hierarchy/shop-native-quantity-base-150.png
+human-confirmation/hierarchy/settings-visible-back-compact-200.png
+human-confirmation/evolution-footer/evolution-with-stone-compact-200.png
+human-confirmation/evolution-footer/evolution-without-stone-base-150.png
+confirmation-complete/targeted/detail-longest-fact-689-visible-compact-200-action.png
+confirmation-complete/targeted/tour-5-silhouettes-base-150.png
+confirmation-complete/targeted/collection-compact-200.png
+Review coherent whole user journeys: corner, album/shelf, my collection/all species independent Normal/Shiny forms +acquisition tips, personalcard/items/facts/linear and branched evolution, expedition empty/team/edit/running/ready/result, nursery first/group/individual/selected/wait/ready/hatch/baby, catch unknown/known/throw/result, shop/apply, settings/history/recovery confirmation, six-step onboarding, in-window cancel-first overlays and navigation.
+Two implementer-carried concerns to independently assess: nursery compact pinned Start lacks a price beside it (canonical price in scroll body); expedition fixed short reward preview is text whereas approved icon row remains in scrolling body. Check actual source/evidence if genuinely harmful; do not pre-judge severity.
+Goal one ordered material-fix batch, not per-font nitpicks. Findings must give concrete user consequence, exact current image/source line, approved counterpart, smallest coherent correction. Combine shared-root issues. Distinguish confirmed current defects, evidence limitations, and optional taste. No quota; report what you see honestly.
+Report must include spec compliance and UI quality verdicts, ordered Critical/Important/Minor findings, actual frames examined and coverage limits. This is UI range gate, NOT fullTask8 recovery/save/MSI acceptance or final whole-branch review. Existing19/19 and101/101 raw logs may be read, not rerun.
+Return concise status + counts + reportpath.
+## Latest human steering — holistic daily-use finish (binding)
+Examples are guidance, not an exhaustive defect list. Independently assess EVERY screen for shared control consistency, information priority, discoverable frequent actions and pleasant daily use.
+Explicit: rename through clicking the Pokémon name with visible edit affordance and keyboard equivalent; remove rename expander. Expose retraining separately. Unify neighboring desktop/star/Back action sizing and hierarchy. Replace shop bare manual quantity textbox with pleasant bounded quantity interaction (stepper using house primitives, direct keyboard editing retained if useful). Inspect other foreign-looking expanders and confusing adjacent buttons across journeys; progressive disclosure remains legitimate for advanced optional content, not hiding frequent actions.
+UI UX Pro Max explicitly invoked: use local UX quick-reference and WPF stack guidance, in addition to Impeccable. Accepted design system and product behavior override generic mobile defaults (no mobile redesign, palette replacement, replacing accepted pixel art, changing catch6250ms or adding dependencies/architecture from generic examples).
+Root searched UX database: consistent type hierarchy/inline validation; WPF keyboard navigation, Auto/Star sizing; loading feedback. Read quick-reference sections1–3 and5–9 directly for coherent coverage, not just sparse search matches. Root read pro-rules; its mobile-specific safe-area/dark-mode/device requirements do not create unrequested features for this native WPF cream-only product.
+Deliver one consolidated ordered material-fix batch. No new reviewer per tiny issue.

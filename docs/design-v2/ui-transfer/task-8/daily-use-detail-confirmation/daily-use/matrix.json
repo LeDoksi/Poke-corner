@@ -1,0 +1,262 @@
+[
+  {
+    "reference": "detail",
+    "variant": "name-editor",
+    "file": "detail-name-editor-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 21
+  },
+  {
+    "reference": "detail",
+    "variant": "name-editor",
+    "file": "detail-name-editor-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 21
+  },
+  {
+    "reference": "detail",
+    "variant": "long-nickname",
+    "file": "detail-long-nickname-base-150.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 21
+  },
+  {
+    "reference": "detail",
+    "variant": "long-nickname",
+    "file": "detail-long-nickname-compact-200.png",
+    "actionFile": null,
+    "actionBounds": null,
+    "action": null,
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 21
+  },
+  {
+    "reference": "detail",
+    "variant": "retraining",
+    "file": "detail-retraining-base-150.png",
+    "actionFile": "detail-retraining-base-150-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 534,
+        "Y": 640
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 123,
+        "Height": 48
+      },
+      "X": 534,
+      "Y": 640,
+      "Width": 123,
+      "Height": 48,
+      "Left": 534,
+      "Top": 640,
+      "Right": 657,
+      "Bottom": 688,
+      "TopLeft": {
+        "X": 534,
+        "Y": 640
+      },
+      "TopRight": {
+        "X": 657,
+        "Y": 640
+      },
+      "BottomLeft": {
+        "X": 534,
+        "Y": 688
+      },
+      "BottomRight": {
+        "X": 657,
+        "Y": 688
+      }
+    },
+    "action": "DetailRetrainButton",
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 21
+  },
+  {
+    "reference": "detail",
+    "variant": "retraining",
+    "file": "detail-retraining-compact-200.png",
+    "actionFile": "detail-retraining-compact-200-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 446.7272727272727,
+        "Y": 588
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 123,
+        "Height": 48
+      },
+      "X": 446.7272727272727,
+      "Y": 588,
+      "Width": 123,
+      "Height": 48,
+      "Left": 446.7272727272727,
+      "Top": 588,
+      "Right": 569.7272727272727,
+      "Bottom": 636,
+      "TopLeft": {
+        "X": 446.7272727272727,
+        "Y": 588
+      },
+      "TopRight": {
+        "X": 569.7272727272727,
+        "Y": 588
+      },
+      "BottomLeft": {
+        "X": 446.7272727272727,
+        "Y": 636
+      },
+      "BottomRight": {
+        "X": 569.7272727272727,
+        "Y": 636
+      }
+    },
+    "action": "DetailRetrainButton",
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 21
+  },
+  {
+    "reference": "evolution",
+    "variant": "linear",
+    "file": "evolution-linear-base-150.png",
+    "actionFile": "evolution-linear-base-150-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 804,
+        "Y": 698
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 172,
+        "Height": 48
+      },
+      "X": 804,
+      "Y": 698,
+      "Width": 172,
+      "Height": 48,
+      "Left": 804,
+      "Top": 698,
+      "Right": 976,
+      "Bottom": 746,
+      "TopLeft": {
+        "X": 804,
+        "Y": 698
+      },
+      "TopRight": {
+        "X": 976,
+        "Y": 698
+      },
+      "BottomLeft": {
+        "X": 804,
+        "Y": 746
+      },
+      "BottomRight": {
+        "X": 976,
+        "Y": 746
+      }
+    },
+    "action": "DetailEvolveButton",
+    "Width": 1000,
+    "Height": 760,
+    "Scale": 1.5,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 23
+  },
+  {
+    "reference": "evolution",
+    "variant": "linear",
+    "file": "evolution-linear-compact-200.png",
+    "actionFile": "evolution-linear-compact-200-action.png",
+    "actionBounds": {
+      "IsEmpty": false,
+      "Location": {
+        "X": 644,
+        "Y": 588
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 172,
+        "Height": 48
+      },
+      "X": 644,
+      "Y": 588,
+      "Width": 172,
+      "Height": 48,
+      "Left": 644,
+      "Top": 588,
+      "Right": 816,
+      "Bottom": 636,
+      "TopLeft": {
+        "X": 644,
+        "Y": 588
+      },
+      "TopRight": {
+        "X": 816,
+        "Y": 588
+      },
+      "BottomLeft": {
+        "X": 644,
+        "Y": 636
+      },
+      "BottomRight": {
+        "X": 816,
+        "Y": 636
+      }
+    },
+    "action": "DetailEvolveButton",
+    "Width": 840,
+    "Height": 650,
+    "Scale": 2,
+    "individuals": 800,
+    "syntheticData": true,
+    "nativeWpfRender": true,
+    "imagesWithSource": 23
+  }
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "file": "collection-base-150.png",
+    "bytes": 149996,
+    "sha256": "FA97FAA64083EE699FA6836D0733F5701C38887099B0AF392DD4E9CFE8A3D3C4"
+  },
+  {
+    "file": "collection-compact-200.png",
+    "bytes": 175562,
+    "sha256": "1E4159C97C9A61260154C2AE7722EFBD705747FA765EF597191031C671C2429B"
+  },
+  {
+    "file": "confirm-rehome-actual-caller-base-150.png",
+    "bytes": 197907,
+    "sha256": "95850E20A094F94F1C67F445193F4626DF2B0DB393A22177D8A8DF05FF855CCE"
+  },
+  {
+    "file": "confirm-rehome-actual-caller-compact-200.png",
+    "bytes": 221544,
+    "sha256": "461E23810F3B071CB80E55F0AD51A9F09D2903A297A96026FB88CA03A1D21EED"
+  },
+  {
+    "file": "detail-name-editor-base-150.png",
+    "bytes": 232286,
+    "sha256": "23E182B38C4535FCB60CED8AD665EA1C73C4D450EA44CE68973BDDD162366F1B"
+  },
+  {
+    "file": "detail-name-editor-compact-200.png",
+    "bytes": 254645,
+    "sha256": "394494E531CEDA68CCB168E4319A734E73EC2C85326379CBA8107E25A9E2361A"
+  },
+  {
+    "file": "detail-retraining-base-150-action.png",
+    "bytes": 239987,
+    "sha256": "CF548E7A81EF78072FC143C51733D94931EA0677B43A6767040685DC1A1D96DC"
+  },
+  {
+    "file": "detail-retraining-base-150.png",
+    "bytes": 239987,
+    "sha256": "CF548E7A81EF78072FC143C51733D94931EA0677B43A6767040685DC1A1D96DC"
+  },
+  {
+    "file": "detail-retraining-compact-200-action.png",
+    "bytes": 278348,
+    "sha256": "80CD264C804EBF6A361EFEB97A372360BF49A35A275AAAB81C0B7481DCB6A652"
+  },
+  {
+    "file": "detail-retraining-compact-200.png",
+    "bytes": 278618,
+    "sha256": "3B01EEBE9FF521156A8555F0710A57AA4C47526BF379D4C2FE98845AEFE6A2AC"
+  },
+  {
+    "file": "detail-supported-eevee-base-150.png",
+    "bytes": 231747,
+    "sha256": "6C54561CCE67DE53E003CF658849CB6539C6799378375CDF27C178CCDB5D70E3"
+  },
+  {
+    "file": "detail-supported-eevee-compact-200.png",
+    "bytes": 268003,
+    "sha256": "2109DDA80954158589EA8A72A1CADEE8DFFA68BD3A85A562E615669A5319EC9E"
+  },
+  {
+    "file": "encounter-source-explanation-base-150.png",
+    "bytes": 845440,
+    "sha256": "D61DDF13573D6BCC7079877DC71DA514684B59DBE0F8A528AB1DEF611C05FC43"
+  },
+  {
+    "file": "encounter-source-explanation-compact-200.png",
+    "bytes": 1157049,
+    "sha256": "61FDA92AD18B72426E5C363F7EED3A10089D7080EAA1CD288196310A711F1EDC"
+  },
+  {
+    "file": "evolution-linear-base-150-action.png",
+    "bytes": 146193,
+    "sha256": "479F6C64025B444D4ADB43481A2AE41EFCAAE3BCAFF4B7F9B55DC94E0313A121"
+  },
+  {
+    "file": "evolution-linear-base-150.png",
+    "bytes": 146193,
+    "sha256": "479F6C64025B444D4ADB43481A2AE41EFCAAE3BCAFF4B7F9B55DC94E0313A121"
+  },
+  {
+    "file": "evolution-linear-compact-200-action.png",
+    "bytes": 188679,
+    "sha256": "9F760C3B57A8F67A44659BBEAB3C57FEFB966E71811BB903FF6766AAF2A61648"
+  },
+  {
+    "file": "evolution-linear-compact-200.png",
+    "bytes": 188679,
+    "sha256": "9F760C3B57A8F67A44659BBEAB3C57FEFB966E71811BB903FF6766AAF2A61648"
+  },
+  {
+    "file": "expedition-selected-pinned-footer-base-150.png",
+    "bytes": 770928,
+    "sha256": "92C58B458A6C9E089D638186ADBDF4DB069E28E57AA7037DB429A876D8CB694E"
+  },
+  {
+    "file": "expedition-selected-pinned-footer-compact-200.png",
+    "bytes": 650290,
+    "sha256": "065681BDDE6090E0D041F2A6315F55D79080B26B084D8A1433E95B6210D24EAB"
+  },
+  {
+    "file": "expedition-team-duplicates-base-150.png",
+    "bytes": 290008,
+    "sha256": "574FABCCE00A2878FD776DF6BA0A539A4C14B093D374C31E60C88F3460DD42C5"
+  },
+  {
+    "file": "expedition-team-duplicates-compact-200.png",
+    "bytes": 208335,
+    "sha256": "5617CE211DC922624C1E7F4633573085514EF2159C6F33139E99E1CCB4E1D532"
+  },
+  {
+    "file": "expedition-unselected-base-150.png",
+    "bytes": 731590,
+    "sha256": "BC46971A9D683C29BE1995008D42203D6EB0D0292C33675C6F86D8E6F37EEC9D"
+  },
+  {
+    "file": "expedition-unselected-compact-200.png",
+    "bytes": 1048459,
+    "sha256": "C0F6A1A34B9F93A7AB024BF3EDCC863FD8510A3F79B86411F1D0C07E441B0B9F"
+  },
+  {
+    "file": "nursery-selected-charm-base-150.png",
+    "bytes": 719862,
+    "sha256": "2E031E09239538916D7D26B978C8D71BCBBD4FD03F274CB4509CD3896D3AEEC8"
+  },
+  {
+    "file": "nursery-selected-charm-compact-200.png",
+    "bytes": 952789,
+    "sha256": "5B7E6A92EA17EBEA53A1B1B3E613B7D6532E657A51176725374B68306FC7593A"
+  },
+  {
+    "file": "nursery-selected-pinned-footer-base-150.png",
+    "bytes": 716876,
+    "sha256": "B3729BFE7AF7A5927F966F4B4D473E83E2773421225A814500B40307133CDB45"
+  },
+  {
+    "file": "nursery-selected-pinned-footer-compact-200.png",
+    "bytes": 951209,
+    "sha256": "CCDD5426B0509B131F729CA4FFFA507EBCE785D5892408F47ADFA959E20E6E6E"
+  },
+  {
+    "file": "nursery-unselected-base-150.png",
+    "bytes": 642419,
+    "sha256": "413EB1D211EA11A6F8FCCC95404CDC5F523D54CDAB0ACA3C06ADBF9CD6FC415C"
+  },
+  {
+    "file": "nursery-unselected-compact-200.png",
+    "bytes": 888332,
+    "sha256": "B60692A45D8573EE5E5E56B6955DBCCBDAF3462A5444A78D598B3F53B20F491F"
+  },
+  {
+    "file": "shop-stepper-base-150.png",
+    "bytes": 271873,
+    "sha256": "E73F88BEA88A851CB99456B30A2CD63B4022A02C07FB253BFB7501667210D8FB"
+  },
+  {
+    "file": "shop-stepper-compact-200.png",
+    "bytes": 307716,
+    "sha256": "28E9E722DE45AB78B86E90587BDE7475DDC4355335474321B07D0BF622E46DE6"
+  },
+  {
+    "file": "species-base-150.png",
+    "bytes": 168954,
+    "sha256": "47ECD6BA3F10CCAD22D97EDF3B9ADD792369BC77730A98673EC7DB52C2B91F9D"
+  },
+  {
+    "file": "species-compact-200.png",
+    "bytes": 169891,
+    "sha256": "0A60E083CE0C84211BDE2594F114D8EE68D16D32CD0AFE7403B1A0D1130F87E3"
+  },
+  {
+    "file": "species-where-find-base-150.png",
+    "bytes": 155725,
+    "sha256": "966C19AA8BF407FEF5DDD051850F323722DFDE338C71EE5D2FE4986A1C71C678"
+  },
+  {
+    "file": "species-where-find-compact-200.png",
+    "bytes": 157170,
+    "sha256": "3421B2B57B29DE7539ED784AE762DA16AC88FD16BC11E78244FC3BF348A69F61"
+  }
+]
