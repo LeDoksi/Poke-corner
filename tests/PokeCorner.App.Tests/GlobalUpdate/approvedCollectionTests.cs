@@ -1,4 +1,4 @@
-﻿using PokeCorner.App.Popup;
+using PokeCorner.App.Popup;
 using PokeCorner.App.Tests.Theme;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
@@ -323,4 +323,91 @@ public sealed class ApprovedCollectionTests
         var encoder = new System.Windows.Media.Imaging.PngBitmapEncoder(); encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(bitmap));
         using var stream = new MemoryStream(); encoder.Save(stream); return stream.ToArray();
     }
+    [Fact]
+    public void DirectNameButtonUsesExplicitCommitCancelRefusalAndKeyboardFocus() => WpfTestHost.Run(() =>
+    {
+        var state = new AppState(); var pet = Pet(1); state.Collection.Add(pet);
+        var commits = 0; var refuse = true;
+        var view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
+            () => { }, () => { }, () => { }, () => null, () => false, () => false,
+            commitState: change =>
+            {
+                commits++;
+                if (refuse) return Task.FromException(new IOException("rename refused"));
+                var next = state.ToSaveData(0); change(next);
+                pet.Nickname = next.Individuals.Single().Nickname;
+                return Task.CompletedTask;
+            });
+        var host = new Window { Content = view, Width = 840, Height = 650 };
+        try
+        {
+            host.Show(); Assert.True(view.OpenIndividual(pet.Id)); host.UpdateLayout();
+            var name = (Button)view.FindName("DetailNameButton"); var box = (TextBox)view.FindName("DetailNicknameBox");
+            var save = (Button)view.FindName("DetailNicknameSaveButton");
+            Assert.True(name.Focus());
+            var peer = new System.Windows.Automation.Peers.ButtonAutomationPeer(name);
+            Assert.NotNull(peer.GetPattern(System.Windows.Automation.Peers.PatternInterface.Invoke));
+            name.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Assert.Same(box, System.Windows.Input.Keyboard.FocusedElement);
+            Assert.Equal("Бульбазавр", ((TextBlock)view.FindName("DetailSpeciesSubtitleText")).Text);
+            Assert.Equal(Visibility.Visible, ((TextBlock)view.FindName("DetailSpeciesSubtitleText")).Visibility);
+            box.Text = "  Листик  "; Assert.Null(pet.Nickname); Assert.Equal(0, commits);
+            var escape = new System.Windows.Input.KeyEventArgs(System.Windows.Input.Keyboard.PrimaryDevice,
+                System.Windows.PresentationSource.FromVisual(host)!, 0, System.Windows.Input.Key.Escape) { RoutedEvent = System.Windows.Input.Keyboard.PreviewKeyDownEvent };
+            view.RaiseEvent(escape); Assert.True(escape.Handled); Assert.Same(name, System.Windows.Input.Keyboard.FocusedElement);
+            Assert.Equal(0, commits); Assert.Equal(Visibility.Visible, ((Border)view.FindName("DetailOverlay")).Visibility);
+            name.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); box.Text = "Листик";
+            save.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Assert.Null(pet.Nickname); Assert.Contains("rename refused", ((TextBlock)view.FindName("DetailErrorText")).Text);
+            Assert.Equal(Visibility.Visible, ((StackPanel)view.FindName("DetailNicknameEditor")).Visibility);
+            Assert.Same(box, System.Windows.Input.Keyboard.FocusedElement);
+            refuse = false;
+            var enter = new System.Windows.Input.KeyEventArgs(System.Windows.Input.Keyboard.PrimaryDevice,
+                System.Windows.PresentationSource.FromVisual(host)!, 0, System.Windows.Input.Key.Enter) { RoutedEvent = System.Windows.Input.Keyboard.PreviewKeyDownEvent };
+            box.RaiseEvent(enter); Assert.True(enter.Handled);
+            Assert.Equal("Листик", pet.Nickname); Assert.Equal(2, commits);
+            Assert.Same(name, System.Windows.Input.Keyboard.FocusedElement);
+            Assert.Equal("Бульбазавр", ((TextBlock)view.FindName("DetailSpeciesSubtitleText")).Text);
+            name.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); box.Text = "bad\nname";
+            save.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); Assert.Equal(2, commits);
+            Assert.Equal("Листик", pet.Nickname);
+        }
+        finally { host.Close(); }
+    });
+
+    [Fact]
+    public async Task PendingRenameCommitsOnceAndCannotRepaintAnotherIndividual()
+    {
+        var state = new AppState(); var first = Pet(1); var second = Pet(1);
+        first.Nickname = "Первый"; second.Nickname = "Второй";
+        state.Collection.Add(first); state.Collection.Add(second);
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var commits = 0; CollectionView view = null!; Task saving = null!;
+        WpfTestHost.Run(() =>
+        {
+            view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
+                () => { }, () => { }, () => { }, () => null, () => false, () => false,
+                commitState: async change => {
+                    commits++; await gate.Task;
+                    var next = state.ToSaveData(0); change(next);
+                    first.Nickname = next.Individuals.Single(p => p.Id == first.Id).Nickname;
+                });
+            view.OpenIndividual(first.Id);
+            ((Button)view.FindName("DetailNameButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            ((TextBox)view.FindName("DetailNicknameBox")).Text = "Новое имя";
+            saving = (Task)typeof(CollectionView).GetMethod("SaveNicknameAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [])!;
+            ((Button)view.FindName("DetailNicknameSaveButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Assert.Equal(1, commits); Assert.Equal("Первый", first.Nickname);
+            Assert.False(((StackPanel)view.FindName("DetailNicknameEditor")).IsEnabled);
+            view.OpenIndividual(second.Id);
+        });
+        gate.SetResult(); await saving;
+        WpfTestHost.Run(() => {
+            Assert.Equal("Новое имя", first.Nickname); Assert.Equal("Второй", second.Nickname);
+            Assert.Equal(second.Id, view.SelectedIndividualId);
+            Assert.Equal("Второй", ((TextBlock)view.FindName("DetailSpeciesNameText")).Text);
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+        });
+    }
+
 }

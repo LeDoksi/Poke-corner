@@ -21,7 +21,7 @@ public partial class ShopView : UserControl
     private readonly ShopService _shop;
     private readonly Func<Action<SaveData>, Task> _commit;
     private readonly Action _onChanged;
-    private readonly Dictionary<string, (TextBlock Stock, TextBlock Total, TextBox Quantity, Button Buy)> _rows = [];
+    private readonly Dictionary<string, (TextBlock Stock, TextBlock Total, TextBox Quantity, Button Buy, Button Decrease, Button Increase)> _rows = [];
     private DispatcherTimer? _timer;
     private bool _busy;
     private bool _suspended;
@@ -97,51 +97,89 @@ public partial class ShopView : UserControl
         Grid.SetColumn(detail, 1);
         grid.Children.Add(detail);
 
-        var action = new StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal, Margin = new Thickness(0, 10, 0, 0) };
-        var quantity = new TextBox { Text = "1", Width = 52, Padding = new Thickness(6, 4, 6, 4), VerticalContentAlignment = VerticalAlignment.Center, ToolTip = "Количество" };
-        var total = new TextBlock { Width = 84, Margin = new Thickness(8, 0, 8, 0), VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap };
-        var buy = new Button { Content = "Купить", Padding = new Thickness(8, 5, 8, 5), MinHeight = 34, Style = (Style)FindResource("UiPrimaryButtonStyle"), Tag = good.Id };
-        System.Windows.Automation.AutomationProperties.SetName(quantity, $"Количество: {good.Name}");
+        var action = new Grid { Margin = new Thickness(0, 10, 0, 0) };
+        action.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        action.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        action.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        action.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        var quantity = new TextBox { Text = "1", Width = 52, Height = 40, MinHeight = 40, Padding = new Thickness(4), TextAlignment = TextAlignment.Center, VerticalContentAlignment = VerticalAlignment.Center, ToolTip = good.Id == "treats" ? "Количество пачек" : "Количество предметов" };
+        var decrease = new Button { Content = "−", Width = 34, MinHeight = 40, Padding = new Thickness(4), Style = (Style)FindResource("SecondaryButtonStyle") };
+        var increase = new Button { Content = "+", Width = 34, MinHeight = 40, Padding = new Thickness(4), Style = (Style)FindResource("SecondaryButtonStyle") };
+        var stepper = new StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal };
+        stepper.Children.Add(decrease); stepper.Children.Add(quantity); stepper.Children.Add(increase);
+        var total = new TextBlock { Margin = new Thickness(0, 5, 0, 0), TextWrapping = TextWrapping.Wrap };
+        System.Windows.Automation.AutomationProperties.SetLiveSetting(total, System.Windows.Automation.AutomationLiveSetting.Polite);
+        var buy = new Button { Content = "Купить", Padding = new Thickness(10, 7, 10, 7), MinHeight = 40, Margin = new Thickness(8, 0, 0, 0), HorizontalAlignment = System.Windows.HorizontalAlignment.Right, Style = (Style)FindResource("UiPrimaryButtonStyle"), Tag = good.Id };
+        System.Windows.Automation.AutomationProperties.SetName(quantity, $"Количество: {good.Name}" + (good.Id == "treats" ? " · пачки" : " · штуки"));
+        System.Windows.Automation.AutomationProperties.SetName(decrease, $"Уменьшить количество: {good.Name}");
+        System.Windows.Automation.AutomationProperties.SetName(increase, $"Увеличить количество: {good.Name}");
         System.Windows.Automation.AutomationProperties.SetName(buy, $"Купить: {good.Name}");
-        System.Windows.Automation.AutomationProperties.SetName(quantity, "Количество: " + good.Name);
         quantity.TextChanged += (_, _) => UpdateTotal(good);
+        quantity.GotKeyboardFocus += (_, _) => quantity.SelectAll();
+        decrease.Click += (_, _) => AdjustQuantity(good, -1);
+        increase.Click += (_, _) => AdjustQuantity(good, 1);
         buy.Click += async (_, _) => await Buy(good);
-        action.Children.Add(quantity);
-        action.Children.Add(total);
-        action.Children.Add(buy);
+        action.Children.Add(stepper);
+        Grid.SetColumn(buy, 1); action.Children.Add(buy);
+        Grid.SetRow(total, 1); Grid.SetColumnSpan(total, 2); action.Children.Add(total);
         if (good.Id == "xp-potion")
         {
-            var use = new Button { Content = "Выбрать питомца", Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
+            var use = new Button { Content = "Выбрать питомца", Style = (Style)FindResource("SecondaryButtonStyle"), Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
             use.Click += (_, _) => OpenPetItems("xp-potion");
             detail.Children.Add(use);
         }
         if (good.Id == "care-booster")
         {
-            var use = new Button { Content = "Выбрать питомца", Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
+            var use = new Button { Content = "Выбрать питомца", Style = (Style)FindResource("SecondaryButtonStyle"), Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
             use.Click += (_, _) => OpenPetItems("care-booster");
             detail.Children.Add(use);
         }
         if (good.Id == "lucky-charm")
         {
-            var activate = new Button { Content = "К поимке", Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
+            var activate = new Button { Content = "К поимке", Style = (Style)FindResource("SecondaryButtonStyle"), Padding = new Thickness(5), Margin = new Thickness(0, 4, 0, 0) };
             activate.Click += async (_, _) => await ActivateLuckyCharm();
             detail.Children.Add(activate);
         }
-        Grid.SetColumn(action, 1);
+        Grid.SetColumnSpan(action, 2);
         Grid.SetRow(action, 1);
         grid.Children.Add(action);
         card.Child = grid;
         panel.Children.Add(card);
-        _rows.Add(good.Id, (stock, total, quantity, buy));
+        _rows.Add(good.Id, (stock, total, quantity, buy, decrease, increase));
         UpdateTotal(good);
+    }
+
+    private int MaximumQuantity(ShopGood good)
+    {
+        var stock = good.Id == "treats" ? _state.Feeding.Treats
+            : (good.IsBerry ? _state.Shop.Berries : _state.Shop.Items).GetValueOrDefault(good.Id);
+        return Math.Min((int.MaxValue - stock) / good.Units, int.MaxValue / good.Price);
+    }
+
+    private void AdjustQuantity(ShopGood good, int delta)
+    {
+        if (_busy || _suspended || MaximumQuantity(good) < 1) return;
+        var row = _rows[good.Id];
+        var current = int.TryParse(row.Quantity.Text, out var count) ? count : 0;
+        row.Quantity.Text = Math.Clamp((long)current + delta, 1, MaximumQuantity(good)).ToString();
     }
 
     private void UpdateTotal(ShopGood good)
     {
         if (!_rows.TryGetValue(good.Id, out var row)) return;
-        row.Total.Text = int.TryParse(row.Quantity.Text, out var count) && count > 0
-            ? $"{(long)good.Price * count} монет"
-            : "Укажите количество";
+        var maximum = MaximumQuantity(good);
+        var parsed = int.TryParse(row.Quantity.Text, out var count);
+        var valid = parsed && count > 0 && count <= maximum;
+        var cost = (long)good.Price * count;
+        row.Total.Text = !parsed || count <= 0 ? "Укажите целое количество от 1."
+            : count > maximum ? maximum == 0 ? "В запасе больше нет места." : $"Можно купить не больше {maximum}."
+            : cost > _state.Shop.Coins ? $"Итого {cost} монет · не хватает {cost - _state.Shop.Coins}."
+            : $"Итого {cost} монет";
+        row.Total.Foreground = (System.Windows.Media.Brush)FindResource(valid && cost <= _state.Shop.Coins ? "SecondaryTextBrush" : "UiDangerBrush");
+        row.Buy.IsEnabled = !_busy && valid && cost <= _state.Shop.Coins;
+        row.Quantity.IsEnabled = !_busy;
+        row.Decrease.IsEnabled = !_busy && parsed && count > 1;
+        row.Increase.IsEnabled = !_busy && maximum > 0 && (!parsed || count < maximum);
     }
 
     private Task<bool> ConfirmLocally(string title, string body, string caption)
@@ -161,7 +199,7 @@ public partial class ShopView : UserControl
     private async Task Buy(ShopGood good)
     {
         if (_busy || _suspended) return;
-        if (!int.TryParse(_rows[good.Id].Quantity.Text, out var count) || count <= 0)
+        if (!int.TryParse(_rows[good.Id].Quantity.Text, out var count) || count <= 0 || count > MaximumQuantity(good))
         { Show("Укажите положительное количество."); return; }
         var total = (long)good.Price * count;
         if (total > _state.Shop.Coins)
@@ -261,10 +299,7 @@ public partial class ShopView : UserControl
             row.Stock.Text = good.Id == "lucky-charm"
                 ? $"Запас: {stock} · {(_state.Shop.CatchLuckyCharmActive ? "активен" : "не активен")} · {good.Price} монет/шт."
                 : $"Запас: {stock} · {good.Price} монет/{(good.Id == "treats" ? "пачка" : "шт.")}";
-            row.Buy.IsEnabled = row.Quantity.IsEnabled = !_busy;
-            if (int.TryParse(row.Quantity.Text, out var count) && count > 0 && (long)good.Price * count > _state.Shop.Coins)
-                row.Total.Text = $"Не хватает {(long)good.Price * count - _state.Shop.Coins} монет";
-            else UpdateTotal(good);
+            UpdateTotal(good);
         }
     }
 }

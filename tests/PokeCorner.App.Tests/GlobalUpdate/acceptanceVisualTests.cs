@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -27,14 +27,20 @@ public class AcceptanceVisualTests
     [Fact]
     public Task CaptureHierarchyContinuation() => CaptureApplication(true, hierarchy: true);
 
-    private async Task CaptureApplication(bool targeted, bool evolutionOnly = false, bool hierarchy = false)
+    [Fact]
+    public Task CaptureDailyUseFinish() => CaptureApplication(true, dailyUse: true);
+
+    [Fact]
+    public Task CaptureDailyUseFinalDetails() => CaptureApplication(true, dailyUse: true, dailyDetailsOnly: true);
+
+    private async Task CaptureApplication(bool targeted, bool evolutionOnly = false, bool hierarchy = false, bool dailyUse = false, bool dailyDetailsOnly = false)
     {
         var cancellations = new List<Task<bool>>();
         WpfTestHost.Run(() =>
     {
         var output = Environment.GetEnvironmentVariable("POKE_SHELL_CAPTURE_DIR");
         Assert.False(string.IsNullOrWhiteSpace(output));
-        output = Path.Combine(output!, hierarchy ? "hierarchy" : evolutionOnly ? "evolution-footer" : targeted ? "targeted" : "assembled");
+        output = Path.Combine(output!, dailyUse ? "daily-use" : hierarchy ? "hierarchy" : evolutionOnly ? "evolution-footer" : targeted ? "targeted" : "assembled");
         Directory.CreateDirectory(output);
         var catalog = CatalogPackage.Load(Path.Combine(AppContext.BaseDirectory, "Data"));
         var lookup = LegacyLookup.Load(catalog.DataRoot);
@@ -171,12 +177,12 @@ public class AcceptanceVisualTests
                         Assert.True(rect.Bottom <= size.Height && rect.Top >= 0, $"{name} outside base viewport: {rect}");
                     }
                 }
-                if (hierarchy && (key == "expedition-selected" || key == "nursery" && variant == "selected-pinned-footer"))
+                if ((hierarchy || dailyUse) && (key == "expedition-selected" || key == "nursery" && variant == "selected-pinned-footer"))
                 {
                     var view = key == "nursery" ? (FrameworkElement)nursery : expedition;
                     var names = key == "nursery"
-                        ? new[] { "StartButton", "FirstSlot", "SecondSlot", "ChooseFirstButton", "ChooseSecondButton" }
-                        : new[] { "StartButton", "TeamSlots", "ChooseTeamButton", "PreviewText" };
+                        ? new[] { "StartButton", "FirstSlot", "SecondSlot", "ChooseFirstButton", "ChooseSecondButton", "ResourcePricesPanel", "CostText", "ShortageText" }
+                        : new[] { "StartButton", "TeamSlots", "ChooseTeamButton", "PreviewText", "PreviewRewardCards" };
                     foreach (var name in names)
                     {
                         var target = (FrameworkElement)view.FindName(name);
@@ -229,6 +235,89 @@ public class AcceptanceVisualTests
         }
         try
         {
+            if (dailyUse)
+            {
+                if (dailyDetailsOnly)
+                {
+                    data.Individuals[0].AccumulatedCarePoints = data.Individuals[5].AccumulatedCarePoints = 200000;
+                    menu.Navigate(MenuSection.Pokedex); collection.OpenIndividual(data.Individuals[0].Id);
+                    Click(collection, "DetailNameButton"); ((TextBox)collection.FindName("DetailNicknameBox")).Text = "Длинная кличка друга";
+                    Assert.Equal("Eevee", ((TextBlock)collection.FindName("DetailSpeciesSubtitleText")).Text);
+                    Capture("detail", MenuSection.Pokedex, "name-editor"); Click(collection, "DetailNicknameCancelButton");
+                    data.Individuals[0].Nickname = "Очень длинная кличка"; collection.OpenIndividual(data.Individuals[0].Id);
+                    Capture("detail", MenuSection.Pokedex, "long-nickname");
+                    Click(collection, "DetailRetrainingToggle");
+                    var cost = ((TextBlock)collection.FindName("DetailRetrainingCostText")).Text;
+                    Assert.Contains("в запасе", cost); Assert.DoesNotContain("aspear", cost);
+                    Capture("detail", MenuSection.Pokedex, "retraining", (FrameworkElement)collection.FindName("DetailRetrainButton"));
+                    Invoke(collection, "HideDetail"); collection.OpenIndividual(data.Individuals[5].Id); Click(collection, "DetailConditionsButton");
+                    Assert.Equal(Visibility.Collapsed, ((ComboBox)collection.FindName("DetailEvolutionBranchPicker")).Visibility);
+                    Capture("evolution", MenuSection.Pokedex, "linear", (FrameworkElement)collection.FindName("DetailEvolveButton"));
+                    SaveProof(); return;
+                }
+                void ChooseParents()
+                {
+                    Click(nursery, "ChooseFirstButton");
+                    foreach (var pet in data.Individuals.Skip(1).Take(2))
+                    {
+                        ((TextBox)nursery.FindName("ParentSearchBox")).Text = pet.CurrentSpeciesId.ToString();
+                        ((WrapPanel)nursery.FindName("SpeciesGroupsPanel")).Children.OfType<Button>().Single(b => Equals(b.Tag, pet.CurrentSpeciesId)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                        var candidates = (WrapPanel)nursery.FindName("PickerIndividualsPanel");
+                        while (!candidates.Children.OfType<Button>().Any(b => Equals(b.Tag, pet.Id)))
+                        {
+                            Assert.True(((Button)nursery.FindName("PickerNextButton")).IsEnabled); Click(nursery, "PickerNextButton");
+                        }
+                        candidates.Children.OfType<Button>().Single(b => Equals(b.Tag, pet.Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    }
+                    Click(nursery, "PickerSaveButton");
+                }
+                Capture("collection", MenuSection.Pokedex);
+                Click(collection, "SpeciesModeButton"); Capture("species", MenuSection.Pokedex);
+                var unknown = ((ListBox)collection.FindName("SpeciesGrid")).Items.Cast<object>().First(item => {
+                    var entry = (PokedexSpeciesEntry)item.GetType().GetProperty("Entry")!.GetValue(item)!;
+                    return !entry.IsDiscovered;
+                });
+                var unknownEntry = (PokedexSpeciesEntry)unknown.GetType().GetProperty("Entry")!.GetValue(unknown)!;
+                Invoke(collection, "SpeciesWhere_Click", new Button { Tag = unknownEntry.SpeciesId }, new RoutedEventArgs());
+                Capture("species", MenuSection.Pokedex, "where-find"); Invoke(collection, "CloseSpeciesDialog");
+                Click(collection, "IndividualsModeButton");
+                data.Individuals[0].AccumulatedCarePoints = data.Individuals[5].AccumulatedCarePoints = 200000;
+                collection.OpenIndividual(data.Individuals[0].Id);
+                Capture("detail", MenuSection.Pokedex, "supported-eevee");
+                Click(collection, "DetailNameButton"); ((TextBox)collection.FindName("DetailNicknameBox")).Text = "Длинная кличка друга";
+                Capture("detail", MenuSection.Pokedex, "name-editor"); Click(collection, "DetailNicknameCancelButton");
+                Click(collection, "DetailRetrainingToggle");
+                Capture("detail", MenuSection.Pokedex, "retraining", (FrameworkElement)collection.FindName("DetailRetrainButton"));
+                Invoke(collection, "HideDetail"); collection.OpenIndividual(data.Individuals[5].Id); Click(collection, "DetailConditionsButton");
+                Capture("evolution", MenuSection.Pokedex, "linear", (FrameworkElement)collection.FindName("DetailEvolveButton"));
+                Invoke(collection, "HideDetail");
+                Capture("nursery", MenuSection.Nursery, "unselected"); ChooseParents();
+                Capture("nursery", MenuSection.Nursery, "selected-pinned-footer");
+                ((StackPanel)nursery.FindName("OutcomePanel")).Children.OfType<Button>().Last().RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                Assert.Contains("Талисман потомства ×1", ((TextBlock)nursery.FindName("CostText")).Text);
+                Capture("nursery", MenuSection.Nursery, "selected-charm");
+                Capture("expedition", MenuSection.Expeditions, "unselected"); Click(expedition, "ChooseTeamButton");
+                Capture("expedition-team", MenuSection.Expeditions, "duplicates");
+                foreach (var pet in data.Individuals.Skip(1).Take(3))
+                {
+                    ((TextBox)expedition.FindName("PickerSearchBox")).Text = pet.CurrentSpeciesId.ToString();
+                    ((WrapPanel)expedition.FindName("PickerMembers")).Children.OfType<Button>().First(b => Equals(b.Tag, pet.Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                Click(expedition, "PickerDoneButton"); Capture("expedition-selected", MenuSection.Expeditions, "pinned-footer");
+                Capture("shop", MenuSection.Shop, "stepper");
+                menu.Navigate(MenuSection.Pokedex); collection.OpenIndividual(data.Individuals[5].Id);
+                Click(collection, "DetailRehomeButton");
+                var rehomeOverlay = (FrameworkElement)menu.FindName("ConfirmationHost");
+                Assert.Same(menu.FindResource("UiDangerButtonStyle"), ((Button)rehomeOverlay.FindName("ConfirmButton")).Style);
+                Capture("confirm-rehome", MenuSection.Pokedex, "actual-caller", navigate: false);
+                Click(rehomeOverlay, "CancelButton");
+                Invoke(collection, "HideDetail");
+                var knownEncounter = new EncounterState { Id = Guid.NewGuid(), Source = "expedition", Phase = "resolved", KnownSpeciesId = 133, Individual = Pet(133), Rarity = RarityTier.Common };
+                state.Encounters.Add(knownEncounter); catchView.SelectEncounter(knownEncounter.Id);
+                Capture("encounter", MenuSection.Catch, "source-explanation");
+                SaveProof();
+                return;
+            }
             if (hierarchy)
             {
                 data.Individuals[0].AccumulatedCarePoints = 200000;

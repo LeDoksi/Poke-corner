@@ -266,8 +266,8 @@ public sealed class ShopTests : IDisposable
         var berries = (StackPanel)view.FindName("BerriesPanel");
         var cheri = (Border)berries.Children[0];
         var grid = (Grid)cheri.Child;
-        var action = (StackPanel)grid.Children[2];
-        Assert.Equal("3", ((TextBox)action.Children[0]).Text);
+        var action = (Grid)grid.Children[2];
+        Assert.Equal("3", ((TextBox)((StackPanel)action.Children[0]).Children[1]).Text);
         Assert.Equal(0, commits);
         Assert.Equal(100, live.Shop.Coins);
     });
@@ -297,7 +297,7 @@ public sealed class ShopTests : IDisposable
         var view = new ShopView(live, shop, _ => { calls++; return pending.Task; }, () => { }, confirmAsync: (_, _, _) => Task.FromResult(true));
         var berries = (StackPanel)view.FindName("BerriesPanel");
         var grid = (Grid)((Border)berries.Children[0]).Child;
-        var buy = (Button)((StackPanel)grid.Children[2]).Children[2];
+        var buy = (Button)((Grid)grid.Children[2]).Children[1];
         buy.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
         buy.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
         Assert.Equal(1, calls);
@@ -405,10 +405,10 @@ public sealed class ShopTests : IDisposable
             {
                 var grid = (Grid)card.Child;
                 Assert.NotNull(((System.Windows.Controls.Image)grid.Children[0]).Source);
-                var actions = (StackPanel)grid.Children[2];
-                Assert.True(actions.ActualWidth <= grid.ActualWidth - grid.ColumnDefinitions[0].ActualWidth + 1);
-                Assert.True(((TextBox)actions.Children[0]).IsEnabled);
-                Assert.True(((Button)actions.Children[2]).IsEnabled);
+                var actions = (Grid)grid.Children[2];
+                Assert.True(actions.ActualWidth <= grid.ActualWidth + 1);
+                Assert.True(((TextBox)((StackPanel)actions.Children[0]).Children[1]).IsEnabled);
+                Assert.True(((Button)actions.Children[1]).IsEnabled);
             }
         }
     });
@@ -528,4 +528,36 @@ public sealed class ShopTests : IDisposable
         });
         Assert.Equal(95, live.Shop.Coins); Assert.Equal(1, live.Shop.Berries["oran"]);
     }
+    [Fact]
+    public void NativeQuantityStepperSupportsEditingBoundsAndLocalShortage() => WpfTestHost.Run(() =>
+    {
+        var live = new AppState(); live.Hydrate(State());
+        var commits = 0;
+        var view = new ShopView(live, shop, _ => { commits++; return Task.CompletedTask; }, () => { });
+        var card = (Grid)((Border)((StackPanel)view.FindName("BerriesPanel")).Children[0]).Child;
+        var actions = (Grid)card.Children[2];
+        var stepper = (StackPanel)actions.Children[0];
+        var minus = (Button)stepper.Children[0]; var quantity = (TextBox)stepper.Children[1]; var plus = (Button)stepper.Children[2];
+        var buy = (Button)actions.Children[1]; var total = (TextBlock)actions.Children[2];
+        Assert.False(minus.IsEnabled);
+        plus.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
+        Assert.Equal("2", quantity.Text); Assert.Contains("10 монет", total.Text);
+        quantity.Select(0, 1); quantity.SelectedText = "3";
+        Assert.Equal("3", quantity.Text); Assert.Contains("15 монет", total.Text);
+        minus.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent)); Assert.Equal("2", quantity.Text);
+        foreach (var invalid in new[] { "0", "-1", "abc", "2147483648", int.MaxValue.ToString() })
+        {
+            quantity.Text = invalid; Assert.False(buy.IsEnabled); Assert.False(string.IsNullOrWhiteSpace(total.Text));
+            Assert.True(InvokeBuy(view, shop.Goods.First(g => g.IsBerry).Id).IsCompletedSuccessfully);
+        }
+        Assert.Equal(0, commits);
+        quantity.Text = "21"; Assert.Contains("не хватает 5", total.Text); Assert.False(buy.IsEnabled);
+        var berry = shop.Goods.First(g => g.IsBerry);
+        live.Shop.Berries[berry.Id] = int.MaxValue - 1; view.Refresh();
+        quantity.Text = "1"; Assert.False(plus.IsEnabled); Assert.True(buy.IsEnabled);
+        live.Shop.Berries[berry.Id] = int.MaxValue; view.Refresh();
+        Assert.False(plus.IsEnabled); Assert.False(buy.IsEnabled); Assert.Contains("нет места", total.Text);
+        view.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.FrameworkElement.UnloadedEvent));
+    });
+
 }

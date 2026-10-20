@@ -113,7 +113,11 @@ public partial class AppMenuWindow : Window
         pending.TrySetResult();
     }
 
-    public Task<bool> ConfirmAsync(string title, string body, string confirmCaption)
+    public Task<bool> ConfirmAsync(string title, string body, string confirmCaption) => PresentConfirmation(title, body, confirmCaption, false);
+
+    public Task<bool> ConfirmDestructiveAsync(string title, string body, string confirmCaption) => PresentConfirmation(title, body, confirmCaption, true);
+
+    private Task<bool> PresentConfirmation(string title, string body, string confirmCaption, bool destructive)
     {
         Dispatcher.VerifyAccess();
         if (_closed) return Task.FromResult(false);
@@ -122,7 +126,7 @@ public partial class AppMenuWindow : Window
         _confirmation = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
         var task = _confirmation.Task;
         ShellContent.IsEnabled = false;
-        ConfirmationHost.Present(title, body, confirmCaption);
+        ConfirmationHost.Present(title, body, confirmCaption, destructive);
         return task;
     }
 

@@ -102,7 +102,7 @@ public class ApprovedExpeditionTests
         Assert.Equal(data.Individuals[2].Id, Find<WrapPanel>(v, "PickerMembers").Children.OfType<Button>().First().Tag);
         Click(v, "PickerCancelButton");
         v.RouteButtons.Children.OfType<Button>().Single(b => Equals(b.Tag, "volcano")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-        Find<ComboBox>(v, "DifficultyBox").SelectedIndex = 2;
+        Find<ListBox>(v, "DifficultyBox").SelectedIndex = 2;
         Click(v, "ChooseTeamButton");
         Assert.Contains("25", Find<TextBlock>(v, "PickerRouteHintText").Text);
         Assert.Contains("Огненный", Find<TextBlock>(v, "PickerRouteHintText").Text);
@@ -210,5 +210,28 @@ public class ApprovedExpeditionTests
         Assert.Equal(Visibility.Visible, Find<StackPanel>(v, "PreparationPanel").Visibility);
         Assert.Equal(Visibility.Collapsed, Find<StackPanel>(v, "ResultPanel").Visibility); Assert.Equal(coins, data.ShopCoins);
     });
+
+    [Fact]
+    public async Task ActualCancellationUsesDangerConfirmationAndDecliningKeepsTrip()
+    {
+        var data = State(); var request = new ExpeditionRequest("grove", "easy", 30, [data.Individuals[0].Id], Guid.NewGuid(), DateTimeOffset.UtcNow);
+        Assert.True(new ExpeditionService(Catalog.Value, data).Start(request).Success);
+        ExpeditionView view = null!;
+        WpfTestHost.Run(() =>
+        {
+            view = View(data); WpfTestHost.Layout(view, 840, 540); Click(view, "CancelButton");
+            var overlay = Find<ConfirmationOverlay>(view, "LocalConfirmation");
+            Assert.Equal(Visibility.Visible, overlay.Visibility);
+            Assert.Same(overlay.FindResource("UiDangerButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
+            ((Button)overlay.FindName("CancelButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        });
+        await view.Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ContextIdle);
+        WpfTestHost.Run(() =>
+        {
+            Assert.Equal("running", data.Expedition!.Status); Assert.Equal(request.OperationId, data.Expedition.Id);
+            Assert.Equal(Visibility.Collapsed, ((ConfirmationOverlay)view.FindName("LocalConfirmation")).Visibility);
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+        });
+    }
 
 }

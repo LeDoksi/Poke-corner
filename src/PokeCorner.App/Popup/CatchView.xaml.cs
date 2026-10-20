@@ -114,14 +114,15 @@ public partial class CatchView : System.Windows.Controls.UserControl
         CatchProgressBar.Value = ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding).CatchFraction;
         var stock = _appState.Shop.Items.GetValueOrDefault("lucky-charm");
         var active = _appState.Shop.CatchLuckyCharmActive;
-        CatchCharmText.Text = active
-            ? $"Талисман зарезервирован на пригодную попытку. В запасе: {stock}. Если шайни-форма недоступна, он остаётся активным."
-            : $"Талисман помогает встретить шайни при пригодном виде. В запасе: {stock}.";
         var encounter = CurrentEncounter();
-        if (encounter?.Source == "gift" || CatchBallQueue.GiftReadyCount(_appState.Encounters) > 0)
-            CatchCharmText.Text += " Подарочный покебол уже закрыт: талисман не меняет его результат.";
-        if (encounter?.Source == "expedition")
-            CatchCharmText.Text += " Результат встречи уже определён; талисман не меняет его.";
+        CatchCharmText.Text = encounter?.Source switch
+        {
+            "gift" => "Подарочный покебол уже закрыт: талисман не меняет его результат.",
+            "expedition" => "Результат встречи уже определён: талисман не меняет его.",
+            _ => active
+                ? $"Талисман зарезервирован на пригодную попытку. В запасе: {stock}. Если шайни-форма недоступна, он остаётся активным."
+                : $"Талисман помогает встретить шайни при пригодном виде. В запасе: {stock}."
+        };
         CharmButton.Content = active ? "Талисман активен" : stock > 0 ? "Активировать" : "Нет в запасе";
         CharmButton.IsEnabled = !_busy && !_suspended && !_showingResult && _activateLuckyCharm is not null && stock > 0 && !active;
         CatchButton.IsEnabled = !_busy && _revealCancellation is null && (_showingResult || encounter is not null ||

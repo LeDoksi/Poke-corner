@@ -43,7 +43,7 @@ public partial class SaveHistoryWindow : Window
     private Task<bool> ConfirmLocally(string title, string body, string caption)
     {
         _localConfirmation = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-        LocalConfirmationHost.Present(title, body, caption);
+        LocalConfirmationHost.Present(title, body, caption, destructive: true);
         return _localConfirmation.Task;
     }
 

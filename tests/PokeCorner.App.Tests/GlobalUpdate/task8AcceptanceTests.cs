@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using PokeCorner.App.Onboarding;
@@ -72,8 +72,11 @@ public class Task8AcceptanceTests
         try
         {
             var shop = new ShopService(catalog.DataRoot);
-            WpfTestHost.Run(() => view = new ShopView(state, shop, update => state.CommitAsync(writer, update, () => 0),
-                () => { }, catalog, (_, _, _) => Task.FromResult(true)));
+            WpfTestHost.Run(() => {
+                view = new ShopView(state, shop, update => state.CommitAsync(writer, update, () => 0),
+                    () => { }, catalog, (_, _, _) => Task.FromResult(true));
+                view.SelectBerryShortage("oran", 2);
+            });
             for (var i = 0; i < 2; i++)
             {
                 Task purchase = null!;
@@ -81,9 +84,9 @@ public class Task8AcceptanceTests
                     .Invoke(view, [shop.Goods.Single(g => g.Id == "oran")])!);
                 await purchase;
             }
-            Assert.Equal(2, state.Shop.Berries["oran"]);
+            Assert.Equal(4, state.Shop.Berries["oran"]);
             Assert.Equal(2, store.Load()!.CompletedOperations.Count);
-            Assert.Equal(90, state.Shop.Coins);
+            Assert.Equal(80, state.Shop.Coins);
         }
         finally
         {
@@ -319,6 +322,75 @@ public class Task8AcceptanceTests
             Assert.Same(menu.FindName("CollectionTab"), ((TabControl)menu.FindName("MenuTabControl")).SelectedItem);
         }
         finally { menu.Close(); }
+    });
+
+    [Fact]
+    public void DuplicateIndividualsKeepTheSameLabelAcrossCollectionFiltersAndTeamSelection() => WpfTestHost.Run(() =>
+    {
+        var data = ApprovedExpeditionTests.State(3);
+        var original = data.Individuals[0];
+        data.Individuals = new[] { 3, 1, 2 }.Select(day => new PokemonIndividual {
+            SpeciesId = original.SpeciesId, CurrentSpeciesId = original.CurrentSpeciesId, FamilyRootId = original.FamilyRootId,
+            EvolutionChainId = original.EvolutionChainId, ChainLength = original.ChainLength, ReachedSpeciesIds = [original.CurrentSpeciesId],
+            IsShiny = false, Nature = Nature.Bold, FirstTraitId = "gatherer", CaughtAtUtc = DateTimeOffset.Parse($"2026-01-0{day}T00:00:00Z")
+        }).ToList();
+        var state = new AppState(); state.Hydrate(data);
+        var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], species: ApprovedExpeditionTests.Catalog.Value.Species);
+        var collection = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
+            () => { }, () => { }, () => { }, () => null, () => false, () => false);
+        var cards = ((ItemsControl)collection.FindName("PokedexGrid")).Items.Cast<PokedexCard>().ToDictionary(p => p.IndividualId);
+        Assert.StartsWith("Экземпляр 1", cards[data.Individuals[1].Id].IndividualText);
+        Assert.StartsWith("Экземпляр 3", cards[data.Individuals[0].Id].IndividualText);
+        Assert.All(cards.Values, card => Assert.Contains(card.IndividualText, card.AccessibleName));
+        var expedition = ApprovedExpeditionTests.View(data); ApprovedExpeditionTests.Click(expedition, "ChooseTeamButton");
+        foreach (var p in data.Individuals)
+            Assert.Contains(cards[p.Id].IndividualText, System.Windows.Automation.AutomationProperties.GetName(ApprovedExpeditionTests.Candidate(expedition, p.Id)));
+        ApprovedExpeditionTests.Candidate(expedition, data.Individuals[1].Id).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        ((ComboBox)expedition.FindName("PickerSortBox")).SelectedIndex = 2;
+        ((TextBox)expedition.FindName("PickerSearchBox")).Text = data.Individuals[1].CurrentSpeciesId.ToString();
+        Assert.Contains(cards[data.Individuals[1].Id].IndividualText, System.Windows.Automation.AutomationProperties.GetName(ApprovedExpeditionTests.Candidate(expedition, data.Individuals[1].Id)));
+        ApprovedExpeditionTests.Click(expedition, "PickerDoneButton");
+        var slot = (System.Windows.Controls.Primitives.UniformGrid)expedition.FindName("TeamSlots");
+        Assert.Contains(cards[data.Individuals[1].Id].IndividualText, System.Windows.Automation.AutomationProperties.GetName(((Border)slot.Children[0]).Child));
+        collection.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent)); expedition.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+    });
+
+    [Fact]
+    public async Task ConfirmationRolePreservesCancelFocusAndResetsForSafeActions()
+    {
+        Task<bool> danger = null!, safe = null!;
+        WpfTestHost.Run(() =>
+        {
+            var menu = ShellTests.CreateMenu(new AppState());
+            try
+            {
+                menu.Show(); var overlay = (ConfirmationOverlay)menu.FindName("ConfirmationHost");
+                danger = menu.ConfirmDestructiveAsync("Передать?", "Питомец покинет коллекцию.", "Передать");
+                Assert.Same(overlay.FindResource("UiDangerButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
+                Assert.Same(overlay.FindName("CancelButton"), System.Windows.Input.Keyboard.FocusedElement);
+                ((Button)overlay.FindName("CancelButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                safe = menu.ConfirmAsync("Купить?", "5 монет", "Купить");
+                Assert.Same(overlay.FindResource("UiPrimaryButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
+                ((Button)overlay.FindName("CancelButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+            finally { menu.Close(); }
+        });
+        Assert.False(await danger); Assert.False(await safe);
+    }
+
+    [Fact]
+    public void ExpeditionEncounterExplanationDoesNotMentionOtherQueuedGifts() => WpfTestHost.Run(() =>
+    {
+        var state = new AppState();
+        state.Encounters.Add(new EncounterState { Id = Guid.NewGuid(), Source = "gift", Phase = "sealed" });
+        var encounter = new EncounterState { Id = Guid.NewGuid(), Source = "expedition", Phase = "resolved", KnownSpeciesId = 1,
+            Individual = new PokemonIndividual { SpeciesId = 1, EvolutionChainId = 1, ChainLength = 3, Nature = Nature.Bold, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow } };
+        state.Encounters.Add(encounter);
+        var view = new CatchView(state, null, _ => Task.FromResult<byte[]?>(null), () => 0, () => { }, _ => "Бульбазавр");
+        Assert.True(view.SelectEncounter(encounter.Id));
+        var text = ((TextBlock)view.FindName("CatchCharmText")).Text;
+        Assert.Contains("Результат встречи", text); Assert.DoesNotContain("Подароч", text); Assert.DoesNotContain("запасе", text);
+        view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
     });
 
 }

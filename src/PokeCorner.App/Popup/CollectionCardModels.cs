@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Media;
 using PokeCorner.Core.Domain;
 
@@ -24,6 +24,8 @@ public sealed class PokedexCard
     public string? FirstTraitId { get; init; }
     public string? SecondTraitId { get; init; }
     public string? DescriptionRu { get; init; }
+    public string IndividualText { get; init; } = string.Empty;
+    public string AccessibleName => $"{DisplayName} · {DexNumber} · {LevelText} · {IndividualText}" + (IsShiny ? " · Shiny" : "");
     public string LevelText => $"Ур. {Level}";
     public string AvailabilityText => IsBusy ? "Занят" : IsActive ? "На столе" : string.Empty;
     public required Guid IndividualId { get; init; }
@@ -211,5 +213,20 @@ public static class RarityDisplay
         // NotifyIcon, which makes the unqualified "Application" type ambiguous between
         // System.Windows.Application and System.Windows.Forms.Application.
         return (Brush)System.Windows.Application.Current.Resources[key];
+    }
+}
+
+internal static class IndividualDisplay
+{
+    public static string Discriminator(IEnumerable<PokemonIndividual> collection, Guid individualId, bool always = false)
+    {
+        var individuals = collection.ToArray();
+        var individual = individuals.FirstOrDefault(p => p.Id == individualId);
+        if (individual is null) return string.Empty;
+        var peers = individuals.Where(p => p.CurrentSpeciesId == individual.CurrentSpeciesId)
+            .OrderBy(p => p.CaughtAtUtc).ThenBy(p => p.Id).ToArray();
+        if (!always && peers.Length < 2) return string.Empty;
+        var ordinal = Array.FindIndex(peers, p => p.Id == individualId) + 1;
+        return $"Экземпляр {ordinal} · {individual.CaughtAtUtc.ToLocalTime():dd.MM.yyyy}";
     }
 }

@@ -1057,9 +1057,10 @@ public partial class App : System.Windows.Application
                         return level == 40 ? ("Опыт · максимальный уровень", 1d)
                             : ($"Опыт · {pet.TotalXp - start} / {end - start} XP до уровня {level + 1}", (pet.TotalXp - start) / (double)(end - start));
                     },
-                    (id, shiny) => collectionPresentation.WhereFind(id, shiny, shiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds));
+                    (id, shiny) => collectionPresentation.WhereFind(id, shiny, shiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds),
+                    confirmDestructiveAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart,
-                    confirmAsync: (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false),
+                    confirmAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false),
                     showOnboarding: async () =>
                     {
                         try { await ShowUpdateTourAsync(replay: true); }
@@ -1082,7 +1083,7 @@ public partial class App : System.Windows.Application
                     enterEncounter: id => {
                         catchView.SelectEncounter(id);
                         _menuWindow?.Navigate(MenuSection.Catch);
-                    });
+                    }, confirmDestructiveAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false));
                 var nurseryView = new NurseryView(() => _appState.ToSaveData(_catchReadyCount), PreviewNursery,
                     StartNurseryAsync, HatchNurseryAsync, RefreshNurseryReadyAsync, _catalogPackage,
                     (good, required) =>
@@ -1380,7 +1381,7 @@ public partial class App : System.Windows.Application
         var menu = _menuWindow;
         if (menu is null) return null;
         var dialog = new SaveHistoryWindow(_saveStore.History.List(), _saveStore.History.UnreadableCount,
-            (title, body, caption) => menu.ConfirmAsync(title, body, caption));
+            (title, body, caption) => menu.ConfirmDestructiveAsync(title, body, caption));
         var content = dialog.TakeHostedContent();
         dialog.Closed += (_, _) => menu.CompleteHostedContent(content);
         try { await menu.ShowHostedAsync(content); }

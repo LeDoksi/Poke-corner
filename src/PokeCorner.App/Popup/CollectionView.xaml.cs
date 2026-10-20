@@ -1,4 +1,4 @@
-﻿using PokeCorner.App.Imaging;
+using PokeCorner.App.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -37,6 +37,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Action<MenuSection>? _navigate;
     private readonly Action<string, int>? _buyBerries;
     private readonly Func<string, string, string, Task<bool>>? _confirm;
+    private readonly Func<string, string, string, Task<bool>>? _confirmDestructive;
     private readonly Func<Guid, string, IndividualItemPreview>? _previewItem;
     private readonly Func<Guid, string, Guid, Task<PurchaseResult>>? _useItem;
     private readonly Func<Guid, (string Text, double Fraction)>? _xpProgress;
@@ -144,7 +145,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Func<Guid, string, IndividualItemPreview>? previewItem = null,
         Func<Guid, string, Guid, Task<PurchaseResult>>? useItem = null,
         Func<Guid, (string Text, double Fraction)>? xpProgress = null,
-        Func<int, bool, string>? whereFind = null)
+        Func<int, bool, string>? whereFind = null,
+        Func<string, string, string, Task<bool>>? confirmDestructiveAsync = null)
     {
         InitializeComponent();
         _onEvolveRequested = onEvolveRequested;
@@ -168,7 +170,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _retrainIndividual = retrainIndividual;
         _navigate = navigate;
         _buyBerries = buyBerries;
-        _confirm = confirmAsync; _previewItem = previewItem; _useItem = useItem;
+        _confirm = confirmAsync; _confirmDestructive = confirmDestructiveAsync; _previewItem = previewItem; _useItem = useItem;
         _xpProgress = xpProgress; _whereFind = whereFind;
         LocalConfirmationHost.Completed += CompleteLocalConfirmation;
 
@@ -260,7 +262,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         IndividualsPane.Visibility = Visibility.Visible;
         SpeciesPane.Visibility = Visibility.Collapsed;
-        IndividualsModeButton.Style = null;
+        IndividualsModeButton.Style = (Style)FindResource("UiPrimaryButtonStyle");
         SpeciesModeButton.Style = (Style)FindResource("SecondaryButtonStyle");
     }
 
@@ -268,7 +270,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         IndividualsPane.Visibility = Visibility.Collapsed;
         SpeciesPane.Visibility = Visibility.Visible;
-        SpeciesModeButton.Style = null;
+        SpeciesModeButton.Style = (Style)FindResource("UiPrimaryButtonStyle");
         IndividualsModeButton.Style = (Style)FindResource("SecondaryButtonStyle");
         RefreshSpecies();
     }
@@ -418,8 +420,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         public string NameText => Entry.DisplayName ?? "Неизвестный вид";
         public string SubText => Entry.IsDiscovered
             ? $"{string.Join(" · ", Entry.Types.Select(TypeDisplay.GetLabel))} · {RarityName}"
-            : Entry.HasSilhouette ? Entry.RouteHint : "Этот вид ещё никто не встречал";
-        public Visibility WhereVisibility => !Entry.IsDiscovered && !Entry.RouteHint.StartsWith("Эволюция") ? Visibility.Visible : Visibility.Collapsed;
+            : Entry.HasSilhouette ? Entry.RouteHint.StartsWith("Эволюция") ? "Открывается эволюцией" : "Можно встретить" : "Ещё не встречался";
+        public Visibility WhereVisibility => Visibility.Visible;
         private string RarityName => Enum.TryParse<RarityTier>(Entry.Rarity, true, out var tier)
             ? RarityDisplay.GetName(tier) : Entry.Rarity ?? string.Empty;
         public Visibility RevealedVisibility => Entry.IsDiscovered && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
@@ -661,7 +663,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // until some unrelated field changes. The nickname is in there for the same reason:
         // renaming from the detail overlay must repaint the card behind it.
         var signature = $"{_rarityFilter}|{_searchQuery}|{_hideFullyEvolved}|{_sortOrder}|{_pageIndex}|" + string.Join("|", page.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId, e.IsShiny) is not null}:{_animatedFrames.ContainsKey((e.DisplaySpeciesId, e.IsShiny))}"));
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{IndividualDisplay.Discriminator(_appState.Collection.Individuals, e.IndividualId)}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId, e.IsShiny) is not null}:{_animatedFrames.ContainsKey((e.DisplaySpeciesId, e.IsShiny))}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
@@ -679,6 +681,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesId = entry.DisplaySpeciesId,
         SpeciesName = entry.SpeciesName,
         Nickname = entry.Nickname,
+        IndividualText = IndividualDisplay.Discriminator(_appState.Collection.Individuals, entry.IndividualId),
         DexNumber = entry.DexNumberText(),
         RarityName = RarityDisplay.GetName(entry.Rarity),
         RarityBrush = RarityDisplay.GetBrush(entry.Rarity),
@@ -810,6 +813,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (_localConfirmation is not null) { CompleteLocalConfirmation(false); e.Handled = true; return; }
         if (SpeciesDialog.Visibility == Visibility.Visible) { CloseSpeciesDialog(); e.Handled = true; return; }
         if (DetailOverlay.Visibility != Visibility.Visible) return;
+        if (DetailNicknameEditor.Visibility == Visibility.Visible) { DetailNicknameCancel_Click(this, e); e.Handled = true; return; }
         HideDetail();
         e.Handled = true;
     }
@@ -840,8 +844,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private SpriteAnimator? _detailAnimator;
 
-    /// Guards the nickname TextBox's TextChanged while ShowDetail populates it — see there.
-    private bool _isLoadingDetailNickname;
 
     private void ShowDetail(PokedexCard card)
     {
@@ -858,11 +860,13 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailSpeciesSubtitleText.Text = card.SpeciesSubtitle;
         DetailSpeciesSubtitleText.Visibility = card.SpeciesSubtitleVisibility;
 
-        // Suppressed so filling the box from the model doesn't read as the player typing —
-        // that would write the nickname straight back and, worse, do it on every card open.
-        _isLoadingDetailNickname = true;
         DetailNicknameBox.Text = card.Nickname ?? string.Empty;
-        _isLoadingDetailNickname = false;
+        DetailNicknameEditor.Visibility = Visibility.Collapsed;
+        DetailNicknameEditor.IsEnabled = true;
+        DetailNameButton.Visibility = Visibility.Visible;
+        DetailRetrainingEditor.Visibility = Visibility.Collapsed;
+        DetailRetrainingToggle.Content = "Переобучение";
+        System.Windows.Automation.AutomationProperties.SetName(DetailNameButton, "Изменить кличку: " + card.DisplayName);
 
         DetailNatureText.Text = "Характер: " + card.NatureText;
         DetailCaughtAtText.Text = "Пойман: " + card.CaughtAtText;
@@ -938,7 +942,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             : string.Empty;
         UpdateEvolutionActionState();
         var choicePossible = preview.Branches.Count(x => x.Available) > 1;
-        DetailEvolutionStoneToggle.Visibility = choicePossible ? Visibility.Visible : Visibility.Collapsed;
+        DetailEvolutionStoneToggle.Visibility = DetailEvolutionBranchPicker.Visibility = choicePossible ? Visibility.Visible : Visibility.Collapsed;
         DetailEvolutionStoneToggle.IsEnabled = choicePossible && preview.StonesOwned > 0 && !_detailPending;
         if (!choicePossible || preview.StonesOwned == 0) DetailEvolutionStoneToggle.IsChecked = false;
         DetailStoneStockText.Text = $"В запасе: {preview.StonesOwned}";
@@ -1042,7 +1046,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var preview = _previewRetraining(_detailCard.IndividualId, selected);
         _detailRetrainingPreview = preview;
         DetailRetrainingCostText.Text = "Стоимость: " + string.Join(" · ",
-            preview.Costs.Select(x => $"{x.BerryId}: {x.Owned} / {x.Required}"));
+            preview.Costs.Select(x => $"{ExpeditionView.BerryName(x.BerryId)} ×{x.Required} (в запасе {x.Owned})"));
         DetailRetrainingOutcomesText.Text = "Возможные новые особенности: " +
             string.Join(" · ", preview.Outcomes.Select(TraitLabel));
         DetailRetrainingReasonText.Text = preview.Reason ?? string.Empty;
@@ -1062,7 +1066,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var slot = (DetailRetrainingSlotPicker.SelectedItem as ComboBoxItem)?.Tag as int? ?? 1;
         var preview = _previewRetraining(id, slot);
         if (preview.Reason is not null) { DetailRetrainingReasonText.Text = preview.Reason; return; }
-        var cost = string.Join(", ", preview.Costs.Select(x => $"{x.Required} {x.BerryId}"));
+        var cost = string.Join(", ", preview.Costs.Select(x => $"{ExpeditionView.BerryName(x.BerryId)} ×{x.Required}"));
         _detailPending = true;
         DetailRetrainButton.IsEnabled = false;
         try
@@ -1165,6 +1169,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailFavoriteButton.ToolTip = _detailIsFavorite
             ? "Убрать из избранного"
             : "Добавить в избранное";
+        System.Windows.Automation.AutomationProperties.SetName(DetailFavoriteButton, (string)DetailFavoriteButton.ToolTip);
         DetailFavoriteBadge.Visibility = _detailIsFavorite ? Visibility.Visible : Visibility.Collapsed;
     }
 
@@ -1172,7 +1177,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// card under the player after it would make a second thought cost another two clicks.
     private async void DetailFavoriteButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_detailCard is null) return;
+        if (_detailPending || _detailCard is null) return;
         var id = _detailCard.IndividualId;
         var generation = _detailGeneration;
         if (_commitState is null) ToggleFavorite(id);
@@ -1239,41 +1244,91 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    /// Live rename. Does NOT call _onStateChanged — the overlay has nothing to re-fetch; the
-    /// periodic autosave persists it. The grid behind picks the new name up on the next tick,
-    /// because Nickname is part of its rebuild signature.
-    private async void DetailNicknameBox_TextChanged(object sender, TextChangedEventArgs e)
+    private void DetailName_Click(object sender, RoutedEventArgs e)
     {
-        if (_isLoadingDetailNickname || _detailCard is null) return;
-        var id = _detailCard.IndividualId;
-        var generation = _detailGeneration;
-        var nicknameText = DetailNicknameBox.Text;
-        if (_commitState is null) _viewModel.SetNickname(id, nicknameText);
-        else if (!await CommitMutationAsync(next =>
+        if (_detailPending || _detailCard is null) return;
+        DetailNicknameBox.Text = LiveNickname(_detailCard.IndividualId) ?? string.Empty;
+        DetailSpeciesSubtitleText.Text = _detailCard.SpeciesName;
+        DetailSpeciesSubtitleText.Visibility = Visibility.Visible;
+        DetailNameButton.Visibility = Visibility.Collapsed;
+        DetailNicknameEditor.Visibility = Visibility.Visible;
+        DetailErrorText.Text = string.Empty;
+        DetailNicknameBox.Focus();
+        DetailNicknameBox.SelectAll();
+    }
+
+    private void DetailNicknameCancel_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailPending) return;
+        DetailNicknameEditor.Visibility = Visibility.Collapsed;
+        DetailNameButton.Visibility = Visibility.Visible;
+        DetailSpeciesSubtitleText.Text = _detailCard?.SpeciesName ?? string.Empty;
+        DetailSpeciesSubtitleText.Visibility = _detailCard is not null && LiveNickname(_detailCard.IndividualId) is not null ? Visibility.Visible : Visibility.Collapsed;
+        DetailErrorText.Text = string.Empty;
+        DetailNameButton.Focus();
+    }
+
+    private async void DetailNickname_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key != System.Windows.Input.Key.Enter) return;
+        e.Handled = true;
+        await SaveNicknameAsync();
+    }
+
+    private async void DetailNicknameSave_Click(object sender, RoutedEventArgs e) => await SaveNicknameAsync();
+
+    private async Task SaveNicknameAsync()
+    {
+        if (_detailPending || _detailCard is null || DetailNicknameEditor.Visibility != Visibility.Visible) return;
+        var text = DetailNicknameBox.Text;
+        if (text.Length > 20 || text.Any(char.IsControl))
         {
-            var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
-                ?? throw new InvalidOperationException("Этот покемон больше не найден.");
-            individual.Nickname = nicknameText;
-        }, id, generation))
-        {
-            if (IsCurrentDetail(id, generation))
-            {
-                _isLoadingDetailNickname = true;
-                DetailNicknameBox.Text = LiveNickname(id) ?? string.Empty;
-                _isLoadingDetailNickname = false;
-            }
+            DetailErrorText.Text = "Кличка должна быть не длиннее 20 символов и без переносов строк.";
             return;
         }
-        if (!IsCurrentDetail(id, generation)) return;
+        var id = _detailCard.IndividualId;
+        var generation = _detailGeneration;
+        _detailPending = true;
+        DetailNicknameEditor.IsEnabled = false;
+        try
+        {
+            if (_commitState is null) _viewModel.SetNickname(id, text);
+            else if (!await CommitMutationAsync(next =>
+            {
+                var individual = next.Individuals.FirstOrDefault(i => i.Id == id)
+                    ?? throw new InvalidOperationException("Этот покемон больше не найден.");
+                individual.Nickname = text;
+            }, id, generation)) return;
+            if (!IsCurrentDetail(id, generation)) return;
+            var nickname = LiveNickname(id);
+            DetailSpeciesNameText.Text = nickname ?? _detailCard.SpeciesName;
+            DetailSpeciesSubtitleText.Text = nickname is null ? string.Empty : _detailCard.SpeciesName;
+            DetailSpeciesSubtitleText.Visibility = nickname is null ? Visibility.Collapsed : Visibility.Visible;
+            System.Windows.Automation.AutomationProperties.SetName(DetailNameButton, "Изменить кличку: " + DetailSpeciesNameText.Text);
+            DetailNicknameEditor.Visibility = Visibility.Collapsed;
+            DetailNameButton.Visibility = Visibility.Visible;
+            DetailErrorText.Text = string.Empty;
+            DetailNameButton.Focus();
+            Refresh();
+        }
+        finally
+        {
+            _detailPending = false;
+            if (IsCurrentDetail(id, generation))
+            {
+                DetailNicknameEditor.IsEnabled = true;
+                if (DetailNicknameEditor.Visibility == Visibility.Visible) DetailNicknameBox.Focus();
+            }
+        }
+    }
 
-        // Re-read from the model rather than from the box: the setter trims and clamps, so a
-        // whitespace-only entry must show as "back to the species name", not as a blank title.
-        var nickname = LiveNickname(_detailCard.IndividualId);
-        var hasNickname = nickname is not null;
-
-        DetailSpeciesNameText.Text = hasNickname ? nickname! : _detailCard.SpeciesName;
-        DetailSpeciesSubtitleText.Text = hasNickname ? _detailCard.SpeciesName : string.Empty;
-        DetailSpeciesSubtitleText.Visibility = hasNickname ? Visibility.Visible : Visibility.Collapsed;
+    private void DetailRetrainingToggle_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailPending) return;
+        var show = DetailRetrainingEditor.Visibility != Visibility.Visible;
+        DetailRetrainingEditor.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+        DetailRetrainingToggle.Content = show ? "Скрыть переобучение" : "Переобучение";
+        if (show) DetailRetrainingSlotPicker.Focus();
     }
 
     /// This individual's nickname straight from the model, or null. Read live rather than off
@@ -1334,7 +1389,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _detailPending = true; DetailRehomeButton.IsEnabled = false;
         try
         {
-            if (!await ConfirmAsync("Найти новый дом?", $"Передать {name} за {quote.Coins} монет? Покемон покинет коллекцию навсегда. Открытая форма останется в покедексе. Это нельзя отменить.", "Передать")) return;
+            if (!await ConfirmAsync("Найти новый дом?", $"Передать {name} за {quote.Coins} монет? Покемон покинет коллекцию навсегда. Открытая форма останется в покедексе. Это нельзя отменить.", "Передать", destructive: true)) return;
             if (!IsCurrentDetail(id, generation)) return;
             var current = _previewRehome(id);
             if (current.Reason is not null || current.Coins != quote.Coins)
@@ -1473,13 +1528,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _selectedSpeciesId = id; ShowSpeciesDetail(entry); SpeciesDialog.Visibility = Visibility.Visible;
         if (entry is not null) SpeciesDetailDescription.Text = _whereFind?.Invoke(id, _speciesShiny) ?? entry.RouteHint;
     }
-    private Task<bool> ConfirmAsync(string title, string body, string caption)
+    private Task<bool> ConfirmAsync(string title, string body, string caption, bool destructive = false)
     {
+        if (destructive && _confirmDestructive is not null) return _confirmDestructive(title, body, caption);
         if (_confirm is not null) return _confirm(title, body, caption);
-        if (System.Windows.Window.GetWindow(this) is AppMenuWindow shell) return shell.ConfirmAsync(title, body, caption);
+        if (System.Windows.Window.GetWindow(this) is AppMenuWindow shell) return destructive ? shell.ConfirmDestructiveAsync(title, body, caption) : shell.ConfirmAsync(title, body, caption);
         if (_localConfirmation is not null) return Task.FromResult(false);
         _localConfirmation = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        var task = _localConfirmation.Task; LocalConfirmationHost.Present(title, body, caption); return task;
+        var task = _localConfirmation.Task; LocalConfirmationHost.Present(title, body, caption, destructive); return task;
     }
     private void CompleteLocalConfirmation(bool result)
     {

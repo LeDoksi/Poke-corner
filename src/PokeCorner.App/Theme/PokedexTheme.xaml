@@ -1,4 +1,4 @@
-﻿<!-- PokéCorner native palette: cream paper, forest controls and Nunito. -->
+<!-- PokéCorner native palette: cream paper, forest controls and Nunito. -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:theme="clr-namespace:PokeCorner.App.Theme">
@@ -724,26 +724,25 @@
 
     <!-- Star pin on a roster card. Both Fill and Stroke come from the bound card so the same
          single Path covers "pinned" (solid gold) and "not pinned" (hollow, muted outline). -->
-    <Style x:Key="FavoriteToggleStyle" TargetType="Button">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="Root" Background="{StaticResource WindowBackgroundBrush}"
-                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
-                            CornerRadius="9" Width="30" Height="30">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
-                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style x:Key="FavoriteToggleStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="8"/>
+    </Style>
+
+    <Style x:Key="UiCardListItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
+            <Border x:Name="Surface" BorderThickness="2" BorderBrush="Transparent" CornerRadius="12">
+                <ContentPresenter/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsSelected" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiForestBrush}"/></Trigger>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}"/></Trigger>
+                <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource SecondaryTextBrush}"/></Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate></Setter.Value></Setter>
     </Style>
 
     <!-- ===================== Tabs ===================== -->

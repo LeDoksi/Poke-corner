@@ -84,7 +84,7 @@ public partial class NurseryView : UserControl
     private string ParentName(SaveData data, Guid id)
     {
         var p = data.Individuals.FirstOrDefault(p => p.Id == id);
-        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.IsShiny ? " · Shiny" : "");
+        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.IsShiny ? " · Shiny" : "") + "\n" + IndividualDisplay.Discriminator(data.Individuals, p.Id, always: true);
     }
     private static string RarityName(string rarity) => rarity.ToLowerInvariant() switch
     {
@@ -275,12 +275,10 @@ public partial class NurseryView : UserControl
                 var reason = Unavailable(data, p);
                 var row = new StackPanel();
 
-                var ordinal = Array.FindIndex(data.Individuals.Where(x => x.CurrentSpeciesId == p.CurrentSpeciesId).OrderBy(x => x.CaughtAtUtc).ThenBy(x => x.Id).ToArray(), x => x.Id == p.Id) + 1;
-
                 var heading = new DockPanel();
                 heading.Children.Add(new Image { Source = Sprite(p.CurrentSpeciesId, p.IsShiny), Width = 54, Height = 54, Margin = new Thickness(0, 0, 7, 0) });
 
-                heading.Children.Add(new TextBlock { Text = $"{ParentName(data, p.Id)}\nЭкземпляр {ordinal} · ур. {_levels.LevelForXp(p.TotalXp)} · {p.CaughtAtUtc.ToLocalTime():g}", TextWrapping = TextWrapping.Wrap });
+                heading.Children.Add(new TextBlock { Text = $"{ParentName(data, p.Id)} · ур. {_levels.LevelForXp(p.TotalXp)}", TextWrapping = TextWrapping.Wrap });
                 row.Children.Add(heading);
 
                 row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId) + " — " + CollectionView.TraitEffect(p.FirstTraitId), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 5, 0, 0) });
@@ -424,6 +422,7 @@ public partial class NurseryView : UserControl
         if (_first == Guid.Empty || _second == Guid.Empty)
         {
             PreviewText.Text = "Выберите двух разных родителей.";
+            CostText.Text = "Стоимость и время появятся после выбора родителей.";
             return;
         }
         try

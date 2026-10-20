@@ -69,6 +69,37 @@
    </ControlTemplate>
   </Setter.Value></Setter>
  </Style>
+ <Style x:Key="UiDangerButtonStyle" TargetType="Button" BasedOn="{StaticResource UiPrimaryButtonStyle}">
+  <Setter Property="Background" Value="{StaticResource UiDangerBrush}"/>
+  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+   <Border x:Name="Surface" Background="{TemplateBinding Background}" CornerRadius="9" Padding="{TemplateBinding Padding}">
+    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+   </Border>
+   <ControlTemplate.Triggers>
+    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#842D29"/></Trigger>
+    <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Background" Value="#6D2421"/></Trigger>
+    <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiInkBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
+    <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Surface" Property="Background" Value="#DEDED2"/><Setter Property="Foreground" Value="#66725F"/></Trigger>
+   </ControlTemplate.Triggers>
+  </ControlTemplate></Setter.Value></Setter>
+ </Style>
+ <Style x:Key="UiChoiceListStyle" TargetType="ListBox">
+  <Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="0"/>
+  <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/><Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+  <Setter Property="ItemsPanel"><Setter.Value><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></Setter.Value></Setter>
+  <Setter Property="ItemContainerStyle"><Setter.Value><Style TargetType="ListBoxItem">
+   <Setter Property="Margin" Value="0,5,6,0"/><Setter Property="Padding" Value="10,7"/><Setter Property="MinHeight" Value="36"/><Setter Property="Foreground" Value="{StaticResource UiSecondaryInkBrush}"/><Setter Property="Cursor" Value="Hand"/>
+   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
+    <Border x:Name="Surface" Background="Transparent" CornerRadius="9" BorderBrush="{StaticResource UiBorderBrush}" BorderThickness="1" Padding="{TemplateBinding Padding}"><ContentPresenter VerticalAlignment="Center"/></Border>
+    <ControlTemplate.Triggers>
+     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#E4E8DA"/></Trigger>
+     <Trigger Property="IsSelected" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource UiForestBrush}"/><Setter Property="Foreground" Value="White"/><Setter Property="FontWeight" Value="Bold"/></Trigger>
+     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiInkBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
+     <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger>
+    </ControlTemplate.Triggers>
+   </ControlTemplate></Setter.Value></Setter>
+  </Style></Setter.Value></Setter>
+ </Style>
  <Style x:Key="UiContentTabsStyle" TargetType="TabControl">
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TabControl">
    <ContentPresenter ContentSource="SelectedContent" />

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PokeCorner.App.Popup.CollectionView"
+<UserControl x:Class="PokeCorner.App.Popup.CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PokeCorner.App.Popup"
@@ -193,24 +193,26 @@
                     </Grid>
 
                     <StackPanel x:Name="SpeciesPane" Visibility="Collapsed">
-                        <WrapPanel Margin="0,0,0,10">
-                            <RadioButton x:Name="SpeciesNormalToggle" Content="Обычные" GroupName="SpeciesForm" IsChecked="True" Checked="SpeciesForm_Changed" Style="{StaticResource FilterPillStyle}"/>
-                            <RadioButton x:Name="SpeciesShinyToggle" Content="Shiny" GroupName="SpeciesForm" Checked="SpeciesForm_Changed" Style="{StaticResource FilterPillStyle}"/>
-                        </WrapPanel>
-                        <TextBlock Text="Поиск по имени, номеру или местности" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,4"/><TextBox x:Name="SpeciesSearchBox" Tag="Имя, кличка или номер" Style="{StaticResource ThemedTextBoxStyle}" MaxLength="40"
-                                 TextChanged="SpeciesFilters_Changed" Margin="0,0,0,8"
-                                 AutomationProperties.Name="Поиск видов по имени, номеру или местности"
-                                 ToolTip="Имя открытого вида, номер или открытая подсказка местности" />
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel Margin="0,0,12,0"><TextBlock Text="Поиск по имени, номеру или местности" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,4"/>
+                                <TextBox x:Name="SpeciesSearchBox" Tag="Имя, номер или местность" Style="{StaticResource ThemedTextBoxStyle}" MaxLength="40" TextChanged="SpeciesFilters_Changed" AutomationProperties.Name="Поиск видов по имени, номеру или местности"/>
+                            </StackPanel>
+                            <WrapPanel Grid.Column="1" VerticalAlignment="Bottom">
+                                <RadioButton x:Name="SpeciesNormalToggle" Content="Обычные" GroupName="SpeciesForm" IsChecked="True" Checked="SpeciesForm_Changed" Style="{StaticResource FilterPillStyle}"/>
+                                <RadioButton x:Name="SpeciesShinyToggle" Content="Shiny" GroupName="SpeciesForm" Checked="SpeciesForm_Changed" Style="{StaticResource FilterPillStyle}"/>
+                            </WrapPanel>
+                        </Grid>
                         <WrapPanel Margin="0,0,0,8">
-                            <ComboBox x:Name="SpeciesSortCombo" Width="155" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
+                            <ComboBox x:Name="SpeciesSortCombo" Width="140" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
                                       AutomationProperties.Name="Сортировка видов" SelectedIndex="0">
                                 <ComboBoxItem Content="По номеру"/><ComboBoxItem Content="По дате"/><ComboBoxItem Content="По типу"/>
                             </ComboBox>
-                            <ComboBox x:Name="SpeciesTypeCombo" Width="145" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
+                            <ComboBox x:Name="SpeciesTypeCombo" Width="170" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
                                       AutomationProperties.Name="Тип вида" SelectedIndex="0">
                                 <ComboBoxItem Content="Тип: любой"/>
                             </ComboBox>
-                            <ComboBox x:Name="SpeciesRarityCombo" Width="145" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
+                            <ComboBox x:Name="SpeciesRarityCombo" Width="178" Margin="0,0,8,4" SelectionChanged="SpeciesFilters_Changed"
                                       AutomationProperties.Name="Редкость вида" SelectedIndex="0">
                                 <ComboBoxItem Content="Редкость: любая"/>
                                 <ComboBoxItem Content="Обычный" Tag="Common"/><ComboBoxItem Content="Необычный" Tag="Uncommon"/>
@@ -219,7 +221,7 @@
 
                         </WrapPanel>
                         <TextBlock x:Name="SpeciesCountText" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,7"/>
-                        <ListBox x:Name="SpeciesGrid" SelectionChanged="SpeciesGrid_SelectionChanged"
+                        <ListBox x:Name="SpeciesGrid" SelectionChanged="SpeciesGrid_SelectionChanged" Background="Transparent" BorderThickness="0" Padding="0" ItemContainerStyle="{StaticResource UiCardListItemStyle}"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  AutomationProperties.Name="Виды Покедекса">
                             <ListBox.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ListBox.ItemsPanel>
@@ -240,8 +242,8 @@
                                                 <TextBlock Text="?" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                            Visibility="{Binding UnknownVisibility}"/>
                                             </Grid>
-                                            <TextBlock Text="{Binding NameText}" FontWeight="Bold" TextWrapping="Wrap"/>
-                                            <TextBlock Text="{Binding SubText}" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap"/>
+                                            <TextBlock Text="{Binding NameText}" FontWeight="Bold" TextWrapping="Wrap" Height="40" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding SubText}" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Height="38" TextTrimming="CharacterEllipsis"/>
                                             <Button Content="Где найти?" Tag="{Binding Entry.SpeciesId}" Click="SpeciesWhere_Click" Visibility="{Binding WhereVisibility}" Style="{StaticResource SecondaryButtonStyle}" Margin="0,6,0,0"/>
                                         </StackPanel>
                                     </Border>
@@ -304,7 +306,7 @@
                                          KeyDown="PokedexCard_KeyDown"
                                          GotKeyboardFocus="PokedexCard_GotKeyboardFocus"
                                          LostKeyboardFocus="PokedexCard_LostKeyboardFocus"
-                                         AutomationProperties.Name="{Binding DisplayName}"
+                                         AutomationProperties.Name="{Binding AccessibleName}"
                                         ToolTip="Открыть карточку — характер, дата поимки и действия">
                                     <StackPanel>
                                         <Grid Margin="0,0,0,6">
@@ -373,6 +375,7 @@
                                                         TextAlignment="Left" HorizontalAlignment="Left"
                                                        Margin="0,1,0,0" />
                                              <TextBlock Text="{Binding LevelText}" Style="{StaticResource CaptionTextStyle}"/>
+                                             <TextBlock Text="{Binding IndividualText}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding IndividualText}"/>
                                              <TextBlock Text="{Binding AvailabilityText}" Style="{StaticResource CaptionTextStyle}"/>
                                         </StackPanel>
 
@@ -433,10 +436,22 @@
                 <Border x:Name="DetailCard" Background="{StaticResource WindowBackgroundBrush}" MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
                     <DockPanel>
                         <DockPanel x:Name="DetailIdentityHeader" DockPanel.Dock="Top" Margin="0,0,0,12">
-                            <Button Content="← К покедексу" VerticalAlignment="Center" Click="DetailBack_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="12,0,0,0"/>
-                                        <WrapPanel DockPanel.Dock="Right" Margin="0,0,12,0"><Button x:Name="DetailSelectButton" Content="На рабочий стол" Click="DetailSelectButton_Click" Margin="0,0,8,0"/><Button x:Name="DetailFavoriteButton" Style="{StaticResource FavoriteToggleStyle}" Click="DetailFavoriteButton_Click"><Path x:Name="DetailFavoriteStar" Width="19" Height="19" Stretch="Uniform" Data="M12,2 L15,8 22,9 17,14 18,21 12,18 6,21 7,14 2,9 9,8 Z"/></Button></WrapPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Top" Margin="12,0,0,0">
+                                <Button x:Name="DetailSelectButton" Content="На рабочий стол" Click="DetailSelectButton_Click" Style="{StaticResource UiPrimaryButtonStyle}" MinHeight="40" Padding="12,7" Margin="0,0,8,0"/>
+                                <Button x:Name="DetailFavoriteButton" Style="{StaticResource FavoriteToggleStyle}" Click="DetailFavoriteButton_Click" Margin="0,0,8,0"><Path x:Name="DetailFavoriteStar" Width="19" Height="19" Stretch="Uniform" Data="M12,2 L15,8 22,9 17,14 18,21 12,18 6,21 7,14 2,9 9,8 Z"/></Button>
+                                <Button x:Name="DetailBackButton" Content="К покедексу" Click="DetailBack_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                            </StackPanel>
                             <StackPanel>
-                                <TextBlock x:Name="DetailSpeciesNameText" Style="{StaticResource ScreenTitleTextStyle}" TextWrapping="Wrap"/>
+                                <Button x:Name="DetailNameButton" Click="DetailName_Click" Style="{StaticResource UiHeaderButtonStyle}" HorizontalAlignment="Left" Padding="2,0" ToolTip="Изменить кличку">
+                                    <DockPanel><Path Width="16" Height="16" Stretch="Uniform" Stroke="{StaticResource UiSecondaryInkBrush}" StrokeThickness="1.6" Data="M3 14L2 20 8 19 20 7 15 2Z M12 5L17 10" DockPanel.Dock="Right" Margin="8,0,2,0"/>
+                                        <TextBlock x:Name="DetailSpeciesNameText" Style="{StaticResource ScreenTitleTextStyle}" TextWrapping="Wrap"/>
+                                    </DockPanel>
+                                </Button>
+                                <StackPanel x:Name="DetailNicknameEditor" Visibility="Collapsed">
+                                    <TextBox x:Name="DetailNicknameBox" MaxLength="20" PreviewKeyDown="DetailNickname_KeyDown" Style="{StaticResource ThemedTextBoxStyle}" AutomationProperties.Name="Кличка питомца"/>
+                                    <TextBlock Text="До 20 символов. Пустое поле вернёт имя вида." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,6"/>
+                                    <WrapPanel><Button x:Name="DetailNicknameSaveButton" Content="Сохранить" Click="DetailNicknameSave_Click" Style="{StaticResource UiPrimaryButtonStyle}" MinHeight="40" Padding="10,7" Margin="0,0,8,0"/><Button x:Name="DetailNicknameCancelButton" Content="Отмена" Click="DetailNicknameCancel_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
+                                </StackPanel>
                                 <WrapPanel><TextBlock x:Name="DetailSpeciesSubtitleText" Style="{StaticResource MetaTextStyle}" Margin="0,0,8,0"/><TextBlock x:Name="DetailDexNumberText" Style="{StaticResource MetaTextStyle}"/></WrapPanel>
                                 <WrapPanel Margin="0,4,0,0"><TextBlock x:Name="DetailNatureText" Style="{StaticResource CaptionTextStyle}" Margin="0,0,12,0"/><TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource CaptionTextStyle}"/></WrapPanel>
                             </StackPanel>
@@ -479,20 +494,20 @@
                                         <TextBlock x:Name="DetailEvolutionText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,4"/>
                                         <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource UiGreenProgressBarStyle}" Minimum="0" Maximum="1"/>
                                         <TextBlock x:Name="DetailTraitsText" TextWrapping="Wrap" Margin="0,14,0,10"/>
+                                        <Border x:Name="DetailRetrainingSection" Padding="0,0,0,12" Visibility="Collapsed"><StackPanel>
+                                            <Button x:Name="DetailRetrainingToggle" Content="Переобучение" Click="DetailRetrainingToggle_Click" Style="{StaticResource SecondaryButtonStyle}" HorizontalAlignment="Left"/>
+                                            <StackPanel x:Name="DetailRetrainingEditor" Visibility="Collapsed" Margin="0,8,0,0">
+                                                <ComboBox x:Name="DetailRetrainingSlotPicker" SelectionChanged="DetailRetrainingSlotPicker_SelectionChanged" AutomationProperties.Name="Особенность для переобучения"/>
+                                                <TextBlock x:Name="DetailRetrainingCostText" TextWrapping="Wrap" Margin="0,6,0,4"/><TextBlock x:Name="DetailRetrainingOutcomesText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingReasonText" TextWrapping="Wrap"/>
+                                                <WrapPanel Margin="0,8,0,0"><Button x:Name="DetailRetrainButton" Content="Переобучить" Click="DetailRetrainButton_Click" Margin="0,0,8,0"/><Button x:Name="DetailRetrainingShopButton" Content="В магазин" Click="DetailRetrainingShopButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
+                                            </StackPanel>
+                                        </StackPanel></Border>
                                         <Border x:Name="DetailItemsSection" Style="{StaticResource CardStyle}" Padding="12" Margin="0,4,0,10"><StackPanel>
                                             <TextBlock Text="Помочь питомцу" Style="{StaticResource SectionHeaderTextStyle}"/>
                                             <DockPanel Margin="0,8,0,0"><Button x:Name="DetailCareBoosterButton" Content="Применить" Tag="care-booster" Click="DetailItem_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,0,0"/><Image x:Name="DetailCareBoosterImage" Source="/PokeCorner;component/Assets/UiSystem/care-booster.png" Width="32" Height="40" DockPanel.Dock="Left" Margin="0,0,8,0"/><TextBlock x:Name="DetailCareBoosterText" TextWrapping="Wrap"/></DockPanel>
                                         <DockPanel Margin="0,12,0,0"><Button x:Name="DetailXpPotionButton" Content="Применить" Tag="xp-potion" Click="DetailItem_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,0,0"/><Image x:Name="DetailXpPotionImage" Source="/PokeCorner;component/Assets/UiSystem/xp-potion.png" Width="32" Height="40" DockPanel.Dock="Left" Margin="0,0,8,0"/><TextBlock x:Name="DetailXpPotionText" TextWrapping="Wrap"/></DockPanel>
                                         </StackPanel></Border>
                                         <TextBlock x:Name="DetailBusyText" Style="{StaticResource MetaTextStyle}"/>
-                                        <Expander Header="Кличка и переобучение" Margin="0,12,0,0"><StackPanel>
-                                            <TextBox x:Name="DetailNicknameBox" MaxLength="20" TextChanged="DetailNicknameBox_TextChanged" Style="{StaticResource ThemedTextBoxStyle}" Margin="0,8,0,0" AutomationProperties.Name="Кличка питомца"/>
-                                            <Border x:Name="DetailRetrainingSection" Padding="0,10" Visibility="Collapsed"><StackPanel>
-                                                <TextBlock Text="Переобучение" Style="{StaticResource SectionHeaderTextStyle}"/><ComboBox x:Name="DetailRetrainingSlotPicker" SelectionChanged="DetailRetrainingSlotPicker_SelectionChanged"/>
-                                                <TextBlock x:Name="DetailRetrainingCostText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingOutcomesText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingReasonText" TextWrapping="Wrap"/>
-                                                <WrapPanel><Button x:Name="DetailRetrainButton" Content="Переобучить" Click="DetailRetrainButton_Click"/><Button x:Name="DetailRetrainingShopButton" Content="В магазин" Click="DetailRetrainingShopButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
-                                            </StackPanel></Border>
-                                        </StackPanel></Expander>
                                         <Border x:Name="DetailFavoriteBadge" Visibility="Collapsed"><TextBlock Text="Избранное"/></Border>
                                         <Border x:Name="DetailActiveBadge" Visibility="Collapsed"><TextBlock Text="На столе"/></Border>
                                     </StackPanel>

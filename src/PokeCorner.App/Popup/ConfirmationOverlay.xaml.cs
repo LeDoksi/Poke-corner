@@ -9,11 +9,12 @@ public partial class ConfirmationOverlay : System.Windows.Controls.UserControl
 
     public ConfirmationOverlay() => InitializeComponent();
 
-    public void Present(string title, string body, string confirmCaption)
+    public void Present(string title, string body, string confirmCaption, bool destructive = false)
     {
         TitleText.Text = title;
         BodyText.Text = body;
         ConfirmButton.Content = confirmCaption;
+        ConfirmButton.Style = (Style)FindResource(destructive ? "UiDangerButtonStyle" : "UiPrimaryButtonStyle");
         Visibility = Visibility.Visible;
         UpdateLayout();
         CancelButton.Focus();

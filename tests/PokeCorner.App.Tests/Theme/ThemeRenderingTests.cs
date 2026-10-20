@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -829,10 +829,9 @@ public class ThemeRenderingTests
             Assert.Equal(Visibility.Collapsed, card.SpeciesSubtitleVisibility);
         });
 
-    /// Typing in the detail overlay's nickname box renames the individual live, and clearing it
-    /// reverts to species-name-only rather than storing a blank nickname.
+    /// Explicit rename commits a trimmed nickname; an empty commit restores the species name.
     [Fact]
-    public void CollectionView_NicknameBox_RenamesLiveAndAnEmptyValueClearsIt() =>
+    public void CollectionView_NicknameEditor_CommitsAndAnEmptyValueClearsIt() =>
         WpfTestHost.Run(() =>
         {
             var appState = new AppState();
@@ -853,7 +852,10 @@ public class ThemeRenderingTests
             var subtitle = (TextBlock)view.FindName("DetailSpeciesSubtitleText")!;
             Assert.Equal(string.Empty, box.Text);
 
+            ((Button)view.FindName("DetailNameButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             box.Text = "  Sparky  ";
+            Assert.Null(individual.Nickname);
+            ((Button)view.FindName("DetailNicknameSaveButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.Equal("Sparky", individual.Nickname); // trimmed by the domain setter
             Assert.Equal("Sparky", ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
             Assert.Equal("Pikachu", subtitle.Text);
@@ -863,7 +865,9 @@ public class ThemeRenderingTests
             view.Refresh();
             Assert.Equal("Sparky", Assert.Single(Cards(view)).DisplayName);
 
+            ((Button)view.FindName("DetailNameButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             box.Text = "   ";
+            ((Button)view.FindName("DetailNicknameSaveButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.Null(individual.Nickname);
             Assert.Equal("Pikachu", ((TextBlock)view.FindName("DetailSpeciesNameText")!).Text);
             Assert.Equal(Visibility.Collapsed, subtitle.Visibility);

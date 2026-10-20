@@ -107,9 +107,12 @@ public sealed class ExpeditionUiTests
             var expected = new ExpeditionService(Catalog.Value, data).Preview(new ExpeditionRequest("grove", "normal", 90,
                 [data.Individuals[0].Id], Guid.NewGuid(), DateTimeOffset.UtcNow));
             var shown = ((TextBlock)view.FindName("PreviewText")!).Text;
-            Assert.StartsWith($"Гарантировано: {expected.PrimaryBerries} ", shown);
-            Assert.Contains($"{expected.Coins} монет", shown);
-            Assert.Contains($"{expected.XpPerParticipant} XP", shown);
+            Assert.Contains("вернутся", shown);
+            var rewards = ((System.Windows.Controls.Primitives.UniformGrid)view.FindName("PreviewRewardCards")).Children.Cast<Border>()
+                .SelectMany(card => ((StackPanel)card.Child).Children.OfType<TextBlock>()).Select(text => text.Text).ToArray();
+            Assert.Contains(rewards, text => text.EndsWith($"×{expected.PrimaryBerries}"));
+            Assert.Contains($"{expected.Coins} монет", rewards);
+            Assert.Contains($"{expected.XpPerParticipant} XP каждому", rewards);
             Assert.Contains("Для встреч и дополнительных находок нужны трое", ((TextBlock)view.FindName("ContributionsText")!).Text);
         });
     }
@@ -295,7 +298,7 @@ public sealed class ExpeditionUiTests
                     if (sent.Count == 1)
                     {
                         view!.RouteButtons.Children.OfType<Button>().Last().RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
-                        ((ComboBox)view.FindName("DurationBox")!).SelectedIndex = 3;
+                        ((ListBox)view.FindName("DurationBox")!).SelectedIndex = 3;
                         return Task.FromException<ExpeditionAction>(new IOException("write failed"));
                     }
                     return Task.FromResult(new ExpeditionAction(true, "saved"));
@@ -310,7 +313,7 @@ public sealed class ExpeditionUiTests
             var start = (Button)view.FindName("StartButton")!;
             start.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
             Assert.Equal("Лесная роща", ((TextBlock)view.FindName("LandscapeName")!).Text);
-            Assert.Equal(1, ((ComboBox)view.FindName("DurationBox")!).SelectedIndex);
+            Assert.Equal(1, ((ListBox)view.FindName("DurationBox")!).SelectedIndex);
             start.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
             Assert.Equal(sent[0], sent[1]);
         });
