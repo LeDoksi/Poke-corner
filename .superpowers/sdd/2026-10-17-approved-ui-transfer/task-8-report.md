@@ -394,3 +394,202 @@ review and actual user/app/upgrade boundary. Assembled shell adapter does not su
 recovery adapter. Friend-loss and intermittent hero causes unproven. Real old->new MSI upgrade,
 physical input/hardware/audio acceptance remain later boundaries. This scoped checkpoint is NOT
 overall Task8 visual/release acceptance.
+
+
+## 20 October 2026 — consolidated daily-use finish, findings 1–8
+
+This is the SAME Task 8 and the one coordinated material batch requested in
+`task-8-daily-use-fix-brief.md` / `task-8-ui-review.md`, not overall Task 8 acceptance.
+Starting HEAD: `0a5349db880da6dda04b3bc90048cc41334a9c48` (verified before commit).
+Prior source checkpoint: `2fc48377c12e1ebbdde61a60ff179ce46fcd41c4`.
+Implementation HEAD: `5d3e7866d70777bcd0a2a2c2e1a92d0944af7243`.
+This append is committed separately, so the final branch HEAD can resolve both implementation
+and evidence without a self-referential commit hash inside its own contents.
+Original review BASE `66544f7586491908b94f3ddcb74e0b3c2531041d` remains unchanged.
+
+### Findings resolved as one shared batch
+
+1. **Personal actions.** Native name Button with visible pencil, keyboard focus and Invoke
+   semantics opens an explicit max-20-character editor. Typing does not mutate/save; Enter/Save
+   commits, Escape/Cancel leaves the model intact and returns focus. Default species identity
+   stays visible while editing and below a nickname. Empty commit restores species-only identity;
+   invalid control characters/overlength input never commit. Refusal retains draft/error and
+   editable focus. Pending duplicate save is blocked; completion cannot repaint another card.
+   Retraining is its own visible action beside traits, disclosing only its existing slot/cost
+   editor. Prices use readable berry names and existing canonical quantities. Desktop/star/Back
+   sit together at 40-DIP height; star reuses SecondaryButtonStyle including focus/pressed/disabled
+   rather than its former separate 30-DIP template. Favorite accessible name follows its state.
+2. **Nursery decision terms.** Moved the SAME ResourcePricesPanel, CostText, ShortageText and
+   shortage shop action beside pinned Start. Preview/outcomes/traits remain in scrolling body;
+   selected parents and decision terms stay fixed. Selected charm spend comes from the existing
+   choice/preview; no parallel price/time calculation. Unselected state says when terms appear.
+3. **Both Pokédex modes.** Explicit house primary/secondary styles in BOTH directions replace
+   Style=null. Search/form controls share a compact row; rarity/type filters fit their captions.
+   Transparent themed ListBox and focus/selection containers retain native list semantics.
+   Bounded name/metadata lines keep regular sprite cards; full canonical origin/evolution/pair
+   information is available in existing Where Find, also for evolved/discovered cards. Ordinary/
+   shiny discovery, name masking, owned navigation, filters and pagination are unchanged.
+4. **Shop.** Native house minus/TextBox/plus, useful native selection/editing, item/pack labels,
+   local live validation, exact long arithmetic total and shortage. Bounds follow the real
+   purchase contract: inventory room divided by pack units and int-bounded cost; zero, malformed,
+   overflow, over-capacity and insufficient funds cannot purchase. Plus/minus clamp safely;
+   pending disables row actions. One green purchase remains primary; use/navigation is secondary.
+   Existing stable-operation retry and commit-before-publish remain. Two legitimate quantity-two
+   purchases commit separately, while pending double click still makes one purchase.
+5. **Individual identity.** One small UI-only IndividualDisplay helper reuses nursery's current-
+   species caught-date/ID ordering. Duplicate collection/team candidates and selected slots use
+   the SAME ordinal/date and accessible labels; filtering/sorting does not renumber them.
+   Nursery uses the same helper (including its existing single-instance ordinal). No GUID is
+   displayed and no persisted identity/schema is introduced. Compact collection metadata is
+   one line with full tooltip/accessibility text; the ordinal remains visible.
+6. **Danger role.** ConfirmationOverlay has a backward-compatible explicit destructive flag and
+   established #9B3833 role with its own hover/pressed/focus/disabled treatment. AppMenuWindow
+   exposes safe/destructive adapters without changing the existing safe callback signature.
+   Actual collection transfer, expedition cancellation, settings reset and history replacement
+   factories/local paths carry the role explicitly; safe purchase/evolution/retraining remain
+   green. Cancel-first focus, trap, close/Esc, pending/background guards and consequence text
+   remain. Actual rehome capture and actual expedition cancellation regression exercise callers,
+   not just a generic fixture; cancelling retains the running trip.
+7. **Expedition.** Native ListBox finite segments show all difficulty/duration choices; selected
+   route uses the house forest role plus accessible selected text. Three illustrated canonical
+   reward cards and concise return time now sit next to pinned launch, from the SAME preview.
+   Team remains fixed; detailed contribution explanations scroll. Approved eight route assets
+   remain, including on active/result screens. Both selected and unselected compositions captured.
+8. **Catch context.** Selected gift/expedition has exactly its own short charm explanation;
+   unrelated queued gifts no longer append another paragraph. Existing activity reservation/
+   unsupported-shiny promise was preserved verbatim after covering tests caught unnecessary copy
+   drift. No charm/result/timing/save rule changed.
+
+Fresh linear evolution evidence additionally exposed a redundant disabled random-branch selector:
+its visibility now follows the same real multi-outcome condition as the stone action. Linear
+forms show no meaningless choice; existing branching forms retain their exact selector behavior.
+
+### Owned paths and scope
+
+Source (16): `src/PokeCorner.App/App.xaml.cs`; `Popup/AppMenuWindow.xaml.cs`;
+`Popup/CatchView.xaml.cs`; `Popup/CollectionCardModels.cs`; `Popup/CollectionView.xaml` and `.cs`;
+`Popup/ConfirmationOverlay.xaml.cs`; `Popup/ExpeditionView.xaml` and `.cs`;
+`Popup/NurseryView.xaml` and `.cs`; `Popup/SaveHistoryWindow.xaml.cs`;
+`Popup/SettingsView.xaml.cs`; `Popup/ShopView.xaml.cs`; `Theme/PokedexTheme.xaml`;
+`Theme/UiSystem.xaml`. Popup/Theme abbreviations are relative to `src/PokeCorner.App/`.
+App.xaml.cs changes are only named confirmation factory adapters, not recovery engine behavior.
+
+Fixtures (7): `tests/PokeCorner.App.Tests/GlobalUpdate/acceptanceVisualTests.cs`,
+`approvedCollectionTests.cs`, `approvedExpeditionTests.cs`, `expedition_uiTests.cs`, `shopTests.cs`,
+`task8AcceptanceTests.cs`; `tests/PokeCorner.App.Tests/Theme/ThemeRenderingTests.cs`.
+Only this SAME task-8-report.md append is the writer document. Root-owned docs/task8 review/
+brief/guidance archives, Kanban and incidental images/logs are not staged. No child agents.
+
+Impeccable polish/Operate/craft-floor and UI UX Pro Max skill/quick-reference/guidance applied to
+native WPF, preserving accepted cream/Nunito/forest/art. Existing context.mjs was NOT rerun.
+Original UI-SYSTEM, LATEST-REVIEW, accepted reference pictures and actual current native frames
+were used; old 37-state evidence remains historical. No new framework/dependency/art or mechanics.
+
+### Focused verification and retained failures
+
+All commands ran in the existing worktree through `rtk proxy`; external-worktree writes/build/git
+used scoped escalation. No broad App/Core suite was run. Final covering command:
+
+`rtk proxy powershell -NoProfile -Command '$env:POKE_SHELL_CAPTURE_DIR = (Join-Path (Get-Location) "docs/design-v2/ui-transfer/task-8/daily-use-focused-artifacts"); dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --filter "FullyQualifiedName~ApprovedCollectionTests|FullyQualifiedName~ShopTests|FullyQualifiedName~Task8AcceptanceTests|FullyQualifiedName~ApprovedExpeditionTests|FullyQualifiedName~ExpeditionUiTests|FullyQualifiedName~NurseryUiTests|FullyQualifiedName~ApprovedNurseryFinalTests|FullyQualifiedName~ThemeRenderingTests|FullyQualifiedName~ShellTests|FullyQualifiedName~SettingsTests|FullyQualifiedName~SaveHistory|FullyQualifiedName~CatchTests" --logger "trx;LogFileName=daily-use-final-focused.trx" --results-directory .superpowers/sdd/2026-10-17-approved-ui-transfer/daily-use-finish -v minimal'`
+
+**PASS 275/275, 0 skipped, Exit 0, 15 s** on final source. No warnings from the final build.
+Raw output: `.superpowers/sdd/2026-10-17-approved-ui-transfer/task-8-daily-use-final-focused.log`;
+TRX: same plan directory `daily-use-finish/daily-use-final-focused.trx`.
+`rtk proxy git diff --check`: Exit 0 before commit. Source commit contains only the 23 owned paths.
+
+Retained diagnostics in the SAME plan directory:
+- Pre-test compiler corrections: qualify Shop HorizontalAlignment; construct init-only test
+  properties in object initializers. Fixture compiler output: `task-8-daily-use-compile-fixture.log`.
+  First qualifier error is in session output; its initial shared log was overwritten before the
+  failed-run naming split. No tests claimed passing from either compile attempt.
+- Initial focused run **92/93, Exit 1**, `task-8-daily-use-focused-initial.log`. Obsolete expedition
+  single-sentence assertion was changed to verify the SAME canonical berry count, coin count and
+  XP in real PreviewRewardCards plus the return-time caption; no weaker numeric assertion.
+- Initial capture **0/1, Exit 1**, `task-8-daily-use-capture-initial.log` (also original capture.log),
+  first whole compact collection card `14,343,170,313.8` exceeded 650. Full dates wrapping added
+  height. An inherited CaptionTextStyle.Wrap required explicit NoWrap after a first incomplete
+  correction; second retained failure is `task-8-daily-use-capture-confirmation.log`. The original
+  whole-card/viewport assertion was NEVER removed/relaxed and no window was enlarged.
+- Main corrected bounded capture **1/1, Exit 0**: `task-8-daily-use-capture-final.log`,
+  `daily-use-finish/daily-use-capture-final.trx`.
+- Final four-composition detail override **1/1, Exit 0**:
+  `task-8-daily-use-detail-confirmation.log`, `daily-use-finish/daily-use-detail-confirmation.trx`.
+- Covering run **272/274, Exit 1**, `task-8-daily-use-covering-initial.log`: two activity charm copy
+  assertions caught unneeded wording drift. Restored the original reservation promise rather
+  than weakening those tests. Final 275/275 adds the pending rename lifetime regression.
+
+Capture command pattern (same process-only synthetic path and runner):
+`rtk proxy powershell -NoProfile -Command '$env:POKE_SHELL_CAPTURE_DIR = (Join-Path (Get-Location) "docs/design-v2/ui-transfer/task-8/<batch>"); dotnet test tests/PokeCorner.App.Tests/PokeCorner.App.Tests.csproj --no-restore --filter "FullyQualifiedName~<named-capture>" --logger "trx;LogFileName=<retained-name>.trx" --results-directory .superpowers/sdd/2026-10-17-approved-ui-transfer/daily-use-finish -v minimal'`.
+Main: batch `daily-use-confirmation`, named test `CaptureDailyUseFinish`.
+Override: batch `daily-use-detail-confirmation`, named test `CaptureDailyUseFinalDetails`.
+Only representative changed paths were captured; no repeated 37-state matrix.
+
+### Current native picture override index — use this before older indexes
+
+M = `docs/design-v2/ui-transfer/task-8/daily-use-confirmation/daily-use/`.
+D = `docs/design-v2/ui-transfer/task-8/daily-use-detail-confirmation/daily-use/`.
+Every stem below has BOTH `-base-150.png` (1000×760, raster 1.5) and
+`-compact-200.png` (840×650, raster 2). Additional `-action.png` exists where specified;
+that is a separate intentionally scrolled view, not initial-visibility proof.
+
+| Current reference/state | Prefix and exact stems | Evidence role |
+|---|---|---|
+| Owned collection / duplicates | M `collection` | Whole first row assertion, visible stable ordinal |
+| All species | M `species` | Shared mode/filter/list/card composition |
+| Full acquisition disclosure | M `species-where-find` | Actual canonical evolution/origin detail |
+| Personal default header | M `detail-supported-eevee` | Compatible neighboring actions, direct pencil, separate retraining |
+| Rename editor | D `detail-name-editor` | Species identity retained, native save/cancel |
+| Long nickname | D `detail-long-nickname` | Cyrillic header and action fit at both sizes |
+| Exposed retraining | D `detail-retraining` (+action) | Own action, readable exact cost and full reachable editor |
+| Fresh linear evolution | D `evolution-linear` (+action) | Fixed Later/Evolve, illustrated canonical cost, no redundant branch selector |
+| Nursery unselected | M `nursery-unselected` | Truthful no-price-yet state and visible parent actions |
+| Nursery selected | M `nursery-selected-pinned-footer` | SAME prices/time + Start simultaneously in bounds |
+| Nursery selected charm | M `nursery-selected-charm` | Real selected charm spend and changed canonical berry terms |
+| Expedition unselected | M `expedition-unselected` | Visible finite segments, selected route, disabled launch |
+| Team duplicate catalog | M `expedition-team-duplicates` | Distinct ordinals/date in otherwise identical candidates |
+| Expedition selected | M `expedition-selected-pinned-footer` | Canonical illustrated berry/coin/XP and return time beside Start |
+| Shop | M `shop-stepper` | Native bounded quantity, one primary purchase, secondary use/navigation |
+| Actual transfer confirmation | M `confirm-rehome-actual-caller` | Real name/price/consequence and danger role |
+| Expedition encounter | M `encounter-source-explanation` | One contextual reason despite gift queue elsewhere |
+
+D supersedes M's name-editor, retraining and linear-evolution variants entirely. The long-nickname
+variant is additional. Main supported-Eevee and the other M variants remain current. Earlier
+hierarchy/assembled/targeted frames remain historical for these changed compositions.
+
+Main: **32 records / 36 PNGs / 15,243,289 bytes**.
+- matrix.json SHA256 `70c06d69a65963fc166941bf55fc30caf74c1898fc4b4cddd0fae7d2c4219d5e`
+- capture-proof.json SHA256 `e8efcb5802efce7610b588240c48d014c8ca3f5359e85703f1cdc3f08e32f463`
+
+Detail override: **8 records / 12 PNGs / 2,714,359 bytes**.
+- matrix.json SHA256 `cfe441fc2ab6ce487376de55c51242ec9c26cd6481667675895fb7b3f3b52a32`
+- capture-proof.json SHA256 `0eb94489e095aee6a23ab0499da6754fd4e0a44361e988de7b165133dfd6658d`
+
+All retained PNG bytecounts and SHA256 independently rechecked against both manifests. Effective
+latest index: 17 compositions × two sizes = 34 records / 38 PNGs including action views.
+Writer explicitly opened 25 main PNGs and 6 detail-override PNGs through view_image (4 of the main
+ones are superseded by D), plus 3 accepted reference JPGs. This is not a claim every retained PNG
+was independently eyeballed. Actual final editor/long-name/retraining/linear frames were viewed.
+Activity fallback copy restoration after capture does not alter the captured expedition-source
+explanation; final source-specific regression is in the 275/275 gate.
+
+### Self-review and genuine remaining limits
+
+Native WPF RenderTargetBitmap evidence, real sprites/approved scene assets, real catalog/preview
+terms and synthetic 800-individual fixture. No HTML repaint or pretend new artwork. Initial bounds
+are asserted separately from action-scrolled pictures. Detail/offspring/contribution content can
+scroll while decision actions stay available. Ordinals are stable within the current collection
+and can change after ownership changes; they are deliberately not permanent IDs. Full date can
+ellipsis on compact collection cards; ordinal remains readable and full text is in tooltip/name.
+
+No new material concern remains from findings 1–8 in this writer's bounded self-review. This is
+not an independent reviewer verdict. No physical/per-monitor Windows DPI, screen reader session,
+hardware/audio/pointer-feel or real keyboard claim; focus and key events here are synthetic native
+WPF adapter tests. No user/friend profile/default startup/MSI execution/OS/account/autostart changes,
+restart/push/merge/release or new child reviewer. No gameplay probability/formula exposure.
+
+Remaining SAME-Task8 acceptance gates are exactly the existing later continuation: private App
+recovery synthetic selected/cancel/current-memory+buffer flush/replacement; full persistence/
+interruption/upgrade/downgrade cases; different-old/new legacy lookup byte-exact preservation plus
+authored/compiled MSI ordering/rollback; offline publish/MSI artifacts/hashes; ONE final relevant
+broad App/Core gate after that source; root's whole-branch review and concrete actual-app/old-to-new
+upgrade/hardware boundary. No full Task8 acceptance or release readiness claim.
