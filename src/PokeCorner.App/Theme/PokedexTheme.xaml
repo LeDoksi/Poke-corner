@@ -720,6 +720,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="TextBox" BasedOn="{StaticResource ThemedTextBoxStyle}"/>
 
     <!-- Star pin on a roster card. Both Fill and Stroke come from the bound card so the same
          single Path covers "pinned" (solid gold) and "not pinned" (hollow, muted outline). -->

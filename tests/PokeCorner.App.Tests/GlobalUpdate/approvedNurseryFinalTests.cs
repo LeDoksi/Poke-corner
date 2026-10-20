@@ -19,7 +19,7 @@ public sealed partial class NurseryUiTests
             var (data,first,second)=State(recipe);var view=View(data);Choose(view,first,second);
             var preview=new NurseryService(Catalog.Value,data).Preview([first,second]);
             Assert.All(preview.Outcomes,o=>Assert.Equal(o.SpeciesId,Catalog.Value.Species.Single(s=>s.Id==o.SpeciesId).FamilyRootId));
-            Assert.All(preview.Outcomes,o=>Assert.Contains(((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<StackPanel>().SelectMany(p=>p.Children.OfType<TextBlock>()),t=>t.Text.Contains($"№{o.SpeciesId} ·")));
+            Assert.All(preview.Outcomes,o=>Assert.Contains(OutcomeLabels(view),t=>t.Text.Contains($"№{o.SpeciesId} ·")));
             Assert.True(((Button)view.FindName("StartButton")!).IsEnabled);
         });
     }

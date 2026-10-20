@@ -289,7 +289,7 @@ public sealed class EvolutionTests
         WpfTestHost.Layout(view, 320, 420);
         var card = (Border)view.FindName("DetailCard");
         Assert.True(card.ActualWidth <= 320);
-        Assert.Contains("oran: 20 / 6", ((TextBlock)view.FindName("DetailEvolutionCostText")).Text);
+        Assert.Contains("× 6 · в запасе 20", ((TextBlock)view.FindName("DetailEvolutionCostText")).Text);
         var picker = (ComboBox)view.FindName("DetailEvolutionBranchPicker");
         Assert.True(picker.TranslatePoint(new Point(picker.ActualWidth, 0), card).X <= card.ActualWidth);
         Assert.Equal(9, picker.Items.Count);

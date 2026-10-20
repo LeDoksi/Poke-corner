@@ -310,7 +310,9 @@ public sealed class ApprovedCollectionTests
             () => {}, () => {}, () => {}, () => null, () => false, () => false,
             previewEvolution: id => new EvolutionService(catalog, state.ToSaveData(0)).Preview(id), evolveIndividual: (_, _, _) => Task.FromResult(new EvolutionAction(false, "unused")));
         view.OpenIndividual(pet.Id); var text = ((TextBlock)view.FindName("DetailEvolutionText")).Text;
-        Assert.Contains(66500.ToString("N0"), text); Assert.DoesNotContain(70000.ToString("N0"), text); Assert.DoesNotContain("%", text);
+        var preview = new EvolutionService(catalog, state.ToSaveData(0)).Preview(pet.Id);
+        Assert.Equal(66500, preview.CareRequired);
+        Assert.Equal("Достаточно", text); Assert.DoesNotContain("%", text);
         Assert.Equal(1d, ((ProgressBar)view.FindName("DetailEvolutionBar")).Value);
     });
 

@@ -98,11 +98,12 @@ public partial class ShopView : UserControl
         grid.Children.Add(detail);
 
         var action = new StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal, Margin = new Thickness(0, 10, 0, 0) };
-        var quantity = new TextBox { Text = "1", Width = 38, VerticalContentAlignment = VerticalAlignment.Center, ToolTip = "Количество" };
+        var quantity = new TextBox { Text = "1", Width = 52, Padding = new Thickness(6, 4, 6, 4), VerticalContentAlignment = VerticalAlignment.Center, ToolTip = "Количество" };
         var total = new TextBlock { Width = 84, Margin = new Thickness(8, 0, 8, 0), VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap };
         var buy = new Button { Content = "Купить", Padding = new Thickness(8, 5, 8, 5), MinHeight = 34, Style = (Style)FindResource("UiPrimaryButtonStyle"), Tag = good.Id };
         System.Windows.Automation.AutomationProperties.SetName(quantity, $"Количество: {good.Name}");
         System.Windows.Automation.AutomationProperties.SetName(buy, $"Купить: {good.Name}");
+        System.Windows.Automation.AutomationProperties.SetName(quantity, "Количество: " + good.Name);
         quantity.TextChanged += (_, _) => UpdateTotal(good);
         buy.Click += async (_, _) => await Buy(good);
         action.Children.Add(quantity);

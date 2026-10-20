@@ -73,7 +73,7 @@ public sealed partial class NurseryUiTests
                     published=proposed;return Task.FromResult(result);
                 },_=>Task.FromResult(false),Catalog.Value,(_,_)=>{},_=>{},_=>Task.CompletedTask);
             Choose(view,first,second);
-            ((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<Button>().Skip(1).First().RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            ((StackPanel)view.FindName("OutcomePanel")!).Children.OfType<Button>().Skip(1).First().RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             var before=JsonSaveStore.Clone(published);var start=(Button)view.FindName("StartButton")!;
             start.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.Null(published.Nest);Assert.Equal(before.Items,published.Items);Assert.Equal(before.Berries,published.Berries);Assert.Empty(published.NormalSpeciesIds);
@@ -111,10 +111,10 @@ public sealed partial class NurseryUiTests
             Assert.Single(buttons);Assert.Equal(second,buttons[0].Tag);Assert.True(buttons[0].IsEnabled);
             buttons[0].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));((Button)view.FindName("PickerSaveButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             data.ShinySpeciesIds.Add(recipe.AvailableOutcomes[0].SpeciesId);data.DiscoveredSpeciesIds.Add(recipe.AvailableOutcomes[0].SpeciesId);view.Refresh();
-            var rows=((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<StackPanel>().SelectMany(p=>p.Children.OfType<TextBlock>()).ToArray();
+            var rows=OutcomeLabels(view).ToArray();
             Assert.Contains(rows,p=>p.Text.Contains("неизвестный вид"));Assert.DoesNotContain(rows,p=>p.Text.Contains(SpeciesNameForTest(recipe.AvailableOutcomes[0].SpeciesId)));
             data.NormalSpeciesIds.Add(recipe.AvailableOutcomes[0].SpeciesId);view.Refresh();
-            Assert.Contains(((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<StackPanel>().SelectMany(p=>p.Children.OfType<TextBlock>()),p=>p.Text.Contains(SpeciesNameForTest(recipe.AvailableOutcomes[0].SpeciesId)));
+            Assert.Contains(OutcomeLabels(view),p=>p.Text.Contains(SpeciesNameForTest(recipe.AvailableOutcomes[0].SpeciesId)));
             foreach(var field in new[]{"PreviewText","CostText","ShortageText","ResultText","NestTerms","LuckText"})Assert.DoesNotContain("%",((TextBlock)view.FindName(field)!).Text);
         });
     }

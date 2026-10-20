@@ -90,6 +90,9 @@ public partial class AppMenuWindow : Window
         MenuTabControl.Visibility = SettingsContent.Visibility = Visibility.Collapsed;
         HostedContent.Content = content;
         HostedContent.Visibility = Visibility.Visible;
+        SettingsButton.Content = "К разделам";
+        SettingsButton.ToolTip = "Назад";
+        System.Windows.Automation.AutomationProperties.SetName(SettingsButton, "Закрыть открытый экран");
         return _hosted.Task;
     }
 
@@ -104,6 +107,9 @@ public partial class AppMenuWindow : Window
         HostedContent.Content = null;
         SettingsContent.Visibility = _hostedFromSettings ? Visibility.Visible : Visibility.Collapsed;
         MenuTabControl.Visibility = _hostedFromSettings ? Visibility.Collapsed : Visibility.Visible;
+        SettingsButton.Content = _hostedFromSettings ? "К разделам" : "Настройки";
+        SettingsButton.ToolTip = _hostedFromSettings ? "К разделам" : "Настройки";
+        System.Windows.Automation.AutomationProperties.SetName(SettingsButton, _hostedFromSettings ? "Вернуться к разделам" : "Открыть настройки");
         pending.TrySetResult();
     }
 
@@ -186,8 +192,12 @@ public partial class AppMenuWindow : Window
         e.Handled = true;
     }
 
-    private void SettingsButton_Click(object sender, RoutedEventArgs e) =>
+    private void SettingsButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_confirmation is not null) return;
+        if (_hosted is not null) { CompleteHostedContent(); return; }
         Navigate(SettingsContent.Visibility == Visibility.Visible ? _lastSection : MenuSection.Settings);
+    }
 
     // Segoe MDL2 Assets glyphs, the same font (and codepoints) the real Windows title
     // bar draws its chrome buttons from.

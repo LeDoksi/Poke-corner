@@ -16,14 +16,25 @@ namespace PokeCorner.App.Tests.GlobalUpdate;
 public class AcceptanceVisualTests
 {
     [Fact]
-    public async Task CaptureAssembledApplicationMatrix()
+    public Task CaptureAssembledApplicationMatrix() => CaptureApplication(false);
+
+    [Fact]
+    public Task CaptureTargetedCompositionContinuation() => CaptureApplication(true);
+
+    [Fact]
+    public Task CapturePinnedEvolutionFooterContinuation() => CaptureApplication(true, true);
+
+    [Fact]
+    public Task CaptureHierarchyContinuation() => CaptureApplication(true, hierarchy: true);
+
+    private async Task CaptureApplication(bool targeted, bool evolutionOnly = false, bool hierarchy = false)
     {
         var cancellations = new List<Task<bool>>();
         WpfTestHost.Run(() =>
     {
         var output = Environment.GetEnvironmentVariable("POKE_SHELL_CAPTURE_DIR");
         Assert.False(string.IsNullOrWhiteSpace(output));
-        output = Path.Combine(output!, "assembled");
+        output = Path.Combine(output!, hierarchy ? "hierarchy" : evolutionOnly ? "evolution-footer" : targeted ? "targeted" : "assembled");
         Directory.CreateDirectory(output);
         var catalog = CatalogPackage.Load(Path.Combine(AppContext.BaseDirectory, "Data"));
         var lookup = LegacyLookup.Load(catalog.DataRoot);
@@ -144,6 +155,46 @@ public class AcceptanceVisualTests
                 var file = key + (variant is null ? "" : "-" + variant) + "-" + size.Suffix + ".png";
                 Render(root, size.Width, size.Height, size.Scale, Path.Combine(output, file));
                 string? actionFile = null;
+                Rect? actionBounds = null;
+                if (targeted && key == "collection")
+                {
+                    var card = Descendants(root).OfType<Border>().First(b => b.DataContext is PokedexCard);
+                    var cardBounds = card.TransformToAncestor(root).TransformBounds(new Rect(card.RenderSize));
+                    Assert.True(cardBounds.Bottom <= size.Height, $"First collection card clipped: {cardBounds}");
+                }
+                if (targeted && key == "detail" && variant == "supported-eevee" && size.Width == 1000)
+                {
+                    foreach (var name in new[] { "DetailDescriptionText", "DetailRehomeButton", "DetailSelectButton" })
+                    {
+                        var target = (FrameworkElement)collection.FindName(name);
+                        var rect = target.TransformToAncestor(root).TransformBounds(new Rect(target.RenderSize));
+                        Assert.True(rect.Bottom <= size.Height && rect.Top >= 0, $"{name} outside base viewport: {rect}");
+                    }
+                }
+                if (hierarchy && (key == "expedition-selected" || key == "nursery" && variant == "selected-pinned-footer"))
+                {
+                    var view = key == "nursery" ? (FrameworkElement)nursery : expedition;
+                    var names = key == "nursery"
+                        ? new[] { "StartButton", "FirstSlot", "SecondSlot", "ChooseFirstButton", "ChooseSecondButton" }
+                        : new[] { "StartButton", "TeamSlots", "ChooseTeamButton", "PreviewText" };
+                    foreach (var name in names)
+                    {
+                        var target = (FrameworkElement)view.FindName(name);
+                        var bounds = target.TransformToAncestor(root).TransformBounds(new Rect(target.RenderSize));
+                        Assert.True(bounds.Top >= 0 && bounds.Left >= 0 && bounds.Bottom <= size.Height && bounds.Right <= size.Width,
+                            $"{key}/{name} outside initial viewport: {bounds}");
+                    }
+                }
+                if (targeted && key == "evolution")
+                {
+                    foreach (var name in new[] { "EvolutionLaterButton", "DetailEvolveButton", "DetailEvolutionShopButton", "DetailEvolutionRouteButton" })
+                    {
+                        var button = (Button)collection.FindName(name);
+                        var rect = button.TransformToAncestor(root).TransformBounds(new Rect(button.RenderSize));
+                        Assert.True(rect.Bottom <= size.Height && rect.Top >= 0 && rect.Left >= 0 && rect.Right <= size.Width,
+                            $"{name} outside initial viewport: {rect}");
+                    }
+                }
                 if (action is not null)
                 {
                     Assert.Equal(Visibility.Visible, action.Visibility);
@@ -151,10 +202,11 @@ public class AcceptanceVisualTests
                     var bounds = action.TransformToAncestor(root).TransformBounds(new Rect(action.RenderSize));
                     Assert.True(bounds.Top >= 0 && bounds.Left >= 0 && bounds.Bottom <= size.Height && bounds.Right <= size.Width,
                         $"{key}/{action.Name}: {bounds} outside {size.Width}x{size.Height}");
+                    actionBounds = bounds;
                     actionFile = Path.GetFileNameWithoutExtension(file) + "-action.png";
                     Render(root, size.Width, size.Height, size.Scale, Path.Combine(output, actionFile));
                 }
-                records.Add(new { reference = key, variant, file, actionFile, action = action?.Name, size.Width, size.Height, size.Scale,
+                records.Add(new { reference = key, variant, file, actionFile, actionBounds, action = action?.Name, size.Width, size.Height, size.Scale,
                     individuals = data.Individuals.Count, syntheticData = true, nativeWpfRender = true,
                     imagesWithSource = Descendants(root).OfType<Image>().Count(i => i.ActualHeight > 0 && i.Source is not null) });
             }
@@ -167,8 +219,137 @@ public class AcceptanceVisualTests
             Click(overlay, "CancelButton");
             Assert.True(task.IsCompletedSuccessfully); cancellations.Add(task);
         }
+        void SaveProof()
+        {
+                File.WriteAllText(Path.Combine(output, "matrix.json"), JsonSerializer.Serialize(records, new JsonSerializerOptions { WriteIndented = true }));
+                File.WriteAllText(Path.Combine(output, "capture-proof.json"), JsonSerializer.Serialize(Directory.GetFiles(output, "*.png").Order().Select(path => new {
+                    file = Path.GetFileName(path), bytes = new FileInfo(path).Length,
+                    sha256 = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path)))
+                }), new JsonSerializerOptions { WriteIndented = true }));
+        }
         try
         {
+            if (hierarchy)
+            {
+                data.Individuals[0].AccumulatedCarePoints = 200000;
+                menu.Navigate(MenuSection.Pokedex); collection.OpenIndividual(data.Individuals[0].Id);
+                Capture("detail", MenuSection.Pokedex, "supported-eevee", (FrameworkElement)collection.FindName("DetailRehomeButton"));
+                Assert.NotNull(((Image)collection.FindName("DetailCareBoosterImage")).Source);
+                Assert.NotNull(((Image)collection.FindName("DetailXpPotionImage")).Source);
+                Assert.StartsWith("Характер:", ((TextBlock)collection.FindName("DetailNatureText")).Text);
+                Invoke(collection, "HideDetail");
+                menu.Navigate(MenuSection.Expeditions); Click(expedition, "ChooseTeamButton");
+                Capture("expedition-team", MenuSection.Expeditions, "search-role", (FrameworkElement)expedition.FindName("PickerDoneButton"));
+                foreach (var pet in data.Individuals.Skip(1).Take(3))
+                {
+                    ((TextBox)expedition.FindName("PickerSearchBox")).Text = pet.CurrentSpeciesId.ToString();
+                    ((WrapPanel)expedition.FindName("PickerMembers")).Children.OfType<Button>().First(b => Equals(b.Tag, pet.Id))
+                        .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                Click(expedition, "PickerDoneButton");
+                Capture("expedition-selected", MenuSection.Expeditions, "pinned-footer", (FrameworkElement)expedition.FindName("StartButton"));
+                menu.Navigate(MenuSection.Nursery); Click(nursery, "ChooseFirstButton");
+                Capture("nursery-select", MenuSection.Nursery, "search-role", (FrameworkElement)nursery.FindName("PickerSaveButton"));
+                foreach (var pet in data.Individuals.Skip(1).Take(2))
+                {
+                    ((TextBox)nursery.FindName("ParentSearchBox")).Text = pet.CurrentSpeciesId.ToString();
+                    ((WrapPanel)nursery.FindName("SpeciesGroupsPanel")).Children.OfType<Button>().Single(b => Equals(b.Tag, pet.CurrentSpeciesId))
+                        .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    var candidates = (WrapPanel)nursery.FindName("PickerIndividualsPanel");
+                    while (!candidates.Children.OfType<Button>().Any(b => Equals(b.Tag, pet.Id)))
+                    {
+                        Assert.True(((Button)nursery.FindName("PickerNextButton")).IsEnabled);
+                        Click(nursery, "PickerNextButton");
+                    }
+                    candidates.Children.OfType<Button>().Single(b => Equals(b.Tag, pet.Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                Click(nursery, "PickerSaveButton");
+                Capture("nursery", MenuSection.Nursery, "selected-pinned-footer", (FrameworkElement)nursery.FindName("StartButton"));
+                var choices = ((StackPanel)nursery.FindName("OutcomePanel")).Children.OfType<Button>().ToArray();
+                Assert.Equal(1 + new NurseryService(catalog, data).Preview(data.Individuals.Skip(1).Take(2).Select(p => p.Id).ToArray()).Outcomes.Count, choices.Length);
+                var nurseryPreview = new NurseryService(catalog, data).Preview(data.Individuals.Skip(1).Take(2).Select(p => p.Id).ToArray());
+                Assert.Equal(nurseryPreview.Outcomes.Count(o => !data.NormalSpeciesIds.Contains(o.SpeciesId) && catalog.GetAssetPath(o.SpeciesId, false) is not null),
+                    Descendants((DependencyObject)nursery.FindName("OutcomePanel")).OfType<Border>().Count(b => b.OpacityMask is ImageBrush));
+                Capture("shop", MenuSection.Shop, "native-quantity");
+                Capture("settings", MenuSection.Settings, "visible-back");
+                SaveProof();
+                return;
+            }
+            if (targeted)
+            {
+                data.Individuals[0].AccumulatedCarePoints = 200000;
+                menu.Navigate(MenuSection.Pokedex);
+                collection.OpenIndividual(data.Individuals[0].Id);
+                if (!evolutionOnly)
+                {
+                    Invoke(collection, "HideDetail");
+                    Capture("collection", MenuSection.Pokedex);
+                    collection.OpenIndividual(data.Individuals[0].Id);
+                Assert.NotNull(((Image)collection.FindName("DetailSpriteImage")).Source);
+                Capture("detail", MenuSection.Pokedex, "supported-eevee", (FrameworkElement)collection.FindName("DetailDescriptionText"));
+                Capture("detail", MenuSection.Pokedex, "eevee-rehome", (FrameworkElement)collection.FindName("DetailRehomeButton"));
+                data.Individuals[0].Nickname = "Очень длинная кличка";
+                Invoke(collection, "HideDetail"); collection.OpenIndividual(data.Individuals[0].Id);
+                Capture("detail", MenuSection.Pokedex, "eevee-long-nickname", (FrameworkElement)collection.FindName("DetailCareBoosterButton"));
+                }
+                Click(collection, "DetailConditionsButton");
+                Capture("evolution", MenuSection.Pokedex, "without-stone", (FrameworkElement)collection.FindName("DetailEvolveButton"));
+                ((CheckBox)collection.FindName("DetailEvolutionStoneToggle")).IsChecked = true;
+                Capture("evolution", MenuSection.Pokedex, "with-stone", (FrameworkElement)collection.FindName("DetailEvolveButton"));
+                Assert.NotNull(((Image)collection.FindName("EvolutionBerryImage")).Source);
+                Assert.NotNull(((Image)collection.FindName("DetailStoneImage")).Source);
+                if (!evolutionOnly)
+                {
+                Invoke(collection, "HideDetail"); collection.OpenIndividual(data.Individuals[4].Id);
+                Assert.True(((TextBlock)collection.FindName("DetailDescriptionText")).Text.Length >= 157);
+                Assert.Null(((Image)collection.FindName("DetailSpriteImage")).Source);
+                Capture("detail", MenuSection.Pokedex, "longest-fact-689-visible", (FrameworkElement)collection.FindName("DetailDescriptionText"));
+                var family = (ItemsControl)collection.FindName("DetailEvolutionChainStrip");
+                var familyStages = Descendants(family).OfType<Border>().Where(b => b.ReadLocalValue(FrameworkElement.DataContextProperty) is EvolutionStageCard)
+                    .Select(b => (EvolutionStageCard)b.DataContext).ToArray();
+                Assert.Equal(2, familyStages.Length);
+                Assert.Equal("#0688", familyStages[0].NameText); Assert.False(familyStages[0].IsRevealed);
+                Assert.NotNull(familyStages[0].SilhouetteImage);
+                Assert.True(familyStages[1].IsCurrent); Assert.Contains("Barbaracle", familyStages[1].NameText);
+                var tour = new OnboardingWindow(5, dataRoot: catalog.DataRoot);
+                var content = tour.TakeHostedContent(); menu.ShowHostedAsync(content);
+                Capture("tour-5", MenuSection.Corner, "silhouettes", (FrameworkElement)tour.FindName("NextButton"), navigate: false);
+                Assert.Equal(2, Descendants(content).OfType<Border>().Count(b => b.OpacityMask is ImageBrush));
+                menu.CompleteHostedContent(content); tour.Close();
+                }
+                if (evolutionOnly)
+                {
+                    menu.Show();
+                    var later = (Button)collection.FindName("EvolutionLaterButton");
+                    var evolve = (Button)collection.FindName("DetailEvolveButton");
+                    Assert.True(later.Focus());
+                    Assert.Same(later, System.Windows.Input.Keyboard.FocusedElement);
+                    Assert.True(later.MoveFocus(new System.Windows.Input.TraversalRequest(System.Windows.Input.FocusNavigationDirection.Next)));
+                    Assert.Same(evolve, System.Windows.Input.Keyboard.FocusedElement);
+                    void InvokeButton(Button button)
+                    {
+                        var peer = new System.Windows.Automation.Peers.ButtonAutomationPeer(button);
+                        ((System.Windows.Automation.Provider.IInvokeProvider)peer.GetPattern(System.Windows.Automation.Peers.PatternInterface.Invoke)).Invoke();
+                        System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(() => { },
+                            System.Windows.Threading.DispatcherPriority.ContextIdle);
+                    }
+                    InvokeButton(later);
+                    Assert.Equal(Visibility.Collapsed, ((FrameworkElement)collection.FindName("EvolutionFooter")).Visibility);
+                    Assert.Equal(Visibility.Visible, ((FrameworkElement)collection.FindName("DetailPersonalGrid")).Visibility);
+                    Click(collection, "DetailConditionsButton");
+                    Assert.True(evolve.Focus());
+                    InvokeButton(evolve);
+                    var confirmation = (FrameworkElement)menu.FindName("ConfirmationHost");
+                    Assert.Equal(Visibility.Visible, confirmation.Visibility);
+                    Click(confirmation, "CancelButton");
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(() => { },
+                        System.Windows.Threading.DispatcherPriority.ContextIdle);
+                    Assert.Equal(133, data.Individuals[0].CurrentSpeciesId);
+                    Assert.Equal(100, data.Berries["oran"]); Assert.Equal(3, data.Items["evolution-stone"]);
+                }
+                SaveProof();
+                return;
+            }
             foreach (var award in art.Cards.Take(3)) data.AwardLedger[award] = new();
             data.TrophyShelfIds.AddRange(art.Cards.Take(3)); room.Refresh(); album.Refresh();
             Capture("corner", MenuSection.Corner);

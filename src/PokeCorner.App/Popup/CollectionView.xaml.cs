@@ -447,7 +447,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ActivePetNameText.Text = hasNickname ? activeEntry.Nickname! : activeEntry.SpeciesName;
             var speciesPrefix = hasNickname ? $"{activeEntry.SpeciesName} · " : string.Empty;
             ActivePetMetaText.Text =
-                $"{speciesPrefix}{activeEntry.DexNumberText()} · {RarityDisplay.GetName(activeEntry.Rarity)} · характер {activeEntry.Nature} · пойман {FormatCaughtDate(activeEntry.CaughtAtUtc)}";
+                $"{speciesPrefix}{activeEntry.DexNumberText()} · {RarityDisplay.GetName(activeEntry.Rarity)} · характер {NatureDisplay.Name(activeEntry.Nature)} · пойман {FormatCaughtDate(activeEntry.CaughtAtUtc)}";
             CarePointsText.Text = active.AccumulatedCarePoints.ToString("N0", CultureInfo.CurrentCulture);
             ShinyBadge.Visibility = activeEntry.IsShiny ? Visibility.Visible : Visibility.Collapsed;
             ActiveTypeBadges.ItemsSource = TypeDisplay.ToBadges(activeEntry.Types);
@@ -531,22 +531,23 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
-    /// One of the rarity filter pills was selected. RadioButton's GroupName already
-    /// deselected the previous one, so this only has to record the new tier and force the
-    /// grid to rebuild — going through Refresh() rather than touching ItemsSource directly
-    /// means the filter also survives the once-a-second refresh tick.
-    private void RarityFilter_Checked(object sender, RoutedEventArgs e)
+    /// The selected rarity combines with the other owned filters and survives refresh ticks.
+    private void IndividualRarity_Changed(object sender, SelectionChangedEventArgs e)
     {
-        if (!_isReady) return; // fires once during InitializeComponent for the default pill
+        if (!_isReady) return;
+        _rarityFilter = (IndividualRarityCombo.SelectedItem as ComboBoxItem)?.Tag is string tier
+            ? Enum.Parse<RarityTier>(tier) : null;
+        _pageIndex = 0;
+        Refresh();
+    }
 
-        _rarityFilter =
-            ReferenceEquals(sender, RarityFilterCommon) ? RarityTier.Common :
-            ReferenceEquals(sender, RarityFilterUncommon) ? RarityTier.Uncommon :
-            ReferenceEquals(sender, RarityFilterRare) ? RarityTier.Rare :
-            ReferenceEquals(sender, RarityFilterLegendary) ? RarityTier.Legendary :
-            null;
-
-        _pageIndex = 0; // a narrower list makes the old page number meaningless
+    private void ResetIndividualFilters_Click(object sender, RoutedEventArgs e)
+    {
+        PokedexSearchBox.Clear();
+        IndividualTypeCombo.SelectedIndex = IndividualRarityCombo.SelectedIndex = PokedexSortCombo.SelectedIndex = 0;
+        EvolutionFilterToggle.IsChecked = DuplicatesFilterToggle.IsChecked =
+            FavoritesFilterToggle.IsChecked = ShinyFilterToggle.IsChecked = false;
+        _pageIndex = 0;
         Refresh();
     }
 
@@ -684,7 +685,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         EvolutionFraction = entry.EvolutionFraction,
         EvolutionState = entry.EvolutionState,
         CaughtAtText = FormatCaughtDate(entry.CaughtAtUtc),
-        NatureText = entry.Nature.ToString(),
+        NatureText = NatureDisplay.Name(entry.Nature),
         CanSelect = !entry.IsActive && !entry.IsBusy,
         IsShiny = entry.IsShiny,
         IsActive = entry.IsActive,
@@ -863,10 +864,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailNicknameBox.Text = card.Nickname ?? string.Empty;
         _isLoadingDetailNickname = false;
 
-        DetailNatureText.Text = card.NatureText;
-        DetailCaughtAtText.Text = card.CaughtAtText;
+        DetailNatureText.Text = "Характер: " + card.NatureText;
+        DetailCaughtAtText.Text = "Пойман: " + card.CaughtAtText;
         DetailLevelText.Text = card.LevelText;
-        DetailBusyText.Text = card.AvailabilityText;
+        DetailBusyText.Text = card.IsBusy ? card.AvailabilityText : string.Empty;
         DetailTraitsText.Text = "Особенности: " + string.Join(" · ",
             new[] { card.FirstTraitId, card.SecondTraitId }.Where(id => !string.IsNullOrWhiteSpace(id)).Select(id => TraitLabel(id) + " — " + TraitEffect(id)));
         DetailTraitsText.Visibility = card.FirstTraitId is null && card.SecondTraitId is null ? Visibility.Collapsed : Visibility.Visible;
@@ -926,8 +927,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailEvolutionActionSection.Visibility = preview.Branches.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
         if (preview.Branches.Count == 0) return;
         DetailEvolutionBar.Value = Math.Clamp(preview.CareOwned / (double)Math.Max(1, preview.CareRequired), 0, 1);
-        DetailEvolutionText.Text = $"{preview.CareOwned:N0} / {preview.CareRequired:N0} ухода";
-        DetailEvolutionCostText.Text = $"Уход: {preview.CareOwned:N0} / {preview.CareRequired:N0} · Ягоды {preview.BerryId}: {preview.BerriesOwned} / {preview.BerryCost} · Камни: {preview.StonesOwned}";
+        var enoughCare = preview.CareOwned >= preview.CareRequired;
+        DetailEvolutionText.Text = EvolutionCareStateText.Text = enoughCare ? "Достаточно" : "Продолжай заботиться о питомце";
+        EvolutionCareBar.Value = DetailEvolutionBar.Value;
+        DetailEvolutionCostText.Text = $"× {preview.BerryCost} · в запасе {preview.BerriesOwned}";
+        var berryPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Data", "final", "assets", "shop", preview.BerryId + ".png");
+        EvolutionBerryImage.Source = System.IO.File.Exists(berryPath) ? PokeCorner.App.Imaging.SpriteImages.Decode(System.IO.File.ReadAllBytes(berryPath)) : null;
         DetailEvolutionBlockedText.Text = preview.Branches.Any(x => !x.Available)
             ? "Недоступные ветви отмечены в списке; вариант без ресурса не подменяется."
             : string.Empty;
@@ -973,7 +978,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var needsStone = branch is not null && _detailEvolutionPreview.Branches.Count(x => x.Available) > 1;
         var reason = _detailEvolutionPreview.Reason
             ?? (needsStone && _detailEvolutionPreview.StonesOwned == 0 ? "Для выбора ветви нужен камень эволюции." : null);
-        DetailEvolutionReasonText.Text = reason ?? string.Empty;
+        DetailEvolutionReasonText.Text = reason?.StartsWith("Нужно ещё ", StringComparison.Ordinal) == true && reason.EndsWith(" ухода.", StringComparison.Ordinal)
+            ? "Продолжай гладить и кормить питомца." : reason ?? string.Empty;
+        EvolutionRequiredStoneImage.Visibility = EvolutionRequiredStoneText.Visibility = needsStone ? Visibility.Visible : Visibility.Collapsed;
+        EvolutionRequiredStoneText.Text = "× 1";
+        RenderEvolutionTargets(_detailEvolutionPreview);
         DetailEvolveButton.IsEnabled = reason is null && !_detailPending && (_detailCard is null || !_evolvingIndividuals.Contains(_detailCard.IndividualId));
     }
 
@@ -1443,8 +1452,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void DetailConditionsBack_Click(object sender, RoutedEventArgs e) => SetEvolutionSurface(false);
     private void SetEvolutionSurface(bool show)
     {
+        if (show && DetailEvolutionActionSection.Visibility != Visibility.Visible) return;
+        EvolutionFooter.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         EvolutionSurface.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
-        DetailPersonalGrid.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
+        DetailPersonalGrid.Visibility = DetailIdentityHeader.Visibility = DetailRehomeSection.Visibility =
+            show ? Visibility.Collapsed : Visibility.Visible;
         DetailScroll.ScrollToTop();
     }
     private void SpeciesBack_Click(object sender, RoutedEventArgs e) => CloseSpeciesDialog();
@@ -1523,51 +1535,76 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     }
     private void RenderEvolutionGraph(PokedexCard card)
     {
-        DetailEvolutionChainStrip.ItemsSource = card.EvolutionStages.GroupBy(x => x.IsParallel ? x.Depth : x.StageIndex).Select(group =>
-        {
-            var row = new WrapPanel { HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
-            foreach (var stage in group)
-            {
-                var contents = new StackPanel();
-                if (stage.SpriteImage is not null) contents.Children.Add(new System.Windows.Controls.Image { Source = stage.SpriteImage, Width = 54, Height = 54 });
-                else if (stage.SilhouetteImage is { } shape) contents.Children.Add(new Border
-                {
-                    Width = 54, Height = 54, Background = ThemeBrushes.Get("MutedTextBrush"),
-                    OpacityMask = new ImageBrush(shape) { Stretch = Stretch.Uniform }
-                });
-                else contents.Children.Add(new TextBlock { Text = "?", Height = 54, FontSize = 28, TextAlignment = TextAlignment.Center });
-                contents.Children.Add(new TextBlock { Text = stage.NameText, TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center });
-                if (stage.IsCurrent) contents.Children.Add(new TextBlock { Text = "Сейчас", TextAlignment = TextAlignment.Center });
-                var tile = new Border { Child = contents, Width = 78, Padding = new Thickness(4), Margin = new Thickness(3), BorderThickness = new Thickness(1), BorderBrush = stage.BorderBrush, DataContext = stage };
-                if (stage.IsRevealed) tile.MouseLeftButtonDown += DetailEvolutionStage_Click;
-                row.Children.Add(tile);
-            }
-            return row;
-        }).ToArray();
+        var root = card.EvolutionStages.FirstOrDefault();
+        var others = card.EvolutionStages.Skip(1).ToArray();
+        var graph = new Grid();
+        graph.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(64) });
+        graph.ColumnDefinitions.Add(new ColumnDefinition());
+        if (root is not null) graph.Children.Add(EvolutionTile(root, 46));
+        var options = new System.Windows.Controls.Primitives.UniformGrid { Columns = others.Length > 3 ? 4 : Math.Max(1, others.Length) };
+        Grid.SetColumn(options, 1);
+        foreach (var stage in others) options.Children.Add(EvolutionTile(stage, 38));
+        graph.Children.Add(options);
+        DetailEvolutionChainStrip.ItemsSource = new[] { graph };
     }
+
+    private Border EvolutionTile(EvolutionStageCard stage, double imageSize)
+    {
+        var contents = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+        if (stage.SpriteImage is not null) contents.Children.Add(new System.Windows.Controls.Image { Source = stage.SpriteImage, Width = imageSize, Height = imageSize });
+        else if (stage.SilhouetteImage is { } shape) contents.Children.Add(new Border
+        {
+            Width = imageSize, Height = imageSize, Background = ThemeBrushes.Get("MutedTextBrush"),
+            OpacityMask = new ImageBrush(shape) { Stretch = Stretch.Uniform }
+        });
+        else contents.Children.Add(new TextBlock { Text = "?", Height = imageSize, FontSize = 26, TextAlignment = TextAlignment.Center });
+        contents.Children.Add(new TextBlock { Text = stage.NameText, FontSize = 10.5, TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center });
+        var tile = new Border { Child = contents, Padding = new Thickness(3), Margin = new Thickness(2), BorderThickness = new Thickness(1),
+            BorderBrush = stage.BorderBrush, CornerRadius = new CornerRadius(6), DataContext = stage };
+        if (stage.IsRevealed) tile.MouseLeftButtonDown += DetailEvolutionStage_Click;
+        return tile;
+    }
+
     private void RenderEvolutionTargets(EvolutionPreview preview)
     {
         if (_detailCard is null) return;
-        var targets = preview.Branches.Select(branch =>
+        var graph = new Grid();
+        graph.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(135) });
+        graph.ColumnDefinitions.Add(new ColumnDefinition());
+        var current = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+        current.Children.Add(new System.Windows.Controls.Image { Source = _detailCard.SpriteImage, Width = 90, Height = 90 });
+        current.Children.Add(new TextBlock { Text = _detailCard.SpeciesName, TextAlignment = TextAlignment.Center });
+        graph.Children.Add(current);
+        var options = new System.Windows.Controls.Primitives.UniformGrid { Columns = preview.Branches.Count > 3 ? 4 : Math.Max(1, preview.Branches.Count) };
+        Grid.SetColumn(options, 1);
+        foreach (var branch in preview.Branches)
         {
             var known = (_detailCard.IsShiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds).Contains(branch.SpeciesId);
-            var panel = new StackPanel { Width = 91, Margin = new Thickness(4) };
             var sprite = TryGetThumbnail(branch.SpeciesId, _detailCard.IsShiny);
-            if (known) panel.Children.Add(new System.Windows.Controls.Image { Source = sprite, Width = 70, Height = 70 });
-            else if (sprite is not null) panel.Children.Add(new Border
-            {
-                Width = 70, Height = 70, Background = ThemeBrushes.Get("MutedTextBrush"),
-                OpacityMask = new ImageBrush(sprite) { Stretch = Stretch.Uniform }
-            });
-            else panel.Children.Add(new TextBlock { Text = "?", Height = 70, FontSize = 32, TextAlignment = TextAlignment.Center });
-            panel.Children.Add(new TextBlock { Text = known ? branch.Name : $"#{branch.SpeciesId:D4} · ?", TextAlignment = TextAlignment.Center, TextWrapping = TextWrapping.Wrap });
-            if (!branch.Available) panel.Children.Add(new TextBlock { Text = "Недоступно", TextAlignment = TextAlignment.Center });
-            return panel;
-        }).ToList();
-        var current = new StackPanel { Width = 108, Margin = new Thickness(4) };
-        current.Children.Add(new System.Windows.Controls.Image { Source = _detailCard.SpriteImage, Width = 80, Height = 80 });
-        current.Children.Add(new TextBlock { Text = _detailCard.SpeciesName + " →", TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center });
-        targets.Insert(0, current); DetailEvolutionTargets.ItemsSource = targets;
+            var stage = new EvolutionStageCard { StageIndex = 1, IsRevealed = known, NameText = known ? branch.Name : $"#{branch.SpeciesId:D4}",
+                SpriteImage = known ? sprite : null, SilhouetteImage = known ? null : sprite,
+                TypeBadges = [], IsCurrent = false, IsDisplayed = false, ShowArrow = false };
+            var tile = EvolutionTile(stage, 54);
+            tile.Tag = branch.SpeciesId;
+            tile.IsEnabled = branch.Available && !_detailPending;
+            if (!branch.Available)
+                ((StackPanel)tile.Child).Children.Add(new TextBlock { Text = "Недоступно", FontSize = 10.5, TextAlignment = TextAlignment.Center });
+            tile.ToolTip = branch.Reason;
+            tile.Background = SelectedEvolutionBranch == branch.SpeciesId ? new SolidColorBrush(System.Windows.Media.Color.FromRgb(225, 237, 216)) : ThemeBrushes.Get("CardBackgroundBrush");
+            tile.BorderBrush = SelectedEvolutionBranch == branch.SpeciesId ? ThemeBrushes.Get("UiForestBrush") : ThemeBrushes.Get("CardBorderBrush");
+            tile.MouseLeftButtonDown -= DetailEvolutionStage_Click;
+            tile.MouseLeftButtonDown += (_, e) => {
+                if (DetailEvolutionStoneToggle.IsEnabled)
+                {
+                    DetailEvolutionStoneToggle.IsChecked = true;
+                    DetailEvolutionBranchPicker.SelectedItem = DetailEvolutionBranchPicker.Items.Cast<ComboBoxItem>().First(x => Equals(x.Tag, branch.SpeciesId));
+                }
+                e.Handled = true;
+            };
+            options.Children.Add(tile);
+        }
+        graph.Children.Add(options);
+        DetailEvolutionTargets.ItemsSource = new[] { graph };
     }
     internal static string TraitEffect(string? id) => id switch
     {

@@ -35,6 +35,7 @@
   </ItemGroup>
   <Import Project="RuntimePackage.props" />
   <ItemGroup><Resource Include="..\..\docs\design-v2\final\assets\shop\evolution-stone.png" Link="Assets\UiSystem\evolution-stone.png" /></ItemGroup>
+  <ItemGroup><Resource Include="..\..\docs\design-v2\final\assets\shop\care-booster.png" Link="Assets\UiSystem\care-booster.png"/><Resource Include="..\..\docs\design-v2\final\assets\shop\xp-potion.png" Link="Assets\UiSystem\xp-potion.png"/></ItemGroup>
 
   <ItemGroup>
     <Resource Include="..\..\docs\design-v2\ui-system\assets\coin.png" Link="Assets\UiSystem\coin.png" />

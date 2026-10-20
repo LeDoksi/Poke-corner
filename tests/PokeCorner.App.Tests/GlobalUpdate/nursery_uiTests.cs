@@ -69,6 +69,19 @@ public sealed partial class NurseryUiTests
         ((Button)view.FindName("PickerSaveButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
     }
 
+    private static IEnumerable<TextBlock> OutcomeLabels(NurseryView view)
+    {
+        static IEnumerable<TextBlock> Labels(DependencyObject root)
+        {
+            foreach (var child in LogicalTreeHelper.GetChildren(root).OfType<DependencyObject>())
+            {
+                if (child is TextBlock text) yield return text;
+                foreach (var nested in Labels(child)) yield return nested;
+            }
+        }
+        return Labels((DependencyObject)view.FindName("OutcomePanel"));
+    }
+
     [Fact]
     public void CompactScreenShowsDistinctCompatibleParentsAndCanonicalPreview()
     {
@@ -89,7 +102,7 @@ public sealed partial class NurseryUiTests
             Assert.Equal(expected.Berries.Count,prices.Length);
             var berryNames=new Dictionary<string,string> { ["rawst"]="Равст",["oran"]="Оран",["pecha"]="Печа",["cheri"]="Чери",["chesto"]="Често",["aspear"]="Аспир" };
             Assert.All(expected.Berries, berry => Assert.Contains($"{berryNames[berry.Key]} ×{berry.Value}",prices));
-            Assert.All(((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<Button>(),
+            Assert.All(((StackPanel)view.FindName("OutcomePanel")!).Children.OfType<Button>(),
                 button => { Assert.True(button.Focusable); Assert.True(button.IsTabStop); });
             Assert.True(((Button)view.FindName("StartButton")!).IsTabStop);
         });
@@ -129,7 +142,7 @@ public sealed partial class NurseryUiTests
             var opened = (Good: "", Required: 0);
             var view = View(data, shortage: (good, required) => opened = (good, required));
             Choose(view, first, second);
-            ((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<Button>().Skip(1).First()
+            ((StackPanel)view.FindName("OutcomePanel")!).Children.OfType<Button>().Skip(1).First()
                 .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.False(((Button)view.FindName("StartButton")!).IsEnabled);
             ((Button)view.FindName("ShopButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
@@ -282,8 +295,7 @@ public sealed partial class NurseryUiTests
             var (data, first, second) = State(recipe);
             var view = View(data);
             Choose(view, first, second);
-            var text = ((WrapPanel)view.FindName("OutcomePanel")!).Children.OfType<StackPanel>()
-                .SelectMany(card => card.Children.OfType<TextBlock>())
+            var text = OutcomeLabels(view)
                 .Single(row => row.Text.Contains($"№{recipe.AvailableOutcomes.First(o => !o.ShinyAvailable).SpeciesId} ·"));
             Assert.Contains("Shiny-форма пока недоступна", text.Text);
             Assert.DoesNotContain("%",text.Text);

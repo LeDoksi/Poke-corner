@@ -183,7 +183,7 @@ public class ThemeRenderingTests
             var card = Assert.IsType<PokedexCard>(Assert.Single(grid.ItemsSource.Cast<object>()));
 
             Assert.Equal("#0004", card.DexNumber);
-            Assert.Equal("Hardy", card.NatureText);
+            Assert.Equal("выносливый", card.NatureText);
             Assert.Equal(DateTimeOffset.UtcNow.ToLocalTime().ToString("dd.MM.yyyy"), card.CaughtAtText);
             Assert.NotNull(card.RarityBrush);
             Assert.NotEqual(Guid.Empty, card.IndividualId);
@@ -425,9 +425,9 @@ public class ThemeRenderingTests
         WpfTestHost.Run(() =>
         {
             const double windowWidth = 560;
-            // The content area of the real 660-tall AppMenuWindow, minus its header strip and
-            // the tab band — i.e. the height this view actually gets on screen.
-            const double windowHeight = 580;
+            // A constrained viewport deliberately exercises scroll reachability even after
+            // the approved two-column composition made the former 580-DIP case fit.
+            const double windowHeight = 380;
 
             var appState = new AppState();
             var individual = new PokemonIndividual
@@ -468,7 +468,7 @@ public class ThemeRenderingTests
                 Assert.Equal(Visibility.Visible, ((Border)view.FindName(badge)!).Visibility);
             }
             Assert.Equal(Visibility.Visible, ((Border)view.FindName("DetailEvolutionChainSection")!).Visibility);
-            Assert.Equal(3, ((ItemsControl)view.FindName("DetailEvolutionChainStrip")!).Items.Count);
+            Assert.Single(((ItemsControl)view.FindName("DetailEvolutionChainStrip")!).Items);
 
             var detailCard = (Border)view.FindName("DetailCard")!;
             var scroller = Descendants<ScrollViewer>(detailCard).First();
@@ -524,21 +524,21 @@ public class ThemeRenderingTests
             var grid = (ItemsControl)view.FindName("PokedexGrid")!;
             Assert.Equal(2, grid.ItemsSource.Cast<object>().Count());
 
-            ((RadioButton)view.FindName("RarityFilterRare")!).IsChecked = true;
+            ((ComboBoxItem)view.FindName("RarityFilterRare")!).IsSelected = true;
             var rareOnly = grid.ItemsSource.Cast<PokedexCard>().ToList();
             Assert.Equal(4, Assert.Single(rareOnly).SpeciesId);
 
-            ((RadioButton)view.FindName("RarityFilterCommon")!).IsChecked = true;
+            ((ComboBoxItem)view.FindName("RarityFilterCommon")!).IsSelected = true;
             Assert.Equal(16, Assert.Single(grid.ItemsSource.Cast<PokedexCard>()).SpeciesId);
 
             // A tier with nothing in it empties the grid and explains why.
-            ((RadioButton)view.FindName("RarityFilterLegendary")!).IsChecked = true;
+            ((ComboBoxItem)view.FindName("RarityFilterLegendary")!).IsSelected = true;
             Assert.Empty(grid.ItemsSource.Cast<PokedexCard>());
             var emptyText = (TextBlock)view.FindName("PokedexEmptyText")!;
             Assert.Equal(Visibility.Visible, emptyText.Visibility);
             Assert.Contains("редкости", emptyText.Text);
 
-            ((RadioButton)view.FindName("RarityFilterAll")!).IsChecked = true;
+            ((ComboBoxItem)view.FindName("RarityFilterAll")!).IsSelected = true;
             Assert.Equal(2, grid.ItemsSource.Cast<object>().Count());
 
             // The headline count always reports total completion, never the filtered subset.
@@ -562,7 +562,7 @@ public class ThemeRenderingTests
             var view = BuildCollectionView(appState, chains);
             WpfTestHost.Layout(view);
 
-            ((RadioButton)view.FindName("RarityFilterRare")!).IsChecked = true;
+            ((ComboBoxItem)view.FindName("RarityFilterRare")!).IsSelected = true;
             view.Refresh();
 
             var grid = (ItemsControl)view.FindName("PokedexGrid")!;
@@ -691,7 +691,7 @@ public class ThemeRenderingTests
             });
             WpfTestHost.Layout(view);
 
-            ((RadioButton)view.FindName("RarityFilterRare")!).IsChecked = true;
+            ((ComboBoxItem)view.FindName("RarityFilterRare")!).IsSelected = true;
             ((TextBox)view.FindName("PokedexSearchBox")!).Text = "charm";
             Assert.Equal(4, Assert.Single(Cards(view)).SpeciesId);
 
@@ -760,7 +760,7 @@ public class ThemeRenderingTests
 
             ((System.Windows.Controls.Button)view.FindName("PokedexNextPageButton")!)
                 .RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
-            ((RadioButton)view.FindName("RarityFilterCommon")!).IsChecked = true;
+            ((ComboBoxItem)view.FindName("RarityFilterCommon")!).IsSelected = true;
             Assert.StartsWith("Страница 1", pageText.Text);
         });
 
@@ -1641,10 +1641,11 @@ public class ThemeRenderingTests
             var section = (Border)view.FindName("DetailEvolutionChainSection")!;
             var strip = (ItemsControl)view.FindName("DetailEvolutionChainStrip")!;
             Assert.Equal(Visibility.Visible, section.Visibility);
-            Assert.Equal(3, strip.Items.Count);
-
-            var row = Descendants<StackPanel>(strip).First(); // the ItemsPanel
-            var needed = row.Children.Cast<UIElement>().Sum(child => child.DesiredSize.Width);
+            var graph = Assert.IsType<Grid>(Assert.Single(strip.Items));
+            var stages = Descendants<Border>(graph).Where(b => b.ReadLocalValue(FrameworkElement.DataContextProperty) is EvolutionStageCard)
+                .Select(b => (EvolutionStageCard)b.DataContext).ToArray();
+            Assert.Equal(new[] { 0, 1, 2 }, stages.Select(stage => stage.StageIndex));
+            var needed = graph.DesiredSize.Width;
             var available = section.ActualWidth
                 - section.Padding.Left - section.Padding.Right
                 - section.BorderThickness.Left - section.BorderThickness.Right;

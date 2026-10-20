@@ -339,7 +339,7 @@ public partial class NurseryView : UserControl
         SubtitleText.Text = ready ? "Пора познакомиться." : active ? "Можно закрыть приложение — время продолжит идти." : result ? "Новая история начинается здесь." : "Выберите родителей и узнайте, кто может появиться.";
 
         Grid.SetColumnSpan(SceneBorder, ready ? 2 : 1);
-        SceneGrid.Height = ready ? 350 : active || result ? 290 : 260;
+        SceneGrid.Height = ready ? 300 : active || result ? 240 : 150;
 
         PreviewPanel.Visibility = active || result ? Visibility.Collapsed : Visibility.Visible;
 
@@ -351,6 +351,7 @@ public partial class NurseryView : UserControl
         PickerPanel.Visibility = _pickerOpen ? Visibility.Visible : Visibility.Collapsed;
 
         PreparationPanel.Visibility = active || result ? Visibility.Collapsed : Visibility.Visible;
+        PreparationFooter.Visibility = _pickerOpen || active || result ? Visibility.Collapsed : Visibility.Visible;
         NestPanel.Visibility = active && !ready ? Visibility.Visible : Visibility.Collapsed;
 
         ResultPanel.Visibility = result && !_awaitingHatchContinue ? Visibility.Visible : Visibility.Collapsed;
@@ -387,7 +388,7 @@ public partial class NurseryView : UserControl
 
                 var luck = nest.LuckBeforeHatch is { } before ? "Удача питомника " + (nest.ShinySupported && child.IsShiny ? "сброшена" : data.NurseryLuckBonus > before ? "увеличилась" : "не изменилась") + "." : "Изменение удачи этого старого вылупления не сохранено.";
 
-                ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · Shiny" : "")} · характер {child.Nature}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
+                ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · Shiny" : "")} · характер {NatureDisplay.Name(child.Nature)}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
 
                 HatchStageText.Text = $"{SpeciesName(child.SpeciesId)} появился!";
 
@@ -432,23 +433,32 @@ public partial class NurseryView : UserControl
             PreviewText.Text = "Один из этих малышей появится после ожидания. Родительские особенности помогают малышу.";
 
             if (preview.SelectionUseful)
-            {
-                OutcomePanel.Children.Add(ChoiceButton("Без талисмана · случайный малыш", null));
-                foreach (var outcome in preview.Outcomes) OutcomePanel.Children.Add(ChoiceButton("Талисман · " + OutcomeName(data, outcome.SpeciesId), outcome.SpeciesId));
-            }
+                OutcomePanel.Children.Add(ChoiceButton("Случайный малыш · без талисмана", null));
             foreach (var outcome in preview.Outcomes)
             {
                 var id = outcome.SpeciesId;
                 var known = data.NormalSpeciesIds.Contains(id);
-                var row = new StackPanel { Width = Math.Max(75, ((ActualWidth > 0 ? ActualWidth : 800) * .4 - 50) / Math.Min(3, preview.Outcomes.Count) - 8), Margin = new Thickness(0, 5, 0, 5) };
-
-                if (known) row.Children.Add(new Image { Source = Sprite(id, false), Height = 52, Width = 52, HorizontalAlignment = HorizontalAlignment.Left });
-
-                row.Children.Add(new TextBlock { Text = OutcomeName(data, id) + "\n" + (outcome.ShinyAvailable ? "Возможна Shiny-форма" : "Shiny-форма пока недоступна"), TextWrapping = TextWrapping.Wrap, FontWeight = FontWeights.Bold });
-
-
-                OutcomePanel.Children.Add(row);
-
+                var row = new DockPanel { LastChildFill = true };
+                var sprite = Sprite(id, false);
+                FrameworkElement picture = known
+                    ? new Image { Source = sprite, Width = 48, Height = 48 }
+                    : sprite is null ? new TextBlock { Text = "?", Width = 48, FontSize = 28, TextAlignment = TextAlignment.Center }
+                    : new Border { Width = 48, Height = 48, Background = (System.Windows.Media.Brush)FindResource("MutedTextBrush"),
+                        OpacityMask = new ImageBrush(sprite) { Stretch = Stretch.Uniform } };
+                picture.Margin = new Thickness(0, 0, 10, 0);
+                DockPanel.SetDock(picture, Dock.Left);
+                row.Children.Add(picture);
+                row.Children.Add(new TextBlock {
+                    Text = OutcomeName(data, id) + "\n" + (outcome.ShinyAvailable ? "Возможна Shiny-форма" : "Shiny-форма пока недоступна"),
+                    TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center
+                });
+                if (preview.SelectionUseful)
+                {
+                    var choice = ChoiceButton(OutcomeName(data, id), id);
+                    choice.Content = row;
+                    OutcomePanel.Children.Add(choice);
+                }
+                else OutcomePanel.Children.Add(new Border { Child = row, Margin = new Thickness(0, 4, 0, 4) });
             }
             TraitsText.Text = "Возможные особенности: " + string.Join("; ", preview.TraitIds.Select(t => CollectionView.TraitLabel(t) + " — " + CollectionView.TraitEffect(t))) + ".";
 
@@ -514,7 +524,7 @@ public partial class NurseryView : UserControl
 
     private Button ChoiceButton(string title, int? choice)
     {
-        var button = new Button { Content = new TextBlock { Text = title, TextWrapping = TextWrapping.Wrap, MaxWidth = Math.Max(160, (ActualWidth > 0 ? ActualWidth : 800) * .4 - 110) }, Tag = choice, IsEnabled = !_busy, Margin = new Thickness(0, 0, 6, 6), Style = (Style)FindResource("SecondaryButtonStyle"), FontWeight = _choice == choice ? FontWeights.Bold : FontWeights.Normal };
+        var button = new Button { Content = new TextBlock { Text = title, TextWrapping = TextWrapping.Wrap }, HorizontalContentAlignment = HorizontalAlignment.Stretch, Tag = choice, IsEnabled = !_busy, Margin = new Thickness(0, 0, 6, 6), Style = (Style)FindResource("SecondaryButtonStyle"), FontWeight = _choice == choice ? FontWeights.Bold : FontWeights.Normal };
 
         button.Click += (_, _) =>
         {

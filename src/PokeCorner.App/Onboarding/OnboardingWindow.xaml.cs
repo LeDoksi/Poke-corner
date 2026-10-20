@@ -124,7 +124,11 @@ public partial class OnboardingWindow : Window
             {
                 var hidden = new StackPanel { Margin = new Thickness(20), VerticalAlignment = VerticalAlignment.Center };
                 hidden.Children.Add(new TextBlock { Text = "→", FontSize = 32, HorizontalAlignment = System.Windows.HorizontalAlignment.Center });
-                hidden.Children.Add(new TextBlock { Text = $"#{id:D4}", FontWeight = FontWeights.Bold, HorizontalAlignment = System.Windows.HorizontalAlignment.Center });
+                var path = System.IO.Path.Combine(_dataRoot, "catalog-package", "assets", "normal", id + ".gif");
+                if (System.IO.File.Exists(path))
+                    hidden.Children.Add(new Border { Width = 100, Height = 100, Background = (Brush)FindResource("UiSecondaryInkBrush"),
+                        OpacityMask = new System.Windows.Media.ImageBrush(PokeCorner.App.Imaging.SpriteImages.Decode(System.IO.File.ReadAllBytes(path))) { Stretch = System.Windows.Media.Stretch.Uniform } });
+                else hidden.Children.Add(new TextBlock { Text = "?", FontSize = 32, HorizontalAlignment = System.Windows.HorizontalAlignment.Center });
                 Illustration.Children.Add(hidden);
             }
         }

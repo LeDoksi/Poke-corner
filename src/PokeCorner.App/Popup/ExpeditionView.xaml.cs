@@ -159,6 +159,7 @@ public partial class ExpeditionView : UserControl
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
         var showResult = !active && trip?.Status == "claimed" && !_continueAfterResult;
         PreparationPanel.Visibility = RouteSelectionPanel.Visibility = active || showResult ? Visibility.Collapsed : Visibility.Visible;
+        PreparationFooter.Visibility = _pickerOpen || active || showResult ? Visibility.Collapsed : Visibility.Visible;
         TripPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
         ResultPanel.Visibility = showResult ? Visibility.Visible : Visibility.Collapsed;
         if (!active) SubtitleText.Text = "Выберите маршрут, время и команду.";
@@ -258,12 +259,12 @@ public partial class ExpeditionView : UserControl
     {
         if (_busy || _suspended || _snapshot().Expedition?.Status is "running" or "ready") return;
         _draft.Clear(); _draft.UnionWith(_selected); _pickerOpen = true;
-        PickerPanel.Visibility = Visibility.Visible; ScenarioScroll.Visibility = Visibility.Collapsed;
+        PickerPanel.Visibility = Visibility.Visible; ScenarioScroll.Visibility = PreparationFooter.Visibility = Visibility.Collapsed;
         ResetPickerFilters(); RefreshPicker(); PickerSearchBox.Focus();
     }
     private void ClosePicker()
     {
-        _pickerOpen = false; _draft.Clear(); PickerPanel.Visibility = Visibility.Collapsed; ScenarioScroll.Visibility = Visibility.Visible;
+        _pickerOpen = false; _draft.Clear(); PickerPanel.Visibility = Visibility.Collapsed; ScenarioScroll.Visibility = PreparationFooter.Visibility = Visibility.Visible;
     }
     private void PickerCancel_Click(object sender, RoutedEventArgs e) { ClosePicker(); Refresh(); }
     private void PickerDone_Click(object sender, RoutedEventArgs e)
