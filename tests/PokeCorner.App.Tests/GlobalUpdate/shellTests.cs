@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -257,7 +257,7 @@ public class ShellTests
         menu.Navigate(MenuSection.Settings);
         WpfTestHost.Layout(root, 640, 480);
         var settingsView = (SettingsView)((ContentControl)menu.FindName("SettingsContent")).Content;
-        var settingsScroll = (ScrollViewer)settingsView.Content;
+        var settingsScroll = (ScrollViewer)((Grid)settingsView.Content).Children[0];
         settingsScroll.ScrollToEnd();
         root.UpdateLayout();
         Assert.True(settingsScroll.VerticalOffset > 0);

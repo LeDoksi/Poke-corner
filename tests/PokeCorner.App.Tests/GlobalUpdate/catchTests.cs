@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using PokeCorner.App.Popup;
@@ -17,11 +17,11 @@ public sealed class CatchTests
     private static void Click(CatchView view, string name) => Find<Button>(view, name).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
     private static CatchView View(AppState state, Func<Task<CatchReveal?>>? open = null, ManualDelay? clock = null,
         Func<Guid, Task<CatchReveal?>>? pinned = null, Func<Task>? charm = null, bool motion = true,
-        Func<int, bool, Task<byte[]?>>? art = null)
+        Func<int, bool, Task<byte[]?>>? art = null, Action? changed = null)
     {
         return new CatchView(state, null, _ => Task.FromResult<byte[]?>(null),
             () => state.Encounters.Count(e => e.Source == "activity" && e.Phase == "sealed"),
-            () => { }, _ => "Бульбазавр", open ?? (() => Task.FromResult<CatchReveal?>(Result)),
+            changed ?? (() => { }), _ => "Бульбазавр", open ?? (() => Task.FromResult<CatchReveal?>(Result)),
             tryPerformEncounterAsync: pinned, activateLuckyCharmAsync: charm,
             animationEnabled: () => motion, delayAsync: clock is null ? null : clock.Wait, fetchVariantSprite: art);
     }
@@ -349,16 +349,25 @@ public sealed class CatchTests
             store.Save(data); var savedBytes = File.ReadAllBytes(Path.Combine(root, "state.json"));
             var writer = new BackgroundSaveWriter(store, _ => throw new IOException("synthetic refused write"));
             var ids = new List<Guid>(); CatchReveal? confirmed = null; CatchView view = null!;
+            var timing = new System.Collections.Concurrent.ConcurrentQueue<string>();
+            var clock = System.Diagnostics.Stopwatch.StartNew();
+            var producerMayReturn = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var handedOff = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
             async Task<CatchReveal?> Open(Guid id) {
                 ids.Add(id); EncounterOpenResult? result = null;
                 await live.CommitAsync(writer, next => result = service.Open(next, id), () => 1,
-                    _ => confirmed = new CatchReveal(new CatchResult(result!.Individual.EvolutionChainId,
+                    _ => { timing.Enqueue($"afterPublish:{clock.ElapsedTicks}");
+                    confirmed = new CatchReveal(new CatchResult(result!.Individual.EvolutionChainId,
                         result.Individual.SpeciesId, result.Individual.Nature, result.Individual.IsShiny,
-                        result.WasDuplicateSpecies, result.Individual.ChainLength), result.Rarity, id));
+                        result.WasDuplicateSpecies, result.Individual.ChainLength), result.Rarity, id); });
+                await producerMayReturn.Task;
+                timing.Enqueue($"producer-return:{clock.ElapsedTicks}");
                 return confirmed;
             }
             WpfTestHost.Run(() => {
-                view = View(live, pinned: Open, clock: new ManualDelay());
+                view = View(live, pinned: Open, clock: new ManualDelay(), changed: () => {
+                    timing.Enqueue($"view-handoff:{clock.ElapsedTicks}"); handedOff.TrySetResult();
+                });
                 Click(view, "CatchButton");
             });
             await Until(() => !live.IsCommitting);
@@ -373,6 +382,20 @@ public sealed class CatchTests
             WpfTestHost.Run(() => Click(view, "CatchButton"));
             await Until(() => confirmed is not null);
             WpfTestHost.Run(() => {
+                Assert.Null(typeof(CatchView).GetField("_pendingReveal", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(view));
+                timing.Enqueue($"published-before-view-handoff:{clock.ElapsedTicks}");
+            });
+            producerMayReturn.SetResult();
+            await handedOff.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            WpfTestHost.Run(() => {
+                var pending = typeof(CatchView).GetField("_pendingReveal", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(view);
+                timing.Enqueue($"skip:{clock.ElapsedTicks}:pending={pending is not null}");
+                var diagnostics = Environment.GetEnvironmentVariable("POKE_SHELL_CAPTURE_DIR");
+                if (!string.IsNullOrWhiteSpace(diagnostics))
+                {
+                    Directory.CreateDirectory(diagnostics);
+                    File.AppendAllLines(Path.Combine(diagnostics, "catch-handoff.txt"), timing);
+                }
                 Click(view, "SkipButton");
                 view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
                 Assert.Equal("Продолжить", Find<Button>(view, "CatchButton").Content);

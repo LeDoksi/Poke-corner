@@ -1,4 +1,4 @@
-using PokeCorner.App.Popup;
+﻿using PokeCorner.App.Popup;
 using PokeCorner.App.Tests.Theme;
 using PokeCorner.Core;
 using PokeCorner.Core.Domain;
@@ -239,7 +239,7 @@ public sealed class ApprovedCollectionTests
             view.RaiseEvent(new RoutedEventArgs(FrameworkElement.LoadedEvent)); view.OpenIndividual(pet.Id);
             Assert.NotNull(Fix1Private(view, "_heroAnimator"));
             var buttonName = action.EndsWith("item") ? "DetailCareBoosterButton" : action == "evolution" ? "DetailEvolveButton" : "DetailRehomeButton";
-            ((Button)view.FindName(buttonName)).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            ((Button)view!.FindName(buttonName)).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
             Assert.Null(Fix1Private(view, "_heroAnimator")); Assert.Null(Fix1Private(view, "_detailAnimator"));
         });
@@ -252,7 +252,7 @@ public sealed class ApprovedCollectionTests
             {
                 Assert.Equal(pendingCommit ? 1 : 0, calls);
                 Assert.Null(Fix1Private(view, "_heroAnimator")); Assert.Null(Fix1Private(view, "_detailAnimator")); Assert.Null(Fix1Private(view, "_liveRefreshTimer"));
-                Assert.Equal(0, ((System.Collections.IDictionary)Fix1Private(view, "_cardAnimators")!).Count);
+                Assert.Empty(((System.Collections.IDictionary)Fix1Private(view, "_cardAnimators")!).Keys);
                 view.Refresh(); Assert.Null(Fix1Private(view, "_heroAnimator")); // Even an external refresh must respect unload.
                 view.RaiseEvent(new RoutedEventArgs(FrameworkElement.LoadedEvent)); Assert.NotNull(Fix1Private(view, "_heroAnimator"));
             }
@@ -280,6 +280,7 @@ public sealed class ApprovedCollectionTests
         {
             grid.SelectedIndex = 0; Assert.Equal(Visibility.Visible, ((Border)view.FindName("SpeciesDialog")).Visibility);
             var choice = Assert.Single(((ItemsControl)view.FindName("SpeciesOwnedList")).Items);
+            Assert.NotNull(choice);
             Assert.Equal(exact.Id, choice.GetType().GetProperty("IndividualId")!.GetValue(choice));
             if (close == "individual")
             {

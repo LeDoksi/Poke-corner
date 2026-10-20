@@ -1,4 +1,4 @@
-<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="PokeCorner.App.Popup.NurseryView">
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="PokeCorner.App.Popup.NurseryView">
  <Grid Margin="16">
   <Grid.RowDefinitions>
    <RowDefinition Height="Auto" />
@@ -69,7 +69,8 @@
       <TextBlock x:Name="NestTitle" Style="{StaticResource SectionHeaderTextStyle}" />
       <TextBlock x:Name="NestTerms" TextWrapping="Wrap" Margin="0,6,0,0" />
       <TextBlock x:Name="NestTime" FontWeight="Bold" TextWrapping="Wrap" Margin="0,8,0,0" />
-      <ProgressBar x:Name="NestProgress" Minimum="0" Maximum="1" Height="8" Margin="0,7,0,0" />
+      <ProgressBar x:Name="NestProgress" Minimum="0" Maximum="1" Height="8" Margin="0,7,0,14" />
+      <Button x:Name="ReturnCornerButton" Content="Вернуться в уголок" Click="ReturnCorner_Click" Margin="0,12,0,0"/>
      </StackPanel>
      <StackPanel x:Name="NestParentPanel" Grid.Row="1" Margin="0,12,0,0" Visibility="Collapsed">
       <TextBlock x:Name="NestParents" TextWrapping="Wrap" Margin="0,6,0,0" />
@@ -128,7 +129,7 @@
      <ColumnDefinition Width="150" />
      <ColumnDefinition Width="90" />
     </Grid.ColumnDefinitions>
-    <TextBox x:Name="ParentSearchBox" TextChanged="ParentFilter_Changed" ToolTip="Имя, кличка или номер" AutomationProperties.Name="Имя, кличка или номер" Margin="0,0,8,0" />
+    <TextBox x:Name="ParentSearchBox" Tag="Имя, кличка или номер" TextChanged="ParentFilter_Changed" ToolTip="Имя, кличка или номер" AutomationProperties.Name="Имя, кличка или номер" Margin="0,0,8,0" />
     <ComboBox x:Name="RarityBox" Grid.Column="1" SelectionChanged="ParentFilter_Changed" AutomationProperties.Name="Редкость" Margin="0,0,8,0" />
     <CheckBox x:Name="ShinyOnlyBox" Grid.Column="2" Content="Shiny" Checked="ParentFilter_Changed" Unchecked="ParentFilter_Changed" VerticalAlignment="Center" />
    </Grid>

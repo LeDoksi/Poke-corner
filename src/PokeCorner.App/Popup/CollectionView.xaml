@@ -1,4 +1,4 @@
-<UserControl x:Class="PokeCorner.App.Popup.CollectionView"
+﻿<UserControl x:Class="PokeCorner.App.Popup.CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PokeCorner.App.Popup"
@@ -183,22 +183,7 @@
          <TabItem Header="Покедекс">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
-                        <Grid>
-                            <StackPanel VerticalAlignment="Center">
-                                 <TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}" />
-                                <TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}" Margin="0,2,0,0" />
-                            </StackPanel>
-                            <Grid Width="46" Height="46" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <Ellipse Stroke="{StaticResource AccentRedBrush}" StrokeThickness="3" />
-                                <Border Height="3" Background="{StaticResource AccentRedBrush}" VerticalAlignment="Center" />
-                                <Ellipse Width="15" Height="15" Fill="{StaticResource CardBackgroundBrush}"
-                                         Stroke="{StaticResource AccentRedBrush}" StrokeThickness="3"
-                                         HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </Border>
-
+                    <StackPanel Margin="0,0,0,10"><TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}"/></StackPanel>
                     <Grid Margin="0,0,0,12">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
                         <Button x:Name="IndividualsModeButton" Grid.Column="0" Content="Мои покемоны"
@@ -212,7 +197,7 @@
                             <RadioButton x:Name="SpeciesNormalToggle" Content="Обычные" GroupName="SpeciesForm" IsChecked="True" Checked="SpeciesForm_Changed" Style="{StaticResource FilterPillStyle}"/>
                             <RadioButton x:Name="SpeciesShinyToggle" Content="Shiny" GroupName="SpeciesForm" Checked="SpeciesForm_Changed" Style="{StaticResource FilterPillStyle}"/>
                         </WrapPanel>
-                        <TextBox x:Name="SpeciesSearchBox" Style="{StaticResource ThemedTextBoxStyle}" MaxLength="40"
+                        <TextBlock Text="Поиск по имени, номеру или местности" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,4"/><TextBox x:Name="SpeciesSearchBox" Tag="Имя, кличка или номер" Style="{StaticResource ThemedTextBoxStyle}" MaxLength="40"
                                  TextChanged="SpeciesFilters_Changed" Margin="0,0,0,8"
                                  AutomationProperties.Name="Поиск видов по имени, номеру или местности"
                                  ToolTip="Имя открытого вида, номер или открытая подсказка местности" />
@@ -277,8 +262,8 @@
                          "sparky" finds a nicknamed Pikachu and "pika" finds it too. ANDs with
                          the rarity pills below, and resets the page to 1 on every keystroke —
                          staying on page 4 of a two-page result would look like an empty grid. -->
-                    <TextBlock Text="Твоя маленькая команда" Style="{StaticResource SectionHeaderTextStyle}" />
-                    <TextBox x:Name="PokedexSearchBox" Style="{StaticResource ThemedTextBoxStyle}"
+                    <TextBlock Text="Поиск по имени, кличке или номеру" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,4"/>
+                    <TextBox x:Name="PokedexSearchBox" Tag="Имя, кличка или номер" Style="{StaticResource ThemedTextBoxStyle}"
                              Margin="2,0,2,10" MaxLength="30"
                              TextChanged="PokedexSearchBox_TextChanged"
                               ToolTip="Фильтр по имени вида или по прозвищу"
@@ -288,7 +273,7 @@
                          for free; each carries its tier's theme brush in Tag, which FilterPillStyle
                          renders as the dot and the checked-state ring. Tag on the buttons is also
                          what the code-behind reads back to know which tier is selected. -->
-                    <TextBlock Text="Редкость" Style="{StaticResource SectionHeaderTextStyle}" />
+
                     <WrapPanel Margin="2,0,0,4">
                         <RadioButton x:Name="RarityFilterAll" Style="{StaticResource FilterPillStyle}"
                                      GroupName="PokedexRarity" Content="Все" IsChecked="True"
@@ -330,7 +315,7 @@
                     </WrapPanel>
 
                     <!-- Number, type, or catch-date order applies after owned-individual filters. -->
-                    <TextBlock Text="Сортировка" Style="{StaticResource SectionHeaderTextStyle}" />
+                    <WrapPanel Margin="0,2,0,6">
                     <ComboBox x:Name="PokedexSortCombo" Margin="2,0,2,10" HorizontalAlignment="Left" MinWidth="170"
                               SelectionChanged="PokedexSortCombo_SelectionChanged">
                          <ComboBoxItem Content="По номеру" IsSelected="True" />
@@ -338,7 +323,7 @@
                         <ComboBoxItem Content="По дате поимки" /><ComboBoxItem Content="По уходу для эволюции" />
                     </ComboBox>
 
-                    <ComboBox x:Name="IndividualTypeCombo" HorizontalAlignment="Left" MinWidth="170" Margin="2,0,2,10" SelectionChanged="IndividualType_Changed" AutomationProperties.Name="Тип питомца"><ComboBoxItem Content="Все типы" IsSelected="True"/></ComboBox>
+                    <ComboBox x:Name="IndividualTypeCombo" HorizontalAlignment="Left" MinWidth="170" Margin="2,0,2,10" SelectionChanged="IndividualType_Changed" AutomationProperties.Name="Тип питомца"><ComboBoxItem Content="Все типы" IsSelected="True"/></ComboBox></WrapPanel>
                     <TextBlock x:Name="PokedexEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0"
                                Text="Пока пусто — поймай первого покемона на вкладке «Поймать»." />
 
@@ -353,12 +338,12 @@
                                 <!-- A mouse handler on the Border rather than wrapping the card in a Button, which would
                                      layer a second chrome and focus rect over the card's own hover/shadow. CardStyle's
                                      Background makes the whole face hit-testable.
-                                
+
                                      MouseLeftButtonDOWN, not Up, and that is load-bearing: the detail overlay dismisses on
                                      mouse-DOWN, so a card opening on Up split one physical click across two visual trees —
                                      the down-stroke dismissed the overlay and the up-stroke opened whatever card lay under
                                      the pointer. Open and dismiss fire on the same event, so the overlay eats the whole click. -->
-                                 <Border Style="{StaticResource CardStyle}" Width="158" Margin="5" Padding="9"
+                                 <Border Style="{StaticResource CardStyle}" Width="170" Margin="5" Padding="10"
                                          Cursor="Hand" Tag="{Binding IndividualId}" Focusable="True"
                                         MouseLeftButtonDown="PokedexCard_Click"
                                          KeyDown="PokedexCard_KeyDown"
@@ -426,7 +411,7 @@
                                              subtitle collapses, so an un-nicknamed card looks
                                              exactly as it did before. -->
                                         <StackPanel Margin="0,0,0,7">
-                                            <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold" FontSize="12"
+                                            <TextBlock Text="{Binding DisplayName}" Foreground="{StaticResource PrimaryTextBrush}" FontWeight="Bold" FontSize="14"
                                                         TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" />
                                             <TextBlock Text="{Binding SpeciesSubtitle}" Style="{StaticResource CaptionTextStyle}"
                                                        Visibility="{Binding SpeciesSubtitleVisibility}"
@@ -485,86 +470,100 @@
              The dimmed backdrop closes the card: MouseLeftButtonDown on it hides the layer, and the
              card marks the event Handled so a click INSIDE the card never bubbles up here. ZIndex
              keeps it over the TabControl regardless of declaration order.
-        
+
              Names are Detail*-prefixed because several (SpriteImage, ShinyBadge) would collide with
              the home tab's elements in the shared namescope. -->
         <Border x:Name="DetailOverlay" Panel.ZIndex="10" Visibility="Collapsed" Background="{StaticResource WindowBackgroundBrush}" MouseLeftButtonDown="DetailOverlay_MouseLeftButtonDown">
-            <Grid x:Name="DetailOverlayArea" Margin="14,10">
-                <Border x:Name="DetailCard" Background="{StaticResource WindowBackgroundBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
-                <DockPanel>
-                    <StackPanel DockPanel.Dock="Top">
-                        <Button Content="← К покедексу" Click="DetailBack_Click" HorizontalAlignment="Left" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10"/>
-                        <TextBlock x:Name="DetailErrorText" Foreground="{StaticResource AccentRedBrush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Assertive"/>
-                    </StackPanel>
-                    <ScrollViewer x:Name="DetailScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel>
-                        <Border Style="{StaticResource CardStyle}" Padding="18">
-                        <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="170"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                            <Grid Height="180">
-                                <Ellipse Width="160" Height="155" Fill="{StaticResource SpotlightBrush}"/>
-                                <Image x:Name="DetailSpriteImage" Width="156" Height="156" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                                <TextBlock x:Name="DetailSpritePlaceholder" Text="?" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"><TextBlock Text="Shiny"/></Border>
-                            </Grid>
-                            <StackPanel Grid.Column="1" Margin="16,0,0,0">
-                                <TextBlock x:Name="DetailDexNumberText" Style="{StaticResource MetaTextStyle}"/>
+            <Grid x:Name="DetailOverlayArea" Margin="24,14">
+                <Border x:Name="DetailCard" Background="{StaticResource WindowBackgroundBrush}" MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+                            <Button Content="← К покедексу" Click="DetailBack_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="12,0,0,0"/>
+                            <StackPanel>
                                 <TextBlock x:Name="DetailSpeciesNameText" Style="{StaticResource ScreenTitleTextStyle}" TextWrapping="Wrap"/>
-                                <TextBlock x:Name="DetailSpeciesSubtitleText" Style="{StaticResource MetaTextStyle}" TextWrapping="Wrap"/>
-                                <WrapPanel Margin="0,6,0,8">
-                                    <Button x:Name="DetailSelectButton" Content="На стол" Click="DetailSelectButton_Click" Margin="0,0,8,0"/>
-                                    <Button x:Name="DetailFavoriteButton" Style="{StaticResource FavoriteToggleStyle}" Click="DetailFavoriteButton_Click"><Path x:Name="DetailFavoriteStar" Width="19" Height="19" Stretch="Uniform" Data="M12,2 L15,8 22,9 17,14 18,21 12,18 6,21 7,14 2,9 9,8 Z"/></Button>
-                                </WrapPanel>
-                                <ItemsControl x:Name="DetailTypeBadges" ItemsPanel="{StaticResource TypeBadgePanelTemplate}" ItemTemplate="{StaticResource TypeBadgeTemplate}"/>
-                                <Border x:Name="DetailRarityPill" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" Margin="0,6"><StackPanel Orientation="Horizontal"><Ellipse x:Name="DetailRarityDot" Width="6" Height="6" Margin="0,0,5,0"/><TextBlock x:Name="DetailRarityText"/></StackPanel></Border>
-                                <TextBlock x:Name="DetailLevelText" FontWeight="Bold"/>
-                                <TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource MetaTextStyle}"/>
-                                <TextBlock x:Name="DetailBusyText" Style="{StaticResource MetaTextStyle}"/>
-                                <TextBox x:Name="DetailNicknameBox" MaxLength="20" TextChanged="DetailNicknameBox_TextChanged" Style="{StaticResource ThemedTextBoxStyle}" Margin="0,8,0,0" AutomationProperties.Name="Кличка питомца"/>
-                                <TextBlock x:Name="DetailNatureText" Visibility="Collapsed"/>
-                                <Border x:Name="DetailFavoriteBadge" Visibility="Collapsed"><TextBlock Text="Избранное"/></Border>
-                                <Border x:Name="DetailActiveBadge" Visibility="Collapsed"><TextBlock Text="На столе"/></Border>
+                                <WrapPanel><TextBlock x:Name="DetailSpeciesSubtitleText" Style="{StaticResource MetaTextStyle}" Margin="0,0,8,0"/><TextBlock x:Name="DetailDexNumberText" Style="{StaticResource MetaTextStyle}"/></WrapPanel>
+                                <TextBlock x:Name="DetailErrorText" Foreground="{StaticResource AccentRedBrush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Assertive"/>
                             </StackPanel>
-                        </Grid></Border>
-                        <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,10,0,0"><StackPanel>
-                            <TextBlock Text="Уход для эволюции" Style="{StaticResource SectionHeaderTextStyle}"/>
-                            <TextBlock x:Name="DetailEvolutionText" TextWrapping="Wrap" Margin="0,5"/>
-                            <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource SlimProgressBarStyle}" Minimum="0" Maximum="1"/>
-                            <TextBlock x:Name="DetailXpText" TextWrapping="Wrap" Margin="0,8,0,0"/>
-                            <ProgressBar x:Name="DetailXpBar" Style="{StaticResource SlimProgressBarStyle}" Minimum="0" Maximum="1" Margin="0,4,0,0"/>
-                        </StackPanel></Border>
-                        <Border x:Name="DetailEvolutionChainSection" Style="{StaticResource CardStyle}" Padding="16" Margin="0,10,0,0"><StackPanel>
-                            <TextBlock Text="Эволюция" Style="{StaticResource SectionHeaderTextStyle}"/>
-                            <ItemsControl x:Name="DetailEvolutionChainStrip" Margin="0,8,0,0"/>
-                        </StackPanel></Border>
-                        <Border x:Name="DetailEvolutionActionSection" Style="{StaticResource CardStyle}" Padding="18" Margin="0,10,0,0" Visibility="Collapsed"><StackPanel>
-                            <TextBlock Text="Время расти" Style="{StaticResource ScreenTitleTextStyle}"/>
-                            <TextBlock Text="Помоги питомцу сделать следующий шаг." Style="{StaticResource MetaTextStyle}" Margin="0,4,0,10"/>
-                            <ItemsControl x:Name="DetailEvolutionTargets"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel></ItemsControl>
-                            <TextBlock x:Name="DetailEvolutionCostText" TextWrapping="Wrap" Margin="0,12,0,8"/>
-                            <CheckBox x:Name="DetailEvolutionStoneToggle" Checked="EvolutionStone_Changed" Unchecked="EvolutionStone_Changed" Margin="0,4,0,8" AutomationProperties.Name="Использовать камень выбора">
-                                <Border Style="{StaticResource WellStyle}" Padding="12"><StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/evolution-stone.png" x:Name="DetailStoneImage" Width="48" Height="48" Margin="0,0,10,0"/><StackPanel><TextBlock Text="Камень выбора" FontWeight="Bold"/><TextBlock x:Name="DetailStoneStockText"/><TextBlock Text="Позволяет выбрать ветвь"/></StackPanel></StackPanel></Border>
-                            </CheckBox>
-                            <ComboBox x:Name="DetailEvolutionBranchPicker" SelectionChanged="DetailEvolutionBranchPicker_SelectionChanged" AutomationProperties.Name="Ветвь эволюции"/>
-                            <TextBlock x:Name="DetailEvolutionBlockedText" TextWrapping="Wrap" Margin="0,8,0,0"/>
-                            <TextBlock x:Name="DetailEvolutionReasonText" Foreground="{StaticResource AccentRedBrush}" TextWrapping="Wrap" Margin="0,5"/>
-                            <Button x:Name="DetailEvolveButton" Content="Эволюционировать" Click="DetailEvolveButton_Click" HorizontalAlignment="Left" Margin="0,8"/>
-                            <WrapPanel><Button x:Name="DetailEvolutionShopButton" Content="В магазин" Click="DetailEvolutionShopButton_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/><Button x:Name="DetailEvolutionRouteButton" Content="В поход" Click="DetailEvolutionRouteButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
-                        </StackPanel></Border>
-                        <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,10,0,0"><StackPanel><TextBlock Text="Особенности" Style="{StaticResource SectionHeaderTextStyle}"/><TextBlock x:Name="DetailTraitsText" TextWrapping="Wrap" Margin="0,6,0,0"/></StackPanel></Border>
-                        <Border x:Name="DetailFactSection" Style="{StaticResource CardStyle}" Padding="16" Margin="0,10,0,0"><StackPanel><TextBlock Text="Интересный факт" Style="{StaticResource SectionHeaderTextStyle}"/><TextBlock x:Name="DetailDescriptionText" TextWrapping="Wrap" Margin="0,6,0,0"/></StackPanel></Border>
-                        <Border x:Name="DetailItemsSection" Style="{StaticResource CardStyle}" Padding="16" Margin="0,10,0,0"><StackPanel>
-                            <TextBlock Text="Помочь питомцу" Style="{StaticResource SectionHeaderTextStyle}"/>
-                            <TextBlock x:Name="DetailCareBoosterText" TextWrapping="Wrap" Margin="0,8,0,4"/><Button x:Name="DetailCareBoosterButton" Content="Применить бустер ухода" Tag="care-booster" Click="DetailItem_Click" HorizontalAlignment="Left"/>
-                            <TextBlock x:Name="DetailXpPotionText" TextWrapping="Wrap" Margin="0,12,0,4"/><Button x:Name="DetailXpPotionButton" Content="Применить зелье опыта" Tag="xp-potion" Click="DetailItem_Click" HorizontalAlignment="Left"/>
-                        </StackPanel></Border>
-                        <Border x:Name="DetailRetrainingSection" Style="{StaticResource CardStyle}" Padding="16" Margin="0,10,0,0" Visibility="Collapsed"><StackPanel>
-                            <TextBlock Text="Переобучение" Style="{StaticResource SectionHeaderTextStyle}"/><ComboBox x:Name="DetailRetrainingSlotPicker" SelectionChanged="DetailRetrainingSlotPicker_SelectionChanged"/>
-                            <TextBlock x:Name="DetailRetrainingCostText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingOutcomesText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingReasonText" TextWrapping="Wrap"/>
-                            <WrapPanel><Button x:Name="DetailRetrainButton" Content="Переобучить" Click="DetailRetrainButton_Click"/><Button x:Name="DetailRetrainingShopButton" Content="В магазин" Click="DetailRetrainingShopButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
-                        </StackPanel></Border>
-                        <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,10,0,10"><StackPanel><TextBlock x:Name="DetailRehomeReasonText" TextWrapping="Wrap" Margin="0,0,0,8"/><Button x:Name="DetailRehomeButton" Content="Найти новый дом" Click="DetailRehomeButton_Click" HorizontalAlignment="Left" Style="{StaticResource SecondaryButtonStyle}"/></StackPanel></Border>
-                    </StackPanel></ScrollViewer>
-                </DockPanel></Border>
+                        </DockPanel>
+                        <ScrollViewer x:Name="DetailScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <Grid x:Name="DetailPersonalGrid">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <StackPanel Margin="0,0,18,0">
+                                        <Grid Height="178">
+                                            <Ellipse Width="160" Height="155" Fill="{StaticResource SpotlightBrush}"/>
+                                            <Image x:Name="DetailSpriteImage" Width="156" Height="156" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                            <TextBlock x:Name="DetailSpritePlaceholder" Text="Изображение формы&#10;пока недоступно" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}"/>
+                                            <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"><TextBlock Text="Shiny"/></Border>
+                                        </Grid>
+                                        <WrapPanel HorizontalAlignment="Center" Margin="0,5">
+                                            <ItemsControl x:Name="DetailTypeBadges" ItemsPanel="{StaticResource TypeBadgePanelTemplate}" ItemTemplate="{StaticResource TypeBadgeTemplate}" Margin="0,0,8,0"/>
+                                            <Border x:Name="DetailRarityPill" Style="{StaticResource PillStyle}"><StackPanel Orientation="Horizontal"><Ellipse x:Name="DetailRarityDot" Width="6" Height="6" Margin="0,0,5,0"/><TextBlock x:Name="DetailRarityText"/></StackPanel></Border>
+                                        </WrapPanel>
+                                        <Border x:Name="DetailEvolutionChainSection" BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="0,0,0,1" Padding="0,10">
+                                            <StackPanel>
+                                                <DockPanel><Button x:Name="DetailConditionsButton" Content="Условия" DockPanel.Dock="Right" Click="DetailConditions_Click" Style="{StaticResource SecondaryButtonStyle}"/><TextBlock Text="Эволюция" Style="{StaticResource SectionHeaderTextStyle}"/></DockPanel>
+                                                <ItemsControl x:Name="DetailEvolutionChainStrip" Margin="0,6,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border x:Name="DetailFactSection" Padding="0,10">
+                                            <StackPanel><TextBlock Text="О виде" Style="{StaticResource SectionHeaderTextStyle}"/><TextBlock x:Name="DetailDescriptionText" TextWrapping="Wrap"/></StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <WrapPanel Margin="0,0,0,12"><Button x:Name="DetailSelectButton" Content="На рабочий стол" Click="DetailSelectButton_Click" Margin="0,0,8,0"/><Button x:Name="DetailFavoriteButton" Style="{StaticResource FavoriteToggleStyle}" Click="DetailFavoriteButton_Click"><Path x:Name="DetailFavoriteStar" Width="19" Height="19" Stretch="Uniform" Data="M12,2 L15,8 22,9 17,14 18,21 12,18 6,21 7,14 2,9 9,8 Z"/></Button></WrapPanel>
+                                        <TextBlock x:Name="DetailLevelText" FontWeight="Bold"/>
+                                        <TextBlock x:Name="DetailXpText" TextWrapping="Wrap" Margin="0,4,0,4"/>
+                                        <ProgressBar x:Name="DetailXpBar" Style="{StaticResource SlimProgressBarStyle}" Minimum="0" Maximum="1"/>
+                                        <TextBlock Text="Уход для эволюции" FontWeight="Bold" Margin="0,12,0,2"/>
+                                        <TextBlock x:Name="DetailEvolutionText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,4"/>
+                                        <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource SlimProgressBarStyle}" Minimum="0" Maximum="1"/>
+                                        <TextBlock x:Name="DetailTraitsText" TextWrapping="Wrap" Margin="0,14,0,10"/>
+                                        <Border x:Name="DetailItemsSection" Style="{StaticResource CardStyle}" Padding="12" Margin="0,4,0,10"><StackPanel>
+                                            <TextBlock Text="Помочь питомцу" Style="{StaticResource SectionHeaderTextStyle}"/>
+                                            <DockPanel Margin="0,8,0,0"><Button x:Name="DetailCareBoosterButton" Content="Применить" Tag="care-booster" Click="DetailItem_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,0,0"/><TextBlock x:Name="DetailCareBoosterText" TextWrapping="Wrap"/></DockPanel>
+                                            <DockPanel Margin="0,12,0,0"><Button x:Name="DetailXpPotionButton" Content="Применить" Tag="xp-potion" Click="DetailItem_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,0,0"/><TextBlock x:Name="DetailXpPotionText" TextWrapping="Wrap"/></DockPanel>
+                                        </StackPanel></Border>
+                                        <TextBlock x:Name="DetailNatureText" Style="{StaticResource CaptionTextStyle}"/>
+                                        <TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource MetaTextStyle}"/>
+                                        <TextBlock x:Name="DetailBusyText" Style="{StaticResource MetaTextStyle}"/>
+                                        <Expander Header="Кличка и переобучение" Margin="0,12,0,0"><StackPanel>
+                                            <TextBox x:Name="DetailNicknameBox" MaxLength="20" TextChanged="DetailNicknameBox_TextChanged" Style="{StaticResource ThemedTextBoxStyle}" Margin="0,8,0,0" AutomationProperties.Name="Кличка питомца"/>
+                                            <Border x:Name="DetailRetrainingSection" Padding="0,10" Visibility="Collapsed"><StackPanel>
+                                                <TextBlock Text="Переобучение" Style="{StaticResource SectionHeaderTextStyle}"/><ComboBox x:Name="DetailRetrainingSlotPicker" SelectionChanged="DetailRetrainingSlotPicker_SelectionChanged"/>
+                                                <TextBlock x:Name="DetailRetrainingCostText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingOutcomesText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingReasonText" TextWrapping="Wrap"/>
+                                                <WrapPanel><Button x:Name="DetailRetrainButton" Content="Переобучить" Click="DetailRetrainButton_Click"/><Button x:Name="DetailRetrainingShopButton" Content="В магазин" Click="DetailRetrainingShopButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
+                                            </StackPanel></Border>
+                                        </StackPanel></Expander>
+                                        <Border x:Name="DetailFavoriteBadge" Visibility="Collapsed"><TextBlock Text="Избранное"/></Border>
+                                        <Border x:Name="DetailActiveBadge" Visibility="Collapsed"><TextBlock Text="На столе"/></Border>
+                                    </StackPanel>
+                                </Grid>
+                                <Border x:Name="EvolutionSurface" Visibility="Collapsed">
+                                    <Border x:Name="DetailEvolutionActionSection" Padding="0" Visibility="Collapsed"><StackPanel>
+                                        <DockPanel Margin="0,0,0,10"><Button Content="← К питомцу" Click="DetailConditionsBack_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}"/><StackPanel><TextBlock Text="Время расти" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock Text="Помоги питомцу сделать следующий шаг." Style="{StaticResource MetaTextStyle}"/></StackPanel></DockPanel>
+                                        <ItemsControl x:Name="DetailEvolutionTargets" Margin="0,0,0,14"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel></ItemsControl>
+                                        <Border Style="{StaticResource CardStyle}" Padding="16"><StackPanel>
+                                            <TextBlock Text="Забота помогает ему вырасти" Style="{StaticResource SectionHeaderTextStyle}"/>
+                                            <TextBlock x:Name="DetailEvolutionCostText" TextWrapping="Wrap" Margin="0,6,0,8"/>
+                                            <CheckBox x:Name="DetailEvolutionStoneToggle" Checked="EvolutionStone_Changed" Unchecked="EvolutionStone_Changed" Margin="0,4,0,8" AutomationProperties.Name="Использовать камень выбора">
+                                                <Border Style="{StaticResource WellStyle}" Padding="10"><StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/evolution-stone.png" x:Name="DetailStoneImage" Width="44" Height="44" Margin="0,0,10,0"/><StackPanel><TextBlock Text="Камень выбора" FontWeight="Bold"/><TextBlock x:Name="DetailStoneStockText"/><TextBlock Text="Позволяет выбрать ветвь"/></StackPanel></StackPanel></Border>
+                                            </CheckBox>
+                                            <ComboBox x:Name="DetailEvolutionBranchPicker" SelectionChanged="DetailEvolutionBranchPicker_SelectionChanged" AutomationProperties.Name="Ветвь эволюции"/>
+                                            <TextBlock x:Name="DetailEvolutionBlockedText" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                                            <TextBlock x:Name="DetailEvolutionReasonText" Foreground="{StaticResource AccentRedBrush}" TextWrapping="Wrap" Margin="0,4"/>
+                                            <WrapPanel Margin="0,8,0,0"><Button x:Name="DetailEvolveButton" Content="Эволюционировать" Click="DetailEvolveButton_Click" Margin="0,0,10,0"/><Button x:Name="DetailEvolutionShopButton" Content="В магазин" Click="DetailEvolutionShopButton_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/><Button x:Name="DetailEvolutionRouteButton" Content="В поход" Click="DetailEvolutionRouteButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
+                                        </StackPanel></Border>
+                                    </StackPanel></Border>
+                                </Border>
+                                <DockPanel Margin="0,14,0,0">
+                                    <Button x:Name="DetailRehomeButton" Content="Найти новый дом" Click="DetailRehomeButton_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="10,0,0,0"/>
+                                    <TextBlock x:Name="DetailRehomeReasonText" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource CaptionTextStyle}"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
             </Grid>
         </Border>
         <Border x:Name="SpeciesDialog" Panel.ZIndex="15" Visibility="Collapsed" Background="#8A26352D">

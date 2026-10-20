@@ -1,4 +1,4 @@
-using PokeCorner.App.Imaging;
+﻿using PokeCorner.App.Imaging;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -514,6 +514,13 @@ public partial class App : System.Windows.Application
         // the static PNG path below.
 
         byte[]? spriteBytes = null;
+        if (active.IsShiny)
+        {
+            _activeSpriteFrames = null;
+            _overlayWindow.SetSpriteFrames([]);
+            ApplyFullscreenVisibility();
+            return;
+        }
         try
         {
             spriteBytes = await _spriteCache.GetOrFetchAsync(displaySpeciesId, () => _pokeApiClient.FetchSpriteAsync(displaySpeciesId));
@@ -574,8 +581,7 @@ public partial class App : System.Windows.Application
 
         byte[]? animatedBytes = null;
         // The selected package provides verified local GIFs; an unavailable species has no animation.
-        var gifPath = _catalogPackage.GetAssetPath(speciesId, isShiny)
-            ?? (isShiny ? _catalogPackage.GetAssetPath(speciesId, false) : null);
+        var gifPath = _catalogPackage.GetAssetPath(speciesId, isShiny);
         if (gifPath is null) return null;
         try
         {

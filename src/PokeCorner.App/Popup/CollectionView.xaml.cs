@@ -1,4 +1,4 @@
-using PokeCorner.App.Imaging;
+﻿using PokeCorner.App.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -705,7 +705,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             Depth = stage.Depth,
             IsParallel = stage.IsParallel,
             IsRevealed = stage.IsRevealed,
-            NameText = stage.IsRevealed ? stage.SpeciesName ?? "???" : "???",
+            NameText = stage.IsRevealed ? stage.SpeciesName ?? "???" : stage.SilhouetteSpeciesId is { } number ? $"#{number:D4}" : "???",
+            SilhouetteImage = !stage.IsRevealed && stage.SilhouetteSpeciesId is { } shape ? TryGetThumbnail(shape, entry.IsShiny) : null,
             SpriteImage = stage.IsRevealed && stage.SpeciesId is { } id ? TryGetThumbnail(id, entry.IsShiny) : null,
             TypeBadges = TypeDisplay.ToBadges(stage.Types),
             IsCurrent = stage.IsCurrent,
@@ -845,6 +846,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         _detailGeneration++;
         _detailCard = card;
+        SetEvolutionSurface(false);
         DetailErrorText.Text = string.Empty;
         _detailIsFavorite = card.IsFavorite;
         DetailFavoriteButton.IsEnabled = true;
@@ -1432,7 +1434,19 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _speciesPageIndex = 0; _speciesSignature = string.Empty; RefreshSpecies();
     }
     private void IndividualType_Changed(object sender, SelectionChangedEventArgs e) => IndividualExtraFilter_Changed(sender, e);
-    private void DetailBack_Click(object sender, RoutedEventArgs e) => HideDetail();
+    private void DetailBack_Click(object sender, RoutedEventArgs e)
+    {
+        if (EvolutionSurface.Visibility == Visibility.Visible) SetEvolutionSurface(false);
+        else HideDetail();
+    }
+    private void DetailConditions_Click(object sender, RoutedEventArgs e) => SetEvolutionSurface(true);
+    private void DetailConditionsBack_Click(object sender, RoutedEventArgs e) => SetEvolutionSurface(false);
+    private void SetEvolutionSurface(bool show)
+    {
+        EvolutionSurface.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+        DetailPersonalGrid.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
+        DetailScroll.ScrollToTop();
+    }
     private void SpeciesBack_Click(object sender, RoutedEventArgs e) => CloseSpeciesDialog();
     private void CloseSpeciesDialog()
     {
@@ -1514,10 +1528,17 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             var row = new WrapPanel { HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
             foreach (var stage in group)
             {
-                var contents = new StackPanel(); contents.Children.Add(new System.Windows.Controls.Image { Source = stage.SpriteImage, Width = 64, Height = 64 });
+                var contents = new StackPanel();
+                if (stage.SpriteImage is not null) contents.Children.Add(new System.Windows.Controls.Image { Source = stage.SpriteImage, Width = 54, Height = 54 });
+                else if (stage.SilhouetteImage is { } shape) contents.Children.Add(new Border
+                {
+                    Width = 54, Height = 54, Background = ThemeBrushes.Get("MutedTextBrush"),
+                    OpacityMask = new ImageBrush(shape) { Stretch = Stretch.Uniform }
+                });
+                else contents.Children.Add(new TextBlock { Text = "?", Height = 54, FontSize = 28, TextAlignment = TextAlignment.Center });
                 contents.Children.Add(new TextBlock { Text = stage.NameText, TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center });
                 if (stage.IsCurrent) contents.Children.Add(new TextBlock { Text = "Сейчас", TextAlignment = TextAlignment.Center });
-                var tile = new Border { Child = contents, Width = 96, Padding = new Thickness(6), Margin = new Thickness(3), BorderThickness = new Thickness(1), BorderBrush = stage.BorderBrush, DataContext = stage };
+                var tile = new Border { Child = contents, Width = 78, Padding = new Thickness(4), Margin = new Thickness(3), BorderThickness = new Thickness(1), BorderBrush = stage.BorderBrush, DataContext = stage };
                 if (stage.IsRevealed) tile.MouseLeftButtonDown += DetailEvolutionStage_Click;
                 row.Children.Add(tile);
             }
@@ -1530,8 +1551,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var targets = preview.Branches.Select(branch =>
         {
             var known = (_detailCard.IsShiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds).Contains(branch.SpeciesId);
-            var panel = new StackPanel { Width = 108, Margin = new Thickness(4) };
-            panel.Children.Add(new System.Windows.Controls.Image { Source = known ? TryGetThumbnail(branch.SpeciesId, _detailCard.IsShiny) : null, Width = 80, Height = 80 });
+            var panel = new StackPanel { Width = 91, Margin = new Thickness(4) };
+            var sprite = TryGetThumbnail(branch.SpeciesId, _detailCard.IsShiny);
+            if (known) panel.Children.Add(new System.Windows.Controls.Image { Source = sprite, Width = 70, Height = 70 });
+            else if (sprite is not null) panel.Children.Add(new Border
+            {
+                Width = 70, Height = 70, Background = ThemeBrushes.Get("MutedTextBrush"),
+                OpacityMask = new ImageBrush(sprite) { Stretch = Stretch.Uniform }
+            });
+            else panel.Children.Add(new TextBlock { Text = "?", Height = 70, FontSize = 32, TextAlignment = TextAlignment.Center });
             panel.Children.Add(new TextBlock { Text = known ? branch.Name : $"#{branch.SpeciesId:D4} · ?", TextAlignment = TextAlignment.Center, TextWrapping = TextWrapping.Wrap });
             if (!branch.Available) panel.Children.Add(new TextBlock { Text = "Недоступно", TextAlignment = TextAlignment.Center });
             return panel;

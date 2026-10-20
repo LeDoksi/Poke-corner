@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using PokeCorner.Core.Domain;
 
@@ -107,6 +107,7 @@ public sealed class PokedexCard
 /// two mean the same thing to the eye: something is there, you just can't see it yet.
 public sealed class EvolutionStageCard
 {
+    public ImageSource? SilhouetteImage { get; init; }
     /// Which stage of the chain this card is, 0-based — needed so the click handler knows
     /// which stage was picked without re-deriving it from position in the ItemsControl.
     public required int StageIndex { get; init; }

@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -98,10 +98,10 @@ public class ApprovedShellTests
     public void ShellHasApprovedSizeAndOrderedNavigation() => WpfTestHost.Run(() =>
     {
         var menu = CreateMenu();
-        Assert.Equal(1000, menu.Width);
-        Assert.Equal(760, menu.Height);
-        Assert.Equal(840, menu.MinWidth);
-        Assert.Equal(650, menu.MinHeight);
+        Assert.Equal(Math.Min(1000, SystemParameters.WorkArea.Width), menu.Width);
+        Assert.Equal(Math.Min(760, SystemParameters.WorkArea.Height), menu.Height);
+        Assert.Equal(Math.Min(840, SystemParameters.WorkArea.Width), menu.MinWidth);
+        Assert.Equal(Math.Min(650, SystemParameters.WorkArea.Height), menu.MinHeight);
         var tabs = (TabControl)menu.FindName("MenuTabControl");
         Assert.Equal(new[] { "Уголок", "Покедекс", "Экспедиции", "Питомник", "Магазин" },
             tabs.Items.Cast<TabItem>().Select(System.Windows.Automation.AutomationProperties.GetName));

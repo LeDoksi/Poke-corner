@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
@@ -48,14 +48,16 @@ internal sealed class ExpeditionTeamSelector
     internal IReadOnlyList<PokemonIndividual> Query(SaveData data, string route, string difficulty, string search,
         string? type, string? trait, bool available, bool matchesRoute, int sort)
     {
-        var q = search.Trim(); var busy = ExpeditionService.BusyIndividualIds(data);
+        var q = search.Trim();
+        var number = q.TrimStart('#', '№', '0');
+        var busy = ExpeditionService.BusyIndividualIds(data);
         bool Available(PokemonIndividual p) => p.Id != data.ActiveIndividualId && !busy.Contains(p.Id) && (_catalog?.CanObtain(p.CurrentSpeciesId, p.IsShiny) ?? true);
         var rows = data.Individuals.Where(p => (!available || Available(p)) && (!matchesRoute || Matches(p, route)) &&
             (string.IsNullOrEmpty(type) || Types(p).Contains(type)) &&
             (string.IsNullOrEmpty(trait) || p.FirstTraitId == trait || (Level(p) >= SecondTraitLevel && p.SecondTraitId == trait)) &&
             (q.Length == 0 || Name(p).Contains(q, StringComparison.CurrentCultureIgnoreCase) ||
              (p.Nickname?.Contains(q, StringComparison.CurrentCultureIgnoreCase) ?? false) ||
-             p.CurrentSpeciesId.ToString().Contains(q.TrimStart('#', '№', '0'))));
+             (number.Length > 0 && p.CurrentSpeciesId.ToString().Contains(number))));
         return (sort == 1 ? rows.OrderByDescending(Level).ThenBy(p => p.CurrentSpeciesId) :
             sort == 2 ? rows.OrderBy(p => p.CurrentSpeciesId).ThenBy(p => p.CaughtAtUtc) :
             rows.OrderByDescending(Available).ThenByDescending(p => Matches(p, route)).ThenByDescending(p => Level(p) >= Recommended(difficulty))

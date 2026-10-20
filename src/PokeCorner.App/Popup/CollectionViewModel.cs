@@ -1,4 +1,4 @@
-using PokeCorner.Core.Domain;
+﻿using PokeCorner.Core.Domain;
 using PokeCorner.Core.PokeApi;
 
 namespace PokeCorner.App.Popup;
@@ -64,6 +64,8 @@ public sealed record EvolutionStagePreview(
     /// Reached stages are revealed; everything past the individual's current stage is a
     /// silhouette. Derived from the presence of the identity rather than stored separately, so
     /// the two can never contradict each other.
+    // Only the public number and shape may be shown before discovery; names and types stay masked.
+    public int? SilhouetteSpeciesId { get; init; }
     public int Depth { get; init; }
     public bool IsParallel { get; init; }
     public bool IsRevealed => SpeciesId is not null;
@@ -256,7 +258,7 @@ public sealed class CollectionViewModel
                     revealed ? _speciesById.GetValueOrDefault(node.Id)?.DisplayName : null,
                     revealed ? _speciesById.GetValueOrDefault(node.Id)?.Types ?? [] : [],
                     node.Id == ResolveCurrentSpeciesId(individual), node.Id == ResolveDisplaySpeciesId(individual))
-                    { Depth = node.Depth, IsParallel = true });
+                    { Depth = node.Depth, IsParallel = true, SilhouetteSpeciesId = node.Id });
                 foreach (var target in _presentation.Targets.GetValueOrDefault(node.Id) ?? []) queue.Enqueue((target, node.Depth + 1));
             }
             return graph.Count > 1 ? graph : [];

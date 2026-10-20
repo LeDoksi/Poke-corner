@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -1251,15 +1251,27 @@ public class ThemeRenderingTests
             // FrameSequencer advances every 150ms, so pumping past that must land on a
             // different frame. Collect what the animator actually renders.
             var seen = new HashSet<ImageSource>();
+            var timing = new List<string>();
+            var clock = System.Diagnostics.Stopwatch.StartNew();
+            view.Loaded += (_, _) => timing.Add($"loaded:{clock.ElapsedMilliseconds}");
+            view.Unloaded += (_, _) => timing.Add($"unloaded:{clock.ElapsedMilliseconds}");
             var deadline = DateTime.UtcNow.AddMilliseconds(700);
             while (DateTime.UtcNow < deadline)
             {
                 Dispatcher.CurrentDispatcher.Invoke(() => { }, DispatcherPriority.Background);
                 if (image.Source is not null) seen.Add(image.Source);
+                timing.Add($"sample:{clock.ElapsedMilliseconds}:frames={seen.Count}");
                 Thread.Sleep(20);
             }
 
-            Assert.True(seen.Count >= 2, $"the hero sprite never changed frame (saw {seen.Count} distinct frames)");
+            var diagnostics = Environment.GetEnvironmentVariable("POKE_SHELL_CAPTURE_DIR");
+            if (!string.IsNullOrWhiteSpace(diagnostics))
+            {
+                Directory.CreateDirectory(diagnostics);
+                File.AppendAllLines(Path.Combine(diagnostics, "hero-timing.txt"), timing.Prepend("hero fixture"));
+            }
+            Assert.True(seen.Count >= 2, $"the hero sprite never changed frame (saw {seen.Count} distinct frames): {string.Join(",", timing)}");
+            view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
 
             // The placeholder pokéball must be out of the way once real frames exist.
             Assert.Equal(Visibility.Collapsed, ((FrameworkElement)view.FindName("ActiveSpritePlaceholder")!).Visibility);

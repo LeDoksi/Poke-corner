@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,7 +16,10 @@ namespace PokeCorner.App.Tests.GlobalUpdate;
 public class AcceptanceVisualTests
 {
     [Fact]
-    public void CaptureAssembledApplicationMatrix() => WpfTestHost.Run(() =>
+    public async Task CaptureAssembledApplicationMatrix()
+    {
+        var cancellations = new List<Task<bool>>();
+        WpfTestHost.Run(() =>
     {
         var output = Environment.GetEnvironmentVariable("POKE_SHELL_CAPTURE_DIR");
         Assert.False(string.IsNullOrWhiteSpace(output));
@@ -35,10 +38,17 @@ public class AcceptanceVisualTests
                 CaughtAtUtc = DateTimeOffset.Parse("2026-10-01T10:00:00Z"), ReachedSpeciesIds = [id],
                 FirstTraitId = "gatherer", TotalXp = levels.XpForLevel(15) };
         }
-        data.Individuals = [Pet(133), Pet(recipe.FirstParentId), Pet(recipe.SecondParentId), Pet(25, true), Pet(3)];
+        data.Individuals = [Pet(133), Pet(recipe.FirstParentId), Pet(recipe.SecondParentId), Pet(25, true), Pet(689), Pet(1)];
+        data.Individuals[4].Nickname = "Очень длинная кириллическая кличка Каменистого Берега";
+        for (var i = 0; i < 794; i++) { var pet = Pet(1); pet.Nickname = "Длинная кириллическая кличка " + i; data.Individuals.Add(pet); }
         data.ActiveIndividualId = data.Individuals[0].Id;
         data.DiscoveredSpeciesIds.UnionWith(data.Individuals.Select(p => p.CurrentSpeciesId));
-        data.ShopCoins = 250;
+        data.NormalSpeciesIds.UnionWith(data.Individuals.Where(p => !p.IsShiny).Select(p => p.CurrentSpeciesId));
+        data.ShinySpeciesIds.Add(25);
+        data.Individuals[0].AccumulatedCarePoints = 40000;
+        data.CatchAccumulatorUnits = PokeCorner.Core.Activity.ActivityAccumulator.CatchCheckIntervalUnits / 2;
+        data.FeedingRemainderUnits = FeedingService.ActivityUnitsPerTreatEarned / 2;
+        data.ShopCoins = 12500;
         data.FeedingTreats = 12;
         foreach (var key in data.Berries.Keys.ToArray()) data.Berries[key] = 100;
         foreach (var key in data.Items.Keys.ToArray()) data.Items[key] = 3;
@@ -53,11 +63,13 @@ public class AcceptanceVisualTests
             var path = catalog.GetAssetPath(id, shiny);
             return path is null ? null : frames[(id, shiny)] = GifFrameDecoder.DecodeFramesAsPng(File.ReadAllBytes(path));
         }
+        var presentation = new CollectionPresentation(catalog);
         var model = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(),
             lookup.Chains, state.PendingEggs, () => ExpeditionService.BusyIndividualIds(data),
             catalog.Species, () => data.DiscoveredSpeciesIds, catalog.GetRouteHints(),
-            p => levels.LevelForXp(p.TotalXp));
+            p => levels.LevelForXp(p.TotalXp), () => state.NormalSpeciesIds, () => state.ShinySpeciesIds, presentation);
         var cacheDirectory = Path.Combine(Path.GetTempPath(), "PokeCorner-T20-visual-" + Guid.NewGuid().ToString("N"));
+        var goods = new ShopService(catalog.DataRoot);
         var collection = new CollectionView(model, state, new SpriteCache(cacheDirectory), () => { }, () => { }, () => { },
             () => Frames(133), () => false, () => false,
             getAnimatedFrames: (id, shiny) => Task.FromResult(Frames(id, shiny)),
@@ -67,11 +79,36 @@ public class AcceptanceVisualTests
             previewRehome: id => new RehomingService(catalog, data).Quote(id),
             rehomeIndividual: (id, op) => Task.FromResult(new RehomingService(catalog, data).Transfer(id, op)),
             previewRetraining: (id, slot) => new RetrainingService(catalog, data).Preview(id, slot),
-            retrainIndividual: (id, slot, op) => Task.FromResult(new RetrainingService(catalog, data).Retrain(id, slot, op)));
-        var settings = new SettingsView(new SettingsViewModel(state.Settings), () => { });
+            retrainIndividual: (id, slot, op) => Task.FromResult(new RetrainingService(catalog, data).Retrain(id, slot, op)),
+            previewItem: (id, item) => new IndividualItemPreview(item, goods.Goods.Single(g => g.Id == item).Name,
+                data.Items.GetValueOrDefault(item), item == "care-booster" ? "Добавляет уход выбранному питомцу." : "Добавляет опыт выбранному питомцу.", null),
+            useItem: (id, item, op) => Task.FromResult(item == "care-booster" ? goods.TryUseCareBooster(data, id, op)
+                : goods.TryUseXpPotion(data, id, op, levels, catalog)),
+            xpProgress: id => {
+                var pet = data.Individuals.Single(p => p.Id == id); var level = levels.LevelForXp(pet.TotalXp);
+                var start = levels.XpForLevel(level); var end = level >= 40 ? start : levels.XpForLevel(level + 1);
+                return level >= 40 ? ("Максимальный уровень", 1d) : ($"До следующего уровня — {end - pet.TotalXp} опыта",
+                    (pet.TotalXp-start)/(double)(end-start));
+            },
+            whereFind: (id, shiny) => presentation.WhereFind(id, shiny, shiny ? data.ShinySpeciesIds : data.NormalSpeciesIds));
+        var settings = new SettingsView(new SettingsViewModel(state.Settings), () => { }, () => { }, () => { },
+            getAutostart: () => false, setAutostart: _ => { });
         var shop = new ShopView(state, new ShopService(catalog.DataRoot), _ => Task.FromException(new IOException("Тест: запись недоступна. Повторите действие.")), () => { }, catalog);
+        var motion = true;
+        var revealDelays = new Queue<(TimeSpan Duration, TaskCompletionSource Completion)>();
+        Task RevealDelay(TimeSpan duration, CancellationToken token)
+        {
+            var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            token.Register(() => completion.TrySetCanceled(token));
+            revealDelays.Enqueue((duration, completion));
+            return completion.Task;
+        }
         var catchView = new CatchView(state, () => null, id => Task.FromResult(Frames(id)?.FirstOrDefault()),
-            () => 1, () => { }, id => catalog.Species.Single(s => s.Id == id).DisplayName);
+            () => 1, () => { }, id => catalog.Species.Single(s => s.Id == id).DisplayName,
+            animationEnabled: () => motion, delayAsync: RevealDelay,
+            fetchVariantSprite: (id, shiny) => Task.FromResult(Frames(id, shiny)?.FirstOrDefault()),
+            fetchScene: _ => File.ReadAllBytes(Path.Combine(catalog.DataRoot, "expeditions", "grove.png")),
+            luckyCharmArtPath: Path.Combine(catalog.DataRoot, "final", "assets", "shop", "lucky-charm.png"));
         var expedition = new ExpeditionView(() => data, r => new ExpeditionService(catalog, data).Preview(r),
             r => Task.FromResult(new ExpeditionService(catalog, data).Start(r)),
             (id, now) => Task.FromResult(new ExpeditionService(catalog, data).Cancel(id, now)),
@@ -82,97 +119,200 @@ public class AcceptanceVisualTests
             (id, op) => Task.FromResult(new NurseryService(catalog, data).Hatch(id, op)),
             now => Task.FromResult(new NurseryService(catalog, data).RefreshReady(now)), catalog, (_, _) => { }, _ => { },
             _ => Task.CompletedTask);
-        var room = new RoomView(art, () => data, () => Frames(133), () => { }, id => catalog.Species.Single(s => s.Id == id).DisplayName);
+        var room = new RoomView(art, () => data, () => Frames(133), () => { },
+            id => catalog.Species.Single(s => s.Id == id).DisplayName, catalog, () => { }, () => { },
+            id => collection.OpenIndividual(id), () => { });
         var album = new AchievementsView(art, () => data, _ => Task.CompletedTask, () => { });
-        var menu = new AppMenuWindow(collection, settings, shop, catchView, expedition, nursery, room, album);
+        var menu = new AppMenuWindow(collection, settings, shop, catchView, expedition, nursery, room, album, () => data);
+        menu.SetCatchReady(CatchBallQueue.GiftReadyCount(state.Encounters));
         var root = (FrameworkElement)menu.Content;
         var records = new List<object>();
-        void Capture(string name, MenuSection section, bool bottom = false)
+        var keys = new HashSet<string>();
+        void Click(FrameworkElement view, string name) => ((Button)view.FindName(name)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        void Invoke(object target, string name, params object[] args) => target.GetType().GetMethod(name,
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(target, args);
+        void Capture(string key, MenuSection section, string? variant = null, FrameworkElement? action = null, bool navigate = true)
         {
-            menu.Navigate(section);
-            foreach (var size in new[] { (Width: 1000, Height: 900, Scale: 1.5, Suffix: "150"), (Width: 640, Height: 480, Scale: 2d, Suffix: "compact-200") })
+            if (navigate) menu.Navigate(section);
+            keys.Add(key);
+            foreach (var size in new[] { (Width: 1000, Height: 760, Scale: 1.5, Suffix: "base-150"),
+                (Width: 840, Height: 650, Scale: 2d, Suffix: "compact-200") })
             {
                 WpfTestHost.Layout(root, size.Width, size.Height);
-                foreach (var scroll in Descendants(root).OfType<ScrollViewer>().Where(s => s.IsVisible || s.ActualHeight > 0))
-                { if (bottom) scroll.ScrollToEnd(); else scroll.ScrollToTop(); }
+                foreach (var scroll in Descendants(root).OfType<ScrollViewer>().Where(s => s.ActualHeight > 0)) scroll.ScrollToTop();
                 root.UpdateLayout();
-                var file = name + "-" + size.Suffix + ".png";
+                var file = key + (variant is null ? "" : "-" + variant) + "-" + size.Suffix + ".png";
                 Render(root, size.Width, size.Height, size.Scale, Path.Combine(output, file));
-                records.Add(new { file, size.Width, size.Height, size.Scale, syntheticData = true, nativeWpfRender = true });
+                string? actionFile = null;
+                if (action is not null)
+                {
+                    Assert.Equal(Visibility.Visible, action.Visibility);
+                    action.BringIntoView(); root.UpdateLayout();
+                    var bounds = action.TransformToAncestor(root).TransformBounds(new Rect(action.RenderSize));
+                    Assert.True(bounds.Top >= 0 && bounds.Left >= 0 && bounds.Bottom <= size.Height && bounds.Right <= size.Width,
+                        $"{key}/{action.Name}: {bounds} outside {size.Width}x{size.Height}");
+                    actionFile = Path.GetFileNameWithoutExtension(file) + "-action.png";
+                    Render(root, size.Width, size.Height, size.Scale, Path.Combine(output, actionFile));
+                }
+                records.Add(new { reference = key, variant, file, actionFile, action = action?.Name, size.Width, size.Height, size.Scale,
+                    individuals = data.Individuals.Count, syntheticData = true, nativeWpfRender = true,
+                    imagesWithSource = Descendants(root).OfType<Image>().Count(i => i.ActualHeight > 0 && i.Source is not null) });
             }
+        }
+        void Overlay(string key, string title, string body, string caption)
+        {
+            var task = menu.ConfirmAsync(title, body, caption);
+            var overlay = (FrameworkElement)menu.FindName("ConfirmationHost");
+            Capture(key, MenuSection.Settings, action: (FrameworkElement)overlay.FindName("CancelButton"), navigate: false);
+            Click(overlay, "CancelButton");
+            Assert.True(task.IsCompletedSuccessfully); cancellations.Add(task);
         }
         try
         {
-            Capture("corner-empty-shelf", MenuSection.Corner);
             foreach (var award in art.Cards.Take(3)) data.AwardLedger[award] = new();
             data.TrophyShelfIds.AddRange(art.Cards.Take(3)); room.Refresh(); album.Refresh();
-            Capture("corner-full-shelf", MenuSection.Corner);
-            Capture("album-locked-earned", MenuSection.Achievements);
-            Capture("album-goals", MenuSection.Achievements, true);
-            Capture("companion-card", MenuSection.Pokedex);
+            Capture("corner", MenuSection.Corner);
+            Capture("achievements", MenuSection.Achievements);
+            menu.Navigate(MenuSection.Pokedex);
             ((TabControl)((Grid)collection.Content).Children[0]).SelectedIndex = 1;
-            Capture("pokedex-owned", MenuSection.Pokedex);
-            ((Button)collection.FindName("SpeciesModeButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            Capture("pokedex-species", MenuSection.Pokedex);
-            ((Button)collection.FindName("IndividualsModeButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            collection.OpenIndividual(data.Individuals[0].Id);
-            Capture("personal-card-evolution", MenuSection.Pokedex);
-            Capture("personal-card-actions", MenuSection.Pokedex, true);
-            typeof(CollectionView).GetMethod("HideDetail", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(collection, []);
-            collection.OpenIndividual(data.Individuals[3].Id);
-            Capture("personal-card-shiny", MenuSection.Pokedex);
-            typeof(CollectionView).GetMethod("HideDetail", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(collection, []);
-            Capture("shop-items", MenuSection.Shop);
-            Capture("shop-berries", MenuSection.Shop, true);
-            typeof(ShopView).GetMethod("ActivateLuckyCharm", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(shop, []);
-            Assert.Contains("запись недоступна", ((TextBlock)shop.FindName("MessageText")).Text);
-            Assert.False(state.Shop.CatchLuckyCharmActive);
-            Capture("shop-write-failure", MenuSection.Shop);
-            foreach (Button member in ((WrapPanel)expedition.FindName("TeamPanel")).Children.OfType<Button>().Take(3).ToArray())
-                member.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            foreach (Button route in expedition.RouteButtons.Children.OfType<Button>())
+            Capture("collection", MenuSection.Pokedex);
+            Click(collection, "SpeciesModeButton"); Capture("species", MenuSection.Pokedex);
+            ((TextBox)collection.FindName("SpeciesSearchBox")).Text = "#0004";
+            ((ListBox)collection.FindName("SpeciesGrid")).SelectedIndex = 0;
+            Capture("species", MenuSection.Pokedex, "unknown-acquisition");
+            Invoke(collection, "SpeciesBack_Click", collection, new RoutedEventArgs());
+            ((TextBox)collection.FindName("SpeciesSearchBox")).Text = "";
+            Click(collection, "IndividualsModeButton");
+            Assert.True(collection.OpenIndividual(data.Individuals[4].Id));
+            Capture("detail", MenuSection.Pokedex, "longest-fact-689", (FrameworkElement)collection.FindName("DetailXpPotionButton"));
+            Assert.True(((TextBlock)collection.FindName("DetailDescriptionText")).Text.Length >= 157);
+            Invoke(collection, "HideDetail"); collection.OpenIndividual(data.Individuals[0].Id);
+            Capture("detail", MenuSection.Pokedex, "supported-eevee", (FrameworkElement)collection.FindName("DetailCareBoosterButton"));
+            Click(collection, "DetailConditionsButton");
+            Capture("evolution", MenuSection.Pokedex, action: (FrameworkElement)collection.FindName("DetailEvolveButton"));
+            ((CheckBox)collection.FindName("DetailEvolutionStoneToggle")).IsChecked = true;
+            Capture("evolution-branch", MenuSection.Pokedex, action: (FrameworkElement)collection.FindName("DetailEvolutionBranchPicker"));
+            Invoke(collection, "HideDetail"); collection.OpenIndividual(data.Individuals[3].Id);
+            Capture("detail", MenuSection.Pokedex, "shiny"); Invoke(collection, "HideDetail");
+            Capture("shop", MenuSection.Shop);
+            Capture("expedition", MenuSection.Expeditions, action: (FrameworkElement)expedition.FindName("ChooseTeamButton"));
+            Click(expedition, "ChooseTeamButton");
+            Capture("expedition-team", MenuSection.Expeditions, "800", (FrameworkElement)expedition.FindName("PickerDoneButton"));
+            foreach (var pet in data.Individuals.Skip(1).Take(3))
             {
-                route.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                Assert.NotNull(((Image)expedition.FindName("LandscapeImage")).Source);
-                Capture("expedition-preparing-" + route.Tag, MenuSection.Expeditions);
+                ((TextBox)expedition.FindName("PickerSearchBox")).Text = pet.CurrentSpeciesId.ToString();
+                ((WrapPanel)expedition.FindName("PickerMembers")).Children.OfType<Button>().First(b => Equals(b.Tag, pet.Id))
+                    .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
-            Capture("expedition-preparing-controls", MenuSection.Expeditions, true);
-            var tripId = Guid.NewGuid();
-            Assert.True(new ExpeditionService(catalog, data).Start(new ExpeditionRequest("grove", "easy", 30,
-                data.Individuals.Take(3).Select(p => p.Id).ToArray(), tripId, DateTimeOffset.UtcNow)).Success);
-            expedition.Refresh(); Capture("expedition-running", MenuSection.Expeditions);
-            data.Expedition!.Status = "ready"; expedition.Refresh(); Capture("expedition-ready", MenuSection.Expeditions);
-            new ExpeditionService(catalog, data).Claim(tripId, Guid.NewGuid());
-            expedition.Refresh(); Capture("expedition-claimed", MenuSection.Expeditions, true);
-            nursery.Refresh();
-            ((WrapPanel)nursery.FindName("FirstParentsPanel")).Children.OfType<Button>().First(b => Equals(b.Tag, data.Individuals[1].Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            ((WrapPanel)nursery.FindName("SecondParentsPanel")).Children.OfType<Button>().First(b => Equals(b.Tag, data.Individuals[2].Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            Capture("nursery-parents-preview", MenuSection.Nursery);
-            var nestId = Guid.NewGuid();
-            Assert.True(new NurseryService(catalog, data).Start(new NurseryRequest([data.Individuals[1].Id, data.Individuals[2].Id], null, nestId, DateTimeOffset.UtcNow)).Success);
-            nursery.Refresh(); Capture("nursery-running", MenuSection.Nursery);
-            data.Nest!.Status = "ready"; nursery.Refresh(); Capture("nursery-ready", MenuSection.Nursery);
-            new NurseryService(catalog, data).Hatch(nestId, Guid.NewGuid());
-            nursery.Refresh(); Capture("nursery-hatched", MenuSection.Nursery, true);
-            Capture("catch-two-sealed-gifts", MenuSection.Catch);
-            catchView.RestoreReveal(new CatchReveal(new CatchResult(1, 1, Nature.Bold, false, false, 3), RarityTier.Common));
-            Capture("catch-confirmed-result", MenuSection.Catch);
-            Capture("settings-zero-audio", MenuSection.Settings);
-            Capture("settings-reset-area", MenuSection.Settings, true);
-            foreach (var step in new[] { 1, 4, 6 })
+            Click(expedition, "PickerDoneButton");
+            Capture("expedition-selected", MenuSection.Expeditions, action: (FrameworkElement)expedition.FindName("StartButton"));
+            Click(expedition, "StartButton"); Assert.Equal("running", data.Expedition!.Status);
+            Capture("expedition-running", MenuSection.Expeditions, action: (FrameworkElement)expedition.FindName("CancelButton"));
+            data.Expedition.Status = "ready"; expedition.Refresh();
+            Capture("expedition-ready", MenuSection.Expeditions, action: (FrameworkElement)expedition.FindName("ClaimButton"));
+            Click(expedition, "ClaimButton"); Capture("expedition-result", MenuSection.Expeditions);
+            Capture("nursery", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("ChooseFirstButton"));
+            Click(nursery, "ChooseFirstButton");
+            Capture("nursery-select", MenuSection.Nursery, "800-groups", (FrameworkElement)nursery.FindName("PickerSaveButton"));
+            foreach (var pet in data.Individuals.Skip(1).Take(2))
             {
-                var tour = new OnboardingWindow(step);
-                var content = (FrameworkElement)tour.Content;
-                WpfTestHost.Layout(content, 640, 480);
-                Render(content, 640, 480, 2, Path.Combine(output, $"onboarding-step-{step}-200.png"));
-                tour.Close();
+                ((TextBox)nursery.FindName("ParentSearchBox")).Text = pet.CurrentSpeciesId.ToString();
+                ((WrapPanel)nursery.FindName("SpeciesGroupsPanel")).Children.OfType<Button>().Single(b => Equals(b.Tag, pet.CurrentSpeciesId))
+                    .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                var candidates = (WrapPanel)nursery.FindName("PickerIndividualsPanel");
+                while (!candidates.Children.OfType<Button>().Any(b => Equals(b.Tag, pet.Id)))
+                {
+                    Assert.True(((Button)nursery.FindName("PickerNextButton")).IsEnabled);
+                    Click(nursery, "PickerNextButton");
+                }
+                if (pet.Id == data.Individuals[1].Id)
+                    Capture("nursery-select", MenuSection.Nursery, "800-individuals", (FrameworkElement)nursery.FindName("PickerSaveButton"));
+                candidates.Children.OfType<Button>().Single(b => Equals(b.Tag, pet.Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
-            var confirm = new ConfirmDialog("Очистить сохранённые данные?", "Коллекция и ресурсы останутся в истории восстановления. Новая игра начнётся только после второго подтверждения.", "Продолжить");
-            WpfTestHost.Layout((FrameworkElement)confirm.Content, 560, 300);
-            Render((FrameworkElement)confirm.Content, 560, 300, 2, Path.Combine(output, "reset-confirmation-200.png"));
-            confirm.Close();
+            Click(nursery, "PickerSaveButton");
+            Capture("nursery", MenuSection.Nursery, "selected", (FrameworkElement)nursery.FindName("StartButton"));
+            Click(nursery, "StartButton"); Assert.Equal("running", data.Nest!.Status);
+            Capture("nursery-running", MenuSection.Nursery);
+            data.Nest.Status = "ready"; nursery.Refresh();
+            Capture("nursery-ready", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("HatchButton"));
+            Click(nursery, "HatchButton");
+            Capture("nursery-hatching", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("HatchContinueButton"));
+            Click(nursery, "HatchContinueButton");
+            Capture("nursery-result", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("OpenPokedexButton"));
+            Capture("catch", MenuSection.Catch, action: (FrameworkElement)catchView.FindName("CatchButton"));
+            var known = new EncounterState { Id = Guid.NewGuid(), Source = "expedition", Phase = "resolved",
+                KnownSpeciesId = 1, Individual = Pet(1) };
+            state.Encounters.Insert(0, known); Assert.True(catchView.SelectEncounter(known.Id));
+            Assert.NotNull(((Image)catchView.FindName("SceneImage")).Source);
+            Capture("encounter", MenuSection.Catch);
+            var reveal = new CatchReveal(new CatchResult(1, 1, Nature.Bold, false, false, 3), RarityTier.Common);
+            void FinishPhase()
+            {
+                var phase = revealDelays.Dequeue();
+                phase.Completion.TrySetResult();
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(() => { },
+                    System.Windows.Threading.DispatcherPriority.ContextIdle);
+            }
+            void AnimatedReveal(string variant)
+            {
+                var animation = catchView.PlayReveal(reveal);
+                var durations = new[] { 1100, 650, 800, 1000, 1000, 1000, 700 };
+                for (var phase = 0; phase < durations.Length; phase++)
+                {
+                    Assert.Equal(durations[phase], revealDelays.Peek().Duration.TotalMilliseconds);
+                    Capture("catch-animation", MenuSection.Catch, variant + "-phase-" + phase,
+                        (FrameworkElement)catchView.FindName("SkipButton"));
+                    if (variant == "unknown")
+                    {
+                        Assert.Equal(Visibility.Collapsed, ((TextBlock)catchView.FindName("RevealNameText")).Visibility);
+                        Assert.Null(((Image)catchView.FindName("RevealSpriteImage")).Source);
+                    }
+                    FinishPhase();
+                }
+                Assert.True(animation.IsCompletedSuccessfully);
+            }
+            AnimatedReveal("known");
+            Capture("catch-result", MenuSection.Catch, action: (FrameworkElement)catchView.FindName("CatchButton"));
+            state.Encounters.Remove(known);
+            Click(catchView, "CatchButton");
+            Capture("catch", MenuSection.Catch, "unknown");
+            AnimatedReveal("unknown");
+            Click(catchView, "CatchButton");
+            motion = false;
+            var reduced = catchView.PlayReveal(reveal);
+            Assert.Equal(250, revealDelays.Peek().Duration.TotalMilliseconds);
+            Capture("catch-reduced", MenuSection.Catch, "reduced-motion", (FrameworkElement)catchView.FindName("SkipButton"));
+            FinishPhase(); Assert.True(reduced.IsCompletedSuccessfully);
+            Capture("catch-result", MenuSection.Catch, "reduced-settled", (FrameworkElement)catchView.FindName("CatchButton"));
+            Capture("settings", MenuSection.Settings, action: (FrameworkElement)settings.FindName("ResetDataButton"));
+            var history = new SaveHistoryWindow(Enumerable.Range(0, 30).Select(i => new SaveHistoryEntry("synthetic-" + i,
+                DateTimeOffset.Parse("2026-10-20T10:00:00Z").AddDays(-i), 2, 800-i, 12500-i)).ToArray(), 2, menu.ConfirmAsync);
+            var hosted = history.TakeHostedContent(); var historyTask = menu.ShowHostedAsync(hosted);
+            ((ListBox)history.FindName("HistoryList")).SelectedIndex = 0;
+            Capture("save-history", MenuSection.Settings, action: (FrameworkElement)history.FindName("RestoreButton"), navigate: false);
+            Overlay("confirm-restore", "Вернуться к этой копии?", "800 питомцев · 12500 монет. Данные останутся в истории.", "Продолжить");
+            menu.CompleteHostedContent(hosted); Assert.True(historyTask.IsCompleted); history.Close();
+            Overlay("confirm-cancel", "Прервать экспедицию?", "Команда вернётся без добычи и опыта.", "Прервать");
+            Overlay("confirm-rehome", "Найти новый дом?", "Этот питомец покинет коллекцию. Действие нельзя отменить.", "Передать");
+            Capture("components", MenuSection.Settings, "audio-zero-and-controls", (FrameworkElement)settings.FindName("CrySoundVolumeSlider"));
+            foreach (var step in Enumerable.Range(1, 6))
+            {
+                var tour = new OnboardingWindow(step, dataRoot: catalog.DataRoot, giftQueueCount: () => 2);
+                var content = tour.TakeHostedContent(); var pending = menu.ShowHostedAsync(content);
+                Capture("tour-" + step, MenuSection.Corner, action: (FrameworkElement)tour.FindName("NextButton"), navigate: false);
+                menu.CompleteHostedContent(content); Assert.True(pending.IsCompleted); tour.Close();
+            }
+            var openedTour = new OnboardingWindow(6, dataRoot: catalog.DataRoot, giftQueueCount: () => 0);
+            var openedContent = openedTour.TakeHostedContent(); menu.ShowHostedAsync(openedContent);
+            Capture("tour-6", MenuSection.Corner, "all-opened", (FrameworkElement)openedTour.FindName("NextButton"), navigate: false);
+            menu.CompleteHostedContent(openedContent); openedTour.Close();
+            var expected = new[] { "corner", "collection", "species", "detail", "evolution", "expedition", "expedition-running",
+                "expedition-ready", "expedition-result", "nursery", "nursery-running", "nursery-ready", "nursery-result",
+                "shop", "achievements", "catch", "catch-result", "settings", "save-history", "confirm-cancel", "confirm-restore",
+                "confirm-rehome", "tour-1", "tour-2", "tour-3", "tour-4", "tour-5", "tour-6", "components", "evolution-branch",
+                "catch-animation", "encounter", "nursery-hatching", "nursery-select", "catch-reduced", "expedition-selected", "expedition-team" };
+            Assert.Equal(expected.Order(), keys.Order());
             File.WriteAllText(Path.Combine(output, "matrix.json"), JsonSerializer.Serialize(records, new JsonSerializerOptions { WriteIndented = true }));
-            Assert.True(records.Count >= 50);
         }
         finally
         {
@@ -183,6 +323,8 @@ public class AcceptanceVisualTests
             Directory.Delete(cacheDirectory, true);
         }
     });
+        Assert.All(await Task.WhenAll(cancellations), Assert.False);
+    }
 
     private static void Render(FrameworkElement element, int width, int height, double scale, string path)
     {

@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 // Aliased because UseWindowsForms (needed for TrayIconService's NotifyIcon) pulls
@@ -131,6 +131,7 @@ public partial class OnboardingWindow : Window
         else
         {
             var count = _stepIndex == 5 ? Math.Clamp(_giftQueueCount?.Invoke() ?? 2, 0, 2) : 1;
+            if (count == 0) Add((System.Windows.Media.ImageSource)FindResource("UiBallOpenImage"), 130);
             for (var i = 0; i < count; i++) Add((System.Windows.Media.ImageSource)FindResource("UiBallClosedImage"), 130);
         }
     }

@@ -1,4 +1,4 @@
-<UserControl x:Class="PokeCorner.App.Popup.ExpeditionView"
+﻿<UserControl x:Class="PokeCorner.App.Popup.ExpeditionView"
  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  xmlns:local="clr-namespace:PokeCorner.App.Popup">
@@ -68,7 +68,7 @@
    <UniformGrid x:Name="PickerSlots" Grid.Row="1" Columns="3" Margin="0,0,0,10"/>
    <StackPanel Grid.Row="2">
     <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="2*"/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
-     <TextBox x:Name="PickerSearchBox" MinHeight="36" TextChanged="PickerFilterChanged" AutomationProperties.Name="Имя, кличка или номер" Margin="0,0,8,6"/>
+     <TextBox x:Name="PickerSearchBox" Tag="Имя, кличка или номер" MinHeight="36" TextChanged="PickerFilterChanged" AutomationProperties.Name="Имя, кличка или номер" Margin="0,0,8,6"/>
      <ComboBox x:Name="PickerTypeBox" Grid.Column="1" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Тип" Margin="0,0,8,6"/>
      <ComboBox x:Name="PickerTraitBox" Grid.Column="2" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Особенность" Margin="0,0,0,6"/>
     </Grid>
