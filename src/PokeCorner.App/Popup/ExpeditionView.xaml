@@ -27,8 +27,10 @@
    </Style>
    <Style x:Key="UiPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="{StaticResource NdApricotBrush}"/><Setter Property="Foreground" Value="#101426"/><Setter Property="FontWeight" Value="Bold"/><Setter Property="MinHeight" Value="48"/></Style>
    <Style TargetType="Button" BasedOn="{StaticResource UiPrimaryButtonStyle}"/>
+   <Style x:Key="NdLinkButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="Transparent"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/></Style>
+   <Style x:Key="NdGlyphStyle" TargetType="TextBlock"><Setter Property="FontFamily" Value="Segoe MDL2 Assets"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="14"/><Setter Property="VerticalAlignment" Value="Center"/><Setter Property="Margin" Value="0,0,7,0"/></Style>
    <Style x:Key="NdRouteSelectedStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Foreground" Value="#101426"/><Setter Property="FontWeight" Value="Bold"/></Style>
-   <Style x:Key="UiChoiceListStyle" TargetType="ListBox"><Setter Property="FontSize" Value="12"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Background" Value="Transparent"/><Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/><Setter Property="ItemsPanel"><Setter.Value><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></Setter.Value></Setter><Setter Property="ItemContainerStyle"><Setter.Value><Style TargetType="ListBoxItem"><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="{StaticResource NdSurfaceBrush}"/><Setter Property="Margin" Value="0,0,5,0"/><Setter Property="Padding" Value="6,8"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><Border x:Name="Choice" CornerRadius="6" BorderThickness="1" BorderBrush="{StaticResource NdBorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center"/></Border><ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Foreground" Value="#101426"/><Setter Property="FontWeight" Value="Bold"/></Trigger><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Choice" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/><Setter TargetName="Choice" Property="BorderThickness" Value="2"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.6"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style></Setter.Value></Setter></Style>
+   <Style x:Key="UiChoiceListStyle" TargetType="ListBox"><Setter Property="FontSize" Value="12"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Background" Value="Transparent"/><Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/><Setter Property="ItemsPanel"><Setter.Value><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></Setter.Value></Setter><Setter Property="ItemContainerStyle"><Setter.Value><Style TargetType="ListBoxItem"><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="{StaticResource NdSurfaceBrush}"/><Setter Property="Margin" Value="0,0,5,0"/><Setter Property="Padding" Value="2,8"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><Border x:Name="Choice" CornerRadius="6" BorderThickness="1" BorderBrush="{StaticResource NdBorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center"/></Border><ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Foreground" Value="#101426"/><Setter Property="FontWeight" Value="Bold"/></Trigger><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Choice" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/><Setter TargetName="Choice" Property="BorderThickness" Value="2"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.6"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style></Setter.Value></Setter></Style>
    <Style TargetType="ScrollBar" BasedOn="{StaticResource NdScrollBarStyle}"/>
    <Style TargetType="TextBox"><Setter Property="Background" Value="{StaticResource NdSurfaceBrush}"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="CaretBrush" Value="{StaticResource NdApricotBrush}"/><Setter Property="BorderBrush" Value="{StaticResource NdBorderBrush}"/><Setter Property="Padding" Value="10,7"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TextBox"><Border x:Name="Field" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="7" Padding="{TemplateBinding Padding}"><Grid><ScrollViewer x:Name="PART_ContentHost"/><TextBlock x:Name="Hint" Text="{TemplateBinding Tag}" Foreground="{StaticResource NdMutedBrush}" Visibility="Collapsed" IsHitTestVisible="False"/></Grid></Border><ControlTemplate.Triggers><Trigger Property="Text" Value=""><Setter TargetName="Hint" Property="Visibility" Value="Visible"/></Trigger><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Field" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
    <Style TargetType="ProgressBar"><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Background" Value="{StaticResource NdRaisedBrush}"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ProgressBar"><Grid><Border x:Name="PART_Track" CornerRadius="4" Background="{TemplateBinding Background}"/><Border x:Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="4" Background="{TemplateBinding Foreground}"/></Grid></ControlTemplate></Setter.Value></Setter></Style>
@@ -91,10 +93,10 @@
    <Style TargetType="CheckBox" BasedOn="{StaticResource NdCheckBoxStyle}"/> 
   </ResourceDictionary>
  </UserControl.Resources>
- <Grid Margin="24,16">
+ <Grid Margin="0,16,0,16">
   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
   <ScrollViewer x:Name="ScenarioScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-   <StackPanel MaxWidth="920">
+   <StackPanel x:Name="ScenarioContent" MaxWidth="968" Margin="24,0">
     <DockPanel Margin="0,0,0,10">
      <Image x:Name="HeaderSketch" Source="/PokeCorner;component/Assets/NightDiary/map.png" DockPanel.Dock="Right" Width="110" Height="56" Margin="16,0,0,0" IsHitTestVisible="False" Focusable="False"/>
      <StackPanel><TextBlock Text="Экспедиции" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="SubtitleText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/></StackPanel>
@@ -102,10 +104,10 @@
     <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
      <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
     </Border>
-    <StackPanel x:Name="RouteSelectionPanel"><WrapPanel x:Name="RouteButtons" x:FieldModifier="public" Margin="0,0,0,6" /></StackPanel>
-    <Border x:Name="Landscape" CornerRadius="12" ClipToBounds="True" Margin="0,0,0,12">
-     <Grid x:Name="SceneFrame" Height="236"><Image x:Name="LandscapeImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута" />
-      <Border VerticalAlignment="Top" HorizontalAlignment="Left" Padding="18,14" Margin="0" MaxWidth="430"><Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,0"><GradientStop Color="#E8181720"/><GradientStop Color="#00181720" Offset="1"/></LinearGradientBrush></Border.Background><StackPanel><TextBlock x:Name="LandscapeName" Foreground="#F1EAF3" FontWeight="Bold" FontSize="28"/><TextBlock x:Name="RouteHintText" Foreground="#F1EAF3" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel></Border>
+    <StackPanel x:Name="RouteSelectionPanel"><UniformGrid x:Name="RouteButtons" x:FieldModifier="public" Rows="1" Margin="0,0,-6,6" /></StackPanel>
+    <Border x:Name="Landscape" ClipToBounds="True" Margin="-24,4,-24,12">
+     <Grid x:Name="SceneFrame" Height="236"><Image x:Name="LandscapeImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута" /><Rectangle IsHitTestVisible="False"><Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="0.75,0.9"><GradientStop Color="#D0101426"/><GradientStop Color="#60101426" Offset="0.45"/><GradientStop Color="#00101426" Offset="1"/></LinearGradientBrush></Rectangle.Fill></Rectangle>
+      <Border VerticalAlignment="Top" HorizontalAlignment="Left" Padding="42,18,40,18" Margin="0" MaxWidth="520"><StackPanel HorizontalAlignment="Left"><TextBlock x:Name="LandscapeName" Foreground="#F1EAF3" FontFamily="Georgia" FontWeight="Bold" FontSize="32"/><Border Height="1" Background="#B9AECF" Opacity="0.7" Margin="0,6,0,0"/><TextBlock x:Name="RouteHintText" Foreground="#F1EAF3" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel></Border>
      </Grid>
     </Border>
     <StackPanel x:Name="PreparationDetailsPanel"/>
@@ -136,9 +138,9 @@
     </StackPanel>
    </StackPanel>
   </ScrollViewer>
-  <StackPanel x:Name="PreparationFooter" Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Top">
+  <StackPanel x:Name="PreparationFooter" Grid.Row="1" Margin="24,0" MaxWidth="968" VerticalAlignment="Top">
    <DockPanel Margin="0,0,0,7">
-    <Button x:Name="ChooseTeamButton" Content="Выбрать команду" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+    <Button x:Name="ChooseTeamButton" Content="Выбрать команду" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource NdLinkButtonStyle}"/>
     <TextBlock x:Name="TeamHeading" Text="Команда · 0 из 3" Style="{StaticResource SectionHeaderTextStyle}" VerticalAlignment="Center"/>
    </DockPanel>
    <UniformGrid x:Name="TeamSlots" Columns="3" Margin="0,0,0,8"/>
@@ -146,24 +148,24 @@
    <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="218"/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
     <StackPanel x:Name="PreparationPanel" Margin="0,0,16,0">
      <Grid x:Name="ChoicesGrid"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-      <StackPanel x:Name="DifficultyGroup" Margin="0,0,8,8"><TextBlock Text="Сложность" Margin="0,0,0,5"/>
+      <StackPanel x:Name="DifficultyGroup" Margin="0,0,8,8"><StackPanel Orientation="Horizontal" Margin="0,0,0,6"><TextBlock Text="&#xE713;" Style="{StaticResource NdGlyphStyle}"/><TextBlock Text="Сложность"/></StackPanel>
        <ListBox x:Name="DifficultyBox" SelectionChanged="ChoiceChanged" Style="{StaticResource UiChoiceListStyle}" AutomationProperties.Name="Сложность похода"><ListBoxItem Content="Лёгкая" Tag="easy"/><ListBoxItem Content="Обычная" Tag="normal"/><ListBoxItem Content="Сложная" Tag="hard"/></ListBox>
       </StackPanel>
-      <StackPanel x:Name="DurationGroup" Grid.Column="1" Margin="0,0,0,8"><TextBlock Text="Длительность" Margin="0,0,0,5"/>
+      <StackPanel x:Name="DurationGroup" Grid.Column="1" Margin="0,0,0,8"><StackPanel Orientation="Horizontal" Margin="0,0,0,6"><TextBlock Text="&#xE823;" Style="{StaticResource NdGlyphStyle}"/><TextBlock Text="Длительность"/></StackPanel>
        <ListBox x:Name="DurationBox" SelectionChanged="ChoiceChanged" Style="{StaticResource UiChoiceListStyle}" AutomationProperties.Name="Длительность похода"><ListBoxItem Content="30 мин" Tag="30"/><ListBoxItem Content="1,5 ч" Tag="90"/><ListBoxItem Content="3 ч" Tag="180"/><ListBoxItem Content="6 ч" Tag="360"/></ListBox>
       </StackPanel>
      </Grid>
     </StackPanel>
     <StackPanel Grid.Column="1" VerticalAlignment="Center"><Button x:Name="StartButton" Content="Отправить команду" Click="StartButton_Click" MinHeight="50"/><TextBlock x:Name="PreviewText" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource CaptionTextStyle}" Margin="0,7,0,0" AutomationProperties.LiveSetting="Polite"/></StackPanel>
-    <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,1,0,0" Padding="0,8,0,0" Margin="0,4,0,0"><DockPanel><TextBlock Text="Гарантированная добыча" Style="{StaticResource CaptionTextStyle}" VerticalAlignment="Center" Margin="0,0,16,0"/><UniformGrid x:Name="PreviewRewardCards" Columns="3"/></DockPanel></Border>
+    <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,1,0,0" Padding="0,8,0,0" Margin="0,4,0,0"><DockPanel><TextBlock Text="Гарантированная добыча:" Foreground="{StaticResource NdMutedBrush}" VerticalAlignment="Center" Margin="0,0,16,0"/><UniformGrid x:Name="PreviewRewardCards" Columns="3"/></DockPanel></Border>
    </Grid>
   </StackPanel>
-  <StackPanel x:Name="ActionFooter" Grid.Row="1" Visibility="Collapsed" Margin="0,10,0,0">
+  <StackPanel x:Name="ActionFooter" Grid.Row="1" Visibility="Collapsed" Margin="24,10,24,0">
    <Button x:Name="ClaimButton" Content="Забрать находки" Click="ClaimButton_Click" Visibility="Collapsed"/>
    <Button x:Name="CancelButton" Content="Прервать поход" Click="CancelButton_Click" Style="{StaticResource SecondaryButtonStyle}" Visibility="Collapsed" HorizontalAlignment="Right"/>
    <Button x:Name="ContinueButton" Content="Продолжить" Click="Continue_Click" Visibility="Collapsed"/>
   </StackPanel>
-  <Grid x:Name="PickerPanel" Grid.RowSpan="2" Visibility="Collapsed" Background="{StaticResource WindowBackgroundBrush}" KeyboardNavigation.TabNavigation="Cycle">
+  <Grid x:Name="PickerPanel" Grid.RowSpan="2" Visibility="Collapsed" Margin="24,0" Background="{StaticResource WindowBackgroundBrush}" KeyboardNavigation.TabNavigation="Cycle">
    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
    <DockPanel><Image Source="{StaticResource NdBackpackImage}" DockPanel.Dock="Right" Width="100" Height="54" Margin="12,0,0,0"/><StackPanel><TextBlock Text="Команда экспедиции" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PickerRouteHintText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,8"/></StackPanel></DockPanel>
    <UniformGrid x:Name="PickerSlots" Grid.Row="1" Columns="3" Margin="0,0,0,10"/>

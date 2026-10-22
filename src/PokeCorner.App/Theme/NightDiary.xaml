@@ -33,12 +33,15 @@
   <Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="13"/>
   <Setter Property="Margin" Value="8,3"/><Setter Property="HorizontalContentAlignment" Value="Left"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TabItem">
-   <Border x:Name="Surface" CornerRadius="7" BorderThickness="1" BorderBrush="Transparent" Padding="9,13" Background="Transparent">
-    <ContentPresenter ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-   </Border>
+   <Grid>
+    <Border x:Name="Surface" CornerRadius="7" BorderThickness="1" BorderBrush="Transparent" Padding="9,13" Background="Transparent">
+     <ContentPresenter ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+    </Border>
+    <Border x:Name="ActiveMark" Width="3" CornerRadius="2" Margin="-8,6,0,6" HorizontalAlignment="Left" Background="{StaticResource NdApricotBrush}" Visibility="Collapsed"/>
+   </Grid>
    <ControlTemplate.Triggers>
     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdRaisedBrush}"/></Trigger>
-    <Trigger Property="IsSelected" Value="True"><Setter TargetName="Surface" Property="Background" Value="#302A4A"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/></Trigger>
+    <Trigger Property="IsSelected" Value="True"><Setter TargetName="ActiveMark" Property="Visibility" Value="Visible"/><Setter TargetName="Surface" Property="Background" Value="#302A4A"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/></Trigger>
     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
     <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
    </ControlTemplate.Triggers>

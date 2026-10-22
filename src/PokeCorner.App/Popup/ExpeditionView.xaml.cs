@@ -86,7 +86,7 @@ public partial class ExpeditionView : UserControl
         {
             var button = new Button
             {
-                Content = route.Id switch { "grove" => "Роща", "lake" => "Озеро", "coast" => "Море", "mountains" => "Горы", "desert" => "Пустыня", "volcano" => "Вулкан", "snow" => "Снег", _ => "Руины" }, Tag = route.Id, MinWidth = 58, FontSize = 12, Padding = new Thickness(7, 5, 7, 5), Margin = new Thickness(0, 0, 5, 6),
+                Content = route.Id switch { "grove" => "Роща", "lake" => "Озеро", "coast" => "Море", "mountains" => "Горы", "desert" => "Пустыня", "volcano" => "Вулкан", "snow" => "Снег", _ => "Руины" }, Tag = route.Id, MinWidth = 58, FontSize = 13, Padding = new Thickness(4, 5, 4, 5), Margin = new Thickness(0, 0, 6, 6),
                 Style = (Style)FindResource("SecondaryButtonStyle"), HorizontalContentAlignment = HorizontalAlignment.Center
             };
             button.Click += (_, _) => { if (_busy) return; _route = route.Id; _pendingStart = null; Refresh(); };
@@ -113,6 +113,7 @@ public partial class ExpeditionView : UserControl
             Refresh();
             if (_pickerOpen) RefreshPicker();
         };
+        PreparationFooter.SizeChanged += (_, _) => FitScene();
         _timer.Tick += (_, _) => Refresh();
         Loaded += (_, _) => { _suspended = false; _timer.Start(); Refresh(); };
         Unloaded += (_, _) => {
@@ -177,6 +178,7 @@ public partial class ExpeditionView : UserControl
         ContinueButton.IsEnabled = !_busy;
         if (!active) ClaimButton.Visibility = CancelButton.Visibility = Visibility.Collapsed;
         SceneFrame.Height = showResult ? 82 : active ? (ActualHeight < 610 ? 170 : 220) : compact ? 150 : 210;
+        if (!active && !showResult) FitScene();
         TripPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
         ResultPanel.Visibility = showResult ? Visibility.Visible : Visibility.Collapsed;
         if (!active) {
@@ -241,6 +243,16 @@ public partial class ExpeditionView : UserControl
             }
         }
         if (trip?.Status == "claimed") RefreshResult(data, trip);
+    }
+
+    // The scene takes whatever height the preparation footer leaves, so no dead band opens between them.
+    private void FitScene()
+    {
+        if (_pickerOpen || PreparationFooter.Visibility != Visibility.Visible || ActualHeight <= 0) return;
+        var others = ScenarioContent.ActualHeight - SceneFrame.ActualHeight;
+        var free = ActualHeight - 32 - PreparationFooter.ActualHeight - others;
+        var height = Math.Clamp(Math.Floor(free), ActualWidth < 760 ? 150 : 190, 320);
+        if (Math.Abs(SceneFrame.Height - height) >= 1) SceneFrame.Height = height;
     }
 
     private string Difficulty => (DifficultyBox.SelectedItem as ListBoxItem)?.Tag as string ?? "normal";

@@ -50,7 +50,7 @@
                 <TextBlock VerticalAlignment="Center" FontSize="19" FontWeight="SemiBold">
                     <Run Text="Poké" Foreground="{StaticResource NdTextBrush}" /><Run Text="Corner" Foreground="{StaticResource NdTextBrush}" />
                 </TextBlock>
-                <TextBlock x:Name="BrandSubtitle" Text="дневник тренера" Foreground="{StaticResource NdMutedBrush}" FontSize="12" Margin="12,0,0,0" VerticalAlignment="Center" />
+                <TextBlock x:Name="BrandSubtitle" Text="Ночной дневник тренера" Foreground="{StaticResource NdMutedBrush}" FontSize="13" Margin="14,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
