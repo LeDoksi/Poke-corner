@@ -167,7 +167,7 @@ public partial class ExpeditionView : UserControl
         var active = trip?.Status is "running" or "ready";
         foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
-        var showResult = !active && trip?.Status == "claimed" && !_continueAfterResult;
+        var showResult = !active && trip?.Status == "claimed" && !_continueAfterResult && RevealedSomething(data, trip.Id);
         var compact = ActualWidth < 760;
         Grid.SetColumnSpan(DifficultyGroup, 1);
         Grid.SetColumnSpan(DurationGroup, 1);
@@ -260,6 +260,7 @@ public partial class ExpeditionView : UserControl
     private string Difficulty => (DifficultyBox.SelectedItem as ListBoxItem)?.Tag as string ?? "normal";
     private string DisplayName(PokemonIndividual pet, SaveData data) => _selector.Name(pet) + (pet.Nickname is null ? "" : $" · {pet.Nickname}") + (pet.IsShiny ? " · шайни" : "")
         + (IndividualDisplay.Discriminator(data.Individuals, pet.Id) is { Length: > 0 } label ? "\n" + label : "");
+    public static string Coins(long n) => n + (n % 10 == 1 && n % 100 != 11 ? " монета" : n % 10 is >= 2 and <= 4 && n % 100 is < 12 or > 14 ? " монеты" : " монет");
     internal static string BerryName(string id) => id switch { "rawst" => "Равст", "oran" => "Оран", "pecha" => "Печа", "cheri" => "Чери", "chesto" => "Често", "aspear" => "Аспир", _ => "ягоды" };
     private static string ItemName(string id) => id switch { "evolution-stone" => "Камень эволюции", "offspring-charm" => "Талисман потомства", "lucky-charm" => "Талисман удачи", _ => "Предмет" };
     private ImageSource? Sprite(PokemonIndividual pet)
@@ -273,7 +274,7 @@ public partial class ExpeditionView : UserControl
         if (_spriteCache.Count >= 128) _spriteCache.Clear();
         _spriteCache[key] = image; return image;
     }
-    private void RenderSlots(UniformGrid panel, IEnumerable<Guid> ids, SaveData data, bool editable)
+    private void RenderSlots(UniformGrid panel, IEnumerable<Guid> ids, SaveData data, bool editable, IReadOnlyDictionary<Guid, long>? xpGain = null)
     {
         panel.Children.Clear(); var members = ids.ToArray();
         for (var i = 0; i < 3; i++) {
@@ -290,7 +291,15 @@ public partial class ExpeditionView : UserControl
                 content.Children.Add(remove);
             }
             System.Windows.Automation.AutomationProperties.SetName(content, member is null ? $"Пустое место {i + 1}" : DisplayName(member, data));
-            panel.Children.Add(new Border { Child = content, Padding = new Thickness(10), Margin = new Thickness(0, 0, 7, 0), CornerRadius = new CornerRadius(9), BorderThickness = new Thickness(1), BorderBrush = (Brush)FindResource("CardBorderBrush"), Background = (Brush)FindResource("CardBackgroundBrush") });
+            UIElement child = content;
+            if (member is not null && xpGain?.TryGetValue(member.Id, out var gain) == true) {
+                var dock = new DockPanel();
+                var chip = new TextBlock { Text = $"+{gain} XP", FontSize = 17, FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource("NdApricotBrush"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 0, 4, 0) };
+                DockPanel.SetDock(chip, Dock.Right);
+                dock.Children.Add(chip); dock.Children.Add(content);
+                child = dock;
+            }
+            panel.Children.Add(new Border { Child = child, Padding = new Thickness(10), Margin = new Thickness(0, 0, 7, 0), CornerRadius = new CornerRadius(9), BorderThickness = new Thickness(1), BorderBrush = (Brush)FindResource("CardBorderBrush"), Background = (Brush)FindResource("CardBackgroundBrush") });
         }
     }
     private void ChooseTeam_Click(object sender, RoutedEventArgs e)
@@ -368,7 +377,7 @@ public partial class ExpeditionView : UserControl
     }
 
     private void Continue_Click(object sender, RoutedEventArgs e) { if (_busy) return; _continueAfterResult = true; Refresh(); }
-    private void RenderRewards(UniformGrid panel, string berry, int berries, int coins, string xp)
+    private void RenderRewards(UniformGrid panel, string berry, int berries, int coins, string? xp)
     {
         panel.Children.Clear();
         ImageSource? berryImage = null;
@@ -379,7 +388,9 @@ public partial class ExpeditionView : UserControl
             _rewardArtCache[berry] = berryImage;
         }
         var compact = ReferenceEquals(panel, PreviewRewardCards);
-        foreach (var (image, text) in new (ImageSource?, string)[] { (berryImage, $"{BerryName(berry)} ×{berries}"), ((ImageSource)FindResource("UiCoinImage"), $"{coins} монет"), (null, xp) }) {
+        var cards = new List<(ImageSource?, string)> { (berryImage, $"{BerryName(berry)} ×{berries}"), ((ImageSource)FindResource("UiCoinImage"), Coins(coins)) };
+        if (xp is not null) cards.Add((null, xp));
+        foreach (var (image, text) in cards) {
             var row = new StackPanel { Orientation = Orientation.Horizontal };
             if (image is not null) row.Children.Add(new Image { Source = image, Width = 26, Height = 26, Margin = new Thickness(0, 0, 6, 0) });
             else row.Children.Add(new TextBlock { Text = "XP", FontWeight = FontWeights.ExtraBold, Foreground = (Brush)FindResource("UiForestBrush"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) });
@@ -416,7 +427,7 @@ public partial class ExpeditionView : UserControl
         SubtitleText.Text = ready ? "Находки готовы и ждут получения." : "Условия похода сохранены. Команда вернётся сама.";
         var difficulty = DifficultyBox.Items.OfType<ListBoxItem>().FirstOrDefault(item => Equals(item.Tag, trip.Difficulty));
         TripTerms.Text = ready ? "Поход завершён. Находки ждут получения." : $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
-        RenderSlots(TripSlots, trip.ParticipantIds, data, false);
+        var xpGain = new Dictionary<Guid, long>();
         TripTeam.Text = string.Join(" · ", trip.ParticipantIds.Select(id =>
         {
             var member = data.Individuals.FirstOrDefault(p => p.Id == id);
@@ -435,9 +446,12 @@ public partial class ExpeditionView : UserControl
             var member = data.Individuals.Single(p => p.Id == id);
             var amount = new RationalRemainder { Numerator = member.XpRemainder.Numerator, Denominator = member.XpRemainder.Denominator }.Settle(reward.XpNumerator, reward.XpDenominator);
             totalXp += checked((int)amount);
+            xpGain[id] = amount;
             return $"{SpeciesName(member.CurrentSpeciesId)} +{amount} XP";
         }));
-        RenderRewards(TripRewardCards, reward.PrimaryBerryId, checked((int)berries), checked((int)coins), $"{totalXp} XP команде");
+        RenderSlots(TripSlots, trip.ParticipantIds, data, false, ready ? xpGain : null);
+        RenderRewards(TripRewardCards, reward.PrimaryBerryId, checked((int)berries), checked((int)coins), null);
+        TripRewardCards.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
         TripRewards.Text = $"Сохранённые условия: {berries} {BerryName(reward.PrimaryBerryId)}, {coins} монет; " +
             $"{xp}. Дополнительные находки и встреча откроются при получении. Награды не сгорают.";
         var returnsAt = trip.ReadyAtUtc.ToLocalTime();
@@ -458,6 +472,11 @@ public partial class ExpeditionView : UserControl
         RenderSlots(ResultSlots, trip.ParticipantIds, data, false);
         ResultRewardCards.Children.Clear();
         if (trip.Receipt is { } quantities) RenderRewards(ResultRewardCards, reward.PrimaryBerryId, quantities.PrimaryBerries, quantities.Coins, $"{quantities.XpByParticipant.Values.Sum()} XP команде");
+        var extras = reward.ExtraBerries.Select(x => $"{BerryName(x.Key)} ×{x.Value}")
+            .Concat(reward.ExtraItems.Select(x => $"{ItemName(x.Key)} ×{x.Value}"))
+            .Concat(reward.ExtraCoins > 0 ? [Coins(reward.ExtraCoins)] : []).ToArray();
+        ResultExtrasText.Text = extras.Length == 0 ? "" : "Сверх обещанного: " + string.Join(", ", extras);
+        ResultExtrasText.Visibility = extras.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
         var receiptText = trip.Receipt is { } receipt
             ? $"Основная ягода: {BerryName(reward.PrimaryBerryId)} ×{receipt.PrimaryBerries}; монеты всего (включая дополнительные): {receipt.Coins}; опыт: " +
               string.Join(", ", receipt.XpByParticipant.Select(x =>
@@ -557,10 +576,17 @@ public partial class ExpeditionView : UserControl
             if (!_suspended && generation == _generation) Show(result.Encounter is { IsClosed: true } encounter
                 ? $"{result.Message} Встреча с {SpeciesName(encounter.SpeciesId)} сохранена закрытой." : result.Message);
             _pendingClaimId = Guid.Empty;
+            _continueAfterResult = !RevealedSomething(_snapshot(), trip.Id);
         }
         catch (Exception ex) { if (!_suspended && generation == _generation) Show(ex.Message); }
         finally { _busy = false; Refresh(); }
     }
+
+    // Guaranteed loot and XP were already on the ready screen; a result screen is only worth a click for extras or an encounter.
+    private static bool RevealedSomething(SaveData data, Guid tripId) =>
+        data.Expedition is { } trip && trip.Id == tripId &&
+        (trip.Rewards.ExtraBerries.Count > 0 || trip.Rewards.ExtraItems.Count > 0 || trip.Rewards.ExtraCoins > 0 ||
+         data.Encounters.Any(e => e.Source == "expedition" && e.Id == tripId));
 
     private async void OpenEncounterButton_Click(object sender, RoutedEventArgs e)
     {

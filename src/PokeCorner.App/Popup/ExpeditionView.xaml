@@ -120,15 +120,15 @@
       <TextBlock Visibility="Collapsed" x:Name="TripTeam" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" />
       <ProgressBar x:Name="TripProgress" Minimum="0" Maximum="1" Height="8" Margin="0,10,0,0" />
       <DockPanel x:Name="TripTimeRow" Margin="0,8,0,4"><TextBlock x:Name="TripReturnText" DockPanel.Dock="Right" Style="{StaticResource CaptionTextStyle}" VerticalAlignment="Center"/><TextBlock x:Name="TripTime" TextWrapping="Wrap" FontSize="15" /></DockPanel>
-      <UniformGrid Visibility="Collapsed" x:Name="TripRewardCards" Columns="3" Margin="0,0,0,10"/><TextBlock Visibility="Collapsed" x:Name="TripRewards" TextWrapping="Wrap" />
+      <UniformGrid Visibility="Collapsed" x:Name="TripRewardCards" Columns="2" Margin="0,4,0,4"/><TextBlock Visibility="Collapsed" x:Name="TripRewards" TextWrapping="Wrap" />
      </StackPanel></Border>
 
     </StackPanel>
     <StackPanel x:Name="ResultPanel" Visibility="Collapsed" Margin="0,12,0,0">
      <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12"><StackPanel>
       <StackPanel Orientation="Horizontal"><TextBlock Text="&#xE930;" Style="{StaticResource NdGlyphStyle}" Foreground="{StaticResource NdLavenderBrush}" FontSize="22" Margin="0,0,10,0"/><TextBlock Text="Экспедиция завершена" Style="{StaticResource SectionHeaderTextStyle}" FontSize="19" VerticalAlignment="Center"/></StackPanel>
-      <TextBlock Text="Находки уже в запасах" Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10" />
-      <UniformGrid Visibility="Collapsed" x:Name="ResultSlots" Columns="3" Margin="0,0,0,12"/><UniformGrid x:Name="ResultRewardCards" Columns="3" Margin="0,0,0,12"/><TextBlock x:Name="ResultText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" />
+      <TextBlock Text="Обещанная добыча и опыт уже в запасах." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10" />
+      <UniformGrid Visibility="Collapsed" x:Name="ResultSlots" Columns="3" Margin="0,0,0,12"/><UniformGrid x:Name="ResultRewardCards" Columns="3" Margin="0,0,0,12" Visibility="Collapsed"/><TextBlock x:Name="ResultExtrasText" TextWrapping="Wrap" FontSize="15" /><TextBlock x:Name="ResultText" TextWrapping="Wrap" Visibility="Collapsed" />
      </StackPanel></Border>
      <Border x:Name="EncounterPanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,8"><DockPanel>
       <Image x:Name="EncounterSprite" Width="54" Height="54" Margin="0,0,12,0"/>

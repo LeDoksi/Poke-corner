@@ -59,6 +59,10 @@ public class NightDiaryPilotTests
         return menu;
     }
 
+    [Theory]
+    [InlineData(1, "1 монета"), InlineData(4, "4 монеты"), InlineData(12, "12 монет"), InlineData(21, "21 монета"), InlineData(113, "113 монет"), InlineData(122, "122 монеты")]
+    public void CoinCountsUseRussianPlural(long count, string expected) => Assert.Equal(expected, ExpeditionView.Coins(count));
+
     [Fact]
     public void ApprovedThreeSpeciesFixtureUsesActualPreviewAndDraftCancel() => WpfTestHost.Run(() =>
     {
@@ -147,6 +151,8 @@ public class NightDiaryPilotTests
         running.Expedition!.ReadyAtUtc = DateTimeOffset.UtcNow.AddSeconds(-1); running.Expedition.Status = "ready";
         Capture("ready", View(running), running);
         new ExpeditionService(Catalog.Value, running).Claim(trip.OperationId, Guid.NewGuid());
+        Capture("claimed-plain", View(running), running);
+        running.Expedition!.Rewards.ExtraBerries["oran"] = 2; // the result screen only appears when the claim revealed extras
         Capture("result", View(running), running);
         var failed = State(); var error = View(failed, _ => Task.FromException<ExpeditionAction>(new IOException("Synthetic write refusal — no profile used")));
         Select(error, failed); Click(error, "StartButton"); Capture("error", error, failed);

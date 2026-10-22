@@ -204,11 +204,9 @@ public class ApprovedExpeditionTests
         var request = new ExpeditionRequest("volcano", "easy", 30, [grass.Id], Guid.NewGuid(), DateTimeOffset.UtcNow.AddHours(-2));
         var service = new ExpeditionService(catalog, data); service.Start(request); data.Expedition!.Status = "ready";
         service.Claim(request.OperationId, Guid.NewGuid()); v.Refresh();
-        Assert.Equal(Visibility.Visible, Find<StackPanel>(v, "ResultPanel").Visibility);
-        Assert.Equal(Visibility.Collapsed, Find<StackPanel>(v, "PreparationPanel").Visibility);
-        var coins = data.ShopCoins; Click(v, "ContinueButton");
+        // A one-member trip reveals no extras or encounter, so there is nothing new to show: straight back to preparation.
         Assert.Equal(Visibility.Visible, Find<StackPanel>(v, "PreparationPanel").Visibility);
-        Assert.Equal(Visibility.Collapsed, Find<StackPanel>(v, "ResultPanel").Visibility); Assert.Equal(coins, data.ShopCoins);
+        Assert.Equal(Visibility.Collapsed, Find<StackPanel>(v, "ResultPanel").Visibility);
     });
 
     [Fact]
