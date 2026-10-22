@@ -32,6 +32,7 @@ public partial class AppMenuWindow : Window
     {
         InitializeComponent();
         MenuTabControl.SelectionChanged += (_, e) => { if (ReferenceEquals(e.OriginalSource, MenuTabControl)) UpdateRailSketch(); };
+        ShopTab.SizeChanged += (_, _) => UpdateRailSketch();
         _getSnapshot = getSnapshot;
         var workArea = SystemParameters.WorkArea;
         MinWidth = Math.Min(MinWidth, workArea.Width);
@@ -273,9 +274,14 @@ public partial class AppMenuWindow : Window
     }
 
     // Only sections with a drawn rail sketch show one; the rest keep the rail clean until their pass.
-    private void UpdateRailSketch() =>
+    private void UpdateRailSketch()
+    {
         RailSketch.Visibility = MenuTabControl.Visibility == Visibility.Visible && MenuTabControl.SelectedItem == ExpeditionsTab
             ? Visibility.Visible : Visibility.Collapsed;
+        // Sits right under the last section (Магазин), where the rail otherwise goes empty.
+        if (ShopTab.ActualHeight > 0 && RailSketch.Parent is System.Windows.Media.Visual host)
+            RailSketch.Margin = new Thickness(8, ShopTab.TransformToAncestor(host).Transform(new System.Windows.Point(0, ShopTab.ActualHeight)).Y + 16, 0, 0);
+    }
 
     private MenuSection SelectedSection() => MenuTabControl.SelectedItem switch
     {

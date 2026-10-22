@@ -94,8 +94,8 @@
         </TabControl>
         <ContentControl x:Name="SettingsContent" Margin="136,0,0,0" Visibility="Collapsed" />
         <ContentControl x:Name="HostedContent" Margin="136,0,0,0" Visibility="Collapsed" />
-        <StackPanel x:Name="RailSketch" Width="120" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="8,0,0,64" IsHitTestVisible="False" Visibility="Collapsed">
-            <Viewbox Width="84" Height="84" HorizontalAlignment="Center">
+        <StackPanel x:Name="RailSketch" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,0,0,0" IsHitTestVisible="False" Visibility="Collapsed">
+            <Viewbox Width="72" Height="72" HorizontalAlignment="Center">
                 <Canvas Width="100" Height="100">
                     <Path Style="{StaticResource NdSketchStyle}" Data="M50,10 A40,40 0 1 1 49.9,10 Z M50,16 A34,34 0 1 1 49.9,16" StrokeDashArray="1 0" />
                     <Path Style="{StaticResource NdSketchStyle}" Data="M50,10 V16 M90,50 H84 M50,90 V84 M10,50 H16 M78,22 L74,26 M22,78 L26,74 M78,78 L74,74 M22,22 L26,26" />
