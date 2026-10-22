@@ -135,12 +135,12 @@ public class NightDiaryPilotTests
             try {
                 menu.ShowActivated = false; menu.ShowInTaskbar = false; menu.Left = -10000; menu.Top = -10000; menu.Show();
                 var root = (FrameworkElement)menu.Content;
-                foreach (var size in new[] { (1000, 760), (840, 650) }) {
+                foreach (var size in new[] { (1200, 660), (1920, 1040) }) {
                     menu.Width = size.Item1; menu.Height = size.Item2;
                     WpfTestHost.Layout(menu, size.Item1, size.Item2);
                     menu.Dispatcher.Invoke(() => { }, DispatcherPriority.ContextIdle);
                     WpfTestHost.Layout(root, size.Item1, size.Item2);
-                    Assert.Equal(size.Item1 == 840 ? 112 : 136, ((GridLength)menu.Resources["NdRailWidth"]).Value);
+                    Assert.Equal(136, ((GridLength)menu.Resources["NdRailWidth"]).Value);
                     var action = name.StartsWith("picker") ? Find<Button>(view, "PickerDoneButton") :
                         name == "ready" ? Find<Button>(view, "ClaimButton") :
                         name == "result" ? Find<Button>(view, "ContinueButton") :

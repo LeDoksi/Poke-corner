@@ -98,10 +98,11 @@ public class ApprovedShellTests
     public void ShellHasApprovedSizeAndOrderedNavigation() => WpfTestHost.Run(() =>
     {
         var menu = CreateMenu();
-        Assert.Equal(Math.Min(1000, SystemParameters.WorkArea.Width), menu.Width);
+        // 22 Oct: fixed comfortable minimum, the window only grows.
+        Assert.Equal(Math.Min(1280, SystemParameters.WorkArea.Width), menu.Width);
         Assert.Equal(Math.Min(760, SystemParameters.WorkArea.Height), menu.Height);
-        Assert.Equal(Math.Min(840, SystemParameters.WorkArea.Width), menu.MinWidth);
-        Assert.Equal(Math.Min(650, SystemParameters.WorkArea.Height), menu.MinHeight);
+        Assert.Equal(Math.Min(1200, SystemParameters.WorkArea.Width), menu.MinWidth);
+        Assert.Equal(Math.Min(660, SystemParameters.WorkArea.Height), menu.MinHeight);
         var tabs = (TabControl)menu.FindName("MenuTabControl");
         Assert.Equal(new[] { "Уголок", "Покедекс", "Экспедиции", "Питомник", "Магазин" },
             tabs.Items.Cast<TabItem>().Select(System.Windows.Automation.AutomationProperties.GetName));

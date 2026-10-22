@@ -101,6 +101,7 @@ public partial class ExpeditionView : UserControl
         foreach (var trait in ExpeditionTeamSelector.TraitIds)
             PickerTraitBox.Items.Add(new ComboBoxItem { Content = CollectionView.TraitLabel(trait), Tag = trait });
         PickerTypeBox.SelectedIndex = PickerTraitBox.SelectedIndex = PickerSortBox.SelectedIndex = 0;
+        LocalConfirmation.UseNightDiaryTheme();
         LocalConfirmation.Completed += CompleteLocalConfirmation;
         PickerScroll.SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
         PreviewKeyDown += (_, e) => {
@@ -152,10 +153,18 @@ public partial class ExpeditionView : UserControl
         }
     }
 
-    private void Show(string message)
+    private void Show(string message) => Show(message, null);
+
+    // Errors lead with what happened to the player's stuff; the raw cause stays as a small second line.
+    private void Show(string message, Exception? error)
     {
         if (_suspended) return;
         MessageText.Text = message;
+        MessageDetailText.Text = error?.Message ?? "";
+        MessageDetailText.Visibility = error is null ? Visibility.Collapsed : Visibility.Visible;
+        MessageGlyph.Visibility = error is null ? Visibility.Collapsed : Visibility.Visible;
+        MessagePanel.Background = error is null ? (Brush)FindResource("NdSurfaceBrush") : new SolidColorBrush(Color.FromRgb(0x3A, 0x1C, 0x2A));
+        MessagePanel.BorderBrush = error is null ? (Brush)FindResource("NdBorderBrush") : new SolidColorBrush(Color.FromRgb(0xA8, 0x50, 0x60));
         MessagePanel.Visibility = Visibility.Visible;
     }
 
@@ -207,7 +216,7 @@ public partial class ExpeditionView : UserControl
                 _selector.Unavailable(member, data) is not null) > 0) _pendingStart = null;
         ChooseTeamButton.IsEnabled = !_busy;
         TeamHeading.Text = $"Команда · {_selected.Count} из 3";
-        StartButton.Content = _busy ? "Отправляем команду…" : "Отправить команду";
+        StartButton.Content = _busy ? "Отправляем команду…" : _pendingStart is not null ? "Повторить отправку" : "Отправить команду";
         ChooseTeamButton.Content = _selected.Count == 0 ? "Выбрать команду" : "Изменить команду";
         RenderSlots(TeamSlots, _selected, data, false);
         RouteHintText.Text = _selector.RouteHint(_route, Difficulty);
@@ -222,6 +231,7 @@ public partial class ExpeditionView : UserControl
             ContributionsText.Text = "Выберите команду из 1–3 питомцев. Полная тройка может принести дополнительные находки и встречу.";
             _currentPreview = null;
             PreviewRewardCards.Children.Clear();
+            LootLabel.Text = "Добыча появится после выбора команды.";
             StartButton.IsEnabled = false;
         }
         else
@@ -229,6 +239,7 @@ public partial class ExpeditionView : UserControl
             try
             {
                 var preview = _currentPreview = _preview(Request(DateTimeOffset.UtcNow));
+                LootLabel.Text = "Гарантированная добыча:";
                 RenderRewards(PreviewRewardCards, preview.PrimaryBerryId, preview.PrimaryBerries, preview.Coins, $"{preview.XpPerParticipant} XP каждому");
                 PreviewText.Text = "Вернутся через " + ((ListBoxItem)DurationBox.SelectedItem).Content;
                 PreviewText.ToolTip = $"Ожидаемое возвращение: {preview.ReadyAtUtc.ToLocalTime():g}";
@@ -255,7 +266,8 @@ public partial class ExpeditionView : UserControl
         var footer = PreparationFooter.Visibility == Visibility.Visible ? PreparationFooter : ActionFooter;
         var others = ScenarioContent.ActualHeight - SceneFrame.ActualHeight;
         var free = ActualHeight - 32 - footer.ActualHeight - footer.Margin.Top - others;
-        var height = Math.Clamp(Math.Floor(free), ActualWidth < 760 || ActualHeight < 610 ? 150 : 190, 320);
+        // The scene is the elastic part: it gives way first at the 1200x660 minimum and takes the extra height when maximized.
+        var height = Math.Clamp(Math.Floor(free), 110, 560);
         if (Math.Abs(SceneFrame.Height - height) >= 1) SceneFrame.Height = height;
     }
 
@@ -293,6 +305,16 @@ public partial class ExpeditionView : UserControl
                 content.Children.Add(remove);
             }
             System.Windows.Automation.AutomationProperties.SetName(content, member is null ? $"Пустое место {i + 1}" : DisplayName(member, data));
+            if (member is null && !editable && ReferenceEquals(panel, TeamSlots)) {
+                var invite = new Grid { MinHeight = 72 };
+                invite.Children.Add(new System.Windows.Shapes.Rectangle { Stroke = (Brush)FindResource("NdBorderBrush"), StrokeThickness = 1.2, StrokeDashArray = [4, 3], RadiusX = 9, RadiusY = 9 });
+                invite.Children.Add(new TextBlock { Text = "+\nВыбрать покемона", TextAlignment = TextAlignment.Center, Foreground = (Brush)FindResource("NdLavenderBrush"), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
+                var slot = new Button { Content = invite, Style = (Style)FindResource("NdLinkButtonStyle"), Padding = new Thickness(0), Margin = new Thickness(0, 0, 7, 0), HorizontalContentAlignment = HorizontalAlignment.Stretch, IsEnabled = !_busy };
+                System.Windows.Automation.AutomationProperties.SetName(slot, $"Выбрать покемона на место {i + 1}");
+                slot.Click += ChooseTeam_Click;
+                panel.Children.Add(slot);
+                continue;
+            }
             UIElement child = content;
             if (member is not null && xpGain?.TryGetValue(member.Id, out var gain) == true) {
                 var dock = new DockPanel();
@@ -526,7 +548,7 @@ public partial class ExpeditionView : UserControl
             if (!_suspended && generation == _generation) Show(result.Message);
             _pendingStart = null; _continueAfterResult = false;
         }
-        catch (Exception ex) { if (!_suspended && generation == _generation) Show(ex.Message); }
+        catch (Exception ex) { if (!_suspended && generation == _generation) Show("Не удалось сохранить поход. Команда осталась дома, повторите попытку.", ex); }
         finally { _busy = false; Refresh(); }
     }
 
@@ -548,7 +570,7 @@ public partial class ExpeditionView : UserControl
             var result = await _cancel(current.Id, now);
             if (!_suspended && generation == _generation) Show(result.Message);
         }
-        catch (Exception ex) { if (!_suspended && generation == _generation) Show(ex.Message); }
+        catch (Exception ex) { if (!_suspended && generation == _generation) Show("Не удалось прервать поход. Команда пока в пути, повторите попытку.", ex); }
         finally { _busy = false; Refresh(); }
     }
 
@@ -586,7 +608,7 @@ public partial class ExpeditionView : UserControl
             _pendingClaimId = Guid.Empty;
             if (result.Encounter is { } met) encounterId = met.Id; // closed = species still sealed until opened
         }
-        catch (Exception ex) { if (!_suspended && generation == _generation) Show(ex.Message); }
+        catch (Exception ex) { if (!_suspended && generation == _generation) Show("Не удалось забрать находки. Они никуда не денутся, повторите попытку.", ex); }
         finally { _busy = false; Refresh(); }
         // One click: the claim button already promised the encounter, so open it right away.
         if (encounterId is { } id && !_suspended && generation == _generation) await OpenEncounter(id);
@@ -609,7 +631,7 @@ public partial class ExpeditionView : UserControl
             var result = await _open(id);
             if (!_suspended && generation == _generation) Show(result.Repeated ? "Встреча уже открыта." : $"{SpeciesName(result.Individual.CurrentSpeciesId)} теперь в коллекции.");
         }
-        catch (Exception ex) { if (!_suspended && generation == _generation) Show(ex.Message); }
+        catch (Exception ex) { if (!_suspended && generation == _generation) Show("Не удалось открыть встречу. Она сохранена, повторите попытку.", ex); }
         finally { _busy = false; Refresh(); }
     }
 }
