@@ -220,7 +220,7 @@ public class ApprovedExpeditionTests
             view = View(data); WpfTestHost.Layout(view, 840, 540); Click(view, "CancelButton");
             var overlay = Find<ConfirmationOverlay>(view, "LocalConfirmation");
             Assert.Equal(Visibility.Visible, overlay.Visibility);
-            Assert.Same(overlay.FindResource("UiDangerButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
+            Assert.Same(overlay.FindResource("NdDialogDangerButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
             ((Button)overlay.FindName("CancelButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         });
         await view.Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ContextIdle);

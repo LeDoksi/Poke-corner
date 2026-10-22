@@ -153,7 +153,7 @@ public sealed class ExpeditionUiTests
             WpfTestHost.Layout(view, 600, 420);
             ((Button)view.FindName("ClaimButton")!).RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
             Assert.Equal("ready", data.Expedition.Status);
-            Assert.Contains("write failed", ((TextBlock)view.FindName("MessageText")!).Text);
+            Assert.Contains("write failed", ((TextBlock)view.FindName("MessageDetailText")!).Text);
             Assert.Equal(System.Windows.Visibility.Visible, ((Button)view.FindName("ClaimButton")!).Visibility);
         });
     }
@@ -210,7 +210,7 @@ public sealed class ExpeditionUiTests
             Assert.Equal(sent[0], sent[1]);
             Assert.Null(data.Expedition);
             Assert.Equal(System.Windows.Visibility.Visible, ((StackPanel)view.FindName("PreparationPanel")!).Visibility);
-            Assert.Contains("write failed", ((TextBlock)view.FindName("MessageText")!).Text);
+            Assert.Contains("write failed", ((TextBlock)view.FindName("MessageDetailText")!).Text);
         });
     }
 

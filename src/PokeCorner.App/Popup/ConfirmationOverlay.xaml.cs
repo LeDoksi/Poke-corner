@@ -29,6 +29,7 @@ public partial class ConfirmationOverlay : System.Windows.Controls.UserControl
         TitleText.Text = title;
         BodyText.Text = body;
         ConfirmButton.Content = confirmCaption;
+        CancelButton.Content = destructive ? "Оставить" : "Отмена";
         ConfirmButton.Style = (Style)FindResource(_nightDiary
             ? destructive ? "NdDialogDangerButtonStyle" : "NdDialogPrimaryButtonStyle"
             : destructive ? "UiDangerButtonStyle" : "UiPrimaryButtonStyle");
