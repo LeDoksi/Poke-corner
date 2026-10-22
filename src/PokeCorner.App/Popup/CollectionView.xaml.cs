@@ -262,16 +262,25 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         IndividualsPane.Visibility = Visibility.Visible;
         SpeciesPane.Visibility = Visibility.Collapsed;
-        IndividualsModeButton.Style = (Style)FindResource("UiPrimaryButtonStyle");
-        SpeciesModeButton.Style = (Style)FindResource("SecondaryButtonStyle");
+        IndividualsModeButton.Style = (Style)FindResource("NdChoiceSelectedStyle");
+        SpeciesModeButton.Style = (Style)FindResource("NdChoiceStyle");
+    }
+
+    // Cards stretch to fill each row instead of leaving a dead column at the right edge.
+    private void PokedexGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        var available = PokedexGrid.ActualWidth - 1;
+        if (available <= 0) return;
+        var columns = Math.Max(1, (int)(available / 190));
+        Resources["PokedexCardWidth"] = Math.Floor(available / columns) - 10;
     }
 
     private void SpeciesMode_Click(object sender, RoutedEventArgs e)
     {
         IndividualsPane.Visibility = Visibility.Collapsed;
         SpeciesPane.Visibility = Visibility.Visible;
-        SpeciesModeButton.Style = (Style)FindResource("UiPrimaryButtonStyle");
-        IndividualsModeButton.Style = (Style)FindResource("SecondaryButtonStyle");
+        SpeciesModeButton.Style = (Style)FindResource("NdChoiceSelectedStyle");
+        IndividualsModeButton.Style = (Style)FindResource("NdChoiceStyle");
         RefreshSpecies();
     }
 

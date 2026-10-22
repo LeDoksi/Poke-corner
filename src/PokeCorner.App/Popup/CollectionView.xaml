@@ -184,13 +184,12 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
                     <StackPanel Margin="0,0,0,10"><TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}"/></StackPanel>
-                    <Grid Margin="0,0,0,12">
-                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                        <Button x:Name="IndividualsModeButton" Grid.Column="0" Content="Мои покемоны"
-                                Click="IndividualsMode_Click" Margin="0,0,4,0" />
-                        <Button x:Name="SpeciesModeButton" Grid.Column="1" Content="Все виды"
-                                Click="SpeciesMode_Click" Margin="4,0,0,0" Style="{StaticResource SecondaryButtonStyle}" />
-                    </Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Button x:Name="IndividualsModeButton" Content="Мои покемоны" MinWidth="150"
+                                Click="IndividualsMode_Click" Margin="0,0,6,0" Style="{StaticResource NdChoiceSelectedStyle}" />
+                        <Button x:Name="SpeciesModeButton" Content="Все виды" MinWidth="150"
+                                Click="SpeciesMode_Click" Style="{StaticResource NdChoiceStyle}" />
+                    </StackPanel>
 
                     <StackPanel x:Name="SpeciesPane" Visibility="Collapsed">
                         <Grid Margin="0,0,0,8">
@@ -284,7 +283,7 @@
                     <TextBlock x:Name="PokedexEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0"
                                Text="Пока пусто — поймай первого покемона на вкладке «Поймать»." />
 
-                    <ItemsControl x:Name="PokedexGrid" Margin="-5,0,-5,0">
+                    <ItemsControl x:Name="PokedexGrid" Margin="-5,0,-5,0" SizeChanged="PokedexGrid_SizeChanged">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel />
@@ -300,7 +299,7 @@
                                      mouse-DOWN, so a card opening on Up split one physical click across two visual trees —
                                      the down-stroke dismissed the overlay and the up-stroke opened whatever card lay under
                                      the pointer. Open and dismiss fire on the same event, so the overlay eats the whole click. -->
-                                 <Border Style="{StaticResource CardStyle}" Width="170" Margin="5" Padding="10"
+                                 <Border Style="{StaticResource CardStyle}" Width="{DynamicResource PokedexCardWidth}" Margin="5" Padding="10"
                                          Cursor="Hand" Tag="{Binding IndividualId}" Focusable="True"
                                         MouseLeftButtonDown="PokedexCard_Click"
                                          KeyDown="PokedexCard_KeyDown"
@@ -379,7 +378,7 @@
                                              <TextBlock Text="{Binding AvailabilityText}" Style="{StaticResource CaptionTextStyle}"/>
                                         </StackPanel>
 
-                                        <Border Style="{StaticResource PillStyle}" HorizontalAlignment="Center"
+                                        <Border Style="{StaticResource PillStyle}" HorizontalAlignment="Left"
                                                 BorderBrush="{Binding RarityBrush}" Padding="7,2">
                                             <StackPanel Orientation="Horizontal">
                                                 <Ellipse Width="6" Height="6" Fill="{Binding RarityBrush}"
@@ -391,7 +390,7 @@
 
                                         <!-- Types wrap within each owned-individual card and
                                              collapse when the catalog has no type data. -->
-                                        <ItemsControl Margin="0,5,0,0" HorizontalAlignment="Center"
+                                        <ItemsControl Margin="0,5,0,0" HorizontalAlignment="Left"
                                                       Visibility="{Binding TypeBadgesVisibility}"
                                                       ItemsSource="{Binding TypeBadges}"
                                                       ItemsPanel="{StaticResource TypeBadgePanelTemplate}"

@@ -1118,4 +1118,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!-- Choice between views or values (Мои покемоны / Все виды, routes, difficulty): a row of quiet
+         buttons, the chosen one filled lavender. Never the apricot primary. -->
+    <Style x:Key="NdChoiceStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="Padding" Value="16,6" />
+    </Style>
+    <Style x:Key="NdChoiceSelectedStyle" TargetType="Button" BasedOn="{StaticResource NdChoiceStyle}">
+        <Setter Property="Background" Value="#C4ABF0" />
+        <Setter Property="Foreground" Value="#101426" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <sys:Double x:Key="PokedexCardWidth" xmlns:sys="clr-namespace:System;assembly=mscorlib">170</sys:Double>
 </ResourceDictionary>
