@@ -149,6 +149,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Func<string, string, string, Task<bool>>? confirmDestructiveAsync = null)
     {
         InitializeComponent();
+        SizeChanged += (_, _) => LayoutMasterDetail();
+        DetailOverlay.SizeChanged += (_, _) => StackDetailColumns();
+        ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectionChanged += (_, e) => { if (e.OriginalSource is System.Windows.Controls.TabControl) LayoutMasterDetail(); };
         _onEvolveRequested = onEvolveRequested;
         _isReadyToEvolve = isReadyToEvolve;
         _viewModel = viewModel;
@@ -264,16 +267,87 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesPane.Visibility = Visibility.Collapsed;
         IndividualsModeButton.Style = (Style)FindResource("NdChoiceSelectedStyle");
         SpeciesModeButton.Style = (Style)FindResource("NdChoiceStyle");
+        LayoutMasterDetail();
     }
 
-    // Cards stretch to fill each row instead of leaving a dead column at the right edge.
-    private void PokedexGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    private const double ListColumn = 460, PageMin = 600, PageMax = 860;
+
+    // Below list + page width (only in narrow test hosts; the window minimum is 1200) the page overlays the list as before.
+    private bool MasterDetail => ActualWidth >= ListColumn + PageMin &&
+        ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectedIndex == 1 && IndividualsPane.Visibility == Visibility.Visible;
+
+    // D-16: list column on the left, the pet's page beside it. On wide windows the pair is
+    // centred and the side margins carry sketches; at the 1200x660 minimum they touch the edges.
+    private void LayoutMasterDetail()
     {
-        var available = PokedexGrid.ActualWidth - 1;
-        if (available <= 0) return;
-        var columns = Math.Max(1, (int)(available / 190));
-        Resources["PokedexCardWidth"] = Math.Floor(available / columns) - 10;
+        var width = ActualWidth;
+        if (!MasterDetail || width <= 0)
+        {
+            PokedexScroll.Margin = new Thickness(0);
+            DetailOverlay.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            DetailOverlay.Width = double.NaN;
+            DetailOverlay.Margin = new Thickness(0);
+            DetailPlaceholder.Visibility = PokedexMarginArt.Visibility = Visibility.Collapsed;
+            return;
+        }
+        var page = Math.Clamp(width - ListColumn, PageMin, PageMax);
+        var list = Math.Min(ListColumn, width - page);
+        var side = Math.Max(0, Math.Floor((width - list - page) / 2));
+        PokedexScroll.Margin = new Thickness(side, 0, width - side - list, 0);
+        DetailOverlay.HorizontalAlignment = DetailPlaceholder.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+        DetailOverlay.Width = DetailPlaceholder.Width = page;
+        DetailOverlay.Margin = DetailPlaceholder.Margin = new Thickness(side + list, 0, 0, 0);
+        DetailPlaceholder.Visibility = DetailOverlay.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        PokedexMarginArt.Visibility = side >= 170 ? Visibility.Visible : Visibility.Collapsed;
+        PokedexMarginLeft.Width = PokedexMarginRight.Width = side;
+        HighlightSelectedRow();
     }
+
+    // On a narrow page (the 1200x660 minimum) the stats column would squeeze to ~250 px and break
+    // every line; it moves under the portrait instead.
+    private void StackDetailColumns()
+    {
+        if (DetailPersonalGrid.RowDefinitions.Count == 0)
+        {
+            DetailPersonalGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            DetailPersonalGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        }
+        var narrow = DetailOverlay.ActualWidth < 780;
+        var right = DetailPersonalGrid.Children.OfType<FrameworkElement>().FirstOrDefault(c => Grid.GetColumn(c) == 1 || Grid.GetRow(c) == 1);
+        var left = DetailPersonalGrid.Children.OfType<FrameworkElement>().FirstOrDefault(c => !ReferenceEquals(c, right));
+        if (right is null || left is null) return;
+        DetailPersonalGrid.ColumnDefinitions[1].Width = narrow ? new GridLength(0) : new GridLength(1, GridUnitType.Star);
+        Grid.SetColumn(right, narrow ? 0 : 1);
+        Grid.SetRow(right, narrow ? 1 : 0);
+        Grid.SetColumnSpan(left, narrow ? 2 : 1);
+        left.Margin = narrow ? new Thickness(0, 0, 0, 16) : new Thickness(0, 0, 18, 0);
+    }
+
+    private void HighlightSelectedRow()
+    {
+        var selected = _detailCard?.IndividualId;
+        foreach (var row in Rows(PokedexGrid))
+            row.BorderBrush = Equals(row.Tag, selected) ? (System.Windows.Media.Brush)FindResource("AccentRedBrush") : (System.Windows.Media.Brush)FindResource("CardBorderBrush");
+    }
+
+    private static IEnumerable<Border> Rows(DependencyObject root)
+    {
+        for (var i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
+        {
+            var child = VisualTreeHelper.GetChild(root, i);
+            if (child is Border { Tag: Guid } border && border.DataContext is PokedexCard) yield return border;
+            else foreach (var nested in Rows(child)) yield return nested;
+        }
+    }
+
+    // A short truthful line from the trainer about this pet, chosen by what is most notable now.
+    private static string TrainerNote(PokedexCard card) =>
+        card.IsShiny ? "Редкий окрас! Таких встречаешь раз в тысячу."
+        : card.ActiveBadgeVisibility == Visibility.Visible ? "Сейчас со мной на столе — не отходит ни на шаг."
+        : card.FavoriteBadgeVisibility == Visibility.Visible ? "Любимчик. Его не отдам никому."
+        : card.IsBusy ? "Сейчас в походе или в питомнике — жду обратно."
+        : card.Level >= 30 ? "Опытный. С ним в любой поход не страшно."
+        : "Ещё узнаём друг друга.";
 
     private void SpeciesMode_Click(object sender, RoutedEventArgs e)
     {
@@ -281,6 +355,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesPane.Visibility = Visibility.Visible;
         SpeciesModeButton.Style = (Style)FindResource("NdChoiceSelectedStyle");
         IndividualsModeButton.Style = (Style)FindResource("NdChoiceStyle");
+        LayoutMasterDetail();
         RefreshSpecies();
     }
 
@@ -677,6 +752,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _pokedexSignature = signature;
 
         PokedexGrid.ItemsSource = page.Select(BuildCard).ToList();
+        Dispatcher.BeginInvoke(HighlightSelectedRow, System.Windows.Threading.DispatcherPriority.Loaded);
     }
 
     private PokedexCard BuildCard(CollectionEntry entry) => new()
@@ -924,8 +1000,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         ApplyDetailFavoriteVisuals();
         ShowDetailSprite(card);
 
+        DetailTrainerNote.Text = TrainerNote(card);
         DetailOverlay.Visibility = Visibility.Visible;
         DetailScroll.ScrollToTop();
+        LayoutMasterDetail();
     }
 
     private void RefreshDetailEvolution()
@@ -1125,6 +1203,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _detailGeneration++;
         DetailOverlay.Visibility = Visibility.Collapsed;
         _detailCard = null;
+        LayoutMasterDetail();
 
         // One DispatcherTimer per animator, so it must not outlive the card it was driving.
         _detailAnimator?.Stop();
@@ -1136,6 +1215,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     /// Handled here too, so a dismiss never also counts as a press on anything else.
     private void DetailOverlay_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
+        if (MasterDetail) return;
         HideDetail();
         e.Handled = true;
     }

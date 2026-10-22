@@ -152,8 +152,11 @@ public class AcceptanceVisualTests
         {
             if (navigate) menu.Navigate(section);
             keys.Add(key);
-            foreach (var size in new[] { (Width: 1000, Height: 760, Scale: 1.5, Suffix: "base-150"),
-                (Width: 840, Height: 650, Scale: 2d, Suffix: "compact-200") })
+            // POKE_ND_SIZES=1: the Night Diary review sizes (D-10 minimum and maximized FullHD) instead of the v2 pair.
+            var sizes = Environment.GetEnvironmentVariable("POKE_ND_SIZES") == "1"
+                ? new[] { (Width: 1200, Height: 660, Scale: 1d, Suffix: "min"), (Width: 1920, Height: 1040, Scale: 1d, Suffix: "fhd") }
+                : new[] { (Width: 1000, Height: 760, Scale: 1.5, Suffix: "base-150"), (Width: 840, Height: 650, Scale: 2d, Suffix: "compact-200") };
+            foreach (var size in sizes)
             {
                 WpfTestHost.Layout(root, size.Width, size.Height);
                 foreach (var scroll in Descendants(root).OfType<ScrollViewer>().Where(s => s.ActualHeight > 0)) scroll.ScrollToTop();

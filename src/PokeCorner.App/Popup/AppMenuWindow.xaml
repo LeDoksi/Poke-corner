@@ -97,7 +97,7 @@
         <ContentControl x:Name="SettingsContent" Margin="136,0,0,0" Visibility="Collapsed" />
         <ContentControl x:Name="HostedContent" Margin="136,0,0,0" Visibility="Collapsed" />
         <StackPanel x:Name="RailSketch" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,0,0,0" IsHitTestVisible="False" Visibility="Collapsed">
-            <Viewbox Width="72" Height="72" HorizontalAlignment="Center">
+            <Viewbox x:Name="RailCompass" Width="72" Height="72" HorizontalAlignment="Center">
                 <Canvas Width="100" Height="100">
                     <Path Style="{StaticResource NdSketchStyle}" Data="M50,10 A40,40 0 1 1 49.9,10 Z M50,16 A34,34 0 1 1 49.9,16" StrokeDashArray="1 0" />
                     <Path Style="{StaticResource NdSketchStyle}" Data="M50,10 V16 M90,50 H84 M50,90 V84 M10,50 H16 M78,22 L74,26 M22,78 L26,74 M78,78 L74,74 M22,22 L26,26" />
@@ -105,7 +105,12 @@
                     <Path Style="{StaticResource NdSketchStyle}" Data="M44,50 L50,78 L56,50 M50,50 m-3,0 a3,3 0 1 0 6,0 a3,3 0 1 0 -6,0" />
                 </Canvas>
             </Viewbox>
-            <TextBlock Style="{StaticResource NdMarginNoteStyle}" Text="Компас старый, но не врёт." Margin="0,6,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-2" /></TextBlock.RenderTransform></TextBlock>
+            <Viewbox x:Name="RailMagnifier" Width="64" Height="64" HorizontalAlignment="Center" Visibility="Collapsed">
+                <Canvas Width="80" Height="80">
+                    <Path Style="{StaticResource NdSketchStyle}" Data="M32,32 m-22,0 a22,22 0 1 0 44,0 a22,22 0 1 0 -44,0 M48,48 L72,72 M66,74 L74,66 M24,24 C28,20 34,20 38,24" />
+                </Canvas>
+            </Viewbox>
+            <TextBlock x:Name="RailSketchNote" Style="{StaticResource NdMarginNoteStyle}" Text="Компас старый, но не врёт." Margin="0,6,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-2" /></TextBlock.RenderTransform></TextBlock>
         </StackPanel>
         <Button x:Name="SettingsButton" ContentTemplate="{StaticResource NdSettingsButtonTemplate}" Content="Настройки" ToolTip="Настройки" Click="SettingsButton_Click"
                 Style="{StaticResource NdHeaderButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
