@@ -45,4 +45,7 @@
     <Resource Include="..\..\docs\design-v2\ui-system\assets\ball-closed.png" Link="Assets\UiSystem\ball-closed.png" />
     <Resource Include="..\..\docs\design-v2\ui-system\assets\ball-open.png" Link="Assets\UiSystem\ball-open.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\NightDiary\*.png" />
+  </ItemGroup>
 </Project>

@@ -37,6 +37,7 @@ public partial class AppMenuWindow : Window
         MinHeight = Math.Min(MinHeight, workArea.Height);
         Width = Math.Min(Width, workArea.Width);
         Height = Math.Min(Height, workArea.Height);
+        ConfirmationHost.UseNightDiaryTheme();
         ConfirmationHost.Completed += CompleteConfirmation;
         _snapshotTimer.Tick += SnapshotTimer_Tick;
         Loaded += (_, _) => { RefreshSnapshot(); UpdateCatchBadgeAnimation(); _snapshotTimer.Start(); };
@@ -64,7 +65,7 @@ public partial class AppMenuWindow : Window
         if (achievementsView is not null) { achievementsView.Foreground = contentInk; AlbumTab.Content = achievementsView; }
         if (expeditionView is not null)
         {
-            expeditionView.Foreground = contentInk;
+            expeditionView.Foreground = (System.Windows.Media.Brush)FindResource("NdTextBrush");
             ExpeditionsTab.Content = expeditionView;
         }
         if (nurseryView is not null)
@@ -174,6 +175,16 @@ public partial class AppMenuWindow : Window
         }
 
         DragMove();
+    }
+
+    private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        var compact = ActualWidth < 920;
+        Resources["NdRailWidth"] = new GridLength(compact ? 112 : 136);
+        TitleBar.Height = compact ? 40 : 44;
+        BrandSubtitle.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
+        SettingsButton.Width = compact ? 96 : 120;
+        SettingsContent.Margin = HostedContent.Margin = new Thickness(compact ? 112 : 136, 0, 0, 0);
     }
 
     private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;

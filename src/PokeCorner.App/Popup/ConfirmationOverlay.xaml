@@ -4,7 +4,7 @@
  KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="Cycle"
  FocusManager.IsFocusScope="True" Background="#6626352D">
  <Grid Margin="24">
-  <Border Background="{StaticResource UiPaperBrush}" CornerRadius="12" Padding="24"
+  <Border x:Name="ConfirmationCard" Background="{StaticResource UiPaperBrush}" CornerRadius="12" Padding="24"
           MaxWidth="490" HorizontalAlignment="Center" VerticalAlignment="Center">
    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
     <StackPanel>

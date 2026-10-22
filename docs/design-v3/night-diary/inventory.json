@@ -1,0 +1,526 @@
+{
+  "date": "2026-10-21",
+  "checkpoint": "f958a145c4e82136ffc1cd18a02bafb560e3de19",
+  "worktree": "C:/Users/Georgy/.codex/worktrees/global-update/PokeTokenBar-Windows",
+  "status": "static-inventory-source-checked-not-runtime-acceptance",
+  "originalIndex": "docs/design-v2/ui-system/screens.json",
+  "baseWindowDip": [
+    1000,
+    760
+  ],
+  "compactWindowDip": [
+    840,
+    650
+  ],
+  "screens": [
+    {
+      "id": "corner",
+      "family": "corner",
+      "entry": "Вход из раздела/возврат",
+      "actions": "Погладить, кормить, карточка, альбом",
+      "expected": "Сцена и уход активного питомца; полка отдельными слоями",
+      "source": "src/PokeCorner.App/Popup/RoomView.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedRoomAlbumTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "collection",
+      "family": "collection",
+      "entry": "Раздел Покедекс → Мои",
+      "actions": "Поиск, фильтры, сортировка, страницы, карточка",
+      "expected": "Точный экземпляр; дубли различимы; состояние фильтров",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedCollectionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "species",
+      "family": "collection",
+      "entry": "Покедекс → Все виды",
+      "actions": "Форма normal/shiny, поиск/фильтры, вид, мои экземпляры",
+      "expected": "Открытие вида отдельно от владения; неизвестные сведения скрыты",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedCollectionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "detail",
+      "family": "collection",
+      "entry": "Карточка из списка/уголка/результата",
+      "actions": "Имя, избранное, уход, предметы, переобучение, выбрать, передать",
+      "expected": "Характер/дата/факт/тип/редкость/способности и семейная цепочка",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedCollectionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "evolution",
+      "family": "collection",
+      "entry": "Условия эволюции из карточки",
+      "actions": "Проверить условия, эволюционировать, назад",
+      "expected": "Настоящая цель и состояние после commit",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedCollectionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "expedition",
+      "family": "expedition",
+      "entry": "Первый вход/новый поход",
+      "actions": "Маршрут, сложность, время, выбрать команду",
+      "expected": "Пустая команда; старт недоступен с объяснением",
+      "source": "src/PokeCorner.App/Popup/ExpeditionView.xaml.cs",
+      "task": "POKE-68",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedExpeditionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "expedition-running",
+      "family": "expedition",
+      "entry": "Успешный старт/возврат",
+      "actions": "Посмотреть состав/время, прервать",
+      "expected": "Текущий поход; конфигурация заблокирована",
+      "source": "src/PokeCorner.App/Popup/ExpeditionView.xaml.cs",
+      "task": "POKE-68",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedExpeditionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "expedition-ready",
+      "family": "expedition",
+      "entry": "Таймер завершён/возврат",
+      "actions": "Получить результат",
+      "expected": "Готовность не теряется; маркер до claim",
+      "source": "src/PokeCorner.App/Popup/ExpeditionView.xaml.cs",
+      "task": "POKE-68",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedExpeditionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "expedition-result",
+      "family": "expedition",
+      "entry": "Успешный claim",
+      "actions": "Награды, встреча при наличии, следующий поход",
+      "expected": "Один сохранённый результат, не новый бросок",
+      "source": "src/PokeCorner.App/Popup/ExpeditionView.xaml.cs",
+      "task": "POKE-68",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedExpeditionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "nursery",
+      "family": "nursery",
+      "entry": "Раздел/новое гнездо",
+      "actions": "Родители, талисман, preview, начать, магазин при нехватке",
+      "expected": "Пустые/заполненные слоты, стоимость/время возле действия",
+      "source": "src/PokeCorner.App/Popup/NurseryView.xaml.cs",
+      "task": "POKE-63",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedNurseryTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "nursery-running",
+      "family": "nursery",
+      "entry": "Успешный старт/возврат",
+      "actions": "Посмотреть родителей и оставшееся время",
+      "expected": "Замороженный результат скрыт; офлайн-время",
+      "source": "src/PokeCorner.App/Popup/NurseryView.xaml.cs",
+      "task": "POKE-63",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedNurseryTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "nursery-ready",
+      "family": "nursery",
+      "entry": "Гнездо готово",
+      "actions": "Вылупить",
+      "expected": "Малыш до подтверждённой выдачи скрыт",
+      "source": "src/PokeCorner.App/Popup/NurseryView.xaml.cs",
+      "task": "POKE-63",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedNurseryTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "nursery-result",
+      "family": "nursery",
+      "entry": "После вылупления/продолжить",
+      "actions": "Карточка, сделать спутником, новое гнездо, уголок",
+      "expected": "Точный сохранённый малыш, характер/особенность/удача",
+      "source": "src/PokeCorner.App/Popup/NurseryView.xaml.cs",
+      "task": "POKE-63",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedNurseryTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "shop",
+      "family": "shop",
+      "entry": "Раздел/нехватка ресурса",
+      "actions": "Количество, покупка, применение/выбор питомца",
+      "expected": "12 товаров, из них 6 ягод; цена/запас; контекст нехватки",
+      "source": "src/PokeCorner.App/Popup/ShopView.xaml.cs",
+      "task": "POKE-62",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/shopTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "achievements",
+      "family": "achievements",
+      "entry": "Альбом из уголка",
+      "actions": "Прогресс, выбрать награду/место полки, назад",
+      "expected": "Разблокированные и закрытые достижения; 3 места",
+      "source": "src/PokeCorner.App/Popup/AchievementsView.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedRoomAlbumTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "catch",
+      "family": "catch",
+      "entry": "Встречи/подарок/активность",
+      "actions": "Талисман, бросить",
+      "expected": "Закрытый покебол без утечки вида",
+      "source": "src/PokeCorner.App/Popup/CatchView.xaml.cs",
+      "task": "POKE-62",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/catchTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "catch-result",
+      "family": "catch",
+      "entry": "После reveal/возобновления",
+      "actions": "Продолжить/следующая встреча",
+      "expected": "Результат ранее сохранён, без повторной выдачи",
+      "source": "src/PokeCorner.App/Popup/CatchView.xaml.cs",
+      "task": "POKE-62",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/catchTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "settings",
+      "family": "settings",
+      "entry": "Кнопка настроек/трей",
+      "actions": "Размер, звук, fullscreen, индикаторы, autostart, тур, история, сброс",
+      "expected": "Chill; возврат к прежнему разделу",
+      "source": "src/PokeCorner.App/Popup/SettingsView.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "save-history",
+      "family": "history",
+      "entry": "Настройки или startup recovery",
+      "actions": "Выбрать копию, восстановить, отменить",
+      "expected": "Дата/коллекция, недоступные записи, отдельное подтверждение",
+      "source": "src/PokeCorner.App/Popup/SaveHistoryWindow.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "protectionTests": "tests/PokeCorner.App.Tests/PersistenceStartupTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "confirm-cancel",
+      "family": "confirmation",
+      "entry": "Прервать поход",
+      "actions": "Подтвердить/отменить",
+      "expected": "Опасная роль; перепроверка текущего таймера; реализация в POKE-68",
+      "source": "src/PokeCorner.App/Popup/ConfirmationOverlay.xaml.cs",
+      "task": "POKE-68",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/task8AcceptanceTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "confirm-restore",
+      "family": "confirmation",
+      "entry": "Выбор копии истории",
+      "actions": "Подтвердить/отменить",
+      "expected": "Точная выбранная копия, безопасный фокус, recovery в POKE-34",
+      "source": "src/PokeCorner.App/Popup/ConfirmationOverlay.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/task8AcceptanceTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "confirm-rehome",
+      "family": "confirmation",
+      "entry": "Передать экземпляр",
+      "actions": "Подтвердить/отменить",
+      "expected": "Точный экземпляр/награда; недоступность занятого; POKE-64",
+      "source": "src/PokeCorner.App/Popup/ConfirmationOverlay.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/task8AcceptanceTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "tour-1",
+      "family": "tour",
+      "entry": "Первый запуск/обновление/повтор",
+      "actions": "Далее/пропустить",
+      "expected": "Шаг 1; сохранение прогресса после commit",
+      "source": "src/PokeCorner.App/Onboarding/OnboardingWindow.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "tour-2",
+      "family": "tour",
+      "entry": "Следующий/возобновлённый шаг",
+      "actions": "Далее/назад/пропустить",
+      "expected": "Шаг 2 в общей системе тура",
+      "source": "src/PokeCorner.App/Onboarding/OnboardingWindow.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "tour-3",
+      "family": "tour",
+      "entry": "Следующий/возобновлённый шаг",
+      "actions": "Далее/назад/пропустить",
+      "expected": "Шаг 3 в общей системе тура",
+      "source": "src/PokeCorner.App/Onboarding/OnboardingWindow.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "tour-4",
+      "family": "tour",
+      "entry": "Следующий/возобновлённый шаг",
+      "actions": "Далее/назад/пропустить",
+      "expected": "Шаг 4 в общей системе тура",
+      "source": "src/PokeCorner.App/Onboarding/OnboardingWindow.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "tour-5",
+      "family": "tour",
+      "entry": "Следующий/возобновлённый шаг",
+      "actions": "Далее/назад/пропустить",
+      "expected": "Шаг 5 в общей системе тура",
+      "source": "src/PokeCorner.App/Onboarding/OnboardingWindow.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "tour-6",
+      "family": "tour",
+      "entry": "Финальный/повторный шаг",
+      "actions": "Назад / пропустить / В мой уголок; подарки доступны в уголке",
+      "expected": "0/1/2 подарка; при нуле иллюстрация остаётся",
+      "source": "src/PokeCorner.App/Onboarding/OnboardingWindow.xaml.cs",
+      "task": "POKE-61",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/onboardingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "components",
+      "family": "components",
+      "entry": "Дизайн/QA стенд, не раздел игры",
+      "actions": "Проверить состояния компонентов",
+      "expected": "Каталог темы, focus/hover/disabled/error, не новая навигация",
+      "source": "src/PokeCorner.App/Theme/UiSystem.xaml",
+      "task": "POKE-67",
+      "tests": "tests/PokeCorner.App.Tests/Theme/ThemeRenderingTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "evolution-branch",
+      "family": "collection",
+      "entry": "Карточка разветвлённой семьи",
+      "actions": "Выбор камня/цели, где найти, эволюция",
+      "expected": "С камнем точная цель, без — прежние правила; восемь ветвей Иви",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "task": "POKE-64",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedCollectionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "catch-animation",
+      "family": "catch",
+      "entry": "Успешный бросок",
+      "actions": "Наблюдать/пропустить",
+      "expected": "Полная последовательность; закрытие не теряет результат",
+      "source": "src/PokeCorner.App/Popup/CatchView.xaml.cs",
+      "task": "POKE-62",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/catchTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "encounter",
+      "family": "catch",
+      "entry": "Результат экспедиции/очередь",
+      "actions": "Известный вид, бросить",
+      "expected": "До броска вид известен, выдачи ещё нет; не путать с подарком",
+      "source": "src/PokeCorner.App/Popup/CatchView.xaml.cs",
+      "task": "POKE-62",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/catchTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "nursery-hatching",
+      "family": "nursery",
+      "entry": "Успешный Hatch",
+      "actions": "Появление, продолжить",
+      "expected": "Reveal после commit; reduced motion/уход не создают второго малыша",
+      "source": "src/PokeCorner.App/Popup/NurseryView.xaml.cs",
+      "task": "POKE-63",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedNurseryTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "nursery-select",
+      "family": "nursery",
+      "entry": "Изменить родителя",
+      "actions": "Группа вида → экземпляр, фильтр, страницы, применить/отмена",
+      "expected": "800 экземпляров/дубли; совместимость и занятость",
+      "source": "src/PokeCorner.App/Popup/NurseryView.xaml.cs",
+      "task": "POKE-63",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedNurseryTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "catch-reduced",
+      "family": "catch",
+      "entry": "Отключено движение Windows",
+      "actions": "Бросить/продолжить",
+      "expected": "Тот же результат без обязательной длинной анимации",
+      "source": "src/PokeCorner.App/Popup/CatchView.xaml.cs",
+      "task": "POKE-62",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/catchTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "expedition-selected",
+      "family": "expedition",
+      "entry": "Команда применена",
+      "actions": "Маршрут/сложность/время, изменить/отправить",
+      "expected": "Состав 1–3, реальные награды и вклад, недоступность перепроверяется",
+      "source": "src/PokeCorner.App/Popup/ExpeditionView.xaml.cs",
+      "task": "POKE-68",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedExpeditionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    },
+    {
+      "id": "expedition-team",
+      "family": "expedition",
+      "entry": "Выбрать/изменить команду",
+      "actions": "Поиск/фильтры/страницы, 3 слота, применить/отменить",
+      "expected": "800 экземпляров; черновик не меняет выбранную команду до применения",
+      "source": "src/PokeCorner.App/Popup/ExpeditionView.xaml.cs",
+      "task": "POKE-68",
+      "tests": "tests/PokeCorner.App.Tests/GlobalUpdate/approvedExpeditionTests.cs",
+      "evidence": "source-and-existing-test-definition; new-runtime-not-run"
+    }
+  ],
+  "additionalFamilies": [
+    {
+      "id": "starter",
+      "name": "Выбор стартера",
+      "task": "POKE-61",
+      "source": "src/PokeCorner.App/Onboarding/StarterSelectionWindow.xaml.cs",
+      "locations": "32–43,107–109; App.xaml.cs:147–215",
+      "states": "3 кандидата, ресурс отсутствует/загружается, выбор, ошибка записи; не показывать новую игру при повреждённом профиле",
+      "tests": "GlobalUpdate/onboardingTests.cs:321"
+    },
+    {
+      "id": "startup-recovery",
+      "name": "Ошибка профиля/загрузки и восстановление до меню",
+      "task": "POKE-61",
+      "source": "src/PokeCorner.App/App.xaml.cs",
+      "locations": "121,159–167,215–240,1370–1375",
+      "states": "retry/history/exit; недоступная копия; нет активного питомца; ошибка записи; опасные side effects проверяются в POKE-34",
+      "tests": "PersistenceStartupTests.cs:13,32"
+    },
+    {
+      "id": "reset-two-step",
+      "name": "Два подтверждения сброса",
+      "task": "POKE-61",
+      "source": "src/PokeCorner.App/Popup/SettingsView.xaml.cs",
+      "locations": "152–163",
+      "states": "Отмена на каждом шаге, pending, уход/возврат, ошибка; история не уничтожается",
+      "tests": "GlobalUpdate/onboardingTests.cs:457"
+    },
+    {
+      "id": "retraining",
+      "name": "Переобучение способности",
+      "task": "POKE-64",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "locations": "1027–1106",
+      "states": "Слот, варианты, цена ягод, нехватка/магазин, подтверждение, pending/retry",
+      "tests": "GlobalUpdate/evolutionTests.cs:83,115"
+    },
+    {
+      "id": "item-use",
+      "name": "Применение предмета к экземпляру",
+      "task": "POKE-64",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "locations": "397,1556–1590",
+      "states": "Выбор из магазина, запас/причина недоступности, эффект/теряемый XP, подтверждение, pending/retry",
+      "tests": "GlobalUpdate/shopTests.cs:158–172,231–254,388–440"
+    },
+    {
+      "id": "detail-variants",
+      "name": "Редактор имени, где найти, недоступный/shiny",
+      "task": "POKE-64",
+      "source": "src/PokeCorner.App/Popup/CollectionView.xaml.cs",
+      "locations": "369–397,1249–1316,1343",
+      "states": "Сохранить/отмена имени, длинная кличка, точный экземпляр, отсутствие картинки без потери данных",
+      "tests": "GlobalUpdate/acceptanceVisualTests.cs:246–252,282–290,378–395"
+    },
+    {
+      "id": "picker-variants",
+      "name": "Пустые/занятые/инвалидированные варианты выбора",
+      "task": "POKE-68 / POKE-63",
+      "source": "src/PokeCorner.App/Popup/ExpeditionView.xaml.cs",
+      "locations": "265–306,437–449; NurseryView.xaml.cs:130–149,227–294,603–659",
+      "states": "800/200 дублей, пустой поиск, страницы, busy reason, invalidated candidate, pending error and same retry",
+      "tests": "GlobalUpdate/approvedExpeditionTests.cs:34,60,91,115; approvedNurseryFix1Tests.cs:18"
+    },
+    {
+      "id": "desktop-pet",
+      "name": "Питомец на рабочем столе",
+      "task": "POKE-61",
+      "source": "src/PokeCorner.App/Overlay/OverlayWindow.xaml.cs",
+      "locations": "47–59,259,407–428,503",
+      "states": "Клик/двойной клик/drag/реакции/мысли/вспышка эволюции; fullscreen; недоступный активный экземпляр",
+      "tests": "Overlay/OverlayDpiPositioningTests.cs; OverlayOwnershipTests.cs; GlobalUpdate/reactionsTests.cs"
+    },
+    {
+      "id": "desktop-progress",
+      "name": "Отдельные индикаторы рядом с питомцем",
+      "task": "POKE-61",
+      "source": "src/PokeCorner.App/Overlay/ProgressPanelWindow.xaml.cs",
+      "locations": "34–51,80; App.xaml.cs:418–431,555–557",
+      "states": "Включено/выключено, прогресс/подсказки, fullscreen, позиционирование",
+      "tests": "Popup/ProgressCalculatorTests.cs"
+    },
+    {
+      "id": "tray",
+      "name": "Трей и уведомления Windows",
+      "task": "POKE-61",
+      "source": "src/PokeCorner.App/Tray/TrayIconService.cs",
+      "locations": "constructor,SetCatchReady,ShowNotification",
+      "states": "Коллекция/настройки/магазин/поимка/выход, ready/disabled, sprite/fallback icon, двойной клик; balloon остаётся системным",
+      "tests": "GlobalUpdate/approvedExpeditionTests.cs:141 (логика уведомления, не вид трея)"
+    },
+    {
+      "id": "runtime-errors",
+      "name": "Ошибки записи/выхода/восстановления/перезапуска",
+      "task": "POKE-61",
+      "source": "src/PokeCorner.App/App.xaml.cs",
+      "locations": "1281,1347,1364,1425,1455,1475,1483",
+      "states": "Отказ записи не закрывает/не сбрасывает игру; ручной перезапуск; недоступная копия; сохранять безопасный fallback",
+      "tests": "PersistenceStartupTests.cs; GlobalUpdate/migrationTests.cs"
+    }
+  ]
+}

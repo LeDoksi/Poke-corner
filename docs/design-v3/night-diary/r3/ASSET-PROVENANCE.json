@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-21",
+  "generator": "built-in image_gen.imagegen",
+  "purpose": "R3 runtime marginalia extracted from accepted R2",
+  "assets": [
+    {
+      "file": "Assets/NightDiary/map.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-988c61d9-50be-45aa-a40c-48cf9313d0cb.png",
+      "reference": "../pilot/01-preparation-base-v2.png",
+      "prompt": "Use case background-extraction, production UI decoration. Input is approved PokéCorner preparation screenshot. Extract/reproduce ONLY its small hand-drawn folded trail map with dotted trail and two bootprints from upper-right header as a standalone reusable asset on a genuinely TRANSPARENT background. Match the exact subtle lavender pencil drawing style and map silhouette, approximately3foldpanels, sparse tiny terrain marks, dotted curved trail, two tiny bootprints outside map right. NO UI, NO text, NO horizontal divider line, NO background rectangle, NO forest, NO other elements, NO shadows/glow. All drawing lines soft pale lavender #BCA4E9 with natural handsketched varied pressure. Preserve loose diary-sketch feeling, do not make it a polished vector icon or ornate illustration. Wide composition2:1, artwork fills most canvas with8% transparent margin and crisp thin readable strokes suitable for display at130x65 DIP. Use approved sketch as identity, no redesign.",
+      "transparent_background": true
+    },
+    {
+      "file": "Assets/NightDiary/backpack.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-52a7fa40-a9c1-498c-a7f1-597481070af8.png",
+      "reference": "../pilot/03-team-picker-v2.png",
+      "prompt": "Use case background-extraction / production UI asset. From attached accepted PokéCorner team-picker screenshot reproduce ONLY the small upper-right diary drawing of a travel backpack with rolled map to its lower right. Isolate this lavender pencil-line drawing on a genuinely TRANSPARENT background. It must be a clean reusable UI decoration: thin single-color pale-lavender #BCA4E9 outlines with tiny natural pencil variations, no filled object interiors (interiors also transparent), no white paper, no gray/black backing, no colored haze, no background texture, no screenshot fragments. No text, no UI, no line running to edge, no flowers. Keep familiar soft backpack silhouette with flap, straps, front pocket, handle; small rolled map alongside. Wide2:1 canvas, centered with8% empty transparent margins. Match approved rough hand-drawn diary character, not a vector icon, and keep strokes legible when displayed at130x65 DIP. Only this one isolated drawing, all space between strokes transparent.",
+      "transparent_background": true
+    },
+    {
+      "file": "Assets/NightDiary/grove-environment.png",
+      "source": "../pilot/grove-environment-v2.png",
+      "provenance": "../pilot/manifest.json",
+      "transparent_background": false
+    }
+  ]
+}

@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PokeCorner.App.Popup"
         Title="PokéCorner" Width="1000" Height="760" MinWidth="840" MinHeight="650"
-        Style="{StaticResource AppWindowStyle}"
+        Style="{StaticResource AppWindowStyle}" Background="{DynamicResource NdBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown">
+        WindowStyle="None" SizeChanged="Window_SizeChanged" PreviewKeyDown="Window_PreviewKeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries><ResourceDictionary Source="/PokeCorner;component/Theme/NightDiary.xaml" /></ResourceDictionary.MergedDictionaries>
+            <GridLength x:Key="NdRailWidth">136</GridLength>
+        </ResourceDictionary>
+    </Window.Resources>
     <!-- WindowChrome, not WindowStyle="None" + AllowsTransparency: the transparency route
          gives up hardware rendering, Aero Snap and correct maximized bounds, all of which
          WindowChrome keeps. CaptionHeight="0" routes every click to the content (the brand
@@ -17,7 +23,7 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-    <Grid x:Name="ShellContent" Background="{StaticResource WindowBackgroundBrush}">
+    <Grid x:Name="ShellContent" Background="{StaticResource NdBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -25,7 +31,7 @@
 
         <!-- Brand strip, doubling as the window's title bar (the OS one is gone) — hence the drag
              handler and the three chrome buttons. -->
-        <Border Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}" Padding="24,0,8,0" Height="52"
+        <Border x:Name="TitleBar" Grid.Row="0" Background="{StaticResource NdSurfaceBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,0,0,1" Padding="18,0,6,0" Height="44" TextElement.FontFamily="Segoe UI"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -35,45 +41,43 @@
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
                 <Grid Width="26" Height="26" Margin="0,0,10,0">
-                    <Ellipse Stroke="{StaticResource AccentRedBrush}" StrokeThickness="2.5" />
-                    <Border Height="2.5" Background="{StaticResource AccentRedBrush}" VerticalAlignment="Center" />
-                    <Ellipse Width="9" Height="9" Fill="{StaticResource WindowBackgroundBrush}"
-                             Stroke="{StaticResource AccentRedBrush}" StrokeThickness="2.5"
+                    <Ellipse Stroke="{StaticResource NdApricotBrush}" StrokeThickness="2.5" />
+                    <Border Height="2.5" Background="{StaticResource NdApricotBrush}" VerticalAlignment="Center" />
+                    <Ellipse Width="9" Height="9" Fill="{StaticResource NdSurfaceBrush}"
+                             Stroke="{StaticResource NdApricotBrush}" StrokeThickness="2.5"
                              HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
-                <TextBlock VerticalAlignment="Center" FontSize="23" FontWeight="SemiBold">
-                    <Run Text="Poké" Foreground="{StaticResource PrimaryTextBrush}" /><Run Text="Corner" Foreground="{StaticResource PrimaryTextBrush}" />
+                <TextBlock VerticalAlignment="Center" FontSize="19" FontWeight="SemiBold">
+                    <Run Text="Poké" Foreground="{StaticResource NdTextBrush}" /><Run Text="Corner" Foreground="{StaticResource NdTextBrush}" />
                 </TextBlock>
+                <TextBlock x:Name="BrandSubtitle" Text="дневник тренера" Foreground="{StaticResource NdMutedBrush}" FontSize="12" Margin="12,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Margin="0,0,18,0" VerticalAlignment="Center">
                         <Image Source="{StaticResource UiCoinImage}" Width="24" Height="24" Margin="0,0,6,0" />
-                        <TextBlock x:Name="WalletText" FontWeight="Bold" VerticalAlignment="Center" AutomationProperties.Name="Монеты" />
+                        <TextBlock x:Name="WalletText" Foreground="{StaticResource NdApricotBrush}" FontWeight="Bold" VerticalAlignment="Center" AutomationProperties.Name="Монеты" />
                     </StackPanel>
                     <Button x:Name="EncountersButton" Content="Встречи · 0" Click="EncountersButton_Click"
-                            Style="{StaticResource UiHeaderButtonStyle}" ContentTemplate="{StaticResource UiEncounterHeaderTemplate}" Margin="0,0,10,0" AutomationProperties.Name="Встречи" />
-                    <Button x:Name="SettingsButton" Content="Настройки" ContentTemplate="{StaticResource UiSettingsHeaderTemplate}" ToolTip="Настройки" Click="SettingsButton_Click"
-                            Style="{StaticResource UiHeaderButtonStyle}" Margin="0,0,10,0"
-                            AutomationProperties.Name="Открыть настройки" />
-                    <Button x:Name="MinimizeButton" Style="{StaticResource TitleBarButtonStyle}"
+                            Style="{StaticResource NdHeaderButtonStyle}" Margin="0,0,10,0" AutomationProperties.Name="Встречи" />
+                    <Button x:Name="MinimizeButton" Style="{StaticResource NdChromeButtonStyle}"
                             Content="&#xE921;" Click="MinimizeButton_Click" ToolTip="Свернуть" AutomationProperties.Name="Свернуть" />
-                    <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarButtonStyle}"
+                    <Button x:Name="MaximizeButton" Style="{StaticResource NdChromeButtonStyle}"
                             Content="&#xE922;" Click="MaximizeButton_Click" ToolTip="Развернуть" AutomationProperties.Name="Развернуть" />
-                    <Button x:Name="CloseButton" Style="{StaticResource TitleBarCloseButtonStyle}"
+                    <Button x:Name="CloseButton" Style="{StaticResource NdCloseButtonStyle}"
                             Content="&#xE8BB;" Click="CloseButton_Click" ToolTip="Закрыть" AutomationProperties.Name="Закрыть" />
                 </StackPanel>
             </Grid>
         </Border>
 
-        <Grid Grid.Row="1" Background="{StaticResource WindowBackgroundBrush}">
-        <TabControl x:Name="MenuTabControl" Style="{StaticResource UiShellTabsStyle}">
+        <Grid Grid.Row="1" Background="{StaticResource NdBackgroundBrush}">
+        <TabControl x:Name="MenuTabControl" Style="{StaticResource NdShellTabsStyle}">
             <TabItem x:Name="CornerTab" AutomationProperties.Name="Уголок">
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M3 10L12 3 21 10 M5 9V21H19V9 M9 21V13H15V21" /><TextBlock Text="Уголок" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI" VerticalAlignment="Center">
+                        <Path Width="20" Height="20" Stretch="Uniform" Margin="0,0,0,7" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M3 10L12 3 21 10 M5 9V21H19V9 M9 21V13H15V21" /><TextBlock Text="Уголок" VerticalAlignment="Center" />
                         <Ellipse x:Name="CatchBadge" Width="7" Height="7" Margin="6,0,0,0"
-                                 VerticalAlignment="Center" Fill="{StaticResource AccentRedBrush}"
+                                 VerticalAlignment="Center" Fill="{StaticResource NdApricotBrush}"
                                  Visibility="Collapsed" />
                     </StackPanel>
                 </TabItem.Header>
@@ -83,13 +87,16 @@
                     <TabItem x:Name="AlbumTab" Header="Достижения" AutomationProperties.Name="Достижения" Visibility="Collapsed" />
                 </TabControl>
             </TabItem>
-            <TabItem x:Name="CollectionTab" AutomationProperties.Name="Покедекс"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M12 5V21 M3 4C7 3 9 4 12 6 C15 4 17 3 21 4 V19 C17 18 15 19 12 21 C9 19 7 18 3 19Z" /><TextBlock Text="Покедекс" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
-            <TabItem x:Name="ExpeditionsTab" AutomationProperties.Name="Экспедиции"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M3 6L9 3 15 6 21 3 V18 L15 21 9 18 3 21Z M9 3V18 M15 6V21" /><TextBlock Text="Экспедиции" VerticalAlignment="Center" /><Border x:Name="ExpeditionReadyBadge" Visibility="Collapsed" Background="{StaticResource UiForestBrush}" CornerRadius="7" Margin="7,0,0,0" Padding="5,1" VerticalAlignment="Center" ToolTip="Команда вернулась — заберите находки"><TextBlock Text="!" Foreground="White" FontWeight="Bold" /></Border></StackPanel></TabItem.Header></TabItem>
-            <TabItem x:Name="NurseryTab" AutomationProperties.Name="Питомник"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M19 15C19 20 16 22 12 22 S5 20 5 15 S9 2 12 2 S19 10 19 15Z M9 11L11 13 M15 16L16 14" /><TextBlock Text="Питомник" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
-            <TabItem x:Name="ShopTab" AutomationProperties.Name="Магазин"><TabItem.Header><StackPanel Orientation="Horizontal"><Path Width="22" Height="22" Stretch="Uniform" Margin="0,0,9,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M4 10V21H20V10 M3 4H21L22 10H2Z M9 21V14H15V21 M7 4L6 10 M12 4V10 M17 4L18 10" /><TextBlock Text="Магазин" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="CollectionTab" AutomationProperties.Name="Покедекс"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Path Width="20" Height="20" Stretch="Uniform" Margin="0,0,0,7" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M12 5V21 M3 4C7 3 9 4 12 6 C15 4 17 3 21 4 V19 C17 18 15 19 12 21 C9 19 7 18 3 19Z" /><TextBlock Text="Покедекс" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="ExpeditionsTab" AutomationProperties.Name="Экспедиции"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Path Width="20" Height="20" Stretch="Uniform" Margin="0,0,0,7" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M3 6L9 3 15 6 21 3 V18 L15 21 9 18 3 21Z M9 3V18 M15 6V21" /><TextBlock Text="Экспедиции" FontSize="12" VerticalAlignment="Center" /><Border x:Name="ExpeditionReadyBadge" Visibility="Collapsed" Background="{StaticResource NdLavenderBrush}" CornerRadius="7" Margin="7,0,0,0" Padding="5,1" VerticalAlignment="Center" ToolTip="Команда вернулась — заберите находки"><TextBlock Text="!" Foreground="{StaticResource NdBackgroundBrush}" FontWeight="Bold" /></Border></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="NurseryTab" AutomationProperties.Name="Питомник"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Path Width="20" Height="20" Stretch="Uniform" Margin="0,0,0,7" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M19 15C19 20 16 22 12 22 S5 20 5 15 S9 2 12 2 S19 10 19 15Z M9 11L11 13 M15 16L16 14" /><TextBlock Text="Питомник" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="ShopTab" AutomationProperties.Name="Магазин"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Path Width="20" Height="20" Stretch="Uniform" Margin="0,0,0,7" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}" StrokeThickness="1.8" Data="M4 10V21H20V10 M3 4H21L22 10H2Z M9 21V14H15V21 M7 4L6 10 M12 4V10 M17 4L18 10" /><TextBlock Text="Магазин" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
         </TabControl>
-        <ContentControl x:Name="SettingsContent" Visibility="Collapsed" />
-        <ContentControl x:Name="HostedContent" Visibility="Collapsed" />
+        <ContentControl x:Name="SettingsContent" Margin="136,0,0,0" Visibility="Collapsed" />
+        <ContentControl x:Name="HostedContent" Margin="136,0,0,0" Visibility="Collapsed" />
+        <Button x:Name="SettingsButton" ContentTemplate="{StaticResource NdSettingsButtonTemplate}" Content="Настройки" ToolTip="Настройки" Click="SettingsButton_Click"
+                Style="{StaticResource NdHeaderButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Width="120" Margin="8,0,0,12" AutomationProperties.Name="Открыть настройки" />
         </Grid>
     </Grid>
     <local:ConfirmationOverlay x:Name="ConfirmationHost" Visibility="Collapsed" Panel.ZIndex="10" />
