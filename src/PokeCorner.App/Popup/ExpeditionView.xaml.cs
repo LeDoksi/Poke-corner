@@ -377,25 +377,34 @@ public partial class ExpeditionView : UserControl
     }
 
     private void Continue_Click(object sender, RoutedEventArgs e) { if (_busy) return; _continueAfterResult = true; Refresh(); }
-    private void RenderRewards(UniformGrid panel, string berry, int berries, int coins, string? xp)
+    private ImageSource? ShopArt(string id)
+    {
+        if (_rewardArtCache.TryGetValue(id, out var cached)) return cached;
+        ImageSource? image = null;
+        var path = _catalog is null ? null : Path.Combine(_catalog.DataRoot, "final", "assets", "shop", id + ".png");
+        try { if (path is not null && File.Exists(path)) image = SpriteImages.Decode(File.ReadAllBytes(path)); }
+        catch (Exception error) when (error is IOException or InvalidOperationException or NotSupportedException or ArgumentException) { }
+        return _rewardArtCache[id] = image;
+    }
+
+    // Extras were rolled when the team set out, so the ready screen can show the whole haul in one row.
+    private void RenderRewards(UniformGrid panel, string berry, int berries, int coins, string? xp, ExpeditionRewards? extras = null)
     {
         panel.Children.Clear();
-        ImageSource? berryImage = null;
-        var path = _catalog is null ? null : Path.Combine(_catalog.DataRoot, "final", "assets", "shop", berry + ".png");
-        if (!_rewardArtCache.TryGetValue(berry, out berryImage)) {
-            try { if (path is not null && File.Exists(path)) berryImage = SpriteImages.Decode(File.ReadAllBytes(path)); }
-            catch (Exception error) when (error is IOException or InvalidOperationException or NotSupportedException or ArgumentException) { }
-            _rewardArtCache[berry] = berryImage;
-        }
-        var compact = ReferenceEquals(panel, PreviewRewardCards);
-        var cards = new List<(ImageSource?, string)> { (berryImage, $"{BerryName(berry)} ×{berries}"), ((ImageSource)FindResource("UiCoinImage"), Coins(coins)) };
+        var berryCounts = new Dictionary<string, int> { [berry] = berries };
+        foreach (var (id, count) in extras?.ExtraBerries ?? []) berryCounts[id] = berryCounts.GetValueOrDefault(id) + count;
+        var cards = berryCounts.Select(x => (ShopArt(x.Key), $"{BerryName(x.Key)} ×{x.Value}")).ToList();
+        cards.Add(((ImageSource)FindResource("UiCoinImage"), Coins(coins + (extras?.ExtraCoins ?? 0))));
+        foreach (var (id, count) in extras?.ExtraItems ?? []) cards.Add((ShopArt(id), $"{ItemName(id)} ×{count}"));
         if (xp is not null) cards.Add((null, xp));
+        var compact = ReferenceEquals(panel, PreviewRewardCards);
+        if (!compact) panel.Columns = Math.Min(cards.Count, 4);
         foreach (var (image, text) in cards) {
             var row = new StackPanel { Orientation = Orientation.Horizontal };
             if (image is not null) row.Children.Add(new Image { Source = image, Width = 26, Height = 26, Margin = new Thickness(0, 0, 6, 0) });
             else row.Children.Add(new TextBlock { Text = "XP", FontWeight = FontWeights.ExtraBold, Foreground = (Brush)FindResource("UiForestBrush"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) });
-            row.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.NoWrap, MaxWidth = compact ? 145 : 180, TextAlignment = TextAlignment.Left, FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center });
-            panel.Children.Add(new Border { Child = row, Padding = new Thickness(compact ? 2 : 8), Margin = new Thickness(0, 0, 6, 0), CornerRadius = new CornerRadius(8), Background = compact ? System.Windows.Media.Brushes.Transparent : (Brush)FindResource("SurfaceBackgroundBrush") });
+            row.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.NoWrap, TextTrimming = TextTrimming.CharacterEllipsis, MaxWidth = compact ? 145 : 180, TextAlignment = TextAlignment.Left, FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center, ToolTip = text });
+            panel.Children.Add(new Border { Child = row, Padding = new Thickness(compact ? 2 : 8), Margin = new Thickness(0, 0, 6, 6), CornerRadius = new CornerRadius(8), Background = compact ? System.Windows.Media.Brushes.Transparent : (Brush)FindResource("SurfaceBackgroundBrush") });
         }
     }
 
@@ -450,7 +459,7 @@ public partial class ExpeditionView : UserControl
             return $"{SpeciesName(member.CurrentSpeciesId)} +{amount} XP";
         }));
         RenderSlots(TripSlots, trip.ParticipantIds, data, false, ready ? xpGain : null);
-        RenderRewards(TripRewardCards, reward.PrimaryBerryId, checked((int)berries), checked((int)coins), null);
+        RenderRewards(TripRewardCards, reward.PrimaryBerryId, checked((int)berries), checked((int)coins), null, reward);
         TripRewardCards.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
         TripRewards.Text = $"Сохранённые условия: {berries} {BerryName(reward.PrimaryBerryId)}, {coins} монет; " +
             $"{xp}. Дополнительные находки и встреча откроются при получении. Награды не сгорают.";
@@ -582,11 +591,10 @@ public partial class ExpeditionView : UserControl
         finally { _busy = false; Refresh(); }
     }
 
-    // Guaranteed loot and XP were already on the ready screen; a result screen is only worth a click for extras or an encounter.
+    // All loot and XP were already on the ready screen; only an encounter is news after the claim.
     private static bool RevealedSomething(SaveData data, Guid tripId) =>
         data.Expedition is { } trip && trip.Id == tripId &&
-        (trip.Rewards.ExtraBerries.Count > 0 || trip.Rewards.ExtraItems.Count > 0 || trip.Rewards.ExtraCoins > 0 ||
-         data.Encounters.Any(e => e.Source == "expedition" && e.Id == tripId));
+        data.Encounters.Any(e => e.Source == "expedition" && e.Id == tripId);
 
     private async void OpenEncounterButton_Click(object sender, RoutedEventArgs e)
     {

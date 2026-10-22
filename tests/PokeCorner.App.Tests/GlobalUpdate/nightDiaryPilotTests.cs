@@ -149,11 +149,10 @@ public class NightDiaryPilotTests
         new ExpeditionService(Catalog.Value, running).Start(trip); Capture("running", View(running), running);
         var cancelView = View(running); Click(cancelView, "CancelButton"); Capture("cancel", cancelView, running);
         running.Expedition!.ReadyAtUtc = DateTimeOffset.UtcNow.AddSeconds(-1); running.Expedition.Status = "ready";
+        running.Expedition.Rewards.ExtraBerries["oran"] = 2; // extras are rolled at start, so the ready screen shows them
         Capture("ready", View(running), running);
         new ExpeditionService(Catalog.Value, running).Claim(trip.OperationId, Guid.NewGuid());
-        Capture("claimed-plain", View(running), running);
-        running.Expedition!.Rewards.ExtraBerries["oran"] = 2; // the result screen only appears when the claim revealed extras
-        Capture("result", View(running), running);
+        Capture("claimed", View(running), running); // no encounter: claiming lands straight back on preparation
         var failed = State(); var error = View(failed, _ => Task.FromException<ExpeditionAction>(new IOException("Synthetic write refusal — no profile used")));
         Select(error, failed); Click(error, "StartButton"); Capture("error", error, failed);
         File.WriteAllText(Path.Combine(output, "README.txt"), "Synthetic in-memory data; WpfTestHost Application, never App.OnStartup. PNG rendering is not physical DPI or interactive acceptance.");
