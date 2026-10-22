@@ -1,11 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
- <SolidColorBrush x:Key="UiPaperBrush" Color="#F8F4E9" />
- <SolidColorBrush x:Key="UiForestBrush" Color="#31694D" />
- <SolidColorBrush x:Key="UiInkBrush" Color="#26352D" />
- <SolidColorBrush x:Key="UiSecondaryInkBrush" Color="#50614F" />
- <SolidColorBrush x:Key="UiBorderBrush" Color="#C8C2B3" />
- <SolidColorBrush x:Key="UiDangerBrush" Color="#9B3833" />
+ <SolidColorBrush x:Key="UiPaperBrush" Color="#16192B" />
+ <SolidColorBrush x:Key="UiForestBrush" Color="#C4ABF0" />
+ <SolidColorBrush x:Key="UiInkBrush" Color="#F2ECFC" />
+ <SolidColorBrush x:Key="UiSecondaryInkBrush" Color="#B9AECF" />
+ <SolidColorBrush x:Key="UiBorderBrush" Color="#41415D" />
+ <SolidColorBrush x:Key="UiDangerBrush" Color="#A85060" />
  <BitmapImage x:Key="UiCoinImage" UriSource="/PokeCorner;component/Assets/UiSystem/coin.png" />
  <BitmapImage x:Key="UiNurseryImage" UriSource="/PokeCorner;component/Assets/UiSystem/nursery.png" />
  <BitmapImage x:Key="UiNurseryWaitingImage" UriSource="/PokeCorner;component/Assets/UiSystem/nursery-waiting.png" />
@@ -13,7 +13,7 @@
  <BitmapImage x:Key="UiBallClosedImage" UriSource="/PokeCorner;component/Assets/UiSystem/ball-closed.png" />
  <BitmapImage x:Key="UiBallOpenImage" UriSource="/PokeCorner;component/Assets/UiSystem/ball-open.png" />
  <Style x:Key="UiGreenProgressBarStyle" TargetType="ProgressBar">
-  <Setter Property="Height" Value="9"/><Setter Property="Foreground" Value="#39825E"/><Setter Property="Background" Value="#DCDED0"/>
+  <Setter Property="Height" Value="9"/><Setter Property="Foreground" Value="#C4ABF0"/><Setter Property="Background" Value="#23253C"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ProgressBar"><Grid><Border x:Name="PART_Track" CornerRadius="5" Background="{TemplateBinding Background}"/><Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}"/></Grid></ControlTemplate></Setter.Value></Setter>
  </Style>
  <Style x:Key="UiHeaderButtonStyle" TargetType="Button">
@@ -25,7 +25,7 @@
     <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
    </Border>
    <ControlTemplate.Triggers>
-    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#E4E8DA" /></Trigger>
+    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#2B2D47" /></Trigger>
     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiForestBrush}" /><Setter TargetName="Surface" Property="BorderThickness" Value="2" /></Trigger>
     <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5" /></Trigger>
    </ControlTemplate.Triggers>
@@ -53,18 +53,18 @@
   <Setter Property="MinHeight" Value="48" />
   <Setter Property="Padding" Value="16,9" />
   <Setter Property="FontWeight" Value="Bold" />
-  <Setter Property="Foreground" Value="White" />
-  <Setter Property="Background" Value="{StaticResource UiForestBrush}" />
+  <Setter Property="Foreground" Value="#101426" />
+  <Setter Property="Background" Value="#FFB574" />
   <Setter Property="Template"><Setter.Value>
    <ControlTemplate TargetType="Button">
     <Border x:Name="Surface" Background="{TemplateBinding Background}" CornerRadius="9" Padding="{TemplateBinding Padding}">
      <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
     </Border>
     <ControlTemplate.Triggers>
-     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#24543D" /></Trigger>
-     <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Background" Value="#1E4935" /></Trigger>
-     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiInkBrush}" /><Setter TargetName="Surface" Property="BorderThickness" Value="2" /></Trigger>
-     <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Surface" Property="Background" Value="#DEDED2" /><Setter Property="Foreground" Value="#66725F" /></Trigger>
+     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#FFC690" /></Trigger>
+     <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Background" Value="#E89E5E" /></Trigger>
+     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="#F2ECFC" /><Setter TargetName="Surface" Property="BorderThickness" Value="2" /></Trigger>
+     <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Surface" Property="Background" Value="#23253C" /><Setter Property="Foreground" Value="#B9AECF" /></Trigger>
     </ControlTemplate.Triggers>
    </ControlTemplate>
   </Setter.Value></Setter>
@@ -76,10 +76,10 @@
     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
    </Border>
    <ControlTemplate.Triggers>
-    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#842D29"/></Trigger>
-    <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Background" Value="#6D2421"/></Trigger>
+    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#B9606F"/></Trigger>
+    <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Background" Value="#8F4552"/></Trigger>
     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiInkBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
-    <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Surface" Property="Background" Value="#DEDED2"/><Setter Property="Foreground" Value="#66725F"/></Trigger>
+    <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Surface" Property="Background" Value="#23253C"/><Setter Property="Foreground" Value="#B9AECF"/></Trigger>
    </ControlTemplate.Triggers>
   </ControlTemplate></Setter.Value></Setter>
  </Style>
@@ -92,7 +92,7 @@
    <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
     <Border x:Name="Surface" Background="Transparent" CornerRadius="9" BorderBrush="{StaticResource UiBorderBrush}" BorderThickness="1" Padding="{TemplateBinding Padding}"><ContentPresenter VerticalAlignment="Center"/></Border>
     <ControlTemplate.Triggers>
-     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#E4E8DA"/></Trigger>
+     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#2B2D47"/></Trigger>
      <Trigger Property="IsSelected" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource UiForestBrush}"/><Setter Property="Foreground" Value="White"/><Setter Property="FontWeight" Value="Bold"/></Trigger>
      <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiInkBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
      <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger>
@@ -115,9 +115,9 @@
       <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center" />
      </Border>
      <ControlTemplate.Triggers>
-      <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#E4E8DA" /></Trigger>
+      <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#2B2D47" /></Trigger>
       <Trigger Property="IsSelected" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource UiForestBrush}" /><Setter Property="Foreground" Value="White" /></Trigger>
-      <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource UiInkBrush}" /><Setter TargetName="Surface" Property="BorderThickness" Value="2" /></Trigger>
+      <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="#F2ECFC" /><Setter TargetName="Surface" Property="BorderThickness" Value="2" /></Trigger>
       <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5" /></Trigger>
      </ControlTemplate.Triggers>
     </ControlTemplate></Setter.Value></Setter>

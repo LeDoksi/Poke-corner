@@ -7,45 +7,45 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- ===================== Color tokens ===================== -->
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#F8F4E9" />
-    <SolidColorBrush x:Key="SurfaceBackgroundBrush" Color="#E9E2D3" />
-    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#EBE7D9" />
-    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#F8F4E9" />
-    <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="#F7F4E8" />
-    <SolidColorBrush x:Key="CardBorderBrush" Color="#C8C2B3" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#101426" />
+    <SolidColorBrush x:Key="SurfaceBackgroundBrush" Color="#23253C" />
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#2B2D47" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#16192B" />
+    <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="#1E2136" />
+    <SolidColorBrush x:Key="CardBorderBrush" Color="#35304F" />
 
-    <SolidColorBrush x:Key="AccentRedBrush" Color="#31694D" />
-    <SolidColorBrush x:Key="AccentRedHoverBrush" Color="#24543D" />
-    <SolidColorBrush x:Key="AccentGoldBrush" Color="#B17837" />
-    <SolidColorBrush x:Key="AccentGoldHoverBrush" Color="#98642D" />
+    <SolidColorBrush x:Key="AccentRedBrush" Color="#C4ABF0" />
+    <SolidColorBrush x:Key="AccentRedHoverBrush" Color="#D6C3F7" />
+    <SolidColorBrush x:Key="AccentGoldBrush" Color="#FFB574" />
+    <SolidColorBrush x:Key="AccentGoldHoverBrush" Color="#FFC690" />
     <!-- Back-compat alias: kept so any XAML still asking for the old key resolves to the
          new gold rather than dangling. New code should use AccentGoldBrush. -->
-    <SolidColorBrush x:Key="AccentYellowBrush" Color="#B17837" />
+    <SolidColorBrush x:Key="AccentYellowBrush" Color="#FFB574" />
 
-    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#26352D" />
-    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#50614F" />
-    <SolidColorBrush x:Key="MutedTextBrush" Color="#50614F" />
-    <SolidColorBrush x:Key="DisabledSurfaceBrush" Color="#D8D7CE" />
-    <SolidColorBrush x:Key="OnForestTextBrush" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="DangerTextBrush" Color="#9B3833" />
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#F2ECFC" />
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#B9AECF" />
+    <SolidColorBrush x:Key="MutedTextBrush" Color="#B9AECF" />
+    <SolidColorBrush x:Key="DisabledSurfaceBrush" Color="#23253C" />
+    <SolidColorBrush x:Key="OnForestTextBrush" Color="#101426" />
+    <SolidColorBrush x:Key="DangerTextBrush" Color="#FF9AA5" />
 
-    <SolidColorBrush x:Key="RarityCommonBrush" Color="#555D66" />
-    <SolidColorBrush x:Key="RarityUncommonBrush" Color="#246A48" />
-    <SolidColorBrush x:Key="RarityRareBrush" Color="#2A548A" />
-    <SolidColorBrush x:Key="RarityLegendaryBrush" Color="#80521B" />
+    <SolidColorBrush x:Key="RarityCommonBrush" Color="#A9A3BC" />
+    <SolidColorBrush x:Key="RarityUncommonBrush" Color="#7FD1A0" />
+    <SolidColorBrush x:Key="RarityRareBrush" Color="#8FB4F0" />
+    <SolidColorBrush x:Key="RarityLegendaryBrush" Color="#FFB574" />
 
     <!-- ===================== Gradient tokens ===================== -->
     <LinearGradientBrush x:Key="PrimaryButtonBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#31694D" Offset="0" />
-        <GradientStop Color="#2F654D" Offset="1" />
+        <GradientStop Color="#FFB574" Offset="0" />
+        <GradientStop Color="#FFAE66" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PrimaryButtonHoverBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#367657" Offset="0" />
-        <GradientStop Color="#31694D" Offset="1" />
+        <GradientStop Color="#FFC690" Offset="0" />
+        <GradientStop Color="#FFB574" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="PrimaryButtonPressedBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#24543D" Offset="0" />
-        <GradientStop Color="#1E4935" Offset="1" />
+        <GradientStop Color="#E89E5E" Offset="0" />
+        <GradientStop Color="#DB9152" Offset="1" />
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="ProgressGoldBrush" StartPoint="0,0" EndPoint="0,1">
@@ -74,8 +74,8 @@
     </RadialGradientBrush>
 
     <LinearGradientBrush x:Key="HeroCardBrush" StartPoint="0,0" EndPoint="0.35,1">
-        <GradientStop Color="#EEE7D7" Offset="0" />
-        <GradientStop Color="#E9E2D3" Offset="1" />
+        <GradientStop Color="#1C1F34" Offset="0" />
+        <GradientStop Color="#16192B" Offset="1" />
     </LinearGradientBrush>
 
     <!-- KEYED: every window opts in with Style="{StaticResource AppWindowStyle}". An implicit
