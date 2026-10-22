@@ -453,9 +453,13 @@
                                 </StackPanel>
                                 <WrapPanel><TextBlock x:Name="DetailSpeciesSubtitleText" Style="{StaticResource MetaTextStyle}" Margin="0,0,8,0"/><TextBlock x:Name="DetailDexNumberText" Style="{StaticResource MetaTextStyle}"/></WrapPanel>
                                 <WrapPanel Margin="0,4,0,0"><TextBlock x:Name="DetailNatureText" Style="{StaticResource CaptionTextStyle}" Margin="0,0,12,0"/><TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource CaptionTextStyle}"/></WrapPanel>
+                                <WrapPanel Margin="0,8,0,0">
+                                    <Border x:Name="DetailActiveBadge" Visibility="Collapsed" Style="{StaticResource PillStyle}" BorderBrush="{StaticResource AccentGoldBrush}" Padding="9,2" Margin="0,0,6,0"><TextBlock Text="На рабочем столе" Foreground="{StaticResource AccentGoldBrush}" FontSize="12" FontWeight="SemiBold"/></Border>
+                                    <Border x:Name="DetailFavoriteBadge" Visibility="Collapsed" Style="{StaticResource PillStyle}" Padding="9,2"><TextBlock Text="★ Избранный" FontSize="12"/></Border>
+                                </WrapPanel>
                             </StackPanel>
                         </DockPanel>
-                        <TextBlock DockPanel.Dock="Top" x:Name="DetailErrorText" Foreground="{StaticResource AccentRedBrush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Assertive"/>
+                        <TextBlock DockPanel.Dock="Top" x:Name="DetailErrorText" Foreground="{StaticResource DangerTextBrush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Assertive"/>
                         <DockPanel x:Name="EvolutionFooter" DockPanel.Dock="Bottom" Visibility="Collapsed" Margin="0,12,0,0">
                                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right"><Button x:Name="EvolutionLaterButton" Content="Позже" Click="DetailConditionsBack_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,10,0"/><Button x:Name="DetailEvolveButton" Content="Эволюционировать" Click="DetailEvolveButton_Click"/></StackPanel>
                                             <WrapPanel><Button x:Name="DetailEvolutionShopButton" Content="В магазин" Click="DetailEvolutionShopButton_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/><Button x:Name="DetailEvolutionRouteButton" Content="В поход" Click="DetailEvolutionRouteButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
@@ -507,8 +511,6 @@
                                         <DockPanel Margin="0,12,0,0"><Button x:Name="DetailXpPotionButton" Content="Применить" Tag="xp-potion" Click="DetailItem_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,0,0"/><Image x:Name="DetailXpPotionImage" Source="/PokeCorner;component/Assets/UiSystem/xp-potion.png" Width="32" Height="40" DockPanel.Dock="Left" Margin="0,0,8,0"/><TextBlock x:Name="DetailXpPotionText" TextWrapping="Wrap"/></DockPanel>
                                         </StackPanel></Border>
                                         <TextBlock x:Name="DetailBusyText" Style="{StaticResource MetaTextStyle}"/>
-                                        <Border x:Name="DetailFavoriteBadge" Visibility="Collapsed"><TextBlock Text="Избранное"/></Border>
-                                        <Border x:Name="DetailActiveBadge" Visibility="Collapsed"><TextBlock Text="На столе"/></Border>
                                     </StackPanel>
                                 </Grid>
                                 <Border x:Name="EvolutionSurface" Visibility="Collapsed">

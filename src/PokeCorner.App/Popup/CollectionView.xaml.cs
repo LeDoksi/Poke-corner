@@ -918,6 +918,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
         // An already-active pet can't be selected again.
         DetailSelectButton.IsEnabled = card.CanSelect;
+        DetailSelectButton.Visibility = card.ActiveBadgeVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         DetailSelectButton.ToolTip = card.CanSelect ? null : "Этот покемон уже на рабочем столе";
 
         ApplyDetailFavoriteVisuals();
@@ -1383,7 +1384,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var quote = _previewRehome(_detailCard.IndividualId);
         DetailRehomeButton.Visibility = Visibility.Visible;
         DetailRehomeReasonText.Visibility = Visibility.Visible;
-        DetailRehomeReasonText.Text = quote.Reason ?? $"Передача: +{quote.Coins} монет. Необратимо.";
+        // The core's wording speaks about a replacement the player never chose here; say what to do instead.
+        DetailRehomeReasonText.Text = _detailCard.ActiveBadgeVisibility == Visibility.Visible && quote.Reason is not null
+            ? "Питомца с рабочего стола отдать нельзя. Сначала поставьте на стол другого."
+            : quote.Reason ?? $"Передача: +{quote.Coins} монет. Необратимо.";
         DetailRehomeButton.IsEnabled = quote.Reason is null && !_detailPending && !_rehomingIndividuals.Contains(_detailCard.IndividualId);
     }
 

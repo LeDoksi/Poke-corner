@@ -224,7 +224,7 @@ public sealed class RehomeTests
             confirmAsync: (_, body, _) => { Assert.Contains("навсегда", body); Assert.Contains("12 монет", body); return Task.FromResult(false); });
         Assert.True(view.OpenIndividual(data.Individuals[0].Id));
         Assert.False(((Button)view.FindName("DetailRehomeButton")).IsEnabled);
-        Assert.Contains("замен", ((TextBlock)view.FindName("DetailRehomeReasonText")).Text);
+        Assert.Contains("поставьте на стол другого", ((TextBlock)view.FindName("DetailRehomeReasonText")).Text);
         Assert.True(view.OpenIndividual(id));
         WpfTestHost.Layout(view, 320, 420);
         Assert.True(((Border)view.FindName("DetailCard")).ActualWidth <= 320);
