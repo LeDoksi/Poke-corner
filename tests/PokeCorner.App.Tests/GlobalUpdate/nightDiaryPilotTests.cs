@@ -160,6 +160,11 @@ public class NightDiaryPilotTests
         }
         var empty = State(); Capture("empty", View(empty), empty);
         var selected = State(); var prepared = View(selected); Select(prepared, selected); Capture("preparation", prepared, selected);
+        foreach (var route in new[] { "volcano", "ruins" }) { // each route carries its own trainer note
+            var routeData = State(); var routeView = View(routeData); Select(routeView, routeData);
+            routeView.RouteButtons.Children.OfType<Button>().Single(x => Equals(x.Tag, route)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Capture("preparation-" + route, routeView, routeData);
+        }
         var pickerData = State(); var picker = View(pickerData); Click(picker, "ChooseTeamButton");
         foreach (var pet in pickerData.Individuals.Take(2))
             Find<WrapPanel>(picker, "PickerMembers").Children.OfType<Button>().Single(b => Equals(b.Tag, pet.Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
@@ -177,16 +182,6 @@ public class NightDiaryPilotTests
         Capture("claimed", View(running), running); // claimed but encounter not opened yet: card stays on preparation
         var failed = State(); var error = View(failed, _ => Task.FromException<ExpeditionAction>(new IOException("Synthetic write refusal — no profile used")));
         Select(error, failed); Click(error, "StartButton"); Capture("error", error, failed);
-        // D-11 font comparison: same screens with the alternative handwritten face.
-        foreach (var name in new[] { "preparation", "ready" }) {
-            var alt = State(); var altView = View(alt); Select(altView, alt);
-            if (name == "ready") {
-                new ExpeditionService(Catalog.Value, alt).Start(new ExpeditionRequest("grove", "normal", 90, alt.Individuals.Take(3).Select(x => x.Id).ToArray(), Guid.NewGuid(), DateTimeOffset.UtcNow.AddHours(-2)));
-                alt.Expedition!.Status = "ready"; altView = View(alt);
-            }
-            altView.Resources["NdHandFont"] = altView.FindResource("NdHandFontAlt");
-            Capture(name + "-neucha", altView, alt);
-        }
         File.WriteAllText(Path.Combine(output, "README.txt"), "Synthetic in-memory data; WpfTestHost Application, never App.OnStartup. PNG rendering is not physical DPI or interactive acceptance.");
     });
 

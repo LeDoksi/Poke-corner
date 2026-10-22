@@ -195,7 +195,7 @@ public partial class ExpeditionView : UserControl
         EncounterPanel.Visibility = Visibility.Collapsed; // RefreshResult re-shows it for a claimed trip with an unopened encounter
         if (!active) {
             SubtitleText.Text = showResult ? "Поход завершён." : "Выберите маршрут, время и команду.";
-            TrainerNote.Text = "Втроём тропа щедрее на находки.";
+            TrainerNote.Text = RouteNote(_route);
             HeaderSketch.Source = (ImageSource)FindResource("NdMapImage");
         }
         RefreshLandscape(active || showResult ? trip!.LocationId : _route);
@@ -271,6 +271,19 @@ public partial class ExpeditionView : UserControl
         var height = Math.Clamp(Math.Floor(free), 110, 560);
         if (Math.Abs(SceneFrame.Height - height) >= 1) SceneFrame.Height = height;
     }
+
+    // Trainer's field note for the chosen place: flavour drawn from each route's art brief, never a mechanic.
+    private static string RouteNote(string route) => route switch
+    {
+        "grove" => "Под ногами сухая листва — шаги слышно издалека.",
+        "lake" => "У воды тихо. Камыши шуршат даже без ветра.",
+        "coast" => "Ветер с моря. Карту держать двумя руками.",
+        "mountains" => "Тропа узкая, щебень сыплется из-под ботинок.",
+        "desert" => "Следы заметает за минуты. Ориентир — гребень дюны.",
+        "volcano" => "Жарко даже ночью. Базальт тёплый сквозь подошву.",
+        "snow" => "Карнизы нависают. Говорить вполголоса.",
+        _ => "Из тёмных проходов кто-то смотрит. Не задерживаться."
+    };
 
     private string Difficulty => (DifficultyBox.SelectedItem as ListBoxItem)?.Tag as string ?? "normal";
     private string DisplayName(PokemonIndividual pet, SaveData data) => _selector.Name(pet) + (pet.Nickname is null ? "" : $" · {pet.Nickname}") + (pet.IsShiny ? " · шайни" : "")
