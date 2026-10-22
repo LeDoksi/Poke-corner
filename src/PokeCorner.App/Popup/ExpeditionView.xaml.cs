@@ -167,7 +167,8 @@ public partial class ExpeditionView : UserControl
         var active = trip?.Status is "running" or "ready";
         foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
-        var showResult = !active && trip?.Status == "claimed" && !_continueAfterResult && RevealedSomething(data, trip.Id);
+        // ponytail: result screen retired (loot is on the ready screen, encounter opens straight from the claim); its panel stays only because receipt tests still read ResultText.
+        var showResult = false;
         var compact = ActualWidth < 760;
         Grid.SetColumnSpan(DifficultyGroup, 1);
         Grid.SetColumnSpan(DurationGroup, 1);
@@ -182,6 +183,7 @@ public partial class ExpeditionView : UserControl
         if (showResult) SceneFrame.Height = 82; else FitScene();
         TripPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
         ResultPanel.Visibility = showResult ? Visibility.Visible : Visibility.Collapsed;
+        EncounterPanel.Visibility = Visibility.Collapsed; // RefreshResult re-shows it for a claimed trip with an unopened encounter
         if (!active) {
             SubtitleText.Text = showResult ? "Поход завершён." : "Выберите маршрут, время и команду.";
             HeaderSketch.Source = (ImageSource)FindResource("NdMapImage");
@@ -435,7 +437,7 @@ public partial class ExpeditionView : UserControl
         TripTimeRow.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
         SubtitleText.Text = ready ? "Находки готовы и ждут получения." : "Условия похода сохранены. Команда вернётся сама.";
         var difficulty = DifficultyBox.Items.OfType<ListBoxItem>().FirstOrDefault(item => Equals(item.Tag, trip.Difficulty));
-        TripTerms.Text = ready ? "Поход завершён. Находки ждут получения." : $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
+        TripTerms.Text = ready ? (trip.Rewards.HasEncounter ? "Поход завершён. В пути команда кого-то встретила." : "Поход завершён. Находки ждут получения.") : $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
         var xpGain = new Dictionary<Guid, long>();
         TripTeam.Text = string.Join(" · ", trip.ParticipantIds.Select(id =>
         {
@@ -472,7 +474,7 @@ public partial class ExpeditionView : UserControl
         ClaimButton.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
         CancelButton.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
         ClaimButton.IsEnabled = CancelButton.IsEnabled = !_busy;
-        ClaimButton.Content = _busy ? "Получаем находки…" : "Забрать находки";
+        ClaimButton.Content = _busy ? "Получаем находки…" : trip.Rewards.HasEncounter ? "Забрать находки и открыть встречу" : "Забрать находки";
     }
 
     private void RefreshResult(SaveData data, ExpeditionState trip)
@@ -506,10 +508,6 @@ public partial class ExpeditionView : UserControl
         OpenEncounterButton.IsEnabled = !_busy && encounter?.Phase == "resolved";
         OpenEncounterButton.Tag = encounter?.Id;
         EncounterPanel.Visibility = encounter?.Phase == "resolved" && encounter.Individual is not null ? Visibility.Visible : Visibility.Collapsed;
-        if (encounter?.Individual is { } encounterPet) {
-            EncounterSprite.Source = Sprite(encounterPet);
-            EncounterName.Text = SpeciesName(encounterPet.CurrentSpeciesId) + (encounterPet.IsShiny ? " · шайни" : "");
-        }
         if (encounter?.Individual is { } individual)
             ResultText.Text += $" Встреча: {SpeciesName(individual.CurrentSpeciesId)}{(individual.IsShiny ? " · шайни" : "")}. " +
                 (encounter.Phase == "resolved" ? "Закрытая встреча сохранена. Откройте её, чтобы перейти к встрече." : "Встреча открыта.");
@@ -572,6 +570,7 @@ public partial class ExpeditionView : UserControl
     {
         if (_busy || _suspended || _snapshot().Expedition is not { } trip) return;
         var generation = _generation;
+        Guid? encounterId = null;
         _busy = true;
         Refresh();
         try
@@ -585,20 +584,22 @@ public partial class ExpeditionView : UserControl
             if (!_suspended && generation == _generation) Show(result.Encounter is { IsClosed: true } encounter
                 ? $"{result.Message} Встреча с {SpeciesName(encounter.SpeciesId)} сохранена закрытой." : result.Message);
             _pendingClaimId = Guid.Empty;
-            _continueAfterResult = !RevealedSomething(_snapshot(), trip.Id);
+            if (result.Encounter is { } met) encounterId = met.Id; // closed = species still sealed until opened
         }
         catch (Exception ex) { if (!_suspended && generation == _generation) Show(ex.Message); }
         finally { _busy = false; Refresh(); }
+        // One click: the claim button already promised the encounter, so open it right away.
+        if (encounterId is { } id && !_suspended && generation == _generation) await OpenEncounter(id);
     }
-
-    // All loot and XP were already on the ready screen; only an encounter is news after the claim.
-    private static bool RevealedSomething(SaveData data, Guid tripId) =>
-        data.Expedition is { } trip && trip.Id == tripId &&
-        data.Encounters.Any(e => e.Source == "expedition" && e.Id == tripId);
 
     private async void OpenEncounterButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_busy || _suspended || OpenEncounterButton.Tag is not Guid id) return;
+        if (OpenEncounterButton.Tag is Guid id) await OpenEncounter(id);
+    }
+
+    private async Task OpenEncounter(Guid id)
+    {
+        if (_busy || _suspended) return;
         if (_enterEncounter is not null) { _enterEncounter(id); return; }
         var generation = _generation;
         _busy = true;

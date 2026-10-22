@@ -105,6 +105,11 @@
     <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
      <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
     </Border>
+<Border x:Name="EncounterPanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,8"><DockPanel>
+      
+      <Button x:Name="OpenEncounterButton" Content="Открыть встречу" Click="OpenEncounterButton_Click" DockPanel.Dock="Right" Visibility="Collapsed" Style="{StaticResource SecondaryButtonStyle}"/>
+      <StackPanel VerticalAlignment="Center"><TextBlock Text="В пути команда кого-то встретила" FontWeight="Bold"/><TextBlock Text="Кто это, узнаете во встрече" Style="{StaticResource CaptionTextStyle}"/></StackPanel>
+     </DockPanel></Border>
     <StackPanel x:Name="RouteSelectionPanel"><UniformGrid x:Name="RouteButtons" x:FieldModifier="public" Rows="1" Margin="0,0,-6,6" /></StackPanel>
     <Border x:Name="Landscape" ClipToBounds="True" Margin="-24,4,-24,12">
      <Grid x:Name="SceneFrame" Height="236"><Image x:Name="LandscapeImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута" /><Rectangle IsHitTestVisible="False"><Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="0.75,0.9"><GradientStop Color="#D0101426"/><GradientStop Color="#60101426" Offset="0.45"/><GradientStop Color="#00101426" Offset="1"/></LinearGradientBrush></Rectangle.Fill></Rectangle>
@@ -130,11 +135,7 @@
       <TextBlock Text="Обещанная добыча и опыт уже в запасах." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10" />
       <UniformGrid Visibility="Collapsed" x:Name="ResultSlots" Columns="3" Margin="0,0,0,12"/><UniformGrid x:Name="ResultRewardCards" Columns="3" Margin="0,0,0,12" Visibility="Collapsed"/><TextBlock x:Name="ResultExtrasText" TextWrapping="Wrap" FontSize="15" /><TextBlock x:Name="ResultText" TextWrapping="Wrap" Visibility="Collapsed" />
      </StackPanel></Border>
-     <Border x:Name="EncounterPanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,8"><DockPanel>
-      <Image x:Name="EncounterSprite" Width="54" Height="54" Margin="0,0,12,0"/>
-      <Button x:Name="OpenEncounterButton" Content="Открыть встречу" Click="OpenEncounterButton_Click" DockPanel.Dock="Right" Visibility="Collapsed" Style="{StaticResource SecondaryButtonStyle}"/>
-      <StackPanel VerticalAlignment="Center"><TextBlock Text="В пути встретили" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="EncounterName" FontWeight="Bold"/><TextBlock Text="Закрытая встреча сохранена" Style="{StaticResource CaptionTextStyle}"/></StackPanel>
-     </DockPanel></Border>
+
 
     </StackPanel>
    </StackPanel>

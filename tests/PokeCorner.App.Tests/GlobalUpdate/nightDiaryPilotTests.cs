@@ -64,6 +64,27 @@ public class NightDiaryPilotTests
     public void CoinCountsUseRussianPlural(long count, string expected) => Assert.Equal(expected, ExpeditionView.Coins(count));
 
     [Fact]
+    public void ClaimWithEncounterOpensItInOneClick() => WpfTestHost.Run(() =>
+    {
+        var data = State();
+        var request = new ExpeditionRequest("grove", "normal", 90, data.Individuals.Take(3).Select(p => p.Id).ToArray(), Guid.NewGuid(), DateTimeOffset.UtcNow.AddHours(-2));
+        new ExpeditionService(Catalog.Value, data).Start(request);
+        data.Expedition!.Rewards.HasEncounter = true; data.Expedition.Status = "ready";
+        var opened = Guid.Empty;
+        var view = new ExpeditionView(() => data, r => new ExpeditionService(Catalog.Value, data).Preview(r),
+            r => Task.FromResult(new ExpeditionService(Catalog.Value, data).Start(r)),
+            (id, now) => Task.FromResult(new ExpeditionService(Catalog.Value, data).Cancel(id, now)),
+            (id, op) => Task.FromResult(new ExpeditionService(Catalog.Value, data).Claim(id, op)),
+            id => { opened = id; return Task.FromResult(new EncounterService(Catalog.Value).Open(data, id)); }, Catalog.Value);
+        Assert.Equal("Забрать находки и открыть встречу", Find<Button>(view, "ClaimButton").Content);
+        Click(view, "ClaimButton");
+        Assert.Equal(data.Expedition.Id, opened);
+        Assert.Equal("opened", data.Encounters.Single(e => e.Id == opened).Phase);
+        Assert.Equal(Visibility.Visible, Find<StackPanel>(view, "PreparationPanel").Visibility);
+        view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+    });
+
+    [Fact]
     public void ApprovedThreeSpeciesFixtureUsesActualPreviewAndDraftCancel() => WpfTestHost.Run(() =>
     {
         var data = State();
@@ -150,9 +171,10 @@ public class NightDiaryPilotTests
         var cancelView = View(running); Click(cancelView, "CancelButton"); Capture("cancel", cancelView, running);
         running.Expedition!.ReadyAtUtc = DateTimeOffset.UtcNow.AddSeconds(-1); running.Expedition.Status = "ready";
         running.Expedition.Rewards.ExtraBerries["oran"] = 2; // extras are rolled at start, so the ready screen shows them
+        running.Expedition.Rewards.HasEncounter = true; // one button: claim and open the encounter
         Capture("ready", View(running), running);
         new ExpeditionService(Catalog.Value, running).Claim(trip.OperationId, Guid.NewGuid());
-        Capture("claimed", View(running), running); // no encounter: claiming lands straight back on preparation
+        Capture("claimed", View(running), running); // claimed but encounter not opened yet: card stays on preparation
         var failed = State(); var error = View(failed, _ => Task.FromException<ExpeditionAction>(new IOException("Synthetic write refusal — no profile used")));
         Select(error, failed); Click(error, "StartButton"); Capture("error", error, failed);
         File.WriteAllText(Path.Combine(output, "README.txt"), "Synthetic in-memory data; WpfTestHost Application, never App.OnStartup. PNG rendering is not physical DPI or interactive acceptance.");
