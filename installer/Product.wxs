@@ -39,13 +39,16 @@
         <FileSearch Id="InstalledLegacyCatalogFile" Name="catalog.json" />
       </ComponentSearch>
     </Property>
-    <!-- No FileSearch signature: AppSearch returns the parent directory of the file key path. -->
-    <Property Id="LEGACY_DATA_DIRECTORY" Secure="yes">
-      <ComponentSearch Id="InstalledLegacyDataDirectory" Guid="1207EAD2-3F07-5CC9-A702-CF851310D8CD" Type="file" />
+    <!-- No FileSearch signature: AppSearch returns the parent directory of the file key path.
+         PokeCorner.exe's component (same harvested GUID since 1.0.18) sits in the install root,
+         so this is INSTALLFOLDER itself. Never build it as "Data\..\": Windows Installer rejects
+         ".." in a folder path and the wizard stops on its first page. -->
+    <Property Id="LEGACY_INSTALL_DIRECTORY" Secure="yes">
+      <ComponentSearch Id="InstalledLegacyInstallDirectory" Guid="41FBCD59-E7DA-50CD-B2E0-A4766427DE68" Type="file" />
     </Property>
     <!-- Keep late upgrades at the existing custom location, preserving component key paths. -->
-    <SetDirectory Id="INSTALLFOLDER" Value="[LEGACY_DATA_DIRECTORY]..\"
-                  Sequence="both" Condition="LEGACY_DATA_DIRECTORY" />
+    <SetDirectory Id="INSTALLFOLDER" Value="[LEGACY_INSTALL_DIRECTORY]"
+                  Sequence="both" Condition="LEGACY_INSTALL_DIRECTORY" />
 
     <Property Id="PRESERVED_LEGACY_LOOKUP" Secure="yes">
       <DirectorySearch Id="PreservedLegacyFolder" Path="[CommonAppDataFolder]PokeCorner" Depth="0">
