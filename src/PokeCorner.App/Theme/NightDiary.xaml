@@ -8,6 +8,9 @@
  <SolidColorBrush x:Key="NdMutedBrush" Color="#B9AECF"/>
  <SolidColorBrush x:Key="NdLavenderBrush" Color="#C4ABF0"/>
  <SolidColorBrush x:Key="NdApricotBrush" Color="#FFB574"/>
+ <SolidColorBrush x:Key="NdInkBrush" Color="#9A8FBE" Opacity="0.75"/>
+ <Style x:Key="NdSketchStyle" TargetType="Path"><Setter Property="Stroke" Value="{StaticResource NdInkBrush}"/><Setter Property="StrokeThickness" Value="1.4"/><Setter Property="StrokeStartLineCap" Value="Round"/><Setter Property="StrokeEndLineCap" Value="Round"/><Setter Property="StrokeLineJoin" Value="Round"/><Setter Property="IsHitTestVisible" Value="False"/></Style>
+ <Style x:Key="NdMarginNoteStyle" TargetType="TextBlock"><Setter Property="FontFamily" Value="{DynamicResource NdHandFont}"/><Setter Property="FontSize" Value="21"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Opacity" Value="0.8"/><Setter Property="TextWrapping" Value="Wrap"/><Setter Property="TextAlignment" Value="Center"/><Setter Property="IsHitTestVisible" Value="False"/></Style>
  <FontFamily x:Key="NdHandFont">pack://application:,,,/PokeCorner;component/Assets/Fonts/#Caveat</FontFamily>
  <Style x:Key="NdHeaderButtonStyle" TargetType="Button">
   <Setter Property="FontFamily" Value="Segoe UI"/><Setter Property="FontSize" Value="14"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="Background" Value="Transparent"/>

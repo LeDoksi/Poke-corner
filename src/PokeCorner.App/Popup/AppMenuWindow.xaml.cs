@@ -31,6 +31,7 @@ public partial class AppMenuWindow : Window
         RoomView? roomView = null, AchievementsView? achievementsView = null, Func<SaveData>? getSnapshot = null)
     {
         InitializeComponent();
+        MenuTabControl.SelectionChanged += (_, e) => { if (ReferenceEquals(e.OriginalSource, MenuTabControl)) UpdateRailSketch(); };
         _getSnapshot = getSnapshot;
         var workArea = SystemParameters.WorkArea;
         MinWidth = Math.Min(MinWidth, workArea.Width);
@@ -234,6 +235,7 @@ public partial class AppMenuWindow : Window
         RefreshSnapshot();
         if (section == MenuSection.Settings)
         {
+            RailSketch.Visibility = Visibility.Collapsed;
             if (SettingsContent.Visibility != Visibility.Visible) _lastSection = SelectedSection();
             MenuTabControl.Visibility = Visibility.Collapsed;
             SettingsContent.Visibility = Visibility.Visible;
@@ -267,7 +269,13 @@ public partial class AppMenuWindow : Window
             };
             if (section == MenuSection.Corner) CornerTabs.SelectedItem = CornerHomeTab;
         }
+        UpdateRailSketch();
     }
+
+    // Only sections with a drawn rail sketch show one; the rest keep the rail clean until their pass.
+    private void UpdateRailSketch() =>
+        RailSketch.Visibility = MenuTabControl.Visibility == Visibility.Visible && MenuTabControl.SelectedItem == ExpeditionsTab
+            ? Visibility.Visible : Visibility.Collapsed;
 
     private MenuSection SelectedSection() => MenuTabControl.SelectedItem switch
     {

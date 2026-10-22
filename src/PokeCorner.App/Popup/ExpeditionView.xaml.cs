@@ -111,6 +111,10 @@ public partial class ExpeditionView : UserControl
         };
         _initializing = false;
         SizeChanged += (_, _) => {
+            // Side margins exist only when the window is wider than the 968 column plus gutters.
+            var margin = Math.Max(0, (ActualWidth - 968 - 48) / 2);
+            MarginArt.Visibility = margin >= 150 ? Visibility.Visible : Visibility.Collapsed;
+            MarginArtLeft.Width = MarginArtRight.Width = margin;
             Refresh();
             if (_pickerOpen) RefreshPicker();
         };
