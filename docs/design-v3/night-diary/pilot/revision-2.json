@@ -1,0 +1,123 @@
+{
+  "revision": 2,
+  "date": "2026-10-21",
+  "status": "user-approved-visual-pilot-2026-10-21",
+  "generator": "built-in image_gen.imagegen",
+  "runtime": false,
+  "artDirection": "../ART-DIRECTION.md",
+  "assets": [
+    {
+      "file": "grove-environment-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-fee58daa-a3b5-457b-b9da-661fe6169df7.png",
+      "prompt": "Use case illustration, precise world-art revision. Create the REVISED Forest Grove environment for PokéCorner Night Diary. Reference image is mood/pixel-style only; the visible water is specifically REJECTED and MUST be completely removed. The camera is IN a dense ancient forest hollow at walking height, not looking at a landscape from outside. Wide2.6:1 pixel-art environment. Cropped close enormous ridged trunk at left, thick interlaced above-ground roots under our feet, soft leaf litter, dry moss, scattered acorns and mushrooms, recognizable fern and broadleaf layers near camera. Midground a shaded small DRY clearing and a diagonally fallen moss-covered log on the right; behind it many upright close trunks sink into deep indigo shadow. The ground remains visibly solid dry earth all the way back. Sparse warm fireflies hover close to roots and fungi, a few silver moonbeams filter from overhead canopy, moon disk is hidden. No distant panoramic horizon, no symmetrical gateway, no straight central path to a vista. Asymmetric detailed composition, distinct near/middle/deep forest layers. Palette midnight plum, indigo, muted moss-green and amber pinlights, preserve approved cozy deep pixel art texture.\nABSOLUTE EXCLUSIONS: NO water of any kind, NO lake, NO pond, NO river, NO stream, NO blue reflective ground, NO liquid reflections or rippling highlights. Also no lava, no snow, no ruins, no mountain vista, no coastline, no ocean. This picture must be instantly identified as being inside a forest, never a lake shore. No Pokemon, no people, no UI, no lettering, no botanical border. Natural forest ground for future sprites near lower middle. Painterly depth via crisp authored pixel clusters, not photorealistic or smooth3D. High-quality unique welcoming place.",
+      "inputs": [
+        "grove-environment.png"
+      ],
+      "role": "environment-reference",
+      "inputRoles": [
+        "rejected-water-grove style-reference"
+      ]
+    },
+    {
+      "file": "01-preparation-base-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-8ec76e11-38b4-4b7a-a293-6fd8878c691f.png",
+      "prompt": "Use case: precise-object-edit. Input1 is the target PokéCorner preparation UI screenshot; input2 is the new dry grove environment to insert. Make ONLY two visual changes: replace the entire forest illustration inside its existing panel with input2's dry close forest, big cropped left trunk and roots, dry leaf litter, diagonal fallen log and deep vertical trunks, sparse amber fireflies. Absolutely NO lake, pond, stream, reflective blue ground or water. Preserve panel dimensions and all overlaid labels. Second: replace the small decorative botanical twig at top-right of the screen with a similarly small thin lavender hand-drawn folded trail map, dotted winding trail and two tiny boot prints, like meaningful notes in a trainer's expedition diary. No flowers/leaves decoration outside the natural scene. Keep this sketch quiet and away from controls. Everything else remains exactly the same: entire layout, full screenshot aspect ratio, titlebar, navigation, eight route tabs, text, three party cards, Bulbasaur Chikorita Pikachu each level10, Ordinary difficulty selected, '1,5 ч' duration selected, 3ч unselected, berry3 coins12 XP150each, apricot send button. Do not redesign or add features. Same crisp pixel forest and readable native-looking UI.",
+      "inputs": [
+        "01-preparation-base.png",
+        "grove-environment-v2.png"
+      ],
+      "role": "ui-mockup",
+      "inputRoles": [
+        "edit-target",
+        "environment-insert-reference"
+      ]
+    },
+    {
+      "file": "02-preparation-compact-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-21e417c6-a06b-45bb-9ea7-dec167206d26.png",
+      "prompt": "Use case precise-object-edit. Input1 is the compact 840:650 PokéCorner preparation UI target. Input2 is new dry grove environment. Keep ENTIRE compact layout and every label/control/sprite/value unchanged. Replace its forest panel with the input2 dry forest: close roots, leaf litter, diagonal fallen log, deep upright trunks and amber fireflies, absolutely no water or reflective ground. Replace small upper-right botanical twig with small fine lavender hand-drawn folded trail map and dotted trail plus two tiny boot prints, kept within its old decorative space. No decorative plants elsewhere outside natural forest. Maintain compact two-row controls, Ordinary selected,1.5h selected (3h not), berry3/12coins/150XP each. Three cards Bulbasaur Chikorita Pikachu lvl10. All buttons, footer and labels fully in frame. Do not change aspect ratio, shell, typography, route labels or features. Output full revised compact screenshot only.",
+      "inputs": [
+        "02-preparation-compact.png",
+        "grove-environment-v2.png"
+      ],
+      "role": "ui-mockup",
+      "inputRoles": [
+        "edit-target",
+        "environment-insert-reference"
+      ]
+    },
+    {
+      "file": "03-team-picker-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-26950857-5b88-4f0c-98dc-c92ad8c73c33.png",
+      "prompt": "Use case precise-object-edit. Target is attached PokéCorner TEAM PICKER screenshot. Replace ONLY the small lavender botanical twig decoration in the upper-right header with a similarly-sized delicate lavender pencil sketch of a travel backpack and small rolled map, a meaningful trainer diary packing doodle. No flowers, leaves or ornamental plants. Keep decorative drawing subtle and within existing header space. ALL OTHER PIXELS/CONTENT/LAYOUT should remain visually identical: heading, three selection slots (Bulbasaur Chikorita selected, third empty), two filter rows, unchecked available and route-fit filters, Recommended sort, six cards exact existing order row1 selectedBulbasaur / unselectedduplicateBulbasaur; row2 unselectedButterfree / selectedChikorita; row3 unselectedPikachu / disabledEevee on desktop. Same labels, sprite identities, checkmarks, 800 results,1/67, scrollbar, Cancel and Done footer. Same aspect ratio, whole screenshot. Do not add anything else or alter typography.",
+      "inputs": [
+        "03-team-picker.png"
+      ],
+      "role": "ui-mockup",
+      "inputRoles": [
+        "edit-target"
+      ]
+    },
+    {
+      "file": "04-trip-states-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-e58aa39a-c181-41a1-9d63-f4390a0a6356.png",
+      "prompt": "Use case precise-object-edit/compositing. Input1 is target FOUR-panel PokéCorner trip-state storyboard; input2 is new DRY grove environment. Revise ONLY environmental art and marginalia; preserve all panel layouts, text, reward values, buttons, states, focus rings, sprites, aspect ratio and gutters. Replace EVERY forest image/strip/background in all four panels with the SAME input2 grove (close roots, solid dry leaflitter, fallen log, dense vertical trunks, fireflies). Absolutely NO water or blue reflective ground. In the small outer decorative header area of top-left running panel replace botanical twig with delicate lavender dotted trail and tiny bootprints; top-right ready panel replace header twig with small thin pencil backpack; bottom-left result panel replace header twig with a quick thin sketch of a berry and coin (purely decorative, no numbers), remove any botanical twig near encounter box and use two tiny generic footprint marks instead. Bottom-right cancellation panel: no decorative botanical or other sketch inside modal, keep it serious and clear. Remove all ornamental plant sprigs outside the environmental art. Do not replace all motifs with the same map. Keep top-left abort action SMALL quiet right-aligned, top-right ONE apricot claim button, result exact berry3 coins12 XP150each and separate optional encounter button, cancellation two correct buttons safe 'Оставить в пути' with focus and destructive 'Прервать'. Preserve all Russian wording verbatim from image and avoid any new text. Full board output.",
+      "inputs": [
+        "04-trip-states.png",
+        "grove-environment-v2.png"
+      ],
+      "role": "ui-mockup",
+      "inputRoles": [
+        "edit-target",
+        "environment-insert-reference"
+      ]
+    },
+    {
+      "file": "05-edge-states-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-d4d3afdc-a099-452e-a28f-061ac132caf7.png",
+      "prompt": "Use case precise-object-edit/compositing. Input1 is target PokéCorner FOUR PANEL edge-state UI board. Input2 is new DRY grove environment. Replace ONLY the narrow forest strips at top of each panel with crops of input2's dry leaflitter/roots/fallenlog/vertical forest trunks/fireflies. Absolutely no water, pool, river or blue reflections. Keep EVERY other detail exactly unchanged, same composition, spacing, text, colors, sprites, borders, controls, aspect ratio. No extra decoration or sketches. Invariants: empty0 team neutral lavender helper, primary choose team, disabled send; two-member valid team no warning, only one change team link top-right; pending3 all controls including change team visibly disabled, spinner, no countdown; failed-start selected3 preserved, exact error 'Не удалось сохранить поход. Команда осталась дома.' with retry. Output entire updated board. Do not invent rewards, delete text or add features.",
+      "inputs": [
+        "05-edge-states.png",
+        "grove-environment-v2.png"
+      ],
+      "role": "ui-mockup",
+      "inputRoles": [
+        "edit-target",
+        "environment-insert-reference"
+      ]
+    },
+    {
+      "file": "06-picker-compact-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-740d6fba-a6ce-4631-9b7f-172b036c666e.png",
+      "prompt": "Use case ui-mockup. Adapt input PokéCorner Night Diary team picker to a carefully composed COMPACT 840x650 logical window, same840:650 aspect at high resolution. Keep ink/plum lavender apricot, native readable Russian text, normal pixel sprites. Compact shell title40px/nav112px/gutter16, content696px. Header y54-90 'Команда экспедиции' with tiny lavender backpack/rolledmap sketch top-right (not plants), context 'Лесная роща · Обычная · 1,5 часа'. Selected slots y120-190: Bulbasaur and Chikorita each lvl10 with remove ×, third empty '+ Выбрать'. Search y208-244 full width 'Имя, кличка или номер'. Dropdown row252-288: 'Все типы', 'Все особенности', 'Рекомендованные'. Row296-324 unchecked 'Доступные', unchecked 'Подходят маршруту', 'Сбросить'. Scrollable list y338-550 two columns two visible rows, slim inner scrollbar; four cards: row1 selectedBulbasaur with 'Экземпляр 1', unselectedduplicateBulbasaur 'Экземпляр 2'; row2 unselectedButterfree and selectedChikorita. Level10 all, short trait 'Заботливый родитель', availability shown when fits. Each card readable, no tiny crowded text; only4visible, remaining8 on page reached by inner scroll. Pagination y558-582: 'Найдено 800' left, '1 / 67' and arrows right. Fixed bottom footer y594-634: 'Отмена' left, 'Выбрано 2 из 3' middle, apricot 'Готово' right. Header compact logo no tagline, coins12500 encounters2, all five nav entries and bottom settings. All controls fit and have generous tap targets. No landscape/no flowers/no new filters. Preserve draft selection semantics. Screenshot only.",
+      "inputs": [
+        "03-team-picker-v2.png"
+      ]
+    },
+    {
+      "file": "07-picker-details-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-c720b11c-25d2-4d2b-b5f6-4766c6b24dc5.png",
+      "prompt": "Use case ui-mockup. Create THREE PANEL horizontal UI detail sheet, aspect ratio2:1, for PokéCorner Night Diary TEAM PICKER using input exact ink/plum lavender/apricot native UI style. Detailed readable Russian text, no full app chrome, no landscape, no ornamental flowers, no decorative doodles needed. Each panel is a precise crop variant of selected-slots/list/footer with outside numbered heading. Panel01 'Пустой поиск': top2selected compact slots Bulbasaur and Chikorita lvl10 plus thirdempty retained; search field contains 'zzzz'; below empty list area calm search icon and exact 'Ничего не найдено', 'Измените поиск или сбросьте фильтры.' secondary 'Сбросить фильтры'. Footer 'Выбрано 2 из 3', 'Отмена', enabled apricot 'Готово'. No pagination or fake results in empty list. Panel02 'Выбор изменился': top three empty dashed slots, inline quiet warning 'Выбранные участники стали недоступны. Выберите команду заново.'; list two compact available options normal pixel Bulbasaur/Chikorita unchecked; footer 'Выбрано 0 из 3', 'Отмена' enabled, 'Готово' dark visibly disabled. This example all selected became unavailable, do not show selected check. Panel03 'Недоступные участники': title 'Доступные' beside UNCHECKED checkbox; four readable muted list rows with lock, normal Pokémon sprites and explicit reasons: Eevee — 'На рабочем столе'; Pikachu — 'В походе'; Chikorita — 'В питомнике'; last generic neutral image placeholder — 'Изображение этой формы пока недоступно'. Wrap long last reason to2lines, do not show fake Pokemon sprite for unsupported. These four rows disabled but readable. Below small note 'Причина указана в карточке'. No action to bypass unavailability. Thin borders generous spacing, preserve style, no invented reward numbers. Full sheetonly.",
+      "editPrompt": "Precise text-only correction to attached three-panel UI sheet. In RIGHTMOST panel's last disabled card, replace heading 'Неизвестная форма' with 'Форма без изображения'. It is an owned known form whose artwork is unavailable, not an undiscovered creature. Keep subtitle 'Изображение этой формы пока недоступно.' and neutral image placeholder. Preserve EVERYTHING else exactly: all layouts, colors, text, rows, checkboxes, icons, other two panels, button states and output dimensions. Only that single heading changes.",
+      "intermediateSource": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-6e5daefe-a0c5-4d49-935d-87f109df37cd.png",
+      "inputs": [
+        "03-team-picker-v2.png"
+      ]
+    },
+    {
+      "file": "08-lifecycle-details-v2.png",
+      "source": "C:/Users/Georgy/.codex/generated_images/01a15a38-efe1-7cb0-8ddd-0d161fb600bd/exec-c395618f-a96e-4c04-994c-dad2f514b557.png",
+      "prompt": "Use case ui-mockup. Create polished SIX-PANEL 2columns x3rows UI DETAIL storyboard in PokéCorner Night Diary ink/plum lavender apricot style matching input. Overall square high-resolution board. This is a detail specification, not full windows. Generous dark gutters, readable large Russian, no landscape or decoration, no botanical elements. Show precisely these six state variants with numbered external headings.\n01 'Прерывание похода': two clearly separated labeled action-row variants. 'Сохранение': disabled danger button with spinner 'Прерываем…', disabled neutral 'Оставить в пути'. Below 'Ошибка': inline coral message 'Не удалось прервать поход. Повторите попытку.' then enabled neutral 'Оставить в пути' and enabled muted red 'Повторить'. No reward claim or success label.\n02 'Получение находок': two clearly separated variants. 'Сохранение': disabled apricot-toned button with spinner 'Получаем находки…'. Below 'Ошибка': inline coral 'Не удалось получить находки. Попробуйте ещё раз.' and enabled apricot 'Повторить получение'. No reward-credited message.\n03 'Результат со встречей': heading 'Находки уже в запасах', compact real reward row 'Равст ×3' '12 монет' '150 XP каждому'. A separate encounter block normal pixel Bulbasaur sprite, name 'Bulbasaur', small 'Встреча в роще', outlined secondary 'Открыть встречу'. Bottom apricot 'Продолжить'. Known revealed encounter example, do not show silhouette.\n04 'Результат без встречи': heading 'Находки уже в запасах', SAME compact reward row 'Равст ×3' '12 монет' '150 XP каждому', no encounter panel, no empty placeholder and no sad no-luck message. Bottom apricot 'Продолжить'.\n05 'Старый результат': heading 'Экспедиция завершена', honest explanation 'Награды уже получены. Подробности этого похода не сохранились.' NO reward values, NO zeroes, NO invented receipt. Bottom apricot 'Продолжить'.\n06 'Поход завершился во время отмены': informational lavender strip 'Поход уже завершён. Заберите находки.'; heading 'С возвращением!', small 'Находки ждут получения.' enabled apricot 'Забрать находки'. NO cancel button, NO modal, NO credited status.\nCrisp native-looking text, thin readable borders, no tiny writing, no clipping. Preserve distinction pending/error versus ready versus alreadycredited. Show entire six-panel board only.",
+      "inputs": [
+        "04-trip-states-v2.png"
+      ]
+    }
+  ],
+  "acceptance": {
+    "date": "2026-10-21",
+    "quote": "как будто отлично. получается 1 пункт закрыт? что там лучше всего брать следующим?",
+    "record": "ACCEPTANCE.md",
+    "scope": "visual-design-revision-2-only",
+    "next": "R3/POKE-68-not-started"
+  }
+}

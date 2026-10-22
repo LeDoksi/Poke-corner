@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Пилот экспедиций — ревизия 2</title>
+<style>
+html{color-scheme:dark;scroll-behavior:smooth}body{margin:0;background:#17131d;color:#eee8f3;font:16px/1.6 system-ui,sans-serif}main{max-width:1400px;margin:auto;padding:24px}a{color:#d5bef4}nav{display:flex;flex-wrap:wrap;gap:8px 20px}section{margin:48px 0}h1,h2{line-height:1.25}img{display:block;max-width:100%;height:auto;margin:16px auto}section>a{display:block}p{max-width:90ch}footer{margin:40px 0} :target{scroll-margin-top:20px}
+</style>
+<main>
+<h1>Пилот экспедиций — ревизия 2</h1>
+<p>Ночной дневник тренера · POKE-69 · 21 октября 2026. Визуально принято пользователем 2026-10-21; R3/POKE-68 ещё не начат, внедрения в WPF нет. Изображения созданы imagegen и не являются снимками запущенного приложения. Нажмите изображение, чтобы открыть оригинал.</p>
+<nav aria-label="Разделы галереи"><a href="#base">Подготовка</a><a href="#compact">Компактное окно</a><a href="#team">Подбор команды</a><a href="#trip">Поход и результат</a><a href="#edges">Служебные состояния</a><a href="#grove">Фон рощи</a><a href="#compact-picker">Компактный подбор команды</a><a href="#picker-details">Детали подбора: пусто и недоступность</a><a href="#lifecycle-details">Детали отмены, получения и результата</a></nav>
+<section id="base"><h2>Подготовка · 1000×760</h2><p>Полный макет подготовки для целевого размера окна 1000×760 DIP.</p><a href="01-preparation-base-v2.png"><img src="01-preparation-base-v2.png" alt="Подготовка экспедиции — ревизия 2"></a></section>
+<section id="compact"><h2>Компактное окно · 840×650</h2><p>Адаптация подготовки к компактному размеру; не простое уменьшение всего экрана.</p><a href="02-preparation-compact-v2.png"><img loading="lazy" src="02-preparation-compact-v2.png" alt="Компактная подготовка — ревизия 2"></a></section>
+<section id="team"><h2>Подбор команды</h2><p>Точные экземпляры, черновик команды, фильтры и занятость.</p><a href="03-team-picker-v2.png"><img loading="lazy" src="03-team-picker-v2.png" alt="Подбор команды — ревизия 2"></a></section>
+<section id="trip"><h2>Поход и результат</h2><p>Фрагменты основного содержимого: в пути, готово, результат и отмена.</p><a href="04-trip-states-v2.png"><img loading="lazy" src="04-trip-states-v2.png" alt="Поход и результат — ревизия 2"></a></section>
+<section id="edges"><h2>Пусто, небольшая команда, сохранение и отказ</h2><p>Служебные и переходные состояния подготовки.</p><a href="05-edge-states-v2.png"><img loading="lazy" src="05-edge-states-v2.png" alt="Служебные состояния — ревизия 2"></a></section>
+<section id="grove"><h2>Отдельный фон рощи</h2><p>Иллюстрация без текста, контролов и покемонов.</p><a href="grove-environment-v2.png"><img loading="lazy" src="grove-environment-v2.png" alt="Лесная роща — фон ревизии 2"></a></section>
+<section id="compact-picker"><h2>Компактный подбор команды</h2><a href="06-picker-compact-v2.png"><img loading="lazy" src="06-picker-compact-v2.png" alt="Компактный подбор команды"></a></section>
+<section id="picker-details"><h2>Детали подбора: пусто и недоступность</h2><a href="07-picker-details-v2.png"><img loading="lazy" src="07-picker-details-v2.png" alt="Детали подбора: пусто и недоступность"></a></section>
+<section id="lifecycle-details"><h2>Детали отмены, получения и результата</h2><a href="08-lifecycle-details-v2.png"><img loading="lazy" src="08-lifecycle-details-v2.png" alt="Детали отмены, получения и результата"></a></section>
+<footer><p><a href="ACCEPTANCE.md">Запись визуального принятия 2026-10-21</a></p><nav aria-label="Документы"><a href="SPEC.md">Правила компоновки и полный сценарий</a><a href="TECHNICAL-CONTRACT.md">Сверка с ядром</a><a href="VALIDATION.md">Матрица полноты и проверка</a><a href="STATE-COVERAGE.md">Варианты и карта переходов</a><a href="../ART-DIRECTION.md">Арт-дирекция</a><a href="manifest.json">Промпты и исходники</a></nav><p>Два полных макета подготовки рассчитаны на два размера; подбор и другие состояния дополнены правилами compact в SPEC.md. Это не новая runtime-приёмка и не набор всех восьми готовых маршрутов.</p></footer>
+</main>
+</html>
