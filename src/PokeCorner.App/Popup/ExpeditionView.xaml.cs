@@ -114,6 +114,8 @@ public partial class ExpeditionView : UserControl
             if (_pickerOpen) RefreshPicker();
         };
         PreparationFooter.SizeChanged += (_, _) => FitScene();
+        ActionFooter.SizeChanged += (_, _) => FitScene();
+        ScenarioContent.SizeChanged += (_, _) => FitScene();
         _timer.Tick += (_, _) => Refresh();
         Loaded += (_, _) => { _suspended = false; _timer.Start(); Refresh(); };
         Unloaded += (_, _) => {
@@ -177,12 +179,11 @@ public partial class ExpeditionView : UserControl
         ContinueButton.Visibility = showResult ? Visibility.Visible : Visibility.Collapsed;
         ContinueButton.IsEnabled = !_busy;
         if (!active) ClaimButton.Visibility = CancelButton.Visibility = Visibility.Collapsed;
-        SceneFrame.Height = showResult ? 82 : active ? (ActualHeight < 610 ? 170 : 220) : compact ? 150 : 210;
-        if (!active && !showResult) FitScene();
+        if (showResult) SceneFrame.Height = 82; else FitScene();
         TripPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
         ResultPanel.Visibility = showResult ? Visibility.Visible : Visibility.Collapsed;
         if (!active) {
-            SubtitleText.Text = "Выберите маршрут, время и команду.";
+            SubtitleText.Text = showResult ? "Поход завершён." : "Выберите маршрут, время и команду.";
             HeaderSketch.Source = (ImageSource)FindResource("NdMapImage");
         }
         RefreshLandscape(active || showResult ? trip!.LocationId : _route);
@@ -248,10 +249,11 @@ public partial class ExpeditionView : UserControl
     // The scene takes whatever height the preparation footer leaves, so no dead band opens between them.
     private void FitScene()
     {
-        if (_pickerOpen || PreparationFooter.Visibility != Visibility.Visible || ActualHeight <= 0) return;
+        if (_pickerOpen || ResultPanel.Visibility == Visibility.Visible || ActualHeight <= 0) return;
+        var footer = PreparationFooter.Visibility == Visibility.Visible ? PreparationFooter : ActionFooter;
         var others = ScenarioContent.ActualHeight - SceneFrame.ActualHeight;
-        var free = ActualHeight - 32 - PreparationFooter.ActualHeight - others;
-        var height = Math.Clamp(Math.Floor(free), ActualWidth < 760 ? 150 : 190, 320);
+        var free = ActualHeight - 32 - footer.ActualHeight - footer.Margin.Top - others;
+        var height = Math.Clamp(Math.Floor(free), ActualWidth < 760 || ActualHeight < 610 ? 150 : 190, 320);
         if (Math.Abs(SceneFrame.Height - height) >= 1) SceneFrame.Height = height;
     }
 
@@ -407,9 +409,13 @@ public partial class ExpeditionView : UserControl
         HeaderSketch.Source = (ImageSource)FindResource(ready ? "NdBackpackImage" : "NdMapImage");
         TripProgress.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
         TripTitle.Text = ready ? "С возвращением!" : "Команда в походе";
+        TripTitle.FontSize = ready ? 22 : 16;
+        TripGlyph.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
+        TripHeader.HorizontalAlignment = TripTerms.HorizontalAlignment = ready ? HorizontalAlignment.Center : HorizontalAlignment.Left;
+        TripTimeRow.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
         SubtitleText.Text = ready ? "Находки готовы и ждут получения." : "Условия похода сохранены. Команда вернётся сама.";
         var difficulty = DifficultyBox.Items.OfType<ListBoxItem>().FirstOrDefault(item => Equals(item.Tag, trip.Difficulty));
-        TripTerms.Text = $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
+        TripTerms.Text = ready ? "Поход завершён. Находки ждут получения." : $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
         RenderSlots(TripSlots, trip.ParticipantIds, data, false);
         TripTeam.Text = string.Join(" · ", trip.ParticipantIds.Select(id =>
         {
@@ -434,8 +440,10 @@ public partial class ExpeditionView : UserControl
         RenderRewards(TripRewardCards, reward.PrimaryBerryId, checked((int)berries), checked((int)coins), $"{totalXp} XP команде");
         TripRewards.Text = $"Сохранённые условия: {berries} {BerryName(reward.PrimaryBerryId)}, {coins} монет; " +
             $"{xp}. Дополнительные находки и встреча откроются при получении. Награды не сгорают.";
+        var returnsAt = trip.ReadyAtUtc.ToLocalTime();
         TripTime.Text = ready ? "Поход завершён. Находки ждут получения." :
-            $"Вернутся: {trip.ReadyAtUtc.ToLocalTime():g} · осталось {Math.Ceiling((trip.ReadyAtUtc - DateTimeOffset.UtcNow).TotalMinutes)} мин";
+            $"Осталось {Math.Ceiling((trip.ReadyAtUtc - DateTimeOffset.UtcNow).TotalMinutes)} мин";
+        TripReturnText.Text = "Ожидаемое возвращение · " + (returnsAt.Date == DateTime.Today ? returnsAt.ToString("t") : returnsAt.ToString("g"));
         var total = (trip.ReadyAtUtc - trip.StartedAtUtc).TotalSeconds;
         TripProgress.Value = ready || total <= 0 ? 1 : Math.Clamp((DateTimeOffset.UtcNow - trip.StartedAtUtc).TotalSeconds / total, 0, 1);
         ClaimButton.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
