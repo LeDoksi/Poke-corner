@@ -195,6 +195,7 @@ public partial class ExpeditionView : UserControl
         EncounterPanel.Visibility = Visibility.Collapsed; // RefreshResult re-shows it for a claimed trip with an unopened encounter
         if (!active) {
             SubtitleText.Text = showResult ? "Поход завершён." : "Выберите маршрут, время и команду.";
+            TrainerNote.Text = "Втроём тропа щедрее на находки.";
             HeaderSketch.Source = (ImageSource)FindResource("NdMapImage");
         }
         RefreshLandscape(active || showResult ? trip!.LocationId : _route);
@@ -458,6 +459,7 @@ public partial class ExpeditionView : UserControl
         TripHeader.HorizontalAlignment = TripTerms.HorizontalAlignment = ready ? HorizontalAlignment.Center : HorizontalAlignment.Left;
         TripTimeRow.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
         SubtitleText.Text = ready ? "Находки готовы и ждут получения." : "Условия похода сохранены. Команда вернётся сама.";
+        TrainerNote.Text = ready ? "Вернулись! Рюкзак тяжелее, чем уходил." : "Ушли по тропе. Ждать у окна не нужно.";
         var difficulty = DifficultyBox.Items.OfType<ListBoxItem>().FirstOrDefault(item => Equals(item.Tag, trip.Difficulty));
         TripTerms.Text = ready ? (trip.Rewards.HasEncounter ? "Поход завершён. В пути команда кого-то встретила." : "Поход завершён. Находки ждут получения.") : $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
         var xpGain = new Dictionary<Guid, long>();

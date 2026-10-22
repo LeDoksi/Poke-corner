@@ -8,6 +8,8 @@
  <SolidColorBrush x:Key="NdMutedBrush" Color="#B9AECF"/>
  <SolidColorBrush x:Key="NdLavenderBrush" Color="#C4ABF0"/>
  <SolidColorBrush x:Key="NdApricotBrush" Color="#FFB574"/>
+ <FontFamily x:Key="NdHandFont">pack://application:,,,/PokeCorner;component/Assets/Fonts/#Caveat</FontFamily>
+ <FontFamily x:Key="NdHandFontAlt">pack://application:,,,/PokeCorner;component/Assets/Fonts/#Neucha</FontFamily>
  <Style x:Key="NdHeaderButtonStyle" TargetType="Button">
   <Setter Property="FontFamily" Value="Segoe UI"/><Setter Property="FontSize" Value="14"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="Background" Value="Transparent"/>
   <Setter Property="MinHeight" Value="32"/><Setter Property="Padding" Value="10,5"/>
