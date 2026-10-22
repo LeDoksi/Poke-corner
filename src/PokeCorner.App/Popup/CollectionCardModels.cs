@@ -226,7 +226,9 @@ internal static class IndividualDisplay
         var peers = individuals.Where(p => p.CurrentSpeciesId == individual.CurrentSpeciesId)
             .OrderBy(p => p.CaughtAtUtc).ThenBy(p => p.Id).ToArray();
         if (!always && peers.Length < 2) return string.Empty;
-        var ordinal = Array.FindIndex(peers, p => p.Id == individualId) + 1;
-        return $"Экземпляр {ordinal} · {individual.CaughtAtUtc.ToLocalTime():dd.MM.yyyy}";
+        // What tells two Bulbasaurs apart for the player is when each was caught, not an internal ordinal.
+        var caught = individual.CaughtAtUtc.ToLocalTime();
+        var sameDay = peers.Count(p => p.CaughtAtUtc.ToLocalTime().Date == caught.Date) > 1;
+        return sameDay ? $"Пойман {caught:dd.MM.yyyy} в {caught:HH:mm}" : $"Пойман {caught:dd.MM.yyyy}";
     }
 }

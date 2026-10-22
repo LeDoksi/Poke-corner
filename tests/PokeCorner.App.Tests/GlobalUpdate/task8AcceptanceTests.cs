@@ -339,8 +339,8 @@ public class Task8AcceptanceTests
         var collection = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
             () => { }, () => { }, () => { }, () => null, () => false, () => false);
         var cards = ((ItemsControl)collection.FindName("PokedexGrid")).Items.Cast<PokedexCard>().ToDictionary(p => p.IndividualId);
-        Assert.StartsWith("Экземпляр 1", cards[data.Individuals[1].Id].IndividualText);
-        Assert.StartsWith("Экземпляр 3", cards[data.Individuals[0].Id].IndividualText);
+        Assert.Equal($"Пойман {data.Individuals[1].CaughtAtUtc.ToLocalTime():dd.MM.yyyy}", cards[data.Individuals[1].Id].IndividualText);
+        Assert.Equal($"Пойман {data.Individuals[0].CaughtAtUtc.ToLocalTime():dd.MM.yyyy}", cards[data.Individuals[0].Id].IndividualText);
         Assert.All(cards.Values, card => Assert.Contains(card.IndividualText, card.AccessibleName));
         var expedition = ApprovedExpeditionTests.View(data); ApprovedExpeditionTests.Click(expedition, "ChooseTeamButton");
         foreach (var p in data.Individuals)
