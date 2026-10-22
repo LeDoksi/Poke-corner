@@ -60,6 +60,7 @@ public static class SaveMigration
     public static readonly string[] BerryIds = ["oran", "cheri", "pecha", "rawst", "aspear", "chesto"];
     public static readonly string[] TraitIds = ["gatherer", "treasure-hunter", "tracker", "finder", "mentor", "collector", "relic-finder", "terrain-expert", "fast-grower", "rarity-expert", "caring-parent"];
     public static readonly string[] ItemIds = ["treats", "care-booster", "lucky-charm", "evolution-stone", "offspring-charm", "xp-potion"];
+    private static readonly int[] LegacyPhioneToManaphy = [489, 490];
 
     public static SaveData Migrate(SaveData v1, LegacyLookup legacyLookup, CatalogPackage catalog)
     {
@@ -104,10 +105,13 @@ public static class SaveMigration
             individual.AcquisitionSource = "unknown";
             individual.ParentIds = [];
             InitializeIndividual(individual, legacyLookup, catalog, rules.RootElement, balance.RootElement);
-            next.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
-            if (individual.IsShiny) next.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+            // A legacy Manaphy was a Phione first, so the player has seen both.
+            var seen = individual.LegacyOrigin?.SpeciesId == LegacyPhioneToManaphy[0] && individual.CurrentSpeciesId == LegacyPhioneToManaphy[1]
+                ? [LegacyPhioneToManaphy[0], .. individual.ReachedSpeciesIds] : individual.ReachedSpeciesIds;
+            next.DiscoveredSpeciesIds.UnionWith(seen);
+            if (individual.IsShiny) next.ShinySpeciesIds.UnionWith(seen);
             if (!individual.IsShiny || v1.UsesLegacyNormalDiscoveryInference)
-                next.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+                next.NormalSpeciesIds.UnionWith(seen);
             for (var i = 1; i < individual.ReachedSpeciesIds.Count; i++)
                 next.EvolutionTransitions.Add($"{individual.ReachedSpeciesIds[i - 1]}->{individual.ReachedSpeciesIds[i]}");
         }
@@ -149,7 +153,12 @@ public static class SaveMigration
         var path = matches[0].StageSpeciesIds.Take((int)individual.CurrentStage + 1).ToList();
         var edges = rules.GetProperty("evolutionEdges").EnumerateArray()
             .Select(e => (e.GetProperty("from").GetInt32(), e.GetProperty("to").GetInt32())).ToHashSet();
-        if (path.Count != (int)individual.CurrentStage + 1 || path.Zip(path.Skip(1)).Any(e => !edges.Contains(e)))
+        if (path.Count != (int)individual.CurrentStage + 1)
+            throw new InvalidDataException($"Неразрешимый путь эволюции v1: {individual.Id}.");
+        // PokeAPI's chain 250 lists Phione before Manaphy with no evolution details, so v1 "evolved"
+        // one into the other. It is no evolution: keep the Manaphy the player had (decision 2026-10-22).
+        if (path.SequenceEqual(LegacyPhioneToManaphy)) path = [LegacyPhioneToManaphy[1]];
+        if (path.Zip(path.Skip(1)).Any(e => !edges.Contains(e)))
             throw new InvalidDataException($"Неразрешимый путь эволюции v1: {individual.Id}.");
         var actual = catalog.Species.SingleOrDefault(s => s.Id == path[^1])
             ?? throw new InvalidDataException($"Вид v1 отсутствует в каталоге: {path[^1]}.");

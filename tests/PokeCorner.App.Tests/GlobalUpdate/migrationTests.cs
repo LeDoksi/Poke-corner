@@ -108,6 +108,20 @@ public sealed class MigrationTests : IDisposable
     }
 
     [Fact]
+    public void LegacyPhioneEvolvedIntoManaphyStaysManaphy()
+    {
+        var pokeApiChain = new SpeciesEvolutionChain(250, 489, 30, 2, new[] { 489, 490 }, new[] { "Phione", "Manaphy" });
+        var lookup = new LegacyLookup(new[] { pokeApiChain }, new byte[] { 1 });
+        var next = SaveMigration.Migrate(Old(Pet(489, 250, 2, EvolutionStage.Stage2), Pet(489, 250, 2)), lookup, Package.Value);
+        Assert.Equal(490, next.Individuals[0].CurrentSpeciesId);
+        Assert.Equal(new[] { 490 }, next.Individuals[0].ReachedSpeciesIds);
+        Assert.Equal(489, next.Individuals[1].CurrentSpeciesId);
+        Assert.Contains(489, next.DiscoveredSpeciesIds);
+        Assert.Contains(490, next.DiscoveredSpeciesIds);
+        Assert.DoesNotContain("489->490", next.EvolutionTransitions);
+    }
+
+    [Fact]
     public void LargeCollectionPreservesAllIdsAndProvenAwardsOnce()
     {
         var old = Old(Enumerable.Range(0, 100).Select(_ => Pet()).ToArray());
