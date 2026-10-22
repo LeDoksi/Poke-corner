@@ -2,6 +2,8 @@
 
 <!-- impeccable:product-schema 1 -->
 
+> Актуальная спецификация продукта — [docs/project/PRODUCT-SPEC.md](docs/project/PRODUCT-SPEC.md). Этот файл оставлен для инструментов, которые его читают.
+
 ## Users
 
 The owner and a small circle of two or three friends use the app on their Windows desktops.
@@ -20,7 +22,7 @@ The app runs as a Windows desktop companion with a tray menu, a small on-desktop
 
 ## Capabilities and Constraints
 
-- The current app includes activity-based catching, care points, feeding, evolution, eggs, a shop, collection, favorites, nicknames, and sprite animation.
+- The current app includes activity-based catching, care points, feeding, evolution, expeditions, a nursery, a shop, collection, favorites, nicknames, and sprite animation.
 - The core is .NET 8 and the UI is WPF/XAML.
 - The app is designed to work offline after assets and catalog data are available locally.
 - Activity monitoring records event counts, not typed or clicked content.
@@ -29,7 +31,7 @@ The app runs as a Windows desktop companion with a tray menu, a small on-desktop
 
 ## Brand Commitments
 
-The product is named PokéCorner and uses Pokémon names, sprites, and game data. No visual palette or style is a binding commitment.
+The product is named PokéCorner and uses Pokémon names, sprites, and game data. The approved visual direction is Night Diary (docs/project/DESIGN-BIBLE.md).
 
 ## Evidence on Hand
 
