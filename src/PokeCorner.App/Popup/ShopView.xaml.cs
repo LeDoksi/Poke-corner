@@ -109,7 +109,9 @@ public partial class ShopView : UserControl
         stepper.Children.Add(decrease); stepper.Children.Add(quantity); stepper.Children.Add(increase);
         var total = new TextBlock { Margin = new Thickness(0, 5, 0, 0), TextWrapping = TextWrapping.Wrap };
         System.Windows.Automation.AutomationProperties.SetLiveSetting(total, System.Windows.Automation.AutomationLiveSetting.Polite);
-        var buy = new Button { Content = "Купить", Padding = new Thickness(10, 7, 10, 7), MinHeight = 40, Margin = new Thickness(8, 0, 0, 0), HorizontalAlignment = System.Windows.HorizontalAlignment.Right, Style = (Style)FindResource("UiPrimaryButtonStyle"), Tag = good.Id };
+        var buy = new Button { Content = "Купить", Padding = new Thickness(10, 7, 10, 7), MinHeight = 40, Margin = new Thickness(8, 0, 0, 0), HorizontalAlignment = System.Windows.HorizontalAlignment.Right, Style = (Style)FindResource("SecondaryButtonStyle"), Tag = good.Id,
+            // Repeated per-item action: one quiet apricot outline on every card, not a wall of filled primaries.
+            Foreground = (System.Windows.Media.Brush)FindResource("AccentGoldBrush"), BorderBrush = (System.Windows.Media.Brush)FindResource("AccentGoldBrush"), FontWeight = FontWeights.Bold };
         System.Windows.Automation.AutomationProperties.SetName(quantity, $"Количество: {good.Name}" + (good.Id == "treats" ? " · пачки" : " · штуки"));
         System.Windows.Automation.AutomationProperties.SetName(decrease, $"Уменьшить количество: {good.Name}");
         System.Windows.Automation.AutomationProperties.SetName(increase, $"Увеличить количество: {good.Name}");
