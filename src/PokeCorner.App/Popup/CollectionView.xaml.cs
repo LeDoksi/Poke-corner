@@ -84,7 +84,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private int _pageIndex;
 
     /// Keep the owned-individual list bounded while leaving room for the inline details.
-    private const int PageSize = 16;
+    // 16 in narrow hosts; in the Night Diary layout six full rows of the closed grid, so a FullHD
+    // window shows ~70 pets per page instead of 16. Derived from the full width, not the open-page
+    // width, so opening a pet never moves it to another page.
+    private int _pageSize = 16;
 
     /// Animated-GIF frames for one species, or null when it has none. Optional so the
     /// theme/layout tests can construct this view without an App behind them; a null delegate
@@ -270,37 +273,74 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         LayoutMasterDetail();
     }
 
-    private const double ListColumn = 460, PageMin = 600, PageMax = 860;
+    private const double PageMin = 560, PageMax = 640, TileMin = 136;
 
-    // Below list + page width (only in narrow test hosts; the window minimum is 1200) the page overlays the list as before.
-    private bool MasterDetail => ActualWidth >= ListColumn + PageMin &&
+    // Below grid + page width (only in narrow test hosts; the window minimum is 1200) the page overlays the grid as before.
+    private bool MasterDetail => ActualWidth >= 1000 &&
         ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectedIndex == 1 && IndividualsPane.Visibility == Visibility.Visible;
 
-    // D-16: list column on the left, the pet's page beside it. On wide windows the pair is
-    // centred and the side margins carry sketches; at the 1200x660 minimum they touch the edges.
+    // D-17: the grid owns the full width while nothing is open; an open pet page takes the right
+    // edge and the grid narrows beside it (no tile is hidden under the page), keeping the picked
+    // tile in view. Clicking another tile swaps the page; × or Esc closes it and the grid widens.
     private void LayoutMasterDetail()
     {
         var width = ActualWidth;
         if (!MasterDetail || width <= 0)
         {
+            ArrangeFilters(false);
             PokedexScroll.Margin = new Thickness(0);
             DetailOverlay.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             DetailOverlay.Width = double.NaN;
             DetailOverlay.Margin = new Thickness(0);
-            DetailPlaceholder.Visibility = PokedexMarginArt.Visibility = Visibility.Collapsed;
+            DetailOverlay.BorderThickness = new Thickness(0);
+            DetailBackButton.Content = "К покедексу";
             return;
         }
-        var page = Math.Clamp(width - ListColumn, PageMin, PageMax);
-        var list = Math.Min(ListColumn, width - page);
-        var side = Math.Max(0, Math.Floor((width - list - page) / 2));
-        PokedexScroll.Margin = new Thickness(side, 0, width - side - list, 0);
-        DetailOverlay.HorizontalAlignment = DetailPlaceholder.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-        DetailOverlay.Width = DetailPlaceholder.Width = page;
-        DetailOverlay.Margin = DetailPlaceholder.Margin = new Thickness(side + list, 0, 0, 0);
-        DetailPlaceholder.Visibility = DetailOverlay.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        PokedexMarginArt.Visibility = side >= 170 ? Visibility.Visible : Visibility.Collapsed;
-        PokedexMarginLeft.Width = PokedexMarginRight.Width = side;
+        var open = DetailOverlay.Visibility == Visibility.Visible;
+        var page = Math.Clamp(width * 0.5, PageMin, PageMax);
+        ArrangeFilters(open && width - page < 780);
+        var pageSize = Math.Max(16, (int)((width - 40) / TileMin) * 6);
+        if (pageSize != _pageSize)
+        {
+            _pageIndex = _pageIndex * _pageSize / pageSize;
+            _pageSize = pageSize;
+            Refresh();
+        }
+        PokedexScroll.Margin = new Thickness(0, 0, open ? page : 0, 0);
+        DetailOverlay.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+        DetailOverlay.Width = page;
+        DetailOverlay.Margin = new Thickness(0);
+        DetailOverlay.BorderThickness = new Thickness(1, 0, 0, 0);
+        DetailBackButton.Content = "✕";
         HighlightSelectedRow();
+        if (open) Dispatcher.BeginInvoke(() => Rows(PokedexGrid).FirstOrDefault(r => Equals(r.Tag, _detailCard?.IndividualId))?.BringIntoView(),
+            System.Windows.Threading.DispatcherPriority.Loaded);
+    }
+
+    // Beside an open page the grid is ~500 px: search takes its own row, the three selects share the next.
+    private void ArrangeFilters(bool narrow)
+    {
+        var cells = PokedexFilterGrid.Children.OfType<FrameworkElement>().ToArray();
+        for (var i = 0; i < cells.Length; i++)
+        {
+            Grid.SetRow(cells[i], narrow && i > 0 ? 1 : 0);
+            Grid.SetColumn(cells[i], narrow ? (i == 0 ? 0 : i - 1) : i);
+            Grid.SetColumnSpan(cells[i], narrow && i == 0 ? 3 : 1);
+            cells[i].Margin = new Thickness(0, 0, !narrow && i < cells.Length - 1 || narrow && i is 1 or 2 ? 8 : 0, narrow && i == 0 ? 8 : 0);
+        }
+        PokedexFilterGrid.ColumnDefinitions[0].MinWidth = narrow ? 0 : 200;
+        PokedexFilterGrid.ColumnDefinitions[3].Width = narrow ? new GridLength(0) : new GridLength(1, GridUnitType.Star);
+        PokedexFilterGrid.ColumnDefinitions[3].MinWidth = narrow ? 0 : 140;
+        PokedexFilterGrid.ColumnDefinitions[1].MinWidth = PokedexFilterGrid.ColumnDefinitions[2].MinWidth = narrow ? 0 : 120;
+    }
+
+    // Tiles stretch so each row is filled edge to edge instead of leaving a ragged gap.
+    private void PokedexGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        var available = PokedexGrid.ActualWidth - 8;
+        if (available <= 0) return;
+        var columns = Math.Max(1, (int)(available / TileMin));
+        Resources["PokedexCardWidth"] = Math.Floor(available / columns) - 8;
     }
 
     // On a narrow page (the 1200x660 minimum) the stats column would squeeze to ~250 px and break
@@ -721,9 +761,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // Clamped rather than reset: releasing a Pokémon (or narrowing a filter) can shrink the
         // list past the page being read, and dumping the player back to page 1 for that would
         // be as jarring as doing it on every refresh tick.
-        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)PageSize));
+        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)_pageSize));
         _pageIndex = Math.Clamp(_pageIndex, 0, pageCount - 1);
-        var page = visible.Skip(_pageIndex * PageSize).Take(PageSize).ToList();
+        var page = visible.Skip(_pageIndex * _pageSize).Take(_pageSize).ToList();
 
         PokedexPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
         PokedexPageText.Text = $"Страница {_pageIndex + 1} из {pageCount}";
