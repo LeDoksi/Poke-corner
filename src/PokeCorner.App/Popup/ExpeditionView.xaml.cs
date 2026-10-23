@@ -382,29 +382,33 @@ public partial class ExpeditionView : UserControl
         var rows = _selector.Query(data, _route, Difficulty, PickerSearchBox.Text,
             (PickerTypeBox.SelectedItem as ComboBoxItem)?.Tag as string, (PickerTraitBox.SelectedItem as ComboBoxItem)?.Tag as string,
             PickerAvailableBox.IsChecked == true, PickerRouteBox.IsChecked == true, PickerSortBox.SelectedIndex);
-        var pages = Math.Max(1, (rows.Count + 11) / 12); _pickerPage = Math.Clamp(_pickerPage, 0, pages - 1);
-        PickerMembers.Children.Clear();
-        var columns = 2;
+        // D-17 tiles, same family as the Pokédex grid: sprite, name, level, plus the two facts a team
+        // pick needs (route fit, trait). Pages hold three rows of whatever width the window gives.
         var viewportWidth = PickerScroll.ActualWidth > 0 ? PickerScroll.ActualWidth : Math.Max(400, ActualWidth - 48);
-        var width = Math.Max(170, (viewportWidth - 22) / columns - 8);
-        foreach (var member in rows.Skip(_pickerPage * 12).Take(12)) {
+        var columns = Math.Max(2, (int)((viewportWidth - 8) / 150));
+        var width = Math.Floor((viewportWidth - 8) / columns) - 8;
+        var pageSize = Math.Max(12, columns * 3);
+        var pages = Math.Max(1, (rows.Count + pageSize - 1) / pageSize); _pickerPage = Math.Clamp(_pickerPage, 0, pages - 1);
+        PickerMembers.Children.Clear();
+        foreach (var member in rows.Skip(_pickerPage * pageSize).Take(pageSize)) {
             var reason = _selector.Unavailable(member, data); var chosen = _draft.Contains(member.Id);
             var content = new StackPanel();
-            var heading = new DockPanel();
-            var check = new System.Windows.Controls.CheckBox { IsChecked = chosen, IsHitTestVisible = false, Focusable = false, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) };
-            heading.Children.Add(check);
-            heading.Children.Add(new Image { Source = Sprite(member), Width = 54, Height = 54, Margin = new Thickness(0, 0, 8, 0) });
-            heading.Children.Add(new TextBlock { Text = $"{DisplayName(member, data).Replace("\n", " · ")}\n#{member.CurrentSpeciesId:D4} · ур. {_selector.Level(member)}" + (chosen ? " · выбран" : ""), TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center });
-            content.Children.Add(heading);
-
-            content.Children.Add(new TextBlock { Text = _selector.Matches(member, _route) ? "✓ Подходит маршруту" : string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 11, Foreground = (Brush)FindResource("NdLavenderBrush"), Margin = new Thickness(0, 2, 0, 0) });
-            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), ToolTip = _selector.Traits(member), TextWrapping = TextWrapping.Wrap, FontSize = 12, Margin = new Thickness(0, 4, 0, 0) });
-            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontWeight = FontWeights.Bold });
-            var button = new Button { Content = content, Tag = member.Id, Width = width, MinHeight = 100,
+            var well = new Grid { Height = 64 };
+            well.Children.Add(new Image { Source = Sprite(member), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
+            if (chosen) well.Children.Add(new TextBlock { Text = "✓", FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource("NdLavenderBrush"), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top });
+            content.Children.Add(well);
+            content.Children.Add(new TextBlock { Text = DisplayName(member, data).Split('\n')[0], FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
+            content.Children.Add(new TextBlock { Text = $"Ур. {_selector.Level(member)}  #{member.CurrentSpeciesId:D4}", FontSize = 12, Foreground = (Brush)FindResource("NdMutedBrush") });
+            var fits = _selector.Matches(member, _route);
+            content.Children.Add(new TextBlock { Text = fits ? "✓ Подходит маршруту" : string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource(fits ? "NdLavenderBrush" : "NdMutedBrush"), Margin = new Thickness(0, 2, 0, 0) });
+            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource("NdMutedBrush") });
+            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 11, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
+            var button = new Button { Content = content, Tag = member.Id, Width = width, MinHeight = 140,
                 HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(0, 0, 8, 8), Padding = new Thickness(8), Style = (Style)FindResource("SecondaryButtonStyle"),
-                IsEnabled = reason is null && (chosen || _draft.Count < 3), ToolTip = reason ?? (chosen ? "Убрать из команды" : _draft.Count >= 3 ? "В команде уже трое. Уберите участника, чтобы выбрать другого." : "Выбрать питомца"),
-                BorderThickness = new Thickness(chosen ? 2 : 1), BorderBrush = (Brush)FindResource(chosen ? "UiForestBrush" : "CardBorderBrush") };
+                Margin = new Thickness(4), Padding = new Thickness(8), Style = (Style)FindResource("SecondaryButtonStyle"),
+                IsEnabled = reason is null && (chosen || _draft.Count < 3),
+                ToolTip = (reason ?? (chosen ? "Убрать из команды" : _draft.Count >= 3 ? "В команде уже трое. Уберите участника, чтобы выбрать другого." : "Выбрать питомца")) + "\n" + DisplayName(member, data) + "\n" + _selector.Traits(member),
+                BorderThickness = new Thickness(chosen ? 2 : 1), BorderBrush = (Brush)FindResource(chosen ? "NdLavenderBrush" : "CardBorderBrush") };
             System.Windows.Automation.AutomationProperties.SetName(button, DisplayName(member, data) + " · " + (reason ?? (chosen ? "выбран" : "выбрать")));
             button.Click += (_, _) => { if (!button.IsEnabled || !_pickerOpen) return; if (!_draft.Remove(member.Id) && _draft.Count < 3) _draft.Add(member.Id); RefreshPicker(); };
             PickerMembers.Children.Add(button);

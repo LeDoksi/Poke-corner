@@ -42,7 +42,8 @@ public sealed partial class NurseryUiTests
             ((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             var groups=(WrapPanel)view.FindName("SpeciesGroupsPanel")!;Assert.Single(groups.Children.OfType<Button>());
             groups.Children.OfType<Button>().Single().RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            Assert.InRange(((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().Count(),1,12);
+            // D-17: three rows of tiles per page, so the bound follows the width (still far below 800).
+            Assert.InRange(((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().Count(),1,30);
             Assert.Contains("800",((TextBlock)view.FindName("PickerCountText")!).Text);
             ((TextBox)view.FindName("ParentSearchBox")!).Text="000000";
             Assert.Empty(((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>());

@@ -71,7 +71,7 @@ public partial class NurseryView : UserControl
             _awaitingHatchContinue = false;
         };
         PreviewKeyDown += (_, e) => { if (e.Key == System.Windows.Input.Key.Escape && _pickerOpen) { ClosePicker(); e.Handled = true; } };
-        SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
+        PickerScroll.SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
         Refresh();
     }
     private void MotionPolicyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -241,24 +241,25 @@ public partial class NurseryView : UserControl
         var individuals = rows.Where(p => p.CurrentSpeciesId == _group).ToArray();
 
         var count = _group is null ? groups.Length : individuals.Length;
-        var size = _group is null ? 24 : 12;
+        // D-17 tiles, same family as the Pokédex grid; pages hold three rows of the available width.
+        var viewport = PickerScroll.ActualWidth > 0 ? PickerScroll.ActualWidth : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50);
+        var columns = Math.Max(2, (int)((viewport - 8) / 150));
+        var width = Math.Floor((viewport - 8) / columns) - 8;
+        var size = Math.Max(_group is null ? 24 : 12, columns * 3);
 
         _pages = Math.Max(1, (count + size - 1) / size);
         _page = Math.Clamp(_page, 0, _pages - 1);
-
-        var width = Math.Max(150, ((ActualWidth > 0 ? ActualWidth : 800) - 50) / (ActualWidth >= 930 ? 3 : 2) - 10);
 
         if (_group is null) foreach (var group in groups.Skip(_page * size).Take(size))
             {
                 var id = group.Key;
 
-                var content = new DockPanel();
+                var content = new StackPanel();
+                content.Children.Add(new Image { Source = Sprite(id, group.All(p => p.IsShiny)), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
+                content.Children.Add(new TextBlock { Text = SpeciesName(id), FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
+                content.Children.Add(new TextBlock { Text = $"#{id:D4} · ×{group.Count()}", FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
 
-                content.Children.Add(new Image { Source = Sprite(id, group.All(p => p.IsShiny)), Width = 56, Height = 56, Margin = new Thickness(0, 0, 10, 0) });
-
-                content.Children.Add(new TextBlock { Text = $"№{id:D4} · {SpeciesName(id)}\nЭкземпляров: {group.Count()}", TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center });
-
-                var button = new Button { Tag = id, Content = content, Width = width, MinHeight = 80, Margin = new Thickness(0, 0, 8, 8), Style = (Style)FindResource("SecondaryButtonStyle") };
+                var button = new Button { Tag = id, Content = content, Width = width, MinHeight = 110, Margin = new Thickness(4), Padding = new Thickness(8), HorizontalContentAlignment = HorizontalAlignment.Stretch, Style = (Style)FindResource("SecondaryButtonStyle"), ToolTip = $"№{id:D4} · {SpeciesName(id)} · экземпляров: {group.Count()}" };
 
                 button.Click += (_, _) =>
                 {
@@ -275,17 +276,15 @@ public partial class NurseryView : UserControl
                 var reason = Unavailable(data, p);
                 var row = new StackPanel();
 
-                var heading = new DockPanel();
-                heading.Children.Add(new Image { Source = Sprite(p.CurrentSpeciesId, p.IsShiny), Width = 54, Height = 54, Margin = new Thickness(0, 0, 7, 0) });
+                row.Children.Add(new Image { Source = Sprite(p.CurrentSpeciesId, p.IsShiny), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
+                row.Children.Add(new TextBlock { Text = p.Nickname ?? SpeciesName(p.CurrentSpeciesId), FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
+                row.Children.Add(new TextBlock { Text = $"Ур. {_levels.LevelForXp(p.TotalXp)}" + (p.IsShiny ? " · шайни" : ""), FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
+                row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Margin = new Thickness(0, 2, 0, 0) });
 
-                heading.Children.Add(new TextBlock { Text = $"{ParentName(data, p.Id)} · ур. {_levels.LevelForXp(p.TotalXp)}", TextWrapping = TextWrapping.Wrap });
-                row.Children.Add(heading);
+                if (reason is not null) row.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 11, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
 
-                row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId) + " — " + CollectionView.TraitEffect(p.FirstTraitId), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 5, 0, 0) });
-
-                if (reason is not null) row.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontWeight = FontWeights.Bold });
-
-                var button = new Button { Tag = p.Id, Content = row, Width = width, MinHeight = 120, Margin = new Thickness(0, 0, 8, 8), Padding = new Thickness(10), HorizontalContentAlignment = HorizontalAlignment.Stretch, Style = (Style)FindResource("SecondaryButtonStyle"), IsEnabled = reason is null, ToolTip = reason ?? "Выбрать этот экземпляр" };
+                var button = new Button { Tag = p.Id, Content = row, Width = width, MinHeight = 130, Margin = new Thickness(4), Padding = new Thickness(8), HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Top, Style = (Style)FindResource("SecondaryButtonStyle"), IsEnabled = reason is null,
+                    ToolTip = (reason ?? "Выбрать этот экземпляр") + "\n" + ParentName(data, p.Id) + "\n" + CollectionView.TraitLabel(p.FirstTraitId) + " — " + CollectionView.TraitEffect(p.FirstTraitId) };
 
                 System.Windows.Automation.AutomationProperties.SetName(button, ParentName(data, p.Id));
 
