@@ -496,7 +496,7 @@
                 </Border>
             </Grid>
         </Border>
-        <Border x:Name="SpeciesDialog" Panel.ZIndex="15" Visibility="Collapsed" Background="#8A26352D">
+        <Border x:Name="SpeciesDialog" Panel.ZIndex="15" Visibility="Collapsed" Background="#B0070A16">
             <Border Style="{StaticResource CardStyle}" Margin="18" MaxWidth="600" HorizontalAlignment="Center" VerticalAlignment="Center"><DockPanel>
                 <Button DockPanel.Dock="Bottom" Content="Назад" Click="SpeciesBack_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,10,0,0"/>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="430">                        <Border x:Name="SpeciesDetail" Style="{StaticResource CardStyle}" Visibility="Collapsed" Margin="0,10,0,0">
@@ -504,7 +504,10 @@
                                 <TextBlock x:Name="SpeciesDetailName" Style="{StaticResource SectionHeaderTextStyle}"/>
                                 <TextBlock x:Name="SpeciesDetailDescription" TextWrapping="Wrap" Margin="0,4,0,8"/>
                                 <TextBlock x:Name="SpeciesDetailTypes" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,8"/>
-                                <TextBlock x:Name="SpeciesDetailOwnedLabel" FontWeight="Bold"/>
+                                <TextBlock x:Name="SpeciesPathsHeader" Text="Где найти" Style="{StaticResource SectionHeaderTextStyle}" Margin="0,4,0,0"/>
+                                <StackPanel x:Name="SpeciesPathsPanel"/>
+                                <TextBlock x:Name="SpeciesPathsMessage" Visibility="Collapsed" TextWrapping="Wrap" Foreground="{StaticResource DangerTextBrush}" Margin="0,2,0,8"/>
+                                <TextBlock x:Name="SpeciesDetailOwnedLabel" FontWeight="Bold" Margin="0,10,0,0"/>
                                 <ItemsControl x:Name="SpeciesOwnedList">
                                     <ItemsControl.ItemTemplate><DataTemplate>
                                         <Button Content="{Binding Label}" Tag="{Binding IndividualId}" Click="SpeciesOwned_Click"

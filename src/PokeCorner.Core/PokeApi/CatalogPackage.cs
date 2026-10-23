@@ -89,6 +89,16 @@ public sealed class CatalogPackage
                 species => names[species.GetProperty("locationIds")[0].GetString()!]);
     }
 
+    /// Species → id of its first expedition route, so a hint can open that route directly.
+    public IReadOnlyDictionary<int, string> GetRouteIds()
+    {
+        using var document = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(_root, "location-draft.json")));
+        return document.RootElement.GetProperty("species").EnumerateArray()
+            .Where(species => species.GetProperty("locationIds").GetArrayLength() > 0)
+            .ToDictionary(species => species.GetProperty("id").GetInt32(),
+                species => species.GetProperty("locationIds")[0].GetString()!);
+    }
+
     private static T Read<T>(string path)
     {
         try { return JsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions) ?? throw new InvalidDataException($"Empty catalog file: {path}"); }

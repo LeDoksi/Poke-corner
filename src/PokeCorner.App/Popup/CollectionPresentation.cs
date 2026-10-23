@@ -14,7 +14,7 @@ public sealed class CollectionPresentation
     private readonly Dictionary<int, CatalogSpecies> _speciesById;
     private readonly Dictionary<int, int[]> _predecessors;
     public IReadOnlyDictionary<int, int[]> Targets { get; }
-    private readonly IReadOnlyDictionary<int, string> _routes;
+    private readonly IReadOnlyDictionary<int, string> _routes, _routeIds;
     private static readonly Lazy<IReadOnlyDictionary<int, string>> Facts = new(() =>
         LoadFacts(Path.Combine(AppContext.BaseDirectory, "Data", "catalog-package", "russian-facts.json")));
     public static string? Fact(int speciesId) => Facts.Value.GetValueOrDefault(speciesId);
@@ -51,7 +51,7 @@ public sealed class CollectionPresentation
 
     public CollectionPresentation(CatalogPackage catalog)
     {
-        _catalog = catalog; _routes = catalog.GetRouteHints(); _speciesById = catalog.Species.ToDictionary(s => s.Id);
+        _catalog = catalog; _routes = catalog.GetRouteHints(); _routeIds = catalog.GetRouteIds(); _speciesById = catalog.Species.ToDictionary(s => s.Id);
         var nursery = new NurseryCatalog(catalog);
         _recipesByOutcome = nursery.MixedRecipes.Concat(nursery.SameSpeciesRecipes).Where(r => r.IsAvailable)
             .SelectMany(r => r.AvailableOutcomes.Select(o => (o.SpeciesId, Recipe: r)))
@@ -61,6 +61,20 @@ public sealed class CollectionPresentation
             .Select(e => (From: e.GetProperty("from").GetInt32(), To: e.GetProperty("to").GetInt32())).ToArray();
         Targets = edges.GroupBy(e => e.From).ToDictionary(g => g.Key, g => g.Select(e => e.To).ToArray());
         _predecessors = edges.GroupBy(e => e.To).ToDictionary(g => g.Key, g => g.Select(e => e.From).ToArray());
+    }
+
+    /// The same facts as WhereFind, as actions: a route to open and parent pairs to preset.
+    public SpeciesPaths Paths(int speciesId, bool shiny, IReadOnlySet<int> known)
+    {
+        var species = _speciesById[speciesId];
+        string Name(int id) => known.Contains(id) ? _speciesById[id].DisplayName : $"#{id:D4}";
+        if (species.FamilyRootId != speciesId)
+            return new(null, null, [], "Эволюция из " + string.Join(" / ", (_predecessors.GetValueOrDefault(speciesId) ?? [species.FamilyRootId]).Select(Name)) + ".");
+        if (!_catalog.CanIssueDirectly(speciesId, shiny)) return new(null, null, [], "Эта форма пока недоступна для получения.");
+        var routeId = _routeIds.GetValueOrDefault(speciesId);
+        var pairs = (_recipesByOutcome.GetValueOrDefault(speciesId) ?? [])
+            .Select(r => new SpeciesPair(r.FirstParentId, r.SecondParentId, $"{Name(r.FirstParentId)} + {Name(r.SecondParentId)}")).ToArray();
+        return new(routeId, routeId is null ? null : _routes.GetValueOrDefault(speciesId), pairs, null);
     }
 
     public string WhereFind(int speciesId, bool shiny, IReadOnlySet<int> known)
@@ -77,5 +91,8 @@ public sealed class CollectionPresentation
         return text;
     }
 }
+
+public sealed record SpeciesPair(int FirstParentId, int SecondParentId, string Label);
+public sealed record SpeciesPaths(string? RouteId, string? RouteName, IReadOnlyList<SpeciesPair> Pairs, string? Note);
 
 public sealed record IndividualItemPreview(string ItemId, string Name, int Stock, string Effect, string? Reason);

@@ -130,6 +130,15 @@ public partial class ExpeditionView : UserControl
         Refresh();
     }
 
+    /// From a Pokédex hint: shows the route on the preparation screen. A trip already under way keeps its own route.
+    public void SelectRoute(string routeId)
+    {
+        if (_busy || _snapshot().Expedition?.Status is "running" or "ready" || Routes.All(r => r.Id != routeId)) return;
+        _route = routeId; _pendingStart = null;
+        if (_pickerOpen) ClosePicker();
+        Refresh();
+    }
+
     private string SpeciesName(int speciesId) =>
         _catalog?.Species.FirstOrDefault(s => s.Id == speciesId)?.DisplayName ?? $"№{speciesId}";
 

@@ -64,6 +64,18 @@ public class NightDiaryPilotTests
     public void CoinCountsUseRussianPlural(long count, string expected) => Assert.Equal(expected, ExpeditionView.Coins(count));
 
     [Fact]
+    public void PokedexHintOpensTheRouteButLeavesARunningTripAlone() => WpfTestHost.Run(() =>
+    {
+        var data = State(); var view = View(data);
+        view.SelectRoute("volcano");
+        Assert.Equal("Вулканическая долина", Find<TextBlock>(view, "LandscapeName").Text);
+        new ExpeditionService(Catalog.Value, data).Start(new ExpeditionRequest("grove", "normal", 90, [data.Individuals[0].Id], Guid.NewGuid(), DateTimeOffset.UtcNow));
+        view.SelectRoute("ruins"); view.Refresh();
+        Assert.Equal("Лесная роща", Find<TextBlock>(view, "LandscapeName").Text);
+        view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+    });
+
+    [Fact]
     public void ClaimWithEncounterOpensItInOneClick() => WpfTestHost.Run(() =>
     {
         var data = State();

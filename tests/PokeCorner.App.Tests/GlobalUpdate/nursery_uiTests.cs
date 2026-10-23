@@ -82,6 +82,20 @@ public sealed partial class NurseryUiTests
     }
 
     [Fact]
+    public void PokedexHintPresetsThePairOrSaysWhatIsMissing()
+    {
+        WpfTestHost.Run(() => {
+            var recipe = new NurseryCatalog(Catalog.Value).MixedRecipes.First(r => r.IsAvailable && r.SelectionUseful);
+            var (data, first, second) = State(recipe); var view = View(data);
+            Assert.Null(view.PresetPair(recipe.FirstParentId, recipe.SecondParentId));
+            Assert.True(((Button)view.FindName("StartButton")!).IsEnabled);
+            data.ActiveIndividualId = second;
+            var (other, _, _) = State(recipe); other.Individuals.RemoveAt(1);
+            Assert.Contains("Нет свободного", View(other).PresetPair(recipe.FirstParentId, recipe.SecondParentId));
+        });
+    }
+
+    [Fact]
     public void ParentPickerTilesFillTheAvailableWidthAfterResize()
     {
         WpfTestHost.Run(() => {

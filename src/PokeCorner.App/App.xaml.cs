@@ -1003,6 +1003,7 @@ public partial class App : System.Windows.Application
                     _catalogPackage.GetRouteHints(), individual => levels.LevelForXp(individual.TotalXp),
                     () => _appState.NormalSpeciesIds, () => _appState.ShinySpeciesIds, collectionPresentation);
                 CollectionView? collectionView = null;
+                ExpeditionView? expeditionRef = null; NurseryView? nurseryRef = null; // built later; Pokédex hints jump into them
                 var shopView = new ShopView(_appState, _shopService,
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount,
                         next => _catchReadyCount = next.PendingCatchCount), RefreshOverlayForActiveIndividual, _catalogPackage,
@@ -1058,7 +1059,15 @@ public partial class App : System.Windows.Application
                             : ($"Опыт · {pet.TotalXp - start} / {end - start} XP до уровня {level + 1}", (pet.TotalXp - start) / (double)(end - start));
                     },
                     (id, shiny) => collectionPresentation.WhereFind(id, shiny, shiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds),
-                    confirmDestructiveAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false));
+                    confirmDestructiveAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false),
+                    speciesPaths: (id, shiny) => collectionPresentation.Paths(id, shiny, shiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds),
+                    openRoute: route => { _menuWindow?.Navigate(MenuSection.Expeditions); expeditionRef?.SelectRoute(route); },
+                    openPair: (first, second) =>
+                    {
+                        var reason = nurseryRef is null ? "Питомник недоступен." : nurseryRef.PresetPair(first, second);
+                        if (reason is null) _menuWindow?.Navigate(MenuSection.Nursery);
+                        return reason;
+                    });
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart,
                     confirmAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false),
                     showOnboarding: async () =>
@@ -1076,7 +1085,7 @@ public partial class App : System.Windows.Application
                     }, closeMenu: false), fetchScene: FetchCatchScene,
                     luckyCharmArtPath: Path.Combine(_catalogPackage.DataRoot, "final", "assets", "shop", "lucky-charm.png"));
                 if (_pendingCatchReveal is { } pendingCatchReveal) catchView.RestoreReveal(pendingCatchReveal);
-                var expeditionView = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
+                var expeditionView = expeditionRef = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
                     PreviewExpedition, StartExpeditionAsync, CancelExpeditionAsync, ClaimExpeditionAsync,
                     OpenExpeditionEncounterAsync, _catalogPackage, confirmAsync:
                     (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false),
@@ -1084,7 +1093,7 @@ public partial class App : System.Windows.Application
                         catchView.SelectEncounter(id);
                         _menuWindow?.Navigate(MenuSection.Catch);
                     }, confirmDestructiveAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false));
-                var nurseryView = new NurseryView(() => _appState.ToSaveData(_catchReadyCount), PreviewNursery,
+                var nurseryView = nurseryRef = new NurseryView(() => _appState.ToSaveData(_catchReadyCount), PreviewNursery,
                     StartNurseryAsync, HatchNurseryAsync, RefreshNurseryReadyAsync, _catalogPackage,
                     (good, required) =>
                     {

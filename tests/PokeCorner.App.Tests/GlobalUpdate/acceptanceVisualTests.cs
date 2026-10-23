@@ -107,7 +107,9 @@ public class AcceptanceVisualTests
                 return level >= 40 ? ("Максимальный уровень", 1d) : ($"До следующего уровня — {end - pet.TotalXp} опыта",
                     (pet.TotalXp-start)/(double)(end-start));
             },
-            whereFind: (id, shiny) => presentation.WhereFind(id, shiny, shiny ? data.ShinySpeciesIds : data.NormalSpeciesIds));
+            whereFind: (id, shiny) => presentation.WhereFind(id, shiny, shiny ? data.ShinySpeciesIds : data.NormalSpeciesIds),
+            speciesPaths: (id, shiny) => presentation.Paths(id, shiny, shiny ? data.ShinySpeciesIds : data.NormalSpeciesIds),
+            openRoute: _ => { }, openPair: (_, _) => null);
         var settings = new SettingsView(new SettingsViewModel(state.Settings), () => { }, () => { }, () => { },
             getAutostart: () => false, setAutostart: _ => { });
         var shop = new ShopView(state, new ShopService(catalog.DataRoot), _ => Task.FromException(new IOException("Тест: запись недоступна. Повторите действие.")), () => { }, catalog);
@@ -450,6 +452,10 @@ public class AcceptanceVisualTests
             ((TextBox)collection.FindName("SpeciesSearchBox")).Text = "#0004";
             ((ListBox)collection.FindName("SpeciesGrid")).SelectedIndex = 0;
             Capture("species", MenuSection.Pokedex, "unknown-acquisition");
+            Invoke(collection, "SpeciesBack_Click", collection, new RoutedEventArgs());
+            ((TextBox)collection.FindName("SpeciesSearchBox")).Text = "#0133";
+            ((ListBox)collection.FindName("SpeciesGrid")).SelectedIndex = 0;
+            Capture("species", MenuSection.Pokedex, "known-paths");
             Invoke(collection, "SpeciesBack_Click", collection, new RoutedEventArgs());
             ((TextBox)collection.FindName("SpeciesSearchBox")).Text = "";
             Click(collection, "IndividualsModeButton");

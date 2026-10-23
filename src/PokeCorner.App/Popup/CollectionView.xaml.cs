@@ -42,6 +42,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Func<Guid, string, Guid, Task<PurchaseResult>>? _useItem;
     private readonly Func<Guid, (string Text, double Fraction)>? _xpProgress;
     private readonly Func<int, bool, string>? _whereFind;
+    private readonly Func<int, bool, SpeciesPaths?>? _speciesPaths;
+    private readonly Action<string>? _openRoute;
+    private readonly Func<int, int, string?>? _openPair;
     private TaskCompletionSource<bool>? _localConfirmation;
     private bool _detailPending;
     // Initial construction supports standalone fixtures; after Unloaded only Loaded resumes presentation.
@@ -149,7 +152,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Func<Guid, string, Guid, Task<PurchaseResult>>? useItem = null,
         Func<Guid, (string Text, double Fraction)>? xpProgress = null,
         Func<int, bool, string>? whereFind = null,
-        Func<string, string, string, Task<bool>>? confirmDestructiveAsync = null)
+        Func<string, string, string, Task<bool>>? confirmDestructiveAsync = null,
+        Func<int, bool, SpeciesPaths?>? speciesPaths = null, Action<string>? openRoute = null, Func<int, int, string?>? openPair = null)
     {
         InitializeComponent();
         SizeChanged += (_, _) => LayoutMasterDetail();
@@ -178,6 +182,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _buyBerries = buyBerries;
         _confirm = confirmAsync; _confirmDestructive = confirmDestructiveAsync; _previewItem = previewItem; _useItem = useItem;
         _xpProgress = xpProgress; _whereFind = whereFind;
+        _speciesPaths = speciesPaths; _openRoute = openRoute; _openPair = openPair;
         LocalConfirmationHost.Completed += CompleteLocalConfirmation;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
@@ -501,13 +506,67 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesDetail.Visibility = entry is null ? Visibility.Collapsed : Visibility.Visible;
         if (entry is null) return;
         SpeciesDetailName.Text = entry.IsDiscovered ? $"{entry.Number} · {entry.DisplayName}" : entry.Number;
-        SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : entry.RouteHint;
+        SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : _speciesPaths is null ? entry.RouteHint : "Вид ещё не открыт. Вот как его можно получить:";
         SpeciesDetailTypes.Text = entry.IsDiscovered ? string.Join(" · ", entry.Types.Select(TypeDisplay.GetLabel)) : string.Empty;
         SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : "Мои экземпляры";
         SpeciesOwnedList.ItemsSource = entry.OwnedIndividuals.Select(i => new IndividualChoice(i.IndividualId,
-            $"{(i.Nickname ?? entry.DisplayName)} · ур. {i.Level} · {(i.IsBusy ? "Занят" : i.IsActive ? "На столе" : "")} · {FormatCaughtDate(i.CaughtAtUtc)}{(i.IsShiny ? " · Shiny" : "")}"))
+            string.Join(" · ", new[] { i.Nickname ?? entry.DisplayName, $"ур. {i.Level}", i.IsBusy ? "занят" : i.IsActive ? "на столе" : null,
+                "пойман " + FormatCaughtDate(i.CaughtAtUtc), i.IsShiny ? "шайни" : null }.Where(x => x is not null))))
             .ToList();
+        RenderSpeciesPaths(entry);
+    }
+
+    // The "where to find" hint as actions (Georgy 23.10): a route opens that expedition, a parent pair
+    // presets the nursery. The shiny form uses the same paths, only rarer, so it is one line, not a
+    // second copy of every button; it gets its own list only when its paths actually differ.
+    private void RenderSpeciesPaths(PokedexSpeciesEntry entry)
+    {
+        SpeciesPathsPanel.Children.Clear(); SpeciesPathsMessage.Visibility = Visibility.Collapsed;
+        SpeciesPathsHeader.Visibility = _speciesPaths is null ? Visibility.Collapsed : Visibility.Visible;
+        if (_speciesPaths?.Invoke(entry.SpeciesId, false) is not { } normal) return;
+        var owned = _appState.Collection.Individuals.Select(p => p.CurrentSpeciesId).ToHashSet();
+        AddPaths(normal, owned);
+        var shiny = _speciesPaths(entry.SpeciesId, true);
+        var same = shiny is not null && shiny.RouteId == normal.RouteId && shiny.Note == normal.Note
+            && shiny.Pairs.Select(p => (p.FirstParentId, p.SecondParentId)).SequenceEqual(normal.Pairs.Select(p => (p.FirstParentId, p.SecondParentId)));
+        if (shiny is null) return;
+        SpeciesPathsPanel.Children.Add(new TextBlock { Text = "Шайни-форма", FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 10, 0, 2) });
+        if (same) SpeciesPathsPanel.Children.Add(new TextBlock { Text = "Теми же путями, только реже. Шанс повышает талисман удачи из магазина.", TextWrapping = TextWrapping.Wrap, Style = (Style)FindResource("CaptionTextStyle") });
+        else AddPaths(shiny, owned);
+    }
+
+    private void AddPaths(SpeciesPaths paths, HashSet<int> owned)
+    {
+        if (paths.Note is not null)
+            SpeciesPathsPanel.Children.Add(new TextBlock { Text = paths.Note, TextWrapping = TextWrapping.Wrap, Style = (Style)FindResource("CaptionTextStyle"), Margin = new Thickness(0, 0, 0, 6) });
+        System.Windows.Controls.Button Action(string text, string? detail, bool enabled, string tip)
+        {
+            var label = new StackPanel();
+            label.Children.Add(new TextBlock { Text = text, FontWeight = FontWeights.SemiBold });
+            if (detail is not null) label.Children.Add(new TextBlock { Text = detail, FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
+            return new System.Windows.Controls.Button { Content = label, Style = (Style)FindResource("SecondaryButtonStyle"), Padding = new Thickness(12, 6, 12, 6),
+                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left, Margin = new Thickness(0, 0, 0, 6), IsEnabled = enabled, ToolTip = tip };
+        }
+        if (paths.RouteId is { } routeId)
+        {
+            var route = Action($"Встретить: {paths.RouteName}", "Откроет экспедиции с этим маршрутом", _openRoute is not null, "Открыть экспедиции с этим маршрутом");
+            route.Click += (_, _) => { CloseSpeciesDialog(); _openRoute?.Invoke(routeId); };
+            SpeciesPathsPanel.Children.Add(route);
+        }
+        foreach (var pair in paths.Pairs)
+        {
+            var missing = new[] { pair.FirstParentId, pair.SecondParentId }.Where(id => !owned.Contains(id)).Distinct().ToArray();
+            var detail = missing.Length == 0 ? "Откроет питомник с этой парой" : "Не хватает: " + string.Join(", ", missing.Select(id => $"#{id:D4}"));
+            var button = Action($"Питомник: {pair.Label}", detail, _openPair is not null && missing.Length == 0, detail);
+            button.Click += (_, _) =>
+            {
+                var reason = _openPair?.Invoke(pair.FirstParentId, pair.SecondParentId);
+                if (reason is null) { CloseSpeciesDialog(); return; }
+                SpeciesPathsMessage.Text = reason; SpeciesPathsMessage.Visibility = Visibility.Visible;
+            };
+            SpeciesPathsPanel.Children.Add(button);
+        }
     }
 
     private void SpeciesOwned_Click(object sender, RoutedEventArgs e)
@@ -1659,7 +1718,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (sender is not System.Windows.Controls.Button { Tag: int id }) return;
         var entry = _viewModel.GetSpeciesEntries(_speciesShiny).FirstOrDefault(x => x.SpeciesId == id);
         _selectedSpeciesId = id; ShowSpeciesDetail(entry); SpeciesDialog.Visibility = Visibility.Visible;
-        if (entry is not null) SpeciesDetailDescription.Text = _whereFind?.Invoke(id, _speciesShiny) ?? entry.RouteHint;
+        if (entry is not null && _speciesPaths is null) SpeciesDetailDescription.Text = _whereFind?.Invoke(id, _speciesShiny) ?? entry.RouteHint;
     }
     private Task<bool> ConfirmAsync(string title, string body, string caption, bool destructive = false)
     {

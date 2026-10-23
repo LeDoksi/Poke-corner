@@ -131,6 +131,24 @@ public partial class NurseryView : UserControl
         _draftFirst = _first; _draftSecond = _second; _editing = editing == 1 && _first != Guid.Empty ? 1 : 0;
         _pickerOpen = true; Refresh(); ParentSearchBox.Focus();
     }
+    /// From a Pokédex hint: puts the best free pet of each species into the pair, ready to start.
+    /// Returns why it couldn't, so the hint can say so instead of landing on an empty nursery.
+    public string? PresetPair(int firstSpecies, int secondSpecies)
+    {
+        var data = _snapshot();
+        if (_busy || data.Nest?.Status is "running" or "ready") return "Питомник сейчас занят.";
+        PokemonIndividual? Best(int species, Guid except) => data.Individuals
+            .Where(p => p.CurrentSpeciesId == species && p.Id != except && Unavailable(data, p) == null)
+            .OrderByDescending(p => p.TotalXp).FirstOrDefault();
+        var first = Best(firstSpecies, Guid.Empty);
+        var second = first is null ? null : Best(secondSpecies, first.Id);
+        if (first is null || second is null) return $"Нет свободного {SpeciesName(first is null ? firstSpecies : secondSpecies)}.";
+        if (!PairValid(data, first.Id, second.Id)) return "Эта пара сейчас недоступна.";
+        _first = first.Id; _second = second.Id;
+        _choice = null; _pendingStart = null; _selectionGeneration++;
+        _pickerOpen = false; Refresh();
+        return null;
+    }
     private void ChooseFirst_Click(object sender, RoutedEventArgs e) => OpenPicker(0);
     private void ChooseSecond_Click(object sender, RoutedEventArgs e) => OpenPicker(1);
     private void DraftFirst_Click(object sender, RoutedEventArgs e) { _editing = 0; _page = 0; RefreshPicker(); }
