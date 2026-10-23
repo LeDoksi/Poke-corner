@@ -145,3 +145,21 @@ Night version of the attached greenhouse nursery, keeping the same composition a
 ## Позже
 
 Зарисовки на полях (D-15): компас, лупа, блокнот, фонарь, следы, покебол — одноцветные линейные рисунки на прозрачном фоне. Сейчас стоят векторные заглушки; заказывать после того, как экраны покедекса и магазина устоятся, чтобы не рисовать под меняющиеся места.
+
+---
+
+## Приёмка 23.10 и переделки
+
+Принято и встроено: семь сцен (снег — `snow-v2`), ночной питомник (`nursery-night`, `-waiting`, `-ready`), монета. Размер сцен 2172×724 вместо 2400×800 принят: пропорция 3:1 та же, а растягивать сгенерированную картинку бессмысленно.
+
+Не принято:
+- **care.png** — на 24 px сердце почти не видно: мелкий объект, много пустого места и искры. Переделать (промпт ниже).
+- **room-night.png** — по композиции хороша, но не совпадает со старой комнатой по геометрии (на неё ставятся трофеи и передний край полки). Перегенерацию не заказываем: Claude сам перенесёт опоры трофеев и вырежет передний край полки из новой комнаты.
+- **treat.png** — принят, встраивается вместе с иконкой ухода.
+
+### Переделка: care.png
+Сохранить в `astra-inbox\icons\care-v2.png`, PNG 512×512 с прозрачностью.
+```
+Single bold icon for pet "care": one large chunky pink-red heart cradled from below by an open lavender hand, the heart fills about 60% of the frame and the whole icon fills 85% of the canvas. Pixel art with big readable shapes and a thick dark outline, one small highlight on the heart. No sparkles, no stars, no extra particles, no thin details. Must read instantly at 24x24 px on dark and light backgrounds. Transparent background, centered, no text.
+```
+Приёмка: на 24 px сердце занимает большую часть значка, читается на тёмном и светлом фоне.

@@ -1,0 +1,12 @@
+Date: 2026-10-23 (Europe/Moscow)
+Tool: built-in image_gen
+Source: C:\Users\Georgy\.codex\generated_images\01a167f7-ef2e-7582-b533-37a37c2c45a1\exec-4bc661f0-7793-4c69-b0a1-32a7b599b75d.png
+Requested size: 2048x768
+
+Night Diary style for a cozy desktop Pokémon companion app. High-quality hand-placed pixel painting with deliberate clusters, no blurry upscaling, no dithering noise, crisp 1px pixel edges. Night lighting with depth in three planes (close foreground, middle, far). Palette anchored on deep ink-blue and plum darks (#101426, #16192B, #23253C), soft lavender light (#C4ABF0) and warm apricot accents (#FFB574) where the scene has a light source. No text, no letters, no UI, no buttons, no frames, no Pokémon, no people, no trophies. Style reference: the attached grove-environment.png.
+
+Night version of the attached greenhouse nursery, keeping the same composition and camera: wooden potting bench across the frame, woven straw nest in the center of the bench, watering can and clay pots on the left, flower pots and a brass lantern on the right, large mullioned windows behind. It is late night: outside the windows a dark indigo sky with stars and a soft moon over distant hills, no daylight, no blue sky. The room is lit by the warm lantern (apricot glow) and cool moonlight through the windows, plants in deep shadow with a few lavender highlights. Calm, cozy, quiet. Keep the nest area clearly lit and readable.
+
+Closer framing on the nest; the same speckled egg has a fresh crack with a faint warm glow leaking from it and a few tiny sparkles around. Nothing hatching yet, no creature visible.
+
+Image 1 is the night nursery with the intact egg: keep its egg identity, night light, materials and room. Image 2 is ONLY the requested close-up camera/composition reference, not its daylight palette. Image 3 is the grove style reference. Render the closer view of the SAME nest and egg at NIGHT, large centered pale egg with olive speckles. Hairline crack with faint warm glow, no gaping opening, no visible creature. Output a single opaque PNG exactly 2048 x 768 pixels. No UI, letters, people or Pokemon.

@@ -1,0 +1,10 @@
+Date: 2026-10-23 (Europe/Moscow)
+Tool: built-in image_gen
+Source: C:\Users\Georgy\.codex\generated_images\01a167f7-ef2e-7582-b533-37a37c2c45a1\exec-b90a0153-22e4-47b8-b4a0-5aea663b70f9.png
+Requested size: 512x512
+
+Night Diary style for a cozy desktop Pokémon companion app. High-quality hand-placed pixel painting with deliberate clusters, no blurry upscaling, no dithering noise, crisp 1px pixel edges. Night lighting with depth in three planes (close foreground, middle, far). Palette anchored on deep ink-blue and plum darks (#101426, #16192B, #23253C), soft lavender light (#C4ABF0) and warm apricot accents (#FFB574) where the scene has a light source. No text, no letters, no UI, no buttons, no frames, no Pokémon, no people, no trophies. Style reference: the attached grove-environment.png.
+
+Single game coin icon, front view, pixel art with chunky readable shapes, warm apricot-gold metal (#FFB574 family) with a simple embossed star or paw mark, one small highlight. Must read clearly at 24x24 px on both dark and light backgrounds: thin dark outline. Transparent background, centered, no text.
+
+Icon asset exception to scene framing: single isolated object on a genuinely transparent background, no scenery, no floor, no ground shadow. Exactly 512 x 512 pixels. Object occupies approximately 80% of canvas. Bold simple silhouette and sparse internal details designed for 24 x 24 display. Reference is for pixel craftsmanship and palette only, NOT for environment or composition. No text or UI.

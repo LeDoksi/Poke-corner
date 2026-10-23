@@ -71,6 +71,8 @@ public partial class NurseryView : UserControl
             _awaitingHatchContinue = false;
         };
         PreviewKeyDown += (_, e) => { if (e.Key == System.Windows.Input.Key.Escape && _pickerOpen) { ClosePicker(); e.Handled = true; } };
+        // Scene art is 2048x768: full width, clipped around its middle band where the nest sits.
+        SceneGrid.SizeChanged += (_, _) => GreenhouseImage.Height = SceneGrid.ActualWidth * 768 / 2048;
         PickerScroll.SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
         Refresh();
     }

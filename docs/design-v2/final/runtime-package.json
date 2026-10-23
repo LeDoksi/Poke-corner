@@ -16450,44 +16450,44 @@
     {
       "path": "docs/design-v2/final/assets/expeditions/lake.png",
       "target": "expeditions/lake.png",
-      "bytes": 3605853,
-      "sha256": "9eaaf538512fc37e18873e5e4657db9ab30cde2dc8de89d867b75b8603c1d316"
+      "bytes": 2460998,
+      "sha256": "5ee50b5209d452254837904da745f3a28935a015eb1df7aa31d5cc2d3c3dbdac"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/coast.png",
       "target": "expeditions/coast.png",
-      "bytes": 3552931,
-      "sha256": "26a9fe1b64f910adee962dd1efb1b0e354de7edaed2957413c04683b62a6af01"
+      "bytes": 2882562,
+      "sha256": "896d65638c04647f4e8e718a22843bc50f6520bff7ee69dde5c5eafc30b17707"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/mountains.png",
       "target": "expeditions/mountains.png",
-      "bytes": 3377835,
-      "sha256": "9899023cd92cbe4661dff2fcbdbccb7dc279d3ddecb97be032e84fb891bf07d2"
+      "bytes": 2532520,
+      "sha256": "5ea78e60c5a35b6ccc1ee0263ab7fbbcb2b3d07b2288a71175fa7593f65b0125"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/desert.png",
       "target": "expeditions/desert.png",
-      "bytes": 2131241,
-      "sha256": "618edfcedd6f4439aa3341872bccc304d9c781a3260c8697a3666cc23a1bcefb"
+      "bytes": 2432000,
+      "sha256": "ac79c6efe1113a8c7e172a726a6c320f4c7e203f2d73a3cd3f07adb60f43d98d"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/volcano.png",
       "target": "expeditions/volcano.png",
-      "bytes": 2670609,
-      "sha256": "3b0c73f5bf0f160deaf9b5d1ae048a40762efa8dabbd79b78b8a1fbfbf2df4f9"
+      "bytes": 2212889,
+      "sha256": "02b21e1e15c988b04ebec92559e41d26b2f6f89b8ff2558dbabf6ef18bbe826c"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/snow.png",
       "target": "expeditions/snow.png",
-      "bytes": 2658503,
-      "sha256": "1f5d87bc17f31dab1303bfedaefc656508bf3862a3c5a6fa60197abbd5b57252"
+      "bytes": 2230313,
+      "sha256": "3c8206df6e03677ea5aa3df4749f7dae38a678252e99f2d9b6d32ec2d5bc3744"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/ruins.png",
       "target": "expeditions/ruins.png",
-      "bytes": 2998745,
-      "sha256": "9fe81bf6ed8dffef2ad17240392967b7396b7825aaf7dab8aef0e47f870319a3"
+      "bytes": 2439014,
+      "sha256": "2853985a0c536978bcb5300dbbdf152e04c3e0bb83ba0ebe38b48aea017e1794"
     },
     {
       "path": "docs/design-v2/catalog-package/russian-facts.json",

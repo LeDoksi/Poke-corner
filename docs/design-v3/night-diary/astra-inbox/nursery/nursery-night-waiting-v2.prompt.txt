@@ -1,0 +1,8 @@
+Date: 2026-10-23 (Europe/Moscow)
+Tool: built-in image_gen
+Source: C:\Users\Georgy\.codex\generated_images\01a167f7-ef2e-7582-b533-37a37c2c45a1\exec-278729a7-625c-4344-a079-2ae7f4cd55d8.png
+Requested size: 2048x768
+
+Night Diary style for a cozy desktop Pokémon companion app. High-quality hand-placed pixel painting with deliberate clusters, no blurry upscaling, no dithering noise, crisp 1px pixel edges. Night lighting with depth in three planes (close foreground, middle, far). Palette anchored on deep ink-blue and plum darks (#101426, #16192B, #23253C), soft lavender light (#C4ABF0) and warm apricot accents (#FFB574) where the scene has a light source. No text, no letters, no UI, no buttons, no frames, no Pokémon, no people, no trophies. Style reference: the attached grove-environment.png.
+
+Precise local object edit of the attached finished NIGHT nursery. Add ONE pale cream egg with muted olive speckles, upright in the center of the existing empty straw nest. Egg occupies only x=925..1145, y=315..540 on this exact 2048x768 canvas. Its lower part sits behind the FRONT nest rim. Match the existing warm right lantern and cool left moonlight on the egg. This is the only change. COPY ALL PIXELS OUTSIDE THAT LOCAL EGG AREA UNCHANGED; absolutely no relighting, regeneration, camera shift, resizing, changed plants, altered nest, different moon, stars, window mullions, flowers, pots, lantern or bench grain. Preserve original full 2048 x 768 resolution and every furniture coordinate. No crack, no sparkles, no creature. Opaque PNG.

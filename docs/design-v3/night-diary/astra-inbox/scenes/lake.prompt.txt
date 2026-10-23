@@ -1,0 +1,10 @@
+Date: 2026-10-23 (Europe/Moscow)
+Tool: built-in image_gen
+Source: C:\Users\Georgy\.codex\generated_images\01a167f7-ef2e-7582-b533-37a37c2c45a1\exec-90bb0020-714d-4621-9e9a-7c3274d2616e.png
+Requested size: 2400x800
+
+Night Diary style for a cozy desktop Pokémon companion app. High-quality hand-placed pixel painting with deliberate clusters, no blurry upscaling, no dithering noise, crisp 1px pixel edges. Night lighting with depth in three planes (close foreground, middle, far). Palette anchored on deep ink-blue and plum darks (#101426, #16192B, #23253C), soft lavender light (#C4ABF0) and warm apricot accents (#FFB574) where the scene has a light source. No text, no letters, no UI, no buttons, no frames, no Pokémon, no people, no trophies. Style reference: the attached grove-environment.png.
+
+Pixel-art view from the waterline INSIDE a sheltered freshwater lakeshore. Close reeds and rounded wet pebbles frame the lower corners, calm water fills the middle, a continuous opposite shore visibly closes the basin. Narrow silver moon reflection, small gentle ripples, still cool blue air. Low intimate framing with foreground bank underfoot. No open ocean horizon, breaking surf, sea foam, towering cliffs or forest clearing composition. Wide 3:1 frame, key elements in the central horizontal band, upper-left third calm and dark.
+
+Output: one opaque PNG, exactly 2400 x 800 pixels. Attached grove-environment.png is a style reference only: use its pixel painting technique and palette, completely replace its forest composition with this lake scene. No collage.

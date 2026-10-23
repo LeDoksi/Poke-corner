@@ -1,0 +1,10 @@
+Date: 2026-10-23 (Europe/Moscow)
+Tool: built-in image_gen
+Source: C:\Users\Georgy\.codex\generated_images\01a167f7-ef2e-7582-b533-37a37c2c45a1\exec-a1ac3c97-ec19-47d8-a7dc-53b19a3f6e7e.png
+Requested size: 2400x800
+
+Night Diary style for a cozy desktop Pokémon companion app. High-quality hand-placed pixel painting with deliberate clusters, no blurry upscaling, no dithering noise, crisp 1px pixel edges. Night lighting with depth in three planes (close foreground, middle, far). Palette anchored on deep ink-blue and plum darks (#101426, #16192B, #23253C), soft lavender light (#C4ABF0) and warm apricot accents (#FFB574) where the scene has a light source. No text, no letters, no UI, no buttons, no frames, no Pokémon, no people, no trophies. Style reference: the attached grove-environment.png.
+
+Pixel-art scene from INSIDE a deep snowbound mountain pass, close shoulder-high wind-packed snowbanks and overhanging white cornices, partly buried rock and translucent blue ice at arm's reach. Powder drifts across the near path, blowing snow obscures the far opening. Large pale snow masses, compressed enclosed perspective, blue-white diffuse moonlight. No dry scree composition recolored white, distant scenic peaks, trees, lava or lake surface. Wide 3:1 frame, key elements in the central horizontal band, upper-left third calm and dark.
+
+Output: single opaque PNG, exactly 2400 x 800 pixels, 3:1 canvas. Reference image is ONLY for pixel technique and palette. Completely replace its forest layout and vegetation with the requested scene. Full bleed, no borders, no collage.

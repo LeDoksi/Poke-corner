@@ -23,8 +23,9 @@
       <RowDefinition Height="Auto" />
      </Grid.RowDefinitions>
      <Border CornerRadius="12" ClipToBounds="True" x:Name="SceneBorder" Grid.Column="0" VerticalAlignment="Top">
-      <Grid Height="210" x:Name="SceneGrid">
-       <Image x:Name="GreenhouseImage" Source="{StaticResource UiNurseryImage}" Stretch="UniformToFill" />
+      <Grid Height="210" x:Name="SceneGrid" ClipToBounds="True">
+       <!-- Full-width art clipped around its middle band, where the nest sits; plain UniformToFill kept only the top (window) and cut the egg. -->
+       <Image x:Name="GreenhouseImage" Source="{StaticResource UiNurseryImage}" Stretch="Uniform" VerticalAlignment="Center" />
        <Image x:Name="BabyImage" Width="120" Height="120" VerticalAlignment="Bottom" Margin="0,0,0,18" Visibility="Collapsed" />
        <Button x:Name="HatchButton" Content="Вылупить" Click="HatchButton_Click" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,12" />
       </Grid>

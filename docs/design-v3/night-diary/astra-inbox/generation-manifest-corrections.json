@@ -1,0 +1,28 @@
+﻿[
+    {
+        "name":  "snow-v2",
+        "folder":  "scenes",
+        "width":  2172,
+        "height":  724,
+        "expectedWidth":  2400,
+        "expectedHeight":  800,
+        "sizePass":  false,
+        "pixelFormat":  "Format24bppRgb",
+        "cornerAlpha":  255,
+        "sha256":  "3C8206DF6E03677EA5AA3DF4749F7DAE38A678252E99F2D9B6D32EC2D5BC3744",
+        "source":  "C:\\Users\\Georgy\\.codex\\generated_images\\01a167f7-ef2e-7582-b533-37a37c2c45a1\\exec-553db8e5-ce4c-44f5-b962-1641b2d36022.png"
+    },
+    {
+        "name":  "nursery-night-waiting-v2",
+        "folder":  "nursery",
+        "width":  2048,
+        "height":  768,
+        "expectedWidth":  2048,
+        "expectedHeight":  768,
+        "sizePass":  true,
+        "pixelFormat":  "Format24bppRgb",
+        "cornerAlpha":  255,
+        "sha256":  "4412FCB871236CB62054C1D71C2D96FFD2B5B562C0E5FCB32CF166A2689AC167",
+        "source":  "C:\\Users\\Georgy\\.codex\\generated_images\\01a167f7-ef2e-7582-b533-37a37c2c45a1\\exec-278729a7-625c-4344-a079-2ae7f4cd55d8.png"
+    }
+]
