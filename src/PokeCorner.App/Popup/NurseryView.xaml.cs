@@ -215,10 +215,16 @@ public partial class NurseryView : UserControl
 
         var rarity = (RarityBox.SelectedItem as ComboBoxItem)?.Tag as string;
 
+        // A first parent is offered only when the collection already holds a free partner for it:
+        // picking a pet that can't be paired was a dead end.
+        var freeBySpecies = data.Individuals.Where(p => Unavailable(data, p) == null)
+            .GroupBy(p => p.CurrentSpeciesId).ToDictionary(g => g.Key, g => g.Count());
+        bool HasPartner(PokemonIndividual p) => _recipes.Partners(p.CurrentSpeciesId).Any(species =>
+            freeBySpecies.GetValueOrDefault(species) > (species == p.CurrentSpeciesId && Unavailable(data, p) == null ? 1 : 0));
+
         var rows = data.Individuals.Where(p => Search(p, ParentSearchBox.Text.Trim()) &&
             (string.IsNullOrEmpty(rarity) || _species.GetValueOrDefault(p.CurrentSpeciesId)?.Rarity == rarity) &&
-            (ShinyOnlyBox.IsChecked != true || p.IsShiny) &&
-            (_editing == 0 || (p.Id != _draftFirst && partners.Contains(p.CurrentSpeciesId) && Unavailable(data, p) == null)))
+            (_editing == 0 ? HasPartner(p) : p.Id != _draftFirst && partners.Contains(p.CurrentSpeciesId) && Unavailable(data, p) == null))
             .OrderBy(p => p.CurrentSpeciesId).ThenBy(p => p.CaughtAtUtc).ThenBy(p => p.Id).ToArray();
 
         // Georgy 23.10: duplicates are rare (1-2 per species), so the species step was an extra click;

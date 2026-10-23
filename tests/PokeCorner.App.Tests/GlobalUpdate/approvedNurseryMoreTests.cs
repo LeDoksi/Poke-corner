@@ -104,7 +104,7 @@ public sealed partial class NurseryUiTests
             data.ActiveIndividualId=active.Id;data.Expedition=new ExpeditionState {Status="running",ParticipantIds=[busy.Id]};
             var unsupported=Catalog.Value.Species.First(s=>!Catalog.Value.CanObtain(s.Id,true));var unavailable=Individual(unsupported.Id,true);data.Individuals.Add(unavailable);
             var view=View(data);((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            Assert.False(ShowIndividual(view,active.Id).IsEnabled);Assert.False(ShowIndividual(view,busy.Id).IsEnabled);Assert.False(ShowIndividual(view,unavailable.Id).IsEnabled);
+            Assert.False(ShowIndividual(view,active.Id).IsEnabled);Assert.False(ShowIndividual(view,busy.Id).IsEnabled);Assert.Throws<InvalidOperationException>(()=>ShowIndividual(view,unavailable.Id)); // no partner possible: not offered at all
             ShowIndividual(view,first).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             var buttons=((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().Where(b=>Equals(b.Tag,second)).ToArray();
             Assert.Single(buttons);Assert.Equal(second,buttons[0].Tag);Assert.True(buttons[0].IsEnabled);
@@ -127,7 +127,7 @@ public sealed partial class NurseryUiTests
             foreach(var s in species)data.Individuals.Add(Individual(s.Id));
             foreach(var s in species.Take(200))data.Individuals.Add(Individual(s.Id));
             var view=View(data);WpfTestHost.Layout(view,width,height);((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));WpfTestHost.Layout(view,width,height);
-            Assert.InRange(((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.Count,12,30);Assert.Contains("800",((TextBlock)view.FindName("PickerCountText")!).Text);
+            Assert.InRange(((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.Count,12,30);Assert.Contains("найдено",((TextBlock)view.FindName("PickerCountText")!).Text);
             var next=(Button)view.FindName("PickerNextButton")!;next.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));var page=((TextBlock)view.FindName("PickerPageText")!).Text;Assert.StartsWith("2 /",page);
             ((Button)view.FindName("PickerCancelButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));Assert.Equal(page,((TextBlock)view.FindName("PickerPageText")!).Text);
             ((TextBox)view.FindName("ParentSearchBox")!).Text=$"#{species[0].Id:D4}";

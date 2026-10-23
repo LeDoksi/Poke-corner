@@ -139,7 +139,6 @@
     </Grid.ColumnDefinitions>
     <TextBox x:Name="ParentSearchBox" Tag="Имя, кличка или номер" TextChanged="ParentFilter_Changed" ToolTip="Имя, кличка или номер" AutomationProperties.Name="Имя, кличка или номер" Margin="0,0,8,0" />
     <ComboBox x:Name="RarityBox" Grid.Column="1" SelectionChanged="ParentFilter_Changed" AutomationProperties.Name="Редкость" Margin="0,0,8,0" />
-    <CheckBox x:Name="ShinyOnlyBox" Grid.Column="2" Content="Shiny" Checked="ParentFilter_Changed" Unchecked="ParentFilter_Changed" VerticalAlignment="Center" />
    </Grid>
    <ScrollViewer x:Name="PickerScroll" Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
     <StackPanel>
