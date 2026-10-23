@@ -125,7 +125,7 @@
    </Grid.RowDefinitions>
    <StackPanel>
     <TextBlock Text="Родители для малыша" Style="{StaticResource ScreenTitleTextStyle}" />
-    <TextBlock Text="Сначала выберите вид, затем конкретного питомца." Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,10" />
+    <TextBlock Text="Выберите первого родителя, затем второго." Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,10" />
     <UniformGrid Columns="2">
      <Button x:Name="DraftFirstButton" Click="DraftFirst_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,6" />
      <Button x:Name="DraftSecondButton" Click="DraftSecond_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="6,0,0,6" />
@@ -143,8 +143,6 @@
    </Grid>
    <ScrollViewer x:Name="PickerScroll" Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
     <StackPanel>
-     <Button x:Name="BackToGroupsButton" Content="Все виды" Click="BackToGroups_Click" HorizontalAlignment="Left" Style="{StaticResource SecondaryButtonStyle}" Visibility="Collapsed" Margin="0,0,0,8" />
-     <WrapPanel x:Name="SpeciesGroupsPanel" />
      <WrapPanel x:Name="PickerIndividualsPanel" />
     </StackPanel>
    </ScrollViewer>

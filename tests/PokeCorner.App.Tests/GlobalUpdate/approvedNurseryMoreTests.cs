@@ -106,8 +106,7 @@ public sealed partial class NurseryUiTests
             var view=View(data);((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.False(ShowIndividual(view,active.Id).IsEnabled);Assert.False(ShowIndividual(view,busy.Id).IsEnabled);Assert.False(ShowIndividual(view,unavailable.Id).IsEnabled);
             ShowIndividual(view,first).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            ((WrapPanel)view.FindName("SpeciesGroupsPanel")!).Children.OfType<Button>().Single(b=>Equals(b.Tag,recipe.FirstParentId)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            var buttons=((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().ToArray();
+            var buttons=((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().Where(b=>Equals(b.Tag,second)).ToArray();
             Assert.Single(buttons);Assert.Equal(second,buttons[0].Tag);Assert.True(buttons[0].IsEnabled);
             buttons[0].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));((Button)view.FindName("PickerSaveButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             data.ShinySpeciesIds.Add(recipe.AvailableOutcomes[0].SpeciesId);data.DiscoveredSpeciesIds.Add(recipe.AvailableOutcomes[0].SpeciesId);view.Refresh();
@@ -128,10 +127,10 @@ public sealed partial class NurseryUiTests
             foreach(var s in species)data.Individuals.Add(Individual(s.Id));
             foreach(var s in species.Take(200))data.Individuals.Add(Individual(s.Id));
             var view=View(data);WpfTestHost.Layout(view,width,height);((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));WpfTestHost.Layout(view,width,height);
-            Assert.Equal(24,((WrapPanel)view.FindName("SpeciesGroupsPanel")!).Children.Count);Assert.Contains("800",((TextBlock)view.FindName("PickerCountText")!).Text);
+            Assert.InRange(((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.Count,12,30);Assert.Contains("800",((TextBlock)view.FindName("PickerCountText")!).Text);
             var next=(Button)view.FindName("PickerNextButton")!;next.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));var page=((TextBlock)view.FindName("PickerPageText")!).Text;Assert.StartsWith("2 /",page);
             ((Button)view.FindName("PickerCancelButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));Assert.Equal(page,((TextBlock)view.FindName("PickerPageText")!).Text);
-            ((TextBox)view.FindName("ParentSearchBox")!).Text=$"#{species[0].Id:D4}";((WrapPanel)view.FindName("SpeciesGroupsPanel")!).Children.OfType<Button>().Single().RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            ((TextBox)view.FindName("ParentSearchBox")!).Text=$"#{species[0].Id:D4}";
             Assert.Equal(2,((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().Count());
             foreach(var name in new[]{"PickerCancelButton","PickerSaveButton","PickerNextButton","ParentSearchBox"}){
                 var control=(FrameworkElement)view.FindName(name)!;var point=control.TransformToAncestor(view).Transform(new Point());

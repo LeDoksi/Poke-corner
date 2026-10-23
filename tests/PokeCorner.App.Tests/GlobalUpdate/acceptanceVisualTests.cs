@@ -264,7 +264,6 @@ public class AcceptanceVisualTests
                     foreach (var pet in data.Individuals.Skip(1).Take(2))
                     {
                         ((TextBox)nursery.FindName("ParentSearchBox")).Text = pet.CurrentSpeciesId.ToString();
-                        ((WrapPanel)nursery.FindName("SpeciesGroupsPanel")).Children.OfType<Button>().Single(b => Equals(b.Tag, pet.CurrentSpeciesId)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         var candidates = (WrapPanel)nursery.FindName("PickerIndividualsPanel");
                         while (!candidates.Children.OfType<Button>().Any(b => Equals(b.Tag, pet.Id)))
                         {
@@ -345,8 +344,6 @@ public class AcceptanceVisualTests
                 foreach (var pet in data.Individuals.Skip(1).Take(2))
                 {
                     ((TextBox)nursery.FindName("ParentSearchBox")).Text = pet.CurrentSpeciesId.ToString();
-                    ((WrapPanel)nursery.FindName("SpeciesGroupsPanel")).Children.OfType<Button>().Single(b => Equals(b.Tag, pet.CurrentSpeciesId))
-                        .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     var candidates = (WrapPanel)nursery.FindName("PickerIndividualsPanel");
                     while (!candidates.Children.OfType<Button>().Any(b => Equals(b.Tag, pet.Id)))
                     {
@@ -490,8 +487,6 @@ public class AcceptanceVisualTests
             foreach (var pet in data.Individuals.Skip(1).Take(2))
             {
                 ((TextBox)nursery.FindName("ParentSearchBox")).Text = pet.CurrentSpeciesId.ToString();
-                ((WrapPanel)nursery.FindName("SpeciesGroupsPanel")).Children.OfType<Button>().Single(b => Equals(b.Tag, pet.CurrentSpeciesId))
-                    .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 var candidates = (WrapPanel)nursery.FindName("PickerIndividualsPanel");
                 while (!candidates.Children.OfType<Button>().Any(b => Equals(b.Tag, pet.Id)))
                 {
@@ -500,6 +495,13 @@ public class AcceptanceVisualTests
                 }
                 if (pet.Id == data.Individuals[1].Id)
                     Capture("nursery-select", MenuSection.Nursery, "800-individuals", (FrameworkElement)nursery.FindName("PickerSaveButton"));
+                // Capturing resizes the window, and the page holds three rows of its width, so look again.
+                ((TextBox)nursery.FindName("ParentSearchBox")).Text = ""; ((TextBox)nursery.FindName("ParentSearchBox")).Text = pet.CurrentSpeciesId.ToString();
+                while (!candidates.Children.OfType<Button>().Any(b => Equals(b.Tag, pet.Id)))
+                {
+                    Assert.True(((Button)nursery.FindName("PickerNextButton")).IsEnabled);
+                    Click(nursery, "PickerNextButton");
+                }
                 candidates.Children.OfType<Button>().Single(b => Equals(b.Tag, pet.Id)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
             Click(nursery, "PickerSaveButton");

@@ -384,7 +384,7 @@ public partial class ExpeditionView : UserControl
             PickerAvailableBox.IsChecked == true, PickerRouteBox.IsChecked == true, PickerSortBox.SelectedIndex);
         // D-17 tiles, same family as the Pokédex grid: sprite, name, level, plus the two facts a team
         // pick needs (route fit, trait). Pages hold three rows of whatever width the window gives.
-        var viewportWidth = PickerScroll.ActualWidth > 0 ? PickerScroll.ActualWidth : Math.Max(400, ActualWidth - 48);
+        var viewportWidth = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
         var columns = Math.Max(2, (int)((viewportWidth - 8) / 150));
         var width = Math.Floor((viewportWidth - 8) / columns) - 8;
         var pageSize = Math.Max(12, columns * 3);

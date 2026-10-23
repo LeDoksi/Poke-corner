@@ -34,7 +34,7 @@ public partial class NurseryView : UserControl
     private readonly Dictionary<string, ImageSource?> _itemArtCache = [];
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
     private Guid _first, _second, _draftFirst, _draftSecond;
-    private int? _choice, _group;
+    private int? _choice;
     private int _page, _pages = 1, _editing, _selectionGeneration, _lifetimeGeneration;
     private NurseryRequest? _pendingStart;
     private Guid _pendingHatchNest, _pendingHatchOperation, _dismissedResult;
@@ -133,8 +133,8 @@ public partial class NurseryView : UserControl
     }
     private void ChooseFirst_Click(object sender, RoutedEventArgs e) => OpenPicker(0);
     private void ChooseSecond_Click(object sender, RoutedEventArgs e) => OpenPicker(1);
-    private void DraftFirst_Click(object sender, RoutedEventArgs e) { _editing = 0; _group = null; _page = 0; RefreshPicker(); }
-    private void DraftSecond_Click(object sender, RoutedEventArgs e) { if (_draftFirst == Guid.Empty) return; _editing = 1; _group = null; _page = 0; RefreshPicker(); }
+    private void DraftFirst_Click(object sender, RoutedEventArgs e) { _editing = 0; _page = 0; RefreshPicker(); }
+    private void DraftSecond_Click(object sender, RoutedEventArgs e) { if (_draftFirst == Guid.Empty) return; _editing = 1; _page = 0; RefreshPicker(); }
     private void ClosePicker() { _pickerOpen = false; Refresh(); ChooseFirstButton.Focus(); }
     private void PickerCancel_Click(object sender, RoutedEventArgs e) => ClosePicker();
     private void PickerSave_Click(object sender, RoutedEventArgs e)
@@ -163,12 +163,6 @@ public partial class NurseryView : UserControl
     private void ParentFilter_Changed(object sender, RoutedEventArgs e)
     {
         if (!_pickerOpen) return;
-        _page = 0;
-        RefreshPicker();
-    }
-    private void BackToGroups_Click(object sender, RoutedEventArgs e)
-    {
-        _group = null;
         _page = 0;
         RefreshPicker();
     }
@@ -227,51 +221,22 @@ public partial class NurseryView : UserControl
             (_editing == 0 || (p.Id != _draftFirst && partners.Contains(p.CurrentSpeciesId) && Unavailable(data, p) == null)))
             .OrderBy(p => p.CurrentSpeciesId).ThenBy(p => p.CaughtAtUtc).ThenBy(p => p.Id).ToArray();
 
-        var groups = rows.GroupBy(p => p.CurrentSpeciesId).ToArray();
-
-        SpeciesGroupsPanel.Children.Clear();
+        // Georgy 23.10: duplicates are rare (1-2 per species), so the species step was an extra click;
+        // the picker lists individuals straight away, narrowed by search, rarity and shiny.
         PickerIndividualsPanel.Children.Clear();
-
-        SpeciesGroupsPanel.Visibility = _group is null ? Visibility.Visible : Visibility.Collapsed;
-
-        PickerIndividualsPanel.Visibility = _group is null ? Visibility.Collapsed : Visibility.Visible;
-
-        BackToGroupsButton.Visibility = _group is null ? Visibility.Collapsed : Visibility.Visible;
-
-        var individuals = rows.Where(p => p.CurrentSpeciesId == _group).ToArray();
-
-        var count = _group is null ? groups.Length : individuals.Length;
+        PickerIndividualsPanel.Visibility = Visibility.Visible;
+        var individuals = rows;
+        var count = individuals.Length;
         // D-17 tiles, same family as the Pokédex grid; pages hold three rows of the available width.
-        var viewport = PickerScroll.ActualWidth > 0 ? PickerScroll.ActualWidth : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50);
+        var viewport = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
         var columns = Math.Max(2, (int)((viewport - 8) / 150));
         var width = Math.Floor((viewport - 8) / columns) - 8;
-        var size = Math.Max(_group is null ? 24 : 12, columns * 3);
+        var size = Math.Max(12, columns * 3);
 
         _pages = Math.Max(1, (count + size - 1) / size);
         _page = Math.Clamp(_page, 0, _pages - 1);
 
-        if (_group is null) foreach (var group in groups.Skip(_page * size).Take(size))
-            {
-                var id = group.Key;
-
-                var content = new StackPanel();
-                content.Children.Add(new Image { Source = Sprite(id, group.All(p => p.IsShiny)), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
-                content.Children.Add(new TextBlock { Text = SpeciesName(id), FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
-                content.Children.Add(new TextBlock { Text = $"#{id:D4} · ×{group.Count()}", FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
-
-                var button = new Button { Tag = id, Content = content, Width = width, MinHeight = 110, Margin = new Thickness(4), Padding = new Thickness(8), HorizontalContentAlignment = HorizontalAlignment.Stretch, Style = (Style)FindResource("SecondaryButtonStyle"), ToolTip = $"№{id:D4} · {SpeciesName(id)} · экземпляров: {group.Count()}" };
-
-                button.Click += (_, _) =>
-                {
-                    _group = id;
-                    _page = 0;
-                    RefreshPicker();
-                    PickerScroll.ScrollToTop();
-                };
-                SpeciesGroupsPanel.Children.Add(button);
-
-            }
-        else foreach (var p in individuals.Skip(_page * size).Take(size))
+        foreach (var p in individuals.Skip(_page * size).Take(size))
             {
                 var reason = Unavailable(data, p);
                 var row = new StackPanel();
@@ -297,7 +262,7 @@ public partial class NurseryView : UserControl
                         _draftFirst = p.Id;
                         if (!PairValid(_snapshot(), _draftFirst, _draftSecond)) _draftSecond = Guid.Empty;
                         _editing = 1;
-                        _group = null;
+                       
                         _page = 0;
                         ParentSearchBox.Text = "";
                     }
@@ -309,7 +274,7 @@ public partial class NurseryView : UserControl
                 PickerIndividualsPanel.Children.Add(button);
 
             }
-        PickerCountText.Text = $"{(_editing == 0 ? "Первый" : "Второй")} родитель · экземпляров: {rows.Length} · видов: {groups.Length}";
+        PickerCountText.Text = $"{(_editing == 0 ? "Первый" : "Второй")} родитель · найдено {rows.Length}";
 
         PickerPageText.Text = $"{_page + 1} / {_pages}";
         PickerPreviousButton.IsEnabled = _page > 0;

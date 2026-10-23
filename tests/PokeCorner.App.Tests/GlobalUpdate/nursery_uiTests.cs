@@ -50,14 +50,13 @@ public sealed partial class NurseryUiTests
 
     private static Button ShowIndividual(NurseryView view, Guid id)
     {
-        var back=(Button)view.FindName("BackToGroupsButton")!;
-        if(back.Visibility==Visibility.Visible) back.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-        foreach(var group in ((WrapPanel)view.FindName("SpeciesGroupsPanel")!).Children.OfType<Button>().ToArray())
+        var panel=(WrapPanel)view.FindName("PickerIndividualsPanel")!;var next=(Button)view.FindName("PickerNextButton")!;
+        while(true)
         {
-            group.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            var found=((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().FirstOrDefault(b=>Equals(b.Tag,id));
+            var found=panel.Children.OfType<Button>().FirstOrDefault(b=>Equals(b.Tag,id));
             if(found is not null)return found;
-            back.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if(!next.IsEnabled)break;
+            next.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
         throw new InvalidOperationException("Exact specimen absent from this picker page.");
     }
@@ -80,6 +79,21 @@ public sealed partial class NurseryUiTests
             }
         }
         return Labels((DependencyObject)view.FindName("OutcomePanel"));
+    }
+
+    [Fact]
+    public void ParentPickerTilesFillTheAvailableWidthAfterResize()
+    {
+        WpfTestHost.Run(() => {
+            var (data, _, _) = State(); for (var i = 0; i < 40; i++) data.Individuals.Add(Individual(data.Individuals[0].CurrentSpeciesId));
+            var view = View(data); WpfTestHost.Layout(view, 860, 760);
+            ((Button)view.FindName("ChooseFirstButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            WpfTestHost.Layout(view, 860, 760); WpfTestHost.Layout(view, 1064, 660);
+            var scroll = (ScrollViewer)view.FindName("PickerScroll")!;
+            var tiles = ((WrapPanel)view.FindName("PickerIndividualsPanel")!).Children.OfType<Button>().ToArray();
+            var rowWidth = tiles.TakeWhile(t => Math.Abs(t.TranslatePoint(new Point(), scroll).Y - tiles[0].TranslatePoint(new Point(), scroll).Y) < 1).Sum(t => t.ActualWidth + 8);
+            Assert.True(scroll.ActualWidth - rowWidth < 150, $"row {rowWidth} leaves a gap in {scroll.ActualWidth}");
+        });
     }
 
     [Fact]
