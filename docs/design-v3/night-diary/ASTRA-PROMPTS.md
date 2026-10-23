@@ -2,6 +2,14 @@
 
 Статус: 23.10.2026. Астра только генерирует картинки (D-01). Claude проверяет результат по критериям ниже и сам встраивает в приложение.
 
+## Что мы делаем (прочитай перед работой)
+
+PokéCorner — уютное приложение-компаньон для Windows. Маленький покемон живёт в углу рабочего стола поверх окон, а в окне приложения тренер ухаживает за ним, собирает коллекцию (до сотен питомцев), отправляет команду в экспедиции, выводит потомство в питомнике и покупает мелочи в магазине. Спрайты покемонов берутся из готового каталога и в картинки не рисуются.
+
+Сейчас приложение переодевается в стиль «Ночной дневник тренера»: тёмный чернильно-сливовый интерфейс, мягкий лавандовый текст, тёплые абрикосовые акценты, ночные сцены с глубиной, на полях — рукописные заметки и зарисовки тренера. Ощущение — вечер, уют, тихое приключение. Ночь и уют относятся к оболочке; отдельные места могут быть суровыми или тревожными (вулкан, руины).
+
+Твоя роль — только картинки: сцены, фоны, иконки. Интерфейс, текст и кнопки рисует приложение поверх, поэтому в картинках не должно быть ни текста, ни элементов интерфейса, ни покемонов. Каждая картинка будет обрезаться под разные размеры окна (от 1200×660 до развёрнутого FullHD), поэтому важное держи там, где указано в задании. Claude проверит каждую картинку по критериям и, если что-то не так, пришлёт исправленный промпт.
+
 ## Куда сохранять
 
 Все результаты кладём в одну папку-приёмник, по подпапке на пакет:
@@ -113,9 +121,26 @@ Single icon of a pet treat: a small bone-shaped biscuit or round cookie with a p
 
 ---
 
-## Пакет 4 — ночной питомник (НЕ запускать до ок Georgy)
+## Пакет 4 — ночной питомник, три состояния (ок Georgy 23.10)
 
-Найдено при сквозной проверке: картинка питомника (`nursery.png`, `nursery-waiting.png`, `nursery-ready.png`, 2048×768) — дневная оранжерея, на ночном экране выглядит так же чужеродно, как дневная комната уголка. В решениях её пока нет. Если Georgy согласится — три ночных состояния той же композиции (пустое гнездо / яйцо ждёт / яйцо готово), PNG 2048×768, в `astra-inbox\nursery\`. Промпты подготовлю после решения.
+Где используется: шапка экрана «Питомник». Сейчас там дневная оранжерея (`docs\design-v2\ui-system\assets\nursery.png`, `nursery-waiting.png`, `nursery-ready.png`) — на ночном экране она чужеродна. Нужна ночная версия той же композиции в трёх состояниях; приложение переключает их по ходу ожидания.
+
+- Референсы композиции (приложить): три текущих файла по путям выше.
+- PNG, 2048×768 px, без прозрачности; первые две картинки совпадают по камере и предметам, отличается только содержимое гнезда; третья — ближний план того же гнезда.
+- Главное — гнездо — в центре кадра; края могут обрезаться.
+- Сохранить в `astra-inbox\nursery\`: `nursery-night.png`, `nursery-night-waiting.png`, `nursery-night-ready.png`.
+
+Общая часть для всех трёх (после общего стиля):
+```
+Night version of the attached greenhouse nursery, keeping the same composition and camera: wooden potting bench across the frame, woven straw nest in the center of the bench, watering can and clay pots on the left, flower pots and a brass lantern on the right, large mullioned windows behind. It is late night: outside the windows a dark indigo sky with stars and a soft moon over distant hills, no daylight, no blue sky. The room is lit by the warm lantern (apricot glow) and cool moonlight through the windows, plants in deep shadow with a few lavender highlights. Calm, cozy, quiet. Keep the nest area clearly lit and readable.
+```
+
+Различия:
+- **nursery-night.png** — `The nest is empty.`
+- **nursery-night-waiting.png** — `A large pale speckled egg rests in the nest, softly lit by the lantern.`
+- **nursery-night-ready.png** — `Closer framing on the nest; the same speckled egg has a fresh crack with a faint warm glow leaking from it and a few tiny sparkles around. Nothing hatching yet, no creature visible.`
+
+Приёмка: первые две картинки совпадают по камере (наложение без сдвига мебели), ночь читается, гнездо в центре светлое, никакого существа и неизвестного покемона не видно.
 
 ## Позже
 
