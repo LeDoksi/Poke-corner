@@ -282,7 +282,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     // Below grid + page width (only in narrow test hosts; the window minimum is 1200) the page overlays the grid as before.
     private bool MasterDetail => ActualWidth >= 1000 &&
-        ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectedIndex == 1 && IndividualsPane.Visibility == Visibility.Visible;
+        ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectedIndex == 1;
 
     // D-17: the grid owns the full width while nothing is open; an open pet page takes the right
     // edge and the grid narrows beside it (no tile is hidden under the page), keeping the picked
@@ -298,10 +298,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             DetailOverlay.Width = double.NaN;
             DetailOverlay.Margin = new Thickness(0);
             DetailOverlay.BorderThickness = new Thickness(0);
+            SpeciesDialog.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            SpeciesDialog.Width = double.NaN;
             DetailBackButton.Content = "К покедексу";
             return;
         }
-        var open = DetailOverlay.Visibility == Visibility.Visible;
+        var open = DetailOverlay.Visibility == Visibility.Visible || SpeciesDialog.Visibility == Visibility.Visible;
         var page = Math.Clamp(width * 0.5, PageMin, PageMax);
         ArrangeFilters(open && width - page < 780);
         var pageSize = Math.Max(16, (int)((width - 40) / TileMin) * 6);
@@ -316,6 +318,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailOverlay.Width = page;
         DetailOverlay.Margin = new Thickness(0);
         DetailOverlay.BorderThickness = new Thickness(1, 0, 0, 0);
+        SpeciesDialog.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+        SpeciesDialog.Width = page;
         DetailBackButton.Content = "✕";
         HighlightSelectedRow();
         if (open) Dispatcher.BeginInvoke(() => Rows(PokedexGrid).FirstOrDefault(r => Equals(r.Tag, _detailCard?.IndividualId))?.BringIntoView(),
@@ -499,20 +503,25 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _selectedSpeciesId = card.Entry.SpeciesId;
         ShowSpeciesDetail(card.Entry);
         SpeciesDialog.Visibility = Visibility.Visible;
+        SpeciesPageScroll.ScrollToTop();
+        LayoutMasterDetail();
     }
 
     private void ShowSpeciesDetail(PokedexSpeciesEntry? entry)
     {
         SpeciesDetail.Visibility = entry is null ? Visibility.Collapsed : Visibility.Visible;
         if (entry is null) return;
-        SpeciesDetailName.Text = entry.IsDiscovered ? $"{entry.Number} · {entry.DisplayName}" : entry.Number;
-        SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : _speciesPaths is null ? entry.RouteHint : "Вид ещё не открыт. Вот как его можно получить:";
-        SpeciesDetailTypes.Text = entry.IsDiscovered ? string.Join(" · ", entry.Types.Select(TypeDisplay.GetLabel)) : string.Empty;
+        SpeciesDetailName.Text = entry.IsDiscovered ? entry.DisplayName ?? entry.Number : "Неизвестный вид";
+        SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : _speciesPaths is null ? entry.RouteHint : "";
+        SpeciesDetailTypes.Text = string.Join(" · ", new[] { entry.Number }.Concat(entry.IsDiscovered ? entry.Types.Select(TypeDisplay.GetLabel) : []));
+        RenderSpeciesForms(entry.SpeciesId);
         SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-        SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : "Мои экземпляры";
+        SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : $"Мои экземпляры · {entry.OwnedIndividuals.Count}";
         SpeciesOwnedList.ItemsSource = entry.OwnedIndividuals.Select(i => new IndividualChoice(i.IndividualId,
             string.Join(" · ", new[] { i.Nickname ?? entry.DisplayName, $"ур. {i.Level}", i.IsBusy ? "занят" : i.IsActive ? "на столе" : null,
-                "пойман " + FormatCaughtDate(i.CaughtAtUtc), i.IsShiny ? "шайни" : null }.Where(x => x is not null))))
+                "пойман " + FormatCaughtDate(i.CaughtAtUtc), i.IsShiny ? "шайни" : null }.Where(x => x is not null)),
+            GetPackageSprite(entry.SpeciesId, i.IsShiny), i.Nickname ?? entry.DisplayName ?? entry.Number,
+            $"Ур. {i.Level}" + (i.IsShiny ? " · шайни" : "") + (i.IsBusy ? " · занят" : i.IsActive ? " · на столе" : "")))
             .ToList();
         RenderSpeciesPaths(entry);
     }
@@ -559,6 +568,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             var missing = new[] { pair.FirstParentId, pair.SecondParentId }.Where(id => !owned.Contains(id)).Distinct().ToArray();
             var detail = missing.Length == 0 ? "Откроет питомник с этой парой" : "Не хватает: " + string.Join(", ", missing.Select(id => $"#{id:D4}"));
             var button = Action($"Питомник: {pair.Label}", detail, _openPair is not null && missing.Length == 0, detail);
+            var faces = new StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 10, 0) };
+            faces.Children.Add(SpeciesPicture(pair.FirstParentId, false, 40));
+            faces.Children.Add(new TextBlock { Text = "+", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(4, 0, 4, 0), Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
+            faces.Children.Add(SpeciesPicture(pair.SecondParentId, false, 40));
+            var label = (UIElement)button.Content; button.Content = null; var row = new DockPanel(); DockPanel.SetDock(faces, Dock.Left); row.Children.Add(faces); row.Children.Add(label);
+            button.Content = row;
             button.Click += (_, _) =>
             {
                 var reason = _openPair?.Invoke(pair.FirstParentId, pair.SecondParentId);
@@ -595,7 +610,47 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         return true;
     }
 
-    private sealed record IndividualChoice(Guid IndividualId, string Label);
+    private sealed record IndividualChoice(Guid IndividualId, string Label, ImageSource? Sprite = null, string Title = "", string Meta = "");
+
+    // A species or parent picture by the Pokédex's reveal rule: the sprite once that form is known,
+    // a flat silhouette where the grid already shows one, otherwise a question mark.
+    private FrameworkElement SpeciesPicture(int speciesId, bool shiny, double size)
+    {
+        var entry = SpeciesLookup(shiny).GetValueOrDefault(speciesId);
+        var sprite = GetPackageSprite(speciesId, shiny);
+        if (entry is { IsDiscovered: true } && sprite is not null)
+        {
+            var image = new System.Windows.Controls.Image { Source = sprite, Width = size, Height = size };
+            System.Windows.Media.RenderOptions.SetBitmapScalingMode(image, System.Windows.Media.BitmapScalingMode.NearestNeighbor);
+            return image;
+        }
+        if (entry is { HasSilhouette: true } && GetPackageSprite(speciesId, false) is { } shape)
+            return new Border { Width = size, Height = size, Background = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Opacity = 0.7,
+                OpacityMask = new System.Windows.Media.ImageBrush(shape) { Stretch = System.Windows.Media.Stretch.Uniform } };
+        return new TextBlock { Text = "?", Width = size, Height = size, FontSize = size * 0.45, TextAlignment = TextAlignment.Center,
+            Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Padding = new Thickness(0, size * 0.2, 0, 0) };
+    }
+
+    private Dictionary<int, PokedexSpeciesEntry>? _normalLookup, _shinyLookup;
+    private Dictionary<int, PokedexSpeciesEntry> SpeciesLookup(bool shiny) => shiny
+        ? _shinyLookup ??= _viewModel.GetSpeciesEntries(true).ToDictionary(e => e.SpeciesId)
+        : _normalLookup ??= _viewModel.GetSpeciesEntries(false).ToDictionary(e => e.SpeciesId);
+
+    private void RenderSpeciesForms(int speciesId)
+    {
+        _normalLookup = _shinyLookup = null;
+        SpeciesForms.Children.Clear();
+        foreach (var shiny in new[] { false, true })
+        {
+            var known = SpeciesLookup(shiny).GetValueOrDefault(speciesId)?.IsDiscovered == true;
+            var panel = new StackPanel { Margin = new Thickness(0, 0, 8, 0) };
+            var well = new Border { Style = (Style)FindResource("WellStyle"), Height = 132, Child = SpeciesPicture(speciesId, shiny, 104) };
+            panel.Children.Add(well);
+            panel.Children.Add(new TextBlock { Text = (shiny ? "Шайни-форма" : "Обычная форма") + (known ? "" : " · не открыта"),
+                Style = (Style)FindResource("CaptionTextStyle"), HorizontalAlignment = System.Windows.HorizontalAlignment.Center, Margin = new Thickness(0, 4, 0, 0) });
+            SpeciesForms.Children.Add(panel);
+        }
+    }
     private sealed record SpeciesCard(PokedexSpeciesEntry Entry, ImageSource? SpriteImage)
     {
         public string Number => Entry.Number;
@@ -1712,6 +1767,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesDialog.Visibility = Visibility.Collapsed;
         _selectedSpeciesId = null;
         SpeciesGrid.SelectedIndex = -1;
+        LayoutMasterDetail();
     }
     private void SpeciesWhere_Click(object sender, RoutedEventArgs e)
     {
