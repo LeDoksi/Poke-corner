@@ -1,0 +1,10 @@
+Date: 2026-10-23 (Europe/Moscow)
+Tool: built-in image_gen
+Source: C:\Users\Georgy\.codex\generated_images\01a167f7-ef2e-7582-b533-37a37c2c45a1\exec-eeea5dc4-883d-4016-8748-f9cb6c10a400.png
+Requested size: 512x512
+
+Night Diary style for a cozy desktop Pokémon companion app. High-quality hand-placed pixel painting with deliberate clusters, no blurry upscaling, no dithering noise, crisp 1px pixel edges. Night lighting with depth in three planes (close foreground, middle, far). Palette anchored on deep ink-blue and plum darks (#101426, #16192B, #23253C), soft lavender light (#C4ABF0) and warm apricot accents (#FFB574) where the scene has a light source. No text, no letters, no UI, no buttons, no frames, no Pokémon, no people, no trophies. Style reference: the attached grove-environment.png.
+
+Single bold icon for pet "care": one large chunky pink-red heart cradled from below by an open lavender hand, the heart fills about 60% of the frame and the whole icon fills 85% of the canvas. Pixel art with big readable shapes and a thick dark outline, one small highlight on the heart. No sparkles, no stars, no extra particles, no thin details. Must read instantly at 24x24 px on dark and light backgrounds. Transparent background, centered, no text.
+
+Edit target: image 1 is the rejected care icon. Replace its composition with the corrected proportions above. Make the heart overwhelmingly dominant, about 75% of canvas width and 65% of canvas height. The lavender hand is a compact shallow supporting palm below the heart, not a tall wide hand competing with it. Heart and hand together occupy 85% of canvas width and height. Reduce empty margins to about 7.5%. Absolutely remove ALL floating sparkles and detached dots. Use a saturated rosy red-pink heart, a thick deep-plum outline and only one small highlight. Image 2 is solely a pixel painting style/palette reference; do NOT draw a grove or environment. Icon request overrides environmental framing: just one isolated icon, real alpha transparency. Output exactly 512 x 512 pixels, PNG.

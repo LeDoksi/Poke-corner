@@ -49,7 +49,7 @@ public sealed class RussianFactsTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void HiddenSelectedFormDoesNotRevealFactAndOwnedFormsShareIt(bool ownedShiny) => WpfTestHost.Run(() =>
+    public void SpeciesCaughtInEitherFormShowsFactAndOwnedFormsShareIt(bool ownedShiny) => WpfTestHost.Run(() =>
     {
         var state = new AppState();
         var pet = new PokemonIndividual { SpeciesId = 1, CurrentSpeciesId = 1, FamilyRootId = 1, ReachedSpeciesIds = [1],
@@ -60,15 +60,11 @@ public sealed class RussianFactsTests
         var view = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
             () => {}, () => {}, () => {}, () => null, () => false, () => false);
         ((Button)view.FindName("SpeciesModeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        ((RadioButton)view.FindName(ownedShiny ? "SpeciesNormalToggle" : "SpeciesShinyToggle")).IsChecked = true;
         var grid = (ListBox)view.FindName("SpeciesGrid"); grid.SelectedIndex = 0;
         var fact = CollectionPresentation.Fact(1); Assert.NotNull(fact);
         Assert.Equal(fact, vm.GetSpeciesEntries(ownedShiny).Single().DescriptionRu);
-        Assert.NotEqual(fact, ((TextBlock)view.FindName("SpeciesDetailDescription")).Text);
         var closed = vm.GetSpeciesEntries(!ownedShiny).Single(); Assert.Null(closed.DescriptionRu);
         Assert.False(CollectionViewModel.MatchesSpeciesSearch(closed, fact));
-        ((RadioButton)view.FindName(ownedShiny ? "SpeciesShinyToggle" : "SpeciesNormalToggle")).IsChecked = true;
-        grid.SelectedIndex = 0;
         Assert.Equal(fact, ((TextBlock)view.FindName("SpeciesDetailDescription")).Text);
         Assert.True(view.OpenIndividual(pet.Id));
         Assert.Equal(fact, ((TextBlock)view.FindName("DetailDescriptionText")).Text);

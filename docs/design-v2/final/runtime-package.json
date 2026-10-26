@@ -346,14 +346,14 @@
     {
       "path": "docs/design-v2/art-production/last-attempt/final-assets/assets/room-master.png",
       "target": "art-production/last-attempt/final-assets/assets/room-master.png",
-      "bytes": 1646141,
-      "sha256": "8165205927e69036306b74d687f1ef8105b0952bf90a9c6b493f80eb4b69f155"
+      "bytes": 1577979,
+      "sha256": "8dbcf89310735b0b0fb24aa24f42b312bd0550efa2f85fc93026d205ac174e90"
     },
     {
       "path": "docs/design-v2/art-production/last-attempt/final-assets/assets/shelf-frontlip.png",
       "target": "art-production/last-attempt/final-assets/assets/shelf-frontlip.png",
-      "bytes": 10644,
-      "sha256": "e04413049ed2392d9c4cc8bcaa96ccb3b7007f43366f198832fe35b439ce80e1"
+      "bytes": 4293,
+      "sha256": "0655f93148f619c362bb3c851c6baf084057124ce087a1f7a2b4463985297bc9"
     },
     {
       "path": "docs/design-v2/art-production/last-attempt/final-assets/assets/trophies/trophy-care-1.png",

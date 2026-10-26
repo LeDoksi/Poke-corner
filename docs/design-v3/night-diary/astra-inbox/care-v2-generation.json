@@ -1,0 +1,13 @@
+﻿{
+    "name":  "care-v2",
+    "folder":  "icons",
+    "width":  1254,
+    "height":  1254,
+    "expectedWidth":  512,
+    "expectedHeight":  512,
+    "sizePass":  false,
+    "pixelFormat":  "Format32bppArgb",
+    "cornerAlpha":  0,
+    "sha256":  "FCD2DD92A30FFD17D05A72758375863C21F2C052BAFBEDA646B20CF0B5294383",
+    "source":  "C:\\Users\\Georgy\\.codex\\generated_images\\01a167f7-ef2e-7582-b533-37a37c2c45a1\\exec-eeea5dc4-883d-4016-8748-f9cb6c10a400.png"
+}

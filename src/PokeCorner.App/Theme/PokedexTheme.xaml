@@ -568,23 +568,13 @@
         </Setter>
     </Style>
 
-    <!-- Treat: a cookie. One EvenOdd Path — the chips are counter-wound holes punched out of
-         the disc, so they read as chips against whatever surface is behind, with no second
-         colour needed. -->
+    <!-- Treat: the painted Night Diary bone (ui-system/assets/treat.png). Foreground is
+         ignored; the icon carries its own colours and outline, readable on both surfaces. -->
     <Style x:Key="TreatIconStyle" TargetType="ContentControl" BasedOn="{StaticResource ProgressIconStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContentControl">
-                    <Viewbox Stretch="Uniform">
-                        <Grid Width="16" Height="16">
-                            <Path Fill="{TemplateBinding Foreground}"
-                                  Data="F0 M1,8 A7,7 0 1 0 15,8 A7,7 0 1 0 1,8 Z
-                                        M4.6,6.4 A1.35,1.35 0 1 0 7.3,6.4 A1.35,1.35 0 1 0 4.6,6.4 Z
-                                        M9.1,9.5 A1.35,1.35 0 1 0 11.8,9.5 A1.35,1.35 0 1 0 9.1,9.5 Z
-                                        M5.7,10.7 A1.1,1.1 0 1 0 7.9,10.7 A1.1,1.1 0 1 0 5.7,10.7 Z
-                                        M9.6,4.9 A1.05,1.05 0 1 0 11.7,4.9 A1.05,1.05 0 1 0 9.6,4.9 Z" />
-                        </Grid>
-                    </Viewbox>
+                    <Image Source="/PokeCorner;component/Assets/UiSystem/treat.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

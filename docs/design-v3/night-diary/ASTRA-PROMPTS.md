@@ -163,3 +163,10 @@ Night version of the attached greenhouse nursery, keeping the same composition a
 Single bold icon for pet "care": one large chunky pink-red heart cradled from below by an open lavender hand, the heart fills about 60% of the frame and the whole icon fills 85% of the canvas. Pixel art with big readable shapes and a thick dark outline, one small highlight on the heart. No sparkles, no stars, no extra particles, no thin details. Must read instantly at 24x24 px on dark and light backgrounds. Transparent background, centered, no text.
 ```
 Приёмка: на 24 px сердце занимает большую часть значка, читается на тёмном и светлом фоне.
+
+## Приёмка 26.10
+
+- **care-v2.png** — принят: на 24 px сердце занимает значок и читается на обоих фонах. Встроен вместе с `treat.png` (96 px в `ui-system/assets/`): кнопки «Погладить» и «Покормить», кольцо лакомства, заголовки ухода и лакомств.
+- **room-night.png** — встроен масштабированием до 1448×582: опоры трофеев и передний край полки совпали со старыми координатами, трофеи стоят на полке.
+
+Открытых заказов у Астры нет.

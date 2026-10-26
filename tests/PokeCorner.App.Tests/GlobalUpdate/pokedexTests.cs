@@ -273,7 +273,7 @@ public class PokedexTests
         Assert.Equal(3, grid.Items.Count);
         grid.SelectedIndex = 0;
         WpfTestHost.Layout(view, 420, 420);
-        Assert.Single(((ItemsControl)view.FindName("SpeciesOwnedList")).Items);
+        Assert.Equal(2, ((ItemsControl)view.FindName("SpeciesOwnedList")).Items.Count); // both forms on one page
         Assert.True(view.OpenIndividual(second.Id));
         Assert.Equal(second.Id, view.SelectedIndividualId);
         WpfTestHost.Layout(view, 320, 420);

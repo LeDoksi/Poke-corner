@@ -33,7 +33,7 @@
         </Grid>
         <UniformGrid Grid.Row="2" Columns="3" Margin="24,14,24,8">
             <StackPanel Margin="0,0,16,0">
-                <TextBlock Text="Уход для эволюции" FontWeight="Bold" />
+                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Уход для эволюции" FontWeight="Bold" VerticalAlignment="Center" /></StackPanel>
                 <TextBlock x:Name="CareText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
                 <ProgressBar x:Name="CareBar" Maximum="1" Height="7" Margin="0,6,0,0" />
             </StackPanel>
@@ -43,7 +43,7 @@
                 <ProgressBar x:Name="CatchBar" Maximum="1" Height="7" Margin="0,6,0,0" />
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="Лакомства" FontWeight="Bold" />
+                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/treat.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Лакомства" FontWeight="Bold" VerticalAlignment="Center" /></StackPanel>
                 <TextBlock x:Name="TreatText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
                 <ProgressBar x:Name="TreatBar" Maximum="1" Height="7" Margin="0,6,0,0" />
             </StackPanel>

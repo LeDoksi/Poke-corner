@@ -49,7 +49,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private bool _detailPending;
     // Initial construction supports standalone fixtures; after Unloaded only Loaded resumes presentation.
     private bool _presentationSuspended;
-    private bool _speciesShiny;
+    private HashSet<int> _shinyOnlySpecies = [];
     private (Guid Pet, int? Branch, Guid Operation)? _pendingEvolution;
     private (Guid Pet, Guid Operation)? _pendingRehome;
     private readonly Dictionary<(Guid Pet, string Item), Guid> _pendingItems = new();
@@ -433,7 +433,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void RefreshSpecies()
     {
         if (!_isReady) return;
-        var all = _viewModel.GetSpeciesEntries(_speciesShiny);
+        var all = SpeciesEntries();
         var types = all.Where(e => e.IsDiscovered).SelectMany(e => e.Types).Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(typeName => typeName, StringComparer.OrdinalIgnoreCase).ToArray();
         var typeSignature = string.Join("|", types);
@@ -461,14 +461,32 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
         SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
         var page = visible.Skip(_speciesPageIndex * SpeciesPageSize).Take(SpeciesPageSize).ToList();
-        var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{_speciesShiny}|" +
+        var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|" +
             string.Join("|", page.Select(e => $"{e.SpeciesId}:{e.IsDiscovered}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
         if (signature != _speciesSignature)
         {
             _speciesSignature = signature;
-            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId, _speciesShiny))).ToList();
+            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId, _shinyOnlySpecies.Contains(e.SpeciesId)))).ToList();
         }
         if (_selectedSpeciesId is { } id) ShowSpeciesDetail(all.FirstOrDefault(e => e.SpeciesId == id));
+    }
+
+    // One Pokédex for both forms (Georgy 26.10): the species page shows normal and shiny side by
+    // side, so the grid needs no form toggle. A species is open if either form was caught; a
+    // shiny-only species shows its shiny sprite, since that is the one the player has seen.
+    private IReadOnlyList<PokedexSpeciesEntry> SpeciesEntries()
+    {
+        var shiny = _viewModel.GetSpeciesEntries(true);
+        var shinyOnly = new HashSet<int>();
+        var merged = _viewModel.GetSpeciesEntries(false).Select((normal, i) =>
+        {
+            var other = shiny[i];
+            var useShiny = !normal.IsDiscovered && other.IsDiscovered;
+            if (useShiny) shinyOnly.Add(normal.SpeciesId);
+            return (useShiny ? other : normal) with { OwnedIndividuals = [.. normal.OwnedIndividuals, .. other.OwnedIndividuals] };
+        }).ToList();
+        _shinyOnlySpecies = shinyOnly;
+        return merged;
     }
 
     private ImageSource? GetPackageSprite(int speciesId, bool isShiny = false)
@@ -1737,13 +1755,6 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private static string FormatCaughtDate(DateTimeOffset caughtAtUtc) =>
         caughtAtUtc.ToLocalTime().ToString("dd.MM.yyyy", CultureInfo.CurrentCulture);
 
-    private void SpeciesForm_Changed(object sender, RoutedEventArgs e)
-    {
-        if (!_isReady) return;
-        _speciesShiny = SpeciesShinyToggle.IsChecked == true;
-        _selectedSpeciesId = null; SpeciesDialog.Visibility = Visibility.Collapsed;
-        _speciesPageIndex = 0; _speciesSignature = string.Empty; RefreshSpecies();
-    }
     private void IndividualType_Changed(object sender, SelectionChangedEventArgs e) => IndividualExtraFilter_Changed(sender, e);
     private void DetailBack_Click(object sender, RoutedEventArgs e)
     {
@@ -1772,9 +1783,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void SpeciesWhere_Click(object sender, RoutedEventArgs e)
     {
         if (sender is not System.Windows.Controls.Button { Tag: int id }) return;
-        var entry = _viewModel.GetSpeciesEntries(_speciesShiny).FirstOrDefault(x => x.SpeciesId == id);
+        var entry = SpeciesEntries().FirstOrDefault(x => x.SpeciesId == id);
         _selectedSpeciesId = id; ShowSpeciesDetail(entry); SpeciesDialog.Visibility = Visibility.Visible;
-        if (entry is not null && _speciesPaths is null) SpeciesDetailDescription.Text = _whereFind?.Invoke(id, _speciesShiny) ?? entry.RouteHint;
+        if (entry is not null && _speciesPaths is null) SpeciesDetailDescription.Text = _whereFind?.Invoke(id, _shinyOnlySpecies.Contains(id)) ?? entry.RouteHint;
     }
     private Task<bool> ConfirmAsync(string title, string body, string caption, bool destructive = false)
     {

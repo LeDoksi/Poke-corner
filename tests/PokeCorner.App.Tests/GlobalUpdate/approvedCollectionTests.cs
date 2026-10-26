@@ -41,7 +41,7 @@ public sealed class ApprovedCollectionTests
         var view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
             () => {}, () => {}, () => {}, () => null, () => false, () => false);
         WpfTestHost.Layout(view, width - 190, height - 150);
-        Assert.NotNull(view.FindName("SpeciesShinyToggle"));
+        Assert.Null(view.FindName("SpeciesShinyToggle"));
         Assert.NotNull(view.FindName("DuplicatesFilterToggle"));
         Assert.NotNull(view.FindName("IndividualTypeCombo"));
         Assert.True(view.OpenIndividual(pet.Id));
@@ -271,7 +271,6 @@ public sealed class ApprovedCollectionTests
         var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], species: species);
         var view = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())), () => {}, () => {}, () => {}, () => null, () => false, () => false);
         ((Button)view.FindName("SpeciesModeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        ((RadioButton)view.FindName(shiny ? "SpeciesShinyToggle" : "SpeciesNormalToggle")).IsChecked = true;
         ((TextBox)view.FindName("SpeciesSearchBox")).Text = "#00";
         ((Button)view.FindName("SpeciesNextButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         var grid = (ListBox)view.FindName("SpeciesGrid"); var originalItems = grid.ItemsSource; var page = ((TextBlock)view.FindName("SpeciesPageText")).Text;
@@ -294,7 +293,7 @@ public sealed class ApprovedCollectionTests
             else typeof(CollectionView).GetMethod("SpeciesBack_Click", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(view, [view, new RoutedEventArgs()]);
             Assert.Equal(Visibility.Collapsed, ((Border)view.FindName("SpeciesDialog")).Visibility); view.Refresh();
             Assert.Same(originalItems, grid.ItemsSource); Assert.Equal(page, ((TextBlock)view.FindName("SpeciesPageText")).Text);
-            Assert.Equal(shiny, ((RadioButton)view.FindName("SpeciesShinyToggle")).IsChecked == true); Assert.Equal("#00", ((TextBox)view.FindName("SpeciesSearchBox")).Text);
+            Assert.Equal("#00", ((TextBox)view.FindName("SpeciesSearchBox")).Text);
         }
     });
 
