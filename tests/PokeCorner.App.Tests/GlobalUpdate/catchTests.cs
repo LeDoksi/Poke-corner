@@ -155,13 +155,14 @@ public sealed class CatchTests
     public async Task ExpeditionEncounterResultLeadsBackToExpeditions()
     {
         var state = State("expedition"); var selected = state.Encounters[0].Id;
-        var backs = 0; var opened = 0; CatchView view = null!;
+        var backs = 0; var opened = 0; var clock = new ManualDelay(); CatchView view = null!;
         WpfTestHost.Run(() => {
-            view = View(state, pinned: _ => { opened++; return Task.FromResult<CatchReveal?>(Result); }, motion: false, back: () => backs++);
+            view = View(state, pinned: _ => { opened++; return Task.FromResult<CatchReveal?>(Result); }, clock: clock, motion: false, back: () => backs++);
             Assert.True(view.SelectEncounter(selected));
             Click(view, "CatchButton");
         });
-        await Until(() => opened == 1);
+        await Until(() => opened == 1 && clock.Durations.Count == 1);
+        clock.Complete(0);
         await Task.Delay(60);
         WpfTestHost.Run(() => {
             Assert.Equal("Вернуться к экспедициям", Find<Button>(view, "CatchButton").Content);
