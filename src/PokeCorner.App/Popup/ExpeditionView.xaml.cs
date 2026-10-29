@@ -292,16 +292,17 @@ public partial class ExpeditionView : UserControl
     }
 
     // Trainer's field note for the chosen place: flavour drawn from each route's art brief, never a mechanic.
+    // Each note names who lives there by type, from the route's own type weights (D-24).
     private static string RouteNote(string route) => route switch
     {
-        "grove" => "Под ногами сухая листва — шаги слышно издалека.",
-        "lake" => "У воды тихо. Камыши шуршат даже без ветра.",
-        "coast" => "Ветер с моря. Карту держать двумя руками.",
-        "mountains" => "Тропа узкая, щебень сыплется из-под ботинок.",
-        "desert" => "Следы заметает за минуты. Ориентир — гребень дюны.",
-        "volcano" => "Жарко даже ночью. Базальт тёплый сквозь подошву.",
-        "snow" => "Карнизы нависают. Говорить вполголоса.",
-        _ => "Из тёмных проходов кто-то смотрит. Не задерживаться."
+        "grove" => "Листва шуршит — или кто-то в ней. Жуки тут не спят.",
+        "lake" => "Камыши шуршат без ветра. У берега кто-то плещется.",
+        "coast" => "Ветер с моря. Над волнами кричат не только чайки.",
+        "mountains" => "Щебень сыплется. Говорят, выше живут драконы.",
+        "desert" => "Следы заметает. Под песком кто-то роет.",
+        "volcano" => "Базальт тёплый. Огненным здесь уютно, мне — нет.",
+        "snow" => "Говорить вполголоса. На насте чьи-то ледяные следы.",
+        _ => "Из тёмных проходов смотрят. Призраки любят гостей."
     };
 
     private string Difficulty => (DifficultyBox.SelectedItem as ListBoxItem)?.Tag as string ?? "normal";

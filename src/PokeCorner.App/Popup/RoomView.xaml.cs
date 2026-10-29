@@ -250,6 +250,11 @@ public partial class RoomView : UserControl
         PetImage.Height = _spriteBounds.Height * scale;
         Canvas.SetLeft(PetImage, 800 - (_spriteBounds.Left + _spriteBounds.Right) * scale / 2);
         Canvas.SetTop(PetImage, 524 - _spriteBounds.Bottom * scale);
+        // The wall lamp is up and to the right, so the soft shadow falls down-left and grows with the pet (Georgy 29.10).
+        var feet = Math.Max(1, _spriteBounds.Right - _spriteBounds.Left) * scale;
+        PetShadow.Width = feet * 1.25; PetShadow.Height = Math.Clamp(feet * .22, 16, 44);
+        Canvas.SetLeft(PetShadow, 800 - feet * .28 - PetShadow.Width / 2);
+        Canvas.SetTop(PetShadow, 524 - PetShadow.Height * .45);
     }
 
     private static (int Width, int Height, int Left, int Right, int Bottom) MeasureSpriteBounds(IReadOnlyList<ImageSource> frames)

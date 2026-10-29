@@ -337,7 +337,7 @@ public partial class AppMenuWindow : Window
             ? Visibility.Visible : Visibility.Collapsed;
         RailCompass.Visibility = pokedex ? Visibility.Collapsed : Visibility.Visible;
         RailMagnifier.Visibility = pokedex ? Visibility.Visible : Visibility.Collapsed;
-        RailSketchNote.Text = pokedex ? "У каждого своя страница." : "Компас старый, но не врёт.";
+        RailSketchNote.Text = pokedex ? "Кто этот покемон? Узнаю — запишу." : "Компас старый, но не врёт.";
         // Sits right under the last section (Магазин), where the rail otherwise goes empty.
         if (ShopTab.ActualHeight > 0 && RailSketch.Parent is System.Windows.Media.Visual host)
             RailSketch.Margin = new Thickness(8, ShopTab.TransformToAncestor(host).Transform(new System.Windows.Point(0, ShopTab.ActualHeight)).Y + 16, 0, 0);

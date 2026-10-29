@@ -23,7 +23,10 @@
                 <Image x:Name="RoomBackground" Width="1448" Height="582" Stretch="Fill" />
                 <Canvas x:Name="AwardLayer" Width="1448" Height="582" />
                 <Image x:Name="ShelfFrontlip" />
-                <Ellipse Canvas.Left="778" Canvas.Top="520" Width="46" Height="10" Fill="#422F1E" Opacity="0.26" />
+                <Ellipse x:Name="PetShadow" Canvas.Left="778" Canvas.Top="520" Width="46" Height="10" Opacity="0.8" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.Fill><RadialGradientBrush><GradientStop Color="#F0140E1E" Offset="0"/><GradientStop Color="#A0140E1E" Offset="0.55"/><GradientStop Color="#00140E1E" Offset="1"/></RadialGradientBrush></Ellipse.Fill>
+                    <Ellipse.RenderTransform><SkewTransform AngleX="18"/></Ellipse.RenderTransform>
+                </Ellipse>
                 <Image x:Name="PetImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
             </Canvas>
         </Viewbox>
