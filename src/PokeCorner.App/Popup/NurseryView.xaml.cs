@@ -117,7 +117,11 @@ public partial class NurseryView : UserControl
         catch (Exception ex) when (ex is IOException or InvalidOperationException or NotSupportedException or ArgumentException) { image = null; }
         if (_spriteCache.Count >= 128) _spriteCache.Clear(); _spriteCache[key] = image; return image;
     }
-    private void Show(string text) { if (_suspended) return; MessageText.Text = text; MessagePanel.Visibility = Visibility.Visible; }
+    private void Show(string text) { if (_suspended) return; MessageText.Text = text; MessagePanel.Visibility = Visibility.Visible; _messageState = NestState(); }
+
+    // A status line belongs to the nest state it was said in: "Гнездо запущено." must not linger once the baby is ready.
+    private string? _messageState;
+    private string NestState() => _snapshot().Nest is { } nest ? $"{nest.Id}:{nest.Status}" : "";
     private void Slot(StackPanel panel, SaveData data, Guid id)
     {
         panel.Children.Clear(); var p = data.Individuals.FirstOrDefault(p => p.Id == id);
@@ -269,9 +273,9 @@ public partial class NurseryView : UserControl
                 row.Children.Add(new Image { Source = Sprite(p.CurrentSpeciesId, p.IsShiny), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
                 row.Children.Add(new TextBlock { Text = p.Nickname ?? SpeciesName(p.CurrentSpeciesId), FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
                 row.Children.Add(new TextBlock { Text = $"Ур. {_levels.LevelForXp(p.TotalXp)}" + (p.IsShiny ? " · шайни" : ""), FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
-                row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Margin = new Thickness(0, 2, 0, 0) });
+                row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Margin = new Thickness(0, 2, 0, 0) });
 
-                if (reason is not null) row.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 11, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
+                if (reason is not null) row.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 12, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
 
                 var button = new Button { Tag = p.Id, Content = row, Width = width, MinHeight = 130, Margin = new Thickness(4), Padding = new Thickness(8), HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Top, Style = (Style)FindResource("SecondaryButtonStyle"), IsEnabled = reason is null,
                     ToolTip = (reason ?? "Выбрать этот экземпляр") + "\n" + ParentName(data, p.Id) + "\n" + CollectionView.TraitLabel(p.FirstTraitId) + " — " + CollectionView.TraitEffect(p.FirstTraitId) };
@@ -313,6 +317,7 @@ public partial class NurseryView : UserControl
         if (_suspended) return;
         var data = _snapshot();
         var nest = data.Nest;
+        if (_messageState is not null && _messageState != NestState()) { MessagePanel.Visibility = Visibility.Collapsed; _messageState = null; }
         var active = nest?.Status is "running" or "ready";
 
         var result = nest?.Status == "hatched" && _dismissedResult != nest.Id;
@@ -351,7 +356,7 @@ public partial class NurseryView : UserControl
 
         LuckBar.Value = Math.Clamp(data.NurseryLuckBonus / (ShinyRules.NurseryChanceCap - ShinyRules.BaseChance), 0, 1);
 
-        LuckText.Text = data.NurseryLuckBonus > 0 ? "Набирается · помогает появлению Shiny" : "Новая история";
+        LuckText.Text = data.NurseryLuckBonus > 0 ? "Набирается · помогает появлению шайни" : "Новая история";
 
         if (active)
         {
@@ -435,7 +440,7 @@ public partial class NurseryView : UserControl
                 DockPanel.SetDock(picture, Dock.Left);
                 row.Children.Add(picture);
                 row.Children.Add(new TextBlock {
-                    Text = OutcomeName(data, id) + "\n" + (outcome.ShinyAvailable ? "Возможна Shiny-форма" : "Shiny-форма пока недоступна"),
+                    Text = OutcomeName(data, id) + "\n" + (outcome.ShinyAvailable ? "Возможна шайни-форма" : "Шайни-форма пока недоступна"),
                     TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center
                 });
                 if (preview.SelectionUseful)

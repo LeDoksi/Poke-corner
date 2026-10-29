@@ -168,6 +168,10 @@ public partial class ExpeditionView : UserControl
 
     private void Show(string message) => Show(message, null);
 
+    // A status line belongs to the moment it was said in: "Поход начался." must not linger on the return screen.
+    private string? _messageState;
+    private string TripState() => _snapshot().Expedition is { } trip ? $"{trip.Id}:{trip.Status}" : "";
+
     // Errors lead with what happened to the player's stuff; the raw cause stays as a small second line.
     private void Show(string message, Exception? error)
     {
@@ -179,6 +183,7 @@ public partial class ExpeditionView : UserControl
         MessagePanel.Background = error is null ? (Brush)FindResource("NdSurfaceBrush") : (Brush)FindResource("NdDangerSurfaceBrush");
         MessagePanel.BorderBrush = error is null ? (Brush)FindResource("NdBorderBrush") : (Brush)FindResource("NdDangerLineBrush");
         MessagePanel.Visibility = Visibility.Visible;
+        _messageState = error is null ? TripState() : null;
     }
 
     public void Refresh()
@@ -186,6 +191,7 @@ public partial class ExpeditionView : UserControl
         if (_initializing || _suspended) return;
         var data = _snapshot();
         var trip = data.Expedition;
+        if (_messageState is not null && _messageState != TripState()) { MessagePanel.Visibility = Visibility.Collapsed; _messageState = null; }
         var active = trip?.Status is "running" or "ready";
         foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;

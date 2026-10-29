@@ -114,7 +114,7 @@ public partial class AchievementsView : UserControl
             panel.Children.Add(new TextBlock
             {
                 Text = progress.Complete ? "Открыто" : progress.Value is null ? "Прогресс неизвестен" :
-                    $"{progress.Value} / {progress.Target}",
+                    $"{Math.Min(progress.Value.Value, progress.Target)} / {progress.Target}",
                 Foreground = (Brush)FindResource("UiSecondaryInkBrush"), TextWrapping = TextWrapping.Wrap,
                 Margin = new Thickness(0, 8, 0, 0)
             });
@@ -177,14 +177,18 @@ public partial class AchievementsView : UserControl
         }
     }
 
+    // 1 вид, 2 вида, 5 видов.
+    private static string Plural(long n, string one, string few, string many) =>
+        (n % 10, n % 100) switch { (1, not 11) => one, (>= 2 and <= 4, < 12 or > 14) => few, _ => many };
+
     private static string ConditionText(AchievementProgress progress) => progress.Condition switch
     {
-        "discovered-species" => $"Откройте {progress.Target} видов",
+        "discovered-species" => $"Откройте {progress.Target} {Plural(progress.Target, "вид", "вида", "видов")}",
         "all-normal-species-in-award-revision" => "Откройте все доступные обычные виды",
         "owned-individuals" => $"Соберите {progress.Target} питомцев",
         "successful-catches" => $"Поймайте {progress.Target} покемонов",
-        "claimed-expeditions" => $"Заберите награды из {progress.Target} походов",
-        "visited-regions" => $"Побывайте в {progress.Target} местностях",
+        "claimed-expeditions" => $"Заберите награды из {progress.Target} {(progress.Target % 10 == 1 && progress.Target % 100 != 11 ? "похода" : "походов")}",
+        "visited-regions" => $"Побывайте в {progress.Target} {(progress.Target % 10 == 1 && progress.Target % 100 != 11 ? "местности" : "местностях")}",
         "hard-expedition-in-each-region" => "Пройдите сложный маршрут в каждой местности",
         "first-expedition-xp" => "Получите первый опыт в походе",
         "individuals-at-required-level" => $"Вырастите {progress.Target} питомцев до ур. {progress.MinimumLevel}",
@@ -192,8 +196,8 @@ public partial class AchievementsView : UserControl
         "first-care-evolution-ready" => "Подготовьте питомца к эволюции заботой",
         "distinct-cared-individuals" => $"Позаботьтесь о {progress.Target} питомцах",
         "distinct-hatched-root-species" => $"Выведите {progress.Target} разных видов",
-        "distinct-species-transitions" => $"Откройте {progress.Target} новых эволюций",
-        "distinct-shiny-species" => $"Откройте {progress.Target} shiny-видов",
+        "distinct-species-transitions" => $"Откройте {progress.Target} {Plural(progress.Target, "новую эволюцию", "новые эволюции", "новых эволюций")}",
+        "distinct-shiny-species" => $"Откройте {progress.Target} {Plural(progress.Target, "шайни-вид", "шайни-вида", "шайни-видов")}",
         "trophy-special-nick" => "Дайте питомцу кличку",
         "trophy-special-favorite" => "Добавьте питомца в избранное",
         "trophy-special-type-team" => "Отправьте команду одного типа",

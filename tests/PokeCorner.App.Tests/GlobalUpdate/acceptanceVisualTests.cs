@@ -222,9 +222,10 @@ public class AcceptanceVisualTests
                     imagesWithSource = Descendants(root).OfType<Image>().Count(i => i.ActualHeight > 0 && i.Source is not null) });
             }
         }
-        void Overlay(string key, string title, string body, string caption)
+        // Destructive overlays are captured the way their real callers raise them (Оставить + danger button, D-14).
+        void Overlay(string key, string title, string body, string caption, bool destructive = false)
         {
-            var task = menu.ConfirmAsync(title, body, caption);
+            var task = destructive ? menu.ConfirmDestructiveAsync(title, body, caption) : menu.ConfirmAsync(title, body, caption);
             var overlay = (FrameworkElement)menu.FindName("ConfirmationHost");
             Capture(key, MenuSection.Settings, action: (FrameworkElement)overlay.FindName("CancelButton"), navigate: false);
             Click(overlay, "CancelButton");
@@ -572,8 +573,8 @@ public class AcceptanceVisualTests
             Capture("save-history", MenuSection.Settings, action: (FrameworkElement)history.FindName("RestoreButton"), navigate: false);
             Overlay("confirm-restore", "Вернуться к этой копии?", "800 питомцев · 12500 монет. Данные останутся в истории.", "Продолжить");
             menu.CompleteHostedContent(hosted); Assert.True(historyTask.IsCompleted); history.Close();
-            Overlay("confirm-cancel", "Прервать экспедицию?", "Команда вернётся без добычи и опыта.", "Прервать");
-            Overlay("confirm-rehome", "Найти новый дом?", "Этот питомец покинет коллекцию. Действие нельзя отменить.", "Передать");
+            Overlay("confirm-cancel", "Прервать экспедицию?", "Команда вернётся без добычи и опыта.", "Прервать", destructive: true);
+            Overlay("confirm-rehome", "Найти новый дом?", "Этот питомец покинет коллекцию. Действие нельзя отменить.", "Передать", destructive: true);
             Capture("components", MenuSection.Settings, "audio-zero-and-controls", (FrameworkElement)settings.FindName("CrySoundVolumeSlider"));
             foreach (var step in Enumerable.Range(1, 6))
             {

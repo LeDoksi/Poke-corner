@@ -89,7 +89,7 @@ public partial class ShopView : UserControl
         detail.Children.Add(new TextBlock { Text = good.Id switch
         {
             "care-booster" => "Помогает подготовиться к эволюции.",
-            "lucky-charm" => "Помогает встретить shiny-покемона. Активируется в поимке.",
+            "lucky-charm" => "Помогает встретить шайни-покемона. Активируется в поимке.",
             _ => good.Effect
         }, Style = (Style)FindResource("CaptionTextStyle"), TextWrapping = TextWrapping.Wrap });
         var stock = new TextBlock { Style = (Style)FindResource("CaptionTextStyle") };
