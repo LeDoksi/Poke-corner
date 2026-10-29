@@ -27,7 +27,8 @@ public class ShellTests
             main.SelectedIndex = index;
             if (index == 0) nested.SelectedIndex = 1;
             settingsButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-            Assert.Equal(Visibility.Collapsed, main.Visibility);
+            Assert.Equal(Visibility.Visible, ((FrameworkElement)menu.FindName("SettingsContent")).Visibility);
+            Assert.Equal(Visibility.Visible, main.Visibility);
             settingsButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             Assert.Equal(index, main.SelectedIndex);
             if (index == 0) Assert.Equal(1, nested.SelectedIndex);

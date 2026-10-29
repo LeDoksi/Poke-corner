@@ -31,7 +31,14 @@ public partial class AppMenuWindow : Window
         RoomView? roomView = null, AchievementsView? achievementsView = null, Func<SaveData>? getSnapshot = null)
     {
         InitializeComponent();
-        MenuTabControl.SelectionChanged += (_, e) => { if (ReferenceEquals(e.OriginalSource, MenuTabControl)) UpdateRailSketch(); };
+        MenuTabControl.SelectionChanged += (_, e) =>
+        {
+            if (!ReferenceEquals(e.OriginalSource, MenuTabControl)) return;
+            // Arrow keys on the rail while Settings is open leave Settings for the newly picked section.
+            if (SettingsContent.Visibility == Visibility.Visible && _hosted is null) Navigate(SelectedSection());
+            UpdateRailSketch();
+        };
+        MenuTabControl.PreviewMouseLeftButtonDown += RailTab_PreviewMouseLeftButtonDown;
         ShopTab.SizeChanged += (_, _) => UpdateRailSketch();
         _getSnapshot = getSnapshot;
         var workArea = SystemParameters.WorkArea;
@@ -93,9 +100,8 @@ public partial class AppMenuWindow : Window
         MenuTabControl.Visibility = SettingsContent.Visibility = Visibility.Collapsed;
         HostedContent.Content = content;
         HostedContent.Visibility = Visibility.Visible;
-        SettingsButton.Content = "К разделам";
-        SettingsButton.ToolTip = "Назад";
-        System.Windows.Automation.AutomationProperties.SetName(SettingsButton, "Закрыть открытый экран");
+        // Tour and save history carry their own exit («Позже», «Отмена»); a second shell «Назад» beside them was noise.
+        SettingsButton.Visibility = Visibility.Collapsed;
         return _hosted.Task;
     }
 
@@ -109,7 +115,10 @@ public partial class AppMenuWindow : Window
         HostedContent.Visibility = Visibility.Collapsed;
         HostedContent.Content = null;
         SettingsContent.Visibility = _hostedFromSettings ? Visibility.Visible : Visibility.Collapsed;
-        MenuTabControl.Visibility = _hostedFromSettings ? Visibility.Collapsed : Visibility.Visible;
+        MenuTabControl.Visibility = Visibility.Visible;
+        CoverSection(_hostedFromSettings);
+        SettingsButton.Visibility = Visibility.Visible;
+        UpdateRailSketch();
         SettingsButton.Content = _hostedFromSettings ? "К разделам" : "Настройки";
         SettingsButton.ToolTip = _hostedFromSettings ? "К разделам" : "Настройки";
         System.Windows.Automation.AutomationProperties.SetName(SettingsButton, _hostedFromSettings ? "Вернуться к разделам" : "Открыть настройки");
@@ -213,6 +222,33 @@ public partial class AppMenuWindow : Window
         e.Handled = true;
     }
 
+    private UIElement? _coveredSection;
+
+    // Hidden, not just painted over: a section behind Settings must not take Tab focus or clicks.
+    private void CoverSection(bool covered)
+    {
+        if (_coveredSection is not null) { _coveredSection.Visibility = Visibility.Visible; _coveredSection = null; }
+        if (covered && MenuTabControl.SelectedItem is System.Windows.Controls.TabItem { Content: UIElement content })
+        {
+            _coveredSection = content;
+            content.Visibility = Visibility.Hidden;
+        }
+    }
+
+    // A click on the rail while Settings is open: also the already highlighted tab, which raises no SelectionChanged.
+    private void RailTab_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (SettingsContent.Visibility != Visibility.Visible || _confirmation is not null || _hosted is not null) return;
+        for (var node = e.OriginalSource as DependencyObject; node is not null; node = System.Windows.Media.VisualTreeHelper.GetParent(node))
+        {
+            if (node is not System.Windows.Controls.TabItem item || System.Windows.Controls.ItemsControl.ItemsControlFromItemContainer(item) != MenuTabControl) continue;
+            MenuTabControl.SelectedItem = item;
+            if (SettingsContent.Visibility == Visibility.Visible) Navigate(SelectedSection());
+            e.Handled = true;
+            return;
+        }
+    }
+
     private void SettingsButton_Click(object sender, RoutedEventArgs e)
     {
         if (_confirmation is not null) return;
@@ -242,8 +278,9 @@ public partial class AppMenuWindow : Window
         {
             RailSketch.Visibility = Visibility.Collapsed;
             if (SettingsContent.Visibility != Visibility.Visible) _lastSection = SelectedSection();
-            MenuTabControl.Visibility = Visibility.Collapsed;
+            // The rail stays: Settings replaces only the content area, so any section is one click away.
             SettingsContent.Visibility = Visibility.Visible;
+            CoverSection(true);
             SettingsButton.Content = "К разделам";
             SettingsButton.ToolTip = "К разделам";
             System.Windows.Automation.AutomationProperties.SetName(SettingsButton, "Вернуться к разделам");
@@ -252,6 +289,7 @@ public partial class AppMenuWindow : Window
 
         SettingsContent.Visibility = Visibility.Collapsed;
         MenuTabControl.Visibility = Visibility.Visible;
+        CoverSection(false);
         _lastSection = section;
         SettingsButton.Content = "Настройки";
         SettingsButton.ToolTip = "Настройки";
@@ -282,7 +320,8 @@ public partial class AppMenuWindow : Window
     {
         var tab = MenuTabControl.SelectedItem;
         var pokedex = tab == CollectionTab;
-        RailSketch.Visibility = MenuTabControl.Visibility == Visibility.Visible && (tab == ExpeditionsTab || pokedex)
+        RailSketch.Visibility = MenuTabControl.Visibility == Visibility.Visible && SettingsContent.Visibility != Visibility.Visible
+            && HostedContent.Visibility != Visibility.Visible && (tab == ExpeditionsTab || pokedex)
             ? Visibility.Visible : Visibility.Collapsed;
         RailCompass.Visibility = pokedex ? Visibility.Collapsed : Visibility.Visible;
         RailMagnifier.Visibility = pokedex ? Visibility.Visible : Visibility.Collapsed;

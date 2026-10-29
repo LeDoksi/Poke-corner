@@ -72,6 +72,8 @@ public partial class NurseryView : UserControl
         PreviewKeyDown += (_, e) => { if (e.Key == System.Windows.Input.Key.Escape && _pickerOpen) { ClosePicker(); e.Handled = true; } };
         // Scene art is 2048x768: full width, clipped around its middle band where the nest sits.
         SceneGrid.SizeChanged += (_, _) => GreenhouseImage.Height = SceneGrid.ActualWidth * 768 / 2048;
+        // The scene grows with the window (about 220 at 1200x660, 360 at FullHD) so tall windows get no empty band.
+        SizeChanged += (_, _) => SceneGrid.Height = Math.Clamp(ActualHeight * 0.36, 200, 380);
         PickerScroll.SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
         Refresh();
     }
@@ -85,7 +87,7 @@ public partial class NurseryView : UserControl
     private string ParentName(SaveData data, Guid id)
     {
         var p = data.Individuals.FirstOrDefault(p => p.Id == id);
-        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.IsShiny ? " · Shiny" : "") + "\n" + IndividualDisplay.Discriminator(data.Individuals, p.Id, always: true);
+        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.IsShiny ? " · шайни" : "") + "\n" + IndividualDisplay.Discriminator(data.Individuals, p.Id, always: true);
     }
     private static string RarityName(string rarity) => rarity.ToLowerInvariant() switch
     {
@@ -330,8 +332,7 @@ public partial class NurseryView : UserControl
 
         SubtitleText.Text = ready ? "Пора познакомиться." : active ? "Можно закрыть приложение — время продолжит идти." : result ? "Новая история начинается здесь." : "Выберите родителей и узнайте, кто может появиться.";
 
-        Grid.SetColumnSpan(SceneBorder, ready ? 2 : 1);
-        SceneGrid.Height = ready ? 300 : active || result ? 240 : 150;
+        ScreenTitle.Visibility = _pickerOpen ? Visibility.Collapsed : Visibility.Visible;
 
         PreviewPanel.Visibility = active || result ? Visibility.Collapsed : Visibility.Visible;
 
@@ -347,6 +348,7 @@ public partial class NurseryView : UserControl
         NestPanel.Visibility = active && !ready ? Visibility.Visible : Visibility.Collapsed;
 
         ResultPanel.Visibility = result ? Visibility.Visible : Visibility.Collapsed;
+        ResultFooter.Visibility = ResultPanel.Visibility;
 
         GreenhouseImage.Source = (ImageSource)FindResource(active ? (nest!.Status == "ready" ? "UiNurseryReadyImage" : "UiNurseryWaitingImage") : "UiNurseryImage");
 
@@ -378,7 +380,7 @@ public partial class NurseryView : UserControl
 
                 var luck = nest.LuckBeforeHatch is { } before ? "Удача питомника " + (nest.ShinySupported && child.IsShiny ? "сброшена" : data.NurseryLuckBonus > before ? "увеличилась" : "не изменилась") + "." : "Изменение удачи этого старого вылупления не сохранено.";
 
-                ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · Shiny" : "")} · характер {NatureDisplay.Name(child.Nature)}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
+                ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · шайни" : "")} · характер {NatureDisplay.Name(child.Nature)}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
 
                 ResultTitle.Text = $"{SpeciesName(child.SpeciesId)} появился!";
 
