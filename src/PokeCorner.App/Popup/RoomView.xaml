@@ -31,16 +31,12 @@
                        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="12"
                        Background="{StaticResource UiPaperBrush}" Padding="10" TextWrapping="Wrap" />
         </Grid>
-        <UniformGrid Grid.Row="2" Columns="3" Margin="24,14,24,8">
+        <!-- Level lives in the caption above; the catch ring is on the desktop and the catch screen (Georgy 27.10). -->
+        <UniformGrid Grid.Row="2" Columns="2" Margin="24,14,24,8">
             <StackPanel Margin="0,0,16,0">
                 <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Уход для эволюции" FontWeight="Bold" VerticalAlignment="Center" /></StackPanel>
                 <TextBlock x:Name="CareText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
                 <ProgressBar x:Name="CareBar" Maximum="1" Height="7" Margin="0,6,0,0" />
-            </StackPanel>
-            <StackPanel Margin="0,0,16,0">
-                <TextBlock Text="Опыт и следующий покебол" FontWeight="Bold" />
-                <TextBlock x:Name="XpText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
-                <ProgressBar x:Name="CatchBar" Maximum="1" Height="7" Margin="0,6,0,0" />
             </StackPanel>
             <StackPanel>
                 <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/treat.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Лакомства" FontWeight="Bold" VerticalAlignment="Center" /></StackPanel>

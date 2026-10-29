@@ -35,14 +35,13 @@ public class ApprovedRoomAlbumTests
         WpfTestHost.Layout(view, 800, 490);
         Assert.Contains(pet.Nickname!, ((TextBlock)view.FindName("PetCaption")).Text);
         Assert.NotNull(view.FindName("CareText"));
-        Assert.NotNull(view.FindName("XpText"));
+        Assert.Null(view.FindName("XpText"));
         var caption = ((TextBlock)view.FindName("PetCaption")).Text;
         Assert.Contains("№0133", caption);
         Assert.Contains("Нормальный", caption);
         Assert.Contains("Необычный", caption);
         Assert.Contains("Ур.", caption);
         Assert.DoesNotContain("%", ((TextBlock)view.FindName("CareText")).Text);
-        Assert.Contains("420", ((TextBlock)view.FindName("XpText")).Text);
         Assert.Contains("12", ((TextBlock)view.FindName("TreatText")).Text);
         foreach (var name in new[] { "PetButton", "FeedButton", "DetailButton", "AchievementsButton" })
         {

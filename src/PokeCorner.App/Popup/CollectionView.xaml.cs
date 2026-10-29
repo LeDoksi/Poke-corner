@@ -434,6 +434,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         if (!_isReady) return;
         var all = SpeciesEntries();
+        var shinyLens = SpeciesShinyToggle.IsChecked == true;
+        var shinyOpen = shinyLens ? _viewModel.GetSpeciesEntries(true).Where(e => e.IsDiscovered).Select(e => e.SpeciesId).ToHashSet() : null;
+        bool FormOpen(PokedexSpeciesEntry e) => shinyOpen?.Contains(e.SpeciesId) ?? e.IsDiscovered;
         var types = all.Where(e => e.IsDiscovered).SelectMany(e => e.Types).Distinct(StringComparer.OrdinalIgnoreCase)
             .OrderBy(typeName => typeName, StringComparer.OrdinalIgnoreCase).ToArray();
         var typeSignature = string.Join("|", types);
@@ -453,26 +456,28 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var sort = SpeciesSortCombo.SelectedIndex switch { 1 => SpeciesSortOrder.CatchDate, 2 => SpeciesSortOrder.Type, _ => SpeciesSortOrder.Number };
         var visible = CollectionViewModel.FilterSpecies(all, SpeciesSearchBox.Text, type, rarity,
             false, sort);
+        if (SpeciesUnopenedToggle.IsChecked == true) visible = visible.Where(e => !FormOpen(e)).ToList();
         var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)SpeciesPageSize));
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
-        SpeciesCountText.Text = $"Открыто видов: {all.Count(e => e.IsDiscovered)} · показано: {visible.Count}";
+        SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · показано: {visible.Count}";
         SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
         SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
         SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
         var page = visible.Skip(_speciesPageIndex * SpeciesPageSize).Take(SpeciesPageSize).ToList();
-        var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|" +
-            string.Join("|", page.Select(e => $"{e.SpeciesId}:{e.IsDiscovered}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
+        var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{shinyLens}|" +
+            string.Join("|", page.Select(e => $"{e.SpeciesId}:{FormOpen(e)}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
         if (signature != _speciesSignature)
         {
             _speciesSignature = signature;
-            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId, _shinyOnlySpecies.Contains(e.SpeciesId)))).ToList();
+            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId, shinyLens || _shinyOnlySpecies.Contains(e.SpeciesId)), FormOpen(e))).ToList();
         }
         if (_selectedSpeciesId is { } id) ShowSpeciesDetail(all.FirstOrDefault(e => e.SpeciesId == id));
     }
 
-    // One Pokédex for both forms (Georgy 26.10): the species page shows normal and shiny side by
-    // side, so the grid needs no form toggle. A species is open if either form was caught; a
+    // One Pokédex for both forms (D-21): the species page shows normal and shiny side by side.
+    // The grid's "Шайни-формы" lens (D-23) only changes which form counts as open. A species is
+    // known if either form was caught; a
     // shiny-only species shows its shiny sprite, since that is the one the player has seen.
     private IReadOnlyList<PokedexSpeciesEntry> SpeciesEntries()
     {
@@ -669,20 +674,23 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             SpeciesForms.Children.Add(panel);
         }
     }
-    private sealed record SpeciesCard(PokedexSpeciesEntry Entry, ImageSource? SpriteImage)
+    // FormOpen: the form the grid tracks is caught. A known species whose shiny is still missing
+    // keeps its name and shows the shiny silhouette, so the hunt list reads at a glance.
+    private sealed record SpeciesCard(PokedexSpeciesEntry Entry, ImageSource? SpriteImage, bool FormOpen)
     {
         public string Number => Entry.Number;
         public string AccessibleName => Entry.AccessibleName;
         public string NameText => Entry.DisplayName ?? "Неизвестный вид";
-        public string SubText => Entry.IsDiscovered
+        public string SubText => Entry.IsDiscovered && !FormOpen ? "Шайни ещё не пойман"
+            : Entry.IsDiscovered
             ? $"{string.Join(" · ", Entry.Types.Select(TypeDisplay.GetLabel))} · {RarityName}"
             : Entry.HasSilhouette ? Entry.RouteHint.StartsWith("Эволюция") ? "Открывается эволюцией" : "Можно встретить" : "Ещё не встречался";
         public Visibility WhereVisibility => Visibility.Visible;
         private string RarityName => Enum.TryParse<RarityTier>(Entry.Rarity, true, out var tier)
             ? RarityDisplay.GetName(tier) : Entry.Rarity ?? string.Empty;
-        public Visibility RevealedVisibility => Entry.IsDiscovered && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
-        public Visibility SilhouetteVisibility => !Entry.IsDiscovered && Entry.HasSilhouette && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
-        public Visibility UnknownVisibility => SpriteImage is null || !Entry.IsDiscovered && !Entry.HasSilhouette ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility RevealedVisibility => FormOpen && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility SilhouetteVisibility => !FormOpen && (Entry.HasSilhouette || Entry.IsDiscovered) && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility UnknownVisibility => SpriteImage is null || !FormOpen && !Entry.HasSilhouette && !Entry.IsDiscovered ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void RefreshHero(PokemonIndividual? active, IReadOnlyList<CollectionEntry> entries)

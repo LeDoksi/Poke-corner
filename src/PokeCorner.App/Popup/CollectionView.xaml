@@ -212,6 +212,13 @@
                             </ComboBox>
 
                         </WrapPanel>
+                        <!-- Hunting lens (Georgy 27.10): which form the grid tracks; the species page still shows both. -->
+                        <WrapPanel Margin="0,0,0,8">
+                            <CheckBox x:Name="SpeciesShinyToggle" Content="Шайни-формы" Checked="SpeciesFilters_Changed" Unchecked="SpeciesFilters_Changed"
+                                      ToolTip="Показать, какие виды пойманы в шайни-форме"/>
+                            <CheckBox x:Name="SpeciesUnopenedToggle" Content="Ещё не открыты" Margin="16,0,0,0" Checked="SpeciesFilters_Changed" Unchecked="SpeciesFilters_Changed"
+                                      ToolTip="Оставить только тех, кого ещё нет в выбранной форме"/>
+                        </WrapPanel>
                         <TextBlock x:Name="SpeciesCountText" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,7"/>
                         <ListBox x:Name="SpeciesGrid" SelectionChanged="SpeciesGrid_SelectionChanged" Background="Transparent" BorderThickness="0" Padding="0" ItemContainerStyle="{StaticResource UiCardListItemStyle}"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"

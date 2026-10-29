@@ -179,7 +179,7 @@ public partial class RoomView : UserControl
         PetCaption.Text = active is null ? "Выберите спутника в Покедексе." :
             (active.Nickname is null ? _speciesName(active.CurrentSpeciesId) :
                 active.Nickname + " · " + _speciesName(active.CurrentSpeciesId)) +
-            $" · №{active.CurrentSpeciesId:D4}" + (active.IsShiny ? " · shiny" : "");
+            $" · №{active.CurrentSpeciesId:D4}" + (active.IsShiny ? " · шайни" : "");
         var species = active is null ? null : _catalog?.Species.FirstOrDefault(s => s.Id == active.CurrentSpeciesId);
         if (active is not null)
         {
@@ -198,17 +198,12 @@ public partial class RoomView : UserControl
             CareBar.Value = active.ChainLength <= 1 ? 0 : (int)active.CurrentStage >= active.ChainLength - 1 ? 1 :
                 Math.Clamp((double)(active.AccumulatedCarePoints - previous) /
                     (required - previous), 0, 1);
-            XpText.Text = level is null ? $"{active.TotalXp} XP" : level >= 40 ? $"Ур. {level} · максимум опыта" :
-                $"Ур. {level} · {active.TotalXp} / {_levels!.XpForLevel(level.Value + 1)} XP";
         }
         else
         {
             CareText.Text = "Выберите спутника";
             CareBar.Value = 0;
-            XpText.Text = "Выберите питомца в Покедексе";
         }
-        XpText.Text += data.PendingCatchCount > 0 ? $" · Покеболов: {data.PendingCatchCount}" : " · За активность";
-        CatchBar.Value = Math.Clamp((double)data.CatchAccumulatorUnits / ActivityAccumulator.CatchCheckIntervalUnits, 0, 1);
         TreatBar.Value = Math.Clamp((double)data.FeedingRemainderUnits / FeedingService.ActivityUnitsPerTreatEarned, 0, 1);
         TreatText.Text = $"{data.FeedingTreats} в запасе · новые за активность";
         PetButton.IsEnabled = active is not null && _pet is not null;

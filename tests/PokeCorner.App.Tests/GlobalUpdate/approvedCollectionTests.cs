@@ -41,7 +41,15 @@ public sealed class ApprovedCollectionTests
         var view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
             () => {}, () => {}, () => {}, () => null, () => false, () => false);
         WpfTestHost.Layout(view, width - 190, height - 150);
-        Assert.Null(view.FindName("SpeciesShinyToggle"));
+        // D-23: the grid tracks one form; a caught normal Bulbasaur is still missing as a shiny.
+        var unopened = Assert.IsType<CheckBox>(view.FindName("SpeciesUnopenedToggle"));
+        Assert.IsType<CheckBox>(view.FindName("SpeciesShinyToggle")).IsChecked = true;
+        unopened.IsChecked = true;
+        Assert.Contains("шайни", ((TextBlock)view.FindName("SpeciesCountText")).Text);
+        Assert.Contains(((System.Windows.Controls.ListBox)view.FindName("SpeciesGrid")).Items.Cast<object>(), card => card.ToString()!.Contains("SpeciesId = 1,"));
+        Assert.IsType<CheckBox>(view.FindName("SpeciesShinyToggle")).IsChecked = false;
+        Assert.DoesNotContain(((System.Windows.Controls.ListBox)view.FindName("SpeciesGrid")).Items.Cast<object>(), card => card.ToString()!.Contains("SpeciesId = 1,"));
+        unopened.IsChecked = false;
         Assert.NotNull(view.FindName("DuplicatesFilterToggle"));
         Assert.NotNull(view.FindName("IndividualTypeCombo"));
         Assert.True(view.OpenIndividual(pet.Id));
