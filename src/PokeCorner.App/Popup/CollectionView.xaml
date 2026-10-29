@@ -249,9 +249,9 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel x:Name="SpeciesPagination" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
-                            <Button x:Name="SpeciesPrevButton" Content="Назад" Click="SpeciesPrev_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                            <Button x:Name="SpeciesPrevButton" Content="‹" ToolTip="Предыдущая страница" AutomationProperties.Name="Предыдущая страница" MinWidth="40" Click="SpeciesPrev_Click" Style="{StaticResource SecondaryButtonStyle}"/>
                             <TextBlock x:Name="SpeciesPageText" VerticalAlignment="Center" Margin="10,0"/>
-                            <Button x:Name="SpeciesNextButton" Content="Вперёд" Click="SpeciesNext_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                            <Button x:Name="SpeciesNextButton" Content="›" ToolTip="Следующая страница" AutomationProperties.Name="Следующая страница" MinWidth="40" Click="SpeciesNext_Click" Style="{StaticResource SecondaryButtonStyle}"/>
                         </StackPanel>
 
                     </StackPanel>
@@ -265,19 +265,19 @@
                         <ComboBox x:Name="PokedexSortCombo" Grid.Column="1" Margin="0,0,8,0" SelectionChanged="PokedexSortCombo_SelectionChanged" AutomationProperties.Name="Сортировка питомцев">
                             <ComboBoxItem Content="По номеру" IsSelected="True"/><ComboBoxItem Content="По уровню"/><ComboBoxItem Content="По дате поимки"/><ComboBoxItem Content="По уходу для эволюции"/>
                         </ComboBox>
-                        <ComboBox x:Name="IndividualTypeCombo" Grid.Column="2" Margin="0,0,8,0" SelectionChanged="IndividualType_Changed" AutomationProperties.Name="Тип питомца"><ComboBoxItem Content="Все типы" IsSelected="True"/></ComboBox>
+                        <ComboBox x:Name="IndividualTypeCombo" Grid.Column="2" Margin="0,0,8,0" SelectionChanged="IndividualType_Changed" AutomationProperties.Name="Тип питомца"><ComboBoxItem Content="Тип: любой" IsSelected="True"/></ComboBox>
                         <ComboBox x:Name="IndividualRarityCombo" Grid.Column="3" SelectionChanged="IndividualRarity_Changed" AutomationProperties.Name="Редкость питомца">
-                            <ComboBoxItem x:Name="RarityFilterAll" Content="Редкость" IsSelected="True"/>
+                            <ComboBoxItem x:Name="RarityFilterAll" Content="Редкость: любая" IsSelected="True"/>
                             <ComboBoxItem x:Name="RarityFilterCommon" Tag="Common"/><ComboBoxItem x:Name="RarityFilterUncommon" Tag="Uncommon"/><ComboBoxItem x:Name="RarityFilterRare" Tag="Rare"/><ComboBoxItem x:Name="RarityFilterLegendary" Tag="Legendary"/>
                         </ComboBox>
                     </Grid>
                     <DockPanel Margin="0,0,0,10">
-                        <Button x:Name="ResetIndividualFiltersButton" Content="Сбросить" DockPanel.Dock="Right" Click="ResetIndividualFilters_Click" Style="{StaticResource SecondaryButtonStyle}" Padding="10,5"/>
+                        <Button x:Name="ResetIndividualFiltersButton" Content="Сбросить фильтры" DockPanel.Dock="Right" Click="ResetIndividualFilters_Click" Style="{StaticResource SecondaryButtonStyle}" Padding="10,5"/>
                         <WrapPanel VerticalAlignment="Center">
                             <CheckBox x:Name="EvolutionFilterToggle" Content="Есть куда расти" Checked="EvolutionFilter_Changed" Unchecked="EvolutionFilter_Changed"/>
                             <CheckBox x:Name="DuplicatesFilterToggle" Content="Дубли" Margin="12,0,0,0" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
                             <CheckBox x:Name="FavoritesFilterToggle" Content="Избранные" Margin="12,0,0,0" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
-                            <CheckBox x:Name="ShinyFilterToggle" Content="Shiny" Margin="12,0,0,0" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
+                            <CheckBox x:Name="ShinyFilterToggle" Content="Шайни" Margin="12,0,0,0" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
                         </WrapPanel>
                     </DockPanel>
                     <TextBlock x:Name="PokedexEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0"
@@ -346,12 +346,12 @@
                          resets only when the rarity filter or the search query changes. -->
                     <StackPanel x:Name="PokedexPagination" Orientation="Horizontal" Visibility="Collapsed"
                                 HorizontalAlignment="Center" Margin="0,10,0,0">
-                        <Button x:Name="PokedexPrevPageButton" Content="Назад" Padding="12,5"
+                        <Button x:Name="PokedexPrevPageButton" Content="‹" ToolTip="Предыдущая страница" AutomationProperties.Name="Предыдущая страница" MinWidth="40" Padding="12,5"
                                 Style="{StaticResource SecondaryButtonStyle}"
                                 Click="PokedexPrevPage_Click" />
                         <TextBlock x:Name="PokedexPageText" Style="{StaticResource MetaTextStyle}"
                                    VerticalAlignment="Center" Margin="12,0" FontWeight="SemiBold" />
-                        <Button x:Name="PokedexNextPageButton" Content="Вперёд" Padding="12,5"
+                        <Button x:Name="PokedexNextPageButton" Content="›" ToolTip="Следующая страница" AutomationProperties.Name="Следующая страница" MinWidth="40" Padding="12,5"
                                 Style="{StaticResource SecondaryButtonStyle}"
                                 Click="PokedexNextPage_Click" />
                     </StackPanel>
@@ -388,7 +388,7 @@
                                 <StackPanel x:Name="DetailNicknameEditor" Visibility="Collapsed">
                                     <TextBox x:Name="DetailNicknameBox" MaxLength="20" PreviewKeyDown="DetailNickname_KeyDown" Style="{StaticResource ThemedTextBoxStyle}" AutomationProperties.Name="Кличка питомца"/>
                                     <TextBlock Text="До 20 символов. Пустое поле вернёт имя вида." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,6"/>
-                                    <WrapPanel><Button x:Name="DetailNicknameSaveButton" Content="Сохранить" Click="DetailNicknameSave_Click" Style="{StaticResource UiPrimaryButtonStyle}" MinHeight="40" Padding="10,7" Margin="0,0,8,0"/><Button x:Name="DetailNicknameCancelButton" Content="Отмена" Click="DetailNicknameCancel_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
+                                    <WrapPanel><Button x:Name="DetailNicknameSaveButton" Content="Сохранить" Click="DetailNicknameSave_Click" Style="{StaticResource SecondaryButtonStyle}" MinHeight="40" Padding="10,7" Margin="0,0,8,0"/><Button x:Name="DetailNicknameCancelButton" Content="Отмена" Click="DetailNicknameCancel_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
                                 </StackPanel>
                                 <WrapPanel><TextBlock x:Name="DetailSpeciesSubtitleText" Style="{StaticResource MetaTextStyle}" Margin="0,0,8,0"/><TextBlock x:Name="DetailDexNumberText" Style="{StaticResource MetaTextStyle}"/></WrapPanel>
                                 <WrapPanel Margin="0,4,0,0"><TextBlock x:Name="DetailNatureText" Style="{StaticResource CaptionTextStyle}" Margin="0,0,12,0"/><TextBlock x:Name="DetailCaughtAtText" Style="{StaticResource CaptionTextStyle}"/></WrapPanel>
@@ -415,7 +415,7 @@
                                             <Ellipse Width="160" Height="155" Fill="{StaticResource SpotlightBrush}"/>
                                             <Image x:Name="DetailSpriteImage" Width="140" Height="140" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                                             <TextBlock x:Name="DetailSpritePlaceholder" Text="Изображение формы&#10;пока недоступно" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}"/>
-                                            <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"><TextBlock Text="Shiny"/></Border>
+                                            <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"><TextBlock Text="Шайни"/></Border>
                                         </Grid>
                                         <WrapPanel HorizontalAlignment="Center" Margin="0,5">
                                             <ItemsControl x:Name="DetailTypeBadges" ItemsPanel="{StaticResource TypeBadgePanelTemplate}" ItemTemplate="{StaticResource TypeBadgeTemplate}" Margin="0,0,8,0"/>
@@ -444,7 +444,7 @@
                                             <StackPanel x:Name="DetailRetrainingEditor" Visibility="Collapsed" Margin="0,8,0,0">
                                                 <ComboBox x:Name="DetailRetrainingSlotPicker" SelectionChanged="DetailRetrainingSlotPicker_SelectionChanged" AutomationProperties.Name="Особенность для переобучения"/>
                                                 <TextBlock x:Name="DetailRetrainingCostText" TextWrapping="Wrap" Margin="0,6,0,4"/><TextBlock x:Name="DetailRetrainingOutcomesText" TextWrapping="Wrap"/><TextBlock x:Name="DetailRetrainingReasonText" TextWrapping="Wrap"/>
-                                                <WrapPanel Margin="0,8,0,0"><Button x:Name="DetailRetrainButton" Content="Переобучить" Click="DetailRetrainButton_Click" Margin="0,0,8,0"/><Button x:Name="DetailRetrainingShopButton" Content="В магазин" Click="DetailRetrainingShopButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
+                                                <WrapPanel Margin="0,8,0,0"><Button x:Name="DetailRetrainButton" Content="Переобучить" Click="DetailRetrainButton_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/><Button x:Name="DetailRetrainingShopButton" Content="В магазин" Click="DetailRetrainingShopButton_Click" Style="{StaticResource SecondaryButtonStyle}"/></WrapPanel>
                                             </StackPanel>
                                         </StackPanel></Border>
                                         <Border x:Name="DetailItemsSection" Style="{StaticResource CardStyle}" Padding="12" Margin="0,4,0,10"><StackPanel>
@@ -485,7 +485,7 @@
                                     </StackPanel></Border>
                                 </Border>
                                 <DockPanel x:Name="DetailRehomeSection" Margin="0,14,0,0">
-                                    <Button x:Name="DetailRehomeButton" Content="Найти новый дом" Click="DetailRehomeButton_Click" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Margin="10,0,0,0"/>
+                                    <Button x:Name="DetailRehomeButton" Content="Найти новый дом" Click="DetailRehomeButton_Click" DockPanel.Dock="Right" Style="{StaticResource NdDangerOutlineButtonStyle}" Margin="10,0,0,0"/>
                                     <TextBlock x:Name="DetailRehomeReasonText" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource CaptionTextStyle}"/>
                                 </DockPanel>
                             </StackPanel>

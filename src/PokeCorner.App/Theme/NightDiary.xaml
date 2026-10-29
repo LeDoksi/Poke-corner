@@ -215,6 +215,22 @@
  </Style>
  <Style x:Key="NdDialogPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource NdDialogButtonStyle}"><Setter Property="Background" Value="{StaticResource NdApricotBrush}"/><Setter Property="Foreground" Value="{StaticResource NdBackgroundBrush}"/></Style>
  <Style x:Key="NdDialogDangerButtonStyle" TargetType="Button" BasedOn="{StaticResource NdDialogButtonStyle}"><Setter Property="Background" Value="#A85060"/></Style>
+ <!-- COMPONENTS.md §2: an action that loses something (rehome, reset) on a screen. Outline only; the filled
+      danger button lives in the confirmation that always follows. -->
+ <Style x:Key="NdDangerOutlineButtonStyle" TargetType="Button">
+  <Setter Property="MinHeight" Value="36"/><Setter Property="Padding" Value="12,7"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Cursor" Value="Hand"/>
+  <Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="{StaticResource NdDangerLineBrush}"/><Setter Property="Foreground" Value="{StaticResource NdDangerTextBrush}"/>
+  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+   <Border x:Name="Surface" CornerRadius="7" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+   </Border>
+   <ControlTemplate.Triggers>
+    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdDangerSurfaceBrush}"/></Trigger>
+    <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
+    <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.6"/></Trigger>
+   </ControlTemplate.Triggers>
+  </ControlTemplate></Setter.Value></Setter>
+ </Style>
  <DataTemplate x:Key="NdSettingsButtonTemplate">
   <Grid><TextBlock x:Name="SettingsLabel" Text="Настройки"/><TextBlock x:Name="BackLabel" Text="Назад" Visibility="Collapsed"/></Grid>
   <DataTemplate.Triggers><DataTrigger Binding="{Binding}" Value="К разделам"><Setter TargetName="SettingsLabel" Property="Visibility" Value="Collapsed"/><Setter TargetName="BackLabel" Property="Visibility" Value="Visible"/></DataTrigger></DataTemplate.Triggers>

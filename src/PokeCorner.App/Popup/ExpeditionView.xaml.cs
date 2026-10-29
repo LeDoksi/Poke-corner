@@ -94,10 +94,10 @@ public partial class ExpeditionView : UserControl
         }
         DifficultyBox.SelectedIndex = 1;
         DurationBox.SelectedIndex = 1;
-        PickerTypeBox.Items.Add(new ComboBoxItem { Content = "Все типы", Tag = "" });
+        PickerTypeBox.Items.Add(new ComboBoxItem { Content = "Тип: любой", Tag = "" });
         foreach (var type in catalog?.Species.SelectMany(s => s.Types).Distinct().OrderBy(ExpeditionTeamSelector.TypeName).ToArray() ?? [])
             PickerTypeBox.Items.Add(new ComboBoxItem { Content = ExpeditionTeamSelector.TypeName(type), Tag = type });
-        PickerTraitBox.Items.Add(new ComboBoxItem { Content = "Все особенности", Tag = "" });
+        PickerTraitBox.Items.Add(new ComboBoxItem { Content = "Особенность: любая", Tag = "" });
         foreach (var trait in ExpeditionTeamSelector.TraitIds)
             PickerTraitBox.Items.Add(new ComboBoxItem { Content = CollectionView.TraitLabel(trait), Tag = trait });
         PickerTypeBox.SelectedIndex = PickerTraitBox.SelectedIndex = PickerSortBox.SelectedIndex = 0;
