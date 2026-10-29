@@ -3,7 +3,7 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PokeCorner.App.Popup">
  <Grid>
   <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-   <StackPanel Margin="24,18">
+   <StackPanel Margin="24,18" MaxWidth="1100">
     <Grid Margin="0,0,0,20">
      <StackPanel><TextBlock Text="Маленькие радости" Style="{StaticResource ScreenTitleTextStyle}"/>
       <TextBlock Text="Всё нужное для новых историй." Style="{StaticResource CaptionTextStyle}"/></StackPanel>
