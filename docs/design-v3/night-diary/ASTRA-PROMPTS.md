@@ -208,3 +208,8 @@ Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel a
 Single bold icon of one chunky bone-shaped pet biscuit lying diagonally (lower left to upper right), warm baked biscuit tones (#D9A066 family with toasted brown and plum shadow clusters), a small paw print pressed into its middle in a darker toasted brown. One compact apricot highlight cluster on the upper edge. The biscuit fills about 85% of the canvas width, centered, uncropped. Reads instantly as a treat at 18x18 and 24x24 px on dark (#101426) and light backgrounds. No crumbs, no sparkles, no stars, no plate, no hands, no Pokémon, no text. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
 ```
 Приёмка: на 18 и 24 px читается как лакомство и не путается ни с сердцами ухода, ни с покеболом; рядом с care-v3 и catch-ball выглядит одним набором.
+
+## Приёмка 29.10 — покебол и лакомство
+
+- **catch-ball.png** — принят: на 18 и 24 px читается закрытым покеболом на тёмном и светлом фоне, кирпично-красный не путается с розовым сердцем ухода, обводка и техника как у care-v3. Исходник стоял ниже и левее центра, при экспорте обрезан по силуэту и отцентрован с полем 4%. Новый `ui-system/assets/catch-ball.png` (96 px) у полосы «Следующий покебол» в уголке. Сцена поимки пока остаётся со старыми `ball-closed`/`ball-open`: их заменит пара для анимации броска.
+- **treat-v2.png** — принят: косточка с четырьмя шишками и лапкой, на 18 px лапка пропадает, силуэт читается. Касался краёв холста, при экспорте отцентрован с полем 4%. Заменил `ui-system/assets/treat.png` (96 px).

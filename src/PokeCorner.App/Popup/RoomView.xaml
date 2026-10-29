@@ -39,7 +39,7 @@
                 <ProgressBar x:Name="CareBar" Maximum="1" Height="7" Margin="0,6,0,0" />
             </StackPanel>
             <StackPanel Margin="0,0,16,0">
-                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/ball-closed.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Следующий покебол" FontWeight="Bold" VerticalAlignment="Center"/></StackPanel>
+                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/catch-ball.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Следующий покебол" FontWeight="Bold" VerticalAlignment="Center"/></StackPanel>
                 <TextBlock x:Name="CatchText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
                 <ProgressBar x:Name="CatchBar" Maximum="1" Height="7" Margin="0,6,0,0" />
             </StackPanel>
