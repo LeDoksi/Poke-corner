@@ -145,9 +145,9 @@
     <TextBlock x:Name="PickerCountText" TextWrapping="Wrap" Margin="0,0,0,6" />
     <DockPanel>
      <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
-      <Button x:Name="PickerPreviousButton" Content="Назад" Click="PreviousPage_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0" />
+      <Button x:Name="PickerPreviousButton" Content="‹" ToolTip="Предыдущая страница" AutomationProperties.Name="Предыдущая страница" MinWidth="40" Click="PreviousPage_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0" />
       <TextBlock x:Name="PickerPageText" VerticalAlignment="Center" />
-      <Button x:Name="PickerNextButton" Content="Далее" Click="NextPage_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="6,0,0,0" />
+      <Button x:Name="PickerNextButton" Content="›" ToolTip="Следующая страница" AutomationProperties.Name="Следующая страница" MinWidth="40" Click="NextPage_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="6,0,0,0" />
      </StackPanel>
      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
       <Button x:Name="PickerCancelButton" Content="Отмена" Click="PickerCancel_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,8,0" />
