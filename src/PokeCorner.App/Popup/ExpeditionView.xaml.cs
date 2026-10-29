@@ -176,8 +176,8 @@ public partial class ExpeditionView : UserControl
         MessageDetailText.Text = error?.Message ?? "";
         MessageDetailText.Visibility = error is null ? Visibility.Collapsed : Visibility.Visible;
         MessageGlyph.Visibility = error is null ? Visibility.Collapsed : Visibility.Visible;
-        MessagePanel.Background = error is null ? (Brush)FindResource("NdSurfaceBrush") : new SolidColorBrush(Color.FromRgb(0x3A, 0x1C, 0x2A));
-        MessagePanel.BorderBrush = error is null ? (Brush)FindResource("NdBorderBrush") : new SolidColorBrush(Color.FromRgb(0xA8, 0x50, 0x60));
+        MessagePanel.Background = error is null ? (Brush)FindResource("NdSurfaceBrush") : (Brush)FindResource("NdDangerSurfaceBrush");
+        MessagePanel.BorderBrush = error is null ? (Brush)FindResource("NdBorderBrush") : (Brush)FindResource("NdDangerLineBrush");
         MessagePanel.Visibility = Visibility.Visible;
     }
 

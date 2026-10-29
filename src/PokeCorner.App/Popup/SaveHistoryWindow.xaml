@@ -11,11 +11,10 @@
    <TextBlock x:Name="Explanation" TextWrapping="Wrap" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,8,0,0"/>
    <TextBlock x:Name="ErrorText" TextWrapping="Wrap" Foreground="{StaticResource DangerTextBrush}" AutomationProperties.LiveSetting="Polite"/>
   </StackPanel>
-  <ListBox x:Name="HistoryList" Grid.Row="1" SelectionChanged="SelectionChanged"
+  <ListBox x:Name="HistoryList" Grid.Row="1" ItemContainerStyle="{StaticResource NdRowListItemStyle}" SelectionChanged="SelectionChanged"
    AutomationProperties.Name="Резервные копии: дата, коллекция и монеты"
    Background="Transparent" Foreground="{StaticResource PrimaryTextBrush}" BorderThickness="0"
    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-   <ListBox.ItemContainerStyle><Style TargetType="ListBoxItem"><Setter Property="Padding" Value="12,16"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/></Style></ListBox.ItemContainerStyle>
    <ListBox.ItemTemplate><DataTemplate>
     <StackPanel>
      <TextBlock Text="{Binding SavedAtUtc.LocalDateTime, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" FontWeight="Bold"/>
@@ -30,7 +29,7 @@
    </DataTemplate></ListBox.ItemTemplate>
   </ListBox>
   <StackPanel Grid.Row="2" Margin="0,16,0,0">
-   <Expander Header="Технические сведения" IsExpanded="False" Margin="0,0,0,12"><TextBlock x:Name="Diagnostics" TextWrapping="Wrap"/></Expander>
+   <Expander Header="Технические сведения" IsExpanded="False" Margin="0,0,0,12" Foreground="{StaticResource NdMutedBrush}"><TextBlock x:Name="Diagnostics" TextWrapping="Wrap" FontSize="12"/></Expander>
    <WrapPanel HorizontalAlignment="Right">
     <Button Content="Отмена" Click="Cancel_Click" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}"/>
     <Button x:Name="RestoreButton" Content="Восстановить…" Click="Restore_Click" IsEnabled="False" Style="{StaticResource UiPrimaryButtonStyle}"/>

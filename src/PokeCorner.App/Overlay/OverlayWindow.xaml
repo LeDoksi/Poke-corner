@@ -10,8 +10,8 @@
         <!-- Shared "thought bubble" backing shape for the petting reaction and the mood cloud, so
              a bare glyph never has to read against a busy desktop on its own. -->
         <Style x:Key="ThoughtBubbleStyle" TargetType="Border">
-            <Setter Property="Background" Value="#E6FFFFFF" />
-            <Setter Property="BorderBrush" Value="#33000000" />
+            <Setter Property="Background" Value="#E616192B" />
+            <Setter Property="BorderBrush" Value="{StaticResource NdBorderBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="11" />
             <Setter Property="Padding" Value="7,3" />
@@ -53,7 +53,7 @@
         </Canvas>
         <Border x:Name="ThoughtBubble" Style="{StaticResource ThoughtBubbleStyle}"
                 HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed">
-            <TextBlock x:Name="ThoughtStage" Foreground="#273447" FontSize="17" />
+            <TextBlock x:Name="ThoughtStage" Foreground="{StaticResource NdTextBrush}" FontSize="17" />
         </Border>
 
     </Grid>

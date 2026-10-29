@@ -16,7 +16,7 @@ public partial class ConfirmationOverlay : System.Windows.Controls.UserControl
         _nightDiary = true;
         FontFamily = new System.Windows.Media.FontFamily("Segoe UI");
         Foreground = (System.Windows.Media.Brush)FindResource("NdTextBrush");
-        Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(175, 7, 10, 22));
+        Background = (System.Windows.Media.Brush)FindResource("NdScrimBrush");
         ConfirmationCard.Background = (System.Windows.Media.Brush)FindResource("NdSurfaceBrush");
         ConfirmationCard.BorderBrush = (System.Windows.Media.Brush)FindResource("NdBorderBrush");
         ConfirmationCard.BorderThickness = new Thickness(1);

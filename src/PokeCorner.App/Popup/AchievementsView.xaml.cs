@@ -102,7 +102,7 @@ public partial class AchievementsView : UserControl
                 panel.Children.Add(new Rectangle
                 {
                     Width = 132, Height = 94, HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
-                    Fill = (Brush)FindResource("PrimaryTextBrush"),
+                    Fill = (Brush)FindResource("NdSilhouetteBrush"),
                     OpacityMask = new ImageBrush(RoomView.LoadImage(_art.PathFor(appearance.MaskFile)))
                     { Stretch = Stretch.Uniform, AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top }
                 });

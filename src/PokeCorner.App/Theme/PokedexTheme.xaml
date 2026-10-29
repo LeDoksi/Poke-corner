@@ -1,8 +1,9 @@
-<!-- PokéCorner native palette: cream paper, forest controls and Nunito. -->
+<!-- PokéCorner legacy keys, remapped onto the Night Diary palette (NightDiary.xaml is the source of truth). -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:theme="clr-namespace:PokeCorner.App.Theme">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="NightDiary.xaml" />
         <ResourceDictionary Source="UiSystem.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -34,49 +35,25 @@
     <SolidColorBrush x:Key="RarityRareBrush" Color="#8FB4F0" />
     <SolidColorBrush x:Key="RarityLegendaryBrush" Color="#FFB574" />
 
-    <!-- ===================== Gradient tokens ===================== -->
-    <LinearGradientBrush x:Key="PrimaryButtonBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#FFB574" Offset="0" />
-        <GradientStop Color="#FFAE66" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="PrimaryButtonHoverBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#FFC690" Offset="0" />
-        <GradientStop Color="#FFB574" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="PrimaryButtonPressedBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#E89E5E" Offset="0" />
-        <GradientStop Color="#DB9152" Offset="1" />
-    </LinearGradientBrush>
+    <!-- ===================== Fill tokens (flat: Night Diary uses no gradients or glows) ===================== -->
+    <SolidColorBrush x:Key="PrimaryButtonBrush" Color="#FFB574" />
+    <SolidColorBrush x:Key="PrimaryButtonHoverBrush" Color="#FFC690" />
+    <SolidColorBrush x:Key="PrimaryButtonPressedBrush" Color="#E89E5E" />
 
-    <LinearGradientBrush x:Key="ProgressGoldBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#FFD86B" Offset="0" />
-        <GradientStop Color="#D9A62A" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="ProgressRoseBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#FF7086" Offset="0" />
-        <GradientStop Color="#D42840" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="ProgressBlueBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#7FB4FF" Offset="0" />
-        <GradientStop Color="#3D6FCC" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="ProgressGreenBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#6FE7A3" Offset="0" />
-        <GradientStop Color="#2FA45E" Offset="1" />
-    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ProgressGoldBrush" Color="#FFB574" />
+    <SolidColorBrush x:Key="ProgressRoseBrush" Color="#C4ABF0" />
+    <SolidColorBrush x:Key="ProgressBlueBrush" Color="#8FB4F0" />
+    <SolidColorBrush x:Key="ProgressGreenBrush" Color="#7FD1A0" />
 
-    <!-- Sits behind the hero sprite: a warm pool of light so the pet reads as "on stage"
+    <!-- Sits behind the hero sprite: a soft lavender pool of light so the pet reads as "on stage"
          rather than pasted onto a flat panel. -->
     <RadialGradientBrush x:Key="SpotlightBrush" GradientOrigin="0.5,0.55" Center="0.5,0.55" RadiusX="0.5" RadiusY="0.5">
-        <GradientStop Color="#40F5C542" Offset="0" />
-        <GradientStop Color="#1AE8384F" Offset="0.55" />
-        <GradientStop Color="#000D1120" Offset="1" />
+        <GradientStop Color="#33C4ABF0" Offset="0" />
+        <GradientStop Color="#14C4ABF0" Offset="0.55" />
+        <GradientStop Color="#00101426" Offset="1" />
     </RadialGradientBrush>
 
-    <LinearGradientBrush x:Key="HeroCardBrush" StartPoint="0,0" EndPoint="0.35,1">
-        <GradientStop Color="#1C1F34" Offset="0" />
-        <GradientStop Color="#16192B" Offset="1" />
-    </LinearGradientBrush>
+    <SolidColorBrush x:Key="HeroCardBrush" Color="#16192B" />
 
     <!-- KEYED: every window opts in with Style="{StaticResource AppWindowStyle}". An implicit
          style would do nothing, because WPF matches implicit styles against the EXACT runtime
@@ -272,9 +249,6 @@
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="9"
                             Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                        <Border.Effect>
-                            <DropShadowEffect Color="#26352D" BlurRadius="9" ShadowDepth="2" Opacity="0.16" />
-                        </Border.Effect>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
                                           RecognizesAccessKey="True" />
                     </Border>
@@ -429,9 +403,6 @@
                                 BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
                         <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
                                 Background="{TemplateBinding Foreground}">
-                            <Border.Effect>
-                                <DropShadowEffect Color="#E8384F" BlurRadius="10" ShadowDepth="0" Opacity="0.65" />
-                            </Border.Effect>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -450,9 +421,6 @@
                                 BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
                         <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
                                 Background="{TemplateBinding Foreground}">
-                            <Border.Effect>
-                                <DropShadowEffect Color="#5B9DFF" BlurRadius="10" ShadowDepth="0" Opacity="0.65" />
-                            </Border.Effect>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -471,9 +439,6 @@
                                 BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
                         <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
                                 Background="{TemplateBinding Foreground}">
-                            <Border.Effect>
-                                <DropShadowEffect Color="#4CD787" BlurRadius="10" ShadowDepth="0" Opacity="0.6" />
-                            </Border.Effect>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -492,9 +457,6 @@
                                 BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
                         <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
                                 Background="{TemplateBinding Foreground}">
-                            <Border.Effect>
-                                <DropShadowEffect Color="#F5C542" BlurRadius="10" ShadowDepth="0" Opacity="0.6" />
-                            </Border.Effect>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -862,9 +824,6 @@
                 <ControlTemplate TargetType="Thumb">
                     <Grid>
                         <Ellipse Fill="{StaticResource AccentRedBrush}">
-                            <Ellipse.Effect>
-                                <DropShadowEffect Color="#26352D" BlurRadius="8" ShadowDepth="2" Opacity="0.15" />
-                            </Ellipse.Effect>
                         </Ellipse>
                         <Ellipse Fill="{StaticResource WindowBackgroundBrush}" Margin="5.5" />
                     </Grid>
@@ -1006,9 +965,6 @@
                     <Border Background="{StaticResource CardBackgroundBrush}"
                             BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
                             CornerRadius="8" Padding="10,7">
-                        <Border.Effect>
-                            <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
-                        </Border.Effect>
                         <!-- A wrapping TextBlock, not a bare ContentPresenter: every tooltip here is a plain string,
                              and ContentPresenter renders a string into a TextBlock that does NOT wrap, so anything
                              longer than ~40 characters was clipped mid-word against the MaxWidth above. -->
@@ -1098,9 +1054,6 @@
                         <Popup x:Name="Popup" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" AllowsTransparency="True" Focusable="False">
                             <Border Background="{StaticResource CardBackgroundBrush}" BorderBrush="{StaticResource CardBorderBrush}"
                                     BorderThickness="1" CornerRadius="10" Padding="0,3" Margin="0,4,0,0">
-                                <Border.Effect>
-                                    <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="4" Opacity="0.5" />
-                                </Border.Effect>
                                 <ItemsPresenter />
                             </Border>
                         </Popup>

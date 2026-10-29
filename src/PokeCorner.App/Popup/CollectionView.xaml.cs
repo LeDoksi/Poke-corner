@@ -643,7 +643,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             return image;
         }
         if (entry is { HasSilhouette: true } && GetPackageSprite(speciesId, false) is { } shape)
-            return new Border { Width = size, Height = size, Background = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Opacity = 0.7,
+            return new Border { Width = size, Height = size, Background = (System.Windows.Media.Brush)FindResource("NdSilhouetteBrush"),
                 OpacityMask = new System.Windows.Media.ImageBrush(shape) { Stretch = System.Windows.Media.Stretch.Uniform } };
         return new TextBlock { Text = "?", Width = size, Height = size, FontSize = size * 0.45, TextAlignment = TextAlignment.Center,
             Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Padding = new Thickness(0, size * 0.2, 0, 0) };
@@ -1869,7 +1869,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (stage.SpriteImage is not null) contents.Children.Add(new System.Windows.Controls.Image { Source = stage.SpriteImage, Width = imageSize, Height = imageSize });
         else if (stage.SilhouetteImage is { } shape) contents.Children.Add(new Border
         {
-            Width = imageSize, Height = imageSize, Background = ThemeBrushes.Get("MutedTextBrush"),
+            Width = imageSize, Height = imageSize, Background = ThemeBrushes.Get("NdSilhouetteBrush"),
             OpacityMask = new ImageBrush(shape) { Stretch = Stretch.Uniform }
         });
         else contents.Children.Add(new TextBlock { Text = "?", Height = imageSize, FontSize = 26, TextAlignment = TextAlignment.Center });
@@ -1905,7 +1905,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             if (!branch.Available)
                 ((StackPanel)tile.Child).Children.Add(new TextBlock { Text = "Недоступно", FontSize = 10.5, TextAlignment = TextAlignment.Center });
             tile.ToolTip = branch.Reason;
-            tile.Background = SelectedEvolutionBranch == branch.SpeciesId ? new SolidColorBrush(System.Windows.Media.Color.FromRgb(225, 237, 216)) : ThemeBrushes.Get("CardBackgroundBrush");
+            tile.Background = SelectedEvolutionBranch == branch.SpeciesId ? ThemeBrushes.Get("NdRaisedBrush") : ThemeBrushes.Get("CardBackgroundBrush");
             tile.BorderBrush = SelectedEvolutionBranch == branch.SpeciesId ? ThemeBrushes.Get("UiForestBrush") : ThemeBrushes.Get("CardBorderBrush");
             tile.MouseLeftButtonDown -= DetailEvolutionStage_Click;
             tile.MouseLeftButtonDown += (_, e) => {

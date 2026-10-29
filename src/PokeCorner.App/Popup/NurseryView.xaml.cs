@@ -432,7 +432,7 @@ public partial class NurseryView : UserControl
                 FrameworkElement picture = known
                     ? new Image { Source = sprite, Width = 48, Height = 48 }
                     : sprite is null ? new TextBlock { Text = "?", Width = 48, FontSize = 28, TextAlignment = TextAlignment.Center }
-                    : new Border { Width = 48, Height = 48, Background = (System.Windows.Media.Brush)FindResource("MutedTextBrush"),
+                    : new Border { Width = 48, Height = 48, Background = (System.Windows.Media.Brush)FindResource("NdSilhouetteBrush"),
                         OpacityMask = new ImageBrush(sprite) { Stretch = Stretch.Uniform } };
                 picture.Margin = new Thickness(0, 0, 10, 0);
                 DockPanel.SetDock(picture, Dock.Left);

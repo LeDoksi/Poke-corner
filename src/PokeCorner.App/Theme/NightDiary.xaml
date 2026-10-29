@@ -9,6 +9,34 @@
  <SolidColorBrush x:Key="NdLavenderBrush" Color="#C4ABF0"/>
  <SolidColorBrush x:Key="NdApricotBrush" Color="#FFB574"/>
  <SolidColorBrush x:Key="NdInkBrush" Color="#9A8FBE" Opacity="0.75"/>
+ <!-- Semantic tokens (COMPONENTS.md §1). Colour is never the only carrier of meaning. -->
+ <SolidColorBrush x:Key="NdOnApricotBrush" Color="#101426"/>
+ <SolidColorBrush x:Key="NdApricotHoverBrush" Color="#FFC690"/>
+ <SolidColorBrush x:Key="NdApricotPressedBrush" Color="#E89E5E"/>
+ <SolidColorBrush x:Key="NdDangerBrush" Color="#A85060"/>
+ <SolidColorBrush x:Key="NdDangerLineBrush" Color="#D9707E"/>
+ <SolidColorBrush x:Key="NdDangerTextBrush" Color="#FF9AA5"/>
+ <SolidColorBrush x:Key="NdDangerSurfaceBrush" Color="#3A1C2A"/>
+ <SolidColorBrush x:Key="NdSuccessBrush" Color="#7FD1A0"/>
+ <SolidColorBrush x:Key="NdWarningBrush" Color="#F2D35E"/>
+ <SolidColorBrush x:Key="NdShinyBrush" Color="#F2D35E"/>
+ <SolidColorBrush x:Key="NdScrimBrush" Color="#D0101426"/>
+ <!-- One flat shape colour for everything not yet discovered: species, evolutions, parents, awards. -->
+ <SolidColorBrush x:Key="NdSilhouetteBrush" Color="#88819E"/>
+ <!-- Selectable row in a plain list (save history): no system highlight, same states as cards. -->
+ <Style x:Key="NdRowListItemStyle" TargetType="ListBoxItem">
+  <Setter Property="Padding" Value="12,12"/><Setter Property="Margin" Value="0,0,0,8"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
+   <Border x:Name="Surface" Background="{StaticResource NdSurfaceBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" CornerRadius="9" Padding="{TemplateBinding Padding}">
+    <ContentPresenter/>
+   </Border>
+   <ControlTemplate.Triggers>
+    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
+    <Trigger Property="IsSelected" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdRaisedBrush}"/><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
+    <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
+   </ControlTemplate.Triggers>
+  </ControlTemplate></Setter.Value></Setter>
+ </Style>
  <Style x:Key="NdSketchStyle" TargetType="Path"><Setter Property="Stroke" Value="{StaticResource NdInkBrush}"/><Setter Property="StrokeThickness" Value="1.4"/><Setter Property="StrokeStartLineCap" Value="Round"/><Setter Property="StrokeEndLineCap" Value="Round"/><Setter Property="StrokeLineJoin" Value="Round"/><Setter Property="IsHitTestVisible" Value="False"/></Style>
  <Style x:Key="NdMarginNoteStyle" TargetType="TextBlock"><Setter Property="FontFamily" Value="{DynamicResource NdHandFont}"/><Setter Property="FontSize" Value="21"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Opacity" Value="0.8"/><Setter Property="TextWrapping" Value="Wrap"/><Setter Property="TextAlignment" Value="Center"/><Setter Property="IsHitTestVisible" Value="False"/></Style>
  <FontFamily x:Key="NdHandFont">pack://application:,,,/PokeCorner;component/Assets/Fonts/#Caveat</FontFamily>
@@ -31,7 +59,7 @@
   <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/><Setter Property="Width" Value="34"/><Setter Property="Padding" Value="5"/>
  </Style>
  <Style x:Key="NdCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource NdChromeButtonStyle}">
-  <Style.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="#FFB7AE"/></Trigger></Style.Triggers>
+  <Style.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{StaticResource NdDangerTextBrush}"/></Trigger></Style.Triggers>
  </Style>
  <Style x:Key="NdShellTabStyle" TargetType="TabItem">
   <Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="13"/>

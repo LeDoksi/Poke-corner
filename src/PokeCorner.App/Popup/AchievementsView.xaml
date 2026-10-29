@@ -17,7 +17,7 @@
                 <TextBlock Text="Три любимые награды можно поставить на полку."
                            TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,12" />
                 <TextBlock Text="Моя полка" Style="{StaticResource SectionHeaderTextStyle}" Margin="0,0,0,8" />
-                <Border Background="#EEE9D9" CornerRadius="10" Padding="16,8" Margin="0,0,0,10">
+                <Border Background="{StaticResource NdBackgroundBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" CornerRadius="9" Padding="16,8" Margin="0,0,0,10">
                     <UniformGrid x:Name="ShelfPanel" Columns="3" />
                 </Border>
                 <TextBlock x:Name="MessageText" Text="Выберите открытую награду, затем место на полке. Нажмите занятое место без выбора, чтобы снять награду."
