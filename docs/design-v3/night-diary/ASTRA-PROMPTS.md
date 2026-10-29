@@ -182,3 +182,9 @@ Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel a
 Single bold icon for pet "care" meaning "time together": one large chunky rosy-pink heart, and a smaller lavender heart tucked against its lower left side, overlapping it slightly, as if leaning on it. The large heart is about 70% of canvas width, the small heart about 35%. Both hearts share one thick deep-plum outline; one small apricot highlight on the large heart only. No hands, no paws, no arms, no faces, no sparkles, no stars, no particles, no text. Simple silhouette that reads instantly at 24x24 px on dark (#101426) and light backgrounds. The pair fills about 85% of the canvas, centered, genuinely transparent background. Exactly 512 x 512 pixels, PNG.
 ```
 Приёмка: на 24 px читаются два сердца без руки; маленькое не сливается с большим (обводка видна на тёмном и светлом фоне); не путается со значком лакомства на соседней кнопке «Покормить».
+
+## Приёмка 29.10
+
+- **care-v3.png** — принят: два сердца без руки читаются на 24, 20 и 18 px на тёмном и светлом фоне и не путаются с косточкой лакомства. Заменил `ui-system/assets/care.png` (96 px): кнопка «Погладить», заголовки ухода в уголке и на странице питомца.
+
+Открытых заказов у Астры нет.
