@@ -265,6 +265,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshPokedex(entries);
         if (SpeciesPane.Visibility == Visibility.Visible) RefreshSpecies();
         if (_detailCard is not null && !_appState.Collection.Individuals.Any(i => i.Id == _detailCard.IndividualId)) HideDetail();
+        if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) SyncDetailForm();
         if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible)
         {
             RefreshDetailEvolution();
@@ -1423,8 +1424,30 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void DetailCard_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) =>
         e.Handled = true;
 
+    // The open page follows its pet's form: after an evolution (from this page, the desktop pet or anywhere
+    // else) it shows the new species at once instead of the previous form's animation until reopened, and it
+    // picks up the animated frames once they arrive. Generation and status line are kept, so an evolve
+    // still in flight reports its result here.
+    private void SyncDetailForm()
+    {
+        var entry = _viewModel.GetEntry(_detailCard!.IndividualId, DateTimeOffset.UtcNow);
+        if (entry is null) return;
+        if (entry.DisplaySpeciesId != _detailCard.SpeciesId || entry.IsShiny != _detailCard.IsShiny)
+        {
+            var generation = _detailGeneration; var status = DetailErrorText.Text;
+            ShowDetail(BuildCard(entry));
+            _detailGeneration = generation; DetailErrorText.Text = status;
+        }
+        else if (_detailCard.SpriteFrames is null && _animatedFrames.ContainsKey((entry.DisplaySpeciesId, entry.IsShiny)))
+        {
+            _detailCard = BuildCard(entry);
+            ShowDetailSprite(_detailCard);
+        }
+    }
+
     private void ShowDetailSprite(PokedexCard card)
     {
+        EnsureAnimatedFrames(card.SpeciesId, card.IsShiny);
         if (_presentationSuspended) return;
         _detailAnimator?.Stop();
         _detailAnimator = null;
