@@ -36,6 +36,19 @@ public class ShellTests
     });
 
     [Fact]
+    public void CatchPageLeadsBackToTheCornerHome() => WpfTestHost.Run(() =>
+    {
+        var menu = CreateMenu(new AppState());
+        var nested = (TabControl)menu.FindName("CornerTabs");
+        menu.Navigate(MenuSection.Catch);
+        Assert.Same(menu.FindName("CatchTab"), nested.SelectedItem);
+        var catchView = (CatchView)((TabItem)menu.FindName("CatchTab")).Content;
+        ((Button)catchView.FindName("BackToCornerButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        Assert.Same(menu.FindName("CornerHomeTab"), nested.SelectedItem);
+        Assert.Same(menu.FindName("CornerTab"), ((TabControl)menu.FindName("MenuTabControl")).SelectedItem);
+    });
+
+    [Fact]
     public void RarityAndTypeLabelsMeetTextContrastOnTheirResolvedPaperSurface() => WpfTestHost.Run(() =>
     {
         foreach (var key in new[] { "RarityCommonBrush", "RarityUncommonBrush", "RarityRareBrush", "RarityLegendaryBrush" })

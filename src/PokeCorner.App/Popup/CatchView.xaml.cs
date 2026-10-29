@@ -36,6 +36,11 @@ public partial class CatchView : System.Windows.Controls.UserControl
     private CatchReveal? _pendingReveal, _spriteFetchedFor;
     private CancellationTokenSource? _revealCancellation;
 
+    /// <summary>The page's own way back to the corner; the shell decides where that is.</summary>
+    public event Action? BackRequested;
+
+    private void BackToCornerButton_Click(object sender, RoutedEventArgs e) => BackRequested?.Invoke();
+
     public CatchView(AppState appState, Func<CatchReveal?>? tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite,
         Func<int> catchReadyCount, Action onStateChanged, Func<int, string> resolveSpeciesName,
         Func<Task<CatchReveal?>>? tryPerformCatchAsync = null, Action? onResultContinued = null,
@@ -130,6 +135,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         };
         CharmButton.Content = active ? "Талисман активен" : stock > 0 ? "Активировать" : "Нет в запасе";
         CharmButton.IsEnabled = !_busy && !_suspended && !_showingResult && _activateLuckyCharm is not null && stock > 0 && !active;
+        BackToCornerButton.IsEnabled = !_busy && _revealCancellation is null; // not mid-throw: the throw commits first
         CatchButton.IsEnabled = !_busy && _revealCancellation is null && (_showingResult || encounter is not null ||
             _selectedEncounterId is null && _catchReadyCount() > 0);
         if (_showingResult || _busy || _suspended) return;

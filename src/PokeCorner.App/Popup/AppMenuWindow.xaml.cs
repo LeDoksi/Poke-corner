@@ -83,6 +83,7 @@ public partial class AppMenuWindow : Window
             NurseryTab.Content = nurseryView;
         }
         _catchView = catchView;
+        catchView.BackRequested += () => Navigate(MenuSection.Corner);
         MenuTabControl.SelectionChanged += (_, _) =>
         {
             RefreshSnapshot();
@@ -236,13 +237,23 @@ public partial class AppMenuWindow : Window
         }
     }
 
-    // A click on the rail while Settings is open: also the already highlighted tab, which raises no SelectionChanged.
+    // A click on the rail tab that is already highlighted raises no SelectionChanged. It still has to work:
+    // from Settings it opens that section, and «Уголок» returns from its inner pages (Поимка, Достижения).
     private void RailTab_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (SettingsContent.Visibility != Visibility.Visible || _confirmation is not null || _hosted is not null) return;
+        if (_confirmation is not null || _hosted is not null) return;
         for (var node = e.OriginalSource as DependencyObject; node is not null; node = System.Windows.Media.VisualTreeHelper.GetParent(node))
         {
             if (node is not System.Windows.Controls.TabItem item || System.Windows.Controls.ItemsControl.ItemsControlFromItemContainer(item) != MenuTabControl) continue;
+            if (SettingsContent.Visibility != Visibility.Visible)
+            {
+                if (item == CornerTab && MenuTabControl.SelectedItem == CornerTab && CornerTabs.SelectedItem != CornerHomeTab)
+                {
+                    Navigate(MenuSection.Corner);
+                    e.Handled = true;
+                }
+                return;
+            }
             MenuTabControl.SelectedItem = item;
             if (SettingsContent.Visibility == Visibility.Visible) Navigate(SelectedSection());
             e.Handled = true;

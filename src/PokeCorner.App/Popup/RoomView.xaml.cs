@@ -204,6 +204,8 @@ public partial class RoomView : UserControl
             CareText.Text = "Выберите спутника";
             CareBar.Value = 0;
         }
+        CatchBar.Value = Math.Clamp((double)data.CatchAccumulatorUnits / ActivityAccumulator.CatchCheckIntervalUnits, 0, 1);
+        CatchText.Text = data.PendingCatchCount > 0 ? $"Готово: {data.PendingCatchCount} · ждут в поимке" : "Копится за активность";
         TreatBar.Value = Math.Clamp((double)data.FeedingRemainderUnits / FeedingService.ActivityUnitsPerTreatEarned, 0, 1);
         TreatText.Text = $"{data.FeedingTreats} в запасе · новые за активность";
         PetButton.IsEnabled = active is not null && _pet is not null;

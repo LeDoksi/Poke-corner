@@ -4,6 +4,9 @@
     <Grid Margin="20,14">
         <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
         <StackPanel Margin="0,0,0,16">
+            <!-- Catch is a page inside «Уголок»; the rail tab is already selected, so the way back must be on the page. -->
+            <Button x:Name="BackToCornerButton" Content="← В уголок" Click="BackToCornerButton_Click" HorizontalAlignment="Left" Margin="-12,-8,0,6"
+                    Style="{StaticResource SecondaryButtonStyle}" Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource NdLavenderBrush}"/>
             <TextBlock x:Name="EncounterTitleText" FontSize="26" FontWeight="ExtraBold" Foreground="{StaticResource UiInkBrush}" TextWrapping="Wrap"/>
             <TextBlock x:Name="SubtitleText" Foreground="{StaticResource UiSecondaryInkBrush}" TextWrapping="Wrap" Margin="0,4,0,0"/>
         </StackPanel>
