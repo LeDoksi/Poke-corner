@@ -18,7 +18,7 @@
     <Border x:Name="SceneBorder" ClipToBounds="True" Margin="0,0,0,12">
      <Grid x:Name="SceneGrid" Height="236" ClipToBounds="True">
       <!-- Scene art is 2048x768: full width, clipped around its middle band where the nest sits. -->
-      <Image x:Name="GreenhouseImage" Source="{StaticResource UiNurseryImage}" Stretch="Uniform" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" />
+      <Image x:Name="GreenhouseImage" Source="{StaticResource UiNurseryImage}" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" />
       <Rectangle IsHitTestVisible="False">
        <Rectangle.Fill>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0.75,0.9">

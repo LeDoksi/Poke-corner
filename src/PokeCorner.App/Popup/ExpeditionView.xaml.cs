@@ -403,7 +403,7 @@ public partial class ExpeditionView : UserControl
         var columns = Math.Max(2, (int)((viewportWidth - 8) / 150));
         var width = Math.Floor((viewportWidth - 8) / columns) - 8;
         // As many full rows as the window height holds (three at 1200x660), so FullHD fills its grid instead of a void.
-        var rowsFit = PickerScroll.ViewportHeight > 0 ? Math.Max(3, (int)(PickerScroll.ViewportHeight / 150)) : 3;
+        var rowsFit = PickerScroll.ActualHeight > 0 && !double.IsInfinity(PickerScroll.ActualHeight) ? Math.Clamp((int)(PickerScroll.ActualHeight / 150), 3, 8) : 3;
         var pageSize = Math.Max(12, columns * rowsFit);
         var pages = Math.Max(1, (rows.Count + pageSize - 1) / pageSize); _pickerPage = Math.Clamp(_pickerPage, 0, pages - 1);
         PickerMembers.Children.Clear();

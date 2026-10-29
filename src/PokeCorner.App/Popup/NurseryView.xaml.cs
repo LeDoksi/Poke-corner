@@ -70,10 +70,16 @@ public partial class NurseryView : UserControl
             BabyImage.BeginAnimation(OpacityProperty, null); BabyImage.Opacity = 1;
         };
         PreviewKeyDown += (_, e) => { if (e.Key == System.Windows.Input.Key.Escape && _pickerOpen) { ClosePicker(); e.Handled = true; } };
-        // Scene art is 2048x768: full width, clipped around its middle band where the nest sits.
-        SceneGrid.SizeChanged += (_, _) => GreenhouseImage.Height = SceneGrid.ActualWidth * 768 / 2048;
-        // The scene grows with the window (about 220 at 1200x660, 360 at FullHD) so tall windows get no empty band.
-        SizeChanged += (_, _) => SceneGrid.Height = Math.Clamp(ActualHeight * 0.36, 200, 380);
+        // The scene takes whatever height the data column leaves (150..460), so no window size gets an empty band.
+        ScenePanel.SizeChanged += (_, _) => FitScene();
+        DataColumn.SizeChanged += (_, _) => FitScene();
+        // Scene art is 2048x768: it covers the band and is clipped evenly around the middle, where the nest sits.
+        SceneGrid.SizeChanged += (_, _) =>
+        {
+            var scale = Math.Max(SceneGrid.ActualWidth / 2048, SceneGrid.ActualHeight / 768);
+            GreenhouseImage.Width = 2048 * scale;
+            GreenhouseImage.Height = 768 * scale;
+        };
         PickerScroll.SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
         Refresh();
     }
@@ -160,6 +166,12 @@ public partial class NurseryView : UserControl
     private void ChooseSecond_Click(object sender, RoutedEventArgs e) => OpenPicker(1);
     private void DraftFirst_Click(object sender, RoutedEventArgs e) { _editing = 0; _page = 0; RefreshPicker(); }
     private void DraftSecond_Click(object sender, RoutedEventArgs e) { if (_draftFirst == Guid.Empty) return; _editing = 1; _page = 0; RefreshPicker(); }
+    private void FitScene()
+    {
+        if (ScenePanel.ViewportHeight <= 0 || double.IsInfinity(ScenePanel.ViewportHeight)) return;
+        var height = Math.Clamp(ScenePanel.ViewportHeight - DataColumn.ActualHeight - 12, 150, 460);
+        if (Math.Abs(SceneGrid.Height - height) > 1) SceneGrid.Height = height;
+    }
     private void ParentReset_Click(object sender, RoutedEventArgs e) { ParentSearchBox.Text = ""; RarityBox.SelectedIndex = 0; }
     private void ClosePicker() { _pickerOpen = false; Refresh(); ChooseFirstButton.Focus(); }
     private void PickerCancel_Click(object sender, RoutedEventArgs e) => ClosePicker();
@@ -263,7 +275,7 @@ public partial class NurseryView : UserControl
         var viewport = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
         var columns = Math.Max(2, (int)((viewport - 8) / 150));
         var width = Math.Floor((viewport - 8) / columns) - 8;
-        var rowsFit = PickerScroll.ViewportHeight > 0 ? Math.Max(3, (int)(PickerScroll.ViewportHeight / 138)) : 3;
+        var rowsFit = PickerScroll.ActualHeight > 0 && !double.IsInfinity(PickerScroll.ActualHeight) ? Math.Clamp((int)(PickerScroll.ActualHeight / 138), 3, 8) : 3;
         var size = Math.Max(12, columns * rowsFit);
 
         _pages = Math.Max(1, (count + size - 1) / size);
@@ -610,8 +622,7 @@ public partial class NurseryView : UserControl
             if (_snapshot().Nest?.Id != request.OperationId || !result.Success ||
                 !_snapshot().CompletedOperations.ContainsKey($"nursery:start:{request.OperationId}"))
                 throw new InvalidOperationException("Запуск не подтверждён сохранением.");
-            _pendingStart = null;
-            Show(result.Message);
+            _pendingStart = null; // the scene caption already says the nest is running; no extra status line
         }
         catch (Exception ex)
         {

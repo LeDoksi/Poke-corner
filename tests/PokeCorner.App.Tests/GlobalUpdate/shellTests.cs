@@ -140,7 +140,8 @@ public class ShellTests
         Assert.Equal(6, ((StackPanel)shop.FindName("BerriesPanel")).Children.Count);
 
         menu.Navigate(MenuSection.Settings);
-        Assert.Equal(Visibility.Collapsed, tabs.Visibility);
+        Assert.Equal(Visibility.Visible, tabs.Visibility); // the section rail stays beside Settings
+        Assert.Equal(Visibility.Visible, ((ContentControl)menu.FindName("SettingsContent")).Visibility);
         var settingsView = (SettingsView)((ContentControl)menu.FindName("SettingsContent")).Content;
         Assert.Equal(30, ((Slider)settingsView.FindName("EffectsSoundVolumeSlider")).Value);
         ((Slider)settingsView.FindName("EffectsSoundVolumeSlider")).Value = 0;

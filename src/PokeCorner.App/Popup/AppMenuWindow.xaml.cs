@@ -227,6 +227,7 @@ public partial class AppMenuWindow : Window
     // Hidden, not just painted over: a section behind Settings must not take Tab focus or clicks.
     private void CoverSection(bool covered)
     {
+        MenuTabControl.Tag = covered ? "settings" : null;
         if (_coveredSection is not null) { _coveredSection.Visibility = Visibility.Visible; _coveredSection = null; }
         if (covered && MenuTabControl.SelectedItem is System.Windows.Controls.TabItem { Content: UIElement content })
         {

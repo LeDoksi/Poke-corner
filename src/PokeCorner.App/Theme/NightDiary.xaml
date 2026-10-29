@@ -74,6 +74,14 @@
    <ControlTemplate.Triggers>
     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdRaisedBrush}"/></Trigger>
     <Trigger Property="IsSelected" Value="True"><Setter TargetName="ActiveMark" Property="Visibility" Value="Visible"/><Setter TargetName="Surface" Property="Background" Value="#302A4A"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/></Trigger>
+    <!-- Settings open beside the rail (Tag="settings"): no section is current, so the last one is not marked. -->
+    <MultiDataTrigger>
+     <MultiDataTrigger.Conditions>
+      <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+      <Condition Binding="{Binding Tag, RelativeSource={RelativeSource AncestorType=TabControl}}" Value="settings"/>
+     </MultiDataTrigger.Conditions>
+     <Setter TargetName="ActiveMark" Property="Visibility" Value="Collapsed"/><Setter TargetName="Surface" Property="Background" Value="Transparent"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/>
+    </MultiDataTrigger>
     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
     <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
    </ControlTemplate.Triggers>

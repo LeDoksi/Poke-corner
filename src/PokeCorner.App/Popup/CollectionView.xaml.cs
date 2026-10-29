@@ -159,7 +159,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         InitializeComponent();
         SizeChanged += (_, _) => LayoutMasterDetail();
         // Page size follows the window: re-fit when the grid's width or the visible height changes.
-        void Refit() => Dispatcher.BeginInvoke(() => { if (SpeciesPane.Visibility == Visibility.Visible && FitSpeciesPage() != _speciesPageSize) RefreshSpecies(); }, System.Windows.Threading.DispatcherPriority.Loaded);
+        void Refit() { if (SpeciesPane.Visibility == Visibility.Visible && FitSpeciesPage() != _speciesPageSize) RefreshSpecies(); }
         PokedexScroll.SizeChanged += (_, e) => { if (e.HeightChanged) Refit(); };
         SpeciesGrid.SizeChanged += (_, e) => { if (e.WidthChanged) Refit(); };
         DetailOverlay.SizeChanged += (_, _) => StackDetailColumns();
