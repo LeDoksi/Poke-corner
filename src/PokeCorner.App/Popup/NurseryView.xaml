@@ -35,7 +35,7 @@
         <TextBlock x:Name="SubtitleText" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
        </StackPanel>
       </Grid>
-      <Image x:Name="BabyImage" Width="120" Height="120" VerticalAlignment="Bottom" Margin="0,0,0,18" Visibility="Collapsed" />
+      <Image x:Name="BabyImage" Width="120" Height="120" VerticalAlignment="Center" Visibility="Collapsed" />
      </Grid>
     </Border>
     <StackPanel x:Name="DataColumn" Margin="24,0" MaxWidth="968">

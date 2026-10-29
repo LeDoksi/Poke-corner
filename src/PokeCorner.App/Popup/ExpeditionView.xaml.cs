@@ -389,6 +389,20 @@ public partial class ExpeditionView : UserControl
     private void PickerReset_Click(object sender, RoutedEventArgs e) { ResetPickerFilters(); RefreshPicker(); }
     private void PickerPrevious_Click(object sender, RoutedEventArgs e) { _pickerPage--; RefreshPicker(); PickerScroll.ScrollToTop(); }
     private void PickerNext_Click(object sender, RoutedEventArgs e) { _pickerPage++; RefreshPicker(); PickerScroll.ScrollToTop(); }
+    private System.Windows.Size _host;
+
+    // The picker page is sized inside the layout pass, so the first frame at a new window size is right.
+    protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint)
+    {
+        if (!double.IsInfinity(constraint.Width) && !double.IsInfinity(constraint.Height) &&
+            (Math.Abs(constraint.Width - _host.Width) > 1 || Math.Abs(constraint.Height - _host.Height) > 1))
+        {
+            _host = constraint;
+            if (_pickerOpen && !_suspended) RefreshPicker();
+        }
+        return base.MeasureOverride(constraint);
+    }
+
     private void RefreshPicker()
     {
         if (!_pickerOpen || _suspended) return;
@@ -399,11 +413,13 @@ public partial class ExpeditionView : UserControl
             PickerAvailableBox.IsChecked == true, PickerRouteBox.IsChecked == true, PickerSortBox.SelectedIndex);
         // D-17 tiles, same family as the Pokédex grid: sprite, name, level, plus the two facts a team
         // pick needs (route fit, trait).
-        var viewportWidth = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
+        // From the space the view was given (picker margins 2x24, room for a scrollbar), not from the scroll
+        // viewer, whose size is still the previous window's while a resize is being laid out.
+        var viewportWidth = _host.Width > 0 ? _host.Width - 66 : PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48);
         var columns = Math.Max(2, (int)((viewportWidth - 8) / 150));
         var width = Math.Floor((viewportWidth - 8) / columns) - 8;
         // As many full rows as the window height holds (three at 1200x660), so FullHD fills its grid instead of a void.
-        var rowsFit = PickerScroll.ActualHeight > 0 && !double.IsInfinity(PickerScroll.ActualHeight) ? Math.Clamp((int)(PickerScroll.ActualHeight / 150), 3, 8) : 3;
+        var rowsFit = _host.Height > 0 ? Math.Clamp((int)((_host.Height - 370) / 150), 3, 8) : 3; // 370: title, slots, filters, footer
         var pageSize = Math.Max(12, columns * rowsFit);
         var pages = Math.Max(1, (rows.Count + pageSize - 1) / pageSize); _pickerPage = Math.Clamp(_pickerPage, 0, pages - 1);
         PickerMembers.Children.Clear();

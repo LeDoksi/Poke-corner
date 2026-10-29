@@ -70,9 +70,8 @@ public partial class NurseryView : UserControl
             BabyImage.BeginAnimation(OpacityProperty, null); BabyImage.Opacity = 1;
         };
         PreviewKeyDown += (_, e) => { if (e.Key == System.Windows.Input.Key.Escape && _pickerOpen) { ClosePicker(); e.Handled = true; } };
-        // The scene takes whatever height the data column leaves (150..460), so no window size gets an empty band.
-        ScenePanel.SizeChanged += (_, _) => FitScene();
-        DataColumn.SizeChanged += (_, _) => FitScene();
+        // A grown or shrunk data column changes how much height the scene may take (see MeasureOverride).
+        DataColumn.SizeChanged += (_, e) => { if (e.HeightChanged) InvalidateMeasure(); };
         // Scene art is 2048x768: it covers the band and is clipped evenly around the middle, where the nest sits.
         SceneGrid.SizeChanged += (_, _) =>
         {
@@ -166,10 +165,32 @@ public partial class NurseryView : UserControl
     private void ChooseSecond_Click(object sender, RoutedEventArgs e) => OpenPicker(1);
     private void DraftFirst_Click(object sender, RoutedEventArgs e) { _editing = 0; _page = 0; RefreshPicker(); }
     private void DraftSecond_Click(object sender, RoutedEventArgs e) { if (_draftFirst == Guid.Empty) return; _editing = 1; _page = 0; RefreshPicker(); }
-    private void FitScene()
+    private System.Windows.Size _host;
+
+    // Sizes that depend on the space this view gets are settled here, inside the layout pass, so the first
+    // frame at a new window size is already right (SizeChanged handlers only fix it one pass later).
+    protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint)
     {
-        if (ScenePanel.ViewportHeight <= 0 || double.IsInfinity(ScenePanel.ViewportHeight)) return;
-        var height = Math.Clamp(ScenePanel.ViewportHeight - DataColumn.ActualHeight - 12, 150, 460);
+        if (!double.IsInfinity(constraint.Width) && !double.IsInfinity(constraint.Height))
+        {
+            if (Math.Abs(constraint.Width - _host.Width) > 1 || Math.Abs(constraint.Height - _host.Height) > 1)
+            {
+                _host = constraint;
+                if (_pickerOpen && !_suspended) RefreshPicker();
+            }
+            if (ScenePanel.Visibility == Visibility.Visible) FitScene(constraint);
+        }
+        return base.MeasureOverride(constraint);
+    }
+
+    // The scene takes the height the title, data column and footer leave, from 150 up to the art's own
+    // height at this width (no vertical crop when there is room), so no window size gets an empty band.
+    private void FitScene(System.Windows.Size constraint)
+    {
+        var probe = new System.Windows.Size(constraint.Width, double.PositiveInfinity);
+        HeaderPanel.Measure(probe); DataColumn.Measure(probe); FooterHost.Measure(probe);
+        var free = constraint.Height - 32 - HeaderPanel.DesiredSize.Height - DataColumn.DesiredSize.Height - FooterHost.DesiredSize.Height - 12;
+        var height = Math.Clamp(free, 150, Math.Max(150, Math.Min(constraint.Width * 768 / 2048, 640)));
         if (Math.Abs(SceneGrid.Height - height) > 1) SceneGrid.Height = height;
     }
     private void ParentReset_Click(object sender, RoutedEventArgs e) { ParentSearchBox.Text = ""; RarityBox.SelectedIndex = 0; }
@@ -272,10 +293,12 @@ public partial class NurseryView : UserControl
         var individuals = rows;
         var count = individuals.Length;
         // D-17 tiles, same family as the Pokédex grid; pages hold as many full rows as the window fits.
-        var viewport = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
+        // From the space the view was given (picker margins 2x24, room for a scrollbar), not from the scroll
+        // viewer, whose size is still the previous window's while a resize is being laid out.
+        var viewport = _host.Width > 0 ? _host.Width - 66 : PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50);
         var columns = Math.Max(2, (int)((viewport - 8) / 150));
         var width = Math.Floor((viewport - 8) / columns) - 8;
-        var rowsFit = PickerScroll.ActualHeight > 0 && !double.IsInfinity(PickerScroll.ActualHeight) ? Math.Clamp((int)(PickerScroll.ActualHeight / 138), 3, 8) : 3;
+        var rowsFit = _host.Height > 0 ? Math.Clamp((int)((_host.Height - 262) / 138), 3, 8) : 3; // 262: title, pair, filters, footer
         var size = Math.Max(12, columns * rowsFit);
 
         _pages = Math.Max(1, (count + size - 1) / size);

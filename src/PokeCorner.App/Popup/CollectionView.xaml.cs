@@ -352,7 +352,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     // FullHD window fills its grid instead of leaving half the page empty. Unmeasured layout keeps 12.
     private int FitSpeciesPage()
     {
-        if (SpeciesGrid.ActualWidth <= 0 || PokedexScroll.ViewportHeight <= 0 || !SpeciesGrid.IsVisible) return _speciesPageSize;
+        // Visibility, not IsVisible: IsVisible is false for any tree not yet shown in a window.
+        if (SpeciesGrid.ActualWidth <= 0 || PokedexScroll.ViewportHeight <= 0 || SpeciesPane.Visibility != Visibility.Visible) return _speciesPageSize;
         var columns = Math.Max(1, (int)((SpeciesGrid.ActualWidth - 4) / 164));
         var top = SpeciesGrid.TransformToAncestor(PokedexScroll).Transform(new System.Windows.Point()).Y + PokedexScroll.VerticalOffset;
         var rows = Math.Max(1, (int)((PokedexScroll.ViewportHeight - top - 56) / 206));
