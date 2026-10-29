@@ -704,8 +704,11 @@ public partial class App : System.Windows.Application
     private byte[]? FetchCatchScene(Guid? encounterId)
     {
         var trip = _appState.ToSaveData(_catchReadyCount).Expedition;
-        var route = trip is not null && trip.Id == encounterId ? trip.LocationId : "grove";
-        var path = Path.Combine(_catalogPackage.DataRoot, "expeditions", route + ".png");
+        var root = Path.Combine(_catalogPackage.DataRoot, "expeditions");
+        // Earned and gift balls open at the trainer's camp (Georgy 29.10); the grove stands in until Astra's camp.png ships.
+        var route = trip is not null && trip.Id == encounterId ? trip.LocationId
+            : File.Exists(Path.Combine(root, "camp.png")) ? "camp" : "grove";
+        var path = Path.Combine(root, route + ".png");
         return File.Exists(path) ? File.ReadAllBytes(path) : null;
     }
 

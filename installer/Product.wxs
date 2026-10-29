@@ -23,7 +23,7 @@
   <Package
       Name="PokeCorner"
       Manufacturer="PokeCorner"
-      Version="1.1.4.0"
+      Version="1.1.5.0"
       UpgradeCode="ABEC4F80-F721-4D76-85F5-BCFF1CCBD9B4"
       Scope="perMachine"
       Compressed="yes"

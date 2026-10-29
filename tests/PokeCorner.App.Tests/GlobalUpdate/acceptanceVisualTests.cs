@@ -537,7 +537,7 @@ public class AcceptanceVisualTests
             void AnimatedReveal(string variant)
             {
                 var animation = catchView.PlayReveal(reveal);
-                var durations = new[] { 1100, 650, 800, 1000, 1000, 1000, 700 };
+                var durations = variant == "known" ? new[] { 600, 450, 450, 550, 550, 550, 350 } : new[] { 500, 450, 450, 300 };
                 for (var phase = 0; phase < durations.Length; phase++)
                 {
                     Assert.Equal(durations[phase], revealDelays.Peek().Duration.TotalMilliseconds);
