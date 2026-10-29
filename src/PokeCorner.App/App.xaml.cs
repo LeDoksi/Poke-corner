@@ -704,8 +704,11 @@ public partial class App : System.Windows.Application
     private byte[]? FetchCatchScene(Guid? encounterId)
     {
         var trip = _appState.ToSaveData(_catchReadyCount).Expedition;
-        var route = trip is not null && trip.Id == encounterId ? trip.LocationId : "grove";
-        var path = Path.Combine(_catalogPackage.DataRoot, "expeditions", route + ".png");
+        var root = Path.Combine(_catalogPackage.DataRoot, "expeditions");
+        // Earned and gift balls open at the trainer's camp (Georgy 29.10); the grove stands in until Astra's camp.png ships.
+        var route = trip is not null && trip.Id == encounterId ? trip.LocationId
+            : File.Exists(Path.Combine(root, "camp.png")) ? "camp" : "grove";
+        var path = Path.Combine(root, route + ".png");
         return File.Exists(path) ? File.ReadAllBytes(path) : null;
     }
 
@@ -1016,7 +1019,11 @@ public partial class App : System.Windows.Application
                     (speciesId, shiny) => _catalogPackage.GetAssetPath(speciesId, shiny),
                     update => _appState.CommitAsync(_saveWriter, update, () => _catchReadyCount),
                     PreviewEvolution, EvolveIndividualAsync, section => _menuWindow?.Navigate(section),
-                    (berry, required) => shopView.SelectBerryShortage(berry, required), PreviewRehome, RehomeIndividualAsync,
+                    (berry, required) =>
+                    {
+                        shopView.SelectBerryShortage(berry, required);
+                        shopView.SetReturn("Вернуться к питомцу", () => _menuWindow?.Navigate(MenuSection.Pokedex));
+                    }, PreviewRehome, RehomeIndividualAsync,
                     PreviewRetraining, RetrainIndividualAsync,
                     (title, body, caption) => _menuWindow?.ConfirmAsync(title, body, caption) ?? Task.FromResult(false),
                     (id, item) =>
@@ -1083,7 +1090,8 @@ public partial class App : System.Windows.Application
                         var result = _shopService.TryActivateLuckyCharm(next);
                         if (!result.Success) throw new InvalidOperationException(result.Message);
                     }, closeMenu: false), fetchScene: FetchCatchScene,
-                    luckyCharmArtPath: Path.Combine(_catalogPackage.DataRoot, "final", "assets", "shop", "lucky-charm.png"));
+                    luckyCharmArtPath: Path.Combine(_catalogPackage.DataRoot, "final", "assets", "shop", "lucky-charm.png"),
+                    returnFromEncounter: () => _menuWindow?.Navigate(MenuSection.Expeditions));
                 if (_pendingCatchReveal is { } pendingCatchReveal) catchView.RestoreReveal(pendingCatchReveal);
                 var expeditionView = expeditionRef = new ExpeditionView(() => _appState.ToSaveData(_catchReadyCount),
                     PreviewExpedition, StartExpeditionAsync, CancelExpeditionAsync, ClaimExpeditionAsync,
@@ -1099,6 +1107,7 @@ public partial class App : System.Windows.Application
                     {
                         if (good == "offspring-charm") shopView.SelectItemShortage(good, required);
                         else shopView.SelectBerryShortage(good, required);
+                        shopView.SetReturn("Вернуться в питомник", () => _menuWindow?.Navigate(MenuSection.Nursery));
                         _menuWindow?.Navigate(MenuSection.Shop);
                     },
                     id => { _menuWindow?.Navigate(MenuSection.Pokedex); collectionView.OpenIndividual(id); },

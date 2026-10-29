@@ -325,7 +325,7 @@ public sealed partial class NurseryUiTests
             Choose(view, first, second);
             var text = OutcomeLabels(view)
                 .Single(row => row.Text.Contains($"№{recipe.AvailableOutcomes.First(o => !o.ShinyAvailable).SpeciesId} ·"));
-            Assert.Contains("Shiny-форма пока недоступна", text.Text);
+            Assert.Contains("Шайни-форма пока недоступна", text.Text);
             Assert.DoesNotContain("%",text.Text);
         });
     }

@@ -110,7 +110,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Dictionary<(int, bool), ImageSource> _packageSprites = new();
     private readonly HashSet<(int, bool)> _missingPackageSprites = new();
     private int _speciesPageIndex;
-    private const int SpeciesPageSize = 12;
+    private const int SpeciesPageMinimum = 12;
+    private int _speciesPageSize = SpeciesPageMinimum;
     private int? _selectedSpeciesId;
     private string _speciesSignature = string.Empty;
     private string _speciesTypeSignature = string.Empty;
@@ -157,6 +158,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         InitializeComponent();
         SizeChanged += (_, _) => LayoutMasterDetail();
+        // Page size follows the window: re-fit when the grid's width or the visible height changes.
+        void Refit() { if (SpeciesPane.Visibility == Visibility.Visible && FitSpeciesPage() != _speciesPageSize) RefreshSpecies(); }
+        PokedexScroll.SizeChanged += (_, e) => { if (e.HeightChanged) Refit(); };
+        SpeciesGrid.SizeChanged += (_, e) => { if (e.WidthChanged) Refit(); };
         DetailOverlay.SizeChanged += (_, _) => StackDetailColumns();
         ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectionChanged += (_, e) => { if (e.OriginalSource is System.Windows.Controls.TabControl) LayoutMasterDetail(); };
         _onEvolveRequested = onEvolveRequested;
@@ -260,6 +265,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshPokedex(entries);
         if (SpeciesPane.Visibility == Visibility.Visible) RefreshSpecies();
         if (_detailCard is not null && !_appState.Collection.Individuals.Any(i => i.Id == _detailCard.IndividualId)) HideDetail();
+        if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) SyncDetailForm();
         if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible)
         {
             RefreshDetailEvolution();
@@ -341,6 +347,18 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         PokedexFilterGrid.ColumnDefinitions[3].Width = narrow ? new GridLength(0) : new GridLength(1, GridUnitType.Star);
         PokedexFilterGrid.ColumnDefinitions[3].MinWidth = narrow ? 0 : 140;
         PokedexFilterGrid.ColumnDefinitions[1].MinWidth = PokedexFilterGrid.ColumnDefinitions[2].MinWidth = narrow ? 0 : 120;
+    }
+
+    // Whole rows of 164x206 species tiles that fit under the filters (never fewer than 12 tiles), so a
+    // FullHD window fills its grid instead of leaving half the page empty. Unmeasured layout keeps 12.
+    private int FitSpeciesPage()
+    {
+        // Visibility, not IsVisible: IsVisible is false for any tree not yet shown in a window.
+        if (SpeciesGrid.ActualWidth <= 0 || PokedexScroll.ViewportHeight <= 0 || SpeciesPane.Visibility != Visibility.Visible) return _speciesPageSize;
+        var columns = Math.Max(1, (int)((SpeciesGrid.ActualWidth - 4) / 164));
+        var top = SpeciesGrid.TransformToAncestor(PokedexScroll).Transform(new System.Windows.Point()).Y + PokedexScroll.VerticalOffset;
+        var rows = Math.Max(1, (int)((PokedexScroll.ViewportHeight - top - 56) / 206));
+        return Math.Max(SpeciesPageMinimum, columns * rows);
     }
 
     // Tiles stretch so each row is filled edge to edge instead of leaving a ragged gap.
@@ -457,14 +475,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var visible = CollectionViewModel.FilterSpecies(all, SpeciesSearchBox.Text, type, rarity,
             false, sort);
         if (SpeciesUnopenedToggle.IsChecked == true) visible = visible.Where(e => !FormOpen(e)).ToList();
-        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)SpeciesPageSize));
+        _speciesPageSize = FitSpeciesPage();
+        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)_speciesPageSize));
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
         SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · показано: {visible.Count}";
         SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
         SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
         SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
-        var page = visible.Skip(_speciesPageIndex * SpeciesPageSize).Take(SpeciesPageSize).ToList();
+        var page = visible.Skip(_speciesPageIndex * _speciesPageSize).Take(_speciesPageSize).ToList();
         var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{shinyLens}|" +
             string.Join("|", page.Select(e => $"{e.SpeciesId}:{FormOpen(e)}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
         if (signature != _speciesSignature)
@@ -1405,8 +1424,30 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void DetailCard_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) =>
         e.Handled = true;
 
+    // The open page follows its pet's form: after an evolution (from this page, the desktop pet or anywhere
+    // else) it shows the new species at once instead of the previous form's animation until reopened, and it
+    // picks up the animated frames once they arrive. Generation and status line are kept, so an evolve
+    // still in flight reports its result here.
+    private void SyncDetailForm()
+    {
+        var entry = _viewModel.GetEntry(_detailCard!.IndividualId, DateTimeOffset.UtcNow);
+        if (entry is null) return;
+        if (entry.DisplaySpeciesId != _detailCard.SpeciesId || entry.IsShiny != _detailCard.IsShiny)
+        {
+            var generation = _detailGeneration; var status = DetailErrorText.Text;
+            ShowDetail(BuildCard(entry));
+            _detailGeneration = generation; DetailErrorText.Text = status;
+        }
+        else if (_detailCard.SpriteFrames is null && _animatedFrames.ContainsKey((entry.DisplaySpeciesId, entry.IsShiny)))
+        {
+            _detailCard = BuildCard(entry);
+            ShowDetailSprite(_detailCard);
+        }
+    }
+
     private void ShowDetailSprite(PokedexCard card)
     {
+        EnsureAnimatedFrames(card.SpeciesId, card.IsShiny);
         if (_presentationSuspended) return;
         _detailAnimator?.Stop();
         _detailAnimator = null;

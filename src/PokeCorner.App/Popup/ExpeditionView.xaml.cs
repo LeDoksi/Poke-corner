@@ -94,10 +94,10 @@ public partial class ExpeditionView : UserControl
         }
         DifficultyBox.SelectedIndex = 1;
         DurationBox.SelectedIndex = 1;
-        PickerTypeBox.Items.Add(new ComboBoxItem { Content = "Все типы", Tag = "" });
+        PickerTypeBox.Items.Add(new ComboBoxItem { Content = "Тип: любой", Tag = "" });
         foreach (var type in catalog?.Species.SelectMany(s => s.Types).Distinct().OrderBy(ExpeditionTeamSelector.TypeName).ToArray() ?? [])
             PickerTypeBox.Items.Add(new ComboBoxItem { Content = ExpeditionTeamSelector.TypeName(type), Tag = type });
-        PickerTraitBox.Items.Add(new ComboBoxItem { Content = "Все особенности", Tag = "" });
+        PickerTraitBox.Items.Add(new ComboBoxItem { Content = "Особенность: любая", Tag = "" });
         foreach (var trait in ExpeditionTeamSelector.TraitIds)
             PickerTraitBox.Items.Add(new ComboBoxItem { Content = CollectionView.TraitLabel(trait), Tag = trait });
         PickerTypeBox.SelectedIndex = PickerTraitBox.SelectedIndex = PickerSortBox.SelectedIndex = 0;
@@ -168,6 +168,10 @@ public partial class ExpeditionView : UserControl
 
     private void Show(string message) => Show(message, null);
 
+    // A status line belongs to the moment it was said in: "Поход начался." must not linger on the return screen.
+    private string? _messageState;
+    private string TripState() => _snapshot().Expedition is { } trip ? $"{trip.Id}:{trip.Status}" : "";
+
     // Errors lead with what happened to the player's stuff; the raw cause stays as a small second line.
     private void Show(string message, Exception? error)
     {
@@ -179,6 +183,7 @@ public partial class ExpeditionView : UserControl
         MessagePanel.Background = error is null ? (Brush)FindResource("NdSurfaceBrush") : (Brush)FindResource("NdDangerSurfaceBrush");
         MessagePanel.BorderBrush = error is null ? (Brush)FindResource("NdBorderBrush") : (Brush)FindResource("NdDangerLineBrush");
         MessagePanel.Visibility = Visibility.Visible;
+        _messageState = error is null ? TripState() : null;
     }
 
     public void Refresh()
@@ -186,6 +191,7 @@ public partial class ExpeditionView : UserControl
         if (_initializing || _suspended) return;
         var data = _snapshot();
         var trip = data.Expedition;
+        if (_messageState is not null && _messageState != TripState()) { MessagePanel.Visibility = Visibility.Collapsed; _messageState = null; }
         var active = trip?.Status is "running" or "ready";
         foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
@@ -286,16 +292,17 @@ public partial class ExpeditionView : UserControl
     }
 
     // Trainer's field note for the chosen place: flavour drawn from each route's art brief, never a mechanic.
+    // Each note names who lives there by type, from the route's own type weights (D-24).
     private static string RouteNote(string route) => route switch
     {
-        "grove" => "Под ногами сухая листва — шаги слышно издалека.",
-        "lake" => "У воды тихо. Камыши шуршат даже без ветра.",
-        "coast" => "Ветер с моря. Карту держать двумя руками.",
-        "mountains" => "Тропа узкая, щебень сыплется из-под ботинок.",
-        "desert" => "Следы заметает за минуты. Ориентир — гребень дюны.",
-        "volcano" => "Жарко даже ночью. Базальт тёплый сквозь подошву.",
-        "snow" => "Карнизы нависают. Говорить вполголоса.",
-        _ => "Из тёмных проходов кто-то смотрит. Не задерживаться."
+        "grove" => "Листва шуршит — или кто-то в ней. Жуки тут не спят.",
+        "lake" => "Камыши шуршат без ветра. У берега кто-то плещется.",
+        "coast" => "Ветер с моря. Над волнами кричат не только чайки.",
+        "mountains" => "Щебень сыплется. Говорят, выше живут драконы.",
+        "desert" => "Следы заметает. Под песком кто-то роет.",
+        "volcano" => "Базальт тёплый. Огненным здесь уютно, мне — нет.",
+        "snow" => "Говорить вполголоса. На насте чьи-то ледяные следы.",
+        _ => "Из тёмных проходов смотрят. Призраки любят гостей."
     };
 
     private string Difficulty => (DifficultyBox.SelectedItem as ListBoxItem)?.Tag as string ?? "normal";
@@ -383,6 +390,20 @@ public partial class ExpeditionView : UserControl
     private void PickerReset_Click(object sender, RoutedEventArgs e) { ResetPickerFilters(); RefreshPicker(); }
     private void PickerPrevious_Click(object sender, RoutedEventArgs e) { _pickerPage--; RefreshPicker(); PickerScroll.ScrollToTop(); }
     private void PickerNext_Click(object sender, RoutedEventArgs e) { _pickerPage++; RefreshPicker(); PickerScroll.ScrollToTop(); }
+    private System.Windows.Size _host;
+
+    // The picker page is sized inside the layout pass, so the first frame at a new window size is right.
+    protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint)
+    {
+        if (!double.IsInfinity(constraint.Width) && !double.IsInfinity(constraint.Height) &&
+            (Math.Abs(constraint.Width - _host.Width) > 1 || Math.Abs(constraint.Height - _host.Height) > 1))
+        {
+            _host = constraint;
+            if (_pickerOpen && !_suspended) RefreshPicker();
+        }
+        return base.MeasureOverride(constraint);
+    }
+
     private void RefreshPicker()
     {
         if (!_pickerOpen || _suspended) return;
@@ -392,11 +413,15 @@ public partial class ExpeditionView : UserControl
             (PickerTypeBox.SelectedItem as ComboBoxItem)?.Tag as string, (PickerTraitBox.SelectedItem as ComboBoxItem)?.Tag as string,
             PickerAvailableBox.IsChecked == true, PickerRouteBox.IsChecked == true, PickerSortBox.SelectedIndex);
         // D-17 tiles, same family as the Pokédex grid: sprite, name, level, plus the two facts a team
-        // pick needs (route fit, trait). Pages hold three rows of whatever width the window gives.
-        var viewportWidth = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
+        // pick needs (route fit, trait).
+        // From the space the view was given (picker margins 2x24, room for a scrollbar), not from the scroll
+        // viewer, whose size is still the previous window's while a resize is being laid out.
+        var viewportWidth = _host.Width > 0 ? _host.Width - 66 : PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48);
         var columns = Math.Max(2, (int)((viewportWidth - 8) / 150));
         var width = Math.Floor((viewportWidth - 8) / columns) - 8;
-        var pageSize = Math.Max(12, columns * 3);
+        // As many full rows as the window height holds (three at 1200x660), so FullHD fills its grid instead of a void.
+        var rowsFit = _host.Height > 0 ? Math.Clamp((int)((_host.Height - 430) / 150), 3, 8) : 3; // 430: title, slots, filters, footer
+        var pageSize = Math.Max(12, columns * rowsFit);
         var pages = Math.Max(1, (rows.Count + pageSize - 1) / pageSize); _pickerPage = Math.Clamp(_pickerPage, 0, pages - 1);
         PickerMembers.Children.Clear();
         foreach (var member in rows.Skip(_pickerPage * pageSize).Take(pageSize)) {
@@ -409,9 +434,9 @@ public partial class ExpeditionView : UserControl
             content.Children.Add(new TextBlock { Text = DisplayName(member, data).Split('\n')[0], FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
             content.Children.Add(new TextBlock { Text = $"Ур. {_selector.Level(member)}  #{member.CurrentSpeciesId:D4}", FontSize = 12, Foreground = (Brush)FindResource("NdMutedBrush") });
             var fits = _selector.Matches(member, _route);
-            content.Children.Add(new TextBlock { Text = fits ? "✓ Подходит маршруту" : string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource(fits ? "NdLavenderBrush" : "NdMutedBrush"), Margin = new Thickness(0, 2, 0, 0) });
-            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource("NdMutedBrush") });
-            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 11, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
+            content.Children.Add(new TextBlock { Text = fits ? "✓ Подходит маршруту" : string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource(fits ? "NdLavenderBrush" : "NdMutedBrush"), Margin = new Thickness(0, 2, 0, 0) });
+            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource("NdMutedBrush") });
+            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 12, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
             var button = new Button { Content = content, Tag = member.Id, Width = width, MinHeight = 140,
                 HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(4), Padding = new Thickness(8), Style = (Style)FindResource("SecondaryButtonStyle"),

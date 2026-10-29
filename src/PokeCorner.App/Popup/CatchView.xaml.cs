@@ -29,9 +29,17 @@ public partial class CatchView : System.Windows.Controls.UserControl
     private int _generation, _artGeneration;
     private string? _error, _sceneKey;
     private Guid? _selectedEncounterId;
+    // Set when an expedition sent us here: its result button leads back instead of stranding the player on an empty catch tab.
+    private bool _returnAfterResult;
+    private readonly Action? _returnFromEncounter;
     private int? _knownSpeciesId;
     private CatchReveal? _pendingReveal, _spriteFetchedFor;
     private CancellationTokenSource? _revealCancellation;
+
+    /// <summary>The page's own way back to the corner; the shell decides where that is.</summary>
+    public event Action? BackRequested;
+
+    private void BackToCornerButton_Click(object sender, RoutedEventArgs e) => BackRequested?.Invoke();
 
     public CatchView(AppState appState, Func<CatchReveal?>? tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite,
         Func<int> catchReadyCount, Action onStateChanged, Func<int, string> resolveSpeciesName,
@@ -39,7 +47,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         Func<Guid, Task<CatchReveal?>>? tryPerformEncounterAsync = null,
         Func<int, bool, Task<byte[]?>>? fetchVariantSprite = null, Func<Task>? activateLuckyCharmAsync = null,
         Func<bool>? animationEnabled = null, Func<TimeSpan, CancellationToken, Task>? delayAsync = null,
-        Func<Guid?, byte[]?>? fetchScene = null, string? luckyCharmArtPath = null)
+        Func<Guid?, byte[]?>? fetchScene = null, string? luckyCharmArtPath = null, Action? returnFromEncounter = null)
     {
         InitializeComponent();
         _appState = appState;
@@ -52,6 +60,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         _onStateChanged = onStateChanged;
         _resolveSpeciesName = resolveSpeciesName;
         _onResultContinued = onResultContinued;
+        _returnFromEncounter = returnFromEncounter;
         _activateLuckyCharm = activateLuckyCharmAsync;
         _animationEnabled = animationEnabled ?? (() => SystemParameters.ClientAreaAnimation);
         _delay = delayAsync ?? Task.Delay;
@@ -105,6 +114,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         if (_appState.Encounters.FirstOrDefault(e => e.Id == id) is not
             { Source: "expedition", Phase: "resolved", KnownSpeciesId: not null, Individual: not null }) return false;
         _selectedEncounterId = id; _sceneKey = null; _error = null;
+        _returnAfterResult = _returnFromEncounter is not null;
         Refresh();
         return true;
     }
@@ -125,6 +135,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         };
         CharmButton.Content = active ? "Талисман активен" : stock > 0 ? "Активировать" : "Нет в запасе";
         CharmButton.IsEnabled = !_busy && !_suspended && !_showingResult && _activateLuckyCharm is not null && stock > 0 && !active;
+        BackToCornerButton.IsEnabled = !_busy && _revealCancellation is null; // not mid-throw: the throw commits first
         CatchButton.IsEnabled = !_busy && _revealCancellation is null && (_showingResult || encounter is not null ||
             _selectedEncounterId is null && _catchReadyCount() > 0);
         if (_showingResult || _busy || _suspended) return;
@@ -154,19 +165,20 @@ public partial class CatchView : System.Windows.Controls.UserControl
         RevealNameText.Text = RevealRarityText.Text = ResultDetailText.Text = "";
         CatchBallImage.Source = (ImageSource)FindResource("UiBallClosedImage");
         PokeBallCanvas.Visibility = Visibility.Visible;
-        PokeBallCanvas.Margin = new Thickness(0);
-        CatchButton.Content = "Бросить покебол";
+        PokeBallThrow.Y = GroundY; // an earned or gift ball already lies on the ground, waiting to be opened
         SceneHeadingText.Visibility = CharmPanel.Visibility = ProgressPanel.Visibility = Visibility.Visible;
         SceneHeadingText.Text = "Твой ещё один друг";
         DetailPanel.Visibility = Visibility.Visible; System.Windows.Controls.Grid.SetColumnSpan(VisualPanel, 1);
         SkipButton.Visibility = Visibility.Collapsed;
         var known = encounter is { Source: "expedition", Phase: "resolved", KnownSpeciesId: not null, Individual: not null };
+        // A met Pokémon is caught with a throw; a ball earned at the PC or gifted already holds one, so it is opened.
+        CatchButton.Content = known ? "Бросить покебол" : "Открыть покебол";
         EncounterTitleText.Text = known ? "Встреча с " + SpeciesName(encounter!.KnownSpeciesId!.Value) : "Кто внутри?";
         SubtitleText.Text = known ? "Этот покемон встретился команде в походе." : "Ещё один друг ждёт знакомства.";
-        SceneImage.Visibility = known ? Visibility.Visible : Visibility.Collapsed;
+        SceneImage.Visibility = Visibility.Visible;
+        LoadScene(encounter?.Id);
         _knownSpeciesId = known ? encounter!.KnownSpeciesId : null;
         if (!known) return;
-        LoadScene(encounter!.Id);
         SceneHeadingText.Visibility = Visibility.Collapsed;
         RevealNameText.Text = SpeciesName(encounter.KnownSpeciesId!.Value);
         RevealNameText.Visibility = RevealSpriteImage.Visibility = Visibility.Visible;
@@ -196,8 +208,10 @@ public partial class CatchView : System.Windows.Controls.UserControl
         if (_showingResult) {
             _showingResult = false; _pendingReveal = null; _spriteFetchedFor = null; _selectedEncounterId = null;
             _sceneKey = null; _error = null;
+            var goBack = _returnAfterResult; _returnAfterResult = false;
             _onResultContinued?.Invoke();
             Refresh();
+            if (goBack) _returnFromEncounter?.Invoke();
             return;
         }
         var encounter = CurrentEncounter();
@@ -215,7 +229,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
             if (_suspended || generation != _generation) { RestoreReveal(reveal); return; }
             await PlayReveal(reveal);
         }
-        catch (Exception error) { _error = "Не удалось открыть покебол: " + error.Message; }
+        catch (Exception error) { _error = "Не удалось открыть покебол, он остался у вас. Попробуйте ещё раз.\nПричина: " + error.Message; }
         finally { _busy = false; Refresh(); }
     }
 
@@ -232,10 +246,11 @@ public partial class CatchView : System.Windows.Controls.UserControl
         EncounterTitleText.Text = _knownSpeciesId is { } knownId ? "Ловим " + SpeciesName(knownId) : "Новая встреча";
         SubtitleText.Text = "Пора познакомиться с новым другом.";
         SceneImage.Visibility = Visibility.Visible; LoadScene(_selectedEncounterId ?? CurrentEncounter()?.Id);
-        PokeBallCanvas.Visibility = Visibility.Visible; PokeBallCanvas.Margin = new Thickness(0);
+        PokeBallCanvas.Visibility = Visibility.Visible;
         CatchBallImage.Source = (ImageSource)FindResource("UiBallClosedImage");
+        var thrown = _knownSpeciesId is not null;
         // Only a known expedition's already public sprite may remain visible before capture.
-        if (_knownSpeciesId is null) {
+        if (!thrown) {
             _artGeneration++; RevealSpriteImage.Source = null; RevealSpriteImage.Visibility = Visibility.Collapsed;
             RevealNameText.Visibility = RevealRarityText.Visibility = Visibility.Collapsed;
         }
@@ -244,47 +259,112 @@ public partial class CatchView : System.Windows.Controls.UserControl
                 StatusText.Text = "Пойман!";
                 await _delay(TimeSpan.FromMilliseconds(250), cancellation.Token);
             }
-            else {
-                StatusText.Text = "Покебол летит…";
-                PokeBallThrow.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(-160, 0, TimeSpan.FromMilliseconds(1100)) { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } });
-                PokeBallThrow.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(70, -50, TimeSpan.FromMilliseconds(1100)));
-                await _delay(TimeSpan.FromMilliseconds(1100), cancellation.Token);
-                cancellation.Token.ThrowIfCancellationRequested();
-                StatusText.Text = "Почти получилось…";
-                CatchBallImage.Source = (ImageSource)FindResource("UiBallOpenImage");
-                RevealSpriteImage.BeginAnimation(OpacityProperty, new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(650)));
-                PetScale.BeginAnimation(ScaleTransform.ScaleXProperty, new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(650)));
-                PetScale.BeginAnimation(ScaleTransform.ScaleYProperty, new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(650)));
-                await _delay(TimeSpan.FromMilliseconds(650), cancellation.Token);
-                cancellation.Token.ThrowIfCancellationRequested();
-                StatusText.Text = "Мягкое приземление…";
-                CatchBallImage.Source = (ImageSource)FindResource("UiBallClosedImage");
-                PokeBallThrow.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(-50, 45, TimeSpan.FromMilliseconds(800)) { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } });
-                await _delay(TimeSpan.FromMilliseconds(800), cancellation.Token);
-                for (var wobble = 0; wobble < 3; wobble++) {
-                    cancellation.Token.ThrowIfCancellationRequested();
-                    StatusText.Text = "Покебол покачивается…";
-                    var shake = new DoubleAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(1000) };
-                    shake.KeyFrames.Add(new EasingDoubleKeyFrame(-12, KeyTime.FromPercent(.12)));
-                    shake.KeyFrames.Add(new EasingDoubleKeyFrame(12, KeyTime.FromPercent(.28)));
-                    shake.KeyFrames.Add(new EasingDoubleKeyFrame(-7, KeyTime.FromPercent(.42)));
-                    shake.KeyFrames.Add(new EasingDoubleKeyFrame(0, KeyTime.FromPercent(.55)));
-                    shake.KeyFrames.Add(new DiscreteDoubleKeyFrame(0, KeyTime.FromPercent(1)));
-                    PokeBallRotate.BeginAnimation(RotateTransform.AngleProperty, shake);
-                    await _delay(TimeSpan.FromMilliseconds(1000), cancellation.Token);
-                }
-                cancellation.Token.ThrowIfCancellationRequested();
-                StatusText.Text = "Пойман!";
-                await _delay(TimeSpan.FromMilliseconds(700), cancellation.Token);
-            }
+            else if (thrown) await PlayThrow(cancellation.Token);
+            else await PlayOpening(cancellation.Token);
             cancellation.Token.ThrowIfCancellationRequested();
-            if (generation == _generation && ReferenceEquals(_pendingReveal, reveal)) ShowResult(reveal);
+            if (generation == _generation && ReferenceEquals(_pendingReveal, reveal)) ShowResult(reveal, popIn: _animationEnabled());
         }
         catch (OperationCanceledException) when (cancellation.IsCancellationRequested) { }
         finally {
             if (ReferenceEquals(_revealCancellation, cancellation)) _revealCancellation = null;
             cancellation.Dispose();
             Refresh();
+        }
+    }
+
+    // Ball centre offsets inside the 250 px scene: resting on the ground, and where it meets a Pokémon standing on it.
+    private const double GroundY = 72, HitY = -28;
+
+    // Expedition encounter, ~3.5 s: arc with spin, opens on contact and takes the Pokémon in, falls, bounces, rocks three times, clicks.
+    private async Task PlayThrow(CancellationToken token)
+    {
+        StatusText.Text = "Покебол летит…";
+        Animate(PokeBallThrow, TranslateTransform.XProperty, 600, K(0, -300), K(1, 0));
+        Animate(PokeBallThrow, TranslateTransform.YProperty, 600, K(0, 90), K(.55, -95, EasingMode.EaseOut), K(1, HitY, EasingMode.EaseIn));
+        Animate(PokeBallSpin, RotateTransform.AngleProperty, 600, K(0, 0), K(1, 540, EasingMode.EaseOut));
+        await _delay(TimeSpan.FromMilliseconds(600), token);
+        token.ThrowIfCancellationRequested();
+        StatusText.Text = "Покебол раскрылся…";
+        CatchBallImage.Source = (ImageSource)FindResource("UiBallOpenImage");
+        Sparks(HitY, 8, 34, NdBrush("NdLavenderBrush"));
+        Animate(RevealSpriteImage, OpacityProperty, 450, K(0, 1), K(1, 0, EasingMode.EaseIn));
+        Animate(PetScale, ScaleTransform.ScaleXProperty, 450, K(0, 1), K(1, 0, EasingMode.EaseIn));
+        Animate(PetScale, ScaleTransform.ScaleYProperty, 450, K(0, 1), K(1, 0, EasingMode.EaseIn));
+        await _delay(TimeSpan.FromMilliseconds(450), token);
+        token.ThrowIfCancellationRequested();
+        StatusText.Text = "Мягкое приземление…";
+        CatchBallImage.Source = (ImageSource)FindResource("UiBallClosedImage");
+        // Falls with gravity (ease-in), lands squashed, then two small bounces.
+        Animate(PokeBallThrow, TranslateTransform.YProperty, 450, K(0, HitY), K(.5, GroundY, EasingMode.EaseIn),
+            K(.68, GroundY - 14, EasingMode.EaseOut), K(.84, GroundY, EasingMode.EaseIn), K(.93, GroundY - 5, EasingMode.EaseOut), K(1, GroundY, EasingMode.EaseIn));
+        Animate(BallSquash, ScaleTransform.ScaleYProperty, 450, K(0, 1), K(.5, 1), K(.56, .8), K(.68, 1), K(.84, 1), K(.88, .92), K(1, 1));
+        Animate(BallSquash, ScaleTransform.ScaleXProperty, 450, K(0, 1), K(.5, 1), K(.56, 1.16), K(.68, 1), K(.84, 1), K(.88, 1.06), K(1, 1));
+        await _delay(TimeSpan.FromMilliseconds(450), token);
+        for (var wobble = 0; wobble < 3; wobble++) {
+            token.ThrowIfCancellationRequested();
+            StatusText.Text = "Покебол покачивается…";
+            Rock(550, 14 - wobble * 3);
+            await _delay(TimeSpan.FromMilliseconds(550), token);
+        }
+        token.ThrowIfCancellationRequested();
+        StatusText.Text = "Пойман!";
+        Sparks(GroundY, 4, 26, NdBrush("NdApricotBrush"));
+        await _delay(TimeSpan.FromMilliseconds(350), token);
+    }
+
+    // Earned or gift ball, ~2.1 s with the pop-in: it rustles, rocks twice, springs open; ShowResult lets the Pokémon hop out.
+    private async Task PlayOpening(CancellationToken token)
+    {
+        PokeBallThrow.Y = GroundY;
+        StatusText.Text = "Кто-то шуршит внутри…";
+        Rock(500, 5);
+        await _delay(TimeSpan.FromMilliseconds(500), token);
+        for (var wobble = 0; wobble < 2; wobble++) {
+            token.ThrowIfCancellationRequested();
+            StatusText.Text = "Покебол покачивается…";
+            Rock(450, 12);
+            await _delay(TimeSpan.FromMilliseconds(450), token);
+        }
+        token.ThrowIfCancellationRequested();
+        StatusText.Text = "Открывается!";
+        Animate(BallSquash, ScaleTransform.ScaleYProperty, 300, K(0, 1), K(.4, .82), K(1, 1, EasingMode.EaseOut));
+        Animate(BallSquash, ScaleTransform.ScaleXProperty, 300, K(0, 1), K(.4, 1.14), K(1, 1, EasingMode.EaseOut));
+        CatchBallImage.Source = (ImageSource)FindResource("UiBallOpenImage");
+        Sparks(GroundY, 8, 40, NdBrush("NdLavenderBrush"));
+        await _delay(TimeSpan.FromMilliseconds(300), token);
+    }
+
+    // Rocks the resting ball on its contact point: left, right, a smaller left, settle.
+    private void Rock(int ms, double degrees) => Animate(PokeBallRotate, RotateTransform.AngleProperty, ms,
+        K(0, 0), K(.2, -degrees, EasingMode.EaseOut), K(.5, degrees, EasingMode.EaseInOut), K(.75, -degrees / 2, EasingMode.EaseInOut), K(1, 0, EasingMode.EaseOut));
+
+    private static EasingDoubleKeyFrame K(double at, double value, EasingMode ease = EasingMode.EaseInOut) =>
+        new(value, KeyTime.FromPercent(at), new QuadraticEase { EasingMode = ease });
+
+    private static void Animate(IAnimatable target, DependencyProperty property, int ms, params EasingDoubleKeyFrame[] frames)
+    {
+        var animation = new DoubleAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(ms) };
+        foreach (var frame in frames) animation.KeyFrames.Add(frame);
+        target.BeginAnimation(property, animation);
+    }
+
+    private System.Windows.Media.Brush NdBrush(string key) => TryFindResource(key) as System.Windows.Media.Brush ?? System.Windows.Media.Brushes.White;
+
+    // Square pixel sparks flying out of the ball and fading: no glow, Night Diary keeps light effects out of the window (D-22).
+    private void Sparks(double centreY, int count, double reach, System.Windows.Media.Brush brush)
+    {
+        SparkLayer.Children.Clear();
+        var cx = CaptureScene.ActualWidth / 2; var cy = CaptureScene.ActualHeight / 2 + centreY;
+        for (var i = 0; i < count; i++) {
+            var angle = Math.PI * 2 * i / count - Math.PI / 2;
+            var spark = new System.Windows.Shapes.Rectangle { Width = 5, Height = 5, Fill = brush, Opacity = 0 };
+            var move = new TranslateTransform();
+            spark.RenderTransform = move;
+            System.Windows.Controls.Canvas.SetLeft(spark, cx - 2.5); System.Windows.Controls.Canvas.SetTop(spark, cy - 2.5);
+            SparkLayer.Children.Add(spark);
+            Animate(move, TranslateTransform.XProperty, 420, K(0, Math.Cos(angle) * reach * .4, EasingMode.EaseOut), K(1, Math.Cos(angle) * reach, EasingMode.EaseOut));
+            Animate(move, TranslateTransform.YProperty, 420, K(0, Math.Sin(angle) * reach * .4, EasingMode.EaseOut), K(1, Math.Sin(angle) * reach, EasingMode.EaseOut));
+            Animate(spark, OpacityProperty, 420, K(0, 1, EasingMode.EaseOut), K(.6, 1), K(1, 0, EasingMode.EaseIn));
         }
     }
 
@@ -318,23 +398,35 @@ public partial class CatchView : System.Windows.Controls.UserControl
         PetScale.BeginAnimation(ScaleTransform.ScaleXProperty, null); PetScale.ScaleX = 1;
         PetScale.BeginAnimation(ScaleTransform.ScaleYProperty, null); PetScale.ScaleY = 1;
         RevealSpriteImage.BeginAnimation(OpacityProperty, null); RevealSpriteImage.Opacity = 1;
+        PokeBallSpin.BeginAnimation(RotateTransform.AngleProperty, null); PokeBallSpin.Angle = 0;
+        BallSquash.BeginAnimation(ScaleTransform.ScaleXProperty, null); BallSquash.ScaleX = 1;
+        BallSquash.BeginAnimation(ScaleTransform.ScaleYProperty, null); BallSquash.ScaleY = 1;
+        PetHop.BeginAnimation(TranslateTransform.YProperty, null); PetHop.Y = 0;
+        SparkLayer.Children.Clear();
     }
 
-    private void ShowResult(CatchReveal reveal)
+    private void ShowResult(CatchReveal reveal, bool popIn = false)
     {
         StopAnimations();
         _pendingReveal = reveal; _showingResult = true;
         DetailPanel.Visibility = Visibility.Visible; System.Windows.Controls.Grid.SetColumnSpan(VisualPanel, 1);
-        SceneImage.Visibility = SceneHeadingText.Visibility = CharmPanel.Visibility = ProgressPanel.Visibility = SkipButton.Visibility = Visibility.Collapsed;
-        PokeBallCanvas.Visibility = Visibility.Visible; PokeBallCanvas.Margin = new Thickness(0, 150, 0, 0);
-        CatchBallImage.Source = (ImageSource)FindResource("UiBallOpenImage");
+        SceneHeadingText.Visibility = CharmPanel.Visibility = ProgressPanel.Visibility = SkipButton.Visibility = Visibility.Collapsed;
+        // The new friend stands on the same scene; the empty ball would only sit under its feet.
+        if (SceneImage.Source is null) LoadScene(_selectedEncounterId);
+        SceneImage.Visibility = Visibility.Visible;
+        PokeBallCanvas.Visibility = Visibility.Collapsed;
+        if (popIn) {
+            Animate(PetScale, ScaleTransform.ScaleXProperty, 400, K(0, .2), K(.7, 1.08, EasingMode.EaseOut), K(1, 1));
+            Animate(PetScale, ScaleTransform.ScaleYProperty, 400, K(0, .2), K(.7, 1.08, EasingMode.EaseOut), K(1, 1));
+            Animate(PetHop, TranslateTransform.YProperty, 400, K(0, GroundY - 16), K(.6, -14, EasingMode.EaseOut), K(1, 0, EasingMode.EaseIn));
+        }
         EncounterTitleText.Text = "Теперь вы знакомы!";
         SubtitleText.Text = SpeciesName(reveal.Result.SpeciesId) + " уже добавлен в коллекцию.";
         RevealNameText.Text = SpeciesName(reveal.Result.SpeciesId) + (reveal.Result.IsShiny ? " ✨" : "");
         RevealRarityText.Text = reveal.Rarity switch { RarityTier.Common => "Обычный", RarityTier.Uncommon => "Необычный", RarityTier.Rare => "Редкий", _ => "Легендарный" };
         ResultDetailText.Text = reveal.Result.WasDuplicateSpecies ? "Ещё один питомец знакомого вида." : "Новый вид в твоей коллекции!";
         RevealNameText.Visibility = RevealRarityText.Visibility = ResultDetailText.Visibility = RevealSpriteImage.Visibility = Visibility.Visible;
-        CatchButton.Content = "Продолжить";
+        CatchButton.Content = _returnAfterResult ? "Вернуться к экспедициям" : "Продолжить";
         CatchButton.IsEnabled = !_busy || _suspended;
         StatusText.Text = "Покемон уже добавлен в коллекцию.";
         if (!_suspended && !ReferenceEquals(_spriteFetchedFor, reveal)) {

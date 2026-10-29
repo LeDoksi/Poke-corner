@@ -78,6 +78,8 @@ public partial class OnboardingWindow : Window
         StepCounterText.Text = $"ШАГ {_stepIndex + 1} ИЗ {Steps.Length}";
         BackButton.IsEnabled = _stepIndex > 0;
         NextButton.Content = _stepIndex == Steps.Length - 1 ? "В мой уголок" : "Дальше";
+        // On the last step «В мой уголок» already ends the tour; «Позже» beside it was a second exit.
+        SkipButton.Visibility = _stepIndex == Steps.Length - 1 ? Visibility.Collapsed : Visibility.Visible;
 
         var activeBrush = (Brush)FindResource("UiForestBrush");
         var inactiveBrush = (Brush)FindResource("CardBorderBrush");

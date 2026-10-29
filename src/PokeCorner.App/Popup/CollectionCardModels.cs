@@ -25,7 +25,7 @@ public sealed class PokedexCard
     public string? SecondTraitId { get; init; }
     public string? DescriptionRu { get; init; }
     public string IndividualText { get; init; } = string.Empty;
-    public string AccessibleName => $"{DisplayName} · {DexNumber} · {LevelText} · {IndividualText}" + (IsShiny ? " · Shiny" : "");
+    public string AccessibleName => $"{DisplayName} · {DexNumber} · {LevelText} · {IndividualText}" + (IsShiny ? " · шайни" : "");
     public string LevelText => $"Ур. {Level}";
     public string AvailabilityText => IsBusy ? "Занят" : IsActive ? "На столе" : string.Empty;
     public required Guid IndividualId { get; init; }

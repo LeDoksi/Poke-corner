@@ -222,9 +222,10 @@ public class AcceptanceVisualTests
                     imagesWithSource = Descendants(root).OfType<Image>().Count(i => i.ActualHeight > 0 && i.Source is not null) });
             }
         }
-        void Overlay(string key, string title, string body, string caption)
+        // Destructive overlays are captured the way their real callers raise them (Оставить + danger button, D-14).
+        void Overlay(string key, string title, string body, string caption, bool destructive = false)
         {
-            var task = menu.ConfirmAsync(title, body, caption);
+            var task = destructive ? menu.ConfirmDestructiveAsync(title, body, caption) : menu.ConfirmAsync(title, body, caption);
             var overlay = (FrameworkElement)menu.FindName("ConfirmationHost");
             Capture(key, MenuSection.Settings, action: (FrameworkElement)overlay.FindName("CancelButton"), navigate: false);
             Click(overlay, "CancelButton");
@@ -517,8 +518,7 @@ public class AcceptanceVisualTests
             data.Nest.Status = "ready"; nursery.Refresh();
             Capture("nursery-ready", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("HatchButton"));
             Click(nursery, "HatchButton");
-            Capture("nursery-hatching", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("HatchContinueButton"));
-            Click(nursery, "HatchContinueButton");
+            Capture("nursery-hatching", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("OpenPokedexButton"));
             Capture("nursery-result", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("OpenPokedexButton"));
             Capture("catch", MenuSection.Catch, action: (FrameworkElement)catchView.FindName("CatchButton"));
             var known = new EncounterState { Id = Guid.NewGuid(), Source = "expedition", Phase = "resolved",
@@ -537,7 +537,7 @@ public class AcceptanceVisualTests
             void AnimatedReveal(string variant)
             {
                 var animation = catchView.PlayReveal(reveal);
-                var durations = new[] { 1100, 650, 800, 1000, 1000, 1000, 700 };
+                var durations = variant == "known" ? new[] { 600, 450, 450, 550, 550, 550, 350 } : new[] { 500, 450, 450, 300 };
                 for (var phase = 0; phase < durations.Length; phase++)
                 {
                     Assert.Equal(durations[phase], revealDelays.Peek().Duration.TotalMilliseconds);
@@ -573,8 +573,8 @@ public class AcceptanceVisualTests
             Capture("save-history", MenuSection.Settings, action: (FrameworkElement)history.FindName("RestoreButton"), navigate: false);
             Overlay("confirm-restore", "Вернуться к этой копии?", "800 питомцев · 12500 монет. Данные останутся в истории.", "Продолжить");
             menu.CompleteHostedContent(hosted); Assert.True(historyTask.IsCompleted); history.Close();
-            Overlay("confirm-cancel", "Прервать экспедицию?", "Команда вернётся без добычи и опыта.", "Прервать");
-            Overlay("confirm-rehome", "Найти новый дом?", "Этот питомец покинет коллекцию. Действие нельзя отменить.", "Передать");
+            Overlay("confirm-cancel", "Прервать экспедицию?", "Команда вернётся без добычи и опыта.", "Прервать", destructive: true);
+            Overlay("confirm-rehome", "Найти новый дом?", "Этот питомец покинет коллекцию. Действие нельзя отменить.", "Передать", destructive: true);
             Capture("components", MenuSection.Settings, "audio-zero-and-controls", (FrameworkElement)settings.FindName("CrySoundVolumeSlider"));
             foreach (var step in Enumerable.Range(1, 6))
             {

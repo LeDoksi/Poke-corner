@@ -22,6 +22,25 @@ public sealed class ApprovedCollectionTests
     private static CollectionViewModel Vm(AppState state) => new(state.Collection, state.CareStateByIndividualId,
         new CareModeService(), [], [], species: [new CatalogSpecies { Id = 1, DisplayName = "Бульбазавр", Types = ["grass"], NormalAvailable = true, ShinyAvailable = true }]);
 
+    // Georgy 29.10: after evolving from the pet's page it kept the previous form's animation until reopened.
+    [Fact]
+    public void OpenPetPageFollowsItsPetToTheEvolvedForm() => WpfTestHost.Run(() =>
+    {
+        var state = new AppState(); var pet = Pet(1); state.Collection.Add(pet);
+        var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], species: [
+            new CatalogSpecies { Id = 1, DisplayName = "Бульбазавр", Types = ["grass"], NormalAvailable = true, ShinyAvailable = true },
+            new CatalogSpecies { Id = 2, DisplayName = "Ивизавр", Types = ["grass"], NormalAvailable = true, ShinyAvailable = true }]);
+        var view = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
+            () => {}, () => {}, () => {}, () => null, () => false, () => false);
+        Assert.True(view.OpenIndividual(pet.Id));
+        var card = typeof(CollectionView).GetField("_detailCard", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+        Assert.Equal(1, ((PokedexCard)card.GetValue(view)!).SpeciesId);
+        pet.CurrentSpeciesId = 2; pet.ReachedSpeciesIds.Add(2);
+        view.Refresh();
+        Assert.Equal(2, ((PokedexCard)card.GetValue(view)!).SpeciesId);
+        Assert.Equal(pet.Id, view.SelectedIndividualId);
+    });
+
     [Fact]
     public void NewShinyOnlyDoesNotOpenOrdinaryMode()
     {

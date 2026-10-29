@@ -316,8 +316,10 @@ public class Task8AcceptanceTests
             Assert.Same(menu.FindName("CollectionTab"), ((TabControl)menu.FindName("MenuTabControl")).SelectedItem);
             Assert.Same(button, System.Windows.Input.Keyboard.FocusedElement);
             var hosted = menu.ShowHostedAsync(new TextBlock { Text = "Синтетическая история" }); menu.UpdateLayout();
-            Assert.Contains(Texts(button), text => text.Text == "Назад" && text.IsVisible);
-            button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            // Hosted screens (tour, save history) bring their own exit; the shell adds no second «Назад».
+            Assert.False(button.IsVisible);
+            menu.CompleteHostedContent(); menu.UpdateLayout();
+            Assert.True(button.IsVisible);
             Assert.True(hosted.IsCompleted);
             Assert.Same(menu.FindName("CollectionTab"), ((TabControl)menu.FindName("MenuTabControl")).SelectedItem);
         }

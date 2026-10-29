@@ -187,4 +187,33 @@ Single bold icon for pet "care" meaning "time together": one large chunky rosy-p
 
 - **care-v3.png** — принят: два сердца без руки читаются на 24, 20 и 18 px на тёмном и светлом фоне и не путаются с косточкой лакомства. Заменил `ui-system/assets/care.png` (96 px): кнопка «Погладить», заголовки ухода в уголке и на странице питомца.
 
-Открытых заказов у Астры нет.
+## Заказ 29.10 — значки прогресса у питомца: покебол и лакомство
+
+Georgy 29.10 после живой проверки 1.1.1: под питомцем в уголке три полосы прогресса (уход, следующий покебол, лакомства), а значки у них из разных эпох. У «Следующего покебола» своего значка нет: временно стоит большая картинка покебола со сцены поимки, на 18 px она мутная. Лакомство нарисовано до care-v3 и выглядит плоско рядом с ним. Нужны два значка в технике care-v3, чтобы все три читались как один набор.
+
+Сохранить в `astra-inbox\icons\`: `catch-ball.png` и `treat-v2.png`, оба PNG 512×512 с прозрачностью. Приложить `care-v3.png` как референс пиксельной техники, обводки и объёма, не композиции.
+
+**catch-ball.png**
+```
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the attached care-v3.png in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). Do not copy its hearts.
+
+Single bold icon of a closed classic catching ball seen straight from the front, slightly tilted (about 10 degrees) so it feels alive. Upper half warm coral-red (#E8636F family with rose and plum shadow clusters), lower half soft cream-lavender (#E9E1F7 with lavender #C4ABF0 shadows), a thick deep-plum band across the middle and a round cream button in the center ringed with deep plum. One compact apricot highlight cluster on the upper left of the red half. The ball fills about 85% of the canvas, centered, uncropped. Reads instantly as a closed ball at 18x18 and 24x24 px on dark (#101426) and light backgrounds. No motion lines, no sparkles, no stars, no glow, no shadow under it, no hands, no Pokémon, no text, no logo. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+```
+Приёмка: на 18 и 24 px читается как закрытый покебол на тёмном и светлом фоне; красный не сливается с розовым сердцем ухода; та же толщина обводки и та же техника, что у care-v3.
+
+**treat-v2.png**
+```
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the attached care-v3.png in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). Do not copy its hearts.
+
+Single bold icon of one chunky bone-shaped pet biscuit lying diagonally (lower left to upper right), warm baked biscuit tones (#D9A066 family with toasted brown and plum shadow clusters), a small paw print pressed into its middle in a darker toasted brown. One compact apricot highlight cluster on the upper edge. The biscuit fills about 85% of the canvas width, centered, uncropped. Reads instantly as a treat at 18x18 and 24x24 px on dark (#101426) and light backgrounds. No crumbs, no sparkles, no stars, no plate, no hands, no Pokémon, no text. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+```
+Приёмка: на 18 и 24 px читается как лакомство и не путается ни с сердцами ухода, ни с покеболом; рядом с care-v3 и catch-ball выглядит одним набором.
+
+## Приёмка 29.10 — покебол и лакомство
+
+- **catch-ball.png** — принят: на 18 и 24 px читается закрытым покеболом на тёмном и светлом фоне, кирпично-красный не путается с розовым сердцем ухода, обводка и техника как у care-v3. Исходник стоял ниже и левее центра, при экспорте обрезан по силуэту и отцентрован с полем 4%. Новый `ui-system/assets/catch-ball.png` (96 px) у полосы «Следующий покебол» в уголке. Сцена поимки пока остаётся со старыми `ball-closed`/`ball-open`: их заменит пара для анимации броска.
+- **treat-v2.png** — принят: косточка с четырьмя шишками и лапкой, на 18 px лапка пропадает, силуэт читается. Касался краёв холста, при экспорте отцентрован с полем 4%. Заменил `ui-system/assets/treat.png` (96 px).
+
+## Заказ 29.10 — поимка, поля дневника, магазин, рейка
+
+33 картинки, каждый промпт целиком: [ASTRA-ORDER-2026-10-29.md](ASTRA-ORDER-2026-10-29.md). Решения D-24 и D-25.

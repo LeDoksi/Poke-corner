@@ -40,7 +40,7 @@ public partial class NurseryView : UserControl
     private Guid _pendingHatchNest, _pendingHatchOperation, _dismissedResult;
     private string? _shortageBerry;
     private int _shortageRequired;
-    private bool _busy, _refreshingReady, _pickerOpen, _suspended, _awaitingHatchContinue;
+    private bool _busy, _refreshingReady, _pickerOpen, _suspended;
 
     public NurseryView(Func<SaveData> snapshot, Func<IReadOnlyList<Guid>, int?, NurseryPreview> preview,
         Func<NurseryRequest, Task<NurseryAction>> start, Func<Guid, Guid, Task<NurseryAction>> hatch,
@@ -52,7 +52,7 @@ public partial class NurseryView : UserControl
         _species = catalog.Species.ToDictionary(s => s.Id);
         _shopShortage = shopShortage; _openPokedex = openPokedex; _activate = activate;
         InitializeComponent();
-        RarityBox.Items.Add(new ComboBoxItem { Content = "Любая редкость", Tag = "" });
+        RarityBox.Items.Add(new ComboBoxItem { Content = "Редкость: любая", Tag = "" });
         foreach (var rarity in catalog.Species.Select(s => s.Rarity).Distinct())
             RarityBox.Items.Add(new ComboBoxItem { Content = RarityName(rarity), Tag = rarity });
         RarityBox.SelectedIndex = 0;
@@ -68,11 +68,17 @@ public partial class NurseryView : UserControl
             _suspended = true; _lifetimeGeneration++; _timer.Stop(); _pickerOpen = false;
             SystemParameters.StaticPropertyChanged -= MotionPolicyChanged;
             BabyImage.BeginAnimation(OpacityProperty, null); BabyImage.Opacity = 1;
-            _awaitingHatchContinue = false;
         };
         PreviewKeyDown += (_, e) => { if (e.Key == System.Windows.Input.Key.Escape && _pickerOpen) { ClosePicker(); e.Handled = true; } };
-        // Scene art is 2048x768: full width, clipped around its middle band where the nest sits.
-        SceneGrid.SizeChanged += (_, _) => GreenhouseImage.Height = SceneGrid.ActualWidth * 768 / 2048;
+        // A grown or shrunk data column changes how much height the scene may take (see MeasureOverride).
+        DataColumn.SizeChanged += (_, e) => { if (e.HeightChanged) InvalidateMeasure(); };
+        // Scene art is 2048x768: it covers the band and is clipped evenly around the middle, where the nest sits.
+        SceneGrid.SizeChanged += (_, _) =>
+        {
+            var scale = Math.Max(SceneGrid.ActualWidth / 2048, SceneGrid.ActualHeight / 768);
+            GreenhouseImage.Width = 2048 * scale;
+            GreenhouseImage.Height = 768 * scale;
+        };
         PickerScroll.SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
         Refresh();
     }
@@ -86,7 +92,7 @@ public partial class NurseryView : UserControl
     private string ParentName(SaveData data, Guid id)
     {
         var p = data.Individuals.FirstOrDefault(p => p.Id == id);
-        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.IsShiny ? " · Shiny" : "") + "\n" + IndividualDisplay.Discriminator(data.Individuals, p.Id, always: true);
+        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.IsShiny ? " · шайни" : "") + "\n" + IndividualDisplay.Discriminator(data.Individuals, p.Id, always: true);
     }
     private static string RarityName(string rarity) => rarity.ToLowerInvariant() switch
     {
@@ -118,7 +124,11 @@ public partial class NurseryView : UserControl
         catch (Exception ex) when (ex is IOException or InvalidOperationException or NotSupportedException or ArgumentException) { image = null; }
         if (_spriteCache.Count >= 128) _spriteCache.Clear(); _spriteCache[key] = image; return image;
     }
-    private void Show(string text) { if (_suspended) return; MessageText.Text = text; MessagePanel.Visibility = Visibility.Visible; }
+    private void Show(string text) { if (_suspended) return; MessageText.Text = text; MessagePanel.Visibility = Visibility.Visible; _messageState = NestState(); }
+
+    // A status line belongs to the nest state it was said in: "Гнездо запущено." must not linger once the baby is ready.
+    private string? _messageState;
+    private string NestState() => _snapshot().Nest is { } nest ? $"{nest.Id}:{nest.Status}" : "";
     private void Slot(StackPanel panel, SaveData data, Guid id)
     {
         panel.Children.Clear(); var p = data.Individuals.FirstOrDefault(p => p.Id == id);
@@ -155,6 +165,35 @@ public partial class NurseryView : UserControl
     private void ChooseSecond_Click(object sender, RoutedEventArgs e) => OpenPicker(1);
     private void DraftFirst_Click(object sender, RoutedEventArgs e) { _editing = 0; _page = 0; RefreshPicker(); }
     private void DraftSecond_Click(object sender, RoutedEventArgs e) { if (_draftFirst == Guid.Empty) return; _editing = 1; _page = 0; RefreshPicker(); }
+    private System.Windows.Size _host;
+
+    // Sizes that depend on the space this view gets are settled here, inside the layout pass, so the first
+    // frame at a new window size is already right (SizeChanged handlers only fix it one pass later).
+    protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint)
+    {
+        if (!double.IsInfinity(constraint.Width) && !double.IsInfinity(constraint.Height))
+        {
+            if (Math.Abs(constraint.Width - _host.Width) > 1 || Math.Abs(constraint.Height - _host.Height) > 1)
+            {
+                _host = constraint;
+                if (_pickerOpen && !_suspended) RefreshPicker();
+            }
+            if (ScenePanel.Visibility == Visibility.Visible) FitScene(constraint);
+        }
+        return base.MeasureOverride(constraint);
+    }
+
+    // The scene takes the height the title, data column and footer leave, from 150 up to the art's own
+    // height at this width (no vertical crop when there is room), so no window size gets an empty band.
+    private void FitScene(System.Windows.Size constraint)
+    {
+        var probe = new System.Windows.Size(constraint.Width, double.PositiveInfinity);
+        HeaderPanel.Measure(probe); DataColumn.Measure(probe); FooterHost.Measure(probe);
+        var free = constraint.Height - 32 - HeaderPanel.DesiredSize.Height - DataColumn.DesiredSize.Height - FooterHost.DesiredSize.Height - 12;
+        var height = Math.Clamp(free, 150, Math.Max(150, Math.Min(constraint.Width * 768 / 2048, 640)));
+        if (Math.Abs(SceneGrid.Height - height) > 1) SceneGrid.Height = height;
+    }
+    private void ParentReset_Click(object sender, RoutedEventArgs e) { ParentSearchBox.Text = ""; RarityBox.SelectedIndex = 0; }
     private void ClosePicker() { _pickerOpen = false; Refresh(); ChooseFirstButton.Focus(); }
     private void PickerCancel_Click(object sender, RoutedEventArgs e) => ClosePicker();
     private void PickerSave_Click(object sender, RoutedEventArgs e)
@@ -253,11 +292,14 @@ public partial class NurseryView : UserControl
         PickerIndividualsPanel.Visibility = Visibility.Visible;
         var individuals = rows;
         var count = individuals.Length;
-        // D-17 tiles, same family as the Pokédex grid; pages hold three rows of the available width.
-        var viewport = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
+        // D-17 tiles, same family as the Pokédex grid; pages hold as many full rows as the window fits.
+        // From the space the view was given (picker margins 2x24, room for a scrollbar), not from the scroll
+        // viewer, whose size is still the previous window's while a resize is being laid out.
+        var viewport = _host.Width > 0 ? _host.Width - 66 : PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50);
         var columns = Math.Max(2, (int)((viewport - 8) / 150));
         var width = Math.Floor((viewport - 8) / columns) - 8;
-        var size = Math.Max(12, columns * 3);
+        var rowsFit = _host.Height > 0 ? Math.Clamp((int)((_host.Height - 262) / 138), 3, 8) : 3; // 262: title, pair, filters, footer
+        var size = Math.Max(12, columns * rowsFit);
 
         _pages = Math.Max(1, (count + size - 1) / size);
         _page = Math.Clamp(_page, 0, _pages - 1);
@@ -270,9 +312,9 @@ public partial class NurseryView : UserControl
                 row.Children.Add(new Image { Source = Sprite(p.CurrentSpeciesId, p.IsShiny), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
                 row.Children.Add(new TextBlock { Text = p.Nickname ?? SpeciesName(p.CurrentSpeciesId), FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
                 row.Children.Add(new TextBlock { Text = $"Ур. {_levels.LevelForXp(p.TotalXp)}" + (p.IsShiny ? " · шайни" : ""), FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
-                row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Margin = new Thickness(0, 2, 0, 0) });
+                row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Margin = new Thickness(0, 2, 0, 0) });
 
-                if (reason is not null) row.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 11, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
+                if (reason is not null) row.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 12, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
 
                 var button = new Button { Tag = p.Id, Content = row, Width = width, MinHeight = 130, Margin = new Thickness(4), Padding = new Thickness(8), HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Top, Style = (Style)FindResource("SecondaryButtonStyle"), IsEnabled = reason is null,
                     ToolTip = (reason ?? "Выбрать этот экземпляр") + "\n" + ParentName(data, p.Id) + "\n" + CollectionView.TraitLabel(p.FirstTraitId) + " — " + CollectionView.TraitEffect(p.FirstTraitId) };
@@ -314,6 +356,7 @@ public partial class NurseryView : UserControl
         if (_suspended) return;
         var data = _snapshot();
         var nest = data.Nest;
+        if (_messageState is not null && _messageState != NestState()) { MessagePanel.Visibility = Visibility.Collapsed; _messageState = null; }
         var active = nest?.Status is "running" or "ready";
 
         var result = nest?.Status == "hatched" && _dismissedResult != nest.Id;
@@ -326,8 +369,7 @@ public partial class NurseryView : UserControl
 
         SubtitleText.Text = ready ? "Пора познакомиться." : active ? "Можно закрыть приложение — время продолжит идти." : result ? "Новая история начинается здесь." : "Выберите родителей и узнайте, кто может появиться.";
 
-        Grid.SetColumnSpan(SceneBorder, ready ? 2 : 1);
-        SceneGrid.Height = ready ? 300 : active || result ? 240 : 150;
+        ScreenTitle.Visibility = _pickerOpen ? Visibility.Collapsed : Visibility.Visible;
 
         PreviewPanel.Visibility = active || result ? Visibility.Collapsed : Visibility.Visible;
 
@@ -342,9 +384,8 @@ public partial class NurseryView : UserControl
         PreparationFooter.Visibility = _pickerOpen || active || result ? Visibility.Collapsed : Visibility.Visible;
         NestPanel.Visibility = active && !ready ? Visibility.Visible : Visibility.Collapsed;
 
-        ResultPanel.Visibility = result && !_awaitingHatchContinue ? Visibility.Visible : Visibility.Collapsed;
-
-        HatchAnimationPanel.Visibility = result && _awaitingHatchContinue ? Visibility.Visible : Visibility.Collapsed;
+        ResultPanel.Visibility = result ? Visibility.Visible : Visibility.Collapsed;
+        ResultFooter.Visibility = ResultPanel.Visibility;
 
         GreenhouseImage.Source = (ImageSource)FindResource(active ? (nest!.Status == "ready" ? "UiNurseryReadyImage" : "UiNurseryWaitingImage") : "UiNurseryImage");
 
@@ -354,7 +395,7 @@ public partial class NurseryView : UserControl
 
         LuckBar.Value = Math.Clamp(data.NurseryLuckBonus / (ShinyRules.NurseryChanceCap - ShinyRules.BaseChance), 0, 1);
 
-        LuckText.Text = data.NurseryLuckBonus > 0 ? "Набирается · помогает появлению Shiny" : "Новая история";
+        LuckText.Text = data.NurseryLuckBonus > 0 ? "Набирается · помогает появлению шайни" : "Новая история";
 
         if (active)
         {
@@ -376,9 +417,9 @@ public partial class NurseryView : UserControl
 
                 var luck = nest.LuckBeforeHatch is { } before ? "Удача питомника " + (nest.ShinySupported && child.IsShiny ? "сброшена" : data.NurseryLuckBonus > before ? "увеличилась" : "не изменилась") + "." : "Изменение удачи этого старого вылупления не сохранено.";
 
-                ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · Shiny" : "")} · характер {NatureDisplay.Name(child.Nature)}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
+                ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · шайни" : "")} · характер {NatureDisplay.Name(child.Nature)}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
 
-                HatchStageText.Text = $"{SpeciesName(child.SpeciesId)} появился!";
+                ResultTitle.Text = $"{SpeciesName(child.SpeciesId)} появился!";
 
             }
             return;
@@ -438,7 +479,7 @@ public partial class NurseryView : UserControl
                 DockPanel.SetDock(picture, Dock.Left);
                 row.Children.Add(picture);
                 row.Children.Add(new TextBlock {
-                    Text = OutcomeName(data, id) + "\n" + (outcome.ShinyAvailable ? "Возможна Shiny-форма" : "Shiny-форма пока недоступна"),
+                    Text = OutcomeName(data, id) + "\n" + (outcome.ShinyAvailable ? "Возможна шайни-форма" : "Шайни-форма пока недоступна"),
                     TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center
                 });
                 if (preview.SelectionUseful)
@@ -604,8 +645,7 @@ public partial class NurseryView : UserControl
             if (_snapshot().Nest?.Id != request.OperationId || !result.Success ||
                 !_snapshot().CompletedOperations.ContainsKey($"nursery:start:{request.OperationId}"))
                 throw new InvalidOperationException("Запуск не подтверждён сохранением.");
-            _pendingStart = null;
-            Show(result.Message);
+            _pendingStart = null; // the scene caption already says the nest is running; no extra status line
         }
         catch (Exception ex)
         {
@@ -638,8 +678,7 @@ public partial class NurseryView : UserControl
                 !_snapshot().HatchedNurseryResults.TryGetValue(nest.Id, out var child) || child.Id != result.Child.Id)
                 throw new InvalidOperationException("Вылупление не подтверждено сохранением.");
             _pendingHatchNest = _pendingHatchOperation = Guid.Empty;
-            _awaitingHatchContinue = true;
-            Refresh();
+            Refresh(); // straight to the result: the baby fades in on it, no separate "appeared" step
             if (IsLoaded && SystemParameters.ClientAreaAnimation)
                 BabyImage.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(450))
                 {
@@ -654,11 +693,6 @@ public partial class NurseryView : UserControl
         {
             ReleaseBusy();
         }
-    }
-    private void HatchContinueButton_Click(object sender, RoutedEventArgs e) { if (_suspended || !_awaitingHatchContinue) return; _awaitingHatchContinue = false; BabyImage.BeginAnimation(OpacityProperty, null); Refresh(); }
-    private void ReturnCorner_Click(object sender, RoutedEventArgs e)
-    {
-        if (System.Windows.Window.GetWindow(this) is AppMenuWindow menu) menu.Navigate(MenuSection.Corner);
     }
     private void NewNest_Click(object sender, RoutedEventArgs e) { if (_busy || _suspended) return; _dismissedResult = _snapshot().Nest?.Id ?? Guid.Empty; _first = _second = Guid.Empty; _choice = null; _pendingStart = null; Refresh(); }
     private void ShopButton_Click(object sender, RoutedEventArgs e) { if (!_busy && !_suspended && _shortageBerry is { } berry) _shopShortage(berry, _shortageRequired); }

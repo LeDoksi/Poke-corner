@@ -12,9 +12,9 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <Version>1.1.0</Version>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.6</Version>
+    <AssemblyVersion>1.1.6.0</AssemblyVersion>
+    <FileVersion>1.1.6.0</FileVersion>
     <!-- Ships as <InstallDir>\PokeCorner.exe. Nothing hardcodes the file name (restart and
          autostart both use Environment.ProcessPath), so this is purely cosmetic-but-required
          packaging: the shortcut target the user sees should not say "PokeCorner.App". -->
@@ -41,6 +41,7 @@
     <Resource Include="..\..\docs\design-v2\ui-system\assets\coin.png" Link="Assets\UiSystem\coin.png" />
     <Resource Include="..\..\docs\design-v2\ui-system\assets\care.png" Link="Assets\UiSystem\care.png" />
     <Resource Include="..\..\docs\design-v2\ui-system\assets\treat.png" Link="Assets\UiSystem\treat.png" />
+    <Resource Include="..\..\docs\design-v2\ui-system\assets\catch-ball.png" Link="Assets\UiSystem\catch-ball.png" />
     <Resource Include="..\..\docs\design-v2\ui-system\assets\nursery.png" Link="Assets\UiSystem\nursery.png" />
     <Resource Include="..\..\docs\design-v2\ui-system\assets\nursery-waiting.png" Link="Assets\UiSystem\nursery-waiting.png" />
     <Resource Include="..\..\docs\design-v2\ui-system\assets\nursery-ready.png" Link="Assets\UiSystem\nursery-ready.png" />

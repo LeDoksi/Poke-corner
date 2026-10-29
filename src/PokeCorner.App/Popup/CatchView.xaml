@@ -4,6 +4,9 @@
     <Grid Margin="20,14">
         <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
         <StackPanel Margin="0,0,0,16">
+            <!-- Catch is a page inside «Уголок»; the rail tab is already selected, so the way back must be on the page. -->
+            <Button x:Name="BackToCornerButton" Content="← В уголок" Click="BackToCornerButton_Click" HorizontalAlignment="Left" Margin="-12,-8,0,6"
+                    Style="{StaticResource SecondaryButtonStyle}" Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource NdLavenderBrush}"/>
             <TextBlock x:Name="EncounterTitleText" FontSize="26" FontWeight="ExtraBold" Foreground="{StaticResource UiInkBrush}" TextWrapping="Wrap"/>
             <TextBlock x:Name="SubtitleText" Foreground="{StaticResource UiSecondaryInkBrush}" TextWrapping="Wrap" Margin="0,4,0,0"/>
         </StackPanel>
@@ -16,15 +19,22 @@
                         <Image x:Name="SceneImage" Stretch="UniformToFill" Visibility="Collapsed"/>
                         <Image x:Name="RevealSpriteImage" Width="144" Height="144" Visibility="Collapsed"
                                RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="0,-32,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform><ScaleTransform x:Name="PetScale"/></Image.RenderTransform>
+                            <Image.RenderTransform><TransformGroup>
+                                <ScaleTransform x:Name="PetScale"/>
+                                <TranslateTransform x:Name="PetHop"/>
+                            </TransformGroup></Image.RenderTransform>
                         </Image>
-                        <Grid x:Name="PokeBallCanvas" Width="144" Height="144" RenderTransformOrigin="0.5,0.5">
+                        <!-- 60 px: the ball is smaller than the Pokémon. Squash and wobble pivot on the contact point, the spin on the centre. -->
+                        <Grid x:Name="PokeBallCanvas" Width="60" Height="60">
                             <Grid.RenderTransform><TransformGroup>
-                                <RotateTransform x:Name="PokeBallRotate"/>
+                                <ScaleTransform x:Name="BallSquash" CenterX="30" CenterY="60"/>
+                                <RotateTransform x:Name="PokeBallSpin" CenterX="30" CenterY="30"/>
+                                <RotateTransform x:Name="PokeBallRotate" CenterX="30" CenterY="60"/>
                                 <TranslateTransform x:Name="PokeBallThrow"/>
                             </TransformGroup></Grid.RenderTransform>
-                            <Image x:Name="CatchBallImage" Source="{StaticResource UiBallClosedImage}" Stretch="Uniform"/>
+                            <Image x:Name="CatchBallImage" Source="{StaticResource UiBallClosedImage}" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Grid>
+                        <Canvas x:Name="SparkLayer" IsHitTestVisible="False"/>
                     </Grid>
                 </Border>
                 <TextBlock x:Name="StatusText" TextWrapping="Wrap" TextAlignment="Center" Margin="6,12,6,0"
