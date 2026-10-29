@@ -47,10 +47,14 @@
         <DockPanel Grid.Row="3" Margin="24,8,24,18" LastChildFill="False">
             <Button x:Name="DetailButton" Content="Карточка питомца" DockPanel.Dock="Left" Click="DetailButton_Click"
                     Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0" />
-            <Button x:Name="FeedButton" Content="Покормить" DockPanel.Dock="Right" Click="FeedButton_Click"
-                    Style="{StaticResource UiPrimaryButtonStyle}" Margin="8,0,0,0" />
-            <Button x:Name="PetButton" Content="♡  Погладить" DockPanel.Dock="Right" Click="PetButton_Click"
-                    Style="{StaticResource SecondaryButtonStyle}" />
+            <Button x:Name="FeedButton" DockPanel.Dock="Right" Click="FeedButton_Click"
+                    Style="{StaticResource UiPrimaryButtonStyle}" Margin="8,0,0,0" AutomationProperties.Name="Покормить">
+                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/treat.png" Width="20" Height="20" Margin="0,0,8,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Покормить" VerticalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="PetButton" DockPanel.Dock="Right" Click="PetButton_Click"
+                    Style="{StaticResource SecondaryButtonStyle}" AutomationProperties.Name="Погладить">
+                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="20" Height="20" Margin="0,0,8,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Погладить" VerticalAlignment="Center"/></StackPanel>
+            </Button>
         </DockPanel>
     </Grid>
 </UserControl>

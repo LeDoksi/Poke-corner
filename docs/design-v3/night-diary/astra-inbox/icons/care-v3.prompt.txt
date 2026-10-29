@@ -1,0 +1,16 @@
+Date: 2026-10-29 (Europe/Moscow)
+Generation: built-in image_gen
+Reference (pixel technique only): C:\Users\Georgy\.codex\worktrees\night-diary-pilot\PokeTokenBar-Windows\docs\design-v3\night-diary\astra-inbox\icons\care-v2.png
+Output: care-v3.png
+Export: 1254x1254 source normalized to 512x512 using nearest-neighbor sampling; original generated image preserved.
+
+Use case: stylized-concept
+Generate a new care icon for the cozy desktop Pokémon companion app in the Night Diary style.
+ATTACHED IMAGE ROLE: care-v2.png is a reference ONLY for its pixel rendering technique, rich sculpted heart volume, deliberate stepped color clusters and strong dark outline. Study it carefully and match that craftsmanship and richness. Do not copy the hand, its composition, or extra bright white glints. This is a fresh two-heart composition.
+The previous flat-looking treatment was rejected. The desired technique is the attached image's carefully shaded pixel painting: sculpted rosy mids, coral-lit upper planes, rich rose-magenta and plum lower/right shadow clusters, lavender shades for the small heart, crisp intentional stairs in edges and in the color planes. Use discrete crisp color clusters to model volume, NO smooth gradients, NO plain flat emoji fills, NO blur, NO noise or dithering. Keep a consistent pixel scale and clean silhouette.
+Subject: exactly two chunky hearts touching as a single cohesive icon. A large rosy red-pink heart approximately 70% of canvas width. A smaller soft lavender heart approximately 35% of canvas width tucked against its LOWER LEFT side and slightly overlapping as if leaning on it. Small heart in foreground. A shared thick deep-plum outer contour and clear plum separating contour at overlap. No other shapes or objects.
+Palette families: rosy pink #F27A93 with related rose and magenta volume shades; lavender #C4ABF0 with lavender/plum volume shades; deep plum outline #2A1F3D; exactly ONE compact warm apricot #FFB574 highlight cluster on the large heart, upper left. No apricot or white highlight on the small heart. No detached highlight pixels.
+Pair fills approximately 85% of canvas width, balanced and centered, uncropped. Instantly legible as two hearts at 24x24 px on #101426 dark and on light backgrounds.
+STRICT EXCLUSIONS: hands, paws, arms, fingers, faces, sparkles, stars, particles, lettering, text, watermark, UI, background shadow, glow, checkerboard image, props.
+Output exactly 512 x 512 pixels, PNG, genuinely transparent alpha background around the icon. Pixel edges crisp and unblurred.
+
