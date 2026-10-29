@@ -517,8 +517,7 @@ public class AcceptanceVisualTests
             data.Nest.Status = "ready"; nursery.Refresh();
             Capture("nursery-ready", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("HatchButton"));
             Click(nursery, "HatchButton");
-            Capture("nursery-hatching", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("HatchContinueButton"));
-            Click(nursery, "HatchContinueButton");
+            Capture("nursery-hatching", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("OpenPokedexButton"));
             Capture("nursery-result", MenuSection.Nursery, action: (FrameworkElement)nursery.FindName("OpenPokedexButton"));
             Capture("catch", MenuSection.Catch, action: (FrameworkElement)catchView.FindName("CatchButton"));
             var known = new EncounterState { Id = Guid.NewGuid(), Source = "expedition", Phase = "resolved",

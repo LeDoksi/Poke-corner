@@ -46,7 +46,6 @@
       <TextBlock x:Name="NestTerms" TextWrapping="Wrap" Margin="0,6,0,0" />
       <TextBlock x:Name="NestTime" FontWeight="Bold" TextWrapping="Wrap" Margin="0,8,0,0" />
       <ProgressBar x:Name="NestProgress" Minimum="0" Maximum="1" Height="8" Margin="0,7,0,14" />
-      <Button x:Name="ReturnCornerButton" Content="Вернуться в уголок" Click="ReturnCorner_Click" Margin="0,12,0,0"/>
      </StackPanel>
      <StackPanel x:Name="NestParentPanel" Grid.Row="1" Margin="0,12,0,0" Visibility="Collapsed">
       <TextBlock x:Name="NestParents" TextWrapping="Wrap" Margin="0,6,0,0" />
@@ -59,13 +58,9 @@
        </Border>
       </UniformGrid>
      </StackPanel>
-     <StackPanel x:Name="HatchAnimationPanel" Visibility="Collapsed" HorizontalAlignment="Center" Margin="12,0,0,0" Grid.Column="1" Grid.RowSpan="2">
-      <TextBlock x:Name="HatchStageText" Text="Малыш появился!" Style="{StaticResource SectionHeaderTextStyle}" />
-      <Button x:Name="HatchContinueButton" Content="Продолжить" Click="HatchContinueButton_Click" Margin="0,10,0,0" />
-     </StackPanel>
      <Border x:Name="ResultPanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="12,0,0,0" Grid.Column="1" Grid.RowSpan="2">
       <StackPanel>
-       <TextBlock Text="Добро пожаловать, малыш!" Style="{StaticResource SectionHeaderTextStyle}" />
+       <TextBlock x:Name="ResultTitle" Text="Добро пожаловать, малыш!" Style="{StaticResource SectionHeaderTextStyle}" />
        <TextBlock x:Name="ResultText" TextWrapping="Wrap" Margin="0,6,0,0" />
        <WrapPanel Margin="0,10,0,0">
         <Button x:Name="OpenPokedexButton" Content="Карточка малыша" Click="OpenPokedexButton_Click" Margin="0,0,8,6" />

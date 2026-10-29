@@ -40,7 +40,7 @@ public partial class NurseryView : UserControl
     private Guid _pendingHatchNest, _pendingHatchOperation, _dismissedResult;
     private string? _shortageBerry;
     private int _shortageRequired;
-    private bool _busy, _refreshingReady, _pickerOpen, _suspended, _awaitingHatchContinue;
+    private bool _busy, _refreshingReady, _pickerOpen, _suspended;
 
     public NurseryView(Func<SaveData> snapshot, Func<IReadOnlyList<Guid>, int?, NurseryPreview> preview,
         Func<NurseryRequest, Task<NurseryAction>> start, Func<Guid, Guid, Task<NurseryAction>> hatch,
@@ -68,7 +68,6 @@ public partial class NurseryView : UserControl
             _suspended = true; _lifetimeGeneration++; _timer.Stop(); _pickerOpen = false;
             SystemParameters.StaticPropertyChanged -= MotionPolicyChanged;
             BabyImage.BeginAnimation(OpacityProperty, null); BabyImage.Opacity = 1;
-            _awaitingHatchContinue = false;
         };
         PreviewKeyDown += (_, e) => { if (e.Key == System.Windows.Input.Key.Escape && _pickerOpen) { ClosePicker(); e.Handled = true; } };
         // Scene art is 2048x768: full width, clipped around its middle band where the nest sits.
@@ -342,9 +341,7 @@ public partial class NurseryView : UserControl
         PreparationFooter.Visibility = _pickerOpen || active || result ? Visibility.Collapsed : Visibility.Visible;
         NestPanel.Visibility = active && !ready ? Visibility.Visible : Visibility.Collapsed;
 
-        ResultPanel.Visibility = result && !_awaitingHatchContinue ? Visibility.Visible : Visibility.Collapsed;
-
-        HatchAnimationPanel.Visibility = result && _awaitingHatchContinue ? Visibility.Visible : Visibility.Collapsed;
+        ResultPanel.Visibility = result ? Visibility.Visible : Visibility.Collapsed;
 
         GreenhouseImage.Source = (ImageSource)FindResource(active ? (nest!.Status == "ready" ? "UiNurseryReadyImage" : "UiNurseryWaitingImage") : "UiNurseryImage");
 
@@ -378,7 +375,7 @@ public partial class NurseryView : UserControl
 
                 ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · Shiny" : "")} · характер {NatureDisplay.Name(child.Nature)}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
 
-                HatchStageText.Text = $"{SpeciesName(child.SpeciesId)} появился!";
+                ResultTitle.Text = $"{SpeciesName(child.SpeciesId)} появился!";
 
             }
             return;
@@ -638,8 +635,7 @@ public partial class NurseryView : UserControl
                 !_snapshot().HatchedNurseryResults.TryGetValue(nest.Id, out var child) || child.Id != result.Child.Id)
                 throw new InvalidOperationException("Вылупление не подтверждено сохранением.");
             _pendingHatchNest = _pendingHatchOperation = Guid.Empty;
-            _awaitingHatchContinue = true;
-            Refresh();
+            Refresh(); // straight to the result: the baby fades in on it, no separate "appeared" step
             if (IsLoaded && SystemParameters.ClientAreaAnimation)
                 BabyImage.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(450))
                 {
@@ -654,11 +650,6 @@ public partial class NurseryView : UserControl
         {
             ReleaseBusy();
         }
-    }
-    private void HatchContinueButton_Click(object sender, RoutedEventArgs e) { if (_suspended || !_awaitingHatchContinue) return; _awaitingHatchContinue = false; BabyImage.BeginAnimation(OpacityProperty, null); Refresh(); }
-    private void ReturnCorner_Click(object sender, RoutedEventArgs e)
-    {
-        if (System.Windows.Window.GetWindow(this) is AppMenuWindow menu) menu.Navigate(MenuSection.Corner);
     }
     private void NewNest_Click(object sender, RoutedEventArgs e) { if (_busy || _suspended) return; _dismissedResult = _snapshot().Nest?.Id ?? Guid.Empty; _first = _second = Guid.Empty; _choice = null; _pendingStart = null; Refresh(); }
     private void ShopButton_Click(object sender, RoutedEventArgs e) { if (!_busy && !_suspended && _shortageBerry is { } berry) _shopShortage(berry, _shortageRequired); }
