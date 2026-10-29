@@ -19,8 +19,8 @@
     <StackPanel>
      <TextBlock Text="{Binding SavedAtUtc.LocalDateTime, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" FontWeight="Bold"/>
      <WrapPanel Margin="0,5,0,0">
-      <TextBlock Text="{Binding CollectionCount, StringFormat={}{0} питомцев · }"/>
-      <TextBlock Text="{Binding Coins, StringFormat={}{0} монет}" Foreground="{StaticResource SecondaryTextBrush}"/>
+      <TextBlock Text="{Binding CollectionCount, StringFormat={}{0} питомцев}"/>
+      <TextBlock Text="{Binding Coins, StringFormat={}· {0} монет}" Margin="4,0,0,0" Foreground="{StaticResource SecondaryTextBrush}"/>
       <TextBlock Text=" · копия из памяти" Foreground="{StaticResource SecondaryTextBrush}">
        <TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding FromMemory}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></TextBlock.Style>
       </TextBlock>

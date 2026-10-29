@@ -398,11 +398,13 @@ public partial class ExpeditionView : UserControl
             (PickerTypeBox.SelectedItem as ComboBoxItem)?.Tag as string, (PickerTraitBox.SelectedItem as ComboBoxItem)?.Tag as string,
             PickerAvailableBox.IsChecked == true, PickerRouteBox.IsChecked == true, PickerSortBox.SelectedIndex);
         // D-17 tiles, same family as the Pokédex grid: sprite, name, level, plus the two facts a team
-        // pick needs (route fit, trait). Pages hold three rows of whatever width the window gives.
+        // pick needs (route fit, trait).
         var viewportWidth = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
         var columns = Math.Max(2, (int)((viewportWidth - 8) / 150));
         var width = Math.Floor((viewportWidth - 8) / columns) - 8;
-        var pageSize = Math.Max(12, columns * 3);
+        // As many full rows as the window height holds (three at 1200x660), so FullHD fills its grid instead of a void.
+        var rowsFit = PickerScroll.ViewportHeight > 0 ? Math.Max(3, (int)(PickerScroll.ViewportHeight / 150)) : 3;
+        var pageSize = Math.Max(12, columns * rowsFit);
         var pages = Math.Max(1, (rows.Count + pageSize - 1) / pageSize); _pickerPage = Math.Clamp(_pickerPage, 0, pages - 1);
         PickerMembers.Children.Clear();
         foreach (var member in rows.Skip(_pickerPage * pageSize).Take(pageSize)) {
@@ -415,9 +417,9 @@ public partial class ExpeditionView : UserControl
             content.Children.Add(new TextBlock { Text = DisplayName(member, data).Split('\n')[0], FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
             content.Children.Add(new TextBlock { Text = $"Ур. {_selector.Level(member)}  #{member.CurrentSpeciesId:D4}", FontSize = 12, Foreground = (Brush)FindResource("NdMutedBrush") });
             var fits = _selector.Matches(member, _route);
-            content.Children.Add(new TextBlock { Text = fits ? "✓ Подходит маршруту" : string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource(fits ? "NdLavenderBrush" : "NdMutedBrush"), Margin = new Thickness(0, 2, 0, 0) });
-            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource("NdMutedBrush") });
-            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 11, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
+            content.Children.Add(new TextBlock { Text = fits ? "✓ Подходит маршруту" : string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource(fits ? "NdLavenderBrush" : "NdMutedBrush"), Margin = new Thickness(0, 2, 0, 0) });
+            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource("NdMutedBrush") });
+            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 12, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
             var button = new Button { Content = content, Tag = member.Id, Width = width, MinHeight = 140,
                 HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(4), Padding = new Thickness(8), Style = (Style)FindResource("SecondaryButtonStyle"),

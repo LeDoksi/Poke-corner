@@ -110,7 +110,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Dictionary<(int, bool), ImageSource> _packageSprites = new();
     private readonly HashSet<(int, bool)> _missingPackageSprites = new();
     private int _speciesPageIndex;
-    private const int SpeciesPageSize = 12;
+    private const int SpeciesPageMinimum = 12;
+    private int _speciesPageSize = SpeciesPageMinimum;
     private int? _selectedSpeciesId;
     private string _speciesSignature = string.Empty;
     private string _speciesTypeSignature = string.Empty;
@@ -157,6 +158,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         InitializeComponent();
         SizeChanged += (_, _) => LayoutMasterDetail();
+        // Page size follows the window: re-fit when the grid's width or the visible height changes.
+        void Refit() => Dispatcher.BeginInvoke(() => { if (SpeciesPane.Visibility == Visibility.Visible && FitSpeciesPage() != _speciesPageSize) RefreshSpecies(); }, System.Windows.Threading.DispatcherPriority.Loaded);
+        PokedexScroll.SizeChanged += (_, e) => { if (e.HeightChanged) Refit(); };
+        SpeciesGrid.SizeChanged += (_, e) => { if (e.WidthChanged) Refit(); };
         DetailOverlay.SizeChanged += (_, _) => StackDetailColumns();
         ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectionChanged += (_, e) => { if (e.OriginalSource is System.Windows.Controls.TabControl) LayoutMasterDetail(); };
         _onEvolveRequested = onEvolveRequested;
@@ -343,6 +348,17 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         PokedexFilterGrid.ColumnDefinitions[1].MinWidth = PokedexFilterGrid.ColumnDefinitions[2].MinWidth = narrow ? 0 : 120;
     }
 
+    // Whole rows of 164x206 species tiles that fit under the filters (never fewer than 12 tiles), so a
+    // FullHD window fills its grid instead of leaving half the page empty. Unmeasured layout keeps 12.
+    private int FitSpeciesPage()
+    {
+        if (SpeciesGrid.ActualWidth <= 0 || PokedexScroll.ViewportHeight <= 0 || !SpeciesGrid.IsVisible) return _speciesPageSize;
+        var columns = Math.Max(1, (int)((SpeciesGrid.ActualWidth - 4) / 164));
+        var top = SpeciesGrid.TransformToAncestor(PokedexScroll).Transform(new System.Windows.Point()).Y + PokedexScroll.VerticalOffset;
+        var rows = Math.Max(1, (int)((PokedexScroll.ViewportHeight - top - 56) / 206));
+        return Math.Max(SpeciesPageMinimum, columns * rows);
+    }
+
     // Tiles stretch so each row is filled edge to edge instead of leaving a ragged gap.
     private void PokedexGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -457,14 +473,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var visible = CollectionViewModel.FilterSpecies(all, SpeciesSearchBox.Text, type, rarity,
             false, sort);
         if (SpeciesUnopenedToggle.IsChecked == true) visible = visible.Where(e => !FormOpen(e)).ToList();
-        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)SpeciesPageSize));
+        _speciesPageSize = FitSpeciesPage();
+        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)_speciesPageSize));
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
         SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · показано: {visible.Count}";
         SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
         SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
         SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
-        var page = visible.Skip(_speciesPageIndex * SpeciesPageSize).Take(SpeciesPageSize).ToList();
+        var page = visible.Skip(_speciesPageIndex * _speciesPageSize).Take(_speciesPageSize).ToList();
         var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{shinyLens}|" +
             string.Join("|", page.Select(e => $"{e.SpeciesId}:{FormOpen(e)}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
         if (signature != _speciesSignature)

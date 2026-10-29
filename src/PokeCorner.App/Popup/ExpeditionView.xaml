@@ -192,7 +192,7 @@
      <ComboBox x:Name="PickerTraitBox" Grid.Column="1" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Особенность" Margin="0,0,8,0"/>
      <ComboBox x:Name="PickerSortBox" Grid.Column="2" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Сортировка команды"><ComboBoxItem Content="Рекомендованные"/><ComboBoxItem Content="Высокий уровень"/><ComboBoxItem Content="Номер"/></ComboBox>
     </Grid>
-    <DockPanel Margin="0,0,0,8"><Button x:Name="PickerResetButton" Content="Сбросить" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Click="PickerReset_Click" MinHeight="28" Padding="10,4"/>
+    <DockPanel Margin="0,0,0,8"><Button x:Name="PickerResetButton" Content="Сбросить фильтры" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Click="PickerReset_Click" MinHeight="28" Padding="10,4"/>
      <StackPanel Orientation="Horizontal"><CheckBox x:Name="PickerAvailableBox" Content="Доступные" IsChecked="True" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center" Margin="0,0,14,0"/>
      <CheckBox x:Name="PickerRouteBox" Content="Подходят маршруту" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center"/></StackPanel>
     </DockPanel>

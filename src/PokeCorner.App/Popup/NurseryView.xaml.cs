@@ -52,7 +52,7 @@ public partial class NurseryView : UserControl
         _species = catalog.Species.ToDictionary(s => s.Id);
         _shopShortage = shopShortage; _openPokedex = openPokedex; _activate = activate;
         InitializeComponent();
-        RarityBox.Items.Add(new ComboBoxItem { Content = "Любая редкость", Tag = "" });
+        RarityBox.Items.Add(new ComboBoxItem { Content = "Редкость: любая", Tag = "" });
         foreach (var rarity in catalog.Species.Select(s => s.Rarity).Distinct())
             RarityBox.Items.Add(new ComboBoxItem { Content = RarityName(rarity), Tag = rarity });
         RarityBox.SelectedIndex = 0;
@@ -160,6 +160,7 @@ public partial class NurseryView : UserControl
     private void ChooseSecond_Click(object sender, RoutedEventArgs e) => OpenPicker(1);
     private void DraftFirst_Click(object sender, RoutedEventArgs e) { _editing = 0; _page = 0; RefreshPicker(); }
     private void DraftSecond_Click(object sender, RoutedEventArgs e) { if (_draftFirst == Guid.Empty) return; _editing = 1; _page = 0; RefreshPicker(); }
+    private void ParentReset_Click(object sender, RoutedEventArgs e) { ParentSearchBox.Text = ""; RarityBox.SelectedIndex = 0; }
     private void ClosePicker() { _pickerOpen = false; Refresh(); ChooseFirstButton.Focus(); }
     private void PickerCancel_Click(object sender, RoutedEventArgs e) => ClosePicker();
     private void PickerSave_Click(object sender, RoutedEventArgs e)
@@ -258,11 +259,12 @@ public partial class NurseryView : UserControl
         PickerIndividualsPanel.Visibility = Visibility.Visible;
         var individuals = rows;
         var count = individuals.Length;
-        // D-17 tiles, same family as the Pokédex grid; pages hold three rows of the available width.
+        // D-17 tiles, same family as the Pokédex grid; pages hold as many full rows as the window fits.
         var viewport = PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, (ActualWidth > 0 ? ActualWidth : 800) - 50); // viewport, not ActualWidth: the scrollbar would push the last tile to the next row
         var columns = Math.Max(2, (int)((viewport - 8) / 150));
         var width = Math.Floor((viewport - 8) / columns) - 8;
-        var size = Math.Max(12, columns * 3);
+        var rowsFit = PickerScroll.ViewportHeight > 0 ? Math.Max(3, (int)(PickerScroll.ViewportHeight / 138)) : 3;
+        var size = Math.Max(12, columns * rowsFit);
 
         _pages = Math.Max(1, (count + size - 1) / size);
         _page = Math.Clamp(_page, 0, _pages - 1);
