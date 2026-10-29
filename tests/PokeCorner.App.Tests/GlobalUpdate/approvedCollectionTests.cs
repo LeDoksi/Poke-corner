@@ -26,7 +26,7 @@ public sealed class ApprovedCollectionTests
     [Fact]
     public void OpenPetPageFollowsItsPetToTheEvolvedForm() => WpfTestHost.Run(() =>
     {
-        var state = new AppState(); var pet = Pet(1); pet.ChainLength = 2; state.Collection.Add(pet);
+        var state = new AppState(); var pet = Pet(1); state.Collection.Add(pet);
         var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], species: [
             new CatalogSpecies { Id = 1, DisplayName = "Бульбазавр", Types = ["grass"], NormalAvailable = true, ShinyAvailable = true },
             new CatalogSpecies { Id = 2, DisplayName = "Ивизавр", Types = ["grass"], NormalAvailable = true, ShinyAvailable = true }]);
