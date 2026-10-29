@@ -12,6 +12,9 @@
       <TextBlock x:Name="CoinsText" FontWeight="Bold" VerticalAlignment="Center"/>
      </StackPanel>
     </Grid>
+    <!-- Shown only when a shortage elsewhere (nursery, evolution, retraining) sent the player here: the way back. -->
+    <Button x:Name="ReturnButton" Visibility="Collapsed" Click="ReturnButton_Click" HorizontalAlignment="Left" Margin="-12,-12,0,8"
+            Style="{StaticResource SecondaryButtonStyle}" Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource NdLavenderBrush}"/>
     <ProgressBar x:Name="CoinProgressBar" Visibility="Collapsed" Minimum="0" Maximum="1"/>
     <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
      <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>

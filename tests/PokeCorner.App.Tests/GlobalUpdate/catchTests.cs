@@ -17,13 +17,14 @@ public sealed class CatchTests
     private static void Click(CatchView view, string name) => Find<Button>(view, name).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
     private static CatchView View(AppState state, Func<Task<CatchReveal?>>? open = null, ManualDelay? clock = null,
         Func<Guid, Task<CatchReveal?>>? pinned = null, Func<Task>? charm = null, bool motion = true,
-        Func<int, bool, Task<byte[]?>>? art = null, Action? changed = null)
+        Func<int, bool, Task<byte[]?>>? art = null, Action? changed = null, Action? back = null)
     {
         return new CatchView(state, null, _ => Task.FromResult<byte[]?>(null),
             () => state.Encounters.Count(e => e.Source == "activity" && e.Phase == "sealed"),
             changed ?? (() => { }), _ => "Бульбазавр", open ?? (() => Task.FromResult<CatchReveal?>(Result)),
             tryPerformEncounterAsync: pinned, activateLuckyCharmAsync: charm,
-            animationEnabled: () => motion, delayAsync: clock is null ? null : clock.Wait, fetchVariantSprite: art);
+            animationEnabled: () => motion, delayAsync: clock is null ? null : clock.Wait, fetchVariantSprite: art,
+            returnFromEncounter: back);
     }
     private static AppState State(string source = "activity")
     {
@@ -148,6 +149,25 @@ public sealed class CatchTests
         await Until(() => ids.Count == 2);
         WpfTestHost.Run(() => view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent)));
         Assert.Equal(new[] { selected, selected }, ids);
+    }
+
+    [Fact]
+    public async Task ExpeditionEncounterResultLeadsBackToExpeditions()
+    {
+        var state = State("expedition"); var selected = state.Encounters[0].Id;
+        var backs = 0; var opened = 0; CatchView view = null!;
+        WpfTestHost.Run(() => {
+            view = View(state, pinned: _ => { opened++; return Task.FromResult<CatchReveal?>(Result); }, motion: false, back: () => backs++);
+            Assert.True(view.SelectEncounter(selected));
+            Click(view, "CatchButton");
+        });
+        await Until(() => opened == 1);
+        await Task.Delay(60);
+        WpfTestHost.Run(() => {
+            Assert.Equal("Вернуться к экспедициям", Find<Button>(view, "CatchButton").Content);
+            Click(view, "CatchButton");
+            Assert.Equal(1, backs);
+        });
     }
 
     [Fact]

@@ -29,6 +29,9 @@ public partial class CatchView : System.Windows.Controls.UserControl
     private int _generation, _artGeneration;
     private string? _error, _sceneKey;
     private Guid? _selectedEncounterId;
+    // Set when an expedition sent us here: its result button leads back instead of stranding the player on an empty catch tab.
+    private bool _returnAfterResult;
+    private readonly Action? _returnFromEncounter;
     private int? _knownSpeciesId;
     private CatchReveal? _pendingReveal, _spriteFetchedFor;
     private CancellationTokenSource? _revealCancellation;
@@ -39,7 +42,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         Func<Guid, Task<CatchReveal?>>? tryPerformEncounterAsync = null,
         Func<int, bool, Task<byte[]?>>? fetchVariantSprite = null, Func<Task>? activateLuckyCharmAsync = null,
         Func<bool>? animationEnabled = null, Func<TimeSpan, CancellationToken, Task>? delayAsync = null,
-        Func<Guid?, byte[]?>? fetchScene = null, string? luckyCharmArtPath = null)
+        Func<Guid?, byte[]?>? fetchScene = null, string? luckyCharmArtPath = null, Action? returnFromEncounter = null)
     {
         InitializeComponent();
         _appState = appState;
@@ -52,6 +55,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         _onStateChanged = onStateChanged;
         _resolveSpeciesName = resolveSpeciesName;
         _onResultContinued = onResultContinued;
+        _returnFromEncounter = returnFromEncounter;
         _activateLuckyCharm = activateLuckyCharmAsync;
         _animationEnabled = animationEnabled ?? (() => SystemParameters.ClientAreaAnimation);
         _delay = delayAsync ?? Task.Delay;
@@ -105,6 +109,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         if (_appState.Encounters.FirstOrDefault(e => e.Id == id) is not
             { Source: "expedition", Phase: "resolved", KnownSpeciesId: not null, Individual: not null }) return false;
         _selectedEncounterId = id; _sceneKey = null; _error = null;
+        _returnAfterResult = _returnFromEncounter is not null;
         Refresh();
         return true;
     }
@@ -196,8 +201,10 @@ public partial class CatchView : System.Windows.Controls.UserControl
         if (_showingResult) {
             _showingResult = false; _pendingReveal = null; _spriteFetchedFor = null; _selectedEncounterId = null;
             _sceneKey = null; _error = null;
+            var goBack = _returnAfterResult; _returnAfterResult = false;
             _onResultContinued?.Invoke();
             Refresh();
+            if (goBack) _returnFromEncounter?.Invoke();
             return;
         }
         var encounter = CurrentEncounter();
@@ -215,7 +222,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
             if (_suspended || generation != _generation) { RestoreReveal(reveal); return; }
             await PlayReveal(reveal);
         }
-        catch (Exception error) { _error = "Не удалось открыть покебол: " + error.Message; }
+        catch (Exception error) { _error = "Не удалось открыть покебол, он остался у вас. Попробуйте ещё раз.\nПричина: " + error.Message; }
         finally { _busy = false; Refresh(); }
     }
 
@@ -334,7 +341,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         RevealRarityText.Text = reveal.Rarity switch { RarityTier.Common => "Обычный", RarityTier.Uncommon => "Необычный", RarityTier.Rare => "Редкий", _ => "Легендарный" };
         ResultDetailText.Text = reveal.Result.WasDuplicateSpecies ? "Ещё один питомец знакомого вида." : "Новый вид в твоей коллекции!";
         RevealNameText.Visibility = RevealRarityText.Visibility = ResultDetailText.Visibility = RevealSpriteImage.Visibility = Visibility.Visible;
-        CatchButton.Content = "Продолжить";
+        CatchButton.Content = _returnAfterResult ? "Вернуться к экспедициям" : "Продолжить";
         CatchButton.IsEnabled = !_busy || _suspended;
         StatusText.Text = "Покемон уже добавлен в коллекцию.";
         if (!_suspended && !ReferenceEquals(_spriteFetchedFor, reveal)) {

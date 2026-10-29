@@ -52,7 +52,7 @@ public partial class ShopView : UserControl
             CompleteLocalConfirmation(false); e.Handled = true;
         };
         Loaded += (_, _) => { _suspended = false; StartRefresh(); Refresh(); };
-        Unloaded += (_, _) => { _suspended = true; _generation++; _timer?.Stop(); _timer = null; CompleteLocalConfirmation(false); };
+        Unloaded += (_, _) => { ClearReturn(); _suspended = true; _generation++; _timer?.Stop(); _timer = null; CompleteLocalConfirmation(false); };
         Refresh();
     }
 
@@ -280,6 +280,29 @@ public partial class ShopView : UserControl
         _state.Shop.Items.TryGetValue(itemId, out var owned);
         row.Quantity.Text = Math.Max(0, required - owned).ToString();
         row.Quantity.Focus();
+    }
+
+    private Action? _return;
+
+    /// A shortage elsewhere sent the player here; offer the way back until they leave the shop.
+    public void SetReturn(string caption, Action back)
+    {
+        _return = back;
+        ReturnButton.Content = "← " + caption;
+        ReturnButton.Visibility = Visibility.Visible;
+    }
+
+    private void ClearReturn()
+    {
+        _return = null;
+        ReturnButton.Visibility = Visibility.Collapsed;
+    }
+
+    private void ReturnButton_Click(object sender, RoutedEventArgs e)
+    {
+        var back = _return;
+        ClearReturn();
+        back?.Invoke();
     }
 
     private void Show(string message)

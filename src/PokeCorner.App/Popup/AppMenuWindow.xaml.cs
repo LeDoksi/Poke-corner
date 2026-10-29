@@ -194,15 +194,19 @@ public partial class AppMenuWindow : Window
     private void MaximizeButton_Click(object sender, RoutedEventArgs e) => ToggleMaximized();
 
     private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
+    // Esc closes the topmost layer. Preview (tunnels window-first) only for the shell's own confirmation,
+    // which sits above everything. The rest waits for the bubbling KeyDown, so an open pet page, picker,
+    // local confirmation or ComboBox drop-down handles Esc first and only an unclaimed Esc leaves the section.
     private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
-        if (e.Key != Key.Escape) return;
-        if (_confirmation is not null)
-        {
-            CompleteConfirmation(false);
-            e.Handled = true;
-            return;
-        }
+        if (e.Key != Key.Escape || _confirmation is null) return;
+        CompleteConfirmation(false);
+        e.Handled = true;
+    }
+
+    private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key != Key.Escape || _confirmation is not null) return;
         if (_hosted is not null) CompleteHostedContent();
         else if (SettingsContent.Visibility == Visibility.Visible) Navigate(_lastSection);
         else Close();

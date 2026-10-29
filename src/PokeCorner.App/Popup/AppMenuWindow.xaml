@@ -5,7 +5,7 @@
         Title="PokéCorner" Width="1280" Height="760" MinWidth="1200" MinHeight="660"
         Style="{StaticResource AppWindowStyle}" Background="{DynamicResource NdBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None" SizeChanged="Window_SizeChanged" PreviewKeyDown="Window_PreviewKeyDown">
+        WindowStyle="None" SizeChanged="Window_SizeChanged" PreviewKeyDown="Window_PreviewKeyDown" KeyDown="Window_KeyDown">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries><ResourceDictionary Source="/PokeCorner;component/Theme/NightDiary.xaml" /></ResourceDictionary.MergedDictionaries>

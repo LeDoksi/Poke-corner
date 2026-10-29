@@ -151,9 +151,17 @@ public class ShellTests
             Width = 1,
             Height = 1
         });
-        var escape = new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Escape)
+        // The tunnelling Preview pass must leave Esc to the open screen (pet page, picker, drop-down);
+        // only the bubbling KeyDown that nobody claimed closes Settings.
+        var preview = new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Escape)
         {
             RoutedEvent = Keyboard.PreviewKeyDownEvent
+        };
+        menu.RaiseEvent(preview);
+        Assert.False(preview.Handled);
+        var escape = new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Escape)
+        {
+            RoutedEvent = Keyboard.KeyDownEvent
         };
         menu.RaiseEvent(escape);
         Assert.True(escape.Handled);
