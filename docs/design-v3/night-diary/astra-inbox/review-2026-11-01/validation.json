@@ -1,0 +1,218 @@
+[
+  {
+    "file": "margins\\rail-corner.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "5913490f62b0ab6819fdee0f320c4e2927743f9a29de958ba946d381a4a96a2c",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-c11ac867-e308-4cf2-8619-a4f4a31fbb99.png"
+  },
+  {
+    "file": "margins\\rail-expeditions.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "02da41165b90665d001b619df7a4888e6fad7f88df77fd771fb2f7153d845ae9",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-f6e2e32a-74de-4d27-967a-8b43d95f2b38.png"
+  },
+  {
+    "file": "margins\\rail-nursery.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "ff913bb29f763a11d6fb449e5069ea28e2c9f6ffce695e92ea4cd268eb5932e9",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-8d66e4fe-4035-4e15-a964-9b4f7abd8d5f.png"
+  },
+  {
+    "file": "margins\\rail-shop.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "b928b3ac0042b26440d380b04c0708d1465a70fecf67e00e3ddff93e4a4aa6ed",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-48e38a46-32fd-426b-b897-009d539db09b.png"
+  },
+  {
+    "file": "margins\\rail-album.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "b483b844f57926644ffd9716f8ada3be7143520d8a5be1aadaa5554fd1a20372",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-f09a5249-9182-44e2-a07d-18c7903a73ba.png"
+  },
+  {
+    "file": "margins\\exp-lantern.png",
+    "size": [
+      512,
+      768
+    ],
+    "sha256": "1e039eb3dfe6c5ddae6685f92200748c8383789d9e05b84ffcd2c4afda39cc49",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-ba84c120-f41b-4e66-b119-371ae24ed6eb.png"
+  },
+  {
+    "file": "margins\\exp-map.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "d72773cf42827cea68451970eb820a25f4d155debec326e99302bbd6b60b908b",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-902cea61-514e-4e1c-9285-675d51b24856.png"
+  },
+  {
+    "file": "margins\\nursery-scheme.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "077415216aea8d99e1c7895f4e50cbd2813e9fe8349bc8944a10edf59c1bd889",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-39923340-206c-40db-bde6-fe7d4a52ea23.png"
+  },
+  {
+    "file": "margins\\nursery-paws.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "ff53ba398ab9fb5611c721ada9b73f483f2d3618d2ee7c5749ccd30a7c35580d",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-409f892a-5a80-4cc3-87cc-6696fc4b1c02.png"
+  },
+  {
+    "file": "margins\\shop-list.png",
+    "size": [
+      512,
+      768
+    ],
+    "sha256": "6c45f5bac0d684a40dd48804d5e29075e8d56e5b479c147c52880e128dc209e2",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-0b0cc89b-19ed-4ca2-a871-43603ab5bcd8.png"
+  },
+  {
+    "file": "margins\\shop-berries.png",
+    "size": [
+      512,
+      768
+    ],
+    "sha256": "ae3c9c15c816d4849ac4385e51667ba1415b42340dc44d7e10bdd02c7b533c0c",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-2b2cf3a6-ee9a-4306-9a38-a716d33fd3d6.png"
+  },
+  {
+    "file": "margins\\hatch-shell.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "07619a62942c787756e6960bc9613bbedfe8c55e26fc5e13680522be372a0383",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-2b8187f4-ac88-4a37-97ac-55bd5d2e2d0f.png"
+  },
+  {
+    "file": "shop\\treats.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "da152a34eb4c3f1abdbcb4403084fea4a1289601e213177991076637d5552ebd",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-0d3de79b-e35d-4e72-b783-e193f2743550.png"
+  },
+  {
+    "file": "shop\\care-booster.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "7eb1963b056a9706c52e59a0f1ac66045389369269edb294a83607f300319d33",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-c6e7e9d5-77b5-4838-8a01-769c9a4c3f30.png"
+  },
+  {
+    "file": "shop\\xp-potion.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "4a3adf939e5d5d12ec776a52d1a5ff2072bdd9bea7602b1a769f58891e1e7397",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-57ab8388-1042-43b3-9e7c-d41117e75e6a.png"
+  },
+  {
+    "file": "shop\\lucky-charm.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "695f3559a0e9335162ddf00d437f4d679fa6c0aa347741645200f205c0c40a81",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-67ed7d6f-4023-4bd3-8fea-fc45907afabe.png"
+  },
+  {
+    "file": "shop\\evolution-stone.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "1ec1f673125dfc62a0b775a70187db92d14fec250491563281fafd81878050ec",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-cc86e432-e77e-4cbe-9bb9-2a85cf967390.png"
+  },
+  {
+    "file": "shop\\offspring-charm.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "51cb439c98a59954a761b65ef8b19f3469623cf3e4967fd9e1cffd946ae3d14a",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-9e4dd733-d27c-422c-8879-42f949de6550.png"
+  },
+  {
+    "file": "shop\\cheri.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "f4f612de9d934831839c8951b0fcfd5154d41885f12b490e125aa44cf1c41b77",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-233942d6-46fe-4cd0-bbf9-1b859b54d2ec.png"
+  },
+  {
+    "file": "shop\\oran.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "809ab7296f5b7198eab50cdc09a25ece6c0d2127e94c992cc09b01a484af4d51",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-efefa63c-5731-4b50-9e3a-968dc18d604a.png"
+  },
+  {
+    "file": "shop\\aspear.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "ea8fe7b97614f389580978582d9161a2fe1aad3076a9c8f3bfa3a7c4d534e376",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-2642682a-f92c-475a-9fdb-ff63f8d1674a.png"
+  },
+  {
+    "file": "shop\\pecha.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "3434f66d68e7bad6d686f69a322cb9aed684612bf05db9419238e450114e1d1f",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-d93c9267-706e-4c40-b7a3-0e0cea4c9a67.png"
+  },
+  {
+    "file": "shop\\chesto.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "95a0522a0a66500c874a01238ff656b188cb61c8a4931bfa0d5bb1ab7dba135b",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-26f45402-ebfb-4582-a6a7-12a12f1a0dfb.png"
+  },
+  {
+    "file": "shop\\rawst.png",
+    "size": [
+      512,
+      512
+    ],
+    "sha256": "3fb1bbf680fb8687ac0fff41b29d24f047f382466eecc3a5c9d4c6c00a7d0448",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-5fed9b4e-b74f-4ba7-99c7-b721553d7b96.png"
+  }
+]

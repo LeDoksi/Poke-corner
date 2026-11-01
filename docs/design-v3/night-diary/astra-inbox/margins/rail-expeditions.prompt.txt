@@ -1,0 +1,22 @@
+Date: 2026-11-01 Europe/Moscow
+Generation: built-in image_gen
+Status: delivered for review by Georgy and Claude; not accepted by assistant.
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-f6e2e32a-74de-4d27-967a-8b43d95f2b38.png
+References: ["C:/Users/Georgy/.codex/visualizations/2026/10/29/01a187d0-dcd8-7853-a129-dbb3fd4fe9b5/november/rail-pokedex-reference.png", "C:/Users/Georgy/.codex/visualizations/2026/10/29/01a187d0-dcd8-7853-a129-dbb3fd4fe9b5/november/exp-tracks-reference.png"]
+Export: nearest-neighbor to requested size with 8% transparent inset; margin RGB normalized to #9A8FBE, alpha retained.
+
+Original order prompt (verbatim):
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 110 to 230 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands.
+
+Subject: An old pocket compass with its hinged lid open, a scratched rim, the needle pointing up-right, a short loop of chain.
+
+Output: exactly 512 x 512 pixels, PNG with alpha.
+
+Sent prompt (verbatim):
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 110 to 230 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands.
+
+Subject: An old pocket compass with its hinged lid open, a scratched rim, the needle pointing up-right, a short loop of chain.
+
+Output: exactly 512 x 512 pixels, PNG with alpha.
+
+Attached images are the accepted M02/M07 stroke references, displayed on dark #101426 only to make their alpha visible. Match their pencil hand, but draw ONLY the requested new subject on transparent background; do not include their notebook/tracks or dark background.

@@ -1,0 +1,30 @@
+Date: 2026-11-01 Europe/Moscow
+Generation: built-in image_gen
+Status: delivered for review by Georgy and Claude; not accepted by assistant.
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-67ed7d6f-4023-4bd3-8fea-fc45907afabe.png
+References: ["C:\\Users\\Georgy\\.codex\\worktrees\\night-diary-pilot\\PokeTokenBar-Windows\\docs\\design-v3\\night-diary\\astra-inbox\\icons\\care-v3.png", "C:\\Users\\Georgy\\.codex\\worktrees\\night-diary-pilot\\PokeTokenBar-Windows\\docs\\design-v2\\final\\assets\\shop\\lucky-charm.png"]
+Export: nearest-neighbor to requested size with 8% transparent inset; margin RGB normalized to #9A8FBE, alpha retained.
+
+Original order prompt (verbatim):
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art item icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the first attached image (care-v3.png) in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). The second attached image is the old version of the same item: keep its recognisable shape and main colours, drop its glossy white highlights, soft gradients and missing outline.
+
+Subject: A golden pendant on a short cord holding a four-pointed star made of two colours, coral and lavender, to suggest an unusual colour form.
+
+Single item, centered, fills about 80% of the canvas with at least 8% transparent margin. Reads instantly at 40 px on dark #101426 and next to the care-v3 heart icon. No sparkles, no stars, no glow, no shadow under it, no text, no labels, no Pokémon. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+
+Sent prompt (verbatim):
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art item icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the first attached image (care-v3.png) in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). The second attached image is the old version of the same item: keep its recognisable shape and main colours, drop its glossy white highlights, soft gradients and missing outline.
+
+Subject: A golden pendant on a short cord holding a four-pointed star made of two colours, coral and lavender, to suggest an unusual colour form.
+
+Single item, centered, fills about 80% of the canvas with at least 8% transparent margin. Reads instantly at 40 px on dark #101426 and next to the care-v3 heart icon. No sparkles, no stars, no glow, no shadow under it, no text, no labels, no Pokémon. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+
+Revision reference: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-626108fe-664b-474c-b40d-ca3c66e5d297.png
+Revision prompt (verbatim):
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art item icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the first attached image (care-v3.png) in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). The second attached image is the old version of the same item: keep its recognisable shape and main colours, drop its glossy white highlights, soft gradients and missing outline.
+
+Subject: A golden pendant on a short cord holding a four-pointed star made of two colours, coral and lavender, to suggest an unusual colour form.
+
+Single item, centered, fills about 80% of the canvas with at least 8% transparent margin. Reads instantly at 40 px on dark #101426 and next to the care-v3 heart icon. No sparkles, no stars, no glow, no shadow under it, no text, no labels, no Pokémon. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+
+Correction of the attached generated item: Replace the four rounded heart/clover petals with one angular FOUR-POINTED STAR: exactly four sharp points with straight concave edges, alternating coral and lavender halves. No clover, hearts, rounded petals. Keep golden pendant frame; a short cord at top.

@@ -223,3 +223,35 @@ Single bold icon of one chunky bone-shaped pet biscuit lying diagonally (lower l
 - **camp.png** — принят: на всех кадрировках поимки (1200×660 и FullHD, до броска и в анимации) шар и крупный покемон стоят на земле. Встроен как `expeditions/camp.png`.
 - **M02 rail-pokedex.png, M07 exp-tracks.png** — приняты как образец штриха для остальных 12 зарисовок.
 - **ball-open.png** — отклонён (Georgy): крышка тонким серпом, кнопка смотрит прямо при поднятой крышке, рваная выемка, у крышки мельче пиксель. Вместо него Claude нарисовал пиксельный шар кодом: 4 кадра 40×40 из одних деталей (`pixel-ball/pixball.py`), в приложении `ui-system/assets/ball-px-0..3.png`.
+
+## Приёмка 01.11 — остальные 29 картинок заказа 29.10
+
+- **Поля M01, M03–M06, M08–M14** — приняты. Одна рука с M02/M07, на рабочих размерах предметы узнаются, реальных покемонов и букв нет. M09 (карта, 90 px) на пределе мелкости, но читается.
+- **Магазин, все 12** — приняты. Один набор с care-v3 / catch-ball / treat на 44 px и на тёмном, и на светлом фоне; пачка лакомств связана с косточкой, ягоды узнаются по форме. Замечание без переделки: у lucky-charm самый лёгкий силуэт в ряду.
+- **Рейка: pokedex, expeditions, nursery** — приняты. В приложении показываются 30 px, линия утолщается при экспорте (MaxFilter 7 на 256).
+- **Рейка: corner, shop** — на перезаказ. На 24–30 px дом (камни, растения, труба, окно, лапка) и мешочек (узел, бирка, кисть) сливаются в пятно.
+- **Питомник переделан (PR #2, «Книга пар»).** Новые картинки не нужны: M10 и M11 остаются на боковых полях FullHD под сценой, M14 — на «малыш готов» и результате. Новое место — пустота под списком пар, когда пар мало: туда запись, без рисунка. Встраивать после слияния PR #2.
+
+### Перезаказ: рейка corner.png и shop.png
+
+Сохранить поверх `astra-inbox\rail\corner.png` и `shop.png`, старые убрать в history. Приложить принятые `rail\pokedex.png`, `expeditions.png`, `nursery.png` как образец толщины и простоты.
+
+**corner.png**
+```
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
+
+Subject: the simplest possible house silhouette: a pitched roof and a square body, one round window, one door with a small paw print. Nothing else: no chimney, no smoke, no plants, no stones, no fence, no roof tiles, no ground line. At most eight strokes in total. It must read as "home" at 24 px.
+
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
+```
+
+**shop.png**
+```
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
+
+Subject: a plump round drawstring pouch seen from the front, a simple gathered neck tied with one band, and one small blank tag hanging from it. Nothing else: no tassels, no rope ends, no berries, no coins, no folds or wrinkles inside the body. At most eight strokes in total. It must read as "shop / pouch" at 24 px.
+
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
+```
+
+Приёмка: на 24 и 30 px рядом с принятыми тремя значками — та же толщина, силуэт узнаётся без подписи.
