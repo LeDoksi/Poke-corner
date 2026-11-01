@@ -1,0 +1,26 @@
+Date: 2026-10-29 (Europe/Moscow)
+Generation: built-in image_gen
+Order: C:\Users\Georgy\Downloads\ASTRA-ORDER-2026-10-29.md
+Reference: None for initial prompt. Revision reference: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-64adc067-380a-403a-913c-dc849107d183.png
+Output: margins/exp-tracks.png
+Export: nearest-neighbor to 512x768; generated alpha retained; original retained; transparent margin inset 8.00% per side for pilot sketches.
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-6f74d634-f328-4773-bb04-3f589f3e876e.png
+Status: M07 pilot; awaiting user acceptance.
+
+Initial prompt (verbatim):
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 110 to 230 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands.
+
+Subject: Three parallel winding trails of footprints going from the bottom to the top: one of a hiking boot, one of a round four-toed paw, one of a three-toed bird-like foot. The trails cross once.
+
+Output: exactly 512 x 768 pixels, PNG with alpha.
+
+Revision prompt (verbatim):
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 110 to 230 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands.
+
+Subject: Three parallel winding trails of footprints going from the bottom to the top: one of a hiking boot, one of a round four-toed paw, one of a three-toed bird-like foot. The trails cross once.
+
+Output: exactly 512 x 768 pixels, PNG with alpha.
+
+Correction of the attached failed draft: REMOVE the entire broad purple haze, all fog, soft halos, diffuse blobs, gradients and all fill between or inside the footprints. The only nontransparent pixels may be the actual narrow pencil strokes and short hatching marks, in #9A8FBE. Every other pixel must be fully transparent (alpha=0), including all space between trails and inside outlined footprints. Redraw with confident fully visible 6-8px strokes at 512x768; do not make the strokes faint. Keep the three distinct boot / four-toed paw / three-toed bird tracks crossing once. Pull every mark inside 8% safe margins, including top and bottom. No paper, texture background, bloom or atmosphere of any kind.
+
+Authorized technical finishing: 2026-10-29 user explicitly approved precise PNG processing. Visible stroke RGB set to #9A8FBE; alpha byte-for-byte preserved from sized export. No shapes redrawn.

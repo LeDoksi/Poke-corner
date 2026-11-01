@@ -163,7 +163,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         RevealSpriteImage.Source = null;
         RevealSpriteImage.Visibility = RevealNameText.Visibility = RevealRarityText.Visibility = ResultDetailText.Visibility = Visibility.Collapsed;
         RevealNameText.Text = RevealRarityText.Text = ResultDetailText.Text = "";
-        CatchBallImage.Source = (ImageSource)FindResource("UiBallClosedImage");
+        SetBall("UiBallClosedImage");
         PokeBallCanvas.Visibility = Visibility.Visible;
         PokeBallThrow.Y = GroundY; // an earned or gift ball already lies on the ground, waiting to be opened
         SceneHeadingText.Visibility = CharmPanel.Visibility = ProgressPanel.Visibility = Visibility.Visible;
@@ -247,7 +247,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         SubtitleText.Text = "Пора познакомиться с новым другом.";
         SceneImage.Visibility = Visibility.Visible; LoadScene(_selectedEncounterId ?? CurrentEncounter()?.Id);
         PokeBallCanvas.Visibility = Visibility.Visible;
-        CatchBallImage.Source = (ImageSource)FindResource("UiBallClosedImage");
+        SetBall("UiBallClosedImage");
         var thrown = _knownSpeciesId is not null;
         // Only a known expedition's already public sprite may remain visible before capture.
         if (!thrown) {
@@ -273,7 +273,8 @@ public partial class CatchView : System.Windows.Controls.UserControl
     }
 
     // Ball centre offsets inside the 250 px scene: resting on the ground, and where it meets a Pokémon standing on it.
-    private const double GroundY = 72, HitY = -28;
+    // The pixel ball sits 12 px below its 80 px box centre, so the box offsets keep the ball centre where it was.
+    private const double GroundY = 60, HitY = -40, BallDrop = 12;
 
     // Expedition encounter, ~3.5 s: arc with spin, opens on contact and takes the Pokémon in, falls, bounces, rocks three times, clicks.
     private async Task PlayThrow(CancellationToken token)
@@ -285,15 +286,15 @@ public partial class CatchView : System.Windows.Controls.UserControl
         await _delay(TimeSpan.FromMilliseconds(600), token);
         token.ThrowIfCancellationRequested();
         StatusText.Text = "Покебол раскрылся…";
-        CatchBallImage.Source = (ImageSource)FindResource("UiBallOpenImage");
-        Sparks(HitY, 8, 34, NdBrush("NdLavenderBrush"));
+        PlayBallFrames("UiBallOpening1Image", "UiBallOpening2Image", "UiBallOpenImage");
+        Sparks(HitY + BallDrop, 8, 34, NdBrush("NdLavenderBrush"));
         Animate(RevealSpriteImage, OpacityProperty, 450, K(0, 1), K(1, 0, EasingMode.EaseIn));
         Animate(PetScale, ScaleTransform.ScaleXProperty, 450, K(0, 1), K(1, 0, EasingMode.EaseIn));
         Animate(PetScale, ScaleTransform.ScaleYProperty, 450, K(0, 1), K(1, 0, EasingMode.EaseIn));
         await _delay(TimeSpan.FromMilliseconds(450), token);
         token.ThrowIfCancellationRequested();
         StatusText.Text = "Мягкое приземление…";
-        CatchBallImage.Source = (ImageSource)FindResource("UiBallClosedImage");
+        PlayBallFrames("UiBallOpening2Image", "UiBallOpening1Image", "UiBallClosedImage");
         // Falls with gravity (ease-in), lands squashed, then two small bounces.
         Animate(PokeBallThrow, TranslateTransform.YProperty, 450, K(0, HitY), K(.5, GroundY, EasingMode.EaseIn),
             K(.68, GroundY - 14, EasingMode.EaseOut), K(.84, GroundY, EasingMode.EaseIn), K(.93, GroundY - 5, EasingMode.EaseOut), K(1, GroundY, EasingMode.EaseIn));
@@ -308,7 +309,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         }
         token.ThrowIfCancellationRequested();
         StatusText.Text = "Пойман!";
-        Sparks(GroundY, 4, 26, NdBrush("NdApricotBrush"));
+        Sparks(GroundY + BallDrop, 4, 26, NdBrush("NdApricotBrush"));
         await _delay(TimeSpan.FromMilliseconds(350), token);
     }
 
@@ -329,9 +330,18 @@ public partial class CatchView : System.Windows.Controls.UserControl
         StatusText.Text = "Открывается!";
         Animate(BallSquash, ScaleTransform.ScaleYProperty, 300, K(0, 1), K(.4, .82), K(1, 1, EasingMode.EaseOut));
         Animate(BallSquash, ScaleTransform.ScaleXProperty, 300, K(0, 1), K(.4, 1.14), K(1, 1, EasingMode.EaseOut));
-        CatchBallImage.Source = (ImageSource)FindResource("UiBallOpenImage");
-        Sparks(GroundY, 8, 40, NdBrush("NdLavenderBrush"));
+        PlayBallFrames("UiBallOpening1Image", "UiBallOpening2Image", "UiBallOpenImage");
+        Sparks(GroundY + BallDrop, 8, 40, NdBrush("NdLavenderBrush"));
         await _delay(TimeSpan.FromMilliseconds(300), token);
+    }
+
+    // Steps the pixel ball through its drawn frames, 70 ms each; the last one holds.
+    private void PlayBallFrames(params string[] keys)
+    {
+        var frames = new ObjectAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(70 * keys.Length) };
+        for (var i = 0; i < keys.Length; i++)
+            frames.KeyFrames.Add(new DiscreteObjectKeyFrame(FindResource(keys[i]), KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(70 * i))));
+        CatchBallImage.BeginAnimation(System.Windows.Controls.Image.SourceProperty, frames);
     }
 
     // Rocks the resting ball on its contact point: left, right, a smaller left, settle.
@@ -346,6 +356,12 @@ public partial class CatchView : System.Windows.Controls.UserControl
         var animation = new DoubleAnimationUsingKeyFrames { Duration = TimeSpan.FromMilliseconds(ms) };
         foreach (var frame in frames) animation.KeyFrames.Add(frame);
         target.BeginAnimation(property, animation);
+    }
+
+    private void SetBall(string key)
+    {
+        CatchBallImage.BeginAnimation(System.Windows.Controls.Image.SourceProperty, null);
+        CatchBallImage.Source = (ImageSource)FindResource(key);
     }
 
     private System.Windows.Media.Brush NdBrush(string key) => TryFindResource(key) as System.Windows.Media.Brush ?? System.Windows.Media.Brushes.White;

@@ -24,15 +24,15 @@
                                 <TranslateTransform x:Name="PetHop"/>
                             </TransformGroup></Image.RenderTransform>
                         </Image>
-                        <!-- 60 px: the ball is smaller than the Pokémon. Squash and wobble pivot on the contact point, the spin on the centre. -->
-                        <Grid x:Name="PokeBallCanvas" Width="60" Height="60">
+                        <!-- The 40 px pixel ball at ×2: smaller than the Pokémon. Squash and wobble pivot on its contact point (y 77), the spin on its centre (39,52). -->
+                        <Grid x:Name="PokeBallCanvas" Width="80" Height="80">
                             <Grid.RenderTransform><TransformGroup>
-                                <ScaleTransform x:Name="BallSquash" CenterX="30" CenterY="60"/>
-                                <RotateTransform x:Name="PokeBallSpin" CenterX="30" CenterY="30"/>
-                                <RotateTransform x:Name="PokeBallRotate" CenterX="30" CenterY="60"/>
+                                <ScaleTransform x:Name="BallSquash" CenterX="39" CenterY="77"/>
+                                <RotateTransform x:Name="PokeBallSpin" CenterX="39" CenterY="52"/>
+                                <RotateTransform x:Name="PokeBallRotate" CenterX="39" CenterY="77"/>
                                 <TranslateTransform x:Name="PokeBallThrow"/>
                             </TransformGroup></Grid.RenderTransform>
-                            <Image x:Name="CatchBallImage" Source="{StaticResource UiBallClosedImage}" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image x:Name="CatchBallImage" Source="{StaticResource UiBallClosedImage}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                         </Grid>
                         <Canvas x:Name="SparkLayer" IsHitTestVisible="False"/>
                     </Grid>

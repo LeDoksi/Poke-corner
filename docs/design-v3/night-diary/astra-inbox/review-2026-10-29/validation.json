@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-29",
+  "acceptance": "Awaiting acceptance by Georgy and Claude of M02 and M07. Remaining 29 assets not generated.",
+  "assets": [
+    {
+      "file": "icons/ball-open.png",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "881f31b8304fc1813d3cbe8acc4ccd35d91ccbe6967686c14e7f58dd5864d08e",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlpha128": [
+        43,
+        40,
+        469,
+        473
+      ],
+      "exactInitialPromptPresent": true,
+      "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-a2cdb0b0-0130-42b4-a956-f0fe54c84516.png"
+    },
+    {
+      "file": "scenes/camp.png",
+      "size": [
+        2400,
+        800
+      ],
+      "sha256": "871279fdc56d551ba886edb6a551e4f4f27816d6b92753b37935c6daa30446ac",
+      "alphaRange": [
+        255,
+        255
+      ],
+      "visibleBoundsAlpha128": [
+        0,
+        0,
+        2400,
+        800
+      ],
+      "exactInitialPromptPresent": true,
+      "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-1b3dc9fd-9fcb-4147-a4aa-3ab7790fa40b.png"
+    },
+    {
+      "file": "margins/rail-pokedex.png",
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "14defac530cc7bdf7d9fce45e03b8e1e8b913647299deccd3e79a7a108c037b5",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlpha128": [
+        61,
+        113,
+        458,
+        420
+      ],
+      "exactInitialPromptPresent": true,
+      "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-ad999d50-9730-4668-87f4-f2fd9bc08382.png"
+    },
+    {
+      "file": "margins/exp-tracks.png",
+      "size": [
+        512,
+        768
+      ],
+      "sha256": "b5d14d54fbc1a6f8cc45693a9d949301d6d84a460d836660fe6b65f43c310946",
+      "alphaRange": [
+        0,
+        254
+      ],
+      "visibleBoundsAlpha128": [
+        120,
+        81,
+        431,
+        682
+      ],
+      "exactInitialPromptPresent": true,
+      "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-6f74d634-f328-4773-bb04-3f589f3e876e.png"
+    }
+  ],
+  "lowerHalf": {
+    "preservedPixels": 113363,
+    "changedPixels": 0,
+    "mask": "ball-preserved-mask.png",
+    "method": "Binary paste of original RGBA values at unchanged coordinates; seam follows bottom of original red shell, excluding intentional notch rectangle (176,210)-(316,376)."
+  }
+}

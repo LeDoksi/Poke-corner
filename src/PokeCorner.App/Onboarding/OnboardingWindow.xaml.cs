@@ -137,8 +137,11 @@ public partial class OnboardingWindow : Window
         else
         {
             var count = _stepIndex == 5 ? Math.Clamp(_giftQueueCount?.Invoke() ?? 2, 0, 2) : 1;
-            if (count == 0) Add((System.Windows.Media.ImageSource)FindResource("UiBallOpenImage"), 130);
-            for (var i = 0; i < count; i++) Add((System.Windows.Media.ImageSource)FindResource("UiBallClosedImage"), 130);
+            // The 40 px pixel ball at exactly ×3, nearest-neighbour, so its pixels stay square.
+            void Ball(string key) => System.Windows.Media.RenderOptions.SetBitmapScalingMode(Add((System.Windows.Media.ImageSource)FindResource(key), 120),
+                System.Windows.Media.BitmapScalingMode.NearestNeighbor);
+            if (count == 0) Ball("UiBallOpenImage");
+            for (var i = 0; i < count; i++) Ball("UiBallClosedImage");
         }
     }
 

@@ -16448,6 +16448,12 @@
       "sha256": "10ba0ef0e52d25e1ffee9e0f93db6467e0f3701106fb31439d102244c6e66df6"
     },
     {
+      "path": "docs/design-v2/final/assets/expeditions/camp.png",
+      "target": "expeditions/camp.png",
+      "bytes": 4100553,
+      "sha256": "871279fdc56d551ba886edb6a551e4f4f27816d6b92753b37935c6daa30446ac"
+    },
+    {
       "path": "docs/design-v2/final/assets/expeditions/lake.png",
       "target": "expeditions/lake.png",
       "bytes": 2460998,
