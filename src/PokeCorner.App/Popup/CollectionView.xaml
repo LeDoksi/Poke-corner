@@ -492,6 +492,8 @@
                         </ScrollViewer>
                     </DockPanel>
                 </Border>
+                <!-- D-28: evolution and retraining top up in place, like the nursery (D-27). -->
+                <local:TopUpCart x:Name="DetailTopUpCart" Panel.ZIndex="5" Margin="0,0,0,64" MaxWidth="{Binding ActualWidth, ElementName=DetailOverlayArea}"/>
             </Grid>
         </Border>
         <!-- D-20: the species page slides in on the right like a pet's page; the species grid narrows beside it. -->
