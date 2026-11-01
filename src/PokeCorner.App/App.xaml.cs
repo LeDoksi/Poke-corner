@@ -1119,6 +1119,15 @@ public partial class App : System.Windows.Application
                         next.ActiveIndividualId = id;
                         if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
                         care.LastInteractionUtc = DateTimeOffset.UtcNow;
+                    }, closeMenu: false),
+                    // Д2 (Georgy 01.11): the nest's missing goods are bought in one save, right from the nursery.
+                    items => CommitStateAsync(next =>
+                    {
+                        foreach (var (item, quantity, operation) in items)
+                        {
+                            var bought = _shopService.TryPurchase(next, item, quantity, operation);
+                            if (!bought.Success) throw new InvalidOperationException(bought.Message);
+                        }
                     }, closeMenu: false));
                 var roomArt = RoomArt.Load(_catalogPackage.DataRoot);
                 var roomView = new RoomView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
