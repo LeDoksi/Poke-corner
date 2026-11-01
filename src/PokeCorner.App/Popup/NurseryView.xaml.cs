@@ -178,7 +178,7 @@ public partial class NurseryView : UserControl
         if (!PairValid(data, first.Id, second.Id)) return "Эта пара сейчас недоступна.";
         _first = first.Id; _second = second.Id;
         _choice = null; _pendingStart = null; _selectionGeneration++;
-        _pickerOpen = false; _cartOpen = false; ShowSelectedPairPage = true; Refresh();
+        _pickerOpen = false; _cartOpen = false; ShowSelectedPairPage = _revealSelectedPair = true; Refresh();
         return null;
     }
     private void ChooseFirst_Click(object sender, RoutedEventArgs e) => OpenPicker(0);
@@ -599,6 +599,8 @@ public partial class NurseryView : UserControl
 
     /// Set by a Pokédex hint or "Ещё раз с этой парой": the next list render turns to the page holding the pair.
     private bool ShowSelectedPairPage;
+    /// Set only when the pair came from outside the book (Pokédex, "Ещё раз"): it must be visible even under "Дадут новых".
+    private bool _revealSelectedPair;
 
     private void ArrangeColumns(double width)
     {
@@ -642,7 +644,8 @@ public partial class NurseryView : UserControl
         _onlyNewPairs ??= fresh > 0;
         var (a, b) = SelectedSpecies(data);
         // A pair chosen from the Pokédex may give nothing new; it must still be visible.
-        if (ShowSelectedPairPage && _onlyNewPairs == true && !_pairs.Any(p => p.Matches(a, b) && p.NewCount > 0)) _onlyNewPairs = false;
+        if (_revealSelectedPair && a != 0 && b != 0 && _onlyNewPairs == true && !_pairs.Any(p => p.Matches(a, b) && p.NewCount > 0)) _onlyNewPairs = false;
+        _revealSelectedPair = false;
         NewPairsButton.Content = $"✦ Дадут новых · {fresh}";
         AllPairsButton.Content = $"Все пары · {_pairs.Count}";
         NewPairsButton.Style = (Style)FindResource(_onlyNewPairs == true ? "NdChipSelectedStyle" : "SecondaryButtonStyle");
@@ -694,9 +697,13 @@ public partial class NurseryView : UserControl
         Left(new TextBlock { Text = "→", Foreground = muted, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 6, 0) });
         foreach (var outcome in pair.Outcomes)
         {
-            var cell = new Grid { Width = 44, Height = 44, Margin = new Thickness(0, 0, 6, 0), ToolTip = OutcomeName(data, outcome.SpeciesId) + $" · {outcome.Percent}%" };
-            cell.Children.Add(Face(outcome.SpeciesId, !outcome.IsNew, 40));
-            cell.Children.Add(new TextBlock { Text = $"{outcome.Percent}%", FontSize = 10, Foreground = muted, HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Bottom });
+            // Percent sits under the face, so it never covers a silhouette.
+            var cell = new Grid { Width = 46, Margin = new Thickness(0, 0, 4, 0), VerticalAlignment = VerticalAlignment.Center, ToolTip = OutcomeName(data, outcome.SpeciesId) + $" · {outcome.Percent}%" };
+            cell.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); cell.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            var face = Face(outcome.SpeciesId, !outcome.IsNew, 32); face.HorizontalAlignment = HorizontalAlignment.Center;
+            cell.Children.Add(face);
+            var share = new TextBlock { Text = $"{outcome.Percent}%", FontSize = 10, Foreground = muted, HorizontalAlignment = HorizontalAlignment.Center };
+            Grid.SetRow(share, 1); cell.Children.Add(share);
             if (outcome.IsNew) cell.Children.Add(new TextBlock { Text = "✦", FontSize = 11, Foreground = (Brush)FindResource("NdApricotBrush"), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top });
             Left(cell);
         }
@@ -1076,7 +1083,7 @@ public partial class NurseryView : UserControl
         if (_busy || _suspended || data.Nest is not { Status: "hatched" } nest || nest.ParticipantIds.Count != 2) return;
         if (!PairValid(data, nest.ParticipantIds[0], nest.ParticipantIds[1])) { Show("Кто-то из родителей сейчас занят."); return; }
         _dismissedResult = nest.Id; _first = nest.ParticipantIds[0]; _second = nest.ParticipantIds[1];
-        _choice = null; _pendingStart = null; _selectionGeneration++; ShowSelectedPairPage = true; Refresh();
+        _choice = null; _pendingStart = null; _selectionGeneration++; ShowSelectedPairPage = _revealSelectedPair = true; Refresh();
     }
     private void NewNest_Click(object sender, RoutedEventArgs e) { if (_busy || _suspended) return; _dismissedResult = _snapshot().Nest?.Id ?? Guid.Empty; _first = _second = Guid.Empty; _choice = null; _pendingStart = null; Refresh(); }
     private void OpenPokedexButton_Click(object sender, RoutedEventArgs e) { var data = _snapshot(); if (!_busy && !_suspended && data.Nest is { Status: "hatched" } nest && data.HatchedNurseryResults.TryGetValue(nest.Id, out var child)) _openPokedex(child.Id); }
