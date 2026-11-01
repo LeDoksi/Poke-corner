@@ -138,19 +138,19 @@
      <StackPanel x:Name="PreparationPanel">
       <Grid Margin="0,0,0,6">
        <Grid.ColumnDefinitions>
-        <ColumnDefinition />
         <ColumnDefinition Width="Auto" />
-        <ColumnDefinition />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
        </Grid.ColumnDefinitions>
-       <DockPanel>
-        <Button x:Name="ChooseFirstButton" Content="Выбрать" Click="ChooseFirst_Click" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="10,4" Style="{StaticResource SecondaryButtonStyle}" ToolTip="Выбрать другого питомца первым родителем" />
-        <StackPanel x:Name="FirstSlot" VerticalAlignment="Center" />
-       </DockPanel>
+       <StackPanel Orientation="Horizontal">
+        <StackPanel x:Name="FirstSlot" VerticalAlignment="Center" Margin="0,0,10,0" />
+        <Button x:Name="ChooseFirstButton" Content="Выбрать" Click="ChooseFirst_Click" VerticalAlignment="Center" Padding="10,4" Style="{StaticResource SecondaryButtonStyle}" ToolTip="Выбрать другого питомца первым родителем" />
+       </StackPanel>
        <TextBlock Grid.Column="1" Text="+" VerticalAlignment="Center" Margin="10,0" Foreground="{StaticResource NdMutedBrush}" />
-       <DockPanel Grid.Column="2">
-        <Button x:Name="ChooseSecondButton" Content="Выбрать" Click="ChooseSecond_Click" DockPanel.Dock="Right" VerticalAlignment="Center" Padding="10,4" Style="{StaticResource SecondaryButtonStyle}" ToolTip="Выбрать другого питомца вторым родителем" />
-        <StackPanel x:Name="SecondSlot" VerticalAlignment="Center" />
-       </DockPanel>
+       <StackPanel Orientation="Horizontal" Grid.Column="2">
+        <StackPanel x:Name="SecondSlot" VerticalAlignment="Center" Margin="0,0,10,0" />
+        <Button x:Name="ChooseSecondButton" Content="Выбрать" Click="ChooseSecond_Click" VerticalAlignment="Center" Padding="10,4" Style="{StaticResource SecondaryButtonStyle}" ToolTip="Выбрать другого питомца вторым родителем" />
+       </StackPanel>
       </Grid>
      </StackPanel>
      <WrapPanel x:Name="ResourcePricesPanel" />
