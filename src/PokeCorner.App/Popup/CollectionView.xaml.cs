@@ -154,7 +154,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Func<Guid, (string Text, double Fraction)>? xpProgress = null,
         Func<int, bool, string>? whereFind = null,
         Func<string, string, string, Task<bool>>? confirmDestructiveAsync = null,
-        Func<int, bool, SpeciesPaths?>? speciesPaths = null, Action<string>? openRoute = null, Func<int, int, string?>? openPair = null)
+        Func<int, bool, SpeciesPaths?>? speciesPaths = null, Action<string>? openRoute = null, Func<int, int, string?>? openPair = null,
+        Func<IReadOnlyList<(string Item, int Quantity, Guid Operation)>, Task>? buyItems = null)
     {
         InitializeComponent();
         SizeChanged += (_, _) => LayoutMasterDetail();
@@ -189,6 +190,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _xpProgress = xpProgress; _whereFind = whereFind;
         _speciesPaths = speciesPaths; _openRoute = openRoute; _openPair = openPair;
         LocalConfirmationHost.Completed += CompleteLocalConfirmation;
+        DetailTopUpCart.Buy = buyItems;
+        DetailTopUpCart.Bought += message => { RefreshDetailEvolution(); RefreshDetailRetraining(); DetailErrorText.Text = message; };
+        DetailTopUpCart.Failed += message => DetailErrorText.Text = message;
+        DetailTopUpCart.ShopRequested += OpenShopFor;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
         // rename there can never leave the filter pills saying something different.
@@ -1095,6 +1100,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         if (e.Key != System.Windows.Input.Key.Escape) return;
         if (_localConfirmation is not null) { CompleteLocalConfirmation(false); e.Handled = true; return; }
+        if (DetailTopUpCart.IsOpen) { DetailTopUpCart.Close(); e.Handled = true; return; }
         if (SpeciesDialog.Visibility == Visibility.Visible) { CloseSpeciesDialog(); e.Handled = true; return; }
         if (DetailOverlay.Visibility != Visibility.Visible) return;
         if (DetailNicknameEditor.Visibility == Visibility.Visible) { DetailNicknameCancel_Click(this, e); e.Handled = true; return; }
@@ -1216,7 +1222,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var preview = _previewEvolution(_detailCard.IndividualId);
         _detailEvolutionPreview = preview;
         DetailEvolutionActionSection.Visibility = preview.Branches.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
-        if (preview.Branches.Count == 0) return;
+        if (preview.Branches.Count == 0) { RefreshTopUp(); return; }
         DetailEvolutionBar.Value = Math.Clamp(preview.CareOwned / (double)Math.Max(1, preview.CareRequired), 0, 1);
         var enoughCare = preview.CareOwned >= preview.CareRequired;
         DetailEvolutionText.Text = EvolutionCareStateText.Text = enoughCare ? "Достаточно" : "Продолжай заботиться о питомце";
@@ -1275,6 +1281,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         EvolutionRequiredStoneText.Text = "× 1";
         RenderEvolutionTargets(_detailEvolutionPreview);
         DetailEvolveButton.IsEnabled = reason is null && !_detailPending && (_detailCard is null || !_evolvingIndividuals.Contains(_detailCard.IndividualId));
+        RefreshTopUp();
     }
 
     private async void DetailEvolveButton_Click(object sender, RoutedEventArgs e)
@@ -1303,11 +1310,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         finally { _detailPending = false; _evolvingIndividuals.Remove(id); Refresh(); }
     }
 
+    // D-28: "Докупить" opens the same cart as the nursery with what is missing already counted;
+    // with nothing missing the button stays the old "В магазин".
     private void DetailEvolutionShopButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_detailEvolutionPreview is { } preview && preview.BerriesOwned < preview.BerryCost)
-            _buyBerries?.Invoke(preview.BerryId, preview.BerryCost);
-        _navigate?.Invoke(MenuSection.Shop);
+        var needs = EvolutionNeeds(forStone: true);
+        if (needs.Count == 0 || DetailTopUpCart.Buy is null) { OpenShopFor(EvolutionCart); return; }
+        if (DetailTopUpCart.IsOpen && DetailTopUpCart.Owner == EvolutionCart) { DetailTopUpCart.Close(); return; }
+        DetailTopUpCart.Open(EvolutionCart, "Докупить для эволюции", needs, _appState.Shop.Coins);
     }
     private void DetailEvolutionRouteButton_Click(object sender, RoutedEventArgs e) => _navigate?.Invoke(MenuSection.Expeditions);
 
@@ -1317,6 +1327,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             !_appState.Collection.Individuals.Any(x => x.Id == _detailCard.IndividualId))
         {
             DetailRetrainingSection.Visibility = Visibility.Collapsed;
+            _detailRetrainingPreview = null;
+            RefreshTopUp();
             return;
         }
         DetailRetrainingSection.Visibility = Visibility.Visible;
@@ -1338,8 +1350,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             string.Join(" · ", preview.Outcomes.Select(TraitLabel));
         DetailRetrainingReasonText.Text = preview.Reason ?? string.Empty;
         DetailRetrainButton.IsEnabled = preview.Reason is null && !_retrainingIndividuals.Contains(_detailCard.IndividualId);
-        DetailRetrainingShopButton.Visibility = preview.Costs.Any(x => x.Owned < x.Required)
-            ? Visibility.Visible : Visibility.Collapsed;
+        RefreshTopUp();
     }
 
     private void DetailRetrainingSlotPicker_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
@@ -1390,15 +1401,76 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void DetailRetrainingShopButton_Click(object sender, RoutedEventArgs e)
     {
-        var shortage = _detailRetrainingPreview?.Costs.FirstOrDefault(x => x.Owned < x.Required);
-        if (shortage is null) return;
-        _buyBerries?.Invoke(shortage.BerryId, shortage.Required);
+        var needs = RetrainingNeeds();
+        if (needs.Count == 0) return;
+        if (DetailTopUpCart.Buy is null) { OpenShopFor(RetrainingCart); return; }
+        if (DetailTopUpCart.IsOpen && DetailTopUpCart.Owner == RetrainingCart) { DetailTopUpCart.Close(); return; }
+        DetailTopUpCart.Open(RetrainingCart, "Докупить для переобучения", needs, _appState.Shop.Coins);
+    }
+
+    private const string EvolutionCart = "evolution";
+    private const string RetrainingCart = "retraining";
+
+    /// Berries the evolution still lacks, plus the choice stone when there are branches to choose from
+    /// and none in stock: optional next to missing berries, the whole point when the berries are there.
+    private List<TopUpNeed> EvolutionNeeds(bool forStone)
+    {
+        var needs = new List<TopUpNeed>();
+        if (_detailEvolutionPreview is not { Branches.Count: > 0 } preview) return needs;
+        if (preview.BerriesOwned < preview.BerryCost)
+            needs.Add(new(preview.BerryId, preview.BerryCost - preview.BerriesOwned, preview.BerriesOwned));
+        if (preview.Branches.Count(x => x.Available) > 1 && preview.StonesOwned == 0)
+        {
+            var wanted = (needs.Count == 0 && forStone) || SelectedEvolutionBranch is not null;
+            needs.Add(new("evolution-stone", wanted ? 1 : 0, 0, wanted ? null : "по желанию · выбрать будущую форму"));
+        }
+        return needs;
+    }
+
+    private List<TopUpNeed> RetrainingNeeds()
+    {
+        if (_detailRetrainingPreview is not { } preview) return [];
+        return preview.Costs.GroupBy(x => x.BerryId)
+            .Select(g => (Id: g.Key, Required: g.Sum(x => x.Required), Owned: g.Max(x => x.Owned)))
+            .Where(x => x.Owned < x.Required)
+            .Select(x => new TopUpNeed(x.Id, x.Required - x.Owned, x.Owned)).ToList();
+    }
+
+    private void RefreshTopUp()
+    {
+        var cart = DetailTopUpCart.Buy is not null;
+        var evolution = EvolutionNeeds(forStone: false);
+        var berriesShort = evolution.Any(x => x.Id != "evolution-stone");
+        var stoneOnly = !berriesShort && evolution.Count > 0;
+        DetailEvolutionShopButton.Content = !cart ? "В магазин"
+            : berriesShort ? $"Докупить · {DetailTopUpCart.Cost(evolution)} ●"
+            : stoneOnly ? $"Камень выбора · {DetailTopUpCart.Price("evolution-stone")} ●" : "В магазин";
+        DetailEvolutionShopButton.ToolTip = cart && (berriesShort || stoneOnly) ? "Купить недостающее прямо здесь" : null;
+        var retraining = RetrainingNeeds();
+        DetailRetrainingShopButton.Visibility = retraining.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        DetailRetrainingShopButton.Content = cart ? $"Докупить · {DetailTopUpCart.Cost(retraining)} ●" : "В магазин";
+        if (DetailTopUpCart.Owner == EvolutionCart) DetailTopUpCart.Update(EvolutionNeeds(forStone: true), _appState.Shop.Coins);
+        else if (DetailTopUpCart.Owner == RetrainingCart) DetailTopUpCart.Update(retraining, _appState.Shop.Coins);
+    }
+
+    /// The old way, kept inside the cart and when there is nothing to top up: the shop opens with the
+    /// first missing berry filled in and a button back to this pet.
+    private void OpenShopFor(string? owner)
+    {
+        if (owner == RetrainingCart)
+        {
+            var shortage = _detailRetrainingPreview?.Costs.FirstOrDefault(x => x.Owned < x.Required);
+            if (shortage is not null) _buyBerries?.Invoke(shortage.BerryId, shortage.Required);
+        }
+        else if (_detailEvolutionPreview is { } preview && preview.BerriesOwned < preview.BerryCost)
+            _buyBerries?.Invoke(preview.BerryId, preview.BerryCost);
         _navigate?.Invoke(MenuSection.Shop);
     }
 
     private void HideDetail()
     {
         CompleteLocalConfirmation(false);
+        DetailTopUpCart.Close();
         _detailGeneration++;
         DetailOverlay.Visibility = Visibility.Collapsed;
         _detailCard = null;
@@ -1639,6 +1711,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var show = DetailRetrainingEditor.Visibility != Visibility.Visible;
         DetailRetrainingEditor.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         DetailRetrainingToggle.Content = show ? "Скрыть переобучение" : "Переобучение";
+        if (DetailTopUpCart.Owner == RetrainingCart) DetailTopUpCart.Close();
+        RefreshTopUp();
         if (show) DetailRetrainingSlotPicker.Focus();
     }
 
@@ -1815,11 +1889,13 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void SetEvolutionSurface(bool show)
     {
         if (show && DetailEvolutionActionSection.Visibility != Visibility.Visible) return;
+        DetailTopUpCart.Close();
         EvolutionFooter.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         EvolutionSurface.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         DetailPersonalGrid.Visibility = DetailIdentityHeader.Visibility = DetailRehomeSection.Visibility =
             show ? Visibility.Collapsed : Visibility.Visible;
         DetailScroll.ScrollToTop();
+        RefreshTopUp();
     }
     private void SpeciesBack_Click(object sender, RoutedEventArgs e) => CloseSpeciesDialog();
     private void CloseSpeciesDialog()

@@ -1074,7 +1074,16 @@ public partial class App : System.Windows.Application
                         var reason = nurseryRef is null ? "Питомник недоступен." : nurseryRef.PresetPair(first, second);
                         if (reason is null) _menuWindow?.Navigate(MenuSection.Nursery);
                         return reason;
-                    });
+                    },
+                    // D-28: evolution and retraining top up in place with the nursery's cart, in one save.
+                    buyItems: items => CommitStateAsync(next =>
+                    {
+                        foreach (var (item, quantity, operation) in items)
+                        {
+                            var bought = _shopService.TryPurchase(next, item, quantity, operation);
+                            if (!bought.Success) throw new InvalidOperationException(bought.Message);
+                        }
+                    }, closeMenu: false));
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart,
                     confirmAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false),
                     showOnboarding: async () =>
@@ -1119,6 +1128,15 @@ public partial class App : System.Windows.Application
                         next.ActiveIndividualId = id;
                         if (!next.CareStates.TryGetValue(id, out var care)) next.CareStates[id] = care = new CareState();
                         care.LastInteractionUtc = DateTimeOffset.UtcNow;
+                    }, closeMenu: false),
+                    // Д2 (Georgy 01.11): the nest's missing goods are bought in one save, right from the nursery.
+                    items => CommitStateAsync(next =>
+                    {
+                        foreach (var (item, quantity, operation) in items)
+                        {
+                            var bought = _shopService.TryPurchase(next, item, quantity, operation);
+                            if (!bought.Success) throw new InvalidOperationException(bought.Message);
+                        }
                     }, closeMenu: false));
                 var roomArt = RoomArt.Load(_catalogPackage.DataRoot);
                 var roomView = new RoomView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
