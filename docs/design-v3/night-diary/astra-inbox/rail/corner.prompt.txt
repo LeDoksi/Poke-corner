@@ -1,22 +1,24 @@
-Date: 2026-11-01 Europe/Moscow
-Generation: built-in image_gen
-Status: delivered for review by Georgy and Claude; not accepted by assistant.
-Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-02627358-8122-4f7a-bdb1-9235b9a69d15.png
-References: ["C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-final\\rail-corner-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-final\\rail-pokedex-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-final\\rail-expeditions-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-final\\rail-nursery-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-final\\rail-shop-reference.png"]
-Export: nearest-neighbor to 214 x 214, centered on transparent 256 x 256 canvas; RGB normalized to #9A8FBE, alpha retained. User authorized exact PNG processing.
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-b9360caf-b4f4-46f8-91cc-904f1824a372.png
+References: ["C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-reorder\\pokedex-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-reorder\\expeditions-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-reorder\\nursery-reference.png"]
+Export: crop to alpha bounds; proportional LANCZOS fit to 206 x 206; center in transparent 256 x 256; RGB #9A8FBE with generated alpha.
+Status: for Georgy and Claude review.
 
-Original order prompt (verbatim):
-Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Simple icon-like sketch: one continuous confident outline, no hatching, slightly imperfect hand-drawn line, lines about 18 px thick at full size so it stays clear at 24 px. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text, no letters, no numbers. Centered, fills about 80% of the canvas with at least 8% transparent margin. Match the line character of the attached accepted margin sketches.
+Original prompt:
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
 
-Subject: a small house outline with a round window and a paw print on the door.
+Subject: the simplest possible house silhouette: a pitched roof and a square body, one round window, one door with a small paw print. Nothing else: no chimney, no smoke, no plants, no stones, no fence, no roof tiles, no ground line. At most eight strokes in total. It must read as "home" at 24 px.
 
-Output: exactly 256 x 256 pixels, PNG with alpha.
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
 
-Sent prompt (verbatim):
-Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Simple icon-like sketch: one continuous confident outline, no hatching, slightly imperfect hand-drawn line, lines about 18 px thick at full size so it stays clear at 24 px. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text, no letters, no numbers. Centered, fills about 80% of the canvas with at least 8% transparent margin. Match the line character of the attached accepted margin sketches.
+Sent prompt:
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
 
-Subject: a small house outline with a round window and a paw print on the door.
+Subject: the simplest possible house silhouette: a pitched roof and a square body, one round window, one door with a small paw print. Nothing else: no chimney, no smoke, no plants, no stones, no fence, no roof tiles, no ground line. At most eight strokes in total. It must read as "home" at 24 px.
 
-Output: exactly 256 x 256 pixels, PNG with alpha.
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
 
-The five attached margin sketches are style references, displayed on dark #101426 only for visibility. Do not reproduce their background or their hatching. Create ONLY the subject specified above as a bold, simple navigation outline, readable at 24 px, with transparent interiors and transparent background. The muted lavender-grey outline must be thick and confident.
+Reference images are composited onto dark navy only to show their alpha. Your output must have genuine transparency. Follow the subject and eight-stroke maximum strictly; do not borrow extra details from the references.
+
+Revision reference: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-03d01ab7-53f8-44cd-bf1b-520a51c62578.png
+Revision prompt:
+Simplify this house icon one final step to meet an absolute maximum of EIGHT strokes. Remove BOTH crossbars from the round window: leave one empty simple circle. Keep only the roof outline, square house body with doorway, empty circular window, and tiny three-toed paw. No other details. Preserve the current house composition and transparent background. Single #9A8FBE line color, no fill except tiny paw toe dots, bold confident outline about 22px at 256px size. No chimney, roof tiles, plants, stones, ground line, shading or texture. Output 256 x 256 PNG with alpha.
