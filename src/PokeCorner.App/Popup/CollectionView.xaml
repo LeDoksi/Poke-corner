@@ -180,7 +180,7 @@
          <TabItem Header="Покедекс">
             <ScrollViewer x:Name="PokedexScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
-                    <DockPanel Margin="0,0,0,10"><TextBlock x:Name="PokedexNote" DockPanel.Dock="Right" Style="{StaticResource NdMarginNoteStyle}" FontSize="24" MaxWidth="520" VerticalAlignment="Center" Margin="16,0,8,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock><StackPanel><TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}"/></StackPanel></DockPanel>
+                    <DockPanel Margin="0,0,0,10" SizeChanged="PokedexHeader_SizeChanged"><TextBlock x:Name="PokedexNote" DockPanel.Dock="Right" Style="{StaticResource NdMarginNoteStyle}" FontSize="24" MaxWidth="520" VerticalAlignment="Center" Margin="16,0,8,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock><StackPanel><TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}"/></StackPanel></DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                         <Button x:Name="IndividualsModeButton" Content="Мои покемоны" MinWidth="150"
                                 Click="IndividualsMode_Click" Margin="0,0,6,0" Style="{StaticResource NdChoiceSelectedStyle}" />
@@ -506,6 +506,7 @@
                     <StackPanel>
                         <TextBlock x:Name="SpeciesDetailName" Style="{StaticResource ScreenTitleTextStyle}" TextWrapping="Wrap"/>
                         <TextBlock x:Name="SpeciesDetailTypes" Style="{StaticResource MetaTextStyle}" Margin="0,2,0,0"/>
+                        <TextBlock x:Name="SpeciesDetailNote" Style="{StaticResource NdMarginNoteStyle}" TextAlignment="Left" HorizontalAlignment="Left" Margin="0,6,0,0" RenderTransformOrigin="0,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock>
                     </StackPanel>
                 </DockPanel>
                 <ScrollViewer x:Name="SpeciesPageScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">

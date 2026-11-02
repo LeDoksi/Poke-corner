@@ -173,6 +173,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         var known = encounter is { Source: "expedition", Phase: "resolved", KnownSpeciesId: not null, Individual: not null };
         // A met Pokémon is caught with a throw; a ball earned at the PC or gifted already holds one, so it is opened.
         CatchButton.Content = known ? "Бросить покебол" : "Открыть покебол";
+        CatchNote.Text = known ? "Встретили в походе. Только бы не улизнул." : "Кто-то шуршит внутри…"; // D-25 notes 36-37
         EncounterTitleText.Text = known ? "Встреча с " + SpeciesName(encounter!.KnownSpeciesId!.Value) : "Кто внутри?";
         SubtitleText.Text = known ? "Этот покемон встретился команде в походе." : "Ещё один друг ждёт знакомства.";
         SceneImage.Visibility = Visibility.Visible;
@@ -242,6 +243,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         var cancellation = _revealCancellation = new CancellationTokenSource();
         CatchButton.IsEnabled = false;
         SkipButton.Visibility = Visibility.Visible;
+        CatchNote.Text = "";
         DetailPanel.Visibility = Visibility.Collapsed; System.Windows.Controls.Grid.SetColumnSpan(VisualPanel, 2);
         EncounterTitleText.Text = _knownSpeciesId is { } knownId ? "Ловим " + SpeciesName(knownId) : "Новая встреча";
         SubtitleText.Text = "Пора познакомиться с новым другом.";
@@ -445,6 +447,8 @@ public partial class CatchView : System.Windows.Controls.UserControl
         CatchButton.Content = _returnAfterResult ? "Вернуться к экспедициям" : "Продолжить";
         CatchButton.IsEnabled = !_busy || _suspended;
         StatusText.Text = "Покемон уже добавлен в коллекцию.";
+        CatchNote.Text = reveal.Result.IsShiny ? "Другого цвета! Глазам не верю."
+            : reveal.Result.WasDuplicateSpecies ? "Знакомое лицо. Вдвоём веселее." : "Новый вид! Запишу, пока помню."; // D-25 notes 38-40
         if (!_suspended && !ReferenceEquals(_spriteFetchedFor, reveal)) {
             _spriteFetchedFor = reveal; RevealSpriteImage.Source = null;
             _ = LoadSpriteAsync(reveal.Result.SpeciesId, reveal.Result.IsShiny, reveal, ++_artGeneration);

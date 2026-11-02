@@ -414,12 +414,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     // A short truthful line from the trainer about this pet, chosen by what is most notable now.
     private static string TrainerNote(PokedexCard card) =>
-        card.IsShiny ? "Редкий окрас! Таких встречаешь раз в тысячу."
+        card.IsShiny ? "Другого цвета. Такие встречаются редко."
         : card.ActiveBadgeVisibility == Visibility.Visible ? "Сейчас со мной на столе — не отходит ни на шаг."
-        : card.FavoriteBadgeVisibility == Visibility.Visible ? "Любимчик. Его не отдам никому."
+        : card.FavoriteBadgeVisibility == Visibility.Visible ? "Любимчик. Только остальным не говорить."
         : card.IsBusy ? "Сейчас в походе или в питомнике — жду обратно."
         : card.Level >= 30 ? "Опытный. С ним в любой поход не страшно."
         : "Ещё узнаём друг друга.";
+
+    // With the pet page open at 1200x660 the header is narrow: the note gives way so «Покедекс» is never cut.
+    private void PokedexHeader_SizeChanged(object sender, SizeChangedEventArgs e) =>
+        PokedexNote.Visibility = e.NewSize.Width >= 760 ? Visibility.Visible : Visibility.Collapsed;
 
     private void SpeciesMode_Click(object sender, RoutedEventArgs e)
     {
@@ -562,6 +566,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesDetailName.Text = entry.IsDiscovered ? entry.DisplayName ?? entry.Number : "Неизвестный вид";
         SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : _speciesPaths is null ? entry.RouteHint : "";
         SpeciesDetailTypes.Text = string.Join(" · ", new[] { entry.Number }.Concat(entry.IsDiscovered ? entry.Types.Select(TypeDisplay.GetLabel) : []));
+        // D-25 notes 17-18: what the trainer knows about this species, never more than the page shows.
+        SpeciesDetailNote.Text = !entry.IsDiscovered ? "Пока только силуэт. Где искать — ниже."
+            : entry.OwnedIndividuals.Any(i => i.IsShiny) && entry.OwnedIndividuals.Any(i => !i.IsShiny) ? "И обычный, и шайни. Страница закрыта."
+            : "Записано в покедекс. Можно гордиться.";
         RenderSpeciesForms(entry.SpeciesId);
         SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : $"Мои экземпляры · {entry.OwnedIndividuals.Count}";
