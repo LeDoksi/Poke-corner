@@ -349,6 +349,15 @@ public partial class AppMenuWindow : Window
         {
             var top = ShopTab.TransformToAncestor(host).Transform(new System.Windows.Point(0, ShopTab.ActualHeight)).Y + 16;
             RailSketch.Margin = new Thickness(8, top, 0, 0);
+            // Like a doodle at the foot of a page: it sits low, just above «Настройки», not glued under the last tab.
+            if (SettingsButton.ActualHeight > 0)
+            {
+                RailSketchNote.Visibility = Visibility.Visible; RailSketchImage.Visibility = Visibility.Visible;
+                RailSketch.Measure(new System.Windows.Size(RailSketch.Width, double.PositiveInfinity));
+                var bottom = SettingsButton.TransformToAncestor(host).Transform(new System.Windows.Point(0, 0)).Y - 12;
+                top = Math.Max(top, bottom - RailSketch.DesiredSize.Height);
+                RailSketch.Margin = new Thickness(8, top, 0, 0);
+            }
             // At 1200x660 the rail is short: the note goes first, then the sketch, so neither runs into «Настройки».
             if (SettingsButton.ActualHeight > 0)
             {

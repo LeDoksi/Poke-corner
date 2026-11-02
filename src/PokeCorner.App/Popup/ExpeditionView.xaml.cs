@@ -111,14 +111,12 @@ public partial class ExpeditionView : UserControl
         };
         _initializing = false;
         SizeChanged += (_, _) => {
-            // Side margins exist only when the window is wider than the 968 column plus gutters.
-            var margin = Math.Max(0, (ActualWidth - 968 - 48) / 2);
-            MarginArt.Visibility = margin >= 150 ? Visibility.Visible : Visibility.Collapsed;
-            MarginArtLeft.Width = MarginArtRight.Width = margin;
+            PlaceMargin();
             Refresh();
             if (_pickerOpen) RefreshPicker();
         };
         PreparationFooter.SizeChanged += (_, _) => FitScene();
+        Landscape.SizeChanged += (_, _) => Dispatcher.BeginInvoke(PlaceMargin, System.Windows.Threading.DispatcherPriority.Loaded);
         ActionFooter.SizeChanged += (_, _) => FitScene();
         ScenarioContent.SizeChanged += (_, _) => FitScene();
         _timer.Tick += (_, _) => Refresh();
@@ -690,5 +688,23 @@ public partial class ExpeditionView : UserControl
         }
         catch (Exception ex) { if (!_suspended && generation == _generation) Show("Не удалось открыть встречу. Она сохранена, повторите попытку.", ex); }
         finally { _busy = false; Refresh(); }
+    }
+
+    private static readonly DiaryPiece[] MarginPieces =
+    [
+        new("exp-tracks", "Следы команды. Кто-то опять убежал вперёд."), new("exp-tent"),
+        new("exp-lantern", "Фонарь — в боковом кармане."), new("exp-binoculars"),
+    ];
+
+    // The margin is whatever the left-aligned 968 px column leaves on the right, under the full-width scene (Georgy 02.11).
+    private void PlaceMargin()
+    {
+        var column = Math.Min(Math.Max(0, ActualWidth - 48), 968);
+        ExpeditionMargin.Width = Math.Max(0, ActualWidth - 24 - column - 16);
+        // Under the scene: the scene is opaque and full width, so the margin starts where it ends.
+        var top = Landscape.ActualHeight > 0 && Landscape.IsDescendantOf(this)
+            ? Landscape.TransformToAncestor(this).Transform(new System.Windows.Point(0, Landscape.ActualHeight)).Y + 12 : 120;
+        ExpeditionMargin.Margin = new Thickness(0, Math.Max(0, top), 8, 0);
+        ExpeditionMargin.Show("expeditions", MarginPieces);
     }
 }

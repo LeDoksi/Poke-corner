@@ -328,7 +328,16 @@ public partial class ShopView : UserControl
         }
     }
 
-    // The 1100 px column leaves ~330 px each side on FullHD; at 1200x660 there is no room and the margins stay empty.
-    private void Root_SizeChanged(object sender, SizeChangedEventArgs e) =>
-        MarginLeft.Visibility = MarginRight.Visibility = (e.NewSize.Width - 1100) / 2 >= 240 ? Visibility.Visible : Visibility.Collapsed;
+    private static readonly DiaryPiece[] MarginPieces =
+    [
+        new("shop-list", "Купить ягод. Много ягод."), new("shop-coins"),
+        new("shop-berries", "Чери, Оран, Печа… Звучит как заклинание."), new("shop-receipt"),
+    ];
+
+    // The margin is whatever the left-aligned 968 px column (the same as every other screen) leaves on the right (Georgy 02.11).
+    private void Root_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        ShopMargin.Width = Math.Max(0, e.NewSize.Width - 24 - Math.Min(Math.Max(0, e.NewSize.Width - 48), 968) - 24);
+        ShopMargin.Show("shop", MarginPieces);
+    }
 }

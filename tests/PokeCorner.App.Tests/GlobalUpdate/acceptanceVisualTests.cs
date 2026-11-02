@@ -156,7 +156,7 @@ public class AcceptanceVisualTests
             keys.Add(key);
             // POKE_ND_SIZES=1: the Night Diary review sizes (D-10 minimum and maximized FullHD) instead of the v2 pair.
             var sizes = Environment.GetEnvironmentVariable("POKE_ND_SIZES") == "1"
-                ? new[] { (Width: 1200, Height: 660, Scale: 1d, Suffix: "min"), (Width: 1920, Height: 1040, Scale: 1d, Suffix: "fhd") }
+                ? new[] { (Width: 1200, Height: 660, Scale: 1d, Suffix: "min"), (Width: 1280, Height: 760, Scale: 1d, Suffix: "std"), (Width: 1920, Height: 1040, Scale: 1d, Suffix: "fhd") }
                 : new[] { (Width: 1000, Height: 760, Scale: 1.5, Suffix: "base-150"), (Width: 840, Height: 650, Scale: 2d, Suffix: "compact-200") };
             foreach (var size in sizes)
             {

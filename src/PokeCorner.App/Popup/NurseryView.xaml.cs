@@ -88,8 +88,8 @@ public partial class NurseryView : UserControl
         };
         // A grown or shrunk data column changes how much height the scene may take (see MeasureOverride).
         DataColumn.SizeChanged += (_, e) => { if (e.HeightChanged) InvalidateMeasure(); };
-        SizeChanged += (_, e) => NurseryMarginLeft.Visibility = NurseryMarginRight.Visibility =
-            (e.NewSize.Width - 968) / 2 >= 240 ? Visibility.Visible : Visibility.Collapsed;
+        SizeChanged += (_, _) => PlaceMargin();
+        SceneBorder.SizeChanged += (_, _) => PlaceMargin();
         // Scene art is 2048x768: it covers the band and is clipped evenly around the middle, where the nest sits.
         SceneGrid.SizeChanged += (_, _) =>
         {
@@ -401,8 +401,7 @@ public partial class NurseryView : UserControl
 
         NurseryNote.Text = ready ? "Трещинка! Пора знакомиться." : active ? "В гнезде тихо. Иногда кажется — шевелится."
             : result ? "Новая страница — с самого первого дня." : "Двое разных — и в гнезде будет сюрприз.";
-        NurseryMarginLeft.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri("pack://application:,,,/PokeCorner;component/Assets/NightDiary/"
-            + (ready || result ? "sketch-hatch-shell.png" : "sketch-nursery-scheme.png")));
+        NurseryMargin.Show(ready || result ? "nursery-hatch" : "nursery", ready || result ? HatchMargin : NestMargin);
         SceneTitleText.Text = ready ? "Малыш готов появиться!" : active ? "В гнезде кто-то растёт" : result ? "Добро пожаловать в семью!" : "Будущие родители";
 
         SubtitleText.Text = ready ? "Пора познакомиться." : active ? "Можно закрыть приложение — время продолжит идти." : result ? "Новая история начинается здесь." : "Выберите пару — у каждой сразу видно, кто может родиться.";
@@ -1117,5 +1116,23 @@ public partial class NurseryView : UserControl
         {
             ReleaseBusy();
         }
+    }
+
+    private static readonly DiaryPiece[] NestMargin =
+    [
+        new("nursery-scheme", "Схема гнезда: тепло снизу, сухо сверху."), new("nursery-thermometer"),
+        new("nursery-paws", "Двое разных — и в гнезде будет сюрприз."), new("nursery-small-egg"), new("hatch-shell"),
+    ];
+    private static readonly DiaryPiece[] HatchMargin =
+    [
+        new("hatch-shell", "Скорлупу оставлю на память."), new("nursery-small-egg"), new("nursery-paws"), new("nursery-scheme"),
+    ];
+
+    // The margin is whatever the left-aligned 968 px column leaves on the right, below the full-width scene.
+    private void PlaceMargin()
+    {
+        var column = Math.Min(Math.Max(0, ActualWidth - 48), 968);
+        NurseryMargin.Width = Math.Max(0, ActualWidth - 24 - column - 16);
+        NurseryMargin.Margin = new Thickness(0, SceneBorder.ActualHeight + 16, 8, 0);
     }
 }

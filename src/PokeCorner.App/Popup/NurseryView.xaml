@@ -1,4 +1,4 @@
-<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="PokeCorner.App.Popup.NurseryView">
+<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PokeCorner.App.Popup" x:Class="PokeCorner.App.Popup.NurseryView">
  <UserControl.Resources>
   <Style x:Key="NdChipSelectedStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="FontWeight" Value="Bold"/></Style>
  </UserControl.Resources>
@@ -11,17 +11,14 @@
    <RowDefinition Height="*" />
    <RowDefinition Height="Auto" />
   </Grid.RowDefinitions>
-  <StackPanel x:Name="HeaderPanel" Margin="24,0" MaxWidth="968">
+  <StackPanel x:Name="HeaderPanel" Margin="24,0" MaxWidth="968" HorizontalAlignment="Left">
    <TextBlock x:Name="ScreenTitle" Text="Питомник" Style="{StaticResource ScreenTitleTextStyle}" Margin="0,0,0,10" />
    <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
     <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
    </Border>
   </StackPanel>
-  <!-- Diary margins (D-25): behind the scrolling column, only where a wide window leaves room beside its 968 px. -->
-  <Image x:Name="NurseryMarginLeft" Grid.Row="1" Source="/PokeCorner;component/Assets/NightDiary/sketch-nursery-scheme.png" Width="190" Opacity="0.85" Visibility="Collapsed"
-         HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,24" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" />
-  <Image x:Name="NurseryMarginRight" Grid.Row="1" Source="/PokeCorner;component/Assets/NightDiary/sketch-nursery-paws.png" Width="180" Opacity="0.85" Visibility="Collapsed"
-         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,24" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" />
+  <!-- The outer diary margin (Georgy 02.11): the column keeps left, sketches scatter in the free space on the right. -->
+  <local:DiaryMargin x:Name="NurseryMargin" Grid.Row="1" HorizontalAlignment="Right" />
   <ScrollViewer x:Name="ScenePanel" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
    <StackPanel>
     <Border x:Name="SceneBorder" ClipToBounds="True" Margin="0,0,0,12">
@@ -42,7 +39,7 @@
       <Image x:Name="SceneSecondParent" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Collapsed" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
        <Image.RenderTransform><ScaleTransform ScaleX="-1" /></Image.RenderTransform>
       </Image>
-      <Grid Margin="24,0" MaxWidth="968">
+      <Grid Margin="24,0" MaxWidth="968" HorizontalAlignment="Left">
        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,18,40,18" MaxWidth="560">
         <TextBlock x:Name="SceneTitleText" Text="Будущие родители" Foreground="{StaticResource NdTextBrush}" FontFamily="Georgia" FontWeight="Bold" FontSize="32" TextWrapping="Wrap" />
         <Border Height="1" Background="{StaticResource NdMutedBrush}" Opacity="0.7" Margin="0,6,0,0" />
@@ -52,7 +49,7 @@
       <Image x:Name="BabyImage" Width="120" Height="120" VerticalAlignment="Center" Visibility="Collapsed" />
      </Grid>
     </Border>
-    <Grid x:Name="DataColumn" Margin="24,0" MaxWidth="968">
+    <Grid x:Name="DataColumn" Margin="24,0" MaxWidth="968" HorizontalAlignment="Left">
      <Grid.ColumnDefinitions>
       <ColumnDefinition x:Name="DataLeftColumn" Width="3*" />
       <ColumnDefinition x:Name="DataRightColumn" Width="2*" />
@@ -134,7 +131,7 @@
     </Grid>
    </StackPanel>
   </ScrollViewer>
-  <Grid x:Name="FooterHost" Grid.Row="2" Margin="24,10,24,0" MaxWidth="968">
+  <Grid x:Name="FooterHost" Grid.Row="2" Margin="24,10,24,0" MaxWidth="968" HorizontalAlignment="Left">
    <Grid x:Name="PreparationFooter">
     <Grid.ColumnDefinitions>
      <ColumnDefinition Width="*" />
