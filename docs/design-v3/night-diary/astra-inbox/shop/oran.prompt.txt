@@ -1,0 +1,20 @@
+Date: 2026-11-01 Europe/Moscow
+Generation: built-in image_gen
+Status: delivered for review by Georgy and Claude; not accepted by assistant.
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-efefa63c-5731-4b50-9e3a-968dc18d604a.png
+References: ["C:\\Users\\Georgy\\.codex\\worktrees\\night-diary-pilot\\PokeTokenBar-Windows\\docs\\design-v3\\night-diary\\astra-inbox\\icons\\care-v3.png", "C:\\Users\\Georgy\\.codex\\worktrees\\night-diary-pilot\\PokeTokenBar-Windows\\docs\\design-v2\\final\\assets\\shop\\oran.png"]
+Export: nearest-neighbor to requested size with 8% transparent inset; margin RGB normalized to #9A8FBE, alpha retained.
+
+Original order prompt (verbatim):
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art item icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the first attached image (care-v3.png) in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). The second attached image is the old version of the same item: keep its recognisable shape and main colours, drop its glossy white highlights, soft gradients and missing outline.
+
+Subject: Oran Berry: a round blue berry with a slightly bumpy skin and a green leafy crown.
+
+Single item, centered, fills about 80% of the canvas with at least 8% transparent margin. Reads instantly at 40 px on dark #101426 and next to the care-v3 heart icon. No sparkles, no stars, no glow, no shadow under it, no text, no labels, no Pokémon. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+
+Sent prompt (verbatim):
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art item icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the first attached image (care-v3.png) in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). The second attached image is the old version of the same item: keep its recognisable shape and main colours, drop its glossy white highlights, soft gradients and missing outline.
+
+Subject: Oran Berry: a round blue berry with a slightly bumpy skin and a green leafy crown.
+
+Single item, centered, fills about 80% of the canvas with at least 8% transparent margin. Reads instantly at 40 px on dark #101426 and next to the care-v3 heart icon. No sparkles, no stars, no glow, no shadow under it, no text, no labels, no Pokémon. Exactly 512 x 512 pixels, PNG, genuinely transparent background.

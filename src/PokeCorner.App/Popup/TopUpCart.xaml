@@ -1,0 +1,19 @@
+<UserControl x:Class="PokeCorner.App.Popup.TopUpCart"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Visibility="Collapsed" Width="400" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+ <!-- Same in-place top-up as the nursery (D-27): what is missing, already counted, bought in one save. -->
+ <Border Background="{StaticResource NdRaisedBrush}" BorderBrush="{StaticResource NdLavenderBrush}" BorderThickness="1" CornerRadius="12" Padding="14">
+  <Border.Effect><DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.6" Color="Black" /></Border.Effect>
+  <StackPanel>
+   <TextBlock x:Name="TitleText" Text="Докупить" Style="{StaticResource SectionHeaderTextStyle}" />
+   <StackPanel x:Name="RowsPanel" Margin="0,8,0,0" />
+   <TextBlock x:Name="TotalText" TextWrapping="Wrap" Margin="0,8,0,0" />
+   <DockPanel Margin="0,10,0,0" LastChildFill="False">
+    <Button x:Name="ShopButton" Content="Открыть магазин" Click="Shop_Click" DockPanel.Dock="Left" Padding="8,4" Style="{StaticResource SecondaryButtonStyle}" ToolTip="Перейти в магазин; кнопка там вернёт сюда" />
+    <Button x:Name="BuyButton" Content="Купить" Click="Buy_Click" DockPanel.Dock="Right" MinWidth="120" MinHeight="40" Style="{StaticResource UiPrimaryButtonStyle}" />
+    <Button x:Name="CancelButton" Content="Отмена" Click="Cancel_Click" DockPanel.Dock="Right" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}" />
+   </DockPanel>
+  </StackPanel>
+ </Border>
+</UserControl>

@@ -10,6 +10,11 @@
     <TextBlock x:Name="TitleText" Style="{StaticResource ScreenTitleTextStyle}" TextWrapping="Wrap" Margin="0,8,0,0"/>
     <TextBlock x:Name="BodyText" TextWrapping="Wrap" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,10,0,18"/>
     <Viewbox Stretch="Uniform" StretchDirection="DownOnly" MaxHeight="290"><StackPanel x:Name="Illustration" Orientation="Horizontal" HorizontalAlignment="Center"/></Viewbox>
+    <!-- A page of the trainer's diary under each step (D-25): the section's own sketch and a short note. -->
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,18,0,0" IsHitTestVisible="False">
+     <Image x:Name="TourSketch" Height="110" Opacity="0.85" RenderOptions.BitmapScalingMode="HighQuality"/>
+     <TextBlock x:Name="TourNote" Style="{StaticResource NdMarginNoteStyle}" FontSize="26" MaxWidth="360" TextAlignment="Left" VerticalAlignment="Center" Margin="18,0,0,0" RenderTransformOrigin="0,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-2"/></TextBlock.RenderTransform></TextBlock>
+    </StackPanel>
    </StackPanel>
   </ScrollViewer>
   <StackPanel Grid.Row="1" Margin="0,10,0,10">

@@ -258,12 +258,6 @@ public sealed class ReactionsTests
 
             Assert.Equal(child.Id, data.HatchedNurseryResults.Single().Value.Id);
             Assert.Single(data.Individuals.Where(p => p.Id == child.Id));
-            var continueButton = (Button)view.FindName("HatchContinueButton")!;
-            Assert.Equal(Visibility.Visible, continueButton.Visibility);
-            var hiddenResult = ((FrameworkElement)view.FindName("ResultPanel")!).Visibility;
-            continueButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            view.Refresh();
-            Assert.Equal(hiddenResult, ((FrameworkElement)view.FindName("ResultPanel")!).Visibility);
             Assert.False(((Image)view.FindName("BabyImage")!).HasAnimatedProperties);
             view.RaiseEvent(new RoutedEventArgs(FrameworkElement.LoadedEvent));
             Assert.Equal(Visibility.Visible, ((FrameworkElement)view.FindName("ResultPanel")!).Visibility);

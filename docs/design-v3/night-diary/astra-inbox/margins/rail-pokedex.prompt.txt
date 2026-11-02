@@ -1,0 +1,17 @@
+Date: 2026-10-29 (Europe/Moscow)
+Generation: built-in image_gen
+Order: C:\Users\Georgy\Downloads\ASTRA-ORDER-2026-10-29.md
+Reference: None (per order).
+Output: margins/rail-pokedex.png
+Export: nearest-neighbor to 512x512; generated alpha retained; original retained; transparent margin inset 8.00% per side for pilot sketches.
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-ad999d50-9730-4668-87f4-f2fd9bc08382.png
+Status: M02 pilot; awaiting user acceptance.
+
+Initial prompt (verbatim):
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 110 to 230 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands.
+
+Subject: An open field notebook. The left page shows a filled-in rough silhouette of a small round creature with two pointed ears and a big question mark beside it; the right page has a few wavy unreadable lines and a tiny sketched leaf. The creature must not resemble any specific real Pokémon.
+
+Output: exactly 512 x 512 pixels, PNG with alpha.
+
+Authorized technical finishing: 2026-10-29 user explicitly approved precise PNG processing. Visible stroke RGB set to #9A8FBE; alpha byte-for-byte preserved from sized export. No shapes redrawn.

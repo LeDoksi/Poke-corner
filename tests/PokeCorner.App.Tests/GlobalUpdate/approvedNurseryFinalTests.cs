@@ -70,7 +70,7 @@ public sealed partial class NurseryUiTests
             Assert.Null(((Image)view.FindName("BabyImage")!).Source);Assert.DoesNotContain("занят",((TextBlock)view.FindName("NestParents")!).Text);
             Assert.DoesNotContain("В питомнике",((TextBlock)view.FindName("NestParents")!).Text);
             var at=hatch.TransformToAncestor(view).Transform(new Point());Assert.InRange(at.Y,0,height);Assert.True(at.Y+hatch.ActualHeight<=height+1);
-            Assert.Equal(2,Grid.GetColumnSpan((Border)view.FindName("SceneBorder")!));
+            Assert.True(((FrameworkElement)view.FindName("FooterHost")!).IsAncestorOf(hatch));Assert.True(at.X+hatch.ActualWidth>=width-40);
         });
     }
 }

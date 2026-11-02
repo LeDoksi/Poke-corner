@@ -52,7 +52,7 @@ public partial class ShopView : UserControl
             CompleteLocalConfirmation(false); e.Handled = true;
         };
         Loaded += (_, _) => { _suspended = false; StartRefresh(); Refresh(); };
-        Unloaded += (_, _) => { _suspended = true; _generation++; _timer?.Stop(); _timer = null; CompleteLocalConfirmation(false); };
+        Unloaded += (_, _) => { ClearReturn(); _suspended = true; _generation++; _timer?.Stop(); _timer = null; CompleteLocalConfirmation(false); };
         Refresh();
     }
 
@@ -89,7 +89,7 @@ public partial class ShopView : UserControl
         detail.Children.Add(new TextBlock { Text = good.Id switch
         {
             "care-booster" => "Помогает подготовиться к эволюции.",
-            "lucky-charm" => "Помогает встретить shiny-покемона. Активируется в поимке.",
+            "lucky-charm" => "Помогает встретить шайни-покемона. Активируется в поимке.",
             _ => good.Effect
         }, Style = (Style)FindResource("CaptionTextStyle"), TextWrapping = TextWrapping.Wrap });
         var stock = new TextBlock { Style = (Style)FindResource("CaptionTextStyle") };
@@ -282,6 +282,29 @@ public partial class ShopView : UserControl
         row.Quantity.Focus();
     }
 
+    private Action? _return;
+
+    /// A shortage elsewhere sent the player here; offer the way back until they leave the shop.
+    public void SetReturn(string caption, Action back)
+    {
+        _return = back;
+        ReturnButton.Content = "← " + caption;
+        ReturnButton.Visibility = Visibility.Visible;
+    }
+
+    private void ClearReturn()
+    {
+        _return = null;
+        ReturnButton.Visibility = Visibility.Collapsed;
+    }
+
+    private void ReturnButton_Click(object sender, RoutedEventArgs e)
+    {
+        var back = _return;
+        ClearReturn();
+        back?.Invoke();
+    }
+
     private void Show(string message)
     {
         MessageText.Text = message;
@@ -303,5 +326,19 @@ public partial class ShopView : UserControl
                 : $"Запас: {stock} · {good.Price} монет/{(good.Id == "treats" ? "пачка" : "шт.")}";
             UpdateTotal(good);
         }
+    }
+
+    private static readonly DiaryPiece[] MarginPieces =
+    [
+        new("shop-list", "Купить ягод. Много ягод."), new("shop-coins"),
+        new("shop-berries", "Чери, Оран, Печа… Звучит как заклинание."), new("shop-receipt"),
+    ];
+
+    // The margin is whatever the left-aligned 968 px column (the same as every other screen) leaves on the right (Georgy 02.11).
+    private void Root_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        ShopMargin.Width = Math.Max(0, e.NewSize.Width - 24 - Math.Min(Math.Max(0, e.NewSize.Width - 48), 968) - 24);
+        DiaryMargin.KeepColumn(this, 968);
+        ShopMargin.Show("shop", MarginPieces);
     }
 }

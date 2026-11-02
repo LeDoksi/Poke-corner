@@ -1,4 +1,5 @@
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using PokeCorner.App.Popup;
 using PokeCorner.App.Tests.Theme;
@@ -270,6 +271,23 @@ public sealed class ShopTests : IDisposable
         Assert.Equal("3", ((TextBox)((StackPanel)action.Children[0]).Children[1]).Text);
         Assert.Equal(0, commits);
         Assert.Equal(100, live.Shop.Coins);
+    });
+
+    [Fact]
+    public void ShortageVisitOffersOneWayBackThatDisappearsAfterUse() => WpfTestHost.Run(() =>
+    {
+        var live = new AppState();
+        live.Hydrate(State());
+        var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
+        var back = (Button)view.FindName("ReturnButton");
+        Assert.Equal(Visibility.Collapsed, back.Visibility);
+        var returned = 0;
+        view.SetReturn("Вернуться в питомник", () => returned++);
+        Assert.Equal(Visibility.Visible, back.Visibility);
+        Assert.Equal("← Вернуться в питомник", back.Content);
+        back.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        Assert.Equal(1, returned);
+        Assert.Equal(Visibility.Collapsed, back.Visibility);
     });
 
     [Fact]

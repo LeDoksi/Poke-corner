@@ -9,6 +9,8 @@
   <StackPanel Margin="0,0,0,18">
    <TextBlock Text="Твоя коллекция под защитой" Style="{StaticResource ScreenTitleTextStyle}" TextWrapping="Wrap"/>
    <TextBlock x:Name="Explanation" TextWrapping="Wrap" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,8,0,0"/>
+   <!-- The one quiet note on a system screen (D-25): a truthful reassurance, nothing decorative. -->
+   <TextBlock Text="Всё записано. Ничего не пропадёт." Style="{StaticResource NdMarginNoteStyle}" FontSize="22" HorizontalAlignment="Left" TextAlignment="Left" Margin="0,8,0,0"/>
    <TextBlock x:Name="ErrorText" TextWrapping="Wrap" Foreground="{StaticResource DangerTextBrush}" AutomationProperties.LiveSetting="Polite"/>
   </StackPanel>
   <ListBox x:Name="HistoryList" Grid.Row="1" ItemContainerStyle="{StaticResource NdRowListItemStyle}" SelectionChanged="SelectionChanged"
@@ -19,8 +21,8 @@
     <StackPanel>
      <TextBlock Text="{Binding SavedAtUtc.LocalDateTime, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" FontWeight="Bold"/>
      <WrapPanel Margin="0,5,0,0">
-      <TextBlock Text="{Binding CollectionCount, StringFormat={}{0} питомцев · }"/>
-      <TextBlock Text="{Binding Coins, StringFormat={}{0} монет}" Foreground="{StaticResource SecondaryTextBrush}"/>
+      <TextBlock Text="{Binding CollectionCount, StringFormat={}{0} питомцев}"/>
+      <TextBlock Text="{Binding Coins, StringFormat={}· {0} монет}" Margin="4,0,0,0" Foreground="{StaticResource SecondaryTextBrush}"/>
       <TextBlock Text=" · копия из памяти" Foreground="{StaticResource SecondaryTextBrush}">
        <TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding FromMemory}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></TextBlock.Style>
       </TextBlock>

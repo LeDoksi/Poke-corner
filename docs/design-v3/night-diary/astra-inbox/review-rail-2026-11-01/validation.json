@@ -1,0 +1,107 @@
+[
+  {
+    "file": "rail\\corner.png",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "visible_rgb": "#9A8FBE",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      24,
+      47,
+      226,
+      232
+    ],
+    "sha256": "c51acd8b3e6806490fba44d8fc8fbd9e661dfabade3c0fbba28101f283fa5a89",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-02627358-8122-4f7a-bdb1-9235b9a69d15.png"
+  },
+  {
+    "file": "rail\\pokedex.png",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "visible_rgb": "#9A8FBE",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      37,
+      30,
+      221,
+      230
+    ],
+    "sha256": "dedeb54677e5c76101241481a63f6702c8250695cb3e5f7ccfee7769b90f8e59",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-b57e3700-f60f-4b96-a718-fb5cdb7662bc.png"
+  },
+  {
+    "file": "rail\\expeditions.png",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "visible_rgb": "#9A8FBE",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      27,
+      41,
+      231,
+      229
+    ],
+    "sha256": "8f97518a4154d0147fdb96dcfa6fab607c4ead5d8fae53efb075bdde44494b72",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-d00931e1-87a2-42b1-97f5-a33ba67609a4.png"
+  },
+  {
+    "file": "rail\\nursery.png",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "visible_rgb": "#9A8FBE",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      50,
+      41,
+      211,
+      213
+    ],
+    "sha256": "22cb009f3c945874eb696d6c0570e5ba2150923cf81feb55b8bf320ecfd2ac98",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-fdca21a0-4c4c-442b-904f-ac8247f40cf9.png"
+  },
+  {
+    "file": "rail\\shop.png",
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "visible_rgb": "#9A8FBE",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      29,
+      48,
+      228,
+      215
+    ],
+    "sha256": "cc7283b4d1cf0198e709ba1c27b93d674b94a26a6307a32348817dafc706b96b",
+    "source": "C:\\Users\\Georgy\\.codex\\generated_images\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\exec-29a7710d-2c30-4814-94dc-2d0563caa510.png"
+  }
+]

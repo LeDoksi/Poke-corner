@@ -5,7 +5,7 @@
  <UserControl.Resources>
   <ResourceDictionary>
    <ResourceDictionary.MergedDictionaries><ResourceDictionary Source="/PokeCorner;component/Theme/NightDiary.xaml"/></ResourceDictionary.MergedDictionaries>
-   <BitmapImage x:Key="NdMapImage" UriSource="/PokeCorner;component/Assets/NightDiary/map.png"/>
+   <BitmapImage x:Key="NdMapImage" UriSource="/PokeCorner;component/Assets/NightDiary/sketch-exp-map.png"/>
    <BitmapImage x:Key="NdBackpackImage" UriSource="/PokeCorner;component/Assets/NightDiary/backpack.png"/>
    <SolidColorBrush x:Key="CardBorderBrush" Color="#35304F"/>
    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#16192B"/>
@@ -97,41 +97,31 @@
  </UserControl.Resources>
  <Grid Margin="0,16,0,16">
   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
-  <Grid x:Name="MarginArt" Grid.RowSpan="2" IsHitTestVisible="False" Visibility="Collapsed">
-   <Grid x:Name="MarginArtLeft" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,8"><Viewbox Height="230" HorizontalAlignment="Center"><Canvas Width="90" Height="240"><Path Style="{StaticResource NdSketchStyle}" StrokeDashArray="2 5" Opacity="0.6" Data="M44,0 C30,60 60,110 42,160 S38,215 44,240" /><Path Style="{StaticResource NdSketchStyle}" Data="M36,26 c-3,0 -5,4 -5,9 c0,4 2,6 5,6 c3,0 5,-2 5,-6 c0,-5 -2,-9 -5,-9 z M36,44 m-3.5,0 a3.5,3 0 1 0 7,0 a3.5,3 0 1 0 -7,0 M52,58 c3,0 5,4 5,9 c0,4 -2,6 -5,6 c-3,0 -5,-2 -5,-6 c0,-5 2,-9 5,-9 z M52,76 m-3.5,0 a3.5,3 0 1 0 7,0 a3.5,3 0 1 0 -7,0 M38,96 c-3,0 -5,4 -5,9 c0,4 2,6 5,6 c3,0 5,-2 5,-6 c0,-5 -2,-9 -5,-9 z M38,114 m-3.5,0 a3.5,3 0 1 0 7,0 a3.5,3 0 1 0 -7,0 M54,130 c3,0 5,4 5,9 c0,4 -2,6 -5,6 c-3,0 -5,-2 -5,-6 c0,-5 2,-9 5,-9 z M54,148 m-3.5,0 a3.5,3 0 1 0 7,0 a3.5,3 0 1 0 -7,0 M34,166 c-3,0 -5,4 -5,9 c0,4 2,6 5,6 c3,0 5,-2 5,-6 c0,-5 -2,-9 -5,-9 z M34,184 m-3.5,0 a3.5,3 0 1 0 7,0 a3.5,3 0 1 0 -7,0 M50,200 c3,0 5,4 5,9 c0,4 -2,6 -5,6 c-3,0 -5,-2 -5,-6 c0,-5 2,-9 5,-9 z M50,218 m-3.5,0 a3.5,3 0 1 0 7,0 a3.5,3 0 1 0 -7,0" /></Canvas></Viewbox></Grid>
-   <StackPanel x:Name="MarginArtRight" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,16">
-    <Viewbox Height="120" HorizontalAlignment="Center">
-     <Canvas Width="60" Height="80">
-      <Path Style="{StaticResource NdSketchStyle}" Data="M20,10 A10,10 0 0 1 40,10 M15,14 H45 V20 H15 Z M18,20 L16,62 H44 L42,20 M14,62 H46 V70 H14 Z M24,22 V60 M36,22 V60" />
-      <Path Style="{StaticResource NdSketchStyle}" Fill="#55FFB574" Stroke="#AAFFB574" Data="M30,50 C25,44 28,38 30,33 C32,38 35,44 30,50 Z" />
-     </Canvas>
-    </Viewbox>
-    <TextBlock Style="{StaticResource NdMarginNoteStyle}" Text="Фонарь — в боковом кармане." MaxWidth="170" Margin="0,8,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="2" /></TextBlock.RenderTransform></TextBlock>
-   </StackPanel>
-  </Grid>
+  <!-- The outer diary margin (Georgy 02.11): the column keeps left, sketches scatter in the free space on the right. -->
+  <local:DiaryMargin x:Name="ExpeditionMargin" Grid.RowSpan="2" HorizontalAlignment="Right" />
   <ScrollViewer x:Name="ScenarioScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
    <StackPanel x:Name="ScenarioContent" Margin="24,0">
-    <DockPanel Margin="0,0,0,10" MaxWidth="968">
-     <Image x:Name="HeaderSketch" Source="/PokeCorner;component/Assets/NightDiary/map.png" DockPanel.Dock="Right" Width="110" Height="56" Margin="16,0,0,0" IsHitTestVisible="False" Focusable="False"/>
+    <DockPanel Margin="0,0,0,10" MaxWidth="968" HorizontalAlignment="Left">
+     <Image x:Name="HeaderSketch" Source="/PokeCorner;component/Assets/NightDiary/sketch-exp-map.png" Opacity="0.85" RenderOptions.BitmapScalingMode="HighQuality" DockPanel.Dock="Right" Width="110" Height="56" Margin="16,0,0,0" IsHitTestVisible="False" Focusable="False"/>
      <Grid DockPanel.Dock="Right" Height="64" MaxWidth="560" IsHitTestVisible="False"><TextBlock x:Name="TrainerNote" FontFamily="{DynamicResource NdHandFont}" FontSize="26" Foreground="{StaticResource NdLavenderBrush}" Opacity="0.85" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Center" Padding="0,4,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-2"/></TextBlock.RenderTransform></TextBlock></Grid>
      <StackPanel><TextBlock Text="Экспедиции" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="SubtitleText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/></StackPanel>
     </DockPanel>
-    <Border x:Name="MessagePanel" MaxWidth="968" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
+    <Border x:Name="MessagePanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
      <DockPanel><TextBlock x:Name="MessageGlyph" Text="&#xE783;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource NdDangerTextBrush}" Margin="0,1,10,0" VerticalAlignment="Top" Visibility="Collapsed"/><StackPanel><TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" /><TextBlock x:Name="MessageDetailText" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource NdMutedBrush}" Visibility="Collapsed" /></StackPanel></DockPanel>
     </Border>
-<Border x:Name="EncounterPanel" MaxWidth="968" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,8"><DockPanel>
+<Border x:Name="EncounterPanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,8"><DockPanel>
       
       <Button x:Name="OpenEncounterButton" Content="Открыть встречу" Click="OpenEncounterButton_Click" DockPanel.Dock="Right" Visibility="Collapsed" Style="{StaticResource SecondaryButtonStyle}"/>
       <StackPanel VerticalAlignment="Center"><TextBlock Text="В пути команда кого-то встретила" FontWeight="Bold"/><TextBlock Text="Кто это, узнаете во встрече" Style="{StaticResource CaptionTextStyle}"/></StackPanel>
      </DockPanel></Border>
-    <StackPanel x:Name="RouteSelectionPanel" MaxWidth="968"><UniformGrid x:Name="RouteButtons" x:FieldModifier="public" Rows="1" Margin="0,0,-6,6" /></StackPanel>
+    <StackPanel x:Name="RouteSelectionPanel" MaxWidth="968" HorizontalAlignment="Left"><UniformGrid x:Name="RouteButtons" x:FieldModifier="public" Rows="1" Margin="0,0,-6,6" /></StackPanel>
     <Border x:Name="Landscape" ClipToBounds="True" Margin="-24,4,-24,12">
      <Grid x:Name="SceneFrame" Height="236"><Image x:Name="LandscapeImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута" /><Rectangle IsHitTestVisible="False"><Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="0.75,0.9"><GradientStop Color="#D0101426"/><GradientStop Color="#60101426" Offset="0.45"/><GradientStop Color="#00101426" Offset="1"/></LinearGradientBrush></Rectangle.Fill></Rectangle>
-      <Grid Margin="24,0" MaxWidth="968"><Border VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,18,40,18" Margin="0" MaxWidth="760"><StackPanel HorizontalAlignment="Left"><TextBlock x:Name="LandscapeName" Foreground="{StaticResource NdTextBrush}" FontFamily="Georgia" FontWeight="Bold" FontSize="32"/><Border Height="1" Background="{StaticResource NdMutedBrush}" Opacity="0.7" Margin="0,6,0,0"/><TextBlock x:Name="RouteHintText" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel></Border></Grid>
+      <Grid Margin="24,0" MaxWidth="968" HorizontalAlignment="Left"><Border VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,18,40,18" Margin="0" MaxWidth="760"><StackPanel HorizontalAlignment="Left"><TextBlock x:Name="LandscapeName" Foreground="{StaticResource NdTextBrush}" FontFamily="Georgia" FontWeight="Bold" FontSize="32"/><Border Height="1" Background="{StaticResource NdMutedBrush}" Opacity="0.7" Margin="0,6,0,0"/><TextBlock x:Name="RouteHintText" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel></Border></Grid>
      </Grid>
     </Border>
     <StackPanel x:Name="PreparationDetailsPanel"/>
-    <StackPanel x:Name="TripPanel" MaxWidth="968" Visibility="Collapsed">
+    <StackPanel x:Name="TripPanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed">
      <Border Padding="0" Margin="0,0,0,12"><StackPanel>
       <StackPanel x:Name="TripHeader" Orientation="Horizontal"><TextBlock x:Name="TripGlyph" Text="&#xE930;" Style="{StaticResource NdGlyphStyle}" Foreground="{StaticResource NdLavenderBrush}" FontSize="24" Margin="0,0,10,0" Visibility="Collapsed"/><TextBlock x:Name="TripTitle" Style="{StaticResource SectionHeaderTextStyle}" VerticalAlignment="Center"/></StackPanel>
       <TextBlock x:Name="TripTerms" TextWrapping="Wrap" Margin="0,5,0,0" Foreground="{StaticResource NdMutedBrush}" />
@@ -143,7 +133,7 @@
      </StackPanel></Border>
 
     </StackPanel>
-    <StackPanel x:Name="ResultPanel" MaxWidth="968" Visibility="Collapsed" Margin="0,12,0,0">
+    <StackPanel x:Name="ResultPanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Margin="0,12,0,0">
      <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12"><StackPanel>
       <StackPanel Orientation="Horizontal"><TextBlock Text="&#xE930;" Style="{StaticResource NdGlyphStyle}" Foreground="{StaticResource NdLavenderBrush}" FontSize="22" Margin="0,0,10,0"/><TextBlock Text="Экспедиция завершена" Style="{StaticResource SectionHeaderTextStyle}" FontSize="19" VerticalAlignment="Center"/></StackPanel>
       <TextBlock Text="Обещанная добыча и опыт уже в запасах." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10" />
@@ -154,7 +144,7 @@
     </StackPanel>
    </StackPanel>
   </ScrollViewer>
-  <StackPanel x:Name="PreparationFooter" Grid.Row="1" Margin="24,0" MaxWidth="968" VerticalAlignment="Top">
+  <StackPanel x:Name="PreparationFooter" Grid.Row="1" Margin="24,0" MaxWidth="968" HorizontalAlignment="Left" VerticalAlignment="Top">
    <DockPanel Margin="0,0,0,7">
     <Button x:Name="ChooseTeamButton" Content="Выбрать команду" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource NdLinkButtonStyle}"/>
     <TextBlock x:Name="TeamHeading" Text="Команда · 0 из 3" Style="{StaticResource SectionHeaderTextStyle}" VerticalAlignment="Center"/>
@@ -176,7 +166,7 @@
     <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,1,0,0" Padding="0,8,0,0" Margin="0,4,0,0"><DockPanel><TextBlock x:Name="LootLabel" Text="Гарантированная добыча:" Foreground="{StaticResource NdMutedBrush}" VerticalAlignment="Center" Margin="0,0,16,0"/><UniformGrid x:Name="PreviewRewardCards" Columns="3"/></DockPanel></Border>
    </Grid>
   </StackPanel>
-  <StackPanel x:Name="ActionFooter" Grid.Row="1" MaxWidth="968" Visibility="Collapsed" Margin="24,10,24,0" VerticalAlignment="Top">
+  <StackPanel x:Name="ActionFooter" Grid.Row="1" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Margin="24,10,24,0" VerticalAlignment="Top">
    <Button x:Name="ClaimButton" Content="Забрать находки" Click="ClaimButton_Click" Visibility="Collapsed"/>
    <Button x:Name="CancelButton" Content="Прервать поход" Click="CancelButton_Click" Style="{StaticResource NdDangerOutlineButtonStyle}" Visibility="Collapsed" HorizontalAlignment="Right"/>
    <Button x:Name="ContinueButton" Content="Продолжить" Click="Continue_Click" Visibility="Collapsed"/>
@@ -192,7 +182,7 @@
      <ComboBox x:Name="PickerTraitBox" Grid.Column="1" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Особенность" Margin="0,0,8,0"/>
      <ComboBox x:Name="PickerSortBox" Grid.Column="2" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Сортировка команды"><ComboBoxItem Content="Рекомендованные"/><ComboBoxItem Content="Высокий уровень"/><ComboBoxItem Content="Номер"/></ComboBox>
     </Grid>
-    <DockPanel Margin="0,0,0,8"><Button x:Name="PickerResetButton" Content="Сбросить" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Click="PickerReset_Click" MinHeight="28" Padding="10,4"/>
+    <DockPanel Margin="0,0,0,8"><Button x:Name="PickerResetButton" Content="Сбросить фильтры" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Click="PickerReset_Click" MinHeight="28" Padding="10,4"/>
      <StackPanel Orientation="Horizontal"><CheckBox x:Name="PickerAvailableBox" Content="Доступные" IsChecked="True" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center" Margin="0,0,14,0"/>
      <CheckBox x:Name="PickerRouteBox" Content="Подходят маршруту" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center"/></StackPanel>
     </DockPanel>
@@ -202,10 +192,10 @@
    </StackPanel></ScrollViewer>
    <Grid Grid.Row="4" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
     <StackPanel><TextBlock x:Name="PickerCountText" FontWeight="Bold" AutomationProperties.LiveSetting="Polite"/><StackPanel Orientation="Horizontal">
-     <Button x:Name="PickerPreviousButton" Content="Назад" Style="{StaticResource SecondaryButtonStyle}" Click="PickerPrevious_Click"/><TextBlock x:Name="PickerPageText" Margin="10,0" VerticalAlignment="Center"/><Button x:Name="PickerNextButton" Content="Дальше" Style="{StaticResource SecondaryButtonStyle}" Click="PickerNext_Click"/>
+     <Button x:Name="PickerPreviousButton" Content="‹" ToolTip="Предыдущая страница" AutomationProperties.Name="Предыдущая страница" MinWidth="40" Style="{StaticResource SecondaryButtonStyle}" Click="PickerPrevious_Click"/><TextBlock x:Name="PickerPageText" Margin="10,0" VerticalAlignment="Center"/><Button x:Name="PickerNextButton" Content="›" ToolTip="Следующая страница" AutomationProperties.Name="Следующая страница" MinWidth="40" Style="{StaticResource SecondaryButtonStyle}" Click="PickerNext_Click"/>
     </StackPanel></StackPanel>
     <Button x:Name="PickerCancelButton" Grid.Column="1" Content="Отмена" Style="{StaticResource SecondaryButtonStyle}" Click="PickerCancel_Click" Margin="10,0" MinWidth="90"/>
-    <Button x:Name="PickerDoneButton" Grid.Column="2" Content="Готово" Click="PickerDone_Click" MinWidth="110"/>
+    <Button x:Name="PickerDoneButton" Grid.Column="2" Content="Сохранить команду" Click="PickerDone_Click" MinWidth="110"/>
    </Grid>
   </Grid>
   <local:ConfirmationOverlay Grid.RowSpan="2" x:Name="LocalConfirmation" Visibility="Collapsed"/>

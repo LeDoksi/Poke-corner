@@ -13,7 +13,7 @@ using System.Text.Json.Nodes;
 
 namespace PokeCorner.App.Tests.GlobalUpdate;
 
-public sealed class EvolutionTests
+public sealed partial class EvolutionTests
 {
     private static readonly Lazy<CatalogPackage> Catalog = new(() => CatalogPackage.Load(Path.Combine(AppContext.BaseDirectory, "Data")));
 

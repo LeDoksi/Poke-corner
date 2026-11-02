@@ -17,13 +17,14 @@ public sealed class CatchTests
     private static void Click(CatchView view, string name) => Find<Button>(view, name).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
     private static CatchView View(AppState state, Func<Task<CatchReveal?>>? open = null, ManualDelay? clock = null,
         Func<Guid, Task<CatchReveal?>>? pinned = null, Func<Task>? charm = null, bool motion = true,
-        Func<int, bool, Task<byte[]?>>? art = null, Action? changed = null)
+        Func<int, bool, Task<byte[]?>>? art = null, Action? changed = null, Action? back = null)
     {
         return new CatchView(state, null, _ => Task.FromResult<byte[]?>(null),
             () => state.Encounters.Count(e => e.Source == "activity" && e.Phase == "sealed"),
             changed ?? (() => { }), _ => "Бульбазавр", open ?? (() => Task.FromResult<CatchReveal?>(Result)),
             tryPerformEncounterAsync: pinned, activateLuckyCharmAsync: charm,
-            animationEnabled: () => motion, delayAsync: clock is null ? null : clock.Wait, fetchVariantSprite: art);
+            animationEnabled: () => motion, delayAsync: clock is null ? null : clock.Wait, fetchVariantSprite: art,
+            returnFromEncounter: back);
     }
     private static AppState State(string source = "activity")
     {
@@ -73,12 +74,11 @@ public sealed class CatchTests
     }
 
     [Fact]
-    public async Task ApprovedPhasesKeepUnknownClosedUntil6250Milliseconds()
+    public async Task EarnedBallOpensWithoutRevealingUntil1700Milliseconds()
     {
         var clock = new ManualDelay(); CatchView view = null!; Task playback = null!;
         WpfTestHost.Run(() => { view = View(State(), clock: clock); playback = view.PlayReveal(Result); });
-        var phases = new[] { ("Покебол летит…", 1100), ("Почти получилось…", 650), ("Мягкое приземление…", 800),
-            ("Покебол покачивается…", 1000), ("Покебол покачивается…", 1000), ("Покебол покачивается…", 1000), ("Пойман!", 700) };
+        var phases = new[] { ("Кто-то шуршит внутри…", 500), ("Покебол покачивается…", 450), ("Покебол покачивается…", 450), ("Открывается!", 300) };
         try {
             for (var i = 0; i < phases.Length; i++) {
                 await Until(() => clock.Durations.Count > i);
@@ -91,8 +91,33 @@ public sealed class CatchTests
                 clock.Complete(i);
             }
             await playback.WaitAsync(TimeSpan.FromSeconds(3));
-            Assert.Equal(6250, clock.Durations.Sum(d => d.TotalMilliseconds));
+            Assert.Equal(1700, clock.Durations.Sum(d => d.TotalMilliseconds));
             WpfTestHost.Run(() => Assert.Contains("Бульбазавр", Find<TextBlock>(view, "RevealNameText").Text));
+        }
+        finally { WpfTestHost.Run(() => view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent))); }
+    }
+
+    [Fact]
+    public async Task MetPokemonIsCaughtWithA3500MillisecondThrow()
+    {
+        var clock = new ManualDelay(); CatchView view = null!; Task playback = null!;
+        WpfTestHost.Run(() => {
+            view = View(State("expedition"), clock: clock);
+            Assert.Equal("Бросить покебол", Find<Button>(view, "CatchButton").Content);
+            playback = view.PlayReveal(Result);
+        });
+        var phases = new[] { ("Покебол летит…", 600), ("Покебол раскрылся…", 450), ("Мягкое приземление…", 450),
+            ("Покебол покачивается…", 550), ("Покебол покачивается…", 550), ("Покебол покачивается…", 550), ("Пойман!", 350) };
+        try {
+            for (var i = 0; i < phases.Length; i++) {
+                await Until(() => clock.Durations.Count > i);
+                WpfTestHost.Run(() => Assert.Equal(phases[i].Item1, Find<TextBlock>(view, "StatusText").Text));
+                Assert.Equal(phases[i].Item2, clock.Durations[i].TotalMilliseconds);
+                clock.Complete(i);
+            }
+            await playback.WaitAsync(TimeSpan.FromSeconds(3));
+            Assert.Equal(3500, clock.Durations.Sum(d => d.TotalMilliseconds));
+            WpfTestHost.Run(() => Assert.Equal(Visibility.Collapsed, Find<Grid>(view, "PokeBallCanvas").Visibility));
         }
         finally { WpfTestHost.Run(() => view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent))); }
     }
@@ -148,6 +173,26 @@ public sealed class CatchTests
         await Until(() => ids.Count == 2);
         WpfTestHost.Run(() => view.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent)));
         Assert.Equal(new[] { selected, selected }, ids);
+    }
+
+    [Fact]
+    public async Task ExpeditionEncounterResultLeadsBackToExpeditions()
+    {
+        var state = State("expedition"); var selected = state.Encounters[0].Id;
+        var backs = 0; var opened = 0; var clock = new ManualDelay(); CatchView view = null!;
+        WpfTestHost.Run(() => {
+            view = View(state, pinned: _ => { opened++; return Task.FromResult<CatchReveal?>(Result); }, clock: clock, motion: false, back: () => backs++);
+            Assert.True(view.SelectEncounter(selected));
+            Click(view, "CatchButton");
+        });
+        await Until(() => opened == 1 && clock.Durations.Count == 1);
+        clock.Complete(0);
+        await Task.Delay(60);
+        WpfTestHost.Run(() => {
+            Assert.Equal("Вернуться к экспедициям", Find<Button>(view, "CatchButton").Content);
+            Click(view, "CatchButton");
+            Assert.Equal(1, backs);
+        });
     }
 
     [Fact]

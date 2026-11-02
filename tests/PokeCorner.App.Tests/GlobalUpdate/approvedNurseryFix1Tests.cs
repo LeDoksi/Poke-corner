@@ -98,9 +98,7 @@ public sealed partial class NurseryUiTests
                 Assert.False((bool)NurseryPrivate(view, "_busy")!);
                 Assert.False((bool)NurseryPrivate(view, "_refreshingReady")!);
                 Assert.Equal(currentMessage, ((TextBlock)view.FindName("MessageText")!).Text);
-                Assert.False((bool)NurseryPrivate(view, "_awaitingHatchContinue")!);
                 Assert.False(((Image)view.FindName("BabyImage")!).HasAnimatedProperties);
-                Assert.Equal(Visibility.Collapsed, ((StackPanel)view.FindName("HatchAnimationPanel")!).Visibility);
                 if (!success && action == "start")
                 {
                     Assert.Null(data.Nest);

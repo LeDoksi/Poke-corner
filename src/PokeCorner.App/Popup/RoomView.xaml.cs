@@ -204,8 +204,11 @@ public partial class RoomView : UserControl
             CareText.Text = "Выберите спутника";
             CareBar.Value = 0;
         }
+        CatchBar.Value = Math.Clamp((double)data.CatchAccumulatorUnits / ActivityAccumulator.CatchCheckIntervalUnits, 0, 1);
+        CatchText.Text = data.PendingCatchCount > 0 ? $"Готово: {data.PendingCatchCount} · ждут в поимке" : "Копится за активность";
         TreatBar.Value = Math.Clamp((double)data.FeedingRemainderUnits / FeedingService.ActivityUnitsPerTreatEarned, 0, 1);
         TreatText.Text = $"{data.FeedingTreats} в запасе · новые за активность";
+        CornerNote.Text = CornerNoteFor(active, data);
         PetButton.IsEnabled = active is not null && _pet is not null;
         FeedButton.IsEnabled = active is not null && data.FeedingTreats > 0 && _feed is not null;
         DetailButton.Content = active is null ? "Открыть Покедекс" : "Карточка питомца";
@@ -240,6 +243,18 @@ public partial class RoomView : UserControl
         PositionPet();
     }
 
+    // One true note at a time, most actionable first (D-25 notes 2-6).
+    private string CornerNoteFor(PokemonIndividual? active, SaveData data)
+    {
+        if (active is null) return "";
+        var evolving = active.ChainLength > 1 && (int)active.CurrentStage < active.ChainLength - 1 && CareText.Text.StartsWith("Уход накоплен");
+        if (evolving) return "Что-то в нём меняется. Загляну в карточку.";
+        if (data.PendingCatchCount > 0) return "Покебол ждёт. Кто же там внутри?";
+        if (data.FeedingTreats == 0) return "Лакомства кончились. Косточки — в лавке.";
+        if (active.IsShiny) return "Другого цвета. Такой спутник — редкая удача.";
+        return (active.Nickname ?? _speciesName(active.CurrentSpeciesId)) + " рядом. Работаем вместе — растём вместе.";
+    }
+
     private void PositionPet()
     {
         // Accepted revision3 keeps the visible foot at (800,524), independent of desktop size.
@@ -248,6 +263,11 @@ public partial class RoomView : UserControl
         PetImage.Height = _spriteBounds.Height * scale;
         Canvas.SetLeft(PetImage, 800 - (_spriteBounds.Left + _spriteBounds.Right) * scale / 2);
         Canvas.SetTop(PetImage, 524 - _spriteBounds.Bottom * scale);
+        // The wall lamp is up and to the right, so the soft shadow falls down-left and grows with the pet (Georgy 29.10).
+        var feet = Math.Max(1, _spriteBounds.Right - _spriteBounds.Left) * scale;
+        PetShadow.Width = feet * 1.25; PetShadow.Height = Math.Clamp(feet * .22, 16, 44);
+        Canvas.SetLeft(PetShadow, 800 - feet * .28 - PetShadow.Width / 2);
+        Canvas.SetTop(PetShadow, 524 - PetShadow.Height * .45);
     }
 
     private static (int Width, int Height, int Left, int Right, int Bottom) MeasureSpriteBounds(IReadOnlyList<ImageSource> frames)

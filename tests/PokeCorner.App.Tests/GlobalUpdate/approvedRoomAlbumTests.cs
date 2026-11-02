@@ -36,6 +36,9 @@ public class ApprovedRoomAlbumTests
         Assert.Contains(pet.Nickname!, ((TextBlock)view.FindName("PetCaption")).Text);
         Assert.NotNull(view.FindName("CareText"));
         Assert.Null(view.FindName("XpText"));
+        // Georgy 29.10: the corner keeps the next-pokéball bar, without the level.
+        Assert.NotNull(view.FindName("CatchBar"));
+        Assert.DoesNotContain("Ур.", ((TextBlock)view.FindName("CatchText")).Text);
         var caption = ((TextBlock)view.FindName("PetCaption")).Text;
         Assert.Contains("№0133", caption);
         Assert.Contains("Нормальный", caption);

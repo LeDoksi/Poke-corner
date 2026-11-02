@@ -1,0 +1,13 @@
+Date: 2026-10-29 (Europe/Moscow)
+Generation: built-in image_gen
+Reference: C:\Users\Georgy\.codex\worktrees\night-diary-pilot\PokeTokenBar-Windows\docs\design-v3\night-diary\astra-inbox\icons\care-v3.png
+Output: catch-ball.png
+Export: nearest-neighbor 512x512, original alpha retained; generated original preserved.
+Source: C:\Users\Georgy\.codex\generated_images\01a18795-3bbc-7d12-9c87-af44701a51fa\exec-ce115fc9-9fab-4833-89f5-8181de62abfb.png
+
+Initial prompt:
+Use case: stylized-concept. Asset type: small pixel-art progress icon for PokeCorner / Night Diary. The attached care-v3.png is a STYLE REFERENCE ONLY: preserve its pixel technique, sculpted volume built from deliberate discrete stepped color clusters, thick deep-plum outline (#2A1F3D), and crisp edges. Replace the hearts completely with the subject below; no hearts. Exactly one compact warm apricot highlight (#FFB574). No blurry upscaling, smooth gradients or dithering noise. Keep strong pixel craftsmanship and volumetric stepped shading rather than a flat symbol. Single bold icon of a CLOSED classic catching ball seen straight from the front, tilted about 10 degrees. Upper half warm coral-red (#E8636F family with rose and plum shadow clusters), lower half soft cream-lavender (#E9E1F7 with lavender #C4ABF0 shadows), a thick deep-plum band across the middle and a round cream button in the center ringed with deep plum. One compact apricot highlight cluster on the upper left of the red half. The ball fills about 85% of the canvas, centered, uncropped. Reads instantly as a CLOSED ball at 18x18 and 24x24 px on dark (#101426) and light backgrounds; coral-red should be distinguishable from the rosy-pink heart reference. No motion lines, sparkles, stars, glow, shadow under it, hands, Pokemon, text or logo. Exactly 512 x 512 pixels, PNG, genuinely transparent alpha background. Output ONLY the single ball icon.
+
+Final revision prompt:
+Edit the attached catching-ball icon. Keep its composition, outline thickness, exact pixel-cluster craft, cream-lavender bottom, central round button, transparency and sculpted stepped shading. Change ONLY the upper shell palette: it must be warm red/coral-red based on #E8636F, with deeper muted brick-red and plum shadows, distinctly redder and less magenta/pink than the care-heart family #F27A93. Remove the hot fuchsia appearance. Keep exactly one compact warm apricot #FFB574 highlight cluster upper-left. No new glints, no extra objects, no text, no ground shadow. Single closed ball centered with safe margins, around 85% canvas width. Export exactly 512x512 PNG with genuinely transparent alpha. Crisp deliberate pixel-art edges.
+

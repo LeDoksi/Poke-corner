@@ -110,7 +110,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Dictionary<(int, bool), ImageSource> _packageSprites = new();
     private readonly HashSet<(int, bool)> _missingPackageSprites = new();
     private int _speciesPageIndex;
-    private const int SpeciesPageSize = 12;
+    private const int SpeciesPageMinimum = 12;
+    private int _speciesPageSize = SpeciesPageMinimum;
     private int? _selectedSpeciesId;
     private string _speciesSignature = string.Empty;
     private string _speciesTypeSignature = string.Empty;
@@ -153,10 +154,15 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Func<Guid, (string Text, double Fraction)>? xpProgress = null,
         Func<int, bool, string>? whereFind = null,
         Func<string, string, string, Task<bool>>? confirmDestructiveAsync = null,
-        Func<int, bool, SpeciesPaths?>? speciesPaths = null, Action<string>? openRoute = null, Func<int, int, string?>? openPair = null)
+        Func<int, bool, SpeciesPaths?>? speciesPaths = null, Action<string>? openRoute = null, Func<int, int, string?>? openPair = null,
+        Func<IReadOnlyList<(string Item, int Quantity, Guid Operation)>, Task>? buyItems = null)
     {
         InitializeComponent();
         SizeChanged += (_, _) => LayoutMasterDetail();
+        // Page size follows the window: re-fit when the grid's width or the visible height changes.
+        void Refit() { if (SpeciesPane.Visibility == Visibility.Visible && FitSpeciesPage() != _speciesPageSize) RefreshSpecies(); }
+        PokedexScroll.SizeChanged += (_, e) => { if (e.HeightChanged) Refit(); };
+        SpeciesGrid.SizeChanged += (_, e) => { if (e.WidthChanged) Refit(); };
         DetailOverlay.SizeChanged += (_, _) => StackDetailColumns();
         ((System.Windows.Controls.TabControl)((Grid)Content).Children[0]).SelectionChanged += (_, e) => { if (e.OriginalSource is System.Windows.Controls.TabControl) LayoutMasterDetail(); };
         _onEvolveRequested = onEvolveRequested;
@@ -184,6 +190,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _xpProgress = xpProgress; _whereFind = whereFind;
         _speciesPaths = speciesPaths; _openRoute = openRoute; _openPair = openPair;
         LocalConfirmationHost.Completed += CompleteLocalConfirmation;
+        DetailTopUpCart.Buy = buyItems;
+        DetailTopUpCart.Bought += message => { RefreshDetailEvolution(); RefreshDetailRetraining(); DetailErrorText.Text = message; };
+        DetailTopUpCart.Failed += message => DetailErrorText.Text = message;
+        DetailTopUpCart.ShopRequested += OpenShopFor;
 
         // Filter labels come from the same helper the rarity tags on the cards use, so a
         // rename there can never leave the filter pills saying something different.
@@ -260,6 +270,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshPokedex(entries);
         if (SpeciesPane.Visibility == Visibility.Visible) RefreshSpecies();
         if (_detailCard is not null && !_appState.Collection.Individuals.Any(i => i.Id == _detailCard.IndividualId)) HideDetail();
+        if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible) SyncDetailForm();
         if (_detailCard is not null && DetailOverlay.Visibility == Visibility.Visible)
         {
             RefreshDetailEvolution();
@@ -343,6 +354,18 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         PokedexFilterGrid.ColumnDefinitions[1].MinWidth = PokedexFilterGrid.ColumnDefinitions[2].MinWidth = narrow ? 0 : 120;
     }
 
+    // Whole rows of 164x206 species tiles that fit under the filters (never fewer than 12 tiles), so a
+    // FullHD window fills its grid instead of leaving half the page empty. Unmeasured layout keeps 12.
+    private int FitSpeciesPage()
+    {
+        // Visibility, not IsVisible: IsVisible is false for any tree not yet shown in a window.
+        if (SpeciesGrid.ActualWidth <= 0 || PokedexScroll.ViewportHeight <= 0 || SpeciesPane.Visibility != Visibility.Visible) return _speciesPageSize;
+        var columns = Math.Max(1, (int)((SpeciesGrid.ActualWidth - 4) / 164));
+        var top = SpeciesGrid.TransformToAncestor(PokedexScroll).Transform(new System.Windows.Point()).Y + PokedexScroll.VerticalOffset;
+        var rows = Math.Max(1, (int)((PokedexScroll.ViewportHeight - top - 56) / 206));
+        return Math.Max(SpeciesPageMinimum, columns * rows);
+    }
+
     // Tiles stretch so each row is filled edge to edge instead of leaving a ragged gap.
     private void PokedexGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -391,12 +414,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     // A short truthful line from the trainer about this pet, chosen by what is most notable now.
     private static string TrainerNote(PokedexCard card) =>
-        card.IsShiny ? "Редкий окрас! Таких встречаешь раз в тысячу."
+        card.IsShiny ? "Другого цвета. Такие встречаются редко."
         : card.ActiveBadgeVisibility == Visibility.Visible ? "Сейчас со мной на столе — не отходит ни на шаг."
-        : card.FavoriteBadgeVisibility == Visibility.Visible ? "Любимчик. Его не отдам никому."
+        : card.FavoriteBadgeVisibility == Visibility.Visible ? "Любимчик. Только остальным не говорить."
         : card.IsBusy ? "Сейчас в походе или в питомнике — жду обратно."
         : card.Level >= 30 ? "Опытный. С ним в любой поход не страшно."
         : "Ещё узнаём друг друга.";
+
+    // With the pet page open at 1200x660 the header is narrow: the note gives way so «Покедекс» is never cut.
+    private void PokedexHeader_SizeChanged(object sender, SizeChangedEventArgs e) =>
+        PokedexNote.Visibility = e.NewSize.Width >= 760 ? Visibility.Visible : Visibility.Collapsed;
 
     private void SpeciesMode_Click(object sender, RoutedEventArgs e)
     {
@@ -457,14 +484,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var visible = CollectionViewModel.FilterSpecies(all, SpeciesSearchBox.Text, type, rarity,
             false, sort);
         if (SpeciesUnopenedToggle.IsChecked == true) visible = visible.Where(e => !FormOpen(e)).ToList();
-        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)SpeciesPageSize));
+        _speciesPageSize = FitSpeciesPage();
+        var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)_speciesPageSize));
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
         SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · показано: {visible.Count}";
+        PokedexNote.Text = shinyLens ? "Другие цвета — и совсем другая охота." : "Силуэт знакомый, имени нет. Кто же это?"; // D-25 notes 10, 12
         SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
         SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
         SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
-        var page = visible.Skip(_speciesPageIndex * SpeciesPageSize).Take(SpeciesPageSize).ToList();
+        var page = visible.Skip(_speciesPageIndex * _speciesPageSize).Take(_speciesPageSize).ToList();
         var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{shinyLens}|" +
             string.Join("|", page.Select(e => $"{e.SpeciesId}:{FormOpen(e)}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
         if (signature != _speciesSignature)
@@ -537,6 +566,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesDetailName.Text = entry.IsDiscovered ? entry.DisplayName ?? entry.Number : "Неизвестный вид";
         SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : _speciesPaths is null ? entry.RouteHint : "";
         SpeciesDetailTypes.Text = string.Join(" · ", new[] { entry.Number }.Concat(entry.IsDiscovered ? entry.Types.Select(TypeDisplay.GetLabel) : []));
+        // D-25 notes 17-18: what the trainer knows about this species, never more than the page shows.
+        SpeciesDetailNote.Text = !entry.IsDiscovered ? "Пока только силуэт. Где искать — ниже."
+            : entry.OwnedIndividuals.Any(i => i.IsShiny) && entry.OwnedIndividuals.Any(i => !i.IsShiny) ? "И обычный, и шайни. Страница закрыта."
+            : "Записано в покедекс. Можно гордиться.";
         RenderSpeciesForms(entry.SpeciesId);
         SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : $"Мои экземпляры · {entry.OwnedIndividuals.Count}";
@@ -886,6 +919,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         PokedexCountText.Text = speciesCount == 1
             ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
+        PokedexNote.Text = "Поймать их всех — дело небыстрое."; // D-25 note 8
 
         // Filters narrow the owned list together before number, type, or catch-date sorting.
         if (IndividualTypeCombo.Items.Count == 1)
@@ -1076,6 +1110,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         if (e.Key != System.Windows.Input.Key.Escape) return;
         if (_localConfirmation is not null) { CompleteLocalConfirmation(false); e.Handled = true; return; }
+        if (DetailTopUpCart.IsOpen) { DetailTopUpCart.Close(); e.Handled = true; return; }
         if (SpeciesDialog.Visibility == Visibility.Visible) { CloseSpeciesDialog(); e.Handled = true; return; }
         if (DetailOverlay.Visibility != Visibility.Visible) return;
         if (DetailNicknameEditor.Visibility == Visibility.Visible) { DetailNicknameCancel_Click(this, e); e.Handled = true; return; }
@@ -1197,7 +1232,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var preview = _previewEvolution(_detailCard.IndividualId);
         _detailEvolutionPreview = preview;
         DetailEvolutionActionSection.Visibility = preview.Branches.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
-        if (preview.Branches.Count == 0) return;
+        if (preview.Branches.Count == 0) { RefreshTopUp(); return; }
         DetailEvolutionBar.Value = Math.Clamp(preview.CareOwned / (double)Math.Max(1, preview.CareRequired), 0, 1);
         var enoughCare = preview.CareOwned >= preview.CareRequired;
         DetailEvolutionText.Text = EvolutionCareStateText.Text = enoughCare ? "Достаточно" : "Продолжай заботиться о питомце";
@@ -1256,6 +1291,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         EvolutionRequiredStoneText.Text = "× 1";
         RenderEvolutionTargets(_detailEvolutionPreview);
         DetailEvolveButton.IsEnabled = reason is null && !_detailPending && (_detailCard is null || !_evolvingIndividuals.Contains(_detailCard.IndividualId));
+        RefreshTopUp();
     }
 
     private async void DetailEvolveButton_Click(object sender, RoutedEventArgs e)
@@ -1284,11 +1320,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         finally { _detailPending = false; _evolvingIndividuals.Remove(id); Refresh(); }
     }
 
+    // D-28: "Докупить" opens the same cart as the nursery with what is missing already counted;
+    // with nothing missing the button stays the old "В магазин".
     private void DetailEvolutionShopButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_detailEvolutionPreview is { } preview && preview.BerriesOwned < preview.BerryCost)
-            _buyBerries?.Invoke(preview.BerryId, preview.BerryCost);
-        _navigate?.Invoke(MenuSection.Shop);
+        var needs = EvolutionNeeds(forStone: true);
+        if (needs.Count == 0 || DetailTopUpCart.Buy is null) { OpenShopFor(EvolutionCart); return; }
+        if (DetailTopUpCart.IsOpen && DetailTopUpCart.Owner == EvolutionCart) { DetailTopUpCart.Close(); return; }
+        DetailTopUpCart.Open(EvolutionCart, "Докупить для эволюции", needs, _appState.Shop.Coins);
     }
     private void DetailEvolutionRouteButton_Click(object sender, RoutedEventArgs e) => _navigate?.Invoke(MenuSection.Expeditions);
 
@@ -1298,6 +1337,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             !_appState.Collection.Individuals.Any(x => x.Id == _detailCard.IndividualId))
         {
             DetailRetrainingSection.Visibility = Visibility.Collapsed;
+            _detailRetrainingPreview = null;
+            RefreshTopUp();
             return;
         }
         DetailRetrainingSection.Visibility = Visibility.Visible;
@@ -1319,8 +1360,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             string.Join(" · ", preview.Outcomes.Select(TraitLabel));
         DetailRetrainingReasonText.Text = preview.Reason ?? string.Empty;
         DetailRetrainButton.IsEnabled = preview.Reason is null && !_retrainingIndividuals.Contains(_detailCard.IndividualId);
-        DetailRetrainingShopButton.Visibility = preview.Costs.Any(x => x.Owned < x.Required)
-            ? Visibility.Visible : Visibility.Collapsed;
+        RefreshTopUp();
     }
 
     private void DetailRetrainingSlotPicker_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
@@ -1371,15 +1411,76 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void DetailRetrainingShopButton_Click(object sender, RoutedEventArgs e)
     {
-        var shortage = _detailRetrainingPreview?.Costs.FirstOrDefault(x => x.Owned < x.Required);
-        if (shortage is null) return;
-        _buyBerries?.Invoke(shortage.BerryId, shortage.Required);
+        var needs = RetrainingNeeds();
+        if (needs.Count == 0) return;
+        if (DetailTopUpCart.Buy is null) { OpenShopFor(RetrainingCart); return; }
+        if (DetailTopUpCart.IsOpen && DetailTopUpCart.Owner == RetrainingCart) { DetailTopUpCart.Close(); return; }
+        DetailTopUpCart.Open(RetrainingCart, "Докупить для переобучения", needs, _appState.Shop.Coins);
+    }
+
+    private const string EvolutionCart = "evolution";
+    private const string RetrainingCart = "retraining";
+
+    /// Berries the evolution still lacks, plus the choice stone when there are branches to choose from
+    /// and none in stock: optional next to missing berries, the whole point when the berries are there.
+    private List<TopUpNeed> EvolutionNeeds(bool forStone)
+    {
+        var needs = new List<TopUpNeed>();
+        if (_detailEvolutionPreview is not { Branches.Count: > 0 } preview) return needs;
+        if (preview.BerriesOwned < preview.BerryCost)
+            needs.Add(new(preview.BerryId, preview.BerryCost - preview.BerriesOwned, preview.BerriesOwned));
+        if (preview.Branches.Count(x => x.Available) > 1 && preview.StonesOwned == 0)
+        {
+            var wanted = (needs.Count == 0 && forStone) || SelectedEvolutionBranch is not null;
+            needs.Add(new("evolution-stone", wanted ? 1 : 0, 0, wanted ? null : "по желанию · выбрать будущую форму"));
+        }
+        return needs;
+    }
+
+    private List<TopUpNeed> RetrainingNeeds()
+    {
+        if (_detailRetrainingPreview is not { } preview) return [];
+        return preview.Costs.GroupBy(x => x.BerryId)
+            .Select(g => (Id: g.Key, Required: g.Sum(x => x.Required), Owned: g.Max(x => x.Owned)))
+            .Where(x => x.Owned < x.Required)
+            .Select(x => new TopUpNeed(x.Id, x.Required - x.Owned, x.Owned)).ToList();
+    }
+
+    private void RefreshTopUp()
+    {
+        var cart = DetailTopUpCart.Buy is not null;
+        var evolution = EvolutionNeeds(forStone: false);
+        var berriesShort = evolution.Any(x => x.Id != "evolution-stone");
+        var stoneOnly = !berriesShort && evolution.Count > 0;
+        DetailEvolutionShopButton.Content = !cart ? "В магазин"
+            : berriesShort ? $"Докупить · {DetailTopUpCart.Cost(evolution)} ●"
+            : stoneOnly ? $"Камень выбора · {DetailTopUpCart.Price("evolution-stone")} ●" : "В магазин";
+        DetailEvolutionShopButton.ToolTip = cart && (berriesShort || stoneOnly) ? "Купить недостающее прямо здесь" : null;
+        var retraining = RetrainingNeeds();
+        DetailRetrainingShopButton.Visibility = retraining.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        DetailRetrainingShopButton.Content = cart ? $"Докупить · {DetailTopUpCart.Cost(retraining)} ●" : "В магазин";
+        if (DetailTopUpCart.Owner == EvolutionCart) DetailTopUpCart.Update(EvolutionNeeds(forStone: true), _appState.Shop.Coins);
+        else if (DetailTopUpCart.Owner == RetrainingCart) DetailTopUpCart.Update(retraining, _appState.Shop.Coins);
+    }
+
+    /// The old way, kept inside the cart and when there is nothing to top up: the shop opens with the
+    /// first missing berry filled in and a button back to this pet.
+    private void OpenShopFor(string? owner)
+    {
+        if (owner == RetrainingCart)
+        {
+            var shortage = _detailRetrainingPreview?.Costs.FirstOrDefault(x => x.Owned < x.Required);
+            if (shortage is not null) _buyBerries?.Invoke(shortage.BerryId, shortage.Required);
+        }
+        else if (_detailEvolutionPreview is { } preview && preview.BerriesOwned < preview.BerryCost)
+            _buyBerries?.Invoke(preview.BerryId, preview.BerryCost);
         _navigate?.Invoke(MenuSection.Shop);
     }
 
     private void HideDetail()
     {
         CompleteLocalConfirmation(false);
+        DetailTopUpCart.Close();
         _detailGeneration++;
         DetailOverlay.Visibility = Visibility.Collapsed;
         _detailCard = null;
@@ -1405,8 +1506,30 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void DetailCard_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) =>
         e.Handled = true;
 
+    // The open page follows its pet's form: after an evolution (from this page, the desktop pet or anywhere
+    // else) it shows the new species at once instead of the previous form's animation until reopened, and it
+    // picks up the animated frames once they arrive. Generation and status line are kept, so an evolve
+    // still in flight reports its result here.
+    private void SyncDetailForm()
+    {
+        var entry = _viewModel.GetEntry(_detailCard!.IndividualId, DateTimeOffset.UtcNow);
+        if (entry is null) return;
+        if (entry.DisplaySpeciesId != _detailCard.SpeciesId || entry.IsShiny != _detailCard.IsShiny)
+        {
+            var generation = _detailGeneration; var status = DetailErrorText.Text;
+            ShowDetail(BuildCard(entry));
+            _detailGeneration = generation; DetailErrorText.Text = status;
+        }
+        else if (_detailCard.SpriteFrames is null && _animatedFrames.ContainsKey((entry.DisplaySpeciesId, entry.IsShiny)))
+        {
+            _detailCard = BuildCard(entry);
+            ShowDetailSprite(_detailCard);
+        }
+    }
+
     private void ShowDetailSprite(PokedexCard card)
     {
+        EnsureAnimatedFrames(card.SpeciesId, card.IsShiny);
         if (_presentationSuspended) return;
         _detailAnimator?.Stop();
         _detailAnimator = null;
@@ -1598,6 +1721,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var show = DetailRetrainingEditor.Visibility != Visibility.Visible;
         DetailRetrainingEditor.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         DetailRetrainingToggle.Content = show ? "Скрыть переобучение" : "Переобучение";
+        if (DetailTopUpCart.Owner == RetrainingCart) DetailTopUpCart.Close();
+        RefreshTopUp();
         if (show) DetailRetrainingSlotPicker.Focus();
     }
 
@@ -1774,11 +1899,13 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void SetEvolutionSurface(bool show)
     {
         if (show && DetailEvolutionActionSection.Visibility != Visibility.Visible) return;
+        DetailTopUpCart.Close();
         EvolutionFooter.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         EvolutionSurface.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         DetailPersonalGrid.Visibility = DetailIdentityHeader.Visibility = DetailRehomeSection.Visibility =
             show ? Visibility.Collapsed : Visibility.Visible;
         DetailScroll.ScrollToTop();
+        RefreshTopUp();
     }
     private void SpeciesBack_Click(object sender, RoutedEventArgs e) => CloseSpeciesDialog();
     private void CloseSpeciesDialog()

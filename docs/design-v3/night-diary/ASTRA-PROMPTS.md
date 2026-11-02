@@ -187,4 +187,106 @@ Single bold icon for pet "care" meaning "time together": one large chunky rosy-p
 
 - **care-v3.png** — принят: два сердца без руки читаются на 24, 20 и 18 px на тёмном и светлом фоне и не путаются с косточкой лакомства. Заменил `ui-system/assets/care.png` (96 px): кнопка «Погладить», заголовки ухода в уголке и на странице питомца.
 
-Открытых заказов у Астры нет.
+## Заказ 29.10 — значки прогресса у питомца: покебол и лакомство
+
+Georgy 29.10 после живой проверки 1.1.1: под питомцем в уголке три полосы прогресса (уход, следующий покебол, лакомства), а значки у них из разных эпох. У «Следующего покебола» своего значка нет: временно стоит большая картинка покебола со сцены поимки, на 18 px она мутная. Лакомство нарисовано до care-v3 и выглядит плоско рядом с ним. Нужны два значка в технике care-v3, чтобы все три читались как один набор.
+
+Сохранить в `astra-inbox\icons\`: `catch-ball.png` и `treat-v2.png`, оба PNG 512×512 с прозрачностью. Приложить `care-v3.png` как референс пиксельной техники, обводки и объёма, не композиции.
+
+**catch-ball.png**
+```
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the attached care-v3.png in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). Do not copy its hearts.
+
+Single bold icon of a closed classic catching ball seen straight from the front, slightly tilted (about 10 degrees) so it feels alive. Upper half warm coral-red (#E8636F family with rose and plum shadow clusters), lower half soft cream-lavender (#E9E1F7 with lavender #C4ABF0 shadows), a thick deep-plum band across the middle and a round cream button in the center ringed with deep plum. One compact apricot highlight cluster on the upper left of the red half. The ball fills about 85% of the canvas, centered, uncropped. Reads instantly as a closed ball at 18x18 and 24x24 px on dark (#101426) and light backgrounds. No motion lines, no sparkles, no stars, no glow, no shadow under it, no hands, no Pokémon, no text, no logo. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+```
+Приёмка: на 18 и 24 px читается как закрытый покебол на тёмном и светлом фоне; красный не сливается с розовым сердцем ухода; та же толщина обводки и та же техника, что у care-v3.
+
+**treat-v2.png**
+```
+Night Diary style for a cozy desktop Pokémon companion app. Hand-placed pixel art icon with deliberate clusters, crisp 1px pixel edges, no blurry upscaling, no dithering noise. Match the attached care-v3.png in pixel technique: sculpted volume built from discrete stepped color clusters, thick deep-plum outline (#2A1F3D), exactly one compact warm apricot highlight (#FFB574). Do not copy its hearts.
+
+Single bold icon of one chunky bone-shaped pet biscuit lying diagonally (lower left to upper right), warm baked biscuit tones (#D9A066 family with toasted brown and plum shadow clusters), a small paw print pressed into its middle in a darker toasted brown. One compact apricot highlight cluster on the upper edge. The biscuit fills about 85% of the canvas width, centered, uncropped. Reads instantly as a treat at 18x18 and 24x24 px on dark (#101426) and light backgrounds. No crumbs, no sparkles, no stars, no plate, no hands, no Pokémon, no text. Exactly 512 x 512 pixels, PNG, genuinely transparent background.
+```
+Приёмка: на 18 и 24 px читается как лакомство и не путается ни с сердцами ухода, ни с покеболом; рядом с care-v3 и catch-ball выглядит одним набором.
+
+## Приёмка 29.10 — покебол и лакомство
+
+- **catch-ball.png** — принят: на 18 и 24 px читается закрытым покеболом на тёмном и светлом фоне, кирпично-красный не путается с розовым сердцем ухода, обводка и техника как у care-v3. Исходник стоял ниже и левее центра, при экспорте обрезан по силуэту и отцентрован с полем 4%. Новый `ui-system/assets/catch-ball.png` (96 px) у полосы «Следующий покебол» в уголке. Сцена поимки пока остаётся со старыми `ball-closed`/`ball-open`: их заменит пара для анимации броска.
+- **treat-v2.png** — принят: косточка с четырьмя шишками и лапкой, на 18 px лапка пропадает, силуэт читается. Касался краёв холста, при экспорте отцентрован с полем 4%. Заменил `ui-system/assets/treat.png` (96 px).
+
+## Заказ 29.10 — поимка, поля дневника, магазин, рейка
+
+33 картинки, каждый промпт целиком: [ASTRA-ORDER-2026-10-29.md](ASTRA-ORDER-2026-10-29.md). Решения D-24 и D-25.
+
+## Приёмка 01.11 — первые 4 картинки заказа 29.10
+
+- **camp.png** — принят: на всех кадрировках поимки (1200×660 и FullHD, до броска и в анимации) шар и крупный покемон стоят на земле. Встроен как `expeditions/camp.png`.
+- **M02 rail-pokedex.png, M07 exp-tracks.png** — приняты как образец штриха для остальных 12 зарисовок.
+- **ball-open.png** — отклонён (Georgy): крышка тонким серпом, кнопка смотрит прямо при поднятой крышке, рваная выемка, у крышки мельче пиксель. Вместо него Claude нарисовал пиксельный шар кодом: 4 кадра 40×40 из одних деталей (`pixel-ball/pixball.py`), в приложении `ui-system/assets/ball-px-0..3.png`.
+
+## Приёмка 01.11 — остальные 29 картинок заказа 29.10
+
+- **Поля M01, M03–M06, M08–M14** — приняты. Одна рука с M02/M07, на рабочих размерах предметы узнаются, реальных покемонов и букв нет. M09 (карта, 90 px) на пределе мелкости, но читается.
+- **Магазин, все 12** — приняты. Один набор с care-v3 / catch-ball / treat на 44 px и на тёмном, и на светлом фоне; пачка лакомств связана с косточкой, ягоды узнаются по форме. Замечание без переделки: у lucky-charm самый лёгкий силуэт в ряду.
+- **Рейка: pokedex, expeditions, nursery** — приняты. В приложении показываются 30 px, линия утолщается при экспорте (MaxFilter 7 на 256).
+- **Рейка: corner, shop** — на перезаказ. На 24–30 px дом (камни, растения, труба, окно, лапка) и мешочек (узел, бирка, кисть) сливаются в пятно.
+- **Питомник переделан (PR #2, «Книга пар»).** Новые картинки не нужны: M10 и M11 остаются на боковых полях FullHD под сценой, M14 — на «малыш готов» и результате. Новое место — пустота под списком пар, когда пар мало: туда запись, без рисунка. Встраивать после слияния PR #2.
+
+### Перезаказ: рейка corner.png и shop.png
+
+Сохранить поверх `astra-inbox\rail\corner.png` и `shop.png`, старые убрать в history. Приложить принятые `rail\pokedex.png`, `expeditions.png`, `nursery.png` как образец толщины и простоты.
+
+**corner.png**
+```
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
+
+Subject: the simplest possible house silhouette: a pitched roof and a square body, one round window, one door with a small paw print. Nothing else: no chimney, no smoke, no plants, no stones, no fence, no roof tiles, no ground line. At most eight strokes in total. It must read as "home" at 24 px.
+
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
+```
+
+**shop.png**
+```
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
+
+Subject: a plump round drawstring pouch seen from the front, a simple gathered neck tied with one band, and one small blank tag hanging from it. Nothing else: no tassels, no rope ends, no berries, no coins, no folds or wrinkles inside the body. At most eight strokes in total. It must read as "shop / pouch" at 24 px.
+
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
+```
+
+Приёмка: на 24 и 30 px рядом с принятыми тремя значками — та же толщина, силуэт узнаётся без подписи.
+
+## Заказ 02.11 — мелкие зарисовки для внешнего поля (14)
+
+Решение Georgy 02.11: колонка экрана прижата влево, справа одно «внешнее поле», где рисунки лежат вразброс. Двух-трёх рисунков на экран мало для развёрнутого окна, поэтому по 2 дополнительных мелких на экран.
+
+Сохранить в `astra-inbox\margins\`, PNG 512×512 с прозрачностью, рядом `.prompt.txt`. Приложить принятые `marginsail-pokedex.png`, `exp-tracks.png`, `nursery-paws.png` как образец штриха.
+
+| № | Файл | Экран | Subject |
+| --- | --- | --- | --- |
+| N01 | exp-tent.png | экспедиции | A small A-frame camping tent with one flap tied open, two pegs and a guy line, a few grass tufts. |
+| N02 | exp-binoculars.png | экспедиции | A pair of old field binoculars lying on their side with a loose neck strap curling around them. |
+| N03 | nursery-thermometer.png | питомник | A small glass bulb thermometer leaning slightly, with tick marks drawn as short dashes and no numbers. |
+| N04 | nursery-small-egg.png | питомник | One small spotted egg lying on a soft folded cloth, three tiny motion ticks above it as if it just wobbled. |
+| N05 | shop-coins.png | магазин | A small uneven stack of four round coins with a star stamped on the top one, one coin rolled away beside it. |
+| N06 | shop-receipt.png | магазин | A long curled paper receipt with wavy unreadable lines and a torn zigzag bottom edge. |
+| N07 | corner-yarn.png | уголок | A ball of yarn with a loose thread trailing away in a lazy loop. |
+| N08 | corner-cup.png | уголок | A mug of hot tea with a tag hanging over the rim and two thin curls of steam. |
+| N09 | pokedex-pencil.png | покедекс | A short worn pencil with an eraser end lying diagonally next to a small curled wood shaving. |
+| N10 | pokedex-footprint.png | покедекс | A single unfamiliar three-toed footprint drawn in the soil, with a small question mark scratched beside it. |
+| N11 | catch-campfire.png | поимка | A tiny campfire of three crossed sticks inside a ring of stones, small flames drawn with a few strokes. |
+| N12 | catch-leaves.png | поимка | A small tuft of tall grass with two leaves bent as if something just rustled through it, three short motion ticks. |
+| N13 | album-ribbon.png | достижения | A rosette ribbon award with two hanging tails and a plain round centre with no marks. |
+| N14 | album-star.png | достижения | A hand-drawn five-pointed star doodle with a quick double outline and two short sparkle ticks. |
+
+Общая часть промпта (Subject подставить из таблицы, Output: exactly 512 x 512 pixels, PNG with alpha):
+
+```
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 70 to 160 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands. Match the attached accepted margin sketches exactly in line weight and hand.
+
+Subject: <из таблицы>
+
+Output: exactly 512 x 512 pixels, PNG with alpha.
+```
+
+Приёмка: на 70–100 px на #101426 предмет узнаётся; та же рука и толщина, что у принятых 26 зарисовок; ни букв, ни цифр, ни реальных покемонов.

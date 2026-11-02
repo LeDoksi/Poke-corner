@@ -78,6 +78,8 @@ public partial class OnboardingWindow : Window
         StepCounterText.Text = $"ШАГ {_stepIndex + 1} ИЗ {Steps.Length}";
         BackButton.IsEnabled = _stepIndex > 0;
         NextButton.Content = _stepIndex == Steps.Length - 1 ? "В мой уголок" : "Дальше";
+        // On the last step «В мой уголок» already ends the tour; «Позже» beside it was a second exit.
+        SkipButton.Visibility = _stepIndex == Steps.Length - 1 ? Visibility.Collapsed : Visibility.Visible;
 
         var activeBrush = (Brush)FindResource("UiForestBrush");
         var inactiveBrush = (Brush)FindResource("CardBorderBrush");
@@ -97,9 +99,22 @@ public partial class OnboardingWindow : Window
         return content;
     }
 
+    private static readonly (string Sketch, string Note)[] TourDiary =
+    [
+        ("rail-corner", "Это наш уголок. Тут ждут, пока я работаю."),
+        ("rail-pokedex", "Покеболы копятся сами. Главное — открывать."),
+        ("rail-expeditions", "Рюкзак собран. Из похода возвращаются всегда."),
+        ("rail-nursery", "Двое родителей — одно яйцо. И столько вопросов."),
+        ("rail-corner", "Гладить, кормить, ждать. Эволюция любит терпеливых."),
+        ("rail-album", "Подарок! Открою в уголке."),
+    ];
+
     private void ShowIllustration()
     {
         Illustration.Children.Clear();
+        var (sketch, note) = TourDiary[Math.Clamp(_stepIndex, 0, TourDiary.Length - 1)];
+        TourSketch.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri($"pack://application:,,,/PokeCorner;component/Assets/NightDiary/sketch-{sketch}.png"));
+        TourNote.Text = note;
         System.Windows.Controls.Image Add(System.Windows.Media.ImageSource source, double width)
         {
             var image = new System.Windows.Controls.Image { Source = source, Width = width, Stretch = System.Windows.Media.Stretch.Uniform, Margin = new Thickness(8) };
@@ -135,8 +150,11 @@ public partial class OnboardingWindow : Window
         else
         {
             var count = _stepIndex == 5 ? Math.Clamp(_giftQueueCount?.Invoke() ?? 2, 0, 2) : 1;
-            if (count == 0) Add((System.Windows.Media.ImageSource)FindResource("UiBallOpenImage"), 130);
-            for (var i = 0; i < count; i++) Add((System.Windows.Media.ImageSource)FindResource("UiBallClosedImage"), 130);
+            // The 40 px pixel ball at exactly ×3, nearest-neighbour, so its pixels stay square.
+            void Ball(string key) => System.Windows.Media.RenderOptions.SetBitmapScalingMode(Add((System.Windows.Media.ImageSource)FindResource(key), 120),
+                System.Windows.Media.BitmapScalingMode.NearestNeighbor);
+            if (count == 0) Ball("UiBallOpenImage");
+            for (var i = 0; i < count; i++) Ball("UiBallClosedImage");
         }
     }
 

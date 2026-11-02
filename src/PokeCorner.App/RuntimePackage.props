@@ -2741,6 +2741,7 @@
     <Content Include="..\..\docs\prototype-v1\assets\Nunito-OFL.txt" Link="Data\fonts\Nunito-OFL.txt" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\prototype-v1\assets\nunito.ttf" Link="Data\fonts\nunito.ttf" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\design-v2\final\assets\expeditions\grove.png" Link="Data\expeditions\grove.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\design-v2\final\assets\expeditions\camp.png" Link="Data\expeditions\camp.png" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\design-v2\final\assets\expeditions\lake.png" Link="Data\expeditions\lake.png" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\design-v2\final\assets\expeditions\coast.png" Link="Data\expeditions\coast.png" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\docs\design-v2\final\assets\expeditions\mountains.png" Link="Data\expeditions\mountains.png" CopyToOutputDirectory="PreserveNewest" />

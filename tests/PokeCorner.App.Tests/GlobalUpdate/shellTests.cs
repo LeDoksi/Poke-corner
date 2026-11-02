@@ -27,11 +27,25 @@ public class ShellTests
             main.SelectedIndex = index;
             if (index == 0) nested.SelectedIndex = 1;
             settingsButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-            Assert.Equal(Visibility.Collapsed, main.Visibility);
+            Assert.Equal(Visibility.Visible, ((FrameworkElement)menu.FindName("SettingsContent")).Visibility);
+            Assert.Equal(Visibility.Visible, main.Visibility);
             settingsButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             Assert.Equal(index, main.SelectedIndex);
             if (index == 0) Assert.Equal(1, nested.SelectedIndex);
         }
+    });
+
+    [Fact]
+    public void CatchPageLeadsBackToTheCornerHome() => WpfTestHost.Run(() =>
+    {
+        var menu = CreateMenu(new AppState());
+        var nested = (TabControl)menu.FindName("CornerTabs");
+        menu.Navigate(MenuSection.Catch);
+        Assert.Same(menu.FindName("CatchTab"), nested.SelectedItem);
+        var catchView = (CatchView)((TabItem)menu.FindName("CatchTab")).Content;
+        ((Button)catchView.FindName("BackToCornerButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        Assert.Same(menu.FindName("CornerHomeTab"), nested.SelectedItem);
+        Assert.Same(menu.FindName("CornerTab"), ((TabControl)menu.FindName("MenuTabControl")).SelectedItem);
     });
 
     [Fact]
@@ -139,7 +153,8 @@ public class ShellTests
         Assert.Equal(6, ((StackPanel)shop.FindName("BerriesPanel")).Children.Count);
 
         menu.Navigate(MenuSection.Settings);
-        Assert.Equal(Visibility.Collapsed, tabs.Visibility);
+        Assert.Equal(Visibility.Visible, tabs.Visibility); // the section rail stays beside Settings
+        Assert.Equal(Visibility.Visible, ((ContentControl)menu.FindName("SettingsContent")).Visibility);
         var settingsView = (SettingsView)((ContentControl)menu.FindName("SettingsContent")).Content;
         Assert.Equal(30, ((Slider)settingsView.FindName("EffectsSoundVolumeSlider")).Value);
         ((Slider)settingsView.FindName("EffectsSoundVolumeSlider")).Value = 0;
@@ -151,9 +166,17 @@ public class ShellTests
             Width = 1,
             Height = 1
         });
-        var escape = new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Escape)
+        // The tunnelling Preview pass must leave Esc to the open screen (pet page, picker, drop-down);
+        // only the bubbling KeyDown that nobody claimed closes Settings.
+        var preview = new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Escape)
         {
             RoutedEvent = Keyboard.PreviewKeyDownEvent
+        };
+        menu.RaiseEvent(preview);
+        Assert.False(preview.Handled);
+        var escape = new KeyEventArgs(Keyboard.PrimaryDevice, inputSource, 0, Key.Escape)
+        {
+            RoutedEvent = Keyboard.KeyDownEvent
         };
         menu.RaiseEvent(escape);
         Assert.True(escape.Handled);

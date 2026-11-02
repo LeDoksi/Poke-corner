@@ -1,0 +1,20 @@
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-6ce9919b-429f-498c-8130-2dd1121799b5.png
+References: ["C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-reorder\\pokedex-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-reorder\\expeditions-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\rail-reorder\\nursery-reference.png"]
+Export: crop to alpha bounds; proportional LANCZOS fit to 206 x 206; center in transparent 256 x 256; RGB #9A8FBE with generated alpha.
+Status: for Georgy and Claude review.
+
+Original prompt:
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
+
+Subject: a plump round drawstring pouch seen from the front, a simple gathered neck tied with one band, and one small blank tag hanging from it. Nothing else: no tassels, no rope ends, no berries, no coins, no folds or wrinkles inside the body. At most eight strokes in total. It must read as "shop / pouch" at 24 px.
+
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
+
+Sent prompt:
+Night Diary style navigation icon for a cozy desktop Pokémon companion app, drawn like a pencil sketch from a Pokémon trainer's travel diary. Match the attached accepted rail icons (notebook, map, egg) exactly in line weight and simplicity: one bold confident outline, about 22 px thick at full size, slightly imperfect hand-drawn line, no hatching. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. No fill, no second colour, no gradients, no glow, no frame, no text.
+
+Subject: a plump round drawstring pouch seen from the front, a simple gathered neck tied with one band, and one small blank tag hanging from it. Nothing else: no tassels, no rope ends, no berries, no coins, no folds or wrinkles inside the body. At most eight strokes in total. It must read as "shop / pouch" at 24 px.
+
+Centered, fills about 80% of the canvas with at least 8% transparent margin. Output: exactly 256 x 256 pixels, PNG with alpha.
+
+Reference images are composited onto dark navy only to show their alpha. Your output must have genuine transparency. Follow the subject and eight-stroke maximum strictly; do not borrow extra details from the references.

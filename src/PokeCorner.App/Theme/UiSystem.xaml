@@ -10,8 +10,11 @@
  <BitmapImage x:Key="UiNurseryImage" UriSource="/PokeCorner;component/Assets/UiSystem/nursery.png" />
  <BitmapImage x:Key="UiNurseryWaitingImage" UriSource="/PokeCorner;component/Assets/UiSystem/nursery-waiting.png" />
  <BitmapImage x:Key="UiNurseryReadyImage" UriSource="/PokeCorner;component/Assets/UiSystem/nursery-ready.png" />
- <BitmapImage x:Key="UiBallClosedImage" UriSource="/PokeCorner;component/Assets/UiSystem/ball-closed.png" />
- <BitmapImage x:Key="UiBallOpenImage" UriSource="/PokeCorner;component/Assets/UiSystem/ball-open.png" />
+ <!-- Pixel ball drawn as one set of parts (docs/design-v3/night-diary/pixel-ball): 40 px, shown at whole multiples with NearestNeighbor. -->
+ <BitmapImage x:Key="UiBallClosedImage" UriSource="/PokeCorner;component/Assets/UiSystem/ball-px-0.png" />
+ <BitmapImage x:Key="UiBallOpening1Image" UriSource="/PokeCorner;component/Assets/UiSystem/ball-px-1.png" />
+ <BitmapImage x:Key="UiBallOpening2Image" UriSource="/PokeCorner;component/Assets/UiSystem/ball-px-2.png" />
+ <BitmapImage x:Key="UiBallOpenImage" UriSource="/PokeCorner;component/Assets/UiSystem/ball-px-3.png" />
  <Style x:Key="UiGreenProgressBarStyle" TargetType="ProgressBar">
   <Setter Property="Height" Value="9"/><Setter Property="Foreground" Value="#C4ABF0"/><Setter Property="Background" Value="#23253C"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ProgressBar"><Grid><Border x:Name="PART_Track" CornerRadius="5" Background="{TemplateBinding Background}"/><Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}"/></Grid></ControlTemplate></Setter.Value></Setter>

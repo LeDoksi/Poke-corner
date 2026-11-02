@@ -11080,38 +11080,38 @@
     {
       "path": "docs/design-v2/final/assets/shop/aspear.png",
       "target": "final/assets/shop/aspear.png",
-      "bytes": 36206,
-      "sha256": "47917d71205c76b967af86f4c3efe21f0576181a1a84858c75c8b620fa2101eb"
+      "bytes": 27175,
+      "sha256": "852a78b654bb88d16e9a2a7977790472e0faacf102f88000a630ace9c45c406d"
     },
     {
       "path": "docs/design-v2/final/assets/shop/care-booster.png",
       "target": "final/assets/shop/care-booster.png",
-      "bytes": 27175,
-      "sha256": "758a3b9ab93ec4a7687cc4fd1edbb0460c64f6c5c11734175de3bec7213c7f41"
+      "bytes": 20603,
+      "sha256": "6338309cd62b45725e3017ac88733883e59e6e73ece843bcdf502db9542149fe"
     },
     {
       "path": "docs/design-v2/final/assets/shop/cheri.png",
       "target": "final/assets/shop/cheri.png",
-      "bytes": 34541,
-      "sha256": "02f23d5f8cd7ababb3493c4c005264d5ce1fa05763c62d7fb3156b532a99c51d"
+      "bytes": 26238,
+      "sha256": "f565b0f6fc89d32c8ab56de99489f14759b4f19fc51bc44372c51c36abddc236"
     },
     {
       "path": "docs/design-v2/final/assets/shop/chesto.png",
       "target": "final/assets/shop/chesto.png",
-      "bytes": 36367,
-      "sha256": "ea1219082fdb5a9f2d7988569f13adb8198b350119117381a63db715aa3a8e60"
+      "bytes": 26144,
+      "sha256": "8d349f533eee0d8273362641ce6bf8114e600711fe3ce10e1c6566190b7b391f"
     },
     {
       "path": "docs/design-v2/final/assets/shop/evolution-stone.png",
       "target": "final/assets/shop/evolution-stone.png",
-      "bytes": 37935,
-      "sha256": "d9e38da57838e24cf38d37bc35463d07adec9be497f39fef4fbcfd642c572b2f"
+      "bytes": 27370,
+      "sha256": "79afca9973cf8a6a5f3f9d47d921dc44fd6fbf95163fe368308e597ea4d592f1"
     },
     {
       "path": "docs/design-v2/final/assets/shop/lucky-charm.png",
       "target": "final/assets/shop/lucky-charm.png",
-      "bytes": 31353,
-      "sha256": "c4ddb698179e14769cb30bbb8002ca93c5dd1e3a52941e1e4c55aa2b1bbe9d6f"
+      "bytes": 17777,
+      "sha256": "79b0beb2197e3661fd700c361c23276af5acfbbb8d5284bdf607a9f2097106a5"
     },
     {
       "path": "docs/design-v2/final/assets/shop/manifest.json",
@@ -11122,38 +11122,38 @@
     {
       "path": "docs/design-v2/final/assets/shop/offspring-charm.png",
       "target": "final/assets/shop/offspring-charm.png",
-      "bytes": 36726,
-      "sha256": "3c0b5ccda69f62b50c30ee31daad4161c81e1737e2d840cdf3d6f183535eec59"
+      "bytes": 28988,
+      "sha256": "9844a07cf4109a7714303a261aaa1d4d0faf6234ff277cecd8bb262d354e8dd9"
     },
     {
       "path": "docs/design-v2/final/assets/shop/oran.png",
       "target": "final/assets/shop/oran.png",
-      "bytes": 37778,
-      "sha256": "3f23be9ac45897eca92019eaf10aff57dfeab13165274f1f0af278f75daeabc1"
+      "bytes": 29273,
+      "sha256": "4d16df3b95ad53ee88547dee2dfe9862cc8c96b65ab82b7a570557cf32720547"
     },
     {
       "path": "docs/design-v2/final/assets/shop/pecha.png",
       "target": "final/assets/shop/pecha.png",
-      "bytes": 29372,
-      "sha256": "9c12effee3e1c6f4a8127e0638884a096ad8ff4602a54b4c6c4a3f34a8e53a52"
+      "bytes": 22972,
+      "sha256": "b6264dba48b3f1d75cc095c67415f73cd0e45c7b5be745599c14abcf1966d782"
     },
     {
       "path": "docs/design-v2/final/assets/shop/rawst.png",
       "target": "final/assets/shop/rawst.png",
-      "bytes": 32016,
-      "sha256": "d82ad3c1b83ce1a50037e227db99a0ba0bbeec1fd001ad89addfe71feec9e399"
+      "bytes": 24678,
+      "sha256": "6d22835576e6d173694f4ab0dd0356eff349cea511ef631069630a3d0d81cebe"
     },
     {
       "path": "docs/design-v2/final/assets/shop/treats.png",
       "target": "final/assets/shop/treats.png",
-      "bytes": 39459,
-      "sha256": "3e81f6f1453a8286fb36bf33b1932a1a4381848c2b70fd229cc556102922cd8a"
+      "bytes": 27152,
+      "sha256": "8ec153d5ac96d52486a23146fa2b49ae7201d25e9725019b15cceb8c5f935c9c"
     },
     {
       "path": "docs/design-v2/final/assets/shop/xp-potion.png",
       "target": "final/assets/shop/xp-potion.png",
-      "bytes": 36674,
-      "sha256": "762516998349fe2735d7441b9e9e7ca67338d1a7b9c1e0643374eaf2d66b910f"
+      "bytes": 25365,
+      "sha256": "39a4fef6cee7a6864f62dc1bf1f6a4e84b8c5f3b1d0c2446286dd5f9de92717e"
     },
     {
       "path": "docs/design-v2/final/balance.json",
@@ -16444,8 +16444,14 @@
     {
       "path": "docs/design-v2/final/assets/expeditions/grove.png",
       "target": "expeditions/grove.png",
-      "bytes": 3634982,
-      "sha256": "d3962771a460e1f228f8e72d8b9d998060ea1b5e7f5e88704b67984e73d358ff"
+      "bytes": 2986554,
+      "sha256": "10ba0ef0e52d25e1ffee9e0f93db6467e0f3701106fb31439d102244c6e66df6"
+    },
+    {
+      "path": "docs/design-v2/final/assets/expeditions/camp.png",
+      "target": "expeditions/camp.png",
+      "bytes": 4100553,
+      "sha256": "871279fdc56d551ba886edb6a551e4f4f27816d6b92753b37935c6daa30446ac"
     },
     {
       "path": "docs/design-v2/final/assets/expeditions/lake.png",

@@ -40,13 +40,21 @@ public sealed partial class NurseryUiTests
 
     private static NurseryView View(SaveData data, Func<NurseryRequest, Task<NurseryAction>>? start = null,
         Func<Guid, Guid, Task<NurseryAction>>? hatch = null, Action<string, int>? shortage = null,
-        Action<Guid>? openPokedex = null, Func<Guid, Task>? activate = null) =>
+        Action<Guid>? openPokedex = null, Func<Guid, Task>? activate = null,
+        Func<IReadOnlyList<(string Item, int Quantity, Guid Operation)>, Task>? buy = null) =>
         new(() => data, (ids, selected) => new NurseryService(Catalog.Value, data).Preview(ids, selected),
             start ?? (request => Task.FromResult(new NurseryService(Catalog.Value, data).Start(request))),
             hatch ?? ((id, op) => Task.FromResult(new NurseryService(Catalog.Value, data).Hatch(id, op))),
             now => Task.FromResult(new NurseryService(Catalog.Value, data).RefreshReady(now)), Catalog.Value,
             shortage ?? ((_, _) => { }), openPokedex ?? (_ => { }),
-            activate ?? (id => { data.ActiveIndividualId = id; return Task.CompletedTask; }));
+            activate ?? (id => { data.ActiveIndividualId = id; return Task.CompletedTask; }),
+            buy ?? (items =>
+            {
+                var shop = new ShopService(Catalog.Value.DataRoot);
+                foreach (var (item, quantity, operation) in items)
+                    Assert.True(shop.TryPurchase(data, item, quantity, operation).Success);
+                return Task.CompletedTask;
+            }));
 
     private static Button ShowIndividual(NurseryView view, Guid id)
     {
@@ -153,6 +161,8 @@ public sealed partial class NurseryUiTests
             Choose(view, first, second);
             var expected = new NurseryService(Catalog.Value, data).Preview([first, second]);
             ((Button)view.FindName("ShopButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Assert.Equal(Visibility.Visible, ((Border)view.FindName("CartPanel")!).Visibility);
+            ((Button)view.FindName("CartShopButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.Equal(expected.Berries.First().Key, opened.Berry);
             Assert.Equal(expected.Berries.First().Value, opened.Required);
             Assert.All(data.Berries, x => Assert.Equal(0, x.Value));
@@ -174,6 +184,7 @@ public sealed partial class NurseryUiTests
                 .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.False(((Button)view.FindName("StartButton")!).IsEnabled);
             ((Button)view.FindName("ShopButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            ((Button)view.FindName("CartShopButton")!).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.Equal(("offspring-charm", 1), opened);
             Assert.Equal(0, data.Items["offspring-charm"]);
             Assert.Null(data.Nest);
@@ -325,7 +336,7 @@ public sealed partial class NurseryUiTests
             Choose(view, first, second);
             var text = OutcomeLabels(view)
                 .Single(row => row.Text.Contains($"№{recipe.AvailableOutcomes.First(o => !o.ShinyAvailable).SpeciesId} ·"));
-            Assert.Contains("Shiny-форма пока недоступна", text.Text);
+            Assert.Contains("Шайни-форма пока недоступна", text.Text);
             Assert.DoesNotContain("%",text.Text);
         });
     }
