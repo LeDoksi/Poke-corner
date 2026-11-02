@@ -255,3 +255,38 @@ Centered, fills about 80% of the canvas with at least 8% transparent margin. Out
 ```
 
 Приёмка: на 24 и 30 px рядом с принятыми тремя значками — та же толщина, силуэт узнаётся без подписи.
+
+## Заказ 02.11 — мелкие зарисовки для внешнего поля (14)
+
+Решение Georgy 02.11: колонка экрана прижата влево, справа одно «внешнее поле», где рисунки лежат вразброс. Двух-трёх рисунков на экран мало для развёрнутого окна, поэтому по 2 дополнительных мелких на экран.
+
+Сохранить в `astra-inbox\margins\`, PNG 512×512 с прозрачностью, рядом `.prompt.txt`. Приложить принятые `marginsail-pokedex.png`, `exp-tracks.png`, `nursery-paws.png` как образец штриха.
+
+| № | Файл | Экран | Subject |
+| --- | --- | --- | --- |
+| N01 | exp-tent.png | экспедиции | A small A-frame camping tent with one flap tied open, two pegs and a guy line, a few grass tufts. |
+| N02 | exp-binoculars.png | экспедиции | A pair of old field binoculars lying on their side with a loose neck strap curling around them. |
+| N03 | nursery-thermometer.png | питомник | A small glass bulb thermometer leaning slightly, with tick marks drawn as short dashes and no numbers. |
+| N04 | nursery-small-egg.png | питомник | One small spotted egg lying on a soft folded cloth, three tiny motion ticks above it as if it just wobbled. |
+| N05 | shop-coins.png | магазин | A small uneven stack of four round coins with a star stamped on the top one, one coin rolled away beside it. |
+| N06 | shop-receipt.png | магазин | A long curled paper receipt with wavy unreadable lines and a torn zigzag bottom edge. |
+| N07 | corner-yarn.png | уголок | A ball of yarn with a loose thread trailing away in a lazy loop. |
+| N08 | corner-cup.png | уголок | A mug of hot tea with a tag hanging over the rim and two thin curls of steam. |
+| N09 | pokedex-pencil.png | покедекс | A short worn pencil with an eraser end lying diagonally next to a small curled wood shaving. |
+| N10 | pokedex-footprint.png | покедекс | A single unfamiliar three-toed footprint drawn in the soil, with a small question mark scratched beside it. |
+| N11 | catch-campfire.png | поимка | A tiny campfire of three crossed sticks inside a ring of stones, small flames drawn with a few strokes. |
+| N12 | catch-leaves.png | поимка | A small tuft of tall grass with two leaves bent as if something just rustled through it, three short motion ticks. |
+| N13 | album-ribbon.png | достижения | A rosette ribbon award with two hanging tails and a plain round centre with no marks. |
+| N14 | album-star.png | достижения | A hand-drawn five-pointed star doodle with a quick double outline and two short sparkle ticks. |
+
+Общая часть промпта (Subject подставить из таблицы, Output: exactly 512 x 512 pixels, PNG with alpha):
+
+```
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 70 to 160 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands. Match the attached accepted margin sketches exactly in line weight and hand.
+
+Subject: <из таблицы>
+
+Output: exactly 512 x 512 pixels, PNG with alpha.
+```
+
+Приёмка: на 70–100 px на #101426 предмет узнаётся; та же рука и толщина, что у принятых 26 зарисовок; ни букв, ни цифр, ни реальных покемонов.
