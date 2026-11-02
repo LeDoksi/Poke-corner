@@ -17,6 +17,11 @@
     <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
    </Border>
   </StackPanel>
+  <!-- Diary margins (D-25): behind the scrolling column, only where a wide window leaves room beside its 968 px. -->
+  <Image x:Name="NurseryMarginLeft" Grid.Row="1" Source="/PokeCorner;component/Assets/NightDiary/sketch-nursery-scheme.png" Width="190" Opacity="0.85" Visibility="Collapsed"
+         HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,24" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" />
+  <Image x:Name="NurseryMarginRight" Grid.Row="1" Source="/PokeCorner;component/Assets/NightDiary/sketch-nursery-paws.png" Width="180" Opacity="0.85" Visibility="Collapsed"
+         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,24" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" />
   <ScrollViewer x:Name="ScenePanel" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
    <StackPanel>
     <Border x:Name="SceneBorder" ClipToBounds="True" Margin="0,0,0,12">
@@ -107,6 +112,7 @@
         <TextBlock x:Name="ResultText" TextWrapping="Wrap" Margin="0,6,0,0" />
        </StackPanel>
       </Border>
+      <TextBlock x:Name="NurseryNote" Style="{StaticResource NdMarginNoteStyle}" TextAlignment="Left" HorizontalAlignment="Left" Margin="4,10,0,0" RenderTransformOrigin="0,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5" /></TextBlock.RenderTransform></TextBlock>
      </StackPanel>
      <StackPanel x:Name="RightStack" Grid.Column="1" Margin="16,0,0,0">
       <Border x:Name="PreviewPanel" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">

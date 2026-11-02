@@ -40,6 +40,7 @@ public partial class AppMenuWindow : Window
         };
         MenuTabControl.PreviewMouseLeftButtonDown += RailTab_PreviewMouseLeftButtonDown;
         ShopTab.SizeChanged += (_, _) => UpdateRailSketch();
+        SizeChanged += (_, _) => UpdateRailSketch(); // window height decides whether the note still fits
         _getSnapshot = getSnapshot;
         var workArea = SystemParameters.WorkArea;
         MinWidth = Math.Min(MinWidth, workArea.Width);
@@ -327,20 +328,37 @@ public partial class AppMenuWindow : Window
         UpdateRailSketch();
     }
 
-    // Only sections with a drawn rail sketch show one; the rest keep the rail clean until their pass.
+    // Every section has its own sketch and note at the foot of the rail (D-25); settings and hosted pages stay clean.
     private void UpdateRailSketch()
     {
-        var tab = MenuTabControl.SelectedItem;
-        var pokedex = tab == CollectionTab;
         RailSketch.Visibility = MenuTabControl.Visibility == Visibility.Visible && SettingsContent.Visibility != Visibility.Visible
-            && HostedContent.Visibility != Visibility.Visible && (tab == ExpeditionsTab || pokedex)
-            ? Visibility.Visible : Visibility.Collapsed;
-        RailCompass.Visibility = pokedex ? Visibility.Collapsed : Visibility.Visible;
-        RailMagnifier.Visibility = pokedex ? Visibility.Visible : Visibility.Collapsed;
-        RailSketchNote.Text = pokedex ? "Кто этот покемон? Узнаю — запишу." : "Компас старый, но не врёт.";
+            && HostedContent.Visibility != Visibility.Visible ? Visibility.Visible : Visibility.Collapsed;
+        var (sketch, note) = SelectedSection() switch
+        {
+            MenuSection.Pokedex => ("rail-pokedex", "Кто этот покемон? Узнаю — запишу."),
+            MenuSection.Expeditions => ("rail-expeditions", "Компас старый, но не врёт."),
+            MenuSection.Nursery => ("rail-nursery", "Яйца любят тепло и терпение."),
+            MenuSection.Shop => ("rail-shop", "Список: ягоды, косточки, не забыть сдачу."),
+            MenuSection.Achievements => ("rail-album", "Значки собираются медленно. Зато навсегда."),
+            _ => ("rail-corner", "Дома всегда кто-то ждёт.")
+        };
+        RailSketchImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri($"pack://application:,,,/PokeCorner;component/Assets/NightDiary/sketch-{sketch}.png"));
+        RailSketchNote.Text = note;
         // Sits right under the last section (Магазин), where the rail otherwise goes empty.
         if (ShopTab.ActualHeight > 0 && RailSketch.Parent is System.Windows.Media.Visual host)
-            RailSketch.Margin = new Thickness(8, ShopTab.TransformToAncestor(host).Transform(new System.Windows.Point(0, ShopTab.ActualHeight)).Y + 16, 0, 0);
+        {
+            var top = ShopTab.TransformToAncestor(host).Transform(new System.Windows.Point(0, ShopTab.ActualHeight)).Y + 16;
+            RailSketch.Margin = new Thickness(8, top, 0, 0);
+            // At 1200x660 the rail is short: the note goes first, then the sketch, so neither runs into «Настройки».
+            if (SettingsButton.ActualHeight > 0)
+            {
+                var room = SettingsButton.TransformToAncestor(host).Transform(new System.Windows.Point(0, 0)).Y - 8 - top;
+                RailSketchNote.Visibility = Visibility.Visible; RailSketchImage.Visibility = Visibility.Visible;
+                RailSketch.Measure(new System.Windows.Size(RailSketch.Width, double.PositiveInfinity));
+                if (RailSketch.DesiredSize.Height > room) RailSketchNote.Visibility = Visibility.Collapsed;
+                if (RailSketchImage.Height > room) RailSketchImage.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 
     private MenuSection SelectedSection() => MenuTabControl.SelectedItem switch

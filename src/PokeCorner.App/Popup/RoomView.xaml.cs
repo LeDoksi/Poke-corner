@@ -208,6 +208,7 @@ public partial class RoomView : UserControl
         CatchText.Text = data.PendingCatchCount > 0 ? $"Готово: {data.PendingCatchCount} · ждут в поимке" : "Копится за активность";
         TreatBar.Value = Math.Clamp((double)data.FeedingRemainderUnits / FeedingService.ActivityUnitsPerTreatEarned, 0, 1);
         TreatText.Text = $"{data.FeedingTreats} в запасе · новые за активность";
+        CornerNote.Text = CornerNoteFor(active, data);
         PetButton.IsEnabled = active is not null && _pet is not null;
         FeedButton.IsEnabled = active is not null && data.FeedingTreats > 0 && _feed is not null;
         DetailButton.Content = active is null ? "Открыть Покедекс" : "Карточка питомца";
@@ -240,6 +241,18 @@ public partial class RoomView : UserControl
             }
         }
         PositionPet();
+    }
+
+    // One true note at a time, most actionable first (D-25 notes 2-6).
+    private string CornerNoteFor(PokemonIndividual? active, SaveData data)
+    {
+        if (active is null) return "";
+        var evolving = active.ChainLength > 1 && (int)active.CurrentStage < active.ChainLength - 1 && CareText.Text.StartsWith("Уход накоплен");
+        if (evolving) return "Что-то в нём меняется. Загляну в карточку.";
+        if (data.PendingCatchCount > 0) return "Покебол ждёт. Кто же там внутри?";
+        if (data.FeedingTreats == 0) return "Лакомства кончились. Косточки — в лавке.";
+        if (active.IsShiny) return "Другого цвета. Такой спутник — редкая удача.";
+        return (active.Nickname ?? _speciesName(active.CurrentSpeciesId)) + " рядом. Работаем вместе — растём вместе.";
     }
 
     private void PositionPet()

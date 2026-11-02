@@ -99,9 +99,22 @@ public partial class OnboardingWindow : Window
         return content;
     }
 
+    private static readonly (string Sketch, string Note)[] TourDiary =
+    [
+        ("rail-corner", "Это наш уголок. Тут ждут, пока я работаю."),
+        ("rail-pokedex", "Покеболы копятся сами. Главное — открывать."),
+        ("rail-expeditions", "Рюкзак собран. Из похода возвращаются всегда."),
+        ("rail-nursery", "Двое родителей — одно яйцо. И столько вопросов."),
+        ("rail-corner", "Гладить, кормить, ждать. Эволюция любит терпеливых."),
+        ("rail-album", "Подарок! Открою в уголке."),
+    ];
+
     private void ShowIllustration()
     {
         Illustration.Children.Clear();
+        var (sketch, note) = TourDiary[Math.Clamp(_stepIndex, 0, TourDiary.Length - 1)];
+        TourSketch.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri($"pack://application:,,,/PokeCorner;component/Assets/NightDiary/sketch-{sketch}.png"));
+        TourNote.Text = note;
         System.Windows.Controls.Image Add(System.Windows.Media.ImageSource source, double width)
         {
             var image = new System.Windows.Controls.Image { Source = source, Width = width, Stretch = System.Windows.Media.Stretch.Uniform, Margin = new Thickness(8) };

@@ -484,6 +484,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)_speciesPageSize));
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
         SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · показано: {visible.Count}";
+        PokedexNote.Text = shinyLens ? "Другие цвета — и совсем другая охота." : "Силуэт знакомый, имени нет. Кто же это?"; // D-25 notes 10, 12
         SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
         SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
@@ -910,6 +911,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         PokedexCountText.Text = speciesCount == 1
             ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
+        PokedexNote.Text = "Поймать их всех — дело небыстрое."; // D-25 note 8
 
         // Filters narrow the owned list together before number, type, or catch-date sorting.
         if (IndividualTypeCombo.Items.Count == 1)

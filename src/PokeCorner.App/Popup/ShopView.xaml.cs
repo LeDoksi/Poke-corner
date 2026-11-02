@@ -327,4 +327,8 @@ public partial class ShopView : UserControl
             UpdateTotal(good);
         }
     }
+
+    // The 1100 px column leaves ~330 px each side on FullHD; at 1200x660 there is no room and the margins stay empty.
+    private void Root_SizeChanged(object sender, SizeChangedEventArgs e) =>
+        MarginLeft.Visibility = MarginRight.Visibility = (e.NewSize.Width - 1100) / 2 >= 240 ? Visibility.Visible : Visibility.Collapsed;
 }
