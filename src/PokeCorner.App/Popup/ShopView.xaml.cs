@@ -338,6 +338,7 @@ public partial class ShopView : UserControl
     private void Root_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         ShopMargin.Width = Math.Max(0, e.NewSize.Width - 24 - Math.Min(Math.Max(0, e.NewSize.Width - 48), 968) - 24);
+        DiaryMargin.KeepColumn(this, 968);
         ShopMargin.Show("shop", MarginPieces);
     }
 }

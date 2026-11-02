@@ -1131,6 +1131,7 @@ public partial class NurseryView : UserControl
     // The margin is whatever the left-aligned 968 px column leaves on the right, below the full-width scene.
     private void PlaceMargin()
     {
+        DiaryMargin.KeepColumn(this, 968);
         var column = Math.Min(Math.Max(0, ActualWidth - 48), 968);
         NurseryMargin.Width = Math.Max(0, ActualWidth - 24 - column - 16);
         NurseryMargin.Margin = new Thickness(0, SceneBorder.ActualHeight + 16, 8, 0);

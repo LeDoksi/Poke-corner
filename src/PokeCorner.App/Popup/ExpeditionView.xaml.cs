@@ -699,6 +699,7 @@ public partial class ExpeditionView : UserControl
     // The margin is whatever the left-aligned 968 px column leaves on the right, under the full-width scene (Georgy 02.11).
     private void PlaceMargin()
     {
+        DiaryMargin.KeepColumn(this, 968);
         var column = Math.Min(Math.Max(0, ActualWidth - 48), 968);
         ExpeditionMargin.Width = Math.Max(0, ActualWidth - 24 - column - 16);
         // Under the scene: the scene is opaque and full width, so the margin starts where it ends.

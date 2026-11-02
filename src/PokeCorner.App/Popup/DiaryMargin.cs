@@ -91,6 +91,23 @@ public sealed class DiaryMargin : Canvas
         catch (System.IO.IOException) { return null; } // a sketch not shipped yet simply leaves its place empty
     }
 
+    /// <summary>
+    /// A left-aligned element would shrink to its content; this gives every left-kept column piece of a screen
+    /// (MaxWidth = <paramref name="column"/>, HorizontalAlignment = Left) the full column width the window allows.
+    /// </summary>
+    public static void KeepColumn(FrameworkElement view, double column)
+    {
+        var width = Math.Max(0, Math.Min(view.ActualWidth - 48, column));
+        void Walk(object node)
+        {
+            if (node is FrameworkElement element && element.HorizontalAlignment == System.Windows.HorizontalAlignment.Left && element.MaxWidth == column)
+                element.Width = width;
+            if (node is DependencyObject parent)
+                foreach (var child in LogicalTreeHelper.GetChildren(parent)) Walk(child);
+        }
+        Walk(view);
+    }
+
     // string.GetHashCode is randomised per process; the scatter must be the same on every launch.
     private static int StableSeed(string key) => key.Aggregate(17, (hash, c) => unchecked(hash * 31 + c));
 }
