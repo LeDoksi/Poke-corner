@@ -13,10 +13,17 @@ public sealed partial class NurseryUiTests
     public void ApprovedNurseryShowsCanonicalRootsForEvolvedAndStandalonePureParents(bool standalone)
     {
         WpfTestHost.Run(()=> {
+            // D-32: recipes are keyed by family root; an evolved parent stands in for its root.
             var recipe=new NurseryCatalog(Catalog.Value).SameSpeciesRecipes.First(r=>r.IsAvailable &&
                 (standalone?Catalog.Value.Species.Count(s=>s.FamilyRootId==r.FirstParentId)==1:
-                    Catalog.Value.Species.Single(s=>s.Id==r.FirstParentId).FamilyRootId!=r.FirstParentId));
-            var (data,first,second)=State(recipe);var view=View(data);Choose(view,first,second);
+                    Catalog.Value.Species.Count(s=>s.FamilyRootId==r.FirstParentId)>1));
+            var (data,first,second)=State(recipe);
+            if(!standalone)
+            {
+                var evolved=Catalog.Value.Species.First(s=>s.FamilyRootId==recipe.FirstParentId&&s.Id!=recipe.FirstParentId);
+                foreach(var p in data.Individuals){p.CurrentSpeciesId=evolved.Id;p.ReachedSpeciesIds=[p.SpeciesId,evolved.Id];}
+            }
+            var view=View(data);Choose(view,first,second);
             var preview=new NurseryService(Catalog.Value,data).Preview([first,second]);
             Assert.All(preview.Outcomes,o=>Assert.Equal(o.SpeciesId,Catalog.Value.Species.Single(s=>s.Id==o.SpeciesId).FamilyRootId));
             Assert.All(preview.Outcomes,o=>Assert.Contains(OutcomeLabels(view),t=>t.Text.Contains($"№{o.SpeciesId} ·")));

@@ -109,18 +109,19 @@ public sealed class ExpeditionCoreTests : IDisposable
     [Fact]
     public void TwelveHalfHoursEqualSixHoursIncludingRemainder()
     {
+        // Easy keeps the 2/h floor (D-29), so levels gained between short trips can't change the rate.
         var shortTrips = State();
         var longTrip = JsonSaveStore.Clone(shortTrips);
         for (var i = 0; i < 12; i++)
         {
             var now = Utc.AddMinutes(i * 30);
             var service = new ExpeditionService(Catalog.Value, shortTrips);
-            var request = Request(shortTrips, 30, now);
+            var request = Request(shortTrips, 30, now) with { Difficulty = "easy" };
             service.Start(request);
             Assert.True(service.Claim(request.OperationId, Guid.NewGuid(), now.AddMinutes(30)).Success);
         }
         var six = new ExpeditionService(Catalog.Value, longTrip);
-        var longRequest = Request(longTrip, 360, Utc);
+        var longRequest = Request(longTrip, 360, Utc) with { Difficulty = "easy" };
         six.Start(longRequest);
         six.Claim(longRequest.OperationId, Guid.NewGuid(), Utc.AddHours(6));
         Assert.Equal(12, shortTrips.Berries["rawst"]);
@@ -153,8 +154,8 @@ public sealed class ExpeditionCoreTests : IDisposable
         var service = new ExpeditionService(Catalog.Value, state);
         var request = Request(state, 360, Utc) with { LocationId = "lake" };
         var preview = service.Preview(request);
-        Assert.Equal(12, preview.PrimaryBerries);
-        Assert.Equal(49, preview.Coins);
+        Assert.Equal(18, preview.PrimaryBerries);
+        Assert.Equal(56, preview.Coins);
         Assert.Equal(600, preview.XpPerParticipant);
         service.Start(request);
         Assert.Throws<InvalidOperationException>(() => service.Start(Request(state, 30, Utc)));
@@ -318,8 +319,8 @@ public sealed class ExpeditionCoreTests : IDisposable
     }
 
     [Theory]
-    [InlineData("normal", 2447, 18000)]
-    [InlineData("easy", 1, 400)]
+    [InlineData("normal", 9449, 10000)]
+    [InlineData("easy", 1, 200)]
     public void FractionalTeamRateCarriesExactCoinRemainder(string difficulty, long numerator, long denominator)
     {
         var state = State(3);

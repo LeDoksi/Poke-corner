@@ -5,77 +5,59 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize"
+        ShowActivated="False"
         Width="60"
         SizeToContent="Height">
-    <!-- Three filling rings stacked in a column to the LEFT of the pet: a narrow strip beside
-         the sprite fits a bottom-right pet without fighting the taskbar.
-    
-         Each ring carries its concept icon inside it (Catch/Evolution/TreatIconStyle from
-         PokedexTheme.xaml, the same glyphs the in-app progress card uses), so every gauge is
-         self-identifying at no extra space.
-    
-         The arcs are plain Ellipses driven by StrokeDashArray (see code-behind) rather than
-         geometry rebuilt per update. SizeToContent is Height-only with an explicit Width,
-         which PositionLeftOf offsets against. -->
-    <Border Background="#E6101426" BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
-            CornerRadius="12" Padding="10,10">
-        <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2" Opacity="0.5" />
-        </Border.Effect>
+    <!-- Optional desktop strip beside the pet (Settings → «Показывать прогресс рядом с питомцем»).
+         It mirrors the corner's three rows exactly: same icons (Assets/UiSystem), same order,
+         same v2 values (care for the next evolution, next pokéball, next treat), Night Diary
+         palette. Rings are Ellipses driven by StrokeDashArray from code-behind. -->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PokeCorner;component/Theme/NightDiary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="RingTrack" TargetType="Ellipse">
+                <Setter Property="Stroke" Value="{StaticResource NdRaisedBrush}" />
+                <Setter Property="StrokeThickness" Value="4" />
+            </Style>
+            <Style x:Key="RingArc" TargetType="Ellipse">
+                <Setter Property="StrokeThickness" Value="4" />
+                <Setter Property="StrokeDashCap" Value="Round" />
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="-90" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="RingIcon" TargetType="Image">
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border Background="{StaticResource NdSurfaceBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1"
+            CornerRadius="12" Padding="10">
         <StackPanel>
-
-            <Grid Width="36" Height="36" Margin="0,0,0,9" ToolTip="Прогресс до следующей поимки">
-                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
-                <Ellipse x:Name="CatchArc" Stroke="{StaticResource AccentRedBrush}" StrokeThickness="4.5"
-                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
-                    <Ellipse.RenderTransform>
-                        <RotateTransform Angle="-90" />
-                    </Ellipse.RenderTransform>
-                    <Ellipse.Effect>
-                        <DropShadowEffect Color="#C4ABF0" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
-                    </Ellipse.Effect>
-                </Ellipse>
-                <ContentControl Style="{StaticResource CatchIconStyle}" Width="15" Height="15"
-                                Foreground="{StaticResource AccentRedBrush}"
-                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Grid x:Name="EvolutionGauge" Width="36" Height="36" Margin="0,0,0,9" ToolTip="Уход для эволюции">
+                <Ellipse Style="{StaticResource RingTrack}" />
+                <Ellipse x:Name="EvolutionArc" Style="{StaticResource RingArc}" Stroke="{StaticResource NdLavenderBrush}" />
+                <Image Style="{StaticResource RingIcon}" Source="/PokeCorner;component/Assets/UiSystem/care.png" />
             </Grid>
-
-            <!-- Named + tooltip assigned from code-behind: this gauge has three readings, not
-                 one (in-progress / never evolves / final form), and a ring has no room for the
-                 words. The tooltip is where the distinction is spelled out on the desktop. -->
-            <Grid x:Name="EvolutionGauge" Width="36" Height="36" Margin="0,0,0,9"
-                  ToolTip="Прогресс до следующей эволюции">
-                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
-                <Ellipse x:Name="EvolutionArc" Stroke="{StaticResource RarityRareBrush}" StrokeThickness="4.5"
-                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
-                    <Ellipse.RenderTransform>
-                        <RotateTransform Angle="-90" />
-                    </Ellipse.RenderTransform>
-                    <Ellipse.Effect>
-                        <DropShadowEffect Color="#8FB4F0" BlurRadius="7" ShadowDepth="0" Opacity="0.7" />
-                    </Ellipse.Effect>
-                </Ellipse>
-                <ContentControl Style="{StaticResource EvolutionIconStyle}" Width="14" Height="14"
-                                Foreground="{StaticResource RarityRareBrush}"
-                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Grid x:Name="CatchGauge" Width="36" Height="36" Margin="0,0,0,9" ToolTip="Следующий покебол">
+                <Ellipse Style="{StaticResource RingTrack}" />
+                <Ellipse x:Name="CatchArc" Style="{StaticResource RingArc}" Stroke="{StaticResource NdApricotBrush}" />
+                <Image Style="{StaticResource RingIcon}" Source="/PokeCorner;component/Assets/UiSystem/catch-ball.png" />
             </Grid>
-
-            <Grid Width="36" Height="36" ToolTip="Прогресс до следующего лакомства">
-                <Ellipse Stroke="{StaticResource CardHoverBackgroundBrush}" StrokeThickness="4.5" />
-                <Ellipse x:Name="TreatArc" Stroke="{StaticResource RarityUncommonBrush}" StrokeThickness="4.5"
-                         StrokeDashCap="Round" RenderTransformOrigin="0.5,0.5">
-                    <Ellipse.RenderTransform>
-                        <RotateTransform Angle="-90" />
-                    </Ellipse.RenderTransform>
-                    <Ellipse.Effect>
-                        <DropShadowEffect Color="#7FD1A0" BlurRadius="7" ShadowDepth="0" Opacity="0.6" />
-                    </Ellipse.Effect>
-                </Ellipse>
-                <ContentControl Style="{StaticResource TreatIconStyle}" Width="15" Height="15"
-                                Foreground="{StaticResource RarityUncommonBrush}"
-                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Grid x:Name="TreatGauge" Width="36" Height="36" ToolTip="Лакомства">
+                <Ellipse Style="{StaticResource RingTrack}" />
+                <Ellipse x:Name="TreatArc" Style="{StaticResource RingArc}" Stroke="{StaticResource NdSuccessBrush}" />
+                <Image Style="{StaticResource RingIcon}" Source="/PokeCorner;component/Assets/UiSystem/treat.png" />
             </Grid>
-
         </StackPanel>
     </Border>
 </Window>

@@ -56,6 +56,6 @@
     <Resource Include="Assets\NightDiary\*.png" />
     <Resource Include="Assets\Fonts\*.ttf" />
     <Resource Include="Assets\Reactions\*.png" />
-    <Content Include="Assets\Reactions\*.wav" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\Reactions\*.wav" Link="Data\Reactions\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

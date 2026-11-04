@@ -360,7 +360,7 @@ public partial class App : System.Windows.Application
         StartExpeditionProgressCommit();
         if (_appState.IsCommitting) return;
 
-        _progressPanelWindow?.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
+        _progressPanelWindow?.UpdateProgress(DesktopProgress());
         UpdateActiveThought();
         if (_cryPlayer is not null) _cryPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.CrySoundVolume);
         if (_effectPlayer is not null) _effectPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.EffectsSoundVolume);
@@ -432,7 +432,7 @@ public partial class App : System.Windows.Application
             _progressPanelWindow = new ProgressPanelWindow();
             _progressPanelWindow.PositionLeftOf(_overlayWindow);
             // Prime the bars now rather than leaving them empty until the next tick.
-            _progressPanelWindow.UpdateProgress(ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding));
+            _progressPanelWindow.UpdateProgress(DesktopProgress());
             // Same fullscreen gate the overlay itself honours — turning the panel on from the
             // settings screen while a fullscreen app is in front must not pop it over that app.
             if (!_isFullscreenHiding)
@@ -453,6 +453,21 @@ public partial class App : System.Windows.Application
     /// Applies the corner/monitor/size settings to the overlay (dragging the progress panel
     /// along), only when something changed — repositioning on every call would fight the user
     /// dragging the pet. The settings screen calls it as the size slider moves, for a live preview.
+    private TraitRules? _panelTraits;
+    private LevelProgression? _panelLevels;
+
+    /// The desktop strip shows the corner's three values: v2 care, next pokéball, next treat.
+    private ProgressInfo DesktopProgress()
+    {
+        var basic = ProgressCalculator.Compute(_appState.Activity, _appState.Collection.GetActive(), _appState.Feeding);
+        var active = _appState.Collection.GetActive();
+        if (active is null) return basic with { EvolutionFraction = 0, EvolutionState = EvolutionProgressState.InProgress };
+        _panelTraits ??= new TraitRules(_catalogPackage.DataRoot);
+        _panelLevels ??= new LevelProgression(_catalogPackage.DataRoot);
+        var care = RoomView.CareProgress(active, _catalogPackage, _panelTraits, _panelLevels);
+        return basic with { EvolutionFraction = care.Fraction, EvolutionState = care.State };
+    }
+
     private static readonly TimeSpan RememberedSpotWait = TimeSpan.FromMinutes(5);
     private DateTimeOffset? _rememberedSpotPendingUntilUtc;
     private DateTimeOffset _lastRememberedSpotTryUtc;
@@ -878,7 +893,7 @@ public partial class App : System.Windows.Application
         {
             if (_appState.Settings.EffectsSoundVolume <= 0) { _effectPlayer?.Stop(); return; }
             // D-30: the two-bite crunch from the reactions pack; the old one only if the new file is missing.
-            var path = Path.Combine(AppContext.BaseDirectory, "Assets", "Reactions", "feeding-crunch-v2.wav");
+            var path = Path.Combine(_catalogPackage.DataRoot, "Reactions", "feeding-crunch-v2.wav");
             if (!File.Exists(path)) path = Path.Combine(_catalogPackage.DataRoot, "voice-preview", "audio", "feeding-crunch.wav");
             if (!File.Exists(path)) return;
             if (_effectPlayer is null)

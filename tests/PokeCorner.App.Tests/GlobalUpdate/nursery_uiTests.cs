@@ -342,7 +342,7 @@ public sealed partial class NurseryUiTests
     }
 
     [Theory]
-    [InlineData(false, false, "увеличилась")]
+    [InlineData(false, false, "+1 деление")]
     [InlineData(true, false, "сброшена")]
     [InlineData(false, true, "не изменилась")]
     public void HatchedResultExplainsTraitEffectAndSavedLuckChange(bool shiny, bool unsupported, string expected)

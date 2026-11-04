@@ -100,7 +100,7 @@ public sealed partial class EvolutionTests
         Assert.True(view.OpenIndividual(id));
         WpfTestHost.Layout(view, 320, 420);
         Assert.Equal(Visibility.Visible, ((Border)view.FindName("DetailRetrainingSection")).Visibility);
-        Assert.Contains("20 / 20", ((TextBlock)view.FindName("DetailRetrainingCostText")).Text);
+        Assert.Contains("×20 (в запасе 20)", ((TextBlock)view.FindName("DetailRetrainingCostText")).Text);
         Assert.Contains("Возможные новые особенности", ((TextBlock)view.FindName("DetailRetrainingOutcomesText")).Text);
         Assert.True(((Button)view.FindName("DetailRetrainButton")).IsEnabled);
         data.Berries["rawst"] = 0;
@@ -327,7 +327,7 @@ public sealed partial class EvolutionTests
         view.Refresh();
         Assert.Contains("ягод", ((TextBlock)view.FindName("DetailEvolutionReasonText")).Text);
         ((Button)view.FindName("DetailEvolutionShopButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        Assert.Equal(("oran", 8), purchase);
+        Assert.Equal(("oran", 10), purchase);
         Assert.Equal(MenuSection.Shop, destination);
         data.Berries["oran"] = 20;
         data.Nest = new NurseryState { Status = "ready", ParticipantIds = [id], Child = data.Individuals[0] };
@@ -379,7 +379,7 @@ public sealed partial class EvolutionTests
         await live.CommitAsync(new BackgroundSaveWriter(new JsonSaveStore(path)), next =>
             committed = new EvolutionService(Catalog.Value, next).Evolve(id, null, operation), () => 0);
         Assert.Equal(proposed!.SpeciesId, committed!.SpeciesId);
-        Assert.Equal(14, live.Shop.Berries["oran"]);
+        Assert.Equal(10, live.Shop.Berries["oran"]);
         File.Delete(path);
     }
 

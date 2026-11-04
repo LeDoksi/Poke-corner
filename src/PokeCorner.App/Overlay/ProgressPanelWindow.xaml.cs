@@ -8,7 +8,7 @@ public partial class ProgressPanelWindow : System.Windows.Window
 {
     // Must match the Width/Height and StrokeThickness of the gauge Ellipses in the XAML.
     private const double GaugeDiameter = 36;
-    private const double GaugeStrokeThickness = 4.5;
+    private const double GaugeStrokeThickness = 4;
 
     /// The length of one full turn of the arc, expressed in StrokeDashArray's units — which
     /// are multiples of StrokeThickness, not pixels. The stroke is centred on the ellipse's
@@ -43,18 +43,12 @@ public partial class ProgressPanelWindow : System.Windows.Window
         SetGauge(CatchArc, progress.CatchFraction);
         SetGauge(TreatArc, progress.TreatFraction);
 
-        // The evolution ring is the one gauge whose "full" is ambiguous, so it renders through
-        // the shared display helper: empty and dimmed for a species that never evolves, full
-        // for one that reached its final form, and the tooltip says which.
         SetGauge(EvolutionArc, EvolutionProgressDisplay.BarValue(progress.EvolutionFraction, progress.EvolutionState));
         EvolutionGauge.Opacity = EvolutionProgressDisplay.BarOpacity(progress.EvolutionState);
-        EvolutionGauge.ToolTip = EvolutionProgressDisplay.ToolTip(progress.EvolutionState);
+        EvolutionGauge.ToolTip = progress.EvolutionState == EvolutionProgressState.InProgress
+            ? "Уход для эволюции" : EvolutionProgressDisplay.ToolTip(progress.EvolutionState);
     }
 
-    /// Draws `fraction` of a ring by making the stroke a single dash that covers that much of
-    /// the circumference followed by a gap covering the rest — the standard donut-gauge trick,
-    /// and the reason these are plain Ellipses instead of a Path whose ArcSegment would have
-    /// to be recomputed (with its own sweep-direction and large-arc bookkeeping) every second.
     private static void SetGauge(Ellipse arc, double fraction)
     {
         fraction = Math.Clamp(fraction, 0, 1);

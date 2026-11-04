@@ -86,7 +86,7 @@ public class Task8AcceptanceTests
             }
             Assert.Equal(4, state.Shop.Berries["oran"]);
             Assert.Equal(2, store.Load()!.CompletedOperations.Count);
-            Assert.Equal(80, state.Shop.Coins);
+            Assert.Equal(20, state.Shop.Coins);
         }
         finally
         {

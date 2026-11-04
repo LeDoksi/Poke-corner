@@ -143,6 +143,23 @@ public partial class RoomView : UserControl
     private string _spriteSignature = "";
     private (int Width, int Height, int Left, int Right, int Bottom) _spriteBounds;
 
+    /// Care toward the next evolution with the v2 per-individual thresholds. Shared by the
+    /// corner and the optional desktop progress strip so both always show the same value.
+    public static (double Fraction, EvolutionProgressState State) CareProgress(PokemonIndividual active,
+        CatalogPackage? catalog, TraitRules? traits, LevelProgression? levels)
+    {
+        if (active.ChainLength <= 1) return (0, EvolutionProgressState.NeverEvolves);
+        if ((int)active.CurrentStage >= active.ChainLength - 1) return (1, EvolutionProgressState.FinalForm);
+        var required = catalog is null || traits is null || levels is null ? EvolutionCalculator.RequiredCareForNext(active.CurrentStage)
+            : EvolutionCalculator.RequiredCareForNext(active, traits, levels, catalog);
+        var previous = active.CurrentStage != EvolutionStage.Stage2 ? 0
+            : catalog is null || traits is null || levels is null ? EvolutionThresholds.Stage2Threshold
+            : EvolutionCalculator.RequiredCareForNext(active, traits, levels, catalog, EvolutionStage.Stage1);
+        var span = required - previous;
+        return (span <= 0 ? 1 : Math.Clamp((double)(active.AccumulatedCarePoints - previous) / span, 0, 1),
+            EvolutionProgressState.InProgress);
+    }
+
     public RoomView(RoomArt art, Func<SaveData> snapshot, Func<IReadOnlyList<byte[]>?> spriteFrames, Action openAchievements,
         Func<int, string>? speciesName = null, CatalogPackage? catalog = null,
         Action? pet = null, Action? feed = null, Action<Guid>? openIndividual = null, Action? openPokedex = null,
@@ -223,17 +240,14 @@ public partial class RoomView : UserControl
             PetCaption.Text += (species is null ? "" : " · " + string.Join(" · ", species.Types.Select(TypeDisplay.GetLabel)) +
                 " · " + (Enum.TryParse<RarityTier>(species.Rarity, out var tier) ? RarityDisplay.GetName(tier) : species.Rarity)) +
                 (level is null ? "" : $" · Ур. {level}");
-            var required = _catalog is null ? EvolutionCalculator.RequiredCareForNext(active.CurrentStage)
-                : EvolutionCalculator.RequiredCareForNext(active, _careTraits!, _levels!, _catalog);
-            CareText.Text = active.ChainLength <= 1 ? EvolutionProgressDisplay.NeverEvolvesLabel :
-                (int)active.CurrentStage >= active.ChainLength - 1 ? EvolutionProgressDisplay.FinalFormLabel :
-                active.AccumulatedCarePoints >= required
-                    ? "Уход накоплен · условия эволюции в карточке" : "Проводите время вместе и кормите питомца";
-            var previous = active.CurrentStage != EvolutionStage.Stage2 ? 0 : _catalog is null ? EvolutionThresholds.Stage2Threshold
-                : EvolutionCalculator.RequiredCareForNext(active, _careTraits!, _levels!, _catalog, EvolutionStage.Stage1);
-            CareBar.Value = active.ChainLength <= 1 ? 0 : (int)active.CurrentStage >= active.ChainLength - 1 ? 1 :
-                Math.Clamp((double)(active.AccumulatedCarePoints - previous) /
-                    (required - previous), 0, 1);
+            var care = CareProgress(active, _catalog, _careTraits, _levels);
+            CareText.Text = care.State switch
+            {
+                EvolutionProgressState.NeverEvolves => EvolutionProgressDisplay.NeverEvolvesLabel,
+                EvolutionProgressState.FinalForm => EvolutionProgressDisplay.FinalFormLabel,
+                _ => care.Fraction >= 1 ? "Уход накоплен · условия эволюции в карточке" : "Проводите время вместе и кормите питомца"
+            };
+            CareBar.Value = EvolutionProgressDisplay.BarValue(care.Fraction, care.State);
         }
         else
         {

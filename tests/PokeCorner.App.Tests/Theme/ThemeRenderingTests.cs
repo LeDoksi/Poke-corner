@@ -967,36 +967,33 @@ public class ThemeRenderingTests
             // Narrow: one gauge wide, so it fits beside the pet without fighting the taskbar.
             Assert.True(panel.Width <= 80, $"panel is {panel.Width}px wide");
 
-            var arcs = new[] { "CatchArc", "EvolutionArc", "TreatArc" }
+            // Same order as the corner card: care for evolution, next pokéball, treats.
+            var arcs = new[] { "EvolutionArc", "CatchArc", "TreatArc" }
                 .Select(name => (System.Windows.Shapes.Ellipse)panel.FindName(name)!)
                 .ToList();
 
             var colors = arcs.Select(a => ((SolidColorBrush)a.Stroke).Color).ToList();
             Assert.Equal(3, colors.Distinct().Count());
 
-            // Stacked one under the other, NOT side by side: each gauge's top is strictly
-            // below the previous one's, and they all share the same left edge.
             var tops = arcs.Select(a => a.TransformToAncestor(root).Transform(new Point(0, 0))).ToList();
-            Assert.True(tops[1].Y > tops[0].Y, "evolution gauge is not below the catch gauge");
-            Assert.True(tops[2].Y > tops[1].Y, "treat gauge is not below the evolution gauge");
+            Assert.True(tops[1].Y > tops[0].Y, "catch gauge is not below the care gauge");
+            Assert.True(tops[2].Y > tops[1].Y, "treat gauge is not below the catch gauge");
             Assert.Equal(tops[0].X, tops[1].X, precision: 2);
             Assert.Equal(tops[0].X, tops[2].X, precision: 2);
 
-            // Big enough to read a fill level on at a glance.
             foreach (var arc in arcs)
             {
                 Assert.True(arc.ActualWidth >= 30, $"gauge is only {arc.ActualWidth}px across");
             }
 
-            // One icon per concept, and they must be the SHARED theme styles so the in-app
-            // progress card renders the identical glyphs.
-            var icons = Descendants(root).OfType<ContentControl>().ToList();
-            var iconStyles = icons.Select(i => i.Style).ToList();
-            Assert.Equal(3, iconStyles.Distinct().Count());
-            foreach (var key in new[] { "CatchIconStyle", "EvolutionIconStyle", "TreatIconStyle" })
-            {
-                Assert.Contains(Application.Current.Resources[key], iconStyles);
-            }
+            // The same Night Diary icons the corner card uses, never the old v1 glyphs.
+            var icons = Descendants(root).OfType<System.Windows.Controls.Image>()
+                .Select(i => i.Source.ToString()).ToList();
+            Assert.Equal(3, icons.Count);
+            Assert.Contains(icons, s => s.EndsWith("UiSystem/care.png"));
+            Assert.Contains(icons, s => s.EndsWith("UiSystem/catch-ball.png"));
+            Assert.Contains(icons, s => s.EndsWith("UiSystem/treat.png"));
+            Assert.Empty(Descendants(root).OfType<ContentControl>());
         });
 
     /// Item 6, the other half of "the same icon in both places": the in-app "Прогресс" card

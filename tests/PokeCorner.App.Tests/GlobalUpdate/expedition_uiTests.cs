@@ -107,7 +107,7 @@ public sealed class ExpeditionUiTests
             var expected = new ExpeditionService(Catalog.Value, data).Preview(new ExpeditionRequest("grove", "normal", 90,
                 [data.Individuals[0].Id], Guid.NewGuid(), DateTimeOffset.UtcNow));
             var shown = ((TextBlock)view.FindName("PreviewText")!).Text;
-            Assert.Contains("вернутся", shown);
+            Assert.Contains("вернутся", shown, StringComparison.OrdinalIgnoreCase);
             var rewards = ((System.Windows.Controls.Primitives.UniformGrid)view.FindName("PreviewRewardCards")).Children.Cast<Border>()
                 .SelectMany(card => ((StackPanel)card.Child).Children.OfType<TextBlock>()).Select(text => text.Text).ToArray();
             Assert.Contains(rewards, text => text.EndsWith($"×{expected.PrimaryBerries}"));

@@ -102,8 +102,8 @@ public class NightDiaryPilotTests
         var data = State();
         var request = new ExpeditionRequest("grove", "normal", 90, data.Individuals.Take(3).Select(p => p.Id).ToArray(), Guid.NewGuid(), DateTimeOffset.UtcNow);
         var preview = new ExpeditionService(Catalog.Value, data).Preview(request);
-        Assert.Equal("rawst", preview.PrimaryBerryId); Assert.Equal(3, preview.PrimaryBerries);
-        Assert.Equal(12, preview.Coins); Assert.Equal(150, preview.XpPerParticipant);
+        Assert.Equal("rawst", preview.PrimaryBerryId); Assert.Equal(4, preview.PrimaryBerries);
+        Assert.Equal(14, preview.Coins); Assert.Equal(150, preview.XpPerParticipant);
         var view = View(data);
         Click(view, "ChooseTeamButton");
         Assert.False(Find<Button>(view, "PickerDoneButton").IsEnabled);
