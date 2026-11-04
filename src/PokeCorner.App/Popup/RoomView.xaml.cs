@@ -373,7 +373,7 @@ public partial class RoomView : UserControl
         const int shown = 4;
         foreach (var item in items.Take(items.Count > shown ? shown - 1 : shown))
         {
-            var chip = new Button
+            var chip = new System.Windows.Controls.Button
             {
                 Content = "✦  " + item.Text, Style = (Style)FindResource("SecondaryButtonStyle"),
                 Margin = new Thickness(0, 0, 8, 6), Padding = new Thickness(12, 4, 12, 4),
@@ -386,7 +386,7 @@ public partial class RoomView : UserControl
         if (items.Count > shown)
         {
             var rest = items.Skip(shown - 1).ToArray();
-            var more = new Button
+            var more = new System.Windows.Controls.Button
             {
                 Content = $"ещё {rest.Length}", Style = (Style)FindResource("SecondaryButtonStyle"),
                 Margin = new Thickness(0, 0, 8, 6), Padding = new Thickness(12, 4, 12, 4),
