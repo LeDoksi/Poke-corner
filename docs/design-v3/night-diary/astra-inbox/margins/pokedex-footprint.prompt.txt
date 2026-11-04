@@ -1,0 +1,22 @@
+Date: 2026-11-02 Europe/Moscow
+Generation: built-in image_gen
+Status: delivered for Georgy and Claude review.
+Source: C:\Users\Georgy\.codex\generated_images\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\exec-3aa5373c-df8e-421c-96ad-32cfc9ea3bbe.png
+References: ["C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\margins-2026-11-02\\rail-pokedex-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\margins-2026-11-02\\exp-tracks-reference.png", "C:\\Users\\Georgy\\.codex\\visualizations\\2026\\10\\29\\01a187d0-dcd8-7853-a129-dbb3fd4fe9b5\\margins-2026-11-02\\nursery-paws-reference.png"]
+Export: crop to alpha bounds, LANCZOS fit within 410 x 410, centered on transparent 512 x 512; visible RGB normalized to #9A8FBE; alpha retained.
+
+Original complete prompt:
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 70 to 160 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands. Match the attached accepted margin sketches exactly in line weight and hand.
+
+Subject: A single unfamiliar three-toed footprint drawn in the soil, with a small question mark scratched beside it.
+
+Output: exactly 512 x 512 pixels, PNG with alpha.
+
+Sent prompt:
+Night Diary style margin sketch for a cozy desktop Pokémon companion app. A quick but confident hand-drawn pencil line sketch from a Pokémon trainer's travel diary. One single line colour, muted lavender-grey #9A8FBE, on a genuinely transparent background. Soft graphite feel: varied line weight, slightly imperfect hand-drawn strokes, a few short hatching strokes for shadow only. No fill, no second colour, no gradients, no glow, no paper texture, no frame, no border, no text, no letters, no numbers, no logo. Lines about 6 to 8 px thick at full size so the sketch stays visible when shown at 70 to 160 px on a dark #101426 background. The subject is centered, fills about 80% of the canvas, at least 8% transparent margin on every side, uncropped. No real Pokémon species, no Poké Ball, no people, no hands. Match the attached accepted margin sketches exactly in line weight and hand.
+
+Subject: A single unfamiliar three-toed footprint drawn in the soil, with a small question mark scratched beside it.
+
+Output: exactly 512 x 512 pixels, PNG with alpha.
+
+The references are displayed on #101426 only for visibility. Output genuine transparency, not the dark background. Use the references only for pencil line character; draw only the specified subject.

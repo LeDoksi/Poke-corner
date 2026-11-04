@@ -20,6 +20,8 @@ public partial class AppMenuWindow : Window
     private bool _catchBadgePulsing;
     private readonly Func<SaveData>? _getSnapshot;
     private readonly Func<IReadOnlyList<ReadyItem>>? _readyItems;
+    private MenuSection? _railSection;
+    private readonly Dictionary<MenuSection, int> _railVisits = [];
     private readonly DispatcherTimer _snapshotTimer = new() { Interval = TimeSpan.FromSeconds(1) };
     private TaskCompletionSource<bool>? _confirmation;
     private IInputElement? _previousFocus;
@@ -341,15 +343,24 @@ public partial class AppMenuWindow : Window
     {
         RailSketch.Visibility = MenuTabControl.Visibility == Visibility.Visible && SettingsContent.Visibility != Visibility.Visible
             && HostedContent.Visibility != Visibility.Visible ? Visibility.Visible : Visibility.Collapsed;
-        var (sketch, note) = SelectedSection() switch
+        var section = SelectedSection();
+        // Screens without a side margin (corner, Pokédex, catch, album) take turns between their sketches
+        // at the foot of the rail: a new one on each visit, never on a mere resize (Astra margins 02.11).
+        if (section != _railSection) { _railSection = section; _railVisits[section] = _railVisits.GetValueOrDefault(section) + 1; }
+        var pieces = section switch
         {
-            MenuSection.Pokedex => ("rail-pokedex", "Кто этот покемон? Узнаю — запишу."),
-            MenuSection.Expeditions => ("rail-expeditions", "Компас старый, но не врёт."),
-            MenuSection.Nursery => ("rail-nursery", "Яйца любят тепло и терпение."),
-            MenuSection.Shop => ("rail-shop", "Список: ягоды, косточки, не забыть сдачу."),
-            MenuSection.Achievements => ("rail-album", "Значки собираются медленно. Зато навсегда."),
-            _ => ("rail-corner", "Дома всегда кто-то ждёт.")
+            MenuSection.Pokedex => new[] { ("rail-pokedex", "Кто этот покемон? Узнаю — запишу."),
+                ("pokedex-footprint", "Чей это след? Узнаю — запишу."), ("pokedex-pencil", "Карандаш точу: записей всё больше.") },
+            MenuSection.Expeditions => new[] { ("rail-expeditions", "Компас старый, но не врёт.") },
+            MenuSection.Nursery => new[] { ("rail-nursery", "Яйца любят тепло и терпение.") },
+            MenuSection.Shop => new[] { ("rail-shop", "Список: ягоды, косточки, не забыть сдачу.") },
+            MenuSection.Achievements => new[] { ("rail-album", "Значки собираются медленно. Зато навсегда."),
+                ("album-star", "Ещё одна звёздочка в дневник."), ("album-ribbon", "Лучшее — на полку, остальное — в память.") },
+            MenuSection.Catch => new[] { ("catch-leaves", "В траве кто-то шевелится."), ("catch-campfire", "У костра лучше слышно шорохи.") },
+            _ => new[] { ("rail-corner", "Дома всегда кто-то ждёт."), ("corner-cup", "Чай остыл, пока мы гладились."),
+                ("corner-yarn", "Клубок опять укатился под стол.") }
         };
+        var (sketch, note) = pieces[(_railVisits.GetValueOrDefault(section) + pieces.Length - 1) % pieces.Length];
         RailSketchImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri($"pack://application:,,,/PokeCorner;component/Assets/NightDiary/sketch-{sketch}.png"));
         RailSketchNote.Text = note;
         // Sits right under the last section (Магазин), where the rail otherwise goes empty.
