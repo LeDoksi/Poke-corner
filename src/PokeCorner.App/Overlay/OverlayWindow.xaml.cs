@@ -68,17 +68,29 @@ public partial class OverlayWindow : Window
     {
         var size = _spriteSizeDips > 0 ? _spriteSizeDips : 96;
         if (_spriteSource.Width <= 0) return;
-        var pad = Math.Max(0, (Width is > 0 and var w ? w : size * SpriteScaleHeadroom) - size) / 2;
+        var pad = Math.Max(0, (Width is > 0 and var w ? w : WindowSizeFor(size)) - size) / 2;
         var scale = size / Math.Max(_spriteSource.Width, _spriteSource.Height);
         var offsetX = pad + (size - _spriteSource.Width * scale) / 2;
         var offsetY = pad + (size - _spriteSource.Height * scale) / 2;
         var silhouette = new Rect(offsetX + _silhouette.X * scale, offsetY + _silhouette.Y * scale,
             _silhouette.Width * scale, _silhouette.Height * scale);
         // A whole number of screen pixels per frame pixel, matched to the sprite: 1 at the usual 96 px pet.
-        var unit = Math.Max(1, Math.Round(scale));
+        // ...but never so big that the cloud no longer fits beside the pet inside the window's headroom.
+        var unit = Math.Clamp(Math.Round(scale), 1, Math.Max(1, Math.Floor(pad / ReactionReach)));
         ReactionImage.Width = ReactionImage.Height = ReactionPlayer.FrameSize * unit;
         var windowSize = size + pad * 2;
-        var (topLeft, mirrored) = ReactionPlayer.Place(silhouette, new System.Windows.Size(windowSize, windowSize), unit, _reactions.AnchorKind);
+        // Only the part of the window that is on screen counts: in a corner the headroom hangs off the
+        // edge, and a cloud drawn there is invisible (Georgy 04.11: on a 150% laptop it landed on the pet).
+        var allowed = new Rect(0, 0, windowSize, windowSize);
+        if (IsLoaded && Width > 0)
+        {
+            var dpi = DpiFor(this);
+            var center = new System.Drawing.Point((int)((Left + windowSize / 2) * dpi.DpiScaleX), (int)((Top + windowSize / 2) * dpi.DpiScaleY));
+            var work = ToDips(System.Windows.Forms.Screen.FromPoint(center).WorkingArea, dpi);
+            var visible = Rect.Intersect(new Rect(Left, Top, windowSize, windowSize), work);
+            if (!visible.IsEmpty) allowed = new Rect(visible.X - Left, visible.Y - Top, visible.Width, visible.Height);
+        }
+        var (topLeft, mirrored) = ReactionPlayer.Place(silhouette, allowed, unit, _reactions.AnchorKind);
         Canvas.SetLeft(ReactionImage, topLeft.X);
         Canvas.SetTop(ReactionImage, topLeft.Y);
         ReactionImage.RenderTransform = mirrored ? new ScaleTransform(-1, 1) : Transform.Identity;
@@ -270,6 +282,14 @@ public partial class OverlayWindow : Window
     /// Raising any animation's peak scale past this constant re-introduces the clipping.
     public const double SpriteScaleHeadroom = 1.4;
 
+    /// How far a reaction cloud reaches past the pet's silhouette, in frame pixels (64-px frame,
+    /// anchored 18 px inside the silhouette, plus a small margin). The window adds this much on every
+    /// side on top of the scale headroom, so a cloud never has to be pushed back over the pet.
+    public const double ReactionReach = 48;
+
+    /// Window side for a pet of `size` DIPs: room for the 1.4x evolution flash plus the reaction cloud.
+    public static double WindowSizeFor(double size) => size * SpriteScaleHeadroom + 2 * ReactionReach;
+
     /// The size the sprite itself is drawn at, in DIPs — the configured pet size, not the
     /// padded window. Zero until the first PositionAt.
     private double _spriteSizeDips;
@@ -302,7 +322,7 @@ public partial class OverlayWindow : Window
         HeartEffects.Width = HeartEffects.Height = sizePixels;
         CrumbEffects.Width = CrumbEffects.Height = sizePixels;
 
-        var windowSize = sizePixels * SpriteScaleHeadroom;
+        var windowSize = WindowSizeFor(sizePixels);
         Width = windowSize;
         Height = windowSize;
 
@@ -325,8 +345,9 @@ public partial class OverlayWindow : Window
                 && IsOnWorkArea(x, y, windowSize, bounds));
         if (rememberedX is { } rememberedLeft && rememberedY is { } rememberedTop && rememberedArea is { } area)
         {
-            (Left, Top) = (Math.Clamp(rememberedLeft, area.Left, Math.Max(area.Left, area.Right - windowSize)),
-                Math.Clamp(rememberedTop, area.Top, Math.Max(area.Top, area.Bottom - windowSize)));
+            // Clamp the visible sprite, not the padded window: the transparent headroom may hang off the edge.
+            (Left, Top) = (Math.Clamp(rememberedLeft, area.Left - headroomPad, Math.Max(area.Left - headroomPad, area.Right - windowSize + headroomPad)),
+                Math.Clamp(rememberedTop, area.Top - headroomPad, Math.Max(area.Top - headroomPad, area.Bottom - windowSize + headroomPad)));
             KeepAboveAppsBelowShell(this);
             return true;
         }

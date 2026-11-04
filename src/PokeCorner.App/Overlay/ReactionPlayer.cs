@@ -215,21 +215,24 @@ public sealed class ReactionPlayer
     /// down; petting puts (16,48) 2 px right and 18 px down. No room on the right: the overlay alone is mirrored to
     /// the top-left corner. No room on top: it slides down. <paramref name="unit"/> is one frame pixel in container units.
     /// </summary>
-    public static (Point TopLeft, bool Mirrored) Place(Rect silhouette, Size container, double unit, string kind)
+    public static (Point TopLeft, bool Mirrored) Place(Rect silhouette, Size container, double unit, string kind) =>
+        Place(silhouette, new Rect(container), unit, kind);
+
+    /// `allowed` is the part of the container that is actually visible (for the desktop pet: the window
+    /// clipped to its monitor's work area). Right of the silhouette first, mirrored to the left when the
+    /// right has no room; never clamped back over the pet.
+    public static (Point TopLeft, bool Mirrored) Place(Rect silhouette, Rect allowed, double unit, string kind)
     {
         var (ax, dy) = kind == "petting" ? (16, 18) : (20, 3);
         const int ay = 48, dx = 2;
         var size = FrameSize * unit;
-        var left = silhouette.Right + (dx - ax) * unit;
-        var mirrored = false;
-        if (left + size > container.Width)
-        {
-            mirrored = true;
-            left = silhouette.Left - (dx + FrameSize - ax) * unit;
-        }
-        left = Math.Clamp(left, 0, Math.Max(0, container.Width - size));
-        var top = Math.Clamp(silhouette.Top + (dy - ay) * unit, 0, Math.Max(0, container.Height - size));
-        return (new Point(left, top), mirrored);
+        var right = silhouette.Right + (dx - ax) * unit;
+        var left = silhouette.Left - (dx + FrameSize - ax) * unit;
+        var mirrored = right + size > allowed.Right && left >= allowed.Left;
+        var x = mirrored ? left : right;
+        x = Math.Clamp(x, allowed.Left, Math.Max(allowed.Left, allowed.Right - size));
+        var top = Math.Clamp(silhouette.Top + (dy - ay) * unit, allowed.Top, Math.Max(allowed.Top, allowed.Bottom - size));
+        return (new Point(x, top), mirrored);
     }
 
     /// The visible pixels of all idle frames together, in source pixels: one stable box, not one per frame.
