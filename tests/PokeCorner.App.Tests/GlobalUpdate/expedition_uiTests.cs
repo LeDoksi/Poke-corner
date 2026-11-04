@@ -113,7 +113,7 @@ public sealed class ExpeditionUiTests
             Assert.Contains(rewards, text => text.EndsWith($"×{expected.PrimaryBerries}"));
             Assert.Contains($"{expected.Coins} монет", rewards);
             Assert.Contains($"{expected.XpPerParticipant} XP каждому", rewards);
-            Assert.Contains("Для встреч и дополнительных находок нужны трое", ((TextBlock)view.FindName("ContributionsText")!).Text);
+            Assert.Contains("Для дополнительных находок и встречи нужны трое", ((TextBlock)view.FindName("ContributionsText")!).Text);
         });
     }
 

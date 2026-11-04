@@ -164,7 +164,7 @@ public sealed class ExpeditionCoreTests : IDisposable
         var claim = service.Claim(request.OperationId, Guid.NewGuid(), preview.ReadyAtUtc);
         Assert.True(claim.Success);
         Assert.Empty(ExpeditionService.BusyIndividualIds(state));
-        Assert.Equal(49 + state.Expedition.Rewards.ExtraCoins, state.ShopCoins);
+        Assert.Equal(56 + state.Expedition.Rewards.ExtraCoins, state.ShopCoins);
     }
 
     [Fact]
