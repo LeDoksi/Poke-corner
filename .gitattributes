@@ -6,3 +6,16 @@ docs/design-v2/rarity-draft-v2.json text eol=lf
 # so they must check out byte-identical on Windows regardless of core.autocrlf.
 docs/design-v2/**/*.json text eol=lf
 docs/prototype-v1/assets/*.txt text eol=lf
+# These entries were hashed from Windows (CRLF) copies, and the frozen v1 lookup SHA
+# depends on OfflineStarterFallback.json staying CRLF, so pin them to CRLF everywhere.
+docs/design-v2/art-production/last-attempt/final-assets/manifest.json text eol=crlf
+docs/design-v2/catalog-package/runtime-content.json text eol=crlf
+docs/design-v2/catalog-package/russian-facts.json text eol=crlf
+docs/design-v2/catalog-package/russian-facts-provenance.json text eol=crlf
+docs/design-v2/final/assets/shop/manifest.json text eol=crlf
+docs/design-v2/final/DESIGN.json text eol=crlf
+docs/design-v2/final/legacy-v1/manifest.json text eol=crlf
+docs/design-v2/final/legacy-v1/OfflineStarterFallback.json text eol=crlf
+docs/design-v2/final/runtime-catalog.json text eol=crlf
+docs/design-v2/voice-preview/delivery.json text eol=crlf
+docs/prototype-v1/assets/Nunito-OFL.txt text eol=crlf
