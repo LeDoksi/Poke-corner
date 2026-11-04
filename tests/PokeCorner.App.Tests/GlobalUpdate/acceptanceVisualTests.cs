@@ -313,7 +313,7 @@ public class AcceptanceVisualTests
                 menu.Navigate(MenuSection.Pokedex); collection.OpenIndividual(data.Individuals[5].Id);
                 Click(collection, "DetailRehomeButton");
                 var rehomeOverlay = (FrameworkElement)menu.FindName("ConfirmationHost");
-                Assert.Same(menu.FindResource("UiDangerButtonStyle"), ((Button)rehomeOverlay.FindName("ConfirmButton")).Style);
+                Assert.Same(menu.FindResource("NdDialogDangerButtonStyle"), ((Button)rehomeOverlay.FindName("ConfirmButton")).Style);
                 Capture("confirm-rehome", MenuSection.Pokedex, "actual-caller", navigate: false);
                 Click(rehomeOverlay, "CancelButton");
                 Invoke(collection, "HideDetail");
