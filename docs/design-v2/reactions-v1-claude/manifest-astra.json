@@ -1,0 +1,237 @@
+{
+  "version": 1,
+  "status": "art-pilot-not-integrated",
+  "frameSize": 64,
+  "columns": 4,
+  "rows": 4,
+  "sourceGrid": [
+    4,
+    4
+  ],
+  "anchor": {
+    "feeding": [
+      20,
+      48
+    ],
+    "petting": [
+      16,
+      48
+    ],
+    "mood": [
+      20,
+      48
+    ]
+  },
+  "animations": [
+    {
+      "id": "feeding",
+      "label": "Кормление",
+      "kind": "once",
+      "sheet": "assets/feeding.png",
+      "durations": [
+        90,
+        90,
+        180,
+        100,
+        70,
+        110,
+        70,
+        120,
+        130,
+        100,
+        160,
+        240,
+        130,
+        110,
+        80,
+        60
+      ],
+      "soundFrame": 4,
+      "revision": 3,
+      "soundFile": "assets/audio/feeding-crunch-v2.wav",
+      "soundBiteOffsetsMs": [
+        0,
+        180
+      ]
+    },
+    {
+      "id": "petting",
+      "label": "Поглаживание",
+      "kind": "once",
+      "sheet": "assets/petting.png",
+      "durations": [
+        65,
+        75,
+        100,
+        110,
+        110,
+        100,
+        120,
+        140,
+        160,
+        140,
+        120,
+        120,
+        100,
+        90,
+        75,
+        60
+      ]
+    },
+    {
+      "id": "neglect-1",
+      "label": "Ты где?",
+      "kind": "persistent",
+      "sheet": "assets/neglect-1.png",
+      "enter": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "enterDurations": [
+        100,
+        120,
+        150,
+        180
+      ],
+      "hold": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        4
+      ],
+      "holdDurations": [
+        5200,
+        220,
+        220,
+        220,
+        220,
+        220,
+        220,
+        480
+      ],
+      "exit": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "exitDurations": [
+        100,
+        100,
+        90,
+        70
+      ],
+      "restFrame": 4
+    },
+    {
+      "id": "neglect-2",
+      "label": "Я вообще-то здесь",
+      "kind": "persistent",
+      "sheet": "assets/neglect-2.png",
+      "enter": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "enterDurations": [
+        100,
+        120,
+        150,
+        180
+      ],
+      "hold": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "holdDurations": [
+        250,
+        250,
+        250,
+        250,
+        250,
+        250,
+        250,
+        250
+      ],
+      "exit": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "exitDurations": [
+        100,
+        100,
+        90,
+        70
+      ],
+      "restFrame": 4,
+      "revision": 2,
+      "holdSeam": "adjacent-rotation-poses"
+    },
+    {
+      "id": "neglect-3",
+      "label": "Ну всё, надулся",
+      "kind": "persistent",
+      "sheet": "assets/neglect-3.png",
+      "enter": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "enterDurations": [
+        100,
+        120,
+        150,
+        180
+      ],
+      "hold": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        4
+      ],
+      "holdDurations": [
+        3200,
+        130,
+        150,
+        160,
+        160,
+        160,
+        180,
+        360
+      ],
+      "exit": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "exitDurations": [
+        100,
+        100,
+        90,
+        70
+      ],
+      "restFrame": 4
+    }
+  ]
+}
