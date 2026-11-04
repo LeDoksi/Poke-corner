@@ -70,7 +70,16 @@ public partial class AppMenuWindow : Window
         // resize border), so the bottom buttons hid behind it (Georgy 04.11, a 150% laptop). Clamp the
         // maximized rect to the monitor's work area.
         SourceInitialized += (_, _) =>
+        {
             System.Windows.Interop.HwndSource.FromHwnd(new System.Windows.Interop.WindowInteropHelper(this).Handle)?.AddHook(MaximizeToWorkArea);
+            FitToMonitor();
+        };
+        // SystemParameters.WorkArea above is the PRIMARY monitor's; a laptop at 150% next to a bigger
+        // primary screen got a window larger than itself (Georgy 04.11). Re-fit on the real monitor.
+        Loaded += (_, _) => FitToMonitor();
+        StateChanged += (_, _) => FitToMonitor();
+        DpiChanged += (_, _) => FitToMonitor();
+        LocationChanged += (_, _) => { if (!_fitPending) { _fitPending = true; Dispatcher.BeginInvoke(() => { _fitPending = false; FitToMonitor(); }, System.Windows.Threading.DispatcherPriority.Background); } };
         SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
         Closed += (_, _) => SystemParameters.StaticPropertyChanged -= SystemParameters_StaticPropertyChanged;
         var contentInk = (System.Windows.Media.Brush)FindResource("PrimaryTextBrush");
@@ -319,6 +328,52 @@ public partial class AppMenuWindow : Window
         System.Runtime.InteropServices.Marshal.StructureToPtr(mmi, lParam, false);
         handled = true;
         return IntPtr.Zero;
+    }
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern bool GetWindowRect(IntPtr hwnd, out NativeRect rect);
+
+    private bool _fitPending;
+    private bool _fitting;
+
+    /// Keeps the whole window on the monitor it is on: a normal window no bigger than that monitor's
+    /// work area, and a maximized one with its content pulled in from any edge that overhangs it
+    /// (frame overhang or taskbar), so the title-bar buttons and the bottom buttons stay visible.
+    private void FitToMonitor()
+    {
+        if (_fitting || Content is not FrameworkElement root) return;
+        var hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+        if (hwnd == IntPtr.Zero) return;
+        var monitor = MonitorFromWindow(hwnd, MonitorDefaultToNearest);
+        var info = new MonitorInfo { Size = System.Runtime.InteropServices.Marshal.SizeOf<MonitorInfo>() };
+        if (monitor == IntPtr.Zero || !GetMonitorInfo(monitor, ref info) || !GetWindowRect(hwnd, out var rect)) return;
+        var dpi = System.Windows.Media.VisualTreeHelper.GetDpi(this);
+        double sx = dpi.DpiScaleX, sy = dpi.DpiScaleY;
+        var work = info.Work;
+        _fitting = true;
+        try
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                root.Margin = new Thickness(Math.Max(0, work.Left - rect.Left) / sx, Math.Max(0, work.Top - rect.Top) / sy,
+                    Math.Max(0, rect.Right - work.Right) / sx, Math.Max(0, rect.Bottom - work.Bottom) / sy);
+                return;
+            }
+            root.Margin = new Thickness(0);
+            if (WindowState != WindowState.Normal) return;
+            double workW = (work.Right - work.Left) / sx, workH = (work.Bottom - work.Top) / sy;
+            MinWidth = Math.Min(MinWidth, workW);
+            MinHeight = Math.Min(MinHeight, workH);
+            if (Width > workW) Width = workW;
+            if (Height > workH) Height = workH;
+            // Window.Left/Top are DIPs of the same (system) DPI as these physical numbers.
+            double left = work.Left / sx, top = work.Top / sy, right = work.Right / sx, bottom = work.Bottom / sy;
+            if (Left + Width > right) Left = Math.Max(left, right - Width);
+            if (Top + Height > bottom) Top = Math.Max(top, bottom - Height);
+            if (Left < left) Left = left;
+            if (Top < top) Top = top;
+        }
+        finally { _fitting = false; }
     }
 
     private void ToggleMaximized()
