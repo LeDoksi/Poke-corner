@@ -8,10 +8,24 @@ public readonly record struct ShinyDraw(double Roll, double Chance);
 
 public static class ShinyRules
 {
-    public const double BaseChance = 1d / 512;
-    public const double CharmMultiplier = 4;
-    public const double NurseryLuckStep = .0025;
-    public const double NurseryChanceCap = .1;
+    // Ш-А (Georgy 04.11): 15% for every source, so collecting shiny forms is a pleasure, not a grind.
+    public const double BaseChance = .15;
+    // The shiny charm guarantees a shiny on the attempt it is spent on (any chance times this reaches 1).
+    public const double CharmMultiplier = 1 / BaseChance;
+    // D-34 (Georgy 04.11): ten visible steps of +3%, so the bar moves on every eligible hatch.
+    public const double NurseryLuckStep = .03;
+    public const int NurseryLuckSteps = 10;
+    public const double NurseryLuckMax = NurseryLuckStep * NurseryLuckSteps;
+    public const double NurseryChanceCap = BaseChance + NurseryLuckMax;
+    // The scale before D-34: +0.25% per hatch up to 10%. Old saves are converted step for step.
+    public const double LegacyNurseryLuckStep = .0025;
+
+    public static int NurseryLuckStepsOf(double luck) =>
+        Math.Clamp((int)Math.Round(luck / NurseryLuckStep, MidpointRounding.AwayFromZero), 0, NurseryLuckSteps);
+
+    public static double ConvertLegacyNurseryLuck(double legacyLuck) =>
+        !double.IsFinite(legacyLuck) || legacyLuck <= 0 ? 0
+        : Math.Min(NurseryLuckSteps, (int)Math.Round(legacyLuck / LegacyNurseryLuckStep, MidpointRounding.AwayFromZero)) * NurseryLuckStep;
 
     public static double Chance(ShinySource source, double nurseryLuck, bool charm, bool variantSupported)
     {
@@ -37,6 +51,6 @@ public static class ShinyRules
     {
         if (!double.IsFinite(currentBonus) || currentBonus < 0) throw new ArgumentOutOfRangeException(nameof(currentBonus));
         if (!variantSupported) return currentBonus;
-        return isShiny ? 0 : Math.Min(NurseryChanceCap - BaseChance, currentBonus + NurseryLuckStep);
+        return isShiny ? 0 : Math.Min(NurseryLuckMax, currentBonus + NurseryLuckStep);
     }
 }

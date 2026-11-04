@@ -29,7 +29,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private readonly Func<bool> _onEvolveRequested;
     private readonly Func<bool> _isReadyToEvolve;
     private readonly Func<Guid, EvolutionPreview>? _previewEvolution;
-    private readonly Func<Guid, int?, Guid, Task<EvolutionAction>>? _evolveIndividual;
+    private readonly Func<Guid, int?, bool, Guid, Task<EvolutionAction>>? _evolveIndividual;
     private readonly Func<Guid, RehomeQuote>? _previewRehome;
     private readonly Func<Guid, Guid, Task<RehomeAction>>? _rehomeIndividual;
     private readonly Func<Guid, int, RetrainingPreview>? _previewRetraining;
@@ -50,7 +50,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     // Initial construction supports standalone fixtures; after Unloaded only Loaded resumes presentation.
     private bool _presentationSuspended;
     private HashSet<int> _shinyOnlySpecies = [];
-    private (Guid Pet, int? Branch, Guid Operation)? _pendingEvolution;
+    private (Guid Pet, int? Branch, bool Stone, Guid Operation)? _pendingEvolution;
     private (Guid Pet, Guid Operation)? _pendingRehome;
     private readonly Dictionary<(Guid Pet, string Item), Guid> _pendingItems = new();
     private DispatcherTimer? _liveRefreshTimer;
@@ -143,7 +143,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     public CollectionView(CollectionViewModel viewModel, AppState appState, SpriteCache spriteCache, Action onPetRequested, Action onFeedRequested, Action onStateChanged, Func<IReadOnlyList<byte[]>?> getActiveSpriteFrames, Func<bool> onEvolveRequested, Func<bool> isReadyToEvolve, Func<int, bool, Task<IReadOnlyList<byte[]>?>>? getAnimatedFrames = null, Func<int, Task<byte[]?>>? fetchSprite = null,
         Func<int, bool, string?>? getSpeciesAssetPath = null, Func<Action<SaveData>, Task>? commitState = null,
         Func<Guid, EvolutionPreview>? previewEvolution = null,
-        Func<Guid, int?, Guid, Task<EvolutionAction>>? evolveIndividual = null,
+        Func<Guid, int?, bool, Guid, Task<EvolutionAction>>? evolveIndividual = null,
         Action<MenuSection>? navigate = null, Action<string, int>? buyBerries = null,
         Func<Guid, RehomeQuote>? previewRehome = null, Func<Guid, Guid, Task<RehomeAction>>? rehomeIndividual = null,
         Func<Guid, int, RetrainingPreview>? previewRetraining = null,
@@ -629,7 +629,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesPathsPanel.Children.Clear(); SpeciesPathsMessage.Visibility = Visibility.Collapsed;
         SpeciesPathsHeader.Visibility = _speciesPaths is null ? Visibility.Collapsed : Visibility.Visible;
         if (_speciesPaths?.Invoke(entry.SpeciesId, false) is not { } normal) return;
-        var owned = _appState.Collection.Individuals.Select(p => p.CurrentSpeciesId).ToHashSet();
+        // Nursery parents are whole families (D-32): owning any stage of a family counts. Pairs name family roots.
+        var owned = _appState.Collection.Individuals.Select(p => p.FamilyRootId > 0 ? p.FamilyRootId : p.CurrentSpeciesId).ToHashSet();
         AddPaths(normal, owned);
         var shiny = _speciesPaths(entry.SpeciesId, true);
         var same = shiny is not null && shiny.RouteId == normal.RouteId && shiny.Note == normal.Note
@@ -1284,18 +1285,21 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ? "Недоступные ветви отмечены в списке; вариант без ресурса не подменяется."
             : string.Empty;
         UpdateEvolutionActionState();
+        // D-33: choosing the branch is free; the stone only replaces care that is still missing.
         var choicePossible = preview.Branches.Count(x => x.Available) > 1;
-        DetailEvolutionStoneToggle.Visibility = DetailEvolutionBranchPicker.Visibility = choicePossible ? Visibility.Visible : Visibility.Collapsed;
-        DetailEvolutionStoneToggle.IsEnabled = choicePossible && preview.StonesOwned > 0 && !_detailPending;
-        if (!choicePossible || preview.StonesOwned == 0) DetailEvolutionStoneToggle.IsChecked = false;
+        var careShort = preview.CareOwned < preview.CareRequired;
+        DetailEvolutionBranchPicker.Visibility = choicePossible ? Visibility.Visible : Visibility.Collapsed;
+        DetailEvolutionBranchPicker.IsEnabled = choicePossible && !_detailPending;
+        DetailEvolutionStoneToggle.Visibility = careShort ? Visibility.Visible : Visibility.Collapsed;
+        DetailEvolutionStoneToggle.IsEnabled = preview.StoneCanFinish && !_detailPending;
+        if (!preview.StoneCanFinish) DetailEvolutionStoneToggle.IsChecked = false;
         DetailStoneStockText.Text = $"В запасе: {preview.StonesOwned}";
-        DetailEvolutionBranchPicker.IsEnabled = DetailEvolutionStoneToggle.IsChecked == true && !_detailPending;
         var signature = string.Join("|", preview.Branches.Select(x => $"{x.SpeciesId}:{x.Available}"))
             + ":" + string.Join("|", (_detailCard.IsShiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds).Order());
         if (signature == _evolutionChoicesSignature) return;
         var selected = (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int?;
         DetailEvolutionBranchPicker.Items.Clear();
-        DetailEvolutionBranchPicker.Items.Add(new ComboBoxItem { Content = "Случайная доступная ветвь · без камня" });
+        DetailEvolutionBranchPicker.Items.Add(new ComboBoxItem { Content = "Случайная ветвь" });
         foreach (var branch in preview.Branches)
         {
             var known = (_detailCard.IsShiny ? _appState.ShinySpeciesIds : _appState.NormalSpeciesIds).Contains(branch.SpeciesId);
@@ -1321,10 +1325,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private void UpdateEvolutionActionState()
     {
         if (_detailEvolutionPreview is null) return;
-        var branch = SelectedEvolutionBranch;
-        var needsStone = branch is not null && _detailEvolutionPreview.Branches.Count(x => x.Available) > 1;
-        var reason = _detailEvolutionPreview.Reason
-            ?? (needsStone && _detailEvolutionPreview.StonesOwned == 0 ? "Для выбора ветви нужен камень эволюции." : null);
+        var needsStone = UseEvolutionStone;
+        var reason = needsStone ? _detailEvolutionPreview.ReasonWithStone : _detailEvolutionPreview.Reason;
         DetailEvolutionReasonText.Text = reason?.StartsWith("Нужно ещё ", StringComparison.Ordinal) == true && reason.EndsWith(" ухода.", StringComparison.Ordinal)
             ? "Продолжай гладить и кормить питомца." : reason ?? string.Empty;
         EvolutionRequiredStoneImage.Visibility = EvolutionRequiredStoneText.Visibility = needsStone ? Visibility.Visible : Visibility.Collapsed;
@@ -1339,19 +1341,20 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (_detailPending || _detailCard is null || _previewEvolution is null || _evolveIndividual is null) return;
         var id = _detailCard.IndividualId; var generation = _detailGeneration; var branch = SelectedEvolutionBranch;
         var preview = _previewEvolution(id);
-        if (preview.Reason is not null) { DetailErrorText.Text = preview.Reason; return; }
+        var useStone = UseEvolutionStone && preview.StoneCanFinish;
+        if ((useStone ? preview.ReasonWithStone : preview.Reason) is { } blocked) { DetailErrorText.Text = blocked; return; }
         if (branch is not null && !preview.Branches.Any(x => x.SpeciesId == branch && x.Available)) return;
         _detailPending = true; RefreshDetailItems(); UpdateEvolutionActionState();
         try
         {
             var choice = branch is null ? "случайную доступную ветвь" : $"ветвь #{branch:D4}";
             if (!await ConfirmAsync("Подтвердить эволюцию?", $"Потратить {preview.BerryCost} ягод {preview.BerryId} на {choice}?"
-                + (branch is not null && preview.Branches.Count(x => x.Available) > 1 ? " Будет потрачен камень выбора." : ""), "Эволюционировать")) return;
+                + (useStone ? " Камень эволюции заменит недостающий уход." : ""), "Эволюционировать")) return;
             if (!IsCurrentDetail(id, generation)) return;
-            if (_pendingEvolution is not { } pending || pending.Pet != id || pending.Branch != branch)
-                _pendingEvolution = (id, branch, Guid.NewGuid());
+            if (_pendingEvolution is not { } pending || pending.Pet != id || pending.Branch != branch || pending.Stone != useStone)
+                _pendingEvolution = (id, branch, useStone, Guid.NewGuid());
             _evolvingIndividuals.Add(id);
-            var result = await _evolveIndividual(id, branch, _pendingEvolution.Value.Operation);
+            var result = await _evolveIndividual(id, branch, useStone, _pendingEvolution.Value.Operation);
             if (result.Success) _pendingEvolution = null;
             _onStateChanged(); Refresh();
             if (IsCurrentDetail(id, generation)) { OpenIndividual(id); DetailErrorText.Text = result.Message; }
@@ -1461,18 +1464,19 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     private const string EvolutionCart = "evolution";
     private const string RetrainingCart = "retraining";
 
-    /// Berries the evolution still lacks, plus the choice stone when there are branches to choose from
-    /// and none in stock: optional next to missing berries, the whole point when the berries are there.
+    /// Berries the evolution still lacks, plus the evolution stone while care is short and none is in stock (D-33):
+    /// optional next to missing berries, the whole point when the berries are there.
     private List<TopUpNeed> EvolutionNeeds(bool forStone)
     {
         var needs = new List<TopUpNeed>();
         if (_detailEvolutionPreview is not { Branches.Count: > 0 } preview) return needs;
         if (preview.BerriesOwned < preview.BerryCost)
             needs.Add(new(preview.BerryId, preview.BerryCost - preview.BerriesOwned, preview.BerriesOwned));
-        if (preview.Branches.Count(x => x.Available) > 1 && preview.StonesOwned == 0)
+        if (preview.CareOwned < preview.CareRequired && preview.StonesOwned == 0
+            && !preview.IsBusy && preview.Branches.Any(x => x.Available))
         {
-            var wanted = (needs.Count == 0 && forStone) || SelectedEvolutionBranch is not null;
-            needs.Add(new("evolution-stone", wanted ? 1 : 0, 0, wanted ? null : "по желанию · выбрать будущую форму"));
+            var wanted = needs.Count == 0 && forStone;
+            needs.Add(new("evolution-stone", wanted ? 1 : 0, 0, wanted ? null : "по желанию · эволюция сейчас, без ожидания ухода"));
         }
         return needs;
     }
@@ -1494,7 +1498,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var stoneOnly = !berriesShort && evolution.Count > 0;
         DetailEvolutionShopButton.Content = !cart ? "В магазин"
             : berriesShort ? $"Докупить · {DetailTopUpCart.Cost(evolution)} ●"
-            : stoneOnly ? $"Камень выбора · {DetailTopUpCart.Price("evolution-stone")} ●" : "В магазин";
+            : stoneOnly ? $"Камень эволюции · {DetailTopUpCart.Price("evolution-stone")} ●" : "В магазин";
         DetailEvolutionShopButton.ToolTip = cart && (berriesShort || stoneOnly) ? "Купить недостающее прямо здесь" : null;
         var retraining = RetrainingNeeds();
         DetailRetrainingShopButton.Visibility = retraining.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -1976,15 +1980,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var pending = _localConfirmation; _localConfirmation = null;
         LocalConfirmationHost.Visibility = Visibility.Collapsed; pending?.TrySetResult(result);
     }
-    private int? SelectedEvolutionBranch => DetailEvolutionStoneToggle.IsChecked == true
+    private int? SelectedEvolutionBranch => DetailEvolutionBranchPicker.Visibility == Visibility.Visible
         ? (DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag as int? : null;
+    private bool UseEvolutionStone => DetailEvolutionStoneToggle.IsChecked == true && _detailEvolutionPreview?.StoneCanFinish == true;
     private void EvolutionStone_Changed(object sender, RoutedEventArgs e)
     {
         if (!_isReady) return;
-        if (DetailEvolutionStoneToggle.IsChecked != true) DetailEvolutionBranchPicker.SelectedIndex = 0;
-        else if ((DetailEvolutionBranchPicker.SelectedItem as ComboBoxItem)?.Tag is not int)
-            DetailEvolutionBranchPicker.SelectedItem = DetailEvolutionBranchPicker.Items.Cast<ComboBoxItem>().FirstOrDefault(x => x.IsEnabled && x.Tag is int);
-        DetailEvolutionBranchPicker.IsEnabled = DetailEvolutionStoneToggle.IsChecked == true && !_detailPending;
         UpdateEvolutionActionState();
     }
     private void RefreshDetailItems()
@@ -2084,11 +2085,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             tile.BorderBrush = SelectedEvolutionBranch == branch.SpeciesId ? ThemeBrushes.Get("UiForestBrush") : ThemeBrushes.Get("CardBorderBrush");
             tile.MouseLeftButtonDown -= DetailEvolutionStage_Click;
             tile.MouseLeftButtonDown += (_, e) => {
-                if (DetailEvolutionStoneToggle.IsEnabled)
-                {
-                    DetailEvolutionStoneToggle.IsChecked = true;
+                if (DetailEvolutionBranchPicker.IsEnabled)
                     DetailEvolutionBranchPicker.SelectedItem = DetailEvolutionBranchPicker.Items.Cast<ComboBoxItem>().First(x => Equals(x.Tag, branch.SpeciesId));
-                }
                 e.Handled = true;
             };
             options.Children.Add(tile);

@@ -98,7 +98,7 @@ public sealed class AchievementsTests
         var state = State(catalog);
         state.DiscoveredSpeciesIds.UnionWith(Enumerable.Range(1, 100));
         state.DiscoveredSpeciesIds.Add(144);
-        state.ShinySpeciesIds.UnionWith(Enumerable.Range(1, 30));
+        state.ShinySpeciesIds.UnionWith(Enumerable.Range(1, 150));
         state.EvolutionTransitions.UnionWith(Enumerable.Range(1, 50).Select(i => $"{i}->{i + 1}"));
         var maxXp = new LevelProgression(catalog.DataRoot).MaxXp;
         state.Individuals.AddRange(Enumerable.Range(1, 100).Select(_ => new PokemonIndividual
@@ -215,8 +215,8 @@ public sealed class AchievementsTests
             }, () => 0);
             Assert.Equal(coins, store.Load()!.ShopCoins);
             Assert.Equal(0, store.Load()!.Berries["rawst"]);
-            Assert.Equal(0, store.Load()!.Berries["pecha"]);
-            Assert.Equal(0, store.Load()!.Berries["cheri"]);
+            Assert.Equal(20, store.Load()!.Berries["pecha"]); // Э-А: only the primary berry is spent
+            Assert.Equal(20, store.Load()!.Berries["cheri"]);
         }
         finally
         {
@@ -247,7 +247,7 @@ public sealed class AchievementsTests
         Assert.False(service.Retrain(individual.Id, 1, operation).Success);
         state.Nest = null;
         var preview = service.Preview(individual.Id, 1);
-        Assert.Equal(3, preview.Costs.Count);
+        Assert.Single(preview.Costs); // D-35: one primary berry
         Assert.All(preview.Costs, cost => Assert.Equal(20, cost.Required));
         Assert.DoesNotContain("collector", preview.Outcomes);
         Assert.DoesNotContain("finder", preview.Outcomes);

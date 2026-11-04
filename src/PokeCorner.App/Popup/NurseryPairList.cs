@@ -6,7 +6,8 @@ namespace PokeCorner.App.Popup;
 /// One possible baby of a pair, with its chance among the pair's available outcomes.
 public sealed record NurseryPairOutcome(int SpeciesId, int Percent, bool IsNew, bool ShinyAvailable);
 
-/// A species pair the collection can put into the nest, with the pets the nursery would use for it.
+/// A family pair the collection can put into the nest, with the pets the nursery would use for it.
+/// FirstSpeciesId/SecondSpeciesId are the families' root species (D-32: any stage is a parent).
 /// Busy is set when the collection owns the species but not enough free pets right now.
 public sealed record NurseryPairOption(NurseryRecipe Recipe, Guid FirstId, Guid SecondId,
     IReadOnlyList<NurseryPairOutcome> Outcomes, string? Busy, int BusySpeciesId = 0)
@@ -26,7 +27,7 @@ public static class NurseryPairList
     public static IReadOnlyList<NurseryPairOption> Build(SaveData data, NurseryCatalog recipes,
         Func<PokemonIndividual, string?> unavailable)
     {
-        var bySpecies = data.Individuals.GroupBy(p => p.CurrentSpeciesId).ToDictionary(g => g.Key, g => g.ToArray());
+        var bySpecies = data.Individuals.GroupBy(p => recipes.FamilyRoot(p.CurrentSpeciesId)).ToDictionary(g => g.Key, g => g.ToArray());
         var result = new List<NurseryPairOption>();
         foreach (var recipe in recipes.MixedRecipes.Concat(recipes.SameSpeciesRecipes))
         {

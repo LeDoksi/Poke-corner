@@ -175,22 +175,30 @@ public sealed class ApprovedCollectionTests
     }
 
     [Fact]
-    public void StoneSelectsExactTargetAndTurningItOffForcesCanonicalRandom() => WpfTestHost.Run(() =>
+    public void BranchChoiceIsFreeAndStoneOnlyStandsInForMissingCare() => WpfTestHost.Run(() =>
     {
         var state = new AppState(); var pet = Pet(1); state.Collection.Add(pet);
-        var selected = new List<int?>();
+        var calls = new List<(int? Branch, bool Stone)>();
+        var care = 100;
         var view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())), () => {}, () => {}, () => {}, () => null, () => false, () => false,
-            previewEvolution: _ => new([new(2, "SecretOne", true, null), new(3, "SecretTwo", true, null)], "oran", 6, 20, 1, 100, 1, false, null),
-            evolveIndividual: (_, branch, _) => { selected.Add(branch); return Task.FromResult(new EvolutionAction(true, "ok")); },
+            previewEvolution: _ => new([new(2, "SecretOne", true, null), new(3, "SecretTwo", true, null)], "oran", 10, 20, 100, care, 1, false,
+                care < 100 ? "Нужно ещё 50 ухода." : null),
+            evolveIndividual: (_, branch, stone, _) => { calls.Add((branch, stone)); return Task.FromResult(new EvolutionAction(true, "ok")); },
             confirmAsync: (_, _, _) => Task.FromResult(true));
         view.OpenIndividual(pet.Id); var stone = (CheckBox)view.FindName("DetailEvolutionStoneToggle"); var picker = (ComboBox)view.FindName("DetailEvolutionBranchPicker");
-        Assert.False(picker.IsEnabled); Assert.DoesNotContain("Secret", string.Join("|", picker.Items.Cast<ComboBoxItem>().Select(i => i.Content)));
-        stone.IsChecked = true; Assert.True(picker.IsEnabled); picker.SelectedIndex = 2;
+        // D-33: with care in place the branch is picked for free and the stone is not even shown.
+        Assert.True(picker.IsEnabled); Assert.Equal(Visibility.Collapsed, stone.Visibility);
+        Assert.DoesNotContain("Secret", string.Join("|", picker.Items.Cast<ComboBoxItem>().Select(i => i.Content)));
+        picker.SelectedIndex = 2;
         ((Button)view.FindName("DetailEvolveButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        Assert.Equal(3, selected.Single());
-        stone.IsChecked = false; picker.SelectedIndex = 1; // stale selection is ignored without stone.
+        Assert.Equal((3, false), calls.Single());
+        care = 50; view.OpenIndividual(pet.Id);
+        Assert.Equal(Visibility.Visible, stone.Visibility); Assert.True(stone.IsEnabled);
+        Assert.False(((Button)view.FindName("DetailEvolveButton")).IsEnabled);
+        stone.IsChecked = true;
+        Assert.True(((Button)view.FindName("DetailEvolveButton")).IsEnabled);
         ((Button)view.FindName("DetailEvolveButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        Assert.Equal(new int?[] { 3, null }, selected);
+        Assert.True(calls[^1].Stone);
     });
 
     [Theory]
@@ -259,7 +267,7 @@ public sealed class ApprovedCollectionTests
             view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
                 () => {}, () => {}, () => {}, () => frames, () => false, () => false,
                 previewEvolution: _ => new([new(2, "masked", true, null)], "oran", 6, 6, 1, 100, 0, false, null),
-                evolveIndividual: (_, _, _) => { calls++; return evolution.Task; },
+                evolveIndividual: (_, _, _, _) => { calls++; return evolution.Task; },
                 previewRehome: _ => new(12, null), rehomeIndividual: (_, _) => { calls++; return rehome.Task; },
                 confirmAsync: action == "local-item" ? null : (_, _, _) => pendingCommit ? Task.FromResult(true) : confirm.Task,
                 previewItem: (_, id) => new(id, id, 1, "effect", null), useItem: (_, _, _) => { calls++; return item.Task; });
@@ -334,7 +342,7 @@ public sealed class ApprovedCollectionTests
             ChainLength = 3, Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UtcNow, FirstTraitId = "fast-grower", AccumulatedCarePoints = 66500 };
         state.Collection.Add(pet); var view = new CollectionView(Vm(state), state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
             () => {}, () => {}, () => {}, () => null, () => false, () => false,
-            previewEvolution: id => new EvolutionService(catalog, state.ToSaveData(0)).Preview(id), evolveIndividual: (_, _, _) => Task.FromResult(new EvolutionAction(false, "unused")));
+            previewEvolution: id => new EvolutionService(catalog, state.ToSaveData(0)).Preview(id), evolveIndividual: (_, _, _, _) => Task.FromResult(new EvolutionAction(false, "unused")));
         view.OpenIndividual(pet.Id); var text = ((TextBlock)view.FindName("DetailEvolutionText")).Text;
         var preview = new EvolutionService(catalog, state.ToSaveData(0)).Preview(pet.Id);
         Assert.Equal(66500, preview.CareRequired);

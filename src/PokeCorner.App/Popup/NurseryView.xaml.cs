@@ -172,7 +172,7 @@ public partial class NurseryView : UserControl
         var data = _snapshot();
         if (_busy || data.Nest?.Status is "running" or "ready") return "Питомник сейчас занят.";
         PokemonIndividual? Best(int species, Guid except) => data.Individuals
-            .Where(p => p.CurrentSpeciesId == species && p.Id != except && Unavailable(data, p) == null)
+            .Where(p => _recipes.FamilyRoot(p.CurrentSpeciesId) == _recipes.FamilyRoot(species) && p.Id != except && Unavailable(data, p) == null)
             .OrderByDescending(p => p.TotalXp).FirstOrDefault();
         var first = Best(firstSpecies, Guid.Empty);
         var second = first is null ? null : Best(secondSpecies, first.Id);
@@ -308,13 +308,13 @@ public partial class NurseryView : UserControl
         // A first parent is offered only when the collection already holds a free partner for it:
         // picking a pet that can't be paired was a dead end.
         var freeBySpecies = data.Individuals.Where(p => Unavailable(data, p) == null)
-            .GroupBy(p => p.CurrentSpeciesId).ToDictionary(g => g.Key, g => g.Count());
-        bool HasPartner(PokemonIndividual p) => _recipes.Partners(p.CurrentSpeciesId).Any(species =>
-            freeBySpecies.GetValueOrDefault(species) > (species == p.CurrentSpeciesId && Unavailable(data, p) == null ? 1 : 0));
+            .GroupBy(p => _recipes.FamilyRoot(p.CurrentSpeciesId)).ToDictionary(g => g.Key, g => g.Count());
+        bool HasPartner(PokemonIndividual p) => _recipes.Partners(p.CurrentSpeciesId).Any(family =>
+            freeBySpecies.GetValueOrDefault(family) > (family == _recipes.FamilyRoot(p.CurrentSpeciesId) && Unavailable(data, p) == null ? 1 : 0));
 
         var rows = data.Individuals.Where(p => Search(p, ParentSearchBox.Text.Trim()) &&
             (string.IsNullOrEmpty(rarity) || _species.GetValueOrDefault(p.CurrentSpeciesId)?.Rarity == rarity) &&
-            (_editing == 0 ? HasPartner(p) : p.Id != _draftFirst && partners.Contains(p.CurrentSpeciesId) && Unavailable(data, p) == null))
+            (_editing == 0 ? HasPartner(p) : p.Id != _draftFirst && partners.Contains(_recipes.FamilyRoot(p.CurrentSpeciesId)) && Unavailable(data, p) == null))
             .OrderBy(p => p.CurrentSpeciesId).ThenBy(p => p.CaughtAtUtc).ThenBy(p => p.Id).ToArray();
 
         // Georgy 23.10: duplicates are rare (1-2 per species), so the species step was an extra click;
@@ -622,7 +622,8 @@ public partial class NurseryView : UserControl
     private (int A, int B) SelectedSpecies(SaveData data)
     {
         var a = data.Individuals.FirstOrDefault(p => p.Id == _first); var b = data.Individuals.FirstOrDefault(p => p.Id == _second);
-        return (a?.CurrentSpeciesId ?? 0, b?.CurrentSpeciesId ?? 0);
+        // Pairs are keyed by family roots (D-32).
+        return (a is null ? 0 : _recipes.FamilyRoot(a.CurrentSpeciesId), b is null ? 0 : _recipes.FamilyRoot(b.CurrentSpeciesId));
     }
 
     private IReadOnlyList<NurseryPairOption> VisiblePairs()
@@ -637,7 +638,8 @@ public partial class NurseryView : UserControl
                 || (int.TryParse(number, out var n) && n > 0 && n == id);
             return Species(pair.FirstSpeciesId, true) || Species(pair.SecondSpeciesId, true)
                 || pair.Outcomes.Any(o => Species(o.SpeciesId, !o.IsNew))
-                || new[] { pair.FirstId, pair.SecondId }.Any(id => data.Individuals.FirstOrDefault(p => p.Id == id)?.Nickname?.Contains(query, StringComparison.CurrentCultureIgnoreCase) == true);
+                || new[] { pair.FirstId, pair.SecondId }.Any(id => data.Individuals.FirstOrDefault(p => p.Id == id) is { } pet
+                    && (pet.Nickname?.Contains(query, StringComparison.CurrentCultureIgnoreCase) == true || Species(pet.CurrentSpeciesId, true)));
         }
         return NurseryPairList.Ordered(_pairs.Where(p => (_onlyNewPairs != true || (p.NewCount > 0 && p.Busy is null)) && Hit(p))).ToArray();
     }
@@ -691,12 +693,14 @@ public partial class NurseryView : UserControl
         Image Parent(Guid id, int species)
         {
             var pet = data.Individuals.FirstOrDefault(p => p.Id == id);
-            return new Image { Source = Sprite(species, pet?.IsShiny ?? false), Width = 36, Height = 36, Margin = new Thickness(0, 0, 2, 0), VerticalAlignment = VerticalAlignment.Center };
+            // The pet that will really sit in the nest, at its own stage (D-32), not the family's first form.
+            return new Image { Source = Sprite(pet?.CurrentSpeciesId ?? species, pet?.IsShiny ?? false), Width = 36, Height = 36, Margin = new Thickness(0, 0, 2, 0), VerticalAlignment = VerticalAlignment.Center };
         }
         Left(Parent(pair.FirstId, pair.FirstSpeciesId));
         Left(Parent(pair.SecondId, pair.SecondSpeciesId));
         var names = new StackPanel { Width = 136, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 4, 0) };
-        names.Children.Add(new TextBlock { Text = $"{SpeciesName(pair.FirstSpeciesId)} + {SpeciesName(pair.SecondSpeciesId)}", FontWeight = FontWeights.SemiBold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis });
+        string PetName(Guid id, int family) => data.Individuals.FirstOrDefault(p => p.Id == id) is { } pet ? pet.Nickname ?? SpeciesName(pet.CurrentSpeciesId) : SpeciesName(family);
+        names.Children.Add(new TextBlock { Text = $"{PetName(pair.FirstId, pair.FirstSpeciesId)} + {PetName(pair.SecondId, pair.SecondSpeciesId)}", ToolTip = $"Семьи {SpeciesName(pair.FirstSpeciesId)} и {SpeciesName(pair.SecondSpeciesId)}: подходит любая стадия", FontWeight = FontWeights.SemiBold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis });
         names.Children.Add(new TextBlock { Text = pair.Busy is { } why ? $"{SpeciesName(pair.BusySpeciesId)}: {why.ToLower(System.Globalization.CultureInfo.CurrentCulture)}" : (pair.IsSameSpecies ? $"малыш семьи · {pair.Recipe.Hours} ч" : $"ожидание {pair.Recipe.Hours} ч"), FontSize = 12, Foreground = muted, TextTrimming = TextTrimming.CharacterEllipsis });
         Left(names);
         Left(new TextBlock { Text = "→", Foreground = muted, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 6, 0) });
@@ -746,7 +750,7 @@ public partial class NurseryView : UserControl
         var a = data.Individuals.FirstOrDefault(p => p.Id == _first); var b = data.Individuals.FirstOrDefault(p => p.Id == _second);
         if (a is null || b is null) return;
         SceneTitleText.Text = $"{a.Nickname ?? SpeciesName(a.CurrentSpeciesId)} + {b.Nickname ?? SpeciesName(b.CurrentSpeciesId)}";
-        var pair = _pairs.FirstOrDefault(p => p.Matches(a.CurrentSpeciesId, b.CurrentSpeciesId));
+        var pair = _pairs.FirstOrDefault(p => p.Matches(_recipes.FamilyRoot(a.CurrentSpeciesId), _recipes.FamilyRoot(b.CurrentSpeciesId)));
         var fresh = pair?.NewCount ?? 0;
         SubtitleText.Text = (fresh == 0 ? "Все малыши этой пары уже есть в покедексе" : $"Может родиться {fresh} {NewSpeciesWord(fresh)}") +
             (pair?.Recipe.Hours is { } hours ? $" · ожидание {hours} ч" : "");

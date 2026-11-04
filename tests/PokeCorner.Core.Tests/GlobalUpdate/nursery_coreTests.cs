@@ -128,7 +128,7 @@ public sealed class NurseryCoreTests : IDisposable
         var request = Request(state, 803);
         var preview = service.Preview(request.ParentIds, request.SelectedSpeciesId, Now);
         Assert.True(preview.SelectionUseful);
-        Assert.Equal(14, preview.Berries.Values.Sum());
+        Assert.Equal(20, preview.Berries.Values.Sum());
         Assert.Equal(1, preview.OutcomeChances[803]);
         Assert.Equal(0, preview.OutcomeChances[451]);
         Assert.Equal(0, preview.ShinyChances[803]);
@@ -155,7 +155,7 @@ public sealed class NurseryCoreTests : IDisposable
         var preview = service.Preview(Request(state).ParentIds);
         Assert.False(preview.SelectionUseful);
         Assert.Single(preview.Outcomes);
-        Assert.Equal(10, preview.Berries.Values.Sum());
+        Assert.Equal(15, preview.Berries.Values.Sum());
         Assert.Throws<InvalidOperationException>(() => service.Start(Request(state, 451)));
         Assert.Equal(2, state.Items["offspring-charm"]);
         Assert.Null(state.Nest);
@@ -176,6 +176,26 @@ public sealed class NurseryCoreTests : IDisposable
         Assert.Equal(4d / 20, preview.OutcomeChances[803], 10);
         Assert.Equal(Now.AddHours(6).AddMinutes(-27), preview.ReadyAtUtc);
         Assert.All(preview.TraitsBySpecies.Values, pool => Assert.Equal(new[] { "caring-parent" }, pool));
+    }
+
+    [Fact]
+    public void LegacyLuckWithoutScaleIsConvertedOnceAndNewSaveIsLeftAlone()
+    {
+        var catalog = Catalog([26, 172], 172);
+        Directory.CreateDirectory(root);
+        var path = Path.Combine(root, "luck.json");
+        var store = new JsonSaveStore(path);
+        var state = State(catalog, 26, 26);
+        state.NurseryLuckBonus = .06;
+        store.Save(state);
+        Assert.Equal(.06, store.Load()!.NurseryLuckBonus, 10);
+
+        var node = JsonNode.Parse(File.ReadAllText(path))!.AsObject();
+        Assert.True(node.Remove("NurseryLuckScale"));
+        File.WriteAllText(path, node.ToJsonString());
+        var converted = store.Load()!;
+        Assert.Equal(10 * ShinyRules.NurseryLuckStep, converted.NurseryLuckBonus, 10); // old .06 = 24 hatches, capped at 10 steps
+        Assert.Equal(1, converted.NurseryLuckScale);
     }
 
     [Fact]
@@ -201,7 +221,7 @@ public sealed class NurseryCoreTests : IDisposable
         Assert.Equal(proposed!.Id, savedStart.Nest!.Child.Id);
         Assert.Equal(proposed.FirstTraitId, savedStart.Nest.Child.FirstTraitId);
         Assert.Equal(proposed.IsShiny, savedStart.Nest.Child.IsShiny);
-        Assert.Equal(90, savedStart.Berries["oran"]);
+        Assert.Equal(85, savedStart.Berries["oran"]);
         var liveRestart = new AppState(); liveRestart.Hydrate(savedStart);
         var hatchId = Guid.NewGuid();
         NurseryAction? proposedHatch = null;
@@ -217,7 +237,7 @@ public sealed class NurseryCoreTests : IDisposable
         var committed = store.Load()!;
         Assert.Equal(proposedHatch!.Child!.Id, hatched!.Child!.Id);
         Assert.Equal(3, committed.Individuals.Count);
-        Assert.Equal(90, committed.Berries["oran"]);
+        Assert.Equal(85, committed.Berries["oran"]);
         Assert.True(new NurseryService(catalog, committed).Hatch(request.OperationId, hatchId).Repeated);
         Assert.Equal(3, committed.Individuals.Count);
     }

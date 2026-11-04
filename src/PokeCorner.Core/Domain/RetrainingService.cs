@@ -28,7 +28,8 @@ public sealed class RetrainingService
         recipes = rules.RootElement.GetProperty("retraining").EnumerateArray().ToDictionary(
             row => row.GetProperty("speciesId").GetInt32(),
             row => row.GetProperty("berries").EnumerateObject().ToDictionary(x => x.Name, x => x.Value.GetInt32()));
-        if (recipes.Values.Any(recipe => recipe.Count != 3 || recipe.Values.Any(count => count != 20)
+        // Э-А (04.11): 20 berries of the species' primary type instead of 3 × 20.
+        if (recipes.Values.Any(recipe => recipe.Count != 1 || recipe.Values.Any(count => count != 20)
             || recipe.Keys.Any(id => !SaveMigration.BerryIds.Contains(id))))
             throw new InvalidDataException("Неверный рецепт переобучения в каталоге.");
     }
@@ -47,7 +48,7 @@ public sealed class RetrainingService
         var outcomes = traits.Allowed(individual.CurrentSpeciesId, individual.IsShiny, catalog)
             .Where(id => id != current && id != other).ToArray();
         var reason = string.IsNullOrWhiteSpace(current) ? "Этот слот ещё не открыт."
-            : costs.Length != 3 ? "Для этого вида нет рецепта переобучения."
+            : costs.Length == 0 ? "Для этого вида нет рецепта переобучения."
             : ExpeditionService.BusyIndividualIds(state).Contains(individualId) ? "Покемон занят в походе или питомнике."
             : outcomes.Length == 0 ? "Нет доступных новых особенностей."
             : costs.FirstOrDefault(x => x.Owned < x.Required) is { } missing

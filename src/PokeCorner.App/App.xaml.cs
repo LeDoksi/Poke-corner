@@ -268,8 +268,11 @@ public partial class App : System.Windows.Application
         _overlayWindow.ForegroundWindowChanged += ReassertOverlayTopmost;
         // Remember where the player actually leaves the pet, so relaunch/reboot restores that
         // spot instead of always snapping back to the configured corner.
+        // A monitor attached late (after a PC restart) or the layout changed: try the remembered spot again.
+        Microsoft.Win32.SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
         _overlayWindow.PositionChanged += () =>
         {
+            _rememberedSpotPendingUntilUtc = null; // the player chose a new spot themselves
             var x = (int)_overlayWindow.Left;
             var y = (int)_overlayWindow.Top;
             _appState.RunWhenReady(() =>
@@ -334,6 +337,7 @@ public partial class App : System.Windows.Application
     private void OnGrowthTick()
     {
         if (!_appState.IsCommitting) ReconcileSettingsState();
+        TryRestoreRememberedPetSpot();
 
         // See FallbackActivityMonitor for why this exists: some anti-cheat drivers (Genshin
         // Impact's mhyprot2.sys is the reported case) silently stop GlobalInputHook's low-level
@@ -441,6 +445,27 @@ public partial class App : System.Windows.Application
     /// Applies the corner/monitor/size settings to the overlay (dragging the progress panel
     /// along), only when something changed — repositioning on every call would fight the user
     /// dragging the pet. The settings screen calls it as the size slider moves, for a live preview.
+    private static readonly TimeSpan RememberedSpotWait = TimeSpan.FromMinutes(5);
+    private DateTimeOffset? _rememberedSpotPendingUntilUtc;
+    private DateTimeOffset _lastRememberedSpotTryUtc;
+
+    /// Puts the pet back on its remembered drag spot once that spot's monitor exists again.
+    /// Only while a fallback is pending, so it never fights a drag the player made since.
+    private void TryRestoreRememberedPetSpot(bool force = false)
+    {
+        if (_rememberedSpotPendingUntilUtc is not { } until || _overlayWindow is null) return;
+        var now = DateTimeOffset.UtcNow;
+        if (!force && now > until) { _rememberedSpotPendingUntilUtc = null; return; }
+        if (!force && now - _lastRememberedSpotTryUtc < TimeSpan.FromSeconds(3)) return;
+        _lastRememberedSpotTryUtc = now;
+        if (_overlayWindow.PositionAt(ParseCorner(_appState.Settings.ScreenCorner), _appState.Settings.MonitorIndex,
+                _appState.Settings.PetSizePixels, _appState.Settings.PetPositionX, _appState.Settings.PetPositionY))
+        {
+            _rememberedSpotPendingUntilUtc = null;
+            _progressPanelWindow?.PositionLeftOf(_overlayWindow);
+        }
+    }
+
     private void ApplyPetSizeAndPosition()
     {
         var desiredCorner = ParseCorner(_appState.Settings.ScreenCorner);
@@ -451,8 +476,13 @@ public partial class App : System.Windows.Application
             return;
         }
 
-        _overlayWindow.PositionAt(desiredCorner, _appState.Settings.MonitorIndex, _appState.Settings.PetSizePixels,
+        var usedRemembered = _overlayWindow.PositionAt(desiredCorner, _appState.Settings.MonitorIndex, _appState.Settings.PetSizePixels,
             _appState.Settings.PetPositionX, _appState.Settings.PetPositionY);
+        // After a PC restart autostart can run before Windows attaches the second monitor, so the
+        // remembered spot is "off screen" for a moment and the pet lands on the primary corner
+        // (Georgy 04.11, item 8). Keep trying for a while and on every display change.
+        _rememberedSpotPendingUntilUtc = !usedRemembered && _appState.Settings.PetPositionX is not null
+            ? DateTimeOffset.UtcNow + RememberedSpotWait : null;
         _appliedCorner = desiredCorner;
         _appliedMonitorIndex = _appState.Settings.MonitorIndex;
         _appliedPetSizePixels = _appState.Settings.PetSizePixels;
@@ -917,7 +947,7 @@ public partial class App : System.Windows.Application
         return result!;
     }
 
-    private async Task<EvolutionAction> EvolveIndividualAsync(Guid id, int? branch, Guid operationId)
+    private async Task<EvolutionAction> EvolveIndividualAsync(Guid id, int? branch, bool useStone, Guid operationId)
     {
         if (_isExiting) throw new InvalidOperationException("Приложение закрывается.");
         EvolutionAction? result = null;
@@ -925,7 +955,7 @@ public partial class App : System.Windows.Application
         if (_isExiting) throw new InvalidOperationException("Приложение закрывается.");
         await _appState.CommitAsync(_saveWriter, next =>
         {
-            result = new EvolutionService(_catalogPackage, next).Evolve(id, branch, operationId);
+            result = new EvolutionService(_catalogPackage, next).Evolve(id, branch, operationId, useStone);
             if (!result.Success) throw new InvalidOperationException(result.Message);
         }, () => _catchReadyCount, next => _catchReadyCount = next.PendingCatchCount);
         if (_appState.Collection.ActiveIndividualId == id)
@@ -1349,6 +1379,15 @@ public partial class App : System.Windows.Application
         if (_appState.PendingActivityEncounterCount > 0) StartActivityReservationCommit();
     }
 
+    private void OnDisplaySettingsChanged(object? sender, EventArgs e)
+    {
+        if (!Dispatcher.CheckAccess()) { Dispatcher.BeginInvoke(() => OnDisplaySettingsChanged(sender, e)); return; }
+        if (_isExiting) return;
+        if (_rememberedSpotPendingUntilUtc is null && _appState.Settings.PetPositionX is not null)
+            _rememberedSpotPendingUntilUtc = DateTimeOffset.UtcNow + RememberedSpotWait;
+        TryRestoreRememberedPetSpot(force: true);
+    }
+
     private async void ShutdownApp()
     {
         if (_isExiting) return;
@@ -1356,6 +1395,7 @@ public partial class App : System.Windows.Application
         if (_menuWindow is not null) _menuWindow.IsEnabled = false;
         if (_overlayWindow is not null) _overlayWindow.IsEnabled = false;
         _growthTickTimer?.Stop();
+        Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
         _inputHook?.Stop();
         _gamepadHook?.Stop();
         var units = _inputCounter?.DrainUnits() ?? 0;

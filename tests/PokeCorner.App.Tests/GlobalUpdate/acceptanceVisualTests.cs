@@ -92,7 +92,7 @@ public class AcceptanceVisualTests
             getAnimatedFrames: (id, shiny) => Task.FromResult(Frames(id, shiny)),
             getSpeciesAssetPath: (id, shiny) => catalog.GetAssetPath(id, shiny),
             previewEvolution: id => new EvolutionService(catalog, data).Preview(id),
-            evolveIndividual: (id, branch, op) => Task.FromResult(new EvolutionService(catalog, data).Evolve(id, branch, op)),
+            evolveIndividual: (id, branch, stone, op) => Task.FromResult(new EvolutionService(catalog, data).Evolve(id, branch, op, stone)),
             previewRehome: id => new RehomingService(catalog, data).Quote(id),
             rehomeIndividual: (id, op) => Task.FromResult(new RehomingService(catalog, data).Transfer(id, op)),
             previewRetraining: (id, slot) => new RetrainingService(catalog, data).Preview(id, slot),

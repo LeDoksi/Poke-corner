@@ -28,7 +28,7 @@ public sealed partial class EvolutionTests
             new SpriteCache(Path.Combine(Path.GetTempPath(), "top-up-view", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => true,
             previewEvolution: evolution ? individualId => new EvolutionService(Catalog.Value, data).Preview(individualId) : null,
-            evolveIndividual: evolution ? (_, _, _) => Task.FromResult(new EvolutionAction(false, "test")) : null,
+            evolveIndividual: evolution ? (_, _, _, _) => Task.FromResult(new EvolutionAction(false, "test")) : null,
             previewRetraining: evolution ? null : (individualId, slot) => new RetrainingService(Catalog.Value, data).Preview(individualId, slot),
             retrainIndividual: evolution ? null : (_, _, _) => Task.FromResult(new RetrainingAction(false, "test")),
             navigate: navigations.Add,
@@ -98,30 +98,34 @@ public sealed partial class EvolutionTests
     });
 
     [Fact]
-    public void EvolutionTopUpBuysBerriesThenOffersTheChoiceStoneOnItsOwn() => WpfTestHost.Run(() =>
+    public void EvolutionTopUpBuysBerriesThenOffersTheStoneForMissingCare() => WpfTestHost.Run(() =>
     {
         var data = State(133);
         data.ShopCoins = 1000;
         data.Berries["oran"] = 2;
+        data.Individuals[0].AccumulatedCarePoints = 0;
         var (view, _, calls, _) = TopUpView(data, evolution: true);
         Click(view, "DetailConditionsButton");
         var shopButton = (Button)view.FindName("DetailEvolutionShopButton");
-        Assert.Equal($"Докупить · {4 * GoodPrice("oran")} ●", shopButton.Content);
+        Assert.Equal($"Докупить · {8 * GoodPrice("oran")} ●", shopButton.Content);
         Click(view, "DetailEvolutionShopButton");
         var cart = (TopUpCart)view.FindName("DetailTopUpCart");
         Assert.True(cart.IsOpen);
-        // Eevee can choose a branch, so the stone is offered too, but only on request (starts at zero).
+        // Care is short, so the stone is offered too, but only on request (starts at zero).
         Assert.Equal(2, ((StackPanel)cart.FindName("RowsPanel")).Children.Count);
         Click(cart, "BuyButton");
-        Assert.Equal(new[] { ("oran", 4) }, Assert.Single(calls).Select(x => (x.Item, x.Quantity)));
-        Assert.Equal(6, data.Berries["oran"]);
-        Assert.True(((Button)view.FindName("DetailEvolveButton")).IsEnabled);
+        Assert.Equal(new[] { ("oran", 8) }, Assert.Single(calls).Select(x => (x.Item, x.Quantity)));
+        Assert.Equal(10, data.Berries["oran"]);
+        Assert.False(((Button)view.FindName("DetailEvolveButton")).IsEnabled);
 
-        Assert.Equal($"Камень выбора · {GoodPrice("evolution-stone")} ●", shopButton.Content);
+        Assert.Equal($"Камень эволюции · {GoodPrice("evolution-stone")} ●", shopButton.Content);
         Click(view, "DetailEvolutionShopButton");
         Click(cart, "BuyButton");
         Assert.Equal(new[] { ("evolution-stone", 1) }, calls[1].Select(x => (x.Item, x.Quantity)));
-        Assert.True(((CheckBox)view.FindName("DetailEvolutionStoneToggle")).IsEnabled);
+        var stone = (CheckBox)view.FindName("DetailEvolutionStoneToggle");
+        Assert.True(stone.IsEnabled);
+        stone.IsChecked = true;
+        Assert.True(((Button)view.FindName("DetailEvolveButton")).IsEnabled);
         Assert.Equal("В магазин", shopButton.Content);
     });
 
@@ -139,7 +143,7 @@ public sealed partial class EvolutionTests
             new SpriteCache(Path.Combine(Path.GetTempPath(), "top-up-view", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => true,
             previewEvolution: individualId => new EvolutionService(Catalog.Value, data).Preview(individualId),
-            evolveIndividual: (_, _, _) => Task.FromResult(new EvolutionAction(false, "test")));
+            evolveIndividual: (_, _, _, _) => Task.FromResult(new EvolutionAction(false, "test")));
         Assert.True(view.OpenIndividual(data.Individuals[0].Id));
         Assert.Equal("В магазин", ((Button)view.FindName("DetailEvolutionShopButton")).Content);
     });

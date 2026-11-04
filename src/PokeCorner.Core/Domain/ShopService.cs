@@ -30,8 +30,8 @@ public sealed class ShopService
         {
             new("treats", "Лакомства", $"Пачка: {pack} шт.", prices.GetProperty("treats5").GetInt32(), pack, false),
             new("care-booster", "Бустер ухода", $"+{care:N0} CP выбранному питомцу", prices.GetProperty("careBooster7500").GetInt32(), care, false),
-            new("lucky-charm", "Shiny-талисман", "Увеличивает текущий шанс shiny в 4 раза на одну попытку. Расходуется независимо от результата", prices.GetProperty("luckyCharm").GetInt32(), 1, false),
-            new("evolution-stone", "Камень выбора", "Выбор доступной ветви эволюции", prices.GetProperty("evolutionStone").GetInt32(), 1, false),
+            new("lucky-charm", "Шайни-талисман", "Следующий покемон точно будет шайни, если у его вида есть шайни-форма", prices.GetProperty("luckyCharm").GetInt32(), 1, false),
+            new("evolution-stone", "Камень эволюции", "Эволюция сейчас, без недостающего ухода. Ягоды нужны как обычно", prices.GetProperty("evolutionStone").GetInt32(), 1, false),
             new("offspring-charm", "Талисман потомства", "Выбор доступного вида в гнезде", prices.GetProperty("offspringCharm").GetInt32(), 1, false),
             new("xp-potion", "Зелье опыта", $"+{xp} XP выбранному питомцу", prices.GetProperty("xpPotion300").GetInt32(), xp, false)
         };

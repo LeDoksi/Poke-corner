@@ -30,8 +30,10 @@ public sealed class SaveData
     public NurseryState? Nest { get; set; }
     // Frozen hatch results keep idempotent replies stable after evolution, release, or another nest.
     public Dictionary<Guid, PokemonIndividual> HatchedNurseryResults { get; set; } = [];
-    // Bonus above the base 1/512 chance. Only an eligible nursery hatch changes it.
+    // Bonus above the base chance. Only an eligible nursery hatch changes it.
     public double NurseryLuckBonus { get; set; }
+    // 1 = steps of +3% (D-34). A save without this field still carries the old +0.25% scale.
+    public int NurseryLuckScale { get; set; } = 1;
     public Dictionary<string, Guid> CompletedOperations { get; set; } = [];
     public Dictionary<Guid, int> EvolutionResults { get; set; } = [];
     public Dictionary<Guid, RetrainingResult> RetrainingResults { get; set; } = [];

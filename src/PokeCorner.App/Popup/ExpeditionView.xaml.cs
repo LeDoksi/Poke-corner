@@ -479,10 +479,13 @@ public partial class ExpeditionView : UserControl
         }
         var minutes = DurationBox.SelectedItem is ListBoxItem { Tag: string tag } && int.TryParse(tag, out var m) ? m : 360;
         var berries = minutes * outlook.MinimumPrimaryPerHour / 60;
-        LootLabel.Text = "Даже с одним питомцем:";
+        // Only the easy trip guarantees the floor (D-29); on harder ones the amount depends on the team's level.
+        var easy = Difficulty == "easy";
+        LootLabel.Text = easy ? "Даже с одним питомцем:" : "Маршрут даёт:";
         var cards = new List<(ImageSource? Image, string Text, string Tip)>
         {
-            (ShopArt(outlook.PrimaryBerryId), $"{BerryName(outlook.PrimaryBerryId)} от {berries}", "Основная ягода маршрута. С сильной командой её больше."),
+            (ShopArt(outlook.PrimaryBerryId), easy ? $"{BerryName(outlook.PrimaryBerryId)} от {berries}" : $"{BerryName(outlook.PrimaryBerryId)} — основная",
+                easy ? "Основная ягода маршрута. С сильной командой её больше." : "Основная ягода маршрута. Сколько — зависит от уровня команды: слабой команде сложный поход даёт меньше."),
             (null, $"{minutes * outlook.XpPerHour / 60} XP каждому", "Опыт не зависит от сложности и состава."),
             (ShopArt(outlook.ExtraBerryIds.FirstOrDefault() ?? outlook.PrimaryBerryId),
                 string.Join(", ", outlook.ExtraBerryIds.Select(BerryName)) + " — находки", "Попутные ягоды и монеты находит только полная тройка."),

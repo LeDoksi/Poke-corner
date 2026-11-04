@@ -335,7 +335,12 @@ public sealed class ExpeditionService
             Fraction.Of(balance.GetProperty(table)[difficulty].GetDecimal())
             * (Fraction.Of(1) + Fraction.Min(Setting("resourceBonusCap"), common + Fraction.Of(Trait(trait, members))))
             * resourcePreparation * composition;
-        var primary = Fraction.Max(Setting("minimumPrimaryBerriesPerHour"), ResourceRate("gatherer", "primaryBerriesPerHour"));
+        // D-29: the 2 berries/hour floor protects only the easy trip; a too-hard trip really yields less.
+        var floored = !balance.TryGetProperty("primaryBerryFloorDifficulties", out var floorDifficulties)
+            || floorDifficulties.EnumerateArray().Any(x => x.GetString() == balance.GetProperty("difficultyOrder")[difficulty].GetString());
+        var primary = floored
+            ? Fraction.Max(Setting("minimumPrimaryBerriesPerHour"), ResourceRate("gatherer", "primaryBerriesPerHour"))
+            : ResourceRate("gatherer", "primaryBerriesPerHour");
         var coins = ResourceRate("treasure-hunter", "coinsPerHour");
         var xp = Setting("xpPerHour") * (Fraction.Of(1) + Fraction.Of(Trait("mentor", members)));
         var timeReduction = Math.Min(balance.GetProperty("maxExpeditionTimeReduction").GetDecimal(), Trait("terrain-expert", members));

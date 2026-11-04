@@ -215,17 +215,17 @@
     {
       "awardId": "trophy-shiny-2",
       "condition": "distinct-shiny-species",
-      "count": 3
+      "count": 10
     },
     {
       "awardId": "trophy-shiny-3",
       "condition": "distinct-shiny-species",
-      "count": 10
+      "count": 50
     },
     {
       "awardId": "trophy-shiny-4",
       "condition": "distinct-shiny-species",
-      "count": 30
+      "count": 150
     }
   ],
   "specialMinimumOccurrences": 1,

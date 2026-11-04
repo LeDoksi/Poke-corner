@@ -11074,8 +11074,8 @@
     {
       "path": "docs/design-v2/final/achievement-rewards.json",
       "target": "final/achievement-rewards.json",
-      "bytes": 6065,
-      "sha256": "abe235b84ec11d8422346bd4e798505c964e8e95997488da70f264e43bd66525"
+      "bytes": 5817,
+      "sha256": "8181340fcecb6970cb799825c59b0ae8f279344910ac17367fde8de7304782b6"
     },
     {
       "path": "docs/design-v2/final/assets/shop/aspear.png",
@@ -11158,14 +11158,14 @@
     {
       "path": "docs/design-v2/final/balance.json",
       "target": "final/balance.json",
-      "bytes": 10885,
-      "sha256": "d771d1915e72a1fc80980032a94f0a31f6ffd778ef945240a0f0fb029fe242c0"
+      "bytes": 10332,
+      "sha256": "6df8536209da1ab5d133887d51d589e4a6a73aa1634edbac47b90dc3af929801"
     },
     {
       "path": "docs/design-v2/final/catalog-rules.json",
       "target": "final/catalog-rules.json",
-      "bytes": 239818,
-      "sha256": "2db7d3a7dc1c81ab87fb9a4c4d390c8726a8c8944b9e81cfa2a5eb7f8ede475b"
+      "bytes": 183134,
+      "sha256": "bd217157bd0897e710786b3c5c5955c8c043983a27f3cff8124da4c0d0c1bc0e"
     },
     {
       "path": "docs/design-v2/final/DESIGN.json",
@@ -11201,7 +11201,7 @@
       "path": "docs/design-v2/nursery-recipes-draft.json",
       "target": "nursery-recipes-draft.json",
       "bytes": 1581470,
-      "sha256": "4580464bf0c8b182ebc37b202762312d12b772b56ee462490a3b5fb93bdf9af9"
+      "sha256": "b89b9750c71fd18021b4a3199398e668085e10432c57fa8c8aa55661fb0d76b5"
     },
     {
       "path": "docs/design-v2/rarity-draft-v2.json",

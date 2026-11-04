@@ -78,7 +78,8 @@ public sealed class FormDiscoveryTests
         var nursery = new NurseryService(catalog, state); var now = DateTimeOffset.UtcNow; var request = new NurseryRequest([a.Id, b.Id], null, Guid.NewGuid(), now);
         Assert.True(nursery.Start(request).Success);
         var hatched = nursery.Hatch(request.OperationId, Guid.NewGuid(), now.AddDays(1)); Assert.True(hatched.Success, hatched.Message);
-        Assert.Contains(1, state.NormalSpeciesIds);
+        // Ш-А: base shiny is 15%, so the frozen child may be either; it lands in exactly its own history.
+        Assert.Contains(1, hatched.Child!.IsShiny ? state.ShinySpeciesIds : state.NormalSpeciesIds);
         var grown = state.Individuals.Single(p => p.Id == a.Id); grown.AccumulatedCarePoints = 196000;
         var evolved = new EvolutionService(catalog, state).Evolve(grown.Id, null, Guid.NewGuid()); Assert.True(evolved.Success, evolved.Message);
         Assert.Contains(2, state.NormalSpeciesIds); Assert.DoesNotContain(2, state.ShinySpeciesIds);
@@ -126,12 +127,12 @@ public sealed class FormDiscoveryTests
         if (slot == 1) pet.FirstTraitId = "fast-grower"; else pet.SecondTraitId = "fast-grower";
         pet.AccumulatedCarePoints = expected - 1;
         var preview = new EvolutionService(catalog, data).Preview(pet.Id); Assert.Equal(expected, preview.CareRequired);
-        Assert.Equal(plain.BerryCost, preview.BerryCost); Assert.Equal(6, preview.BerryCost); Assert.NotNull(preview.Reason);
+        Assert.Equal(plain.BerryCost, preview.BerryCost); Assert.Equal(10, preview.BerryCost); Assert.NotNull(preview.Reason);
         Assert.False(new EvolutionService(catalog, data).Evolve(pet.Id, null, Guid.NewGuid()).Success);
         var berries = data.Berries[preview.BerryId]; pet.AccumulatedCarePoints = expected;
         Assert.Null(new EvolutionService(catalog, data).Preview(pet.Id).Reason);
         Assert.True(new EvolutionService(catalog, data).Evolve(pet.Id, null, Guid.NewGuid()).Success);
-        Assert.Equal(expected, pet.AccumulatedCarePoints); Assert.Equal(berries - 6, data.Berries[preview.BerryId]);
+        Assert.Equal(expected, pet.AccumulatedCarePoints); Assert.Equal(berries - 10, data.Berries[preview.BerryId]);
         Assert.Equal(2, pet.CurrentSpeciesId); Assert.Equal(levels.XpForLevel(level), pet.TotalXp);
     }
 

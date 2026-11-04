@@ -209,7 +209,16 @@ public sealed class JsonSaveStore
         }
         ValidateData(data!);
         NormalizeLegacyCare(data!);
+        if (!root.TryGetProperty("NurseryLuckScale", out _)) ConvertLegacyNurseryLuck(data!);
         return data!;
+    }
+
+    // D-34: the old luck counted +0.25% per eligible hatch; the new one +3%. Each old step becomes a new step.
+    internal static void ConvertLegacyNurseryLuck(SaveData data)
+    {
+        data.NurseryLuckBonus = ShinyRules.ConvertLegacyNurseryLuck(data.NurseryLuckBonus);
+        if (data.Nest?.LuckBeforeHatch is { } before) data.Nest.LuckBeforeHatch = ShinyRules.ConvertLegacyNurseryLuck(before);
+        data.NurseryLuckScale = 1;
     }
 
     internal static void NormalizeLegacyCare(SaveData data)
@@ -331,7 +340,7 @@ public sealed class JsonSaveStore
         Require(SaveMigration.BerryIds.ToHashSet().SetEquals(data.BerryRemainders!.Keys)
             && data.BerryRemainders.Values.All(ValidRemainder) && ValidRemainder(data.CoinRemainder), "неверный дробный остаток");
         Require(double.IsFinite(data.NurseryLuckBonus) && data.NurseryLuckBonus >= 0
-            && data.NurseryLuckBonus <= ShinyRules.NurseryChanceCap - ShinyRules.BaseChance,
+            && data.NurseryLuckBonus <= ShinyRules.NurseryLuckMax + 1e-9,
             "неверная удача питомника");
         Require(data.NormalSpeciesIds!.All(id => id > 0) && data.DiscoveredSpeciesIds!.All(id => id > 0) && data.ShinySpeciesIds!.All(id => id > 0)
             && data.Metrics!.Values.All(n => n is null or >= 0), "неверная метрика v2");
@@ -436,7 +445,7 @@ public sealed class JsonSaveStore
                 && (nest.LuckBeforeHatch is null ||
                     (nest.Status == "hatched" && double.IsFinite(nest.LuckBeforeHatch.Value)
                      && nest.LuckBeforeHatch.Value >= 0
-                     && nest.LuckBeforeHatch.Value <= ShinyRules.NurseryChanceCap - ShinyRules.BaseChance))
+                     && nest.LuckBeforeHatch.Value <= ShinyRules.NurseryLuckMax + 1e-9))
                 && (nest.Status == "hatched") == (nest.HatchOperationId is not null)
                 && (nest.Status != "hatched" || (data.Individuals.Count(x => x.Id == nest.Child.Id) == 1
                     || data.HatchedNurseryResults.ContainsKey(nest.Id))

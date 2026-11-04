@@ -256,7 +256,9 @@ public partial class OverlayWindow : Window
     /// sizePixels is treated as DIPs on purpose: the setting is a perceived size, so the pet
     /// should look the same next to everything else on a 150% display rather than shrinking
     /// to two-thirds of it.
-    public void PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels, int? rememberedX = null, int? rememberedY = null)
+    /// Returns true when the remembered drag spot was used, false when it fell back to the corner
+    /// (no spot, or its monitor is not connected yet).
+    public bool PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels, int? rememberedX = null, int? rememberedY = null)
     {
         // The sprite keeps the configured size; only the window around it grows, so the pet
         // looks identical to before — it simply is no longer clipped when it scales up.
@@ -292,7 +294,7 @@ public partial class OverlayWindow : Window
             (Left, Top) = (Math.Clamp(rememberedLeft, area.Left, Math.Max(area.Left, area.Right - windowSize)),
                 Math.Clamp(rememberedTop, area.Top, Math.Max(area.Top, area.Bottom - windowSize)));
             KeepAboveAppsBelowShell(this);
-            return;
+            return true;
         }
 
         var screen = monitorIndex >= 0 && monitorIndex < screens.Length ? screens[monitorIndex] : System.Windows.Forms.Screen.PrimaryScreen!;
@@ -304,6 +306,7 @@ public partial class OverlayWindow : Window
         // Moving/resizing a window can drop it behind others; re-top it right away instead of
         // waiting for the next foreground switch.
         KeepAboveAppsBelowShell(this);
+        return false;
     }
 
     // Click-vs-drag detection via explicit mouse capture + a MouseMove threshold, not a

@@ -54,13 +54,13 @@ public sealed class NurseryCatalogTests : IDisposable
     public void CanonicalDefinitionsAndFamilyRoots()
     {
         var catalog = Load(26, 172, 134, 133, 150);
-        Assert.Equal(1046, catalog.MixedRecipes.Count);
-        Assert.Equal(1025, catalog.SameSpeciesRecipes.Count);
+        Assert.Equal(752, catalog.MixedRecipes.Count); // D-32: family pairs
+        Assert.Equal(541, catalog.SameSpeciesRecipes.Count);
         Assert.Equal(172, catalog.Find(26, 26)!.Outcomes.Single().SpeciesId);
         Assert.Equal(133, catalog.Find(134, 134)!.Outcomes.Single().SpeciesId);
         Assert.Equal(2, catalog.Find(26, 26)!.Hours);
         Assert.Equal(4, catalog.Find(134, 134)!.Hours);
-        Assert.Equal(10, catalog.Find(26, 26)!.BaseBerries["oran"]);
+        Assert.Equal(15, catalog.Find(26, 26)!.BaseBerries["oran"]);
         var legendaryRoots = catalog.MixedRecipes.SelectMany(r => r.Outcomes)
             .Where(o => o.Rarity == "Legendary").GroupBy(o => o.SpeciesId).ToArray();
         Assert.Equal(88, legendaryRoots.Length);
@@ -79,7 +79,7 @@ public sealed class NurseryCatalogTests : IDisposable
         Assert.Equal(6, pair.Hours);
         Assert.Same(pair, catalog.Find(849, 2));
         Assert.Same(pair, catalog.Find(2, 849));
-        Assert.Contains(849, catalog.Partners(2));
+        Assert.Contains(848, catalog.Partners(2)); // partner families by root
 
         var limited = Load(2, 849, 451, 453);
         pair = limited.Find(2, 849)!;
@@ -142,13 +142,13 @@ public sealed class NurseryCatalogTests : IDisposable
         Assert.Throws<NotSupportedException>(() => ((IList<int>)catalog.Partners(2))[0] = 999);
 
         var again = catalog.Find(849, 2)!;
-        Assert.Equal(451, again.Outcomes[0].SpeciesId);
+        Assert.Equal(69, again.Outcomes[0].SpeciesId); // union of both families' recipes
         Assert.Equal(451, again.AvailableOutcomes[0].SpeciesId);
-        Assert.Equal(6, again.BaseBerries["pecha"]);
-        Assert.Equal(4, again.SelectedSurcharge["pecha"]);
-        Assert.Equal(1046, catalog.MixedRecipes.Count);
-        Assert.Equal(1025, catalog.SameSpeciesRecipes.Count);
-        Assert.Contains(849, catalog.Partners(2));
+        Assert.Equal(9, again.BaseBerries["pecha"]);
+        Assert.Equal(5, again.SelectedSurcharge["pecha"]);
+        Assert.Equal(752, catalog.MixedRecipes.Count); // D-32: family pairs
+        Assert.Equal(541, catalog.SameSpeciesRecipes.Count);
+        Assert.Contains(848, catalog.Partners(2)); // partner families by root
     }
 
     private static PokemonIndividual Individual(int speciesId, Guid? id = null) => new()

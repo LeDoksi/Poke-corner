@@ -9,7 +9,13 @@ namespace PokeCorner.Core.Domain;
 
 public sealed record EvolutionBranch(int SpeciesId, string Name, bool Available, string? Reason);
 public sealed record EvolutionPreview(IReadOnlyList<EvolutionBranch> Branches, string BerryId, int BerryCost,
-    int BerriesOwned, int CareRequired, int CareOwned, int StonesOwned, bool IsBusy, string? Reason);
+    int BerriesOwned, int CareRequired, int CareOwned, int StonesOwned, bool IsBusy, string? Reason)
+{
+    /// D-33: only missing care stands in the way, and an evolution stone can cover it.
+    public bool StoneCanFinish => CareOwned < CareRequired && StonesOwned > 0 && ReasonWithStone is null;
+    /// What would still block the evolution if a stone covered the care (null = nothing).
+    public string? ReasonWithStone { get; init; }
+}
 public sealed record EvolutionAction(bool Success, string Message, int? SpeciesId = null, bool Repeated = false);
 
 public sealed class EvolutionService
@@ -58,23 +64,28 @@ public sealed class EvolutionService
         var berry = next.FirstOrDefault()?.Berry ?? string.Empty;
         var count = next.FirstOrDefault()?.Quantity ?? 0;
         var owned = state.Berries.GetValueOrDefault(berry);
+        var withStone = next.Length == 0 ? "Дальше этот вид не эволюционирует."
+            : branches.All(x => !x.Available) ? "Для следующей формы нет доступного варианта."
+            : busy ? "Покемон занят в походе или питомнике."
+            : owned < count ? $"Не хватает {count - owned} ягод {berry}."
+            : null;
         var reason = next.Length == 0 ? "Дальше этот вид не эволюционирует."
             : branches.All(x => !x.Available) ? "Для следующей формы нет доступного варианта."
             : busy ? "Покемон занят в походе или питомнике."
             : individual.AccumulatedCarePoints < required ? $"Нужно ещё {required - individual.AccumulatedCarePoints:N0} ухода."
-            : owned < count ? $"Не хватает {count - owned} ягод {berry}."
-            : null;
+            : withStone;
         return new EvolutionPreview(branches, berry, count, owned, required, individual.AccumulatedCarePoints,
-            state.Items.GetValueOrDefault("evolution-stone"), busy, reason);
+            state.Items.GetValueOrDefault("evolution-stone"), busy, reason) { ReasonWithStone = withStone };
     }
 
-    public EvolutionAction Evolve(Guid individualId, int? selectedBranch, Guid operationId)
+    /// selectedBranch picks the next form for free (D-33); useStone spends an evolution stone in place of missing care.
+    public EvolutionAction Evolve(Guid individualId, int? selectedBranch, Guid operationId, bool useStone = false)
     {
         if (state.SchemaVersion != 2 || operationId == Guid.Empty)
             return new(false, "Требуется сохранение v2 и ID действия.");
         var key = $"evolution:{operationId}";
         var fingerprint = new Guid(SHA256.HashData(Encoding.UTF8.GetBytes(
-            $"evolution:{individualId:N}:{selectedBranch?.ToString() ?? "random"}")).AsSpan(0, 16));
+            $"evolution:{individualId:N}:{selectedBranch?.ToString() ?? "random"}" + (useStone ? ":stone" : ""))).AsSpan(0, 16));
         if (state.CompletedOperations.TryGetValue(key, out var previous))
             return previous == fingerprint && state.EvolutionResults.TryGetValue(operationId, out var previousSpecies)
                 ? new(true, "Эволюция уже сохранена.", previousSpecies, true)
@@ -83,12 +94,15 @@ public sealed class EvolutionService
         var individual = state.Individuals.FirstOrDefault(x => x.Id == individualId);
         if (individual is null) return new(false, "Этот покемон больше не найден.");
         var preview = Preview(individualId);
-        if (preview.Reason is not null) return new(false, preview.Reason);
+        var careShort = preview.CareOwned < preview.CareRequired;
+        var needsStone = useStone && careShort;
+        if (useStone && !careShort) return new(false, "Уход уже набран — камень не нужен.");
+        if (needsStone && preview.StonesOwned < 1) return new(false, "Нет камня эволюции.");
+        if ((needsStone ? preview.ReasonWithStone : preview.Reason) is { } blocked) return new(false, blocked);
         var available = preview.Branches.Where(x => x.Available).ToArray();
         if (selectedBranch is { } selected && !available.Any(x => x.SpeciesId == selected))
             return new(false, "Выбранная ветвь недоступна.");
-        var needsStone = selectedBranch is not null && available.Length > 1;
-        if (needsStone && preview.StonesOwned < 1) return new(false, "Для выбора ветви нужен камень эволюции.");
+        var choseBranch = selectedBranch is not null && available.Length > 1;
         var canonicalLength = CanonicalLength(individual.SpeciesId, new HashSet<int>());
         if ((int)individual.CurrentStage + 1 >= individual.ChainLength)
         {
@@ -103,7 +117,12 @@ public sealed class EvolutionService
             SHA256.HashData(Encoding.UTF8.GetBytes($"evolution-draw:{operationId:N}:{individualId:N}"))) % (uint)available.Length].SpeciesId;
 
         state.Berries[preview.BerryId] -= preview.BerryCost;
-        if (needsStone) state.Items["evolution-stone"]--;
+        if (needsStone)
+        {
+            state.Items["evolution-stone"]--;
+            // The stone fills the gap: the next stage counts from this threshold, as if the care had been earned.
+            individual.AccumulatedCarePoints = Math.Max(individual.AccumulatedCarePoints, preview.CareRequired);
+        }
         var from = individual.CurrentSpeciesId;
         individual.CurrentSpeciesId = chosen;
         individual.CurrentStage++;
@@ -113,7 +132,7 @@ public sealed class EvolutionService
         else state.NormalSpeciesIds.Add(chosen);
         state.EvolutionTransitions.Add($"{from}->{chosen}");
         AchievementMetrics.Record(state, "special:trophy-special-berry-evolution");
-        if (needsStone) AchievementMetrics.Record(state, "special:trophy-special-branch-choice");
+        if (choseBranch) AchievementMetrics.Record(state, "special:trophy-special-branch-choice");
         state.CompletedOperations[key] = fingerprint;
         state.EvolutionResults[operationId] = chosen;
         return new(true, $"Эволюция: {available.Single(x => x.SpeciesId == chosen).Name}.", chosen);

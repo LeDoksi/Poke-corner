@@ -306,15 +306,18 @@
   "extraCheckMinutes": 30,
   "coinsPerHour": [
     6,
-    8,
-    12
+    9,
+    14
   ],
   "primaryBerriesPerHour": [
     2,
-    2,
-    3
+    3,
+    4
   ],
   "minimumPrimaryBerriesPerHour": 2,
+  "primaryBerryFloorDifficulties": [
+    "easy"
+  ],
   "primaryBerryFloorOrder": "after capped bonus, underlevel and composition; before duration",
   "completionDecisionAuthority": "user-delegated-audit-finalization-2026-10-11",
   "hourlyEncounterChance": [
@@ -370,10 +373,10 @@
     "luckyCharm": 10
   },
   "eventChanceCap": 0.95,
-  "underlevelPenaltyPerLevel": 0.025,
-  "eventUnderlevelPenaltyPerLevel": 0.025,
-  "maxUnderlevelPenalty": 0.5,
-  "levelBonusPerLevel": 0.0025,
+  "underlevelPenaltyPerLevel": 0.04,
+  "eventUnderlevelPenaltyPerLevel": 0.04,
+  "maxUnderlevelPenalty": 0.6,
+  "levelBonusPerLevel": 0.005,
   "matchingTypeBonusPerMember": 0.03,
   "resourceBonusCap": 0.4,
   "stackWeights": [
@@ -419,14 +422,14 @@
     2,
     0.5
   ],
-  "nurseryBerries": 10,
-  "choiceExtraBerries": 4,
-  "evolutionBerries": 6,
-  "retrainBerries": 60,
-  "shinyBase": 0.001953125,
-  "nurseryShinyIncrement": 0.0025,
-  "nurseryShinyCap": 0.1,
-  "shinyCharmMultiplier": 4,
+  "nurseryBerries": 15,
+  "choiceExtraBerries": 5,
+  "evolutionBerries": 10,
+  "retrainBerries": 20,
+  "shinyBase": 0.15,
+  "nurseryShinyIncrement": 0.03,
+  "nurseryShinyCap": 0.45,
+  "shinyCharmMultiplier": 6.666666666666667,
   "shinyChanceCap": 1,
   "unusableShinyPolicy": {
     "chance": 0,
@@ -435,13 +438,13 @@
     "mixedOutcomes": "preserve selected actual species; apply that species availability"
   },
   "shopPrices": {
-    "treats5": 20,
-    "careBooster7500": 20,
-    "luckyCharm": 30,
-    "evolutionStone": 20,
-    "offspringCharm": 50,
-    "xpPotion300": 40,
-    "berry1": 5
+    "treats5": 30,
+    "careBooster7500": 60,
+    "luckyCharm": 250,
+    "evolutionStone": 300,
+    "offspringCharm": 120,
+    "xpPotion300": 80,
+    "berry1": 20
   },
   "treatPackQuantity": 5,
   "careBoosterPoints": 7500,

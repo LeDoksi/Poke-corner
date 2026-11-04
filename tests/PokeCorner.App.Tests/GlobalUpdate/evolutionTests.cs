@@ -146,7 +146,7 @@ public sealed partial class EvolutionTests
         Assert.Equal(8, preview.Branches.Count);
         Assert.All(preview.Branches, branch => Assert.True(branch.Available));
         Assert.Equal("oran", preview.BerryId);
-        Assert.Equal(6, preview.BerryCost);
+        Assert.Equal(10, preview.BerryCost);
         var action = new EvolutionService(Catalog.Value, data).Evolve(pet.Id, null, Guid.NewGuid());
         Assert.True(action.Success, action.Message);
         Assert.Contains(pet.CurrentSpeciesId, preview.Branches.Select(b => b.SpeciesId));
@@ -158,7 +158,7 @@ public sealed partial class EvolutionTests
         Assert.Equal(Nature.Hardy, pet.Nature);
         Assert.Equal("gatherer", pet.FirstTraitId);
         Assert.Contains(pet.CurrentSpeciesId, data.ShinySpeciesIds);
-        Assert.Equal(14, data.Berries["oran"]);
+        Assert.Equal(10, data.Berries["oran"]);
         Assert.Single(data.EvolutionTransitions);
     }
 
@@ -204,21 +204,47 @@ public sealed partial class EvolutionTests
     }
 
     [Fact]
-    public void MeaninglessChoiceNeedsNoStoneButRealChoiceDoes()
+    public void BranchChoiceIsFreeAndStoneOnlyReplacesMissingCare()
     {
         var single = State(1);
         Assert.False(new EvolutionService(Catalog.Value, single).Evolve(single.Individuals[0].Id, 3, Guid.NewGuid()).Success);
         Assert.Equal(20, single.Berries["rawst"]);
         Assert.True(new EvolutionService(Catalog.Value, single).Evolve(single.Individuals[0].Id, 2, Guid.NewGuid()).Success);
         Assert.Equal(0, single.Items["evolution-stone"]);
+        // D-33: a real branch choice costs nothing extra.
         var branching = State(133);
         var id = branching.Individuals[0].Id;
-        Assert.False(new EvolutionService(Catalog.Value, branching).Evolve(id, 134, Guid.NewGuid()).Success);
-        Assert.Equal(20, branching.Berries["oran"]);
-        branching.Items["evolution-stone"] = 1;
         Assert.True(new EvolutionService(Catalog.Value, branching).Evolve(id, 134, Guid.NewGuid()).Success);
         Assert.Equal(134, branching.Individuals[0].CurrentSpeciesId);
         Assert.Equal(0, branching.Items["evolution-stone"]);
+        Assert.Contains("special:trophy-special-branch-choice", branching.Metrics.Keys);
+        // With care in place the stone is refused and nothing is spent.
+        var full = State(133);
+        full.Items["evolution-stone"] = 1;
+        Assert.False(new EvolutionService(Catalog.Value, full).Evolve(full.Individuals[0].Id, null, Guid.NewGuid(), useStone: true).Success);
+        Assert.Equal(1, full.Items["evolution-stone"]);
+        Assert.Equal(20, full.Berries["oran"]);
+    }
+
+    [Fact]
+    public void StoneEvolvesNowWhenOnlyCareIsMissing()
+    {
+        var data = State(133, care: 10);
+        var pet = data.Individuals[0];
+        var service = new EvolutionService(Catalog.Value, data);
+        var preview = service.Preview(pet.Id);
+        Assert.NotNull(preview.Reason);
+        Assert.Null(preview.ReasonWithStone);
+        Assert.False(preview.StoneCanFinish);
+        Assert.False(service.Evolve(pet.Id, 134, Guid.NewGuid(), useStone: true).Success);
+        data.Items["evolution-stone"] = 1;
+        Assert.True(service.Preview(pet.Id).StoneCanFinish);
+        Assert.False(service.Evolve(pet.Id, 134, Guid.NewGuid()).Success);
+        Assert.True(service.Evolve(pet.Id, 134, Guid.NewGuid(), useStone: true).Success);
+        Assert.Equal(134, pet.CurrentSpeciesId);
+        Assert.Equal(0, data.Items["evolution-stone"]);
+        Assert.Equal(10, data.Berries["oran"]);
+        Assert.Equal(preview.CareRequired, pet.AccumulatedCarePoints);
     }
 
     [Fact]
@@ -236,8 +262,8 @@ public sealed partial class EvolutionTests
         Assert.True(new EvolutionService(Catalog.Value, JsonSaveStore.Clone(data)).Evolve(id, 134, operation).Repeated);
         Assert.False(service.Evolve(other.Id, 134, operation).Success);
         Assert.False(service.Evolve(id, 135, operation).Success);
-        Assert.Equal(14, data.Berries["oran"]);
-        Assert.Equal(0, data.Items["evolution-stone"]);
+        Assert.Equal(10, data.Berries["oran"]);
+        Assert.Equal(1, data.Items["evolution-stone"]); // D-33: the branch choice itself is free.
     }
 
     [Fact]
@@ -282,26 +308,26 @@ public sealed partial class EvolutionTests
             new SpriteCache(Path.Combine(Path.GetTempPath(), "evolution-view", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => true,
             previewEvolution: individualId => new EvolutionService(Catalog.Value, data).Preview(individualId),
-            evolveIndividual: (_, _, _) => Task.FromResult(new EvolutionAction(false, "test")),
+            evolveIndividual: (_, _, _, _) => Task.FromResult(new EvolutionAction(false, "test")),
             navigate: section => destination = section,
             buyBerries: (berry, required) => purchase = (berry, required));
         Assert.True(view.OpenIndividual(id));
         WpfTestHost.Layout(view, 320, 420);
         var card = (Border)view.FindName("DetailCard");
         Assert.True(card.ActualWidth <= 320);
-        Assert.Contains("× 6 · в запасе 20", ((TextBlock)view.FindName("DetailEvolutionCostText")).Text);
+        Assert.Contains("× 10 · в запасе 20", ((TextBlock)view.FindName("DetailEvolutionCostText")).Text);
         var picker = (ComboBox)view.FindName("DetailEvolutionBranchPicker");
         Assert.True(picker.TranslatePoint(new Point(picker.ActualWidth, 0), card).X <= card.ActualWidth);
         Assert.Equal(9, picker.Items.Count);
         Assert.False(((CheckBox)view.FindName("DetailEvolutionStoneToggle")).IsEnabled);
-        picker.SelectedIndex = 1; // A stale forced selection cannot override random without the optional stone.
+        picker.SelectedIndex = 1; // D-33: picking a branch needs no stone.
         Assert.True(((Button)view.FindName("DetailEvolveButton")).IsEnabled);
         picker.SelectedIndex = 0;
         data.Berries["oran"] = 2;
         view.Refresh();
         Assert.Contains("ягод", ((TextBlock)view.FindName("DetailEvolutionReasonText")).Text);
         ((Button)view.FindName("DetailEvolutionShopButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-        Assert.Equal(("oran", 6), purchase);
+        Assert.Equal(("oran", 8), purchase);
         Assert.Equal(MenuSection.Shop, destination);
         data.Berries["oran"] = 20;
         data.Nest = new NurseryState { Status = "ready", ParticipantIds = [id], Child = data.Individuals[0] };
@@ -324,7 +350,7 @@ public sealed partial class EvolutionTests
             new SpriteCache(Path.Combine(Path.GetTempPath(), "evolution-cancel", Guid.NewGuid().ToString("N"))),
             () => { }, () => { }, () => { }, () => null, () => false, () => true,
             previewEvolution: individualId => new EvolutionService(Catalog.Value, data).Preview(individualId),
-            evolveIndividual: (_, _, _) => { commits++; return Task.FromResult(new EvolutionAction(true, "test")); },
+            evolveIndividual: (_, _, _, _) => { commits++; return Task.FromResult(new EvolutionAction(true, "test")); },
             confirmAsync: (_, _, _) => Task.FromResult(false));
         Assert.True(view.OpenIndividual(id));
         WpfTestHost.Layout(view, 420, 420);
