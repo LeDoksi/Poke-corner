@@ -368,11 +368,11 @@ public class Task8AcceptanceTests
             {
                 menu.Show(); var overlay = (ConfirmationOverlay)menu.FindName("ConfirmationHost");
                 danger = menu.ConfirmDestructiveAsync("Передать?", "Питомец покинет коллекцию.", "Передать");
-                Assert.Same(overlay.FindResource("UiDangerButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
+                Assert.Same(overlay.FindResource("NdDialogDangerButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
                 Assert.Same(overlay.FindName("CancelButton"), System.Windows.Input.Keyboard.FocusedElement);
                 ((Button)overlay.FindName("CancelButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 safe = menu.ConfirmAsync("Купить?", "5 монет", "Купить");
-                Assert.Same(overlay.FindResource("UiPrimaryButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
+                Assert.Same(overlay.FindResource("NdDialogPrimaryButtonStyle"), ((Button)overlay.FindName("ConfirmButton")).Style);
                 ((Button)overlay.FindName("CancelButton")).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
             finally { menu.Close(); }

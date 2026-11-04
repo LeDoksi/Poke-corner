@@ -73,14 +73,14 @@ public sealed class ShopTests : IDisposable
     {
         Assert.Equal(12, shop.Goods.Count);
         Assert.Equal(6, shop.Goods.Count(g => g.IsBerry));
-        var data = State();
+        var data = State(200);
         Assert.True(shop.TryPurchase(data, "cheri", 3, Guid.NewGuid()).Success);
         Assert.Equal(3, data.Berries["cheri"]);
-        Assert.Equal(85, data.ShopCoins);
+        Assert.Equal(140, data.ShopCoins);
         Assert.True(shop.TryPurchase(data, "treats", 2, Guid.NewGuid()).Success);
         Assert.Equal(10, data.FeedingTreats);
         Assert.Equal(0, data.Items["treats"]);
-        Assert.Equal(45, data.ShopCoins);
+        Assert.Equal(80, data.ShopCoins);
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public sealed class ShopTests : IDisposable
         var id = Guid.NewGuid();
         Assert.True(shop.TryPurchase(data, "oran", 2, id).Success);
         Assert.True(shop.TryPurchase(data, "oran", 2, id).Repeated);
-        Assert.Equal(90, data.ShopCoins);
+        Assert.Equal(60, data.ShopCoins);
         Assert.Equal(2, data.Berries["oran"]);
     }
 
@@ -125,7 +125,7 @@ public sealed class ShopTests : IDisposable
 
         Assert.False(replay.Success);
         Assert.False(replay.Repeated);
-        Assert.Equal(90, data.ShopCoins);
+        Assert.Equal(60, data.ShopCoins);
         Assert.Equal(2, data.Berries["oran"]);
         Assert.Equal(0, data.Berries["cheri"]);
     }
@@ -301,8 +301,8 @@ public sealed class ShopTests : IDisposable
         var treatsDetail = (StackPanel)((Grid)((Border)items.Children[0]).Child).Children[1];
         var berryDetail = (StackPanel)((Grid)((Border)berries.Children[0]).Child).Children[1];
 
-        Assert.Contains("20 монет/пачка", ((TextBlock)treatsDetail.Children[2]).Text);
-        Assert.Contains("5 монет/шт.", ((TextBlock)berryDetail.Children[2]).Text);
+        Assert.Contains("30 монет/пачка", ((TextBlock)treatsDetail.Children[2]).Text);
+        Assert.Contains("20 монет/шт.", ((TextBlock)berryDetail.Children[2]).Text);
     });
 
     [Fact]
@@ -350,20 +350,20 @@ public sealed class ShopTests : IDisposable
         await buying!;
         Assert.Equal(2, operations.Count);
         Assert.Equal(operations[0], operations[1]);
-        Assert.Equal(95, live.Shop.Coins);
+        Assert.Equal(80, live.Shop.Coins);
         Assert.Equal(1, live.Shop.Berries["oran"]);
     }
 
     [Fact]
     public async Task PurchaseConfirmationCancelAndShortageNeverCommit()
     {
-        var live = new AppState(); live.Hydrate(State(10));
+        var live = new AppState(); live.Hydrate(State(30));
         var commits = 0; var prompts = 0;
         ShopView? view = null; Task? buying = null;
         WpfTestHost.Run(() =>
         {
             view = new ShopView(live, shop, _ => { commits++; return Task.CompletedTask; }, () => { },
-                confirmAsync: (_, body, _) => { prompts++; Assert.Contains("5 монет", body); return Task.FromResult(false); });
+                confirmAsync: (_, body, _) => { prompts++; Assert.Contains("20 монет", body); return Task.FromResult(false); });
             buying = InvokeBuy(view, "oran");
         });
         await buying!;
@@ -374,7 +374,7 @@ public sealed class ShopTests : IDisposable
         });
         await buying!;
         Assert.Equal(1, prompts); Assert.Equal(0, commits);
-        Assert.Equal(10, live.Shop.Coins); Assert.Equal(0, live.Shop.Berries["oran"]);
+        Assert.Equal(30, live.Shop.Coins); Assert.Equal(0, live.Shop.Berries["oran"]);
     }
 
     [Fact]
@@ -413,7 +413,7 @@ public sealed class ShopTests : IDisposable
     [InlineData(840, 650)]
     public void IllustratedShopHasAllGoodsAndReachableQuantityActions(double width, double height) => WpfTestHost.Run(() =>
     {
-        var live = new AppState(); live.Hydrate(State());
+        var live = new AppState(); live.Hydrate(State(1000));
         var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
         WpfTestHost.Layout(view, width - 40, height - 140);
         foreach (var panel in new[] { (StackPanel)view.FindName("ItemsPanel"), (StackPanel)view.FindName("BerriesPanel") })
@@ -501,8 +501,8 @@ public sealed class ShopTests : IDisposable
             WpfTestHost.Run(() => purchase = InvokeBuy(view!, "oran"));
             await purchase!;
             Assert.Equal(2, operations.Count); Assert.Equal(operations[0], operations[1]);
-            Assert.Equal(95, live.Shop.Coins); Assert.Equal(1, live.Shop.Berries["oran"]);
-            Assert.Equal(95, store.Load()!.ShopCoins); Assert.Equal(1, store.Load()!.Berries["oran"]);
+            Assert.Equal(80, live.Shop.Coins); Assert.Equal(1, live.Shop.Berries["oran"]);
+            Assert.Equal(80, store.Load()!.ShopCoins); Assert.Equal(1, store.Load()!.Berries["oran"]);
         }
         finally { writer.Stop(); }
     }
@@ -544,7 +544,7 @@ public sealed class ShopTests : IDisposable
             Assert.Contains("Покупка сохранена", message);
             Assert.DoesNotContain("Повторите покупку", message);
         });
-        Assert.Equal(95, live.Shop.Coins); Assert.Equal(1, live.Shop.Berries["oran"]);
+        Assert.Equal(80, live.Shop.Coins); Assert.Equal(1, live.Shop.Berries["oran"]);
     }
     [Fact]
     public void NativeQuantityStepperSupportsEditingBoundsAndLocalShortage() => WpfTestHost.Run(() =>
@@ -559,9 +559,9 @@ public sealed class ShopTests : IDisposable
         var buy = (Button)actions.Children[1]; var total = (TextBlock)actions.Children[2];
         Assert.False(minus.IsEnabled);
         plus.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
-        Assert.Equal("2", quantity.Text); Assert.Contains("10 монет", total.Text);
+        Assert.Equal("2", quantity.Text); Assert.Contains("40 монет", total.Text);
         quantity.Select(0, 1); quantity.SelectedText = "3";
-        Assert.Equal("3", quantity.Text); Assert.Contains("15 монет", total.Text);
+        Assert.Equal("3", quantity.Text); Assert.Contains("60 монет", total.Text);
         minus.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent)); Assert.Equal("2", quantity.Text);
         foreach (var invalid in new[] { "0", "-1", "abc", "2147483648", int.MaxValue.ToString() })
         {
@@ -569,7 +569,7 @@ public sealed class ShopTests : IDisposable
             Assert.True(InvokeBuy(view, shop.Goods.First(g => g.IsBerry).Id).IsCompletedSuccessfully);
         }
         Assert.Equal(0, commits);
-        quantity.Text = "21"; Assert.Contains("не хватает 5", total.Text); Assert.False(buy.IsEnabled);
+        quantity.Text = "6"; Assert.Contains("не хватает 20", total.Text); Assert.False(buy.IsEnabled);
         var berry = shop.Goods.First(g => g.IsBerry);
         live.Shop.Berries[berry.Id] = int.MaxValue - 1; view.Refresh();
         quantity.Text = "1"; Assert.False(plus.IsEnabled); Assert.True(buy.IsEnabled);
