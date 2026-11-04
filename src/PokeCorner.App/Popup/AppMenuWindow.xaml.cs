@@ -66,12 +66,11 @@ public partial class AppMenuWindow : Window
             CompleteHostedContent();
         };
         RefreshSnapshot();
-        // A chrome-less window maximizes over the taskbar (Windows sizes it to the whole monitor plus the
-        // resize border), so the bottom buttons hid behind it (Georgy 04.11, a 150% laptop). Clamp the
-        // maximized rect to the monitor's work area.
+        // A chrome-less maximized window overhangs its monitor by the resize border; FitToMonitor pulls the
+        // content in from every overhanging edge. No WM_GETMINMAXINFO hook: Windows rescales ptMaxSize by the
+        // primary monitor, which pushed the window off a 150% laptop screen in 1.1.14.
         SourceInitialized += (_, _) =>
         {
-            System.Windows.Interop.HwndSource.FromHwnd(new System.Windows.Interop.WindowInteropHelper(this).Handle)?.AddHook(MaximizeToWorkArea);
             FitToMonitor();
         };
         // SystemParameters.WorkArea above is the PRIMARY monitor's; a laptop at 150% next to a bigger
@@ -298,7 +297,6 @@ public partial class AppMenuWindow : Window
     private const string MaximizeGlyph = "\uE922";
     private const string RestoreGlyph = "\uE923";
 
-    private const int WmGetMinMaxInfo = 0x0024;
     private const uint MonitorDefaultToNearest = 2;
 
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -306,29 +304,12 @@ public partial class AppMenuWindow : Window
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
     private struct NativeRect { public int Left, Top, Right, Bottom; }
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    private struct MinMaxInfo { public NativePoint Reserved, MaxSize, MaxPosition, MinTrackSize, MaxTrackSize; }
-    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
     private struct MonitorInfo { public int Size; public NativeRect Monitor, Work; public uint Flags; }
 
     [System.Runtime.InteropServices.DllImport("user32.dll")]
     private static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint flags);
     [System.Runtime.InteropServices.DllImport("user32.dll")]
     private static extern bool GetMonitorInfo(IntPtr monitor, ref MonitorInfo info);
-
-    private static IntPtr MaximizeToWorkArea(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        if (msg != WmGetMinMaxInfo) return IntPtr.Zero;
-        var monitor = MonitorFromWindow(hwnd, MonitorDefaultToNearest);
-        var info = new MonitorInfo { Size = System.Runtime.InteropServices.Marshal.SizeOf<MonitorInfo>() };
-        if (monitor == IntPtr.Zero || !GetMonitorInfo(monitor, ref info)) return IntPtr.Zero;
-        var mmi = System.Runtime.InteropServices.Marshal.PtrToStructure<MinMaxInfo>(lParam);
-        // Coordinates are physical pixels relative to the monitor's own origin.
-        mmi.MaxPosition = new NativePoint { X = info.Work.Left - info.Monitor.Left, Y = info.Work.Top - info.Monitor.Top };
-        mmi.MaxSize = new NativePoint { X = info.Work.Right - info.Work.Left, Y = info.Work.Bottom - info.Work.Top };
-        System.Runtime.InteropServices.Marshal.StructureToPtr(mmi, lParam, false);
-        handled = true;
-        return IntPtr.Zero;
-    }
 
     [System.Runtime.InteropServices.DllImport("user32.dll")]
     private static extern bool GetWindowRect(IntPtr hwnd, out NativeRect rect);
