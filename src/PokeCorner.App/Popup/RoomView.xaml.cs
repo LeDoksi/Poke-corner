@@ -240,14 +240,14 @@ public partial class RoomView : UserControl
             PetCaption.Text += (species is null ? "" : " · " + string.Join(" · ", species.Types.Select(TypeDisplay.GetLabel)) +
                 " · " + (Enum.TryParse<RarityTier>(species.Rarity, out var tier) ? RarityDisplay.GetName(tier) : species.Rarity)) +
                 (level is null ? "" : $" · Ур. {level}");
-            var care = CareProgress(active, _catalog, _careTraits, _levels);
-            CareText.Text = care.State switch
+            var careProgress = CareProgress(active, _catalog, _careTraits, _levels);
+            CareText.Text = careProgress.State switch
             {
                 EvolutionProgressState.NeverEvolves => EvolutionProgressDisplay.NeverEvolvesLabel,
                 EvolutionProgressState.FinalForm => EvolutionProgressDisplay.FinalFormLabel,
-                _ => care.Fraction >= 1 ? "Уход накоплен · условия эволюции в карточке" : "Проводите время вместе и кормите питомца"
+                _ => careProgress.Fraction >= 1 ? "Уход накоплен · условия эволюции в карточке" : "Проводите время вместе и кормите питомца"
             };
-            CareBar.Value = EvolutionProgressDisplay.BarValue(care.Fraction, care.State);
+            CareBar.Value = EvolutionProgressDisplay.BarValue(careProgress.Fraction, careProgress.State);
         }
         else
         {
