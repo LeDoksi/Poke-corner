@@ -413,13 +413,27 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     }
 
     // A short truthful line from the trainer about this pet, chosen by what is most notable now.
-    private static string TrainerNote(PokedexCard card) =>
-        card.IsShiny ? "Другого цвета. Такие встречаются редко."
-        : card.ActiveBadgeVisibility == Visibility.Visible ? "Сейчас со мной на столе — не отходит ни на шаг."
-        : card.FavoriteBadgeVisibility == Visibility.Visible ? "Любимчик. Только остальным не говорить."
-        : card.IsBusy ? "Сейчас в походе или в питомнике — жду обратно."
-        : card.Level >= 30 ? "Опытный. С ним в любой поход не страшно."
-        : "Ещё узнаём друг друга.";
+    // "Ещё узнаём друг друга" is only for a pet that is genuinely new: a final form or a pet that has
+    // been around for weeks got the same line before (Georgy 04.11, item 6).
+    internal static string TrainerNote(PokedexCard card) => TrainerNote(card, DateTimeOffset.UtcNow);
+
+    internal static string TrainerNote(PokedexCard card, DateTimeOffset nowUtc)
+    {
+        if (card.IsShiny) return "Другого цвета. Такие встречаются редко.";
+        if (card.ActiveBadgeVisibility == Visibility.Visible) return "Сейчас со мной на столе — не отходит ни на шаг.";
+        if (card.FavoriteBadgeVisibility == Visibility.Visible) return "Любимчик. Только остальным не говорить.";
+        if (card.IsBusy) return "Сейчас в походе или в питомнике — жду обратно.";
+        if (card.EvolutionState == EvolutionProgressState.FinalForm) return "Прошли весь путь вместе — дальше только дружить.";
+        if (card.Level >= 30) return "Опытный. С ним в любой поход не страшно.";
+        var days = card.CaughtAtUtc == default ? 0 : (int)Math.Floor((nowUtc - card.CaughtAtUtc).TotalDays);
+        if (days >= 30) return $"Вместе уже {days} {Plural(days, "день", "дня", "дней")}. Понимаем друг друга без слов.";
+        if (card.Level >= 10) return "Пара походов позади — уже совсем свой.";
+        if (days >= 7) return "Привыкаем друг к другу. Уже знаю, что он любит.";
+        return "Ещё узнаём друг друга.";
+    }
+
+    private static string Plural(long n, string one, string few, string many) =>
+        (n % 100) is >= 11 and <= 14 ? many : (n % 10) switch { 1 => one, >= 2 and <= 4 => few, _ => many };
 
     // With the pet page open at 1200x660 the header is narrow: the note gives way so «Покедекс» is never cut.
     private void PokedexHeader_SizeChanged(object sender, SizeChangedEventArgs e) =>
@@ -455,6 +469,31 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         _speciesPageIndex++;
         RefreshSpecies();
+    }
+
+    // The species page is sized to fit the window (whole rows), so the page itself rarely scrolls and
+    // the wheel used to do nothing (Georgy 02.11). The wheel scrolls while there is room, then turns
+    // the page: one page per gesture, so a fast spin does not race through all 1025 species.
+    private DateTime _lastWheelPageTurn;
+
+    private void SpeciesPane_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+    {
+        var down = e.Delta < 0;
+        var canScroll = down
+            ? PokedexScroll.VerticalOffset < PokedexScroll.ScrollableHeight - 0.5
+            : PokedexScroll.VerticalOffset > 0.5;
+        if (canScroll)
+        {
+            PokedexScroll.ScrollToVerticalOffset(PokedexScroll.VerticalOffset - e.Delta);
+            e.Handled = true;
+            return;
+        }
+        e.Handled = true;
+        if (DateTime.UtcNow - _lastWheelPageTurn < TimeSpan.FromMilliseconds(350)) return;
+        var button = down ? SpeciesNextButton : SpeciesPrevButton;
+        if (!button.IsEnabled) return;
+        _lastWheelPageTurn = DateTime.UtcNow;
+        if (down) SpeciesNext_Click(button, e); else SpeciesPrev_Click(button, e);
     }
 
     private void RefreshSpecies()
@@ -987,6 +1026,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         EvolutionFraction = entry.EvolutionFraction,
         EvolutionState = entry.EvolutionState,
         CaughtAtText = FormatCaughtDate(entry.CaughtAtUtc),
+        CaughtAtUtc = entry.CaughtAtUtc,
         NatureText = NatureDisplay.Name(entry.Nature),
         CanSelect = !entry.IsActive && !entry.IsBusy,
         IsShiny = entry.IsShiny,

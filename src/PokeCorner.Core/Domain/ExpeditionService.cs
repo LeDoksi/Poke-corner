@@ -73,6 +73,23 @@ public sealed class ExpeditionService
         if (routes.Count != 8) throw new InvalidDataException("Invalid expedition routes.");
     }
 
+    /// What a route yields regardless of the team, for the preparation screen before a team is chosen
+    /// (Georgy 04.11, item 1): the primary berry with its guaranteed floor per hour, the berries that can
+    /// turn up as extra finds, and the flat XP per hour each participant gets.
+    public sealed record RouteOutlook(string PrimaryBerryId, IReadOnlyList<string> ExtraBerryIds, int MinimumPrimaryPerHour, int XpPerHour);
+
+    public static RouteOutlook Outlook(CatalogPackage catalog, string routeId)
+    {
+        using var rules = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "catalog-rules.json")));
+        using var source = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "balance.json")));
+        var row = rules.RootElement.GetProperty("routes").EnumerateArray().FirstOrDefault(r => r.GetProperty("id").GetString() == routeId);
+        if (row.ValueKind != JsonValueKind.Object) throw new InvalidOperationException("Маршрут не найден.");
+        return new(row.GetProperty("primary").GetString()!,
+            row.GetProperty("additional").EnumerateArray().Select(x => x.GetString()!).ToArray(),
+            source.RootElement.GetProperty("minimumPrimaryBerriesPerHour").GetInt32(),
+            source.RootElement.GetProperty("xpPerHour").GetInt32());
+    }
+
     public static IReadOnlySet<Guid> BusyIndividualIds(SaveData state) =>
         (state.Expedition?.Status is "running" or "ready" ? state.Expedition.ParticipantIds : [])
         .Concat(state.Nest?.Status is "running" or "ready" ? state.Nest.ParticipantIds : [])

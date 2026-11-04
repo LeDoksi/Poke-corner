@@ -41,7 +41,7 @@
       </Image>
       <Grid Margin="24,0" MaxWidth="968" HorizontalAlignment="Left">
        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,18,40,18" MaxWidth="560">
-        <TextBlock x:Name="SceneTitleText" Text="Будущие родители" Foreground="{StaticResource NdTextBrush}" FontFamily="Georgia" FontWeight="Bold" FontSize="32" TextWrapping="Wrap" />
+        <TextBlock x:Name="SceneTitleText" Text="Будущие родители" Foreground="{StaticResource NdTextBrush}" FontFamily="{DynamicResource NdHandFont}" FontWeight="Bold" FontSize="42" RenderTransformOrigin="0,0.5" TextWrapping="Wrap"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock>
         <Border Height="1" Background="{StaticResource NdMutedBrush}" Opacity="0.7" Margin="0,6,0,0" />
         <TextBlock x:Name="SubtitleText" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
        </StackPanel>

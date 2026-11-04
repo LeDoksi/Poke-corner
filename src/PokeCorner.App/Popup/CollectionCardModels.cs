@@ -77,6 +77,8 @@ public sealed class PokedexCard
 
     /// Detail-overlay-only fields.
     public required string CaughtAtText { get; init; }
+    /// When this individual joined the collection; the trainer's note counts days together from it.
+    public DateTimeOffset CaughtAtUtc { get; init; }
     public required string NatureText { get; init; }
 
     public required bool CanSelect { get; init; }

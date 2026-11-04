@@ -248,8 +248,7 @@ public partial class ExpeditionView : UserControl
             PreviewText.Text = "Выберите хотя бы одного участника.";
             ContributionsText.Text = "Выберите команду из 1–3 питомцев. Полная тройка может принести дополнительные находки и встречу.";
             _currentPreview = null;
-            PreviewRewardCards.Children.Clear();
-            LootLabel.Text = "Добыча появится после выбора команды.";
+            RenderRouteOutlook();
             StartButton.IsEnabled = false;
         }
         else
@@ -466,6 +465,38 @@ public partial class ExpeditionView : UserControl
     }
 
     // Extras were rolled when the team set out, so the ready screen can show the whole haul in one row.
+    // Before a team is chosen the route still says what it gives (Georgy 04.11, item 1): the primary berry
+    // with the floor any team gets, the berries extra finds can bring, and the flat XP. Coins depend on the team.
+    private void RenderRouteOutlook()
+    {
+        PreviewRewardCards.Children.Clear();
+        ExpeditionService.RouteOutlook outlook;
+        try { if (_catalog is null) throw new InvalidOperationException(); outlook = ExpeditionService.Outlook(_catalog, _route); }
+        catch (Exception ex) when (ex is InvalidOperationException or System.IO.IOException or System.Text.Json.JsonException or KeyNotFoundException)
+        {
+            LootLabel.Text = "Добыча появится после выбора команды.";
+            return;
+        }
+        var minutes = DurationBox.SelectedItem is ListBoxItem { Tag: string tag } && int.TryParse(tag, out var m) ? m : 360;
+        var berries = minutes * outlook.MinimumPrimaryPerHour / 60;
+        LootLabel.Text = "Даже с одним питомцем:";
+        var cards = new List<(ImageSource? Image, string Text, string Tip)>
+        {
+            (ShopArt(outlook.PrimaryBerryId), $"{BerryName(outlook.PrimaryBerryId)} от {berries}", "Основная ягода маршрута. С сильной командой её больше."),
+            (null, $"{minutes * outlook.XpPerHour / 60} XP каждому", "Опыт не зависит от сложности и состава."),
+            (ShopArt(outlook.ExtraBerryIds.FirstOrDefault() ?? outlook.PrimaryBerryId),
+                string.Join(", ", outlook.ExtraBerryIds.Select(BerryName)) + " — находки", "Попутные ягоды и монеты находит только полная тройка."),
+        };
+        foreach (var (image, text, tip) in cards)
+        {
+            var row = new StackPanel { Orientation = Orientation.Horizontal, ToolTip = tip };
+            if (image is not null) row.Children.Add(new Image { Source = image, Width = 26, Height = 26, Margin = new Thickness(0, 0, 6, 0) });
+            else row.Children.Add(new TextBlock { Text = "XP", FontWeight = FontWeights.ExtraBold, Foreground = (Brush)FindResource("UiForestBrush"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) });
+            row.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.NoWrap, TextTrimming = TextTrimming.CharacterEllipsis, MaxWidth = 145, FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center });
+            PreviewRewardCards.Children.Add(new Border { Child = row, Padding = new Thickness(2), Margin = new Thickness(0, 0, 6, 6), CornerRadius = new CornerRadius(8), Background = System.Windows.Media.Brushes.Transparent });
+        }
+    }
+
     private void RenderRewards(UniformGrid panel, string berry, int berries, int coins, string? xp, ExpeditionRewards? extras = null)
     {
         panel.Children.Clear();
