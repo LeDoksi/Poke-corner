@@ -77,6 +77,23 @@ public sealed class NurseryCoreTests : IDisposable
         new(state.Individuals.Take(2).Select(x => x.Id).ToArray(), chosen, id ?? Guid.NewGuid(), Now);
 
     [Fact]
+    public void FamilyPairWithManyOutcomesPassesTheSaveValidator()
+    {
+        // D-32 family pairs can have 4–5 possible babies; the save validator once capped the nest at 3
+        // and every such start failed with «неверное гнездо v2» (Georgy 04.11, Skuntank + Purrloin).
+        var all = Enumerable.Range(1, 1025).ToArray();
+        var catalog = Catalog(all, all);
+        var recipe = new NurseryCatalog(catalog).MixedRecipes.Where(r => r.IsAvailable)
+            .OrderByDescending(r => r.AvailableOutcomes.Count).First();
+        Assert.True(recipe.AvailableOutcomes.Count > 3);
+        var state = State(catalog, recipe.FirstParentId, recipe.SecondParentId);
+        var service = new NurseryService(catalog, state);
+        service.Start(Request(state));
+        Assert.True(state.Nest!.PossibleOutcomeSpeciesIds.Count > 3);
+        JsonSaveStore.ValidateData(state);
+    }
+
+    [Fact]
     public void EvolvedParentsRootReadyLocksAndDoubleHatch()
     {
         var catalog = Catalog([26, 172], 172);

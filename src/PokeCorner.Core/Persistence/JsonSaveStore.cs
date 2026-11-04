@@ -438,7 +438,7 @@ public sealed class JsonSaveStore
                 && nest.Child.TotalXp == 0 && nest.Child.AcquisitionSource == "nursery"
                 && nest.Child.ParentIds.SequenceEqual(nest.ParticipantIds)
                 && (!nest.Child.IsShiny || nest.ShinySupported)
-                && nest.PossibleOutcomeSpeciesIds is { Count: <= 3 } possibilities
+                && nest.PossibleOutcomeSpeciesIds is { Count: <= 64 } possibilities
                 && possibilities.Distinct().Count() == possibilities.Count
                 && possibilities.All(id => id > 0)
                 && (possibilities.Count == 0 || possibilities.Contains(nest.Child.SpeciesId))
