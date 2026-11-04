@@ -108,6 +108,9 @@ public partial class RoomView : UserControl
     private readonly Action? _feed;
     private readonly Action<Guid>? _openIndividual;
     private readonly Action? _openPokedex;
+    private readonly Func<IReadOnlyList<ReadyItem>>? _readyItems;
+    private readonly Action<ReadyItem>? _openReady;
+    private string _readySignature = "";
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
     private SpriteAnimator? _animator;
     private string _sceneSignature = "";
@@ -116,8 +119,11 @@ public partial class RoomView : UserControl
 
     public RoomView(RoomArt art, Func<SaveData> snapshot, Func<IReadOnlyList<byte[]>?> spriteFrames, Action openAchievements,
         Func<int, string>? speciesName = null, CatalogPackage? catalog = null,
-        Action? pet = null, Action? feed = null, Action<Guid>? openIndividual = null, Action? openPokedex = null)
+        Action? pet = null, Action? feed = null, Action<Guid>? openIndividual = null, Action? openPokedex = null,
+        Func<IReadOnlyList<ReadyItem>>? readyItems = null, Action<ReadyItem>? openReady = null)
     {
+        _readyItems = readyItems;
+        _openReady = openReady;
         _art = art;
         _snapshot = snapshot;
         _spriteFrames = spriteFrames;
@@ -156,6 +162,7 @@ public partial class RoomView : UserControl
 
     public void Refresh()
     {
+        RenderReadyStrip();
         var data = _snapshot();
         var signature = string.Join("|", data.TrophyShelfIds);
         if (signature != _sceneSignature)
@@ -319,4 +326,41 @@ public partial class RoomView : UserControl
     }
 
     private void AchievementsButton_Click(object sender, RoutedEventArgs e) => _openAchievements();
+
+    /// D-31: chips for everything that waits; a click goes straight to the right place.
+    private void RenderReadyStrip()
+    {
+        var items = _readyItems?.Invoke() ?? [];
+        var signature = string.Join("|", items.Select(x => $"{x.Kind}:{x.IndividualId}:{x.Text}"));
+        if (signature == _readySignature) return;
+        _readySignature = signature;
+        ReadyStrip.Children.Clear();
+        // At 1200×660 more than four chips would wrap and squeeze the room; the rest fold into one.
+        const int shown = 4;
+        foreach (var item in items.Take(items.Count > shown ? shown - 1 : shown))
+        {
+            var chip = new Button
+            {
+                Content = "✦  " + item.Text, Style = (Style)FindResource("SecondaryButtonStyle"),
+                Margin = new Thickness(0, 0, 8, 6), Padding = new Thickness(12, 4, 12, 4),
+                IsEnabled = _openReady is not null
+            };
+            System.Windows.Automation.AutomationProperties.SetName(chip, item.Text);
+            chip.Click += (_, _) => _openReady?.Invoke(item);
+            ReadyStrip.Children.Add(chip);
+        }
+        if (items.Count > shown)
+        {
+            var rest = items.Skip(shown - 1).ToArray();
+            var more = new Button
+            {
+                Content = $"ещё {rest.Length}", Style = (Style)FindResource("SecondaryButtonStyle"),
+                Margin = new Thickness(0, 0, 8, 6), Padding = new Thickness(12, 4, 12, 4),
+                ToolTip = string.Join("\n", rest.Select(x => x.Text)), IsEnabled = _openReady is not null
+            };
+            more.Click += (_, _) => _openReady?.Invoke(rest[0]);
+            ReadyStrip.Children.Add(more);
+        }
+        ReadyStrip.Visibility = items.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+    }
 }

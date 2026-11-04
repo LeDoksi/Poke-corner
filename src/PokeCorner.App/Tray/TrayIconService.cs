@@ -41,7 +41,12 @@ public sealed class TrayIconService : IDisposable
             ContextMenuStrip = menu
         };
         _notifyIcon.DoubleClick += (_, _) => OpenCollectionRequested?.Invoke();
+        // D-31: a toast about something ready opens exactly that place when clicked.
+        _notifyIcon.BalloonTipClicked += (_, _) => { var open = _balloonAction; _balloonAction = null; open?.Invoke(); };
+        _notifyIcon.BalloonTipClosed += (_, _) => _balloonAction = null;
     }
+
+    private Action? _balloonAction;
 
     /// Called from App.xaml.cs right where the overlay's sprite PNG bytes are already
     /// decoded — the tray icon always matches whoever is currently on the desktop.
@@ -103,8 +108,15 @@ public sealed class TrayIconService : IDisposable
             : new System.Drawing.Font(_catchMenuItem.Font, System.Drawing.FontStyle.Regular);
     }
 
-    public void ShowNotification(string title, string text) =>
-        _notifyIcon.ShowBalloonTip(timeout: 5000, tipTitle: title, tipText: text, tipIcon: ToolTipIcon.Info);
+    public void ShowNotification(string title, string text) => ShowNotification(title, text, null);
+
+    /// With an action the toast ends with "Нажмите, чтобы открыть" and a click opens that place.
+    public void ShowNotification(string title, string text, Action? open)
+    {
+        _balloonAction = open;
+        _notifyIcon.ShowBalloonTip(timeout: 5000, tipTitle: title,
+            tipText: open is null ? text : text + " Нажмите, чтобы открыть.", tipIcon: ToolTipIcon.Info);
+    }
 
     public void Dispose()
     {

@@ -161,6 +161,26 @@ public sealed class FormDiscoveryTests
         Items = SaveMigration.ItemIds.ToDictionary(id => id, _ => 0),
         BerryRemainders = SaveMigration.BerryIds.ToDictionary(id => id, _ => new RationalRemainder())
     };
+    [Fact]
+    public void ReadyItemsListEveryWaitingThingOnceWithEvolutionsFirst()
+    {
+        using var fixture = new NurseryCoreTests(); var catalog = fixture.Catalog([1, 2]);
+        var data = V2(); var now = DateTimeOffset.UtcNow;
+        var ready = Individual(catalog, 1); ready.AccumulatedCarePoints = 70_000; ready.Nickname = "Буся";
+        var growing = Individual(catalog, 1); growing.AccumulatedCarePoints = 60_000;
+        data.Individuals.AddRange([growing, ready]);
+        Assert.Equal(new[] { "Буся: пора эволюционировать" }, ReadyItems.Collect(catalog, data, 0, now).Select(x => x.Text));
+        data.Expedition = new ExpeditionState { Status = "running", ReadyAtUtc = now.AddMinutes(-1) };
+        data.Nest = new NurseryState { Status = "running", ReadyAtUtc = now.AddHours(1), Child = Individual(catalog, 1) };
+        var items = ReadyItems.Collect(catalog, data, 2, now);
+        Assert.Equal(new[] { ReadyKind.Evolution, ReadyKind.Expedition, ReadyKind.Catch }, items.Select(x => x.Kind));
+        Assert.Equal(ready.Id, items[0].IndividualId);
+        Assert.Equal("Покеболы: 2", items[2].Text);
+        // A pet on the trip is busy: it cannot evolve until it is back.
+        data.Expedition.ParticipantIds = [ready.Id];
+        Assert.DoesNotContain(ReadyItems.Collect(catalog, data, 0, now), x => x.Kind == ReadyKind.Evolution);
+    }
+
     private static PokemonIndividual Individual(CatalogPackage catalog, int id, bool shiny = false)
     {
         var species = catalog.Species.Single(s => s.Id == id);

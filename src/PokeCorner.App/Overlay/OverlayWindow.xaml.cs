@@ -430,8 +430,26 @@ public partial class OverlayWindow : Window
             ThoughtBubble.Tag = stage;
             ThoughtBubble.Visibility = stage == 0 ? Visibility.Collapsed : Visibility.Visible;
             ThoughtStage.Text = new string('⌁', stage);
+            UpdateReadyBadge();
         }
         UpdateThoughtMotion();
+    }
+
+    private int _readyCount;
+
+    /// D-31: the number of things waiting in the app; the badge stays hidden while the sulk cloud shows.
+    public void SetReadyCount(int count)
+    {
+        if (count == _readyCount) return;
+        _readyCount = count;
+        UpdateReadyBadge();
+    }
+
+    private void UpdateReadyBadge()
+    {
+        ReadyBadgeText.Text = _readyCount > 1 ? $"✦ {_readyCount}" : "✦";
+        ReadyBadge.Visibility = _readyCount > 0 && _thoughtStage == 0 ? Visibility.Visible : Visibility.Collapsed;
+        ReadyBadge.ToolTip = _readyCount > 0 ? "Что-то готово — открой уголок" : null;
     }
 
     private void SystemParameters_StaticPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

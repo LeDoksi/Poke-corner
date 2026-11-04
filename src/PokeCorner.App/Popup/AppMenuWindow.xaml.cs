@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Threading;
+using PokeCorner.Core.Domain;
 using PokeCorner.Core.Persistence;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -18,6 +19,7 @@ public partial class AppMenuWindow : Window
     /// restart the animation (and its phase) on every catch-ready refresh tick.
     private bool _catchBadgePulsing;
     private readonly Func<SaveData>? _getSnapshot;
+    private readonly Func<IReadOnlyList<ReadyItem>>? _readyItems;
     private readonly DispatcherTimer _snapshotTimer = new() { Interval = TimeSpan.FromSeconds(1) };
     private TaskCompletionSource<bool>? _confirmation;
     private IInputElement? _previousFocus;
@@ -28,8 +30,10 @@ public partial class AppMenuWindow : Window
 
     public AppMenuWindow(CollectionView collectionView, SettingsView settingsView, ShopView shopView, CatchView catchView,
         ExpeditionView? expeditionView = null, NurseryView? nurseryView = null,
-        RoomView? roomView = null, AchievementsView? achievementsView = null, Func<SaveData>? getSnapshot = null)
+        RoomView? roomView = null, AchievementsView? achievementsView = null, Func<SaveData>? getSnapshot = null,
+        Func<IReadOnlyList<ReadyItem>>? readyItems = null)
     {
+        _readyItems = readyItems;
         InitializeComponent();
         MenuTabControl.SelectionChanged += (_, e) =>
         {
@@ -167,6 +171,10 @@ public partial class AppMenuWindow : Window
         var trip = snapshot?.Expedition;
         ExpeditionReadyBadge.Visibility = trip is not null && (trip.Status == "ready" || trip.Status == "running" && DateTimeOffset.UtcNow >= trip.ReadyAtUtc)
             ? Visibility.Visible : Visibility.Collapsed;
+        // D-31: the same "ready" list as the corner strip and the badge over the desktop pet.
+        var ready = _readyItems?.Invoke() ?? [];
+        PokedexReadyBadge.Visibility = ready.Any(x => x.Kind == ReadyKind.Evolution) ? Visibility.Visible : Visibility.Collapsed;
+        NurseryReadyBadge.Visibility = ready.Any(x => x.Kind == ReadyKind.Nursery) ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void StopPresentation()

@@ -9,6 +9,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <DockPanel Margin="24,16,24,12">
+            <!-- D-31: what is waiting right now, one click each. Docked first so it spans the full width under the title. -->
+            <WrapPanel x:Name="ReadyStrip" DockPanel.Dock="Bottom" Margin="0,10,0,0" Visibility="Collapsed"
+                       AutomationProperties.Name="Готово сейчас" />
             <Button x:Name="AchievementsButton" Content="☆  Достижения" DockPanel.Dock="Right"
                     Style="{StaticResource SecondaryButtonStyle}" Click="AchievementsButton_Click"
                     AutomationProperties.Name="Открыть достижения и мою полку" />

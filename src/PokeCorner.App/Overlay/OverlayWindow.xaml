@@ -55,6 +55,12 @@
                 HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed">
             <TextBlock x:Name="ThoughtStage" Foreground="{StaticResource NdTextBrush}" FontSize="17" />
         </Border>
+        <!-- D-31: something is waiting in the app (evolution, trip, baby, pokéball). Hidden while the pet sulks,
+             so there is never more than one cloud over it. -->
+        <Border x:Name="ReadyBadge" Style="{StaticResource ThoughtBubbleStyle}" Padding="6,1"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed">
+            <TextBlock x:Name="ReadyBadgeText" Foreground="{StaticResource NdApricotBrush}" FontSize="13" FontWeight="Bold" />
+        </Border>
 
     </Grid>
 </Window>

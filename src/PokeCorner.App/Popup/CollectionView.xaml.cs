@@ -697,6 +697,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         Refresh();
     }
 
+    /// Quick action from the corner or a toast: the pet's card already on the "time to grow" surface.
+    public bool OpenEvolution(Guid id)
+    {
+        if (!OpenIndividual(id)) return false;
+        SetEvolutionSurface(true);
+        return true;
+    }
+
     public bool OpenIndividual(Guid id)
     {
         var entry = _viewModel.GetEntry(id, DateTimeOffset.UtcNow);
@@ -1276,6 +1284,10 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (preview.Branches.Count == 0) { RefreshTopUp(); return; }
         DetailEvolutionBar.Value = Math.Clamp(preview.CareOwned / (double)Math.Max(1, preview.CareRequired), 0, 1);
         var enoughCare = preview.CareOwned >= preview.CareRequired;
+        // D-31: a pet that is ready says so on its card instead of hiding behind "Условия".
+        var readyNow = enoughCare && !preview.IsBusy && preview.Branches.Any(x => x.Available);
+        DetailConditionsButton.Content = readyNow ? "✦ Готов к эволюции" : "Условия";
+        DetailConditionsButton.Style = (Style)FindResource(readyNow ? "UiPrimaryButtonStyle" : "SecondaryButtonStyle");
         DetailEvolutionText.Text = EvolutionCareStateText.Text = enoughCare ? "Достаточно" : "Продолжай заботиться о питомце";
         EvolutionCareBar.Value = DetailEvolutionBar.Value;
         DetailEvolutionCostText.Text = $"× {preview.BerryCost} · в запасе {preview.BerriesOwned}";

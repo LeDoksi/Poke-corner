@@ -361,6 +361,7 @@ public partial class App : System.Windows.Application
         if (_effectPlayer is not null) _effectPlayer.Volume = CryVolume.ToPlayerVolume(_appState.Settings.EffectsSoundVolume);
 
         CheckEvolutionReady();
+        _overlayWindow.SetReadyCount(CurrentReadyItems().Count);
 
         // Backstop for the ForegroundWindowChanged hook: plenty of things reorder the normal
         // z-order band without a foreground change (a window being restored, shown, or moved
@@ -397,7 +398,9 @@ public partial class App : System.Windows.Application
         if (_evolutionReadyNotifiedFor == active.Id) return;
 
         _evolutionReadyNotifiedFor = active.Id;
-        _trayIconService.ShowNotification("PokéCorner", "Покемон готов эволюционировать!");
+        var id = active.Id;
+        _trayIconService.ShowNotification("PokéCorner", "Покемон готов эволюционировать!",
+            () => OpenReady(new ReadyItem(ReadyKind.Evolution, string.Empty, id)));
     }
 
     private void ReconcileSettingsState()
@@ -681,7 +684,7 @@ public partial class App : System.Windows.Application
                 _trayIconService.SetCatchReady(ReadyBallCount() > 0);
                 _menuWindow?.SetCatchReady(ReadyBallCount());
                 if (wasIdle && _catchReadyCount > 0)
-                    _trayIconService.ShowNotification("PokéCorner", "Покебол за активность готов к открытию.");
+                    _trayIconService.ShowNotification("PokéCorner", "Покебол за активность готов к открытию.", () => OpenMenu(MenuSection.Catch));
             }
         }
         catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or System.Text.Json.JsonException)
@@ -743,6 +746,36 @@ public partial class App : System.Windows.Application
     }
 
     private int ReadyBallCount() => CatchBallQueue.ReadyCount(_appState.Encounters, _catchReadyCount);
+
+    // D-31: one list of waiting things for the corner strip, the rail dots, the desktop badge and toasts.
+    private IReadOnlyList<ReadyItem> _readyCache = [];
+    private DateTimeOffset _readyCacheUtc = DateTimeOffset.MinValue;
+    private CollectionView? _menuCollectionView;
+
+    private IReadOnlyList<ReadyItem> CurrentReadyItems()
+    {
+        var now = DateTimeOffset.UtcNow;
+        if (!_hasLoadedState || now - _readyCacheUtc < TimeSpan.FromSeconds(2)) return _readyCache;
+        _readyCacheUtc = now;
+        try { _readyCache = ReadyItems.Collect(_catalogPackage, _appState.ToSaveData(_catchReadyCount), ReadyBallCount(), now); }
+        catch (Exception ex) when (ex is InvalidOperationException or InvalidDataException or IOException) { _readyCache = []; }
+        return _readyCache;
+    }
+
+    private void OpenReady(ReadyItem item)
+    {
+        _readyCacheUtc = DateTimeOffset.MinValue; // what is shown next must reflect the click
+        switch (item.Kind)
+        {
+            case ReadyKind.Evolution when item.IndividualId is { } id:
+                OpenMenu(MenuSection.Pokedex);
+                if (_menuCollectionView is { } collection) { _menuWindow?.Navigate(MenuSection.Pokedex); collection.OpenEvolution(id); }
+                break;
+            case ReadyKind.Expedition: OpenMenu(MenuSection.Expeditions); break;
+            case ReadyKind.Nursery: OpenMenu(MenuSection.Nursery); break;
+            case ReadyKind.Catch: OpenMenu(MenuSection.Catch); break;
+        }
+    }
 
     private CatchReveal PublishConfirmedCatch(EncounterOpenResult result)
     {
@@ -1174,14 +1207,16 @@ public partial class App : System.Windows.Application
                     id => _catalogPackage.Species.FirstOrDefault(species => species.Id == id)?.DisplayName ?? $"№{id:D4}",
                     catalog: _catalogPackage, pet: PetActiveIndividual, feed: FeedActiveIndividual,
                     openIndividual: id => { _menuWindow?.Navigate(MenuSection.Pokedex); collectionView.OpenIndividual(id); },
-                    openPokedex: () => _menuWindow?.Navigate(MenuSection.Pokedex));
+                    openPokedex: () => _menuWindow?.Navigate(MenuSection.Pokedex),
+                    readyItems: CurrentReadyItems, openReady: OpenReady);
                 var achievementsView = new AchievementsView(roomArt, () => _appState.ToSaveData(_catchReadyCount),
                     update => CommitStateAsync(update, closeMenu: false), () => _menuWindow?.Navigate(MenuSection.Corner),
                     _appState.Achievements);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView,
-                    nurseryView, roomView, achievementsView, () => _appState.ToSaveData(_catchReadyCount));
+                    nurseryView, roomView, achievementsView, () => _appState.ToSaveData(_catchReadyCount), CurrentReadyItems);
+                _menuCollectionView = collectionView;
                 _menuWindow.SectionViewed += ShowContextHint;
-                _menuWindow.Closed += (_, _) => _menuWindow = null;
+                _menuWindow.Closed += (_, _) => { _menuWindow = null; _menuCollectionView = null; };
                 _menuWindow.SetCatchReady(ReadyBallCount()); // picks up all unopened ready encounters
                 _menuWindow.Show();
             }
@@ -1359,7 +1394,8 @@ public partial class App : System.Windows.Application
     private void NotifyCommittedExpeditionReady()
     {
         if (!_isExiting && _hasLoadedState && _trayIconService is not null)
-            _expeditionReadyNotifications.ObserveCommitted(_appState.ToSaveData(_catchReadyCount), _trayIconService.ShowNotification);
+            _expeditionReadyNotifications.ObserveCommitted(_appState.ToSaveData(_catchReadyCount),
+                (title, text) => _trayIconService.ShowNotification(title, text, () => OpenMenu(MenuSection.Expeditions)));
     }
 
     private SaveData SnapshotIncludingPendingExpeditionActivity()
