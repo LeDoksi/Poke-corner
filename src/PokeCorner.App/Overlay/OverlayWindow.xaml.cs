@@ -56,10 +56,41 @@ public partial class OverlayWindow : Window
     /// next launch instead of always snapping back to the configured corner.
     public event Action? PositionChanged;
 
+    /// (sheet, frame) of the reaction being shown; the app starts the crunch on the feeding bite.
+    public event Action<string, int>? ReactionFrame;
+    private readonly ReactionPlayer _reactions;
+    private Int32Rect _silhouette;
+    private (int Width, int Height) _spriteSource;
+    /// The sulk stage now shown or arriving (0 = none).
+    public int MoodStage => _reactions.MoodStage;
+
+    private void PlaceReaction()
+    {
+        var size = _spriteSizeDips > 0 ? _spriteSizeDips : 96;
+        if (_spriteSource.Width <= 0) return;
+        var pad = Math.Max(0, (Width is > 0 and var w ? w : size * SpriteScaleHeadroom) - size) / 2;
+        var scale = size / Math.Max(_spriteSource.Width, _spriteSource.Height);
+        var offsetX = pad + (size - _spriteSource.Width * scale) / 2;
+        var offsetY = pad + (size - _spriteSource.Height * scale) / 2;
+        var silhouette = new Rect(offsetX + _silhouette.X * scale, offsetY + _silhouette.Y * scale,
+            _silhouette.Width * scale, _silhouette.Height * scale);
+        // A whole number of screen pixels per frame pixel, matched to the sprite: 1 at the usual 96 px pet.
+        var unit = Math.Max(1, Math.Round(scale));
+        ReactionImage.Width = ReactionImage.Height = ReactionPlayer.FrameSize * unit;
+        var windowSize = size + pad * 2;
+        var (topLeft, mirrored) = ReactionPlayer.Place(silhouette, new System.Windows.Size(windowSize, windowSize), unit, _reactions.AnchorKind);
+        Canvas.SetLeft(ReactionImage, topLeft.X);
+        Canvas.SetTop(ReactionImage, topLeft.Y);
+        ReactionImage.RenderTransform = mirrored ? new ScaleTransform(-1, 1) : Transform.Identity;
+    }
+
     public OverlayWindow()
     {
         InitializeComponent();
         ThoughtBubble.Tag = 0;
+        _reactions = new ReactionPlayer(ReactionImage);
+        _reactions.VisibilityChanged += () => { PlaceReaction(); UpdateReadyBadge(); };
+        _reactions.FrameShown += (sheet, frame) => { PlaceReaction(); ReactionFrame?.Invoke(sheet, frame); };
         _stillEffectTimer.Tick += (_, _) =>
         {
             _stillEffectTimer.Stop();
@@ -170,6 +201,9 @@ public partial class OverlayWindow : Window
 
         // frameCount comes from frames.Count right here, so FrameSequencer and SpriteAnimator can
         // never disagree; a single frame just means a static image.
+        _silhouette = ReactionPlayer.SilhouetteOf(frames);
+        _spriteSource = frames[0] is System.Windows.Media.Imaging.BitmapSource first ? (first.PixelWidth, first.PixelHeight) : (96, 96);
+        PlaceReaction();
         var sequencer = new FrameSequencer(frames.Count, IdleFrameDuration);
         _animator = new SpriteAnimator(SpriteImage, sequencer, frames);
         _animator.Start();
@@ -410,26 +444,29 @@ public partial class OverlayWindow : Window
     public void PlayPetReaction()
     {
         PlayBounce(peakScale: 1.15, durationMs: 300);
-        PlayParticles(HeartEffects, HeartLeft, HeartMiddle, HeartRight);
+        _reactions.PlayOnce("petting");
     }
 
     public void PlayFeedReaction()
     {
         PlayBounce(peakScale: 1.3, durationMs: 400);
-        PlayParticles(CrumbEffects, CrumbLeft, CrumbMiddle, CrumbRight);
+        _reactions.PlayOnce("feeding");
     }
+
+    /// The sulk stage for this long without attention: 3 h, 4.5 h, 5.75 h. Shared with the corner.
+    public static int SulkStage(TimeSpan idle) =>
+        idle >= TimeSpan.FromHours(5.75) ? 3 : idle >= TimeSpan.FromHours(4.5) ? 2 : idle >= TimeSpan.FromHours(3) ? 1 : 0;
 
     public void UpdateThought(DateTimeOffset lastInteractionUtc, DateTimeOffset nowUtc)
     {
-        var idle = nowUtc - lastInteractionUtc;
-        var stage = idle >= TimeSpan.FromHours(5.75) ? 3 :
-            idle >= TimeSpan.FromHours(4.5) ? 2 : idle >= TimeSpan.FromHours(3) ? 1 : 0;
+        var stage = SulkStage(nowUtc - lastInteractionUtc);
         if (stage != _thoughtStage)
         {
             _thoughtStage = stage;
             ThoughtBubble.Tag = stage;
-            ThoughtBubble.Visibility = stage == 0 ? Visibility.Collapsed : Visibility.Visible;
-            ThoughtStage.Text = new string('⌁', stage);
+            // D-30: the sulk is the pixel cloud now; the old text bubble stays hidden.
+            ThoughtBubble.Visibility = Visibility.Collapsed;
+            _reactions.SetMood(stage);
             UpdateReadyBadge();
         }
         UpdateThoughtMotion();
@@ -448,7 +485,7 @@ public partial class OverlayWindow : Window
     private void UpdateReadyBadge()
     {
         ReadyBadgeText.Text = _readyCount > 1 ? $"✦ {_readyCount}" : "✦";
-        ReadyBadge.Visibility = _readyCount > 0 && _thoughtStage == 0 ? Visibility.Visible : Visibility.Collapsed;
+        ReadyBadge.Visibility = _readyCount > 0 && _thoughtStage == 0 && !_reactions.IsShowing ? Visibility.Visible : Visibility.Collapsed;
         ReadyBadge.ToolTip = _readyCount > 0 ? "Что-то готово — открой уголок" : null;
     }
 

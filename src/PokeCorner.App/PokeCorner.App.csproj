@@ -55,5 +55,7 @@
   <ItemGroup>
     <Resource Include="Assets\NightDiary\*.png" />
     <Resource Include="Assets\Fonts\*.ttf" />
+    <Resource Include="Assets\Reactions\*.png" />
+    <Content Include="Assets\Reactions\*.wav" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

@@ -111,6 +111,32 @@ public partial class RoomView : UserControl
     private readonly Func<IReadOnlyList<ReadyItem>>? _readyItems;
     private readonly Action<ReadyItem>? _openReady;
     private string _readySignature = "";
+    private readonly ReactionPlayer _reactions;
+    private Int32Rect _petSilhouette;
+
+    /// The same reaction the desktop pet plays, called by the app after a pet or feed was saved.
+    public void PlayReaction(string id) { if (IsLoaded) _reactions.PlayOnce(id); }
+
+    private void PetImage_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (_snapshot().ActiveIndividualId is null) return;
+        _pet?.Invoke();
+        e.Handled = true;
+    }
+
+    private void PlaceReaction()
+    {
+        const double scale = 5.07; // the room's sprite scale (PositionPet)
+        if (PetImage.Source is null) return;
+        var silhouette = new Rect(Canvas.GetLeft(PetImage) + _petSilhouette.X * scale, Canvas.GetTop(PetImage) + _petSilhouette.Y * scale,
+            _petSilhouette.Width * scale, _petSilhouette.Height * scale);
+        const double unit = 5;
+        RoomReaction.Width = RoomReaction.Height = ReactionPlayer.FrameSize * unit;
+        var (topLeft, mirrored) = ReactionPlayer.Place(silhouette, new System.Windows.Size(Scene.Width, Scene.Height), unit, _reactions.AnchorKind);
+        Canvas.SetLeft(RoomReaction, topLeft.X);
+        Canvas.SetTop(RoomReaction, topLeft.Y);
+        RoomReaction.RenderTransform = mirrored ? new ScaleTransform(-1, 1) : Transform.Identity;
+    }
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
     private SpriteAnimator? _animator;
     private string _sceneSignature = "";
@@ -137,6 +163,9 @@ public partial class RoomView : UserControl
         _openIndividual = openIndividual;
         _openPokedex = openPokedex;
         InitializeComponent();
+        _reactions = new ReactionPlayer(RoomReaction);
+        _reactions.VisibilityChanged += PlaceReaction;
+        _reactions.FrameShown += (_, _) => PlaceReaction();
         RoomBackground.Source = LoadImage(art.PathFor(art.Background));
         ShelfFrontlip.Source = LoadImage(art.PathFor(art.Frontlip));
         Canvas.SetLeft(ShelfFrontlip, art.FrontlipRect.X);
@@ -145,7 +174,7 @@ public partial class RoomView : UserControl
         ShelfFrontlip.Height = art.FrontlipRect.Height;
         _timer.Tick += (_, _) => Refresh();
         Loaded += (_, _) => { _timer.Start(); Refresh(); _animator?.Start(); };
-        Unloaded += (_, _) => { _timer.Stop(); _animator?.Stop(); _animator = null; _spriteSignature = ""; };
+        Unloaded += (_, _) => { _reactions.Stop(); _timer.Stop(); _animator?.Stop(); _animator = null; _spriteSignature = ""; };
         Refresh();
     }
 
@@ -239,6 +268,7 @@ public partial class RoomView : UserControl
             {
                 var decoded = frames!.Select(SpriteImages.Decode).ToList();
                 _spriteBounds = MeasureSpriteBounds(decoded);
+                _petSilhouette = ReactionPlayer.SilhouetteOf(decoded);
                 PetImage.Source = decoded[0];
                 if (decoded.Count > 1)
                 {
@@ -248,6 +278,10 @@ public partial class RoomView : UserControl
             }
         }
         PositionPet();
+        // The corner shows the same sulk as the desktop (D-30), from the saved last attention.
+        var lastCare = active is null ? (DateTimeOffset?)null
+            : data.CareStates.TryGetValue(active.Id, out var care) ? care.LastInteractionUtc : active.CaughtAtUtc;
+        _reactions.SetMood(lastCare is { } last && IsLoaded ? OverlayWindow.SulkStage(DateTimeOffset.UtcNow - last) : 0);
     }
 
     // One true note at a time, most actionable first (D-25 notes 2-6).

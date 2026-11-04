@@ -55,6 +55,11 @@
                 HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed">
             <TextBlock x:Name="ThoughtStage" Foreground="{StaticResource NdTextBrush}" FontSize="17" />
         </Border>
+        <!-- D-30: the pet's reactions (feeding, petting, three sulk stages) as pixel frames, anchored to the
+             visible silhouette by ReactionPlayer.Place. Never takes clicks. -->
+        <Canvas x:Name="ReactionLayer" IsHitTestVisible="False">
+            <Image x:Name="ReactionImage" Stretch="Fill" RenderTransformOrigin="0.5,0.5" />
+        </Canvas>
         <!-- D-31: something is waiting in the app (evolution, trip, baby, pokéball). Hidden while the pet sulks,
              so there is never more than one cloud over it. -->
         <Border x:Name="ReadyBadge" Style="{StaticResource ThoughtBubbleStyle}" Padding="6,1"

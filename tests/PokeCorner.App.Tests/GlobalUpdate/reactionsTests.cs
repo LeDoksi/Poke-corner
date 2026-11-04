@@ -39,9 +39,9 @@ public sealed class ReactionsTests
             var refresh = typeof(global::PokeCorner.App.App).GetMethod("UpdateActiveThought", AppPrivate)!;
 
             refresh.Invoke(app, null);
-            Assert.Equal(expectedStage, overlay.FindName("ThoughtBubble") is FrameworkElement first ? first.Tag : null);
+            Assert.Equal(expectedStage, overlay.MoodStage);
             refresh.Invoke(app, null);
-            Assert.Equal(expectedStage, overlay.FindName("ThoughtBubble") is FrameworkElement next ? next.Tag : null);
+            Assert.Equal(expectedStage, overlay.MoodStage);
         });
     }
 
@@ -182,9 +182,11 @@ public sealed class ReactionsTests
         {
             var overlay = new OverlayWindow();
             for (var click = 0; click < 20; click++) overlay.PlayPetReaction();
-            var hearts = (Panel)overlay.FindName("HeartEffects")!;
-            Assert.False(hearts.IsHitTestVisible);
-            Assert.InRange(hearts.Children.Count, 1, 3);
+            // D-30: one frame player, one image; twenty clicks never stack twenty clouds.
+            var layer = (Panel)overlay.FindName("ReactionLayer")!;
+            Assert.False(layer.IsHitTestVisible);
+            Assert.Single(layer.Children);
+            Assert.Equal(Visibility.Visible, ((FrameworkElement)overlay.FindName("ReactionImage")!).Visibility);
         });
     }
 
@@ -201,9 +203,11 @@ public sealed class ReactionsTests
             var overlay = new OverlayWindow();
             var now = new DateTimeOffset(2026, 10, 16, 12, 0, 0, TimeSpan.Zero);
             overlay.UpdateThought(now.AddHours(-hours), now);
-            var cloud = (FrameworkElement)overlay.FindName("ThoughtBubble")!;
+            var cloud = (FrameworkElement)overlay.FindName("ReactionImage")!;
             Assert.Equal(expected == 0 ? Visibility.Collapsed : Visibility.Visible, cloud.Visibility);
-            Assert.Equal(expected, cloud.Tag);
+            Assert.Equal(expected, overlay.MoodStage);
+            // The sulk is a state: it is still there after its whole sheet would have played.
+            if (expected > 0) { WpfTestHost.Pump(TimeSpan.FromSeconds(3)); Assert.Equal(Visibility.Visible, cloud.Visibility); }
         });
     }
 
@@ -214,9 +218,9 @@ public sealed class ReactionsTests
         {
             var overlay = new OverlayWindow();
             for (var feed = 0; feed < 20; feed++) overlay.PlayFeedReaction();
-            var crumbs = (Panel)overlay.FindName("CrumbEffects")!;
-            Assert.False(crumbs.IsHitTestVisible);
-            Assert.InRange(crumbs.Children.Count, 1, 3);
+            var layer = (Panel)overlay.FindName("ReactionLayer")!;
+            Assert.False(layer.IsHitTestVisible);
+            Assert.Single(layer.Children);
         });
     }
 

@@ -264,6 +264,11 @@ public partial class App : System.Windows.Application
         _overlayWindow = new OverlayWindow();
         _overlayWindow.PetClicked += PetActiveIndividual;
         _overlayWindow.MenuRequested += () => OpenMenu(MenuSection.Corner);
+        // D-30: the crunch starts on the first bite of the feeding frames, not on the click.
+        _overlayWindow.ReactionFrame += (sheet, frame) =>
+        {
+            if (sheet == "feeding" && frame == ReactionPlayer.FeedingSoundFrame) PlayCrunch();
+        };
         // Re-top the pet the moment another app comes to the front, not on the next tick.
         _overlayWindow.ForegroundWindowChanged += ReassertOverlayTopmost;
         // Remember where the player actually leaves the pet, so relaunch/reboot restores that
@@ -751,6 +756,7 @@ public partial class App : System.Windows.Application
     private IReadOnlyList<ReadyItem> _readyCache = [];
     private DateTimeOffset _readyCacheUtc = DateTimeOffset.MinValue;
     private CollectionView? _menuCollectionView;
+    private RoomView? _menuRoomView;
 
     private IReadOnlyList<ReadyItem> CurrentReadyItems()
     {
@@ -810,6 +816,7 @@ public partial class App : System.Windows.Application
             if (!petted) return;
             RefreshOverlayForActiveIndividual();
             _overlayWindow.PlayPetReaction();
+            _menuRoomView?.PlayReaction("petting");
             if (_appState.Collection.Individuals.FirstOrDefault(i => i.Id == id) is { } saved)
                 PlayCry(ResolveDisplaySpeciesId(saved));
         }
@@ -870,7 +877,9 @@ public partial class App : System.Windows.Application
         try
         {
             if (_appState.Settings.EffectsSoundVolume <= 0) { _effectPlayer?.Stop(); return; }
-            var path = Path.Combine(_catalogPackage.DataRoot, "voice-preview", "audio", "feeding-crunch.wav");
+            // D-30: the two-bite crunch from the reactions pack; the old one only if the new file is missing.
+            var path = Path.Combine(AppContext.BaseDirectory, "Assets", "Reactions", "feeding-crunch-v2.wav");
+            if (!File.Exists(path)) path = Path.Combine(_catalogPackage.DataRoot, "voice-preview", "audio", "feeding-crunch.wav");
             if (!File.Exists(path)) return;
             if (_effectPlayer is null)
             {
@@ -927,7 +936,7 @@ public partial class App : System.Windows.Application
             {
                 RefreshOverlayForActiveIndividual();
                 _overlayWindow.PlayFeedReaction();
-                PlayCrunch();
+                _menuRoomView?.PlayReaction("feeding");
             }
             else _trayIconService.ShowNotification("PokéCorner", "Не хватает лакомств — накопи ещё активности.");
         }
@@ -1215,8 +1224,9 @@ public partial class App : System.Windows.Application
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView,
                     nurseryView, roomView, achievementsView, () => _appState.ToSaveData(_catchReadyCount), CurrentReadyItems);
                 _menuCollectionView = collectionView;
+                _menuRoomView = roomView;
                 _menuWindow.SectionViewed += ShowContextHint;
-                _menuWindow.Closed += (_, _) => { _menuWindow = null; _menuCollectionView = null; };
+                _menuWindow.Closed += (_, _) => { _menuWindow = null; _menuCollectionView = null; _menuRoomView = null; };
                 _menuWindow.SetCatchReady(ReadyBallCount()); // picks up all unopened ready encounters
                 _menuWindow.Show();
             }

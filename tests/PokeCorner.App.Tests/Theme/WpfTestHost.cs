@@ -61,6 +61,16 @@ internal static class WpfTestHost
         element.UpdateLayout();
     }
 
+    /// Lets dispatcher timers run for a while on the current (dispatcher) thread.
+    public static void Pump(TimeSpan duration)
+    {
+        var frame = new System.Windows.Threading.DispatcherFrame();
+        var timer = new System.Windows.Threading.DispatcherTimer { Interval = duration };
+        timer.Tick += (_, _) => { timer.Stop(); frame.Continue = false; };
+        timer.Start();
+        System.Windows.Threading.Dispatcher.PushFrame(frame);
+    }
+
     private static void EnsureStarted()
     {
         lock (Gate)
