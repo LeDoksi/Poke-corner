@@ -11158,8 +11158,8 @@
     {
       "path": "docs/design-v2/final/balance.json",
       "target": "final/balance.json",
-      "bytes": 10332,
-      "sha256": "6df8536209da1ab5d133887d51d589e4a6a73aa1634edbac47b90dc3af929801"
+      "bytes": 10367,
+      "sha256": "04bfb94bed1010f497034b99861bf6089e33b39f5a922219b3ce0eb3881965ac"
     },
     {
       "path": "docs/design-v2/final/catalog-rules.json",

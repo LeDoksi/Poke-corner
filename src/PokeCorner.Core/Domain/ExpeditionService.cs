@@ -326,7 +326,10 @@ public sealed class ExpeditionService
         var underlevel = Fraction.Max(Fraction.Of(0), Fraction.Of(balance.GetProperty("recommendedLevels")[difficulty].GetInt32()) - average);
         var cap = Setting("maxUnderlevelPenalty");
         var resourcePreparation = Fraction.Of(1) - Fraction.Min(cap, Setting("underlevelPenaltyPerLevel") * underlevel);
-        var eventPreparation = Fraction.Of(1) - Fraction.Min(cap, Setting("eventUnderlevelPenaltyPerLevel") * underlevel);
+        // D-37: encounters forgive a weak team more than loot does, so any full trio meets someone
+        // on roughly every third hard six-hour trip.
+        var eventCap = balance.TryGetProperty("maxEventUnderlevelPenalty", out _) ? Setting("maxEventUnderlevelPenalty") : cap;
+        var eventPreparation = Fraction.Of(1) - Fraction.Min(eventCap, Setting("eventUnderlevelPenaltyPerLevel") * underlevel);
         var matching = members.Count(p => catalog.Species.First(s => s.Id == p.CurrentSpeciesId).Types.Any(route.BonusTypes.Contains));
         var common = Setting("levelBonusPerLevel") * (average - Fraction.Of(1))
             + Setting("matchingTypeBonusPerMember") * Fraction.Of(matching);
