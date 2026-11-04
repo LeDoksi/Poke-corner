@@ -14,7 +14,9 @@
             <Grid.ColumnDefinitions><ColumnDefinition Width="1.15*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
             <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
             <StackPanel x:Name="VisualPanel" Margin="0,0,20,0">
-                <Border CornerRadius="12" Background="{StaticResource SurfaceBackgroundBrush}" ClipToBounds="True">
+                <!-- The scene never gets wider than its picture at 250 px high: wider, UniformToFill would crop the floor
+                     off the bottom and the ball and the Pokémon would hang in the air (Georgy 04.11, a 150% laptop). -->
+                <Border x:Name="SceneFrame" CornerRadius="12" Background="{StaticResource SurfaceBackgroundBrush}" ClipToBounds="True" MaxWidth="750">
                     <Grid x:Name="CaptureScene" Height="250">
                         <Image x:Name="SceneImage" Stretch="UniformToFill" Visibility="Collapsed"/>
                         <Image x:Name="RevealSpriteImage" Width="144" Height="144" Visibility="Collapsed"

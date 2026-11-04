@@ -191,6 +191,9 @@ public partial class CatchView : System.Windows.Controls.UserControl
     {
         try { SceneImage.Source = _fetchScene?.Invoke(id) is { } bytes ? SpriteImages.Decode(bytes) : null; }
         catch { SceneImage.Source = null; }
+        // Fit by height only: the floor line the ball and the Pokémon stand on stays where it was drawn.
+        SceneFrame.MaxWidth = SceneImage.Source is System.Windows.Media.Imaging.BitmapSource scene && scene.PixelHeight > 0
+            ? CaptureScene.Height * scene.PixelWidth / scene.PixelHeight : 750;
     }
 
     private async void CharmButton_Click(object sender, RoutedEventArgs e)
