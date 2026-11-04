@@ -434,15 +434,16 @@ public partial class NurseryView : UserControl
         SceneFirstParent.Visibility = SceneSecondParent.Visibility = Visibility.Collapsed;
         HatchButton.Visibility = Visibility.Collapsed;
 
-        LuckBar.Value = Math.Clamp(data.NurseryLuckBonus / (ShinyRules.NurseryChanceCap - ShinyRules.BaseChance), 0, 1);
-
-        // Audit item 30: an empty bar said nothing. Now it says what the luck is and how it grows.
+        // D-34: ten clear steps instead of a bar that crept by a quarter of a percent.
+        var steps = ShinyRules.NurseryLuckStepsOf(data.NurseryLuckBonus);
+        RenderLuckSegments(steps);
         var shinyNow = ShinyRules.Chance(ShinySource.Nursery, data.NurseryLuckBonus, false, true);
-        // The line itself stays without numbers; the exact chance is in the tooltip.
-        LuckText.Text = data.NurseryLuckBonus > 0
-            ? "Набирается · каждый обычный малыш приближает шайни"
-            : "Пока пусто · каждый обычный малыш приближает шайни";
-        LuckPanel.ToolTip = $"Шанс шайни в гнезде сейчас {Percent(shinyNow)}, растёт до {Percent(ShinyRules.NurseryChanceCap)}. Шайни-малыш сбрасывает удачу.";
+        // Audit item 30: the line stays without percentages; the exact chance is in the tooltip.
+        LuckText.Text = steps >= ShinyRules.NurseryLuckSteps
+            ? $"{steps} из {ShinyRules.NurseryLuckSteps} · полная удача"
+            : $"{steps} из {ShinyRules.NurseryLuckSteps} · обычный малыш +1 деление";
+        LuckPanel.ToolTip = $"Шанс шайни в гнезде сейчас {Percent(shinyNow)}, каждое деление +{Percent(ShinyRules.NurseryLuckStep)}, максимум {Percent(ShinyRules.NurseryChanceCap)}. "
+            + "Шайни-малыш сбрасывает удачу. Если у малыша нет шайни-формы, удача не меняется.";
 
         if (active)
         {
@@ -464,7 +465,11 @@ public partial class NurseryView : UserControl
                 BabyImage.Source = Sprite(child.SpeciesId, child.IsShiny);
                 BabyImage.Visibility = Visibility.Visible;
 
-                var luck = nest.LuckBeforeHatch is { } before ? "Удача питомника " + (nest.ShinySupported && child.IsShiny ? "сброшена" : data.NurseryLuckBonus > before ? "увеличилась" : "не изменилась") + "." : "Изменение удачи этого старого вылупления не сохранено.";
+                var luck = nest.LuckBeforeHatch is not { } before ? "Изменение удачи этого старого вылупления не сохранено."
+                    : nest.ShinySupported && child.IsShiny ? "Удача питомника сброшена: вылупился шайни."
+                    : data.NurseryLuckBonus > before ? $"Удача питомника +1 деление ({ShinyRules.NurseryLuckStepsOf(data.NurseryLuckBonus)} из {ShinyRules.NurseryLuckSteps})."
+                    : !nest.ShinySupported ? "Удача не изменилась: у этого малыша нет шайни-формы."
+                    : "Удача уже полная.";
 
                 ResultText.Text = $"№{child.SpeciesId} · {SpeciesName(child.SpeciesId)}{(child.IsShiny ? " · шайни" : "")} · характер {NatureDisplay.Name(child.Nature)}. Особенность: {CollectionView.TraitLabel(child.FirstTraitId)} — {CollectionView.TraitEffect(child.FirstTraitId)}. Малыш сохранён в коллекции. {luck}";
 
@@ -1139,5 +1144,17 @@ public partial class NurseryView : UserControl
         var column = Math.Min(Math.Max(0, ActualWidth - 48), 968);
         NurseryMargin.Width = Math.Max(0, ActualWidth - 24 - column - 16);
         NurseryMargin.Margin = new Thickness(0, SceneBorder.ActualHeight + 16, 8, 0);
+    }
+
+    private void RenderLuckSegments(int filled)
+    {
+        LuckSegments.Children.Clear();
+        for (var i = 0; i < ShinyRules.NurseryLuckSteps; i++)
+            LuckSegments.Children.Add(new Border
+            {
+                Margin = new Thickness(i == 0 ? 0 : 2, 0, 0, 0), CornerRadius = new CornerRadius(2),
+                Background = i < filled ? ThemeBrushes.Get("NdLavenderBrush") : ThemeBrushes.Get("NdSurfaceBrush"),
+                BorderBrush = ThemeBrushes.Get("NdBorderBrush"), BorderThickness = new Thickness(1)
+            });
     }
 }
