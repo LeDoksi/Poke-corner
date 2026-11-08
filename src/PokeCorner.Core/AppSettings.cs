@@ -18,6 +18,10 @@ public sealed class AppSettings
     public int? PetPositionX { get; set; }
     public int? PetPositionY { get; set; }
 
+    /// The same drag spot pinned to its monitor (see PetSpot). Null in saves made before it
+    /// existed: those fall back to PetPositionX/Y once and are upgraded on the first restore.
+    public PetSpot? PetSpot { get; set; }
+
     /// Loudness of the species cry played when the player pets the active Pokémon, as a
     /// PERCENT (0-100) rather than the 0.0-1.0 the player itself takes — a percent is what the
     /// settings slider and its readout want, and CryVolume.ToPlayerVolume does the conversion
