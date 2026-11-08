@@ -229,6 +229,7 @@ public sealed class AppState
         Settings.EffectsSoundVolume = data.Settings.EffectsSoundVolume;
         Settings.PetPositionX = data.Settings.PetPositionX;
         Settings.PetPositionY = data.Settings.PetPositionY;
+        Settings.PetSpot = data.Settings.PetSpot;
 
         Activity.UnitsSinceLastCatchCheck = data.CatchAccumulatorUnits;
 

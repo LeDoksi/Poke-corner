@@ -518,7 +518,8 @@ public class AppStateTests
             {
                 CareMode = CareMode.Hardcore, AutoHideInFullscreen = false, StartWithWindows = true,
                 ScreenCorner = "TopLeft", MonitorIndex = 1, PetSizePixels = 128, ShowProgressPanel = true,
-                PetPositionX = 10, PetPositionY = 20, CrySoundVolume = 33, SuperHardcoreEnabled = true
+                PetPositionX = 10, PetPositionY = 20, CrySoundVolume = 33, SuperHardcoreEnabled = true,
+                PetSpot = new PetSpot(@"\\.\DISPLAY2", 2560, 0, 1920, 1080, 1700, 900)
             },
             FeedingTreats = 5,
             CatchAccumulatorUnits = 111,

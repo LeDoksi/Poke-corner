@@ -1,3 +1,4 @@
+using PokeCorner.Core;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
@@ -312,7 +313,8 @@ public partial class OverlayWindow : Window
     /// to two-thirds of it.
     /// Returns true when the remembered drag spot was used, false when it fell back to the corner
     /// (no spot, or its monitor is not connected yet).
-    public bool PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels, int? rememberedX = null, int? rememberedY = null)
+    public bool PositionAt(ScreenCorner corner, int monitorIndex, int sizePixels, int? rememberedX = null, int? rememberedY = null,
+        PetSpot? spot = null)
     {
         // The sprite keeps the configured size; only the window around it grows, so the pet
         // looks identical to before — it simply is no longer clipped when it scales up.
@@ -334,20 +336,13 @@ public partial class OverlayWindow : Window
         var dpi = DpiFor(this);
         var screens = System.Windows.Forms.Screen.AllScreens;
 
-        // A remembered spot from a manual drag wins over the corner setting — but only if it's
-        // still somewhere on a currently-connected monitor (a disconnected second monitor
-        // would otherwise strand the pet off-screen forever).
-        // The remembered pair is a WINDOW origin on both sides of the round trip — App stores
-        // Left/Top and hands the same numbers back — so it is restored verbatim and only the
-        // on-a-connected-monitor test needs the window's (padded) size.
-        var rememberedArea = screens.Select(s => (Rect?)ToDips(s.WorkingArea, dpi))
-            .FirstOrDefault(area => area is { } bounds && rememberedX is { } x && rememberedY is { } y
-                && IsOnWorkArea(x, y, windowSize, bounds));
-        if (rememberedX is { } rememberedLeft && rememberedY is { } rememberedTop && rememberedArea is { } area)
+        // A remembered spot from a manual drag wins over the corner setting — but only if its
+        // monitor is connected right now. Otherwise the pet waits in the corner and App keeps
+        // retrying (a second monitor attaches late after a reboot; a game's mode switch
+        // reshuffles monitor origins for a moment).
+        if (ResolveRememberedOrigin(sizePixels, spot, rememberedX, rememberedY) is { } origin)
         {
-            // Clamp the visible sprite, not the padded window: the transparent headroom may hang off the edge.
-            (Left, Top) = (Math.Clamp(rememberedLeft, area.Left - headroomPad, Math.Max(area.Left - headroomPad, area.Right - windowSize + headroomPad)),
-                Math.Clamp(rememberedTop, area.Top - headroomPad, Math.Max(area.Top - headroomPad, area.Bottom - windowSize + headroomPad)));
+            (Left, Top) = (origin.X, origin.Y);
             KeepAboveAppsBelowShell(this);
             return true;
         }
@@ -363,6 +358,69 @@ public partial class OverlayWindow : Window
         KeepAboveAppsBelowShell(this);
         return false;
     }
+
+    /// Where the window origin belongs for the remembered drag spot, or null when that spot's
+    /// monitor is not connected. Pure lookup: moves nothing, so App can call it every tick to
+    /// notice that Windows (or a fullscreen game's mode switch) shoved the pet elsewhere.
+    ///
+    /// `spot` (monitor + offset) is preferred; the bare legacy pair is only for saves made before
+    /// PetSpot existed. Both clamp the VISIBLE sprite onto the working area, not the padded window:
+    /// the transparent headroom may hang off the edge.
+    public System.Windows.Point? ResolveRememberedOrigin(int sizePixels, PetSpot? spot, int? rememberedX, int? rememberedY)
+    {
+        var windowSize = WindowSizeFor(sizePixels);
+        var headroomPad = (windowSize - sizePixels) / 2;
+        var dpi = DpiFor(this);
+        var screens = System.Windows.Forms.Screen.AllScreens;
+
+        Rect area;
+        double x, y;
+        if (spot is not null)
+        {
+            var index = PetSpotMatcher.FindMonitor(spot, screens.Select(Describe).ToList());
+            if (index < 0) return null;
+            area = ToDips(screens[index].WorkingArea, dpi);
+            (x, y) = (area.Left + spot.OffsetX, area.Top + spot.OffsetY);
+        }
+        else if (rememberedX is { } legacyX && rememberedY is { } legacyY)
+        {
+            // The remembered pair is a WINDOW origin on both sides of the round trip — App stores
+            // Left/Top and hands the same numbers back — so only the on-a-connected-monitor test
+            // needs the window's (padded) size.
+            var found = screens.Select(s => (Rect?)ToDips(s.WorkingArea, dpi))
+                .FirstOrDefault(a => a is { } bounds && IsOnWorkArea(legacyX, legacyY, windowSize, bounds));
+            if (found is not { } legacyArea) return null;
+            (area, x, y) = (legacyArea, legacyX, legacyY);
+        }
+        else return null;
+
+        return new System.Windows.Point(
+            Math.Clamp(x, area.Left - headroomPad, Math.Max(area.Left - headroomPad, area.Right - windowSize + headroomPad)),
+            Math.Clamp(y, area.Top - headroomPad, Math.Max(area.Top - headroomPad, area.Bottom - windowSize + headroomPad)));
+    }
+
+    /// The pet's current spot pinned to the monitor under the visible sprite's centre — what App
+    /// saves after a drag. Null before the first PositionAt.
+    public PetSpot? CaptureSpot()
+    {
+        if (_spriteSizeDips <= 0) return null;
+        var dpi = DpiFor(this);
+        var sprite = SpriteBounds;
+        var center = new System.Drawing.Point((int)((sprite.X + sprite.Width / 2) * dpi.DpiScaleX),
+            (int)((sprite.Y + sprite.Height / 2) * dpi.DpiScaleY));
+        var screen = System.Windows.Forms.Screen.FromPoint(center);
+        var area = ToDips(screen.WorkingArea, dpi);
+        var monitor = Describe(screen);
+        return new PetSpot(monitor.DeviceName, monitor.X, monitor.Y, monitor.Width, monitor.Height,
+            (int)Math.Round(Left - area.Left), (int)Math.Round(Top - area.Top));
+    }
+
+    private static MonitorDescriptor Describe(System.Windows.Forms.Screen screen) =>
+        new(screen.DeviceName, screen.Bounds.X, screen.Bounds.Y, screen.Bounds.Width, screen.Bounds.Height);
+
+    /// True only inside DragMove()'s modal loop. Not _isDragging: that one stays set until the
+    /// next mouse-down, because DragMove swallows the mouse-up.
+    public bool IsBeingDragged { get; private set; }
 
     // Click-vs-drag detection via explicit mouse capture + a MouseMove threshold, not a
     // before/after position comparison around DragMove(): DragMove() runs its own Win32
@@ -391,7 +449,9 @@ public partial class OverlayWindow : Window
         {
             _isDragging = true;
             SpriteImage.ReleaseMouseCapture();
-            DragMove(); // blocks until mouse-up; this call is now only reached for a real drag.
+            IsBeingDragged = true;
+            try { DragMove(); } // blocks until mouse-up; this call is now only reached for a real drag.
+            finally { IsBeingDragged = false; }
             PositionChanged?.Invoke();
         }
     }

@@ -277,13 +277,14 @@ public partial class App : System.Windows.Application
         Microsoft.Win32.SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
         _overlayWindow.PositionChanged += () =>
         {
-            _rememberedSpotPendingUntilUtc = null; // the player chose a new spot themselves
             var x = (int)_overlayWindow.Left;
             var y = (int)_overlayWindow.Top;
+            var spot = _overlayWindow.CaptureSpot();
             _appState.RunWhenReady(() =>
             {
                 _appState.Settings.PetPositionX = x;
                 _appState.Settings.PetPositionY = y;
+                _appState.Settings.PetSpot = spot;
                 PersistState();
             });
         };
@@ -342,7 +343,7 @@ public partial class App : System.Windows.Application
     private void OnGrowthTick()
     {
         if (!_appState.IsCommitting) ReconcileSettingsState();
-        TryRestoreRememberedPetSpot();
+        KeepPetOnRememberedSpot();
 
         // See FallbackActivityMonitor for why this exists: some anti-cheat drivers (Genshin
         // Impact's mhyprot2.sys is the reported case) silently stop GlobalInputHook's low-level
@@ -468,25 +469,42 @@ public partial class App : System.Windows.Application
         return basic with { EvolutionFraction = care.Fraction, EvolutionState = care.State };
     }
 
-    private static readonly TimeSpan RememberedSpotWait = TimeSpan.FromMinutes(5);
-    private DateTimeOffset? _rememberedSpotPendingUntilUtc;
-    private DateTimeOffset _lastRememberedSpotTryUtc;
-
-    /// Puts the pet back on its remembered drag spot once that spot's monitor exists again.
-    /// Only while a fallback is pending, so it never fights a drag the player made since.
-    private void TryRestoreRememberedPetSpot(bool force = false)
+    /// Puts the pet back on its remembered drag spot whenever it is not there and that spot's
+    /// monitor is connected. Runs every growth tick and on every display change, with no expiry:
+    ///  - after a reboot autostart can run before Windows attaches the second monitor, so the pet
+    ///    starts in the primary corner and must hop over once the monitor appears (Georgy 04.11 #8,
+    ///    and again 08.11 — the old 5-minute retry window was too short for a slow attach);
+    ///  - a fullscreen game's mode switch reshuffles monitor origins and Windows itself shoves
+    ///    windows onto the primary monitor; the pet must walk back afterwards (Georgy 08.11).
+    /// Cheap enough for the tick: one monitor enumeration and a comparison; it moves the window
+    /// only when it is actually off its spot. Never during a drag — the drag decides the new spot.
+    private void KeepPetOnRememberedSpot()
     {
-        if (_rememberedSpotPendingUntilUtc is not { } until || _overlayWindow is null) return;
-        var now = DateTimeOffset.UtcNow;
-        if (!force && now > until) { _rememberedSpotPendingUntilUtc = null; return; }
-        if (!force && now - _lastRememberedSpotTryUtc < TimeSpan.FromSeconds(3)) return;
-        _lastRememberedSpotTryUtc = now;
-        if (_overlayWindow.PositionAt(ParseCorner(_appState.Settings.ScreenCorner), _appState.Settings.MonitorIndex,
-                _appState.Settings.PetSizePixels, _appState.Settings.PetPositionX, _appState.Settings.PetPositionY))
+        if (_overlayWindow is null || _overlayWindow.IsBeingDragged || _appliedPetSizePixels <= 0) return;
+        var settings = _appState.Settings;
+        if (settings.PetSpot is null && settings.PetPositionX is null) return;
+        if (_overlayWindow.ResolveRememberedOrigin(settings.PetSizePixels, settings.PetSpot, settings.PetPositionX, settings.PetPositionY)
+            is not { } target) return; // its monitor is not here (yet): stay parked, try again later
+        if (Math.Abs(_overlayWindow.Left - target.X) < 1 && Math.Abs(_overlayWindow.Top - target.Y) < 1) return;
+
+        _overlayWindow.PositionAt(ParseCorner(settings.ScreenCorner), settings.MonitorIndex, settings.PetSizePixels,
+            settings.PetPositionX, settings.PetPositionY, settings.PetSpot);
+        _progressPanelWindow?.PositionLeftOf(_overlayWindow);
+        UpgradeLegacyPetSpot();
+    }
+
+    /// A save from before PetSpot knows only a bare desktop (x, y). The first time that spot is
+    /// actually on a connected monitor, pin it to that monitor so later layout shifts follow it.
+    private void UpgradeLegacyPetSpot()
+    {
+        if (_appState.Settings.PetSpot is not null || _appState.Settings.PetPositionX is null) return;
+        if (_overlayWindow.CaptureSpot() is not { } spot) return;
+        _appState.RunWhenReady(() =>
         {
-            _rememberedSpotPendingUntilUtc = null;
-            _progressPanelWindow?.PositionLeftOf(_overlayWindow);
-        }
+            if (_appState.Settings.PetSpot is not null) return;
+            _appState.Settings.PetSpot = spot;
+            PersistState();
+        });
     }
 
     private void ApplyPetSizeAndPosition()
@@ -499,13 +517,11 @@ public partial class App : System.Windows.Application
             return;
         }
 
+        // A remembered spot whose monitor is not attached yet falls back to the corner here;
+        // KeepPetOnRememberedSpot moves the pet over as soon as that monitor appears.
         var usedRemembered = _overlayWindow.PositionAt(desiredCorner, _appState.Settings.MonitorIndex, _appState.Settings.PetSizePixels,
-            _appState.Settings.PetPositionX, _appState.Settings.PetPositionY);
-        // After a PC restart autostart can run before Windows attaches the second monitor, so the
-        // remembered spot is "off screen" for a moment and the pet lands on the primary corner
-        // (Georgy 04.11, item 8). Keep trying for a while and on every display change.
-        _rememberedSpotPendingUntilUtc = !usedRemembered && _appState.Settings.PetPositionX is not null
-            ? DateTimeOffset.UtcNow + RememberedSpotWait : null;
+            _appState.Settings.PetPositionX, _appState.Settings.PetPositionY, _appState.Settings.PetSpot);
+        if (usedRemembered) UpgradeLegacyPetSpot();
         _appliedCorner = desiredCorner;
         _appliedMonitorIndex = _appState.Settings.MonitorIndex;
         _appliedPetSizePixels = _appState.Settings.PetSizePixels;
@@ -1444,9 +1460,7 @@ public partial class App : System.Windows.Application
     {
         if (!Dispatcher.CheckAccess()) { Dispatcher.BeginInvoke(() => OnDisplaySettingsChanged(sender, e)); return; }
         if (_isExiting) return;
-        if (_rememberedSpotPendingUntilUtc is null && _appState.Settings.PetPositionX is not null)
-            _rememberedSpotPendingUntilUtc = DateTimeOffset.UtcNow + RememberedSpotWait;
-        TryRestoreRememberedPetSpot(force: true);
+        KeepPetOnRememberedSpot();
     }
 
     private async void ShutdownApp()
