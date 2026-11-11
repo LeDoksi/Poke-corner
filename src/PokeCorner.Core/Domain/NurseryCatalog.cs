@@ -104,7 +104,12 @@ public sealed class NurseryCatalog
         NurseryRecipe Merge((int First, int Second) family, NurseryRecipe[] parts)
         {
             // The root-and-root recipe (or the same-species recipe of the root) is the family's own price when it exists.
-            int Rank(NurseryRecipe r) => r.Outcomes.Count == 0 ? -1 : r.Outcomes.Max(o => Array.IndexOf(rarityOrder, o.Rarity));
+            // Georgy 11.11: two different families never hatch a baby of either parent's own family;
+            // only parents of one family repeat themselves.
+            bool Foreign(NurseryOutcome o) => family.First == family.Second
+                || o.SpeciesId != family.First && o.SpeciesId != family.Second;
+            int Rank(NurseryRecipe r) => r.Outcomes.Where(Foreign).Select(o => Array.IndexOf(rarityOrder, o.Rarity))
+                .DefaultIfEmpty(-1).Max();
             var priced = parts
                 .OrderByDescending(Rank)
                 .ThenByDescending(r => r.FirstParentId == family.First && r.SecondParentId == family.Second
@@ -114,7 +119,7 @@ public sealed class NurseryCatalog
                 outcomes.GroupBy(o => o.SpeciesId).Select(g => g.First()).OrderBy(o => o.SpeciesId).ToArray();
             // A stage without art must not hide its family's babies: availability is judged per baby,
             // the pet actually put into the nest is checked on its own when it is picked.
-            var outcomes = Union(parts.SelectMany(r => r.Outcomes));
+            var outcomes = Union(parts.SelectMany(r => r.Outcomes).Where(Foreign));
             var available = outcomes.Where(o => catalog.CanObtain(o.SpeciesId, false)).ToArray();
             var surcharge = available.Length <= 1 ? new Dictionary<string, int>()
                 : priced.SelectedSurcharge.Count > 0 ? new Dictionary<string, int>(priced.SelectedSurcharge)

@@ -70,6 +70,22 @@ public sealed class NurseryCatalogTests : IDisposable
     }
 
     [Fact]
+    public void DifferentFamiliesNeverHatchABabyOfEitherParentFamily()
+    {
+        var catalog = Load(26, 172, 134, 133, 150);
+        Assert.All(catalog.MixedRecipes, r =>
+        {
+            Assert.NotEqual(r.FirstParentId, r.SecondParentId);
+            Assert.DoesNotContain(r.Outcomes, o => o.SpeciesId == r.FirstParentId || o.SpeciesId == r.SecondParentId);
+            Assert.DoesNotContain(r.AvailableOutcomes, o => o.SpeciesId == r.FirstParentId || o.SpeciesId == r.SecondParentId);
+        });
+        // Weedle + Spinarak used to list both Weedle and Spinarak among the babies.
+        Assert.Equal(new[] { 10, 23, 46, 265, 616, 953 }, catalog.Find(15, 168)!.Outcomes.Select(o => o.SpeciesId));
+        // Parents of one family still hatch their own root.
+        Assert.Contains(catalog.SameSpeciesRecipes, r => r.Outcomes.Any(o => o.SpeciesId == r.FirstParentId));
+    }
+
+    [Fact]
     public void AvailabilityRecomputesParentsOutcomesWeightsAndTimeWithoutMutation()
     {
         var catalog = Load(2, 849, 451, 453, 803);

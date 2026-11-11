@@ -61,11 +61,22 @@
             <Image x:Name="ReactionImage" Stretch="Fill" RenderTransformOrigin="0.5,0.5" />
         </Canvas>
         <!-- D-31: something is waiting in the app (evolution, trip, baby, pokéball). Hidden while the pet sulks,
-             so there is never more than one cloud over it. -->
-        <Border x:Name="ReadyBadge" Style="{StaticResource ThoughtBubbleStyle}" Padding="6,1"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed">
-            <TextBlock x:Name="ReadyBadgeText" Foreground="{StaticResource NdApricotBrush}" FontSize="13" FontWeight="Bold" />
-        </Border>
+             so there is never more than one cloud over it. Pinned to the pet's own silhouette by PlaceReadyBadge:
+             the window is much wider than the pet, and a badge in the window's corner hung in the air and
+             crossed onto the neighbouring monitor (Georgy 11.11). -->
+        <Canvas IsHitTestVisible="False">
+            <Border x:Name="ReadyBadge" Height="22" MinWidth="22" CornerRadius="11" Padding="4,0"
+                    Background="#F216192B" BorderBrush="{StaticResource NdApricotBrush}" BorderThickness="1.5"
+                    SnapsToDevicePixels="True" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Path x:Name="ReadyBadgeSpark" Width="11" Height="11" Stretch="Uniform"
+                          Fill="{StaticResource NdApricotBrush}" RenderOptions.EdgeMode="Aliased"
+                          Data="M3,0 h1 v2 h1 v1 h2 v1 h-2 v1 h-1 v2 h-1 v-2 h-1 v-1 h-2 v-1 h2 v-1 h1 z" />
+                    <TextBlock x:Name="ReadyBadgeText" Foreground="{StaticResource NdApricotBrush}" FontSize="12"
+                               FontWeight="Bold" Margin="4,0,2,1" VerticalAlignment="Center" Visibility="Collapsed" />
+                </StackPanel>
+            </Border>
+        </Canvas>
 
     </Grid>
 </Window>

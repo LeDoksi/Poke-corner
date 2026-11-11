@@ -65,20 +65,18 @@ public partial class OverlayWindow : Window
     /// The sulk stage now shown or arriving (0 = none).
     public int MoodStage => _reactions.MoodStage;
 
-    private void PlaceReaction()
+    /// The pet's visible silhouette and the part of the window that is on its monitor, both in window
+    /// coordinates. Null until a sprite is set.
+    private (Rect Silhouette, Rect Allowed, double Scale, double Pad)? PetGeometry()
     {
         var size = _spriteSizeDips > 0 ? _spriteSizeDips : 96;
-        if (_spriteSource.Width <= 0) return;
+        if (_spriteSource.Width <= 0) return null;
         var pad = Math.Max(0, (Width is > 0 and var w ? w : WindowSizeFor(size)) - size) / 2;
         var scale = size / Math.Max(_spriteSource.Width, _spriteSource.Height);
         var offsetX = pad + (size - _spriteSource.Width * scale) / 2;
         var offsetY = pad + (size - _spriteSource.Height * scale) / 2;
         var silhouette = new Rect(offsetX + _silhouette.X * scale, offsetY + _silhouette.Y * scale,
             _silhouette.Width * scale, _silhouette.Height * scale);
-        // A whole number of screen pixels per frame pixel, matched to the sprite: 1 at the usual 96 px pet.
-        // ...but never so big that the cloud no longer fits beside the pet inside the window's headroom.
-        var unit = Math.Clamp(Math.Round(scale), 1, Math.Max(1, Math.Floor(pad / ReactionReach)));
-        ReactionImage.Width = ReactionImage.Height = ReactionPlayer.FrameSize * unit;
         var windowSize = size + pad * 2;
         // Only the part of the window that is on screen counts: in a corner the headroom hangs off the
         // edge, and a cloud drawn there is invisible (Georgy 04.11: on a 150% laptop it landed on the pet).
@@ -91,10 +89,42 @@ public partial class OverlayWindow : Window
             var visible = Rect.Intersect(new Rect(Left, Top, windowSize, windowSize), work);
             if (!visible.IsEmpty) allowed = new Rect(visible.X - Left, visible.Y - Top, visible.Width, visible.Height);
         }
+        return (silhouette, allowed, scale, pad);
+    }
+
+    private void PlaceReaction()
+    {
+        if (PetGeometry() is not { } geometry) return;
+        var (silhouette, allowed, scale, pad) = geometry;
+        // A whole number of screen pixels per frame pixel, matched to the sprite: 1 at the usual 96 px pet.
+        // ...but never so big that the cloud no longer fits beside the pet inside the window's headroom.
+        var unit = Math.Clamp(Math.Round(scale), 1, Math.Max(1, Math.Floor(pad / ReactionReach)));
+        ReactionImage.Width = ReactionImage.Height = ReactionPlayer.FrameSize * unit;
         var (topLeft, mirrored) = ReactionPlayer.Place(silhouette, allowed, unit, _reactions.AnchorKind);
         Canvas.SetLeft(ReactionImage, topLeft.X);
         Canvas.SetTop(ReactionImage, topLeft.Y);
         ReactionImage.RenderTransform = mirrored ? new ScaleTransform(-1, 1) : Transform.Identity;
+        PlaceReadyBadge();
+    }
+
+    /// Where the ready badge goes: sitting on the top-right corner of the pet's silhouette, a third of it
+    /// outside, and never outside `allowed` — so it stays with the pet and on the pet's own monitor.
+    public static System.Windows.Point ReadyBadgePosition(Rect silhouette, Rect allowed, System.Windows.Size badge)
+    {
+        var x = silhouette.Right - badge.Width * 2 / 3;
+        var y = silhouette.Top - badge.Height / 3;
+        return new(Math.Clamp(x, allowed.Left, Math.Max(allowed.Left, allowed.Right - badge.Width)),
+            Math.Clamp(y, allowed.Top, Math.Max(allowed.Top, allowed.Bottom - badge.Height)));
+    }
+
+    private void PlaceReadyBadge()
+    {
+        if (ReadyBadge.Visibility != Visibility.Visible || PetGeometry() is not { } geometry) return;
+        var (silhouette, allowed) = (geometry.Silhouette, geometry.Allowed);
+        ReadyBadge.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
+        var spot = ReadyBadgePosition(silhouette, allowed, ReadyBadge.DesiredSize);
+        Canvas.SetLeft(ReadyBadge, spot.X);
+        Canvas.SetTop(ReadyBadge, spot.Y);
     }
 
     public OverlayWindow()
@@ -111,6 +141,9 @@ public partial class OverlayWindow : Window
                 shape.Opacity = 0;
         };
         Loaded += (_, _) => SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
+        Loaded += (_, _) => PlaceReadyBadge();
+        LocationChanged += (_, _) => PlaceReadyBadge();
+        SizeChanged += (_, _) => PlaceReadyBadge();
         Unloaded += (_, _) => SystemParameters.StaticPropertyChanged -= SystemParameters_StaticPropertyChanged;
         _foregroundChangedCallback = (_, _, _, _, _, _, _) => ForegroundWindowChanged?.Invoke();
         SourceInitialized += (_, _) =>
@@ -565,9 +598,28 @@ public partial class OverlayWindow : Window
 
     private void UpdateReadyBadge()
     {
-        ReadyBadgeText.Text = _readyCount > 1 ? $"✦ {_readyCount}" : "✦";
+        ReadyBadgeText.Text = _readyCount.ToString();
+        ReadyBadgeText.Visibility = _readyCount > 1 ? Visibility.Visible : Visibility.Collapsed;
         ReadyBadge.Visibility = _readyCount > 0 && _thoughtStage == 0 && !_reactions.IsShowing ? Visibility.Visible : Visibility.Collapsed;
-        ReadyBadge.ToolTip = _readyCount > 0 ? "Что-то готово — открой уголок" : null;
+        PlaceReadyBadge();
+        UpdateReadyBadgeMotion();
+    }
+
+    private bool _readyBadgeAnimated;
+
+    /// A slow breath of the spark, so the badge reads as "alive" without nagging; still when Windows animations are off.
+    private void UpdateReadyBadgeMotion()
+    {
+        var animate = ReadyBadge.Visibility == Visibility.Visible && SystemParameters.ClientAreaAnimation;
+        if (animate == _readyBadgeAnimated) return;
+        _readyBadgeAnimated = animate;
+        ReadyBadgeSpark.BeginAnimation(OpacityProperty, animate
+            ? new DoubleAnimation(1, .45, TimeSpan.FromSeconds(1.4))
+            {
+                AutoReverse = true, RepeatBehavior = RepeatBehavior.Forever,
+                EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
+            }
+            : null);
     }
 
     private void SystemParameters_StaticPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -589,6 +641,7 @@ public partial class OverlayWindow : Window
             }
         }
         UpdateThoughtMotion();
+        UpdateReadyBadgeMotion();
     }
 
     private void UpdateThoughtMotion()
