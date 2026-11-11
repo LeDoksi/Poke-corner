@@ -59,6 +59,8 @@ public partial class ExpeditionView : UserControl
     private Guid _pendingClaimTripId;
     private bool _busy;
     private bool _initializing;
+    private Guid _seededTripId;
+    private bool _routeChosen;
 
     public ExpeditionView(Func<SaveData> snapshot, Func<ExpeditionRequest, ExpeditionPreview> preview,
         Func<ExpeditionRequest, Task<ExpeditionAction>> start, Func<Guid, DateTimeOffset, Task<ExpeditionAction>> cancel,
@@ -89,7 +91,7 @@ public partial class ExpeditionView : UserControl
                 Content = route.Id switch { "grove" => "Роща", "lake" => "Озеро", "coast" => "Море", "mountains" => "Горы", "desert" => "Пустыня", "volcano" => "Вулкан", "snow" => "Снег", _ => "Руины" }, Tag = route.Id, MinWidth = 58, FontSize = 13, Padding = new Thickness(4, 5, 4, 5), Margin = new Thickness(0, 0, 6, 6),
                 Style = (Style)FindResource("SecondaryButtonStyle"), HorizontalContentAlignment = HorizontalAlignment.Center
             };
-            button.Click += (_, _) => { if (_busy) return; _route = route.Id; _pendingStart = null; Refresh(); };
+            button.Click += (_, _) => { if (_busy) return; _route = route.Id; _routeChosen = true; _pendingStart = null; Refresh(); };
             RouteButtons.Children.Add(button);
         }
         DifficultyBox.SelectedIndex = 1;
@@ -132,7 +134,7 @@ public partial class ExpeditionView : UserControl
     public void SelectRoute(string routeId)
     {
         if (_busy || _snapshot().Expedition?.Status is "running" or "ready" || Routes.All(r => r.Id != routeId)) return;
-        _route = routeId; _pendingStart = null;
+        _route = routeId; _routeChosen = true; _pendingStart = null;
         if (_pickerOpen) ClosePicker();
         Refresh();
     }
@@ -191,6 +193,25 @@ public partial class ExpeditionView : UserControl
         var trip = data.Expedition;
         if (_messageState is not null && _messageState != TripState()) { MessagePanel.Visibility = Visibility.Collapsed; _messageState = null; }
         var active = trip?.Status is "running" or "ready";
+        // Georgy 11.11: the team lived only in this view, so it survived a trip when the window stayed open
+        // and vanished when the window had been closed meanwhile. The last finished trip is the default plan.
+        if (!active && !_busy && trip is { Status: "claimed" } last && last.Id != _seededTripId)
+        {
+            _seededTripId = last.Id;
+            _selected.Clear(); _selected.UnionWith(last.ParticipantIds.Take(3));
+            if (!_routeChosen && Routes.Any(r => r.Id == last.LocationId)) _route = last.LocationId;
+            _initializing = true;
+            try
+            {
+                if (DifficultyBox.Items.OfType<ListBoxItem>().FirstOrDefault(i => Equals(i.Tag, last.Difficulty)) is { } difficulty)
+                    DifficultyBox.SelectedItem = difficulty;
+                if (DurationBox.Items.OfType<ListBoxItem>().FirstOrDefault(i =>
+                        Equals(i.Tag, last.DurationMinutes.ToString(CultureInfo.InvariantCulture))) is { } duration)
+                    DurationBox.SelectedItem = duration;
+            }
+            finally { _initializing = false; }
+            _pendingStart = null;
+        }
         foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
         // ponytail: result screen retired (loot is on the ready screen, encounter opens straight from the claim); its panel stays only because receipt tests still read ResultText.
