@@ -213,4 +213,20 @@ public class OverlayDpiPositioningTests
         });
     }
 
+    [Fact]
+    public void ReadyBadge_SitsOnThePetAndNeverLeavesItsMonitor()
+    {
+        var badge = new Size(22, 22);
+        var silhouette = new Rect(100, 90, 60, 70);
+        // Room everywhere: on the silhouette's top-right corner, mostly over the pet.
+        var free = OverlayWindow.ReadyBadgePosition(silhouette, new Rect(0, 0, 230, 230), badge);
+        Assert.InRange(free.X, silhouette.Right - badge.Width, silhouette.Right);
+        Assert.InRange(free.Y, silhouette.Top - badge.Height, silhouette.Top);
+        // The pet stands at the right edge of its monitor (the next monitor starts at x=165 in window
+        // coordinates): the badge stays on the pet's side instead of crossing over.
+        var edge = OverlayWindow.ReadyBadgePosition(silhouette, new Rect(0, 0, 165, 230), badge);
+        Assert.True(edge.X + badge.Width <= 165);
+        var top = OverlayWindow.ReadyBadgePosition(silhouette, new Rect(0, 88, 230, 142), badge);
+        Assert.True(top.Y >= 88);
+    }
 }
