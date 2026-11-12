@@ -77,6 +77,9 @@
         </Border>
 
         <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+        <!-- «Сегодня» (D-38): the right-hand diary page; shown only when the window is big enough for it. -->
+        <local:TodayPanel x:Name="TodayColumn" Grid.Column="1" Visibility="Collapsed" />
         <TabControl x:Name="MenuTabControl" Style="{StaticResource NdShellTabsStyle}">
             <TabItem x:Name="CornerTab" AutomationProperties.Name="Уголок">
                 <TabItem.Header>

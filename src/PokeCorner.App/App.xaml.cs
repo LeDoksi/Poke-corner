@@ -1261,6 +1261,8 @@ public partial class App : System.Windows.Application
                     _appState.Achievements);
                 _menuWindow = new AppMenuWindow(collectionView, settingsView, shopView, catchView, expeditionView,
                     nurseryView, roomView, achievementsView, () => _appState.ToSaveData(_catchReadyCount), CurrentReadyItems);
+                _menuWindow.SpeciesName = id => _catalogPackage.Species.FirstOrDefault(s => s.Id == id)?.DisplayName ?? $"№{id:D4}";
+                _menuWindow.OpenReady = OpenReady;
                 _menuCollectionView = collectionView;
                 _menuRoomView = roomView;
                 _menuWindow.SectionViewed += ShowContextHint;

@@ -202,6 +202,34 @@ public partial class AppMenuWindow : Window
         NurseryReadyBadge.Visibility = ready.Any(x => x.Kind == ReadyKind.Nursery) ? Visibility.Visible : Visibility.Collapsed;
         ExpeditionReadyBadgeCount.Text = NurseryReadyBadgeCount.Text = "!";
         UpdateBadgeMotion();
+        UpdateTodayColumn();
+        if (TodayColumn.Visibility == Visibility.Visible) TodayColumn.Refresh(snapshot, ready, DateTimeOffset.UtcNow);
+    }
+
+    private void ShowTodayNow()
+    {
+        UpdateTodayColumn();
+        if (TodayColumn.Visibility == Visibility.Visible)
+            TodayColumn.Refresh(_getSnapshot?.Invoke(), _readyItems?.Invoke() ?? [], DateTimeOffset.UtcNow);
+    }
+
+    /// Names for the «Сегодня» column and where a click on a waiting line leads; set by the app.
+    public Func<int, string>? SpeciesName { get => TodayColumn.SpeciesName; set => TodayColumn.SpeciesName = value; }
+    public Action<ReadyItem>? OpenReady { get => TodayColumn.OpenReady; set => TodayColumn.OpenReady = value; }
+
+    // The column takes 300 px, so it appears only when the section still keeps more than the minimum window gives it.
+    // The Pokédex keeps the whole width for its grid; settings and hosted pages stay clean.
+    private void UpdateTodayColumn()
+    {
+        var scale = Theme.Motion.ShellScale(ActualWidth, ActualHeight);
+        var roomy = ActualWidth / scale >= 1500;
+        var section = SelectedSection();
+        var show = roomy && SettingsContent.Visibility != Visibility.Visible && HostedContent.Visibility != Visibility.Visible
+            && section is MenuSection.Corner or MenuSection.Expeditions or MenuSection.Nursery or MenuSection.Shop;
+        var visibility = show ? Visibility.Visible : Visibility.Collapsed;
+        if (TodayColumn.Visibility == visibility) return;
+        TodayColumn.Visibility = visibility;
+        if (show) Theme.Motion.Enter(TodayColumn, 0, 260);
     }
 
     private static string BadgeCount(int count) => count > 9 ? "9+" : Math.Max(1, count).ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -247,6 +275,7 @@ public partial class AppMenuWindow : Window
         BrandSubtitle.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
         SettingsButton.Width = compact ? 96 : 120;
         SettingsContent.Margin = HostedContent.Margin = new Thickness(compact ? 112 : 136, 0, 0, 0);
+        if (IsLoaded) ShowTodayNow();
     }
 
     private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
@@ -279,6 +308,7 @@ public partial class AppMenuWindow : Window
     private void CoverSection(bool covered)
     {
         MenuTabControl.Tag = covered ? "settings" : null;
+        Dispatcher.BeginInvoke(ShowTodayNow, DispatcherPriority.Loaded);
         if (_coveredSection is not null) { _coveredSection.Visibility = Visibility.Visible; _coveredSection = null; }
         if (covered && MenuTabControl.SelectedItem is System.Windows.Controls.TabItem { Content: UIElement content })
         {
@@ -440,6 +470,7 @@ public partial class AppMenuWindow : Window
     // Every section has its own sketch and note at the foot of the rail (D-25); settings and hosted pages stay clean.
     private void UpdateRailSketch()
     {
+        ShowTodayNow();
         RailSketch.Visibility = MenuTabControl.Visibility == Visibility.Visible && SettingsContent.Visibility != Visibility.Visible
             && HostedContent.Visibility != Visibility.Visible ? Visibility.Visible : Visibility.Collapsed;
         var section = SelectedSection();
