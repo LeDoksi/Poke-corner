@@ -42,6 +42,10 @@ public sealed record CollectionEntry(
     public string? FirstTraitId { get; init; }
     public string? SecondTraitId { get; init; }
     public string? DescriptionRu { get; init; }
+    /// How many forms further down this Pokémon's line are still closed in its own form (normal or shiny).
+    /// Feeds SpareRules: a copy that can still open something is never a spare duplicate (D-42).
+    public int UnopenedAhead { get; init; }
+    public bool IsReadyToEvolve { get; init; }
 }
 
 /// One node of the evolution-chain strip in the detail view.
@@ -122,6 +126,25 @@ public sealed class CollectionViewModel
         _shinySpeciesIds = shinySpeciesIds ?? (() => new HashSet<int>());
     }
 
+    /// Ids of the Pokémon whose evolution can be started right now (the same list as the ready badges, D-31).
+    public Func<IReadOnlySet<Guid>>? ReadyToEvolveIds { get; set; }
+
+    // Forms still closed below the current one, in the individual's own form. Without the evolution graph
+    // (tests, legacy chains) every later stage counts as closed: the filter must err on the side of keeping.
+    private int UnopenedAhead(PokemonIndividual individual, IReadOnlySet<int> open)
+    {
+        if (_presentation is null) return Math.Max(0, individual.ChainLength - 1 - (int)individual.CurrentStage);
+        var seen = new HashSet<int>(); var queue = new Queue<int>(); var closed = 0;
+        foreach (var next in _presentation.Targets.GetValueOrDefault(ResolveCurrentSpeciesId(individual)) ?? []) queue.Enqueue(next);
+        while (queue.TryDequeue(out var id))
+        {
+            if (!seen.Add(id)) continue;
+            if (!open.Contains(id)) closed++;
+            foreach (var next in _presentation.Targets.GetValueOrDefault(id) ?? []) queue.Enqueue(next);
+        }
+        return closed;
+    }
+
     public CollectionEntry? GetEntry(Guid id, DateTimeOffset nowUtc) =>
         GetEntries(nowUtc).FirstOrDefault(entry => entry.IndividualId == id);
 
@@ -198,8 +221,11 @@ public sealed class CollectionViewModel
     ///
     /// Dex number is the CURRENT stage's species id (what the card shows), so an evolved
     /// Charmander sorts where Charmeleon does. Filtering only narrows this list; it never reorders it.
-    public IReadOnlyList<CollectionEntry> GetEntries(DateTimeOffset nowUtc) =>
-        _collection.Individuals
+    public IReadOnlyList<CollectionEntry> GetEntries(DateTimeOffset nowUtc)
+    {
+        var normalOpen = _normalSpeciesIds(); var shinyOpen = _shinySpeciesIds();
+        var readyToEvolve = ReadyToEvolveIds?.Invoke();
+        return _collection.Individuals
             .OrderByDescending(i => i.Id == _collection.ActiveIndividualId)
             .ThenByDescending(i => i.IsFavorite)
             .ThenBy(ResolveDisplaySpeciesId)
@@ -231,9 +257,12 @@ public sealed class CollectionViewModel
                 IsBusy = _busyIndividualIds().Contains(individual.Id),
                 FirstTraitId = individual.FirstTraitId,
                 SecondTraitId = individual.SecondTraitId,
-                DescriptionRu = CollectionPresentation.Fact(displaySpeciesId)
+                DescriptionRu = CollectionPresentation.Fact(displaySpeciesId),
+                UnopenedAhead = UnopenedAhead(individual, individual.IsShiny ? shinyOpen : normalOpen),
+                IsReadyToEvolve = readyToEvolve?.Contains(individual.Id) == true
             };
         }).ToList();
+    }
 
     /// Builds the spoiler-masked evolution strip for one individual: every stage its chain
     /// has, with the identity filled in only up to the stage this individual has reached.
@@ -381,17 +410,24 @@ public sealed class CollectionViewModel
 
     public static IReadOnlyList<CollectionEntry> FilterIndividuals(IReadOnlyList<CollectionEntry> entries,
         string? query, string? type, RarityTier? rarity, bool growth, bool duplicates, bool favorite, bool shiny,
-        PokedexSortOrder sort = PokedexSortOrder.Number)
+        PokedexSortOrder sort = PokedexSortOrder.Number, bool free = false, bool readyToEvolve = false)
     {
-        var duplicateIds = entries.GroupBy(e => e.CurrentSpeciesId > 0 ? e.CurrentSpeciesId : e.DisplaySpeciesId)
-            .Where(g => g.Count() > 1).Select(g => g.Key).ToHashSet();
+        var spare = duplicates ? SpareIds(entries) : null;
         return ApplySort(entries.Where(e => MatchesSearch(e, query))
             .Where(e => type is null || e.Types.Contains(type, StringComparer.OrdinalIgnoreCase))
             .Where(e => rarity is null || e.Rarity == rarity)
             .Where(e => !growth || e.HasEvolutionsRemaining)
-            .Where(e => !duplicates || duplicateIds.Contains(e.CurrentSpeciesId > 0 ? e.CurrentSpeciesId : e.DisplaySpeciesId))
+            .Where(e => spare is null || spare.Contains(e.IndividualId))
+            .Where(e => !free || !e.IsBusy && !e.IsActive).Where(e => !readyToEvolve || e.IsReadyToEvolve)
             .Where(e => !favorite || e.IsFavorite).Where(e => !shiny || e.IsShiny).ToList(), sort);
     }
+
+    /// «Лишние дубли» (D-42): see SpareRules. Same species AND same form; the best copy and every copy that
+    /// can still open a form always stay; a favourite, the active pet or a busy one is never offered.
+    public static IReadOnlySet<Guid> SpareIds(IReadOnlyList<CollectionEntry> entries) =>
+        Core.Domain.SpareRules.Spare(entries.Select(e => new Core.Domain.SpareRules.Copy(e.IndividualId,
+            e.CurrentSpeciesId > 0 ? e.CurrentSpeciesId : e.DisplaySpeciesId, e.IsShiny, e.IsFavorite || e.IsActive || e.IsBusy,
+            e.Level, e.CarePoints, e.CaughtAtUtc, e.UnopenedAhead)));
 
     /// Re-orders an already-filtered entry list. Default leaves GetEntries' own banded order
     /// (active -> favorites -> rest, each by dex number) alone. Alphabetical sorts by species

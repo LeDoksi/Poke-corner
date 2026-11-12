@@ -892,8 +892,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     {
         PokedexSearchBox.Clear();
         IndividualTypeCombo.SelectedIndex = IndividualRarityCombo.SelectedIndex = PokedexSortCombo.SelectedIndex = 0;
-        EvolutionFilterToggle.IsChecked = DuplicatesFilterToggle.IsChecked =
-            FavoritesFilterToggle.IsChecked = ShinyFilterToggle.IsChecked = false;
+        EvolutionFilterToggle.IsChecked = DuplicatesFilterToggle.IsChecked = ReadyEvolveFilterToggle.IsChecked =
+            FreeFilterToggle.IsChecked = FavoritesFilterToggle.IsChecked = ShinyFilterToggle.IsChecked = false;
         _pageIndex = 0;
         Refresh();
     }
@@ -978,7 +978,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var visible = CollectionViewModel.FilterIndividuals(entries, _searchQuery,
             (IndividualTypeCombo.SelectedItem as ComboBoxItem)?.Tag as string, _rarityFilter,
             _hideFullyEvolved, DuplicatesFilterToggle.IsChecked == true, FavoritesFilterToggle.IsChecked == true,
-            ShinyFilterToggle.IsChecked == true, _sortOrder);
+            ShinyFilterToggle.IsChecked == true, _sortOrder, FreeFilterToggle.IsChecked == true, ReadyEvolveFilterToggle.IsChecked == true);
+        var spareCount = CollectionViewModel.SpareIds(entries).Count;
+        EvolutionFilterToggle.Content = $"Растут · {entries.Count(e => e.HasEvolutionsRemaining)}";
+        ReadyEvolveFilterToggle.Content = $"Готовы к эволюции · {entries.Count(e => e.IsReadyToEvolve)}";
+        FreeFilterToggle.Content = $"Свободны · {entries.Count(e => !e.IsBusy && !e.IsActive)}";
+        FavoritesFilterToggle.Content = $"Избранные · {entries.Count(e => e.IsFavorite)}";
+        ShinyFilterToggle.Content = $"Шайни · {entries.Count(e => e.IsShiny)}";
+        DuplicatesFilterToggle.Content = $"Лишние дубли · {spareCount}";
 
         // Clamped rather than reset: releasing a Pokémon (or narrowing a filter) can shrink the
         // list past the page being read, and dumping the player back to page 1 for that would
@@ -995,6 +1002,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         PokedexEmptyText.Visibility = visible.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         PokedexEmptyText.Text = entries.Count == 0
             ? "Пока пусто — поймай первого покемона на вкладке «Поймать»."
+            : DuplicatesFilterToggle.IsChecked == true && spareCount == 0
+                ? "Лишних дублей нет: каждый покемон здесь ещё пригодится."
             : !string.IsNullOrWhiteSpace(_searchQuery)
                 ? "Ничего не найдено — проверь имя вида или прозвище."
                 : "В этой редкости пока нет открытых видов — попробуй другой фильтр.";

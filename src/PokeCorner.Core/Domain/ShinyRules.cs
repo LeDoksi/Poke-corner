@@ -47,6 +47,22 @@ public static class ShinyRules
         return persistedDraw.Roll < persistedDraw.Chance;
     }
 
+    /// D-41 (Georgy 11.11): shine belongs to the family. Once a shiny of any stage has been owned, the shiny form
+    /// counts as open for every stage of that family the player has already seen, so nobody is raised twice.
+    /// Stages never seen stay closed, and so do stages that have no shiny art. Achievements keep counting the
+    /// raw set (only shiny forms actually owned).
+    public static IReadOnlySet<int> FamilyShiny(IReadOnlySet<int> ownedShiny, IEnumerable<int> seen,
+        IReadOnlyDictionary<int, int> familyRoots, Func<int, bool>? shinySupported = null)
+    {
+        if (ownedShiny.Count == 0) return ownedShiny;
+        int Root(int id) => familyRoots.TryGetValue(id, out var root) && root > 0 ? root : id;
+        var families = ownedShiny.Select(Root).ToHashSet();
+        var open = ownedShiny.ToHashSet();
+        foreach (var id in seen)
+            if (families.Contains(Root(id)) && (shinySupported?.Invoke(id) ?? true)) open.Add(id);
+        return open;
+    }
+
     public static double NextNurseryLuck(double currentBonus, bool isShiny, bool variantSupported)
     {
         if (!double.IsFinite(currentBonus) || currentBonus < 0) throw new ArgumentOutOfRangeException(nameof(currentBonus));

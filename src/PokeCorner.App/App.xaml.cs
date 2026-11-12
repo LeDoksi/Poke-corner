@@ -150,7 +150,12 @@ public partial class App : System.Windows.Application
                     loaded = SaveMigration.Migrate(new SaveData { Individuals = [], Settings = new() }, _legacyLookup, _catalogPackage);
                     loaded.StarterSelectionPending = true;
                 }
-                _appState = new AppState { Achievements = new AchievementService(_catalogPackage) };
+                _appState = new AppState
+                {
+                    Achievements = new AchievementService(_catalogPackage),
+                    FamilyRoots = _catalogPackage.Species.ToDictionary(s => s.Id, s => s.FamilyRootId),
+                    ShinySupported = id => _catalogPackage.CanObtain(id, true)
+                };
                 _appState.Hydrate(loaded);
                 break;
             }
@@ -1108,6 +1113,8 @@ public partial class App : System.Windows.Application
                     () => _appState.BusyIndividualIds, _catalogPackage.Species, () => _appState.DiscoveredSpeciesIds,
                     _catalogPackage.GetRouteHints(), individual => levels.LevelForXp(individual.TotalXp),
                     () => _appState.NormalSpeciesIds, () => _appState.ShinySpeciesIds, collectionPresentation);
+                collectionVm.ReadyToEvolveIds = () => CurrentReadyItems().Where(x => x.Kind == ReadyKind.Evolution && x.IndividualId is not null)
+                    .Select(x => x.IndividualId!.Value).ToHashSet();
                 CollectionView? collectionView = null;
                 ExpeditionView? expeditionRef = null; NurseryView? nurseryRef = null; // built later; Pokédex hints jump into them
                 var shopView = new ShopView(_appState, _shopService,

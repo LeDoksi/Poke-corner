@@ -31,7 +31,13 @@ public sealed class AppState
     public DateTimeOffset? ExpeditionReadyAtUtc => _metadata?.Expedition?.Status == "running" ? _metadata.Expedition.ReadyAtUtc : null;
     public IReadOnlySet<Guid> BusyIndividualIds => _metadata is null ? new HashSet<Guid>() : ExpeditionService.BusyIndividualIds(_metadata);
     public IReadOnlySet<int> NormalSpeciesIds => _metadata?.NormalSpeciesIds ?? new HashSet<int>();
-    public IReadOnlySet<int> ShinySpeciesIds => _metadata?.ShinySpeciesIds ?? new HashSet<int>();
+    /// Shiny forms open in the Pokédex. With FamilyRoots set this is family-wide (D-41, ShinyRules.FamilyShiny);
+    /// the saved set and the achievements stay on forms actually owned.
+    public IReadOnlySet<int> ShinySpeciesIds => _metadata is null ? new HashSet<int>()
+        : FamilyRoots is null ? _metadata.ShinySpeciesIds
+        : ShinyRules.FamilyShiny(_metadata.ShinySpeciesIds, _metadata.NormalSpeciesIds.Concat(_metadata.DiscoveredSpeciesIds), FamilyRoots, ShinySupported);
+    public IReadOnlyDictionary<int, int>? FamilyRoots { get; set; }
+    public Func<int, bool>? ShinySupported { get; set; }
     public IReadOnlySet<int> DiscoveredSpeciesIds => _metadata?.DiscoveredSpeciesIds ?? new HashSet<int>();
 
     public void QueueActivityEncounter(Guid operationId)

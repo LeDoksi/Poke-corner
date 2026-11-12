@@ -105,6 +105,18 @@ public sealed class ApprovedCollectionTests
     }
 
     [Fact]
+    public void SpareDuplicatesAreSameSpeciesSameFormAndNeverTheBestCopy() => WpfTestHost.Run(() =>
+    {
+        var state = new AppState();
+        var strong = Pet(7, false); strong.AccumulatedCarePoints = 30; var weak = Pet(7, false); var shiny = Pet(7, true); var loved = Pet(7, false); loved.IsFavorite = true;
+        foreach (var pet in new[] { strong, weak, shiny, loved }) state.Collection.Add(pet);
+        var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], levelFor: p => p.AccumulatedCarePoints + 1);
+        var spare = CollectionViewModel.FilterIndividuals(vm.GetEntries(DateTimeOffset.UtcNow), "", null, null, false, true, false, false);
+        Assert.DoesNotContain(spare, e => e.IsShiny || e.IsFavorite || e.IsActive);
+        Assert.Contains(spare, e => e.IndividualId == weak.Id);
+    });
+
+    [Fact]
     public void EightHundredIndividualsUseCurrentSpeciesForDuplicatesAndAndEveryFilter() => WpfTestHost.Run(() =>
     {
         var state = new AppState();
@@ -112,7 +124,9 @@ public sealed class ApprovedCollectionTests
         var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], levelFor: p => p.AccumulatedCarePoints % 40 + 1);
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
         Assert.Equal(2, CollectionViewModel.FilterIndividuals(entries, "#0001", null, null, false, false, false, false).Count);
-        var filtered = CollectionViewModel.FilterIndividuals(entries, "", null, null, false, true, true, true, PokedexSortOrder.Level);
+        // D-42: a shiny and a normal one of the same species are not duplicates, so nobody here is spare.
+        Assert.Empty(CollectionViewModel.FilterIndividuals(entries, "", null, null, false, true, false, false));
+        var filtered = CollectionViewModel.FilterIndividuals(entries, "", null, null, false, false, true, true, PokedexSortOrder.Level);
         Assert.All(filtered, e => { Assert.True(e.IsFavorite); Assert.True(e.IsShiny); });
         Assert.Equal(133, filtered.Count);
         Assert.Equal(filtered.Select(e => e.Level).OrderDescending(), filtered.Select(e => e.Level));

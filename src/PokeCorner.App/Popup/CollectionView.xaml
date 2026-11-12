@@ -276,10 +276,13 @@
                     <DockPanel Margin="0,0,0,10">
                         <Button x:Name="ResetIndividualFiltersButton" Content="Сбросить фильтры" DockPanel.Dock="Right" Click="ResetIndividualFilters_Click" Style="{StaticResource SecondaryButtonStyle}" Padding="10,5"/>
                         <WrapPanel VerticalAlignment="Center">
-                            <CheckBox x:Name="EvolutionFilterToggle" Content="Есть куда расти" Checked="EvolutionFilter_Changed" Unchecked="EvolutionFilter_Changed"/>
-                            <CheckBox x:Name="DuplicatesFilterToggle" Content="Дубли" Margin="12,0,0,0" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
-                            <CheckBox x:Name="FavoritesFilterToggle" Content="Избранные" Margin="12,0,0,0" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
-                            <CheckBox x:Name="ShinyFilterToggle" Content="Шайни" Margin="12,0,0,0" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
+                            <!-- D-42: chips with counters. The counter is of the whole collection, so it shows where there is something to do. -->
+                            <CheckBox x:Name="EvolutionFilterToggle" Content="Растут" Style="{StaticResource FilterPillCheckBoxStyle}" Tag="{StaticResource NdLavenderBrush}" ToolTip="Ещё не дошли до последней формы" Checked="EvolutionFilter_Changed" Unchecked="EvolutionFilter_Changed"/>
+                            <CheckBox x:Name="ReadyEvolveFilterToggle" Content="Готовы к эволюции" Style="{StaticResource FilterPillCheckBoxStyle}" Tag="{StaticResource NdApricotBrush}" ToolTip="Заботы хватает: эволюцию можно начать прямо сейчас" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
+                            <CheckBox x:Name="FreeFilterToggle" Content="Свободны" Style="{StaticResource FilterPillCheckBoxStyle}" Tag="{StaticResource NdSuccessBrush}" ToolTip="Не в экспедиции, не в питомнике и не на рабочем столе" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
+                            <CheckBox x:Name="FavoritesFilterToggle" Content="Избранные" Style="{StaticResource FilterPillCheckBoxStyle}" Tag="{StaticResource NdApricotBrush}" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
+                            <CheckBox x:Name="ShinyFilterToggle" Content="Шайни" Style="{StaticResource FilterPillCheckBoxStyle}" Tag="{StaticResource NdShinyBrush}" Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
+                            <CheckBox x:Name="DuplicatesFilterToggle" Content="Лишние дубли" Style="{StaticResource FilterPillCheckBoxStyle}" Tag="{StaticResource NdDangerLineBrush}" ToolTip="Лишние копии того же вида в той же форме. Лучший всегда остаётся, шайни и обычный дублями не считаются, а тот, кто ещё может открыть новую форму, сюда не попадает." Checked="IndividualExtraFilter_Changed" Unchecked="IndividualExtraFilter_Changed"/>
                         </WrapPanel>
                     </DockPanel>
                     <TextBlock x:Name="PokedexEmptyText" Style="{StaticResource CaptionTextStyle}" Margin="2,0,0,0"
