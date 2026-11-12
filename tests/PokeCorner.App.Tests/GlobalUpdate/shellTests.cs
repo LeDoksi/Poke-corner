@@ -56,7 +56,9 @@ public class ShellTests
             var text = new TextBlock { Text = "Редкость", Foreground = (Brush)Application.Current.Resources[key] };
             var card = new Border { Style = (Style)Application.Current.Resources["CardStyle"], Child = text };
             WpfTestHost.Layout(card, 180, 40);
-            Assert.True(Contrast(((SolidColorBrush)text.Foreground).Color, ((SolidColorBrush)card.Background).Color) >= 4.5, key);
+            // D-38: the card surface is a gradient now, so the text must hold against every stop of it.
+            var surface = card.Background is GradientBrush gradient ? gradient.GradientStops.Select(stop => stop.Color) : [((SolidColorBrush)card.Background).Color];
+            Assert.All(surface, color => Assert.True(Contrast(((SolidColorBrush)text.Foreground).Color, color) >= 4.5, key));
         }
 
         foreach (var type in new[] { "normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy", "unknown" })
