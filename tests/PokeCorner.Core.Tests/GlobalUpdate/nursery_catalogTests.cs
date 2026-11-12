@@ -70,6 +70,16 @@ public sealed class NurseryCatalogTests : IDisposable
     }
 
     [Fact]
+    public void OneFamilyHatchesOnlyItsOwnBabyAndEveryBabyKeepsAMixedPair()
+    {
+        var catalog = Load(Enumerable.Range(1, 1100).ToArray());
+        Assert.All(catalog.SameSpeciesRecipes.Where(r => r.IsAvailable), r =>
+            Assert.Equal([r.FirstParentId], r.AvailableOutcomes.Select(o => o.SpeciesId)));
+        var mixedBabies = catalog.MixedRecipes.Where(r => r.IsAvailable).SelectMany(r => r.AvailableOutcomes.Select(o => o.SpeciesId)).ToHashSet();
+        Assert.All(catalog.SameSpeciesRecipes.Where(r => r.IsAvailable), r => Assert.Contains(r.FirstParentId, mixedBabies));
+    }
+
+    [Fact]
     public void DifferentFamiliesNeverHatchABabyOfEitherParentFamily()
     {
         var catalog = Load(26, 172, 134, 133, 150);

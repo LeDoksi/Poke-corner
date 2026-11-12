@@ -106,8 +106,12 @@ public sealed class NurseryCatalog
             // The root-and-root recipe (or the same-species recipe of the root) is the family's own price when it exists.
             // Georgy 11.11: two different families never hatch a baby of either parent's own family;
             // only parents of one family repeat themselves.
+            // Georgy 12.11: and two parents of one family hatch their own baby only. Two different stages of one
+            // family used to add the babies of their species-level recipe (Fidough + Dachsbun -> Cleffa).
+            var ownBaby = family.First == family.Second && parts.Any(r => r.Outcomes.Any(o => o.SpeciesId == family.First));
             bool Foreign(NurseryOutcome o) => family.First == family.Second
-                || o.SpeciesId != family.First && o.SpeciesId != family.Second;
+                ? !ownBaby || o.SpeciesId == family.First
+                : o.SpeciesId != family.First && o.SpeciesId != family.Second;
             int Rank(NurseryRecipe r) => r.Outcomes.Where(Foreign).Select(o => Array.IndexOf(rarityOrder, o.Rarity))
                 .DefaultIfEmpty(-1).Max();
             var priced = parts
