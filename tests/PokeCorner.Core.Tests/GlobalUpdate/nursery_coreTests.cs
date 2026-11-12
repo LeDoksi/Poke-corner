@@ -66,9 +66,9 @@ public sealed class NurseryCoreTests : IDisposable
             {
                 SpeciesId = species.FamilyRootId, CurrentSpeciesId = id, FamilyRootId = species.FamilyRootId,
                 EvolutionChainId = species.EvolutionChainId,
-                ChainLength = id switch { 26 or 679 => 3, 2 or 849 or 714 => 2, _ => 1 },
-                ReachedSpeciesIds = id switch { 26 => [172, 25, 26], 2 => [1, 2], 849 => [848, 849], _ => [id] },
-                CurrentStage = id switch { 26 => EvolutionStage.Stage3, 2 or 849 => EvolutionStage.Stage2, _ => EvolutionStage.Stage1 },
+                ChainLength = id switch { 26 or 679 => 3, 125 or 849 or 714 => 2, _ => 1 },
+                ReachedSpeciesIds = id switch { 26 => [172, 25, 26], 125 => [239, 125], 849 => [848, 849], _ => [id] },
+                CurrentStage = id switch { 26 => EvolutionStage.Stage3, 125 or 849 => EvolutionStage.Stage2, _ => EvolutionStage.Stage1 },
                 Nature = Nature.Bold, IsShiny = false, CaughtAtUtc = Now, FirstTraitId = "gatherer"
             };
         }).ToList()
@@ -79,17 +79,17 @@ public sealed class NurseryCoreTests : IDisposable
     [Fact]
     public void FamilyPairWithManyOutcomesPassesTheSaveValidator()
     {
-        // D-32 family pairs can have 4–5 possible babies; the save validator once capped the nest at 3
-        // and every such start failed with «неверное гнездо v2» (Georgy 04.11, Skuntank + Purrloin).
+        // The save validator once capped the nest at 3 babies and such a start failed with «неверное гнездо v2»
+        // (Georgy 04.11). Since 12.11 every pair has exactly two babies; the nest must list both.
         var all = Enumerable.Range(1, 1025).ToArray();
         var catalog = Catalog(all, all);
         var recipe = new NurseryCatalog(catalog).MixedRecipes.Where(r => r.IsAvailable)
             .OrderByDescending(r => r.AvailableOutcomes.Count).First();
-        Assert.True(recipe.AvailableOutcomes.Count > 3);
+        Assert.Equal(2, recipe.AvailableOutcomes.Count);
         var state = State(catalog, recipe.FirstParentId, recipe.SecondParentId);
         var service = new NurseryService(catalog, state);
         service.Start(Request(state));
-        Assert.True(state.Nest!.PossibleOutcomeSpeciesIds.Count > 3);
+        Assert.Equal(2, state.Nest!.PossibleOutcomeSpeciesIds.Count);
         JsonSaveStore.ValidateData(state);
     }
 
@@ -121,11 +121,11 @@ public sealed class NurseryCoreTests : IDisposable
     [Fact]
     public void BusyAndInvalidSelectionDoNotSpend()
     {
-        var catalog = Catalog([2, 849, 451, 453, 803]);
-        var state = State(catalog, 2, 849);
+        var catalog = Catalog([125, 849, 871, 992]);
+        var state = State(catalog, 125, 849);
         var service = new NurseryService(catalog, state);
-        var request = Request(state, 451);
-        Assert.Equal(3, service.Preview(request.ParentIds).Outcomes.Count);
+        var request = Request(state, 871);
+        Assert.Equal(2, service.Preview(request.ParentIds).Outcomes.Count);
         Assert.Throws<InvalidOperationException>(() => service.Start(request with { SelectedSpeciesId = 999 }));
         state.Expedition = new ExpeditionState { Id = Guid.NewGuid(), ParticipantIds = [state.Individuals[0].Id],
             Status = "ready", StartedAtUtc = Now, ReadyAtUtc = Now, DurationMinutes = 30 };
@@ -138,20 +138,20 @@ public sealed class NurseryCoreTests : IDisposable
     [Fact]
     public void SelectionSpendsCanonicalPriceAndChoiceItemWithChosenChild()
     {
-        var catalog = Catalog([2, 849, 451, 453, 803], 451);
-        var state = State(catalog, 2, 849);
+        var catalog = Catalog([125, 849, 871, 992], 871);
+        var state = State(catalog, 125, 849);
         state.ShopCatchLuckyCharmActive = true;
         var service = new NurseryService(catalog, state);
-        var request = Request(state, 803);
+        var request = Request(state, 992);
         var preview = service.Preview(request.ParentIds, request.SelectedSpeciesId, Now);
         Assert.True(preview.SelectionUseful);
         Assert.Equal(20, preview.Berries.Values.Sum());
-        Assert.Equal(1, preview.OutcomeChances[803]);
-        Assert.Equal(0, preview.OutcomeChances[451]);
-        Assert.Equal(0, preview.ShinyChances[803]);
-        Assert.True(preview.ShinyChances[451] > 0);
+        Assert.Equal(1, preview.OutcomeChances[992]);
+        Assert.Equal(0, preview.OutcomeChances[871]);
+        Assert.Equal(0, preview.ShinyChances[992]);
+        Assert.True(preview.ShinyChances[871] > 0);
         Assert.True(service.Start(request).Success);
-        Assert.Equal(803, state.Nest!.Child.SpeciesId);
+        Assert.Equal(992, state.Nest!.Child.SpeciesId);
         Assert.False(state.Nest.ShinySupported);
         Assert.True(state.ShopCatchLuckyCharmActive);
         Assert.Equal(1, state.Items["offspring-charm"]);
@@ -160,20 +160,20 @@ public sealed class NurseryCoreTests : IDisposable
         Assert.Equal(1, state.Items["offspring-charm"]);
         var sameRequest = request with { ParentIds = request.ParentIds.Reverse().ToArray() };
         Assert.True(service.Start(sameRequest).Repeated);
-        Assert.Throws<InvalidOperationException>(() => service.Start(request with { SelectedSpeciesId = 451 }));
+        Assert.Throws<InvalidOperationException>(() => service.Start(request with { SelectedSpeciesId = 871 }));
     }
 
     [Fact]
     public void SingleAvailableOutcomeRejectsChoiceWithoutSpendingCharm()
     {
-        var catalog = Catalog([2, 849, 451]);
-        var state = State(catalog, 2, 849);
+        var catalog = Catalog([125, 849, 871]);
+        var state = State(catalog, 125, 849);
         var service = new NurseryService(catalog, state);
         var preview = service.Preview(Request(state).ParentIds);
         Assert.False(preview.SelectionUseful);
         Assert.Single(preview.Outcomes);
         Assert.Equal(15, preview.Berries.Values.Sum());
-        Assert.Throws<InvalidOperationException>(() => service.Start(Request(state, 451)));
+        Assert.Throws<InvalidOperationException>(() => service.Start(Request(state, 871)));
         Assert.Equal(2, state.Items["offspring-charm"]);
         Assert.Null(state.Nest);
     }
@@ -181,16 +181,15 @@ public sealed class NurseryCoreTests : IDisposable
     [Fact]
     public void RandomPreviewRetainsCanonicalWeightsAndCaringParentsShortenTime()
     {
-        var catalog = Catalog([2, 849, 451, 453, 803]);
-        var state = State(catalog, 2, 849);
+        var catalog = Catalog([125, 849, 871, 992]);
+        var state = State(catalog, 125, 849);
         foreach (var parent in state.Individuals) parent.FirstTraitId = "caring-parent";
         var service = new NurseryService(catalog, state);
         var request = Request(state);
         var preview = service.Preview(request.ParentIds, now: Now);
         Assert.Equal(1, preview.OutcomeChances.Values.Sum(), 10);
-        Assert.Equal(8d / 20, preview.OutcomeChances[451], 10);
-        Assert.Equal(8d / 20, preview.OutcomeChances[453], 10);
-        Assert.Equal(4d / 20, preview.OutcomeChances[803], 10);
+        Assert.Equal(8d / 12, preview.OutcomeChances[871], 10);
+        Assert.Equal(4d / 12, preview.OutcomeChances[992], 10);
         Assert.Equal(Now.AddHours(6).AddMinutes(-27), preview.ReadyAtUtc);
         Assert.All(preview.TraitsBySpecies.Values, pool => Assert.Equal(new[] { "caring-parent" }, pool));
     }

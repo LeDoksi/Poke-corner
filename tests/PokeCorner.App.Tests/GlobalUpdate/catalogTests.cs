@@ -70,7 +70,7 @@ public sealed class CatalogTests : IDisposable
         using var nursery = JsonDocument.Parse(File.ReadAllText(Path.Combine(repo, "docs/design-v2/nursery-recipes-draft.json")));
         var ids = rules.RootElement.GetProperty("giftRecipeCandidates").EnumerateArray().Select(x => x.GetString()).ToHashSet();
         var candidates = nursery.RootElement.GetProperty("recipes").EnumerateArray().Where(r => ids.Contains(r.GetProperty("id").GetString())).ToArray();
-        Assert.Equal(166, candidates.Length);
+        Assert.Equal(570, candidates.Length);
         Assert.All(candidates, r => Assert.All(r.GetProperty("parentIds").EnumerateArray(), p => Assert.True(c.CanIssueDirectly(p.GetInt32(), false))));
         Assert.Contains(candidates, r => r.GetProperty("parentIds").EnumerateArray().Any(p => p.GetInt32() == 142));
     }

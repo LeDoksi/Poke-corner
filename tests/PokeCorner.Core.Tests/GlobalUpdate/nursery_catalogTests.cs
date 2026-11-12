@@ -54,7 +54,7 @@ public sealed class NurseryCatalogTests : IDisposable
     public void CanonicalDefinitionsAndFamilyRoots()
     {
         var catalog = Load(26, 172, 134, 133, 150);
-        Assert.Equal(752, catalog.MixedRecipes.Count); // D-32: family pairs
+        Assert.Equal(1082, catalog.MixedRecipes.Count); // 541 families, four partners each
         Assert.Equal(541, catalog.SameSpeciesRecipes.Count);
         Assert.Equal(172, catalog.Find(26, 26)!.Outcomes.Single().SpeciesId);
         Assert.Equal(133, catalog.Find(134, 134)!.Outcomes.Single().SpeciesId);
@@ -64,7 +64,7 @@ public sealed class NurseryCatalogTests : IDisposable
         var legendaryRoots = catalog.MixedRecipes.SelectMany(r => r.Outcomes)
             .Where(o => o.Rarity == "Legendary").GroupBy(o => o.SpeciesId).ToArray();
         Assert.Equal(88, legendaryRoots.Length);
-        Assert.All(legendaryRoots, group => Assert.Single(group));
+        Assert.All(legendaryRoots, group => Assert.Equal(4, group.Count())); // every baby hatches from four pairs
         Assert.All(catalog.MixedRecipes.Concat(catalog.SameSpeciesRecipes), r =>
             Assert.All(r.Outcomes, o => Assert.Equal(o.SpeciesId, catalog.FamilyRoot(o.SpeciesId))));
     }
@@ -80,6 +80,23 @@ public sealed class NurseryCatalogTests : IDisposable
     }
 
     [Fact]
+    public void EveryFamilyHasFourPartnersEightBabiesAndHatchesFromFourPairs()
+    {
+        // Georgy 12.11: the same share for everyone (docs/design-v2/build-nursery-families.py).
+        var catalog = Load(Enumerable.Range(1, 1100).ToArray());
+        var roots = catalog.SameSpeciesRecipes.Select(r => r.FirstParentId).ToArray();
+        Assert.Equal(541, roots.Length);
+        Assert.All(catalog.MixedRecipes, r => Assert.Equal(2, r.Outcomes.Count));
+        Assert.All(roots, root =>
+        {
+            var pairs = catalog.MixedRecipes.Where(r => r.FirstParentId == root || r.SecondParentId == root).ToArray();
+            Assert.Equal(4, pairs.Length);
+            Assert.Equal(8, pairs.SelectMany(r => r.Outcomes).Select(o => o.SpeciesId).Distinct().Count());
+            Assert.Equal(4, catalog.MixedRecipes.Count(r => r.Outcomes.Any(o => o.SpeciesId == root)));
+        });
+    }
+
+    [Fact]
     public void DifferentFamiliesNeverHatchABabyOfEitherParentFamily()
     {
         var catalog = Load(26, 172, 134, 133, 150);
@@ -89,8 +106,8 @@ public sealed class NurseryCatalogTests : IDisposable
             Assert.DoesNotContain(r.Outcomes, o => o.SpeciesId == r.FirstParentId || o.SpeciesId == r.SecondParentId);
             Assert.DoesNotContain(r.AvailableOutcomes, o => o.SpeciesId == r.FirstParentId || o.SpeciesId == r.SecondParentId);
         });
-        // Weedle + Spinarak used to list both Weedle and Spinarak among the babies.
-        Assert.Equal(new[] { 10, 23, 46, 265, 616, 953 }, catalog.Find(15, 168)!.Outcomes.Select(o => o.SpeciesId));
+        // Any stages of the two families stand for the pair: Beedrill + Toxtricity is Weedle's family + Toxel's.
+        Assert.Equal(new[] { 41, 69 }, catalog.Find(15, 849)!.Outcomes.Select(o => o.SpeciesId));
         // Parents of one family still hatch their own root.
         Assert.Contains(catalog.SameSpeciesRecipes, r => r.Outcomes.Any(o => o.SpeciesId == r.FirstParentId));
     }
@@ -98,30 +115,26 @@ public sealed class NurseryCatalogTests : IDisposable
     [Fact]
     public void AvailabilityRecomputesParentsOutcomesWeightsAndTimeWithoutMutation()
     {
-        var catalog = Load(2, 849, 451, 453, 803);
-        var pair = catalog.Find(2, 849)!;
+        var catalog = Load(125, 849, 871, 992);
+        var pair = catalog.Find(125, 849)!;
         Assert.True(pair.IsAvailable);
-        Assert.Equal(new[] { 451, 453, 803 }, pair.AvailableOutcomes.Select(o => o.SpeciesId));
+        Assert.Equal(new[] { 871, 992 }, pair.AvailableOutcomes.Select(o => o.SpeciesId));
+        Assert.Equal(new[] { 8, 4 }, pair.AvailableOutcomes.Select(o => o.Weight));
         Assert.Equal(6, pair.Hours);
-        Assert.Same(pair, catalog.Find(849, 2));
-        Assert.Same(pair, catalog.Find(2, 849));
-        Assert.Contains(848, catalog.Partners(2)); // partner families by root
+        Assert.Same(pair, catalog.Find(849, 125));
+        Assert.Same(pair, catalog.Find(125, 849));
+        Assert.Contains(848, catalog.Partners(125)); // partner families by root
 
-        var limited = Load(2, 849, 451, 453);
-        pair = limited.Find(2, 849)!;
-        Assert.Equal(new[] { 451, 453 }, pair.AvailableOutcomes.Select(o => o.SpeciesId));
-        Assert.Equal(new[] { 8, 8 }, pair.AvailableOutcomes.Select(o => o.Weight));
-        Assert.Equal(4, pair.Hours);
-        Assert.False(limited.Find(803, 803)!.IsAvailable);
-        Assert.DoesNotContain(803, limited.Partners(2));
-
-        var oneOutcome = Load(2, 849, 451).Find(2, 849)!;
+        var limited = Load(125, 849, 871);
+        var oneOutcome = limited.Find(125, 849)!;
         Assert.True(oneOutcome.IsAvailable);
+        Assert.Equal(new[] { 871 }, oneOutcome.AvailableOutcomes.Select(o => o.SpeciesId));
+        Assert.Equal(4, oneOutcome.Hours);
         Assert.False(oneOutcome.SelectionUseful);
         Assert.Empty(oneOutcome.SelectedSurcharge);
-        Assert.Single(oneOutcome.AvailableOutcomes);
+        Assert.False(limited.Find(992, 992)!.IsAvailable);
 
-        Assert.False(Load(2, 849).Find(2, 849)!.IsAvailable);
+        Assert.False(Load(125, 849).Find(125, 849)!.IsAvailable);
 
         var developedOnly = Load(26);
         Assert.False(developedOnly.Find(26, 26)!.IsAvailable);
@@ -145,8 +158,8 @@ public sealed class NurseryCatalogTests : IDisposable
     [Fact]
     public void PublishedCollectionsCannotChangeCachedRecipes()
     {
-        var catalog = Load(2, 849, 451, 453, 803);
-        var recipe = catalog.Find(2, 849)!;
+        var catalog = Load(125, 849, 871, 992);
+        var recipe = catalog.Find(125, 849)!;
         if (recipe.Outcomes is NurseryOutcome[] outcomes)
             outcomes[0] = new NurseryOutcome(999, "Legendary", 999, true);
         if (recipe.AvailableOutcomes is NurseryOutcome[] available)
@@ -155,7 +168,7 @@ public sealed class NurseryCatalogTests : IDisposable
         if (recipe.SelectedSurcharge is Dictionary<string, int> surcharge) surcharge["pecha"] = 999;
         if (catalog.MixedRecipes is List<NurseryRecipe> mixed) mixed.Clear();
         if (catalog.SameSpeciesRecipes is List<NurseryRecipe> same) same.Clear();
-        if (catalog.Partners(2) is int[] partners) partners[0] = 999;
+        if (catalog.Partners(125) is int[] partners) partners[0] = 999;
 
         Assert.Throws<NotSupportedException>(() => ((IList<NurseryOutcome>)recipe.Outcomes)[0] =
             new NurseryOutcome(999, "Legendary", 999, true));
@@ -165,16 +178,16 @@ public sealed class NurseryCatalogTests : IDisposable
         Assert.Throws<NotSupportedException>(() => ((IDictionary<string, int>)recipe.SelectedSurcharge)["pecha"] = 999);
         Assert.Throws<NotSupportedException>(() => ((IList<NurseryRecipe>)catalog.MixedRecipes).Clear());
         Assert.Throws<NotSupportedException>(() => ((IList<NurseryRecipe>)catalog.SameSpeciesRecipes).Clear());
-        Assert.Throws<NotSupportedException>(() => ((IList<int>)catalog.Partners(2))[0] = 999);
+        Assert.Throws<NotSupportedException>(() => ((IList<int>)catalog.Partners(125))[0] = 999);
 
-        var again = catalog.Find(849, 2)!;
-        Assert.Equal(69, again.Outcomes[0].SpeciesId); // union of both families' recipes
-        Assert.Equal(451, again.AvailableOutcomes[0].SpeciesId);
-        Assert.Equal(9, again.BaseBerries["pecha"]);
-        Assert.Equal(5, again.SelectedSurcharge["pecha"]);
-        Assert.Equal(752, catalog.MixedRecipes.Count); // D-32: family pairs
+        var again = catalog.Find(849, 125)!;
+        Assert.Equal(871, again.Outcomes[0].SpeciesId);
+        Assert.Equal(871, again.AvailableOutcomes[0].SpeciesId);
+        Assert.Equal(15, again.BaseBerries["oran"]);
+        Assert.Equal(5, again.SelectedSurcharge["oran"]);
+        Assert.Equal(1082, catalog.MixedRecipes.Count); // 541 families, four partners each
         Assert.Equal(541, catalog.SameSpeciesRecipes.Count);
-        Assert.Contains(848, catalog.Partners(2)); // partner families by root
+        Assert.Contains(848, catalog.Partners(125)); // partner families by root
     }
 
     private static PokemonIndividual Individual(int speciesId, Guid? id = null) => new()

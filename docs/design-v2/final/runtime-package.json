@@ -11164,8 +11164,8 @@
     {
       "path": "docs/design-v2/final/catalog-rules.json",
       "target": "final/catalog-rules.json",
-      "bytes": 183134,
-      "sha256": "bd217157bd0897e710786b3c5c5955c8c043983a27f3cff8124da4c0d0c1bc0e"
+      "bytes": 189083,
+      "sha256": "72c4bd7ae6ce6431d98b7b0c2e19c6c7eec7215b7ab0b68e508c6beed15019e2"
     },
     {
       "path": "docs/design-v2/final/DESIGN.json",
@@ -11200,8 +11200,8 @@
     {
       "path": "docs/design-v2/nursery-recipes-draft.json",
       "target": "nursery-recipes-draft.json",
-      "bytes": 1581470,
-      "sha256": "b89b9750c71fd18021b4a3199398e668085e10432c57fa8c8aa55661fb0d76b5"
+      "bytes": 1378714,
+      "sha256": "6c044b224911f319ca6390728c74af22d9230072d352588b4c5b14fbb998b829"
     },
     {
       "path": "docs/design-v2/rarity-draft-v2.json",
