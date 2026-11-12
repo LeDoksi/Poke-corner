@@ -35,7 +35,7 @@
     <SolidColorBrush x:Key="RarityRareBrush" Color="#8FB4F0" />
     <SolidColorBrush x:Key="RarityLegendaryBrush" Color="#FFB574" />
 
-    <!-- ===================== Fill tokens (flat: Night Diary uses no gradients or glows) ===================== -->
+    <!-- ===================== Fill tokens (Night Diary 2.0, D-38: gradients and glow are allowed) ===================== -->
     <SolidColorBrush x:Key="PrimaryButtonBrush" Color="#FFB574" />
     <SolidColorBrush x:Key="PrimaryButtonHoverBrush" Color="#FFC690" />
     <SolidColorBrush x:Key="PrimaryButtonPressedBrush" Color="#E89E5E" />
@@ -53,7 +53,7 @@
         <GradientStop Color="#00101426" Offset="1" />
     </RadialGradientBrush>
 
-    <SolidColorBrush x:Key="HeroCardBrush" Color="#16192B" />
+    <LinearGradientBrush x:Key="HeroCardBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#232749" Offset="0" /><GradientStop Color="#181B33" Offset="1" /></LinearGradientBrush>
 
     <!-- KEYED: every window opts in with Style="{StaticResource AppWindowStyle}". An implicit
          style would do nothing, because WPF matches implicit styles against the EXACT runtime
@@ -66,7 +66,7 @@
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
         <Setter Property="FontFamily" Value="{x:Static theme:BundledFont.Family}" />
         <Setter Property="FontSize" Value="15" />
-        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     </Style>
 
     <!-- The single-purpose dialogs' chrome: onboarding, starter selection and ConfirmDialog.
@@ -140,7 +140,8 @@
 
     <!-- ===================== Typography helpers ===================== -->
     <Style x:Key="ScreenTitleTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="{StaticResource NdDisplayFont}" />
+        <Setter Property="FontSize" Value="21" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
     </Style>
@@ -151,7 +152,8 @@
         <Setter Property="Margin" Value="2,0,0,6" />
     </Style>
     <Style x:Key="StatValueTextStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontFamily" Value="{StaticResource NdDisplayFont}" />
+        <Setter Property="FontSize" Value="17" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
     </Style>
@@ -172,8 +174,8 @@
 
     <!-- ===================== Surfaces ===================== -->
     <Style x:Key="CardStyle" TargetType="Border">
-        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource NdPanelBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource NdPanelLineBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="14" />
         <Setter Property="Padding" Value="12" />
@@ -238,42 +240,14 @@
          via SecondaryButtonStyle. -->
     <Style TargetType="Button">
         <Setter Property="MinHeight" Value="48" />
-        <Setter Property="Background" Value="{StaticResource PrimaryButtonBrush}" />
+        <Setter Property="Background" Value="{StaticResource NdApricotFaceBrush}" />
         <Setter Property="Foreground" Value="{StaticResource OnForestTextBrush}" />
         <Setter Property="Padding" Value="14,7" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="9"
-                            Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource PrimaryButtonHoverBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource PrimaryButtonPressedBrush}" />
-                            <Setter TargetName="Root" Property="Effect" Value="{x:Null}" />
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
-                            <Setter TargetName="Root" Property="BorderThickness" Value="2" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource DisabledSurfaceBrush}" />
-                            <Setter TargetName="Root" Property="Effect" Value="{x:Null}" />
-                            <Setter Property="Foreground" Value="{StaticResource MutedTextBrush}" />
-                            <Setter Property="Opacity" Value="0.65" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource NdKeycapTemplate}" />
     </Style>
 
     <!-- Outline/ghost variant for routine-but-not-primary actions (release, skip, back).
@@ -282,35 +256,39 @@
     <Style x:Key="SecondaryButtonStyle" TargetType="Button">
         <Setter Property="MinHeight" Value="40" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
+        <Setter Property="Background" Value="{StaticResource NdRaisedFaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource NdBorderBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
         <Setter Property="Padding" Value="14,7" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="11"
-                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1.5"
-                            Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"
-                                          RecognizesAccessKey="True" />
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1.5" SnapsToDevicePixels="True">
+                        <Border.RenderTransform><TranslateTransform Y="0" /></Border.RenderTransform>
+                        <Grid>
+                            <Border x:Name="Light" CornerRadius="10" Background="#FFFFFF" Opacity="0" IsHitTestVisible="False" />
+                            <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
-                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource SecondaryTextBrush}" />
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+                            <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="0.1" Duration="0:0:0.09" /></Storyboard></BeginStoryboard></Trigger.EnterActions>
+                            <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.18" /></Storyboard></BeginStoryboard></Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource SurfaceHoverBrush}" />
+                            <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" To="2" Duration="0:0:0.05" /></Storyboard></BeginStoryboard></Trigger.EnterActions>
+                            <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" To="0" Duration="0:0:0.12" /></Storyboard></BeginStoryboard></Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentRedBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentGoldBrush}" />
                             <Setter TargetName="Root" Property="BorderThickness" Value="2" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.35" />
+                            <Setter Property="Opacity" Value="0.4" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -362,7 +340,7 @@
          element. The indicator is left-aligned inside the same Grid cell; the thin
          highlight Border on top of it is a static gloss, not a second progress element. -->
     <Style TargetType="ProgressBar">
-        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource ProgressGoldBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Height" Value="9" />
@@ -395,73 +373,21 @@
     <Style x:Key="CatchProgressBarStyle" TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
         <Setter Property="Foreground" Value="{StaticResource ProgressRoseBrush}" />
         <Setter Property="Height" Value="10" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ProgressBar">
-                    <Grid>
-                        <Border x:Name="PART_Track" CornerRadius="5" Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                        <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
-                                Background="{TemplateBinding Foreground}">
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style x:Key="EvolutionProgressBarStyle" TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
         <Setter Property="Foreground" Value="{StaticResource ProgressBlueBrush}" />
         <Setter Property="Height" Value="10" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ProgressBar">
-                    <Grid>
-                        <Border x:Name="PART_Track" CornerRadius="5" Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                        <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
-                                Background="{TemplateBinding Foreground}">
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style x:Key="TreatProgressBarStyle" TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
         <Setter Property="Foreground" Value="{StaticResource ProgressGreenBrush}" />
         <Setter Property="Height" Value="10" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ProgressBar">
-                    <Grid>
-                        <Border x:Name="PART_Track" CornerRadius="5" Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                        <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
-                                Background="{TemplateBinding Foreground}">
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style x:Key="GoldProgressBarStyle" TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
         <Setter Property="Foreground" Value="{StaticResource ProgressGoldBrush}" />
         <Setter Property="Height" Value="10" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ProgressBar">
-                    <Grid>
-                        <Border x:Name="PART_Track" CornerRadius="5" Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                        <Border x:Name="PART_Indicator" CornerRadius="5" HorizontalAlignment="Left"
-                                Background="{TemplateBinding Foreground}">
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <!-- Row-level bar inside list cards: no glow (it would repeat once per row) and thinner,
@@ -551,21 +477,21 @@
          needs the Tag brush, and cross-fading opacity keeps the setters binding-free. -->
     <Style x:Key="FilterPillStyle" TargetType="RadioButton">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="FontSize" Value="10.5" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
         <Setter Property="Margin" Value="0,0,6,6" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <Grid>
-                        <Border x:Name="BasePill" CornerRadius="9"
-                                Background="{StaticResource WindowBackgroundBrush}"
+                        <Border x:Name="BasePill" CornerRadius="13"
+                                Background="{StaticResource NdRaisedFaceBrush}"
                                 BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                        <Border x:Name="AccentRing" CornerRadius="9" Opacity="0"
-                                Background="{StaticResource CardHoverBackgroundBrush}"
+                        <Border x:Name="AccentRing" CornerRadius="13" Opacity="0"
+                                Background="{StaticResource NdTabSelectedBrush}"
                                 BorderBrush="{TemplateBinding Tag}" BorderThickness="1.5" />
-                        <StackPanel Orientation="Horizontal" Margin="9,3">
+                        <StackPanel Orientation="Horizontal" Margin="11,5">
                             <Ellipse x:Name="Dot" Width="6" Height="6" Opacity="0.5" Margin="0,0,5,0"
                                      VerticalAlignment="Center" Fill="{TemplateBinding Tag}" />
                             <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
@@ -573,7 +499,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="BasePill" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
+                            <Setter TargetName="BasePill" Property="BorderBrush" Value="{StaticResource SecondaryTextBrush}" />
                             <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
@@ -592,21 +518,21 @@
          can't be reused for CheckBox. -->
     <Style x:Key="FilterPillCheckBoxStyle" TargetType="CheckBox">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="FontSize" Value="10.5" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
         <Setter Property="Margin" Value="0,0,6,6" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <Grid>
-                        <Border x:Name="BasePill" CornerRadius="9"
-                                Background="{StaticResource WindowBackgroundBrush}"
+                        <Border x:Name="BasePill" CornerRadius="13"
+                                Background="{StaticResource NdRaisedFaceBrush}"
                                 BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" />
-                        <Border x:Name="AccentRing" CornerRadius="9" Opacity="0"
-                                Background="{StaticResource CardHoverBackgroundBrush}"
+                        <Border x:Name="AccentRing" CornerRadius="13" Opacity="0"
+                                Background="{StaticResource NdTabSelectedBrush}"
                                 BorderBrush="{TemplateBinding Tag}" BorderThickness="1.5" />
-                        <StackPanel Orientation="Horizontal" Margin="9,3">
+                        <StackPanel Orientation="Horizontal" Margin="11,5">
                             <Ellipse x:Name="Dot" Width="6" Height="6" Opacity="0.5" Margin="0,0,5,0"
                                      VerticalAlignment="Center" Fill="{TemplateBinding Tag}" />
                             <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
@@ -614,7 +540,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="BasePill" Property="Background" Value="{StaticResource CardHoverBackgroundBrush}" />
+                            <Setter TargetName="BasePill" Property="BorderBrush" Value="{StaticResource SecondaryTextBrush}" />
                             <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
@@ -962,9 +888,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToolTip">
-                    <Border Background="{StaticResource CardBackgroundBrush}"
-                            BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
-                            CornerRadius="8" Padding="10,7">
+                    <Border Background="{StaticResource NdRaisedFaceBrush}"
+                            BorderBrush="{StaticResource NdPanelLineBrush}" BorderThickness="1"
+                            CornerRadius="10" Padding="11,8">
                         <!-- A wrapping TextBlock, not a bare ContentPresenter: every tooltip here is a plain string,
                              and ContentPresenter renders a string into a TextBlock that does NOT wrap, so anything
                              longer than ~40 characters was clipped mid-word against the MaxWidth above. -->
@@ -1028,7 +954,7 @@
                                       IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="ToggleButton">
-                                    <Border x:Name="ClosedBox" Background="{StaticResource CardBackgroundBrush}"
+                                    <Border x:Name="ClosedBox" Background="{StaticResource NdRaisedFaceBrush}"
                                             BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1"
                                             CornerRadius="10" Padding="{TemplateBinding Padding}">
                                         <Grid>
@@ -1069,7 +995,8 @@
         <Setter Property="Padding" Value="16,6" />
     </Style>
     <Style x:Key="NdChoiceSelectedStyle" TargetType="Button" BasedOn="{StaticResource NdChoiceStyle}">
-        <Setter Property="Background" Value="#C4ABF0" />
+        <Setter Property="Background" Value="{StaticResource NdLavenderFaceBrush}" />
+        <Setter Property="BorderBrush" Value="#E6D9FC" />
         <Setter Property="Foreground" Value="#101426" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>

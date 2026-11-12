@@ -23,6 +23,72 @@
  <SolidColorBrush x:Key="NdScrimBrush" Color="#D0101426"/>
  <!-- One flat shape colour for everything not yet discovered: species, evolutions, parents, awards. -->
  <SolidColorBrush x:Key="NdSilhouetteBrush" Color="#88819E"/>
+ <!-- Night Diary 2.0 (D-38): depth. Gradients and glow are allowed again; the palette itself is unchanged. -->
+ <LinearGradientBrush x:Key="NdBackdropBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#151936" Offset="0"/><GradientStop Color="#0C0F1F" Offset="1"/></LinearGradientBrush>
+ <RadialGradientBrush x:Key="NdBackdropGlowBrush" Center="0.2,0" GradientOrigin="0.2,0" RadiusX="0.75" RadiusY="0.8"><GradientStop Color="#2EC4ABF0" Offset="0"/><GradientStop Color="#00C4ABF0" Offset="1"/></RadialGradientBrush>
+ <RadialGradientBrush x:Key="NdBackdropEmberBrush" Center="1,1" GradientOrigin="1,1" RadiusX="0.6" RadiusY="0.7"><GradientStop Color="#1FFFB574" Offset="0"/><GradientStop Color="#00FFB574" Offset="1"/></RadialGradientBrush>
+ <LinearGradientBrush x:Key="NdPanelBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#202443" Offset="0"/><GradientStop Color="#181B33" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdPanelLineBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#51557E" Offset="0"/><GradientStop Color="#2F3252" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdRailGradientBrush" StartPoint="0,0" EndPoint="1,0"><GradientStop Color="#1B1D38" Offset="0"/><GradientStop Color="#151730" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdHeaderGradientBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#23274A" Offset="0"/><GradientStop Color="#191C36" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdApricotFaceBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#FFD0A0" Offset="0"/><GradientStop Color="#FFB574" Offset="0.55"/><GradientStop Color="#F7A45F" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdRaisedFaceBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#363B66" Offset="0"/><GradientStop Color="#292D50" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdLavenderFaceBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#D9C6FA" Offset="0"/><GradientStop Color="#B79BEA" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdDangerFaceBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#C4667A" Offset="0"/><GradientStop Color="#A04B5B" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdTabSelectedBrush" StartPoint="0,0" EndPoint="1,0"><GradientStop Color="#473D73" Offset="0"/><GradientStop Color="#2A2748" Offset="1"/></LinearGradientBrush>
+ <LinearGradientBrush x:Key="NdGlossBrush" StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#40FFFFFF" Offset="0"/><GradientStop Color="#00FFFFFF" Offset="1"/></LinearGradientBrush>
+ <SolidColorBrush x:Key="NdPaperBrush" Color="#EFE4CC"/>
+ <SolidColorBrush x:Key="NdPaperInkBrush" Color="#3B2F4A"/>
+ <DropShadowEffect x:Key="NdApricotGlow" Color="#FFB574" BlurRadius="16" ShadowDepth="0" Opacity="0.55"/>
+ <DropShadowEffect x:Key="NdLavenderGlow" Color="#C4ABF0" BlurRadius="14" ShadowDepth="0" Opacity="0.45"/>
+ <DropShadowEffect x:Key="NdLiftShadow" Color="#05060F" BlurRadius="18" ShadowDepth="5" Direction="270" Opacity="0.55"/>
+ <FontFamily x:Key="NdDisplayFont">pack://application:,,,/PokeCorner;component/Assets/Fonts/#Unbounded</FontFamily>
+ <FontFamily x:Key="NdTextFont">pack://application:,,,/PokeCorner;component/Assets/Fonts/#Onest</FontFamily>
+ <!-- The one button body of the app: a key cap. The face sits on a darker lip of its own colour, the pointer
+      lights it, a press pushes it down onto the lip. Colour comes from the style (Background), so primary,
+      quiet and danger buttons move the same way. -->
+ <ControlTemplate x:Key="NdKeycapTemplate" TargetType="Button">
+  <Grid SnapsToDevicePixels="True" Background="Transparent">
+   <Border x:Name="Lip" CornerRadius="11" Margin="0,4,0,0" Background="{TemplateBinding Background}"><Border CornerRadius="11" Background="#66080A18"/></Border>
+   <Border x:Name="Face" CornerRadius="11" Margin="0,0,0,4" Background="{TemplateBinding Background}">
+    <Border.RenderTransform><TranslateTransform Y="0"/></Border.RenderTransform>
+    <Grid>
+     <Border x:Name="Gloss" CornerRadius="11,11,6,6" Height="14" VerticalAlignment="Top" Margin="1,1,1,0" Background="{StaticResource NdGlossBrush}" Opacity="0.55" IsHitTestVisible="False"/>
+     <Border x:Name="Light" CornerRadius="11" Background="#FFFFFF" Opacity="0" IsHitTestVisible="False"/>
+     <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+     <Border x:Name="FocusRing" CornerRadius="11" BorderThickness="2" BorderBrush="{StaticResource NdTextBrush}" Visibility="Collapsed" IsHitTestVisible="False"/>
+    </Grid>
+   </Border>
+  </Grid>
+  <ControlTemplate.Triggers>
+   <Trigger Property="IsMouseOver" Value="True">
+    <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="0.14" Duration="0:0:0.09"/></Storyboard></BeginStoryboard></Trigger.EnterActions>
+    <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.18"/></Storyboard></BeginStoryboard></Trigger.ExitActions>
+   </Trigger>
+   <Trigger Property="IsPressed" Value="True">
+    <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Face" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" To="3" Duration="0:0:0.05"/></Storyboard></BeginStoryboard></Trigger.EnterActions>
+    <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Face" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" To="0" Duration="0:0:0.14"><DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.6"/></DoubleAnimation.EasingFunction></DoubleAnimation></Storyboard></BeginStoryboard></Trigger.ExitActions>
+   </Trigger>
+   <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="FocusRing" Property="Visibility" Value="Visible"/></Trigger>
+   <Trigger Property="IsEnabled" Value="False">
+    <Setter TargetName="Face" Property="Background" Value="{StaticResource NdRaisedBrush}"/><Setter TargetName="Lip" Property="Background" Value="{StaticResource NdRaisedBrush}"/>
+    <Setter TargetName="Gloss" Property="Visibility" Value="Collapsed"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="Opacity" Value="0.6"/>
+   </Trigger>
+  </ControlTemplate.Triggers>
+ </ControlTemplate>
+ <!-- Ready badge (D-38): a count on the rail or a tile, not a bare dot. -->
+ <Style x:Key="NdReadyBadgeStyle" TargetType="Border">
+  <Setter Property="MinWidth" Value="18"/><Setter Property="Height" Value="18"/><Setter Property="CornerRadius" Value="9"/><Setter Property="Padding" Value="4,0"/>
+  <Setter Property="Background" Value="{StaticResource NdApricotFaceBrush}"/><Setter Property="BorderBrush" Value="{StaticResource NdRailBrush}"/><Setter Property="BorderThickness" Value="1.5"/>
+  <Setter Property="HorizontalAlignment" Value="Right"/><Setter Property="VerticalAlignment" Value="Top"/><Setter Property="Effect" Value="{StaticResource NdApricotGlow}"/>
+  <Setter Property="TextElement.Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="TextElement.FontSize" Value="10"/><Setter Property="TextElement.FontWeight" Value="Bold"/>
+ </Style>
+ <!-- Panel: the standard raised surface of a screen. -->
+ <Style x:Key="NdPanelStyle" TargetType="Border">
+  <Setter Property="Background" Value="{StaticResource NdPanelBrush}"/><Setter Property="BorderBrush" Value="{StaticResource NdPanelLineBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="14"/><Setter Property="Padding" Value="14"/>
+ </Style>
+ <!-- Margin note on a scrap of paper held by tape (D-43). -->
+ <Style x:Key="NdPaperNoteTextStyle" TargetType="TextBlock"><Setter Property="FontFamily" Value="{DynamicResource NdHandFont}"/><Setter Property="FontSize" Value="20"/><Setter Property="Foreground" Value="{StaticResource NdPaperInkBrush}"/><Setter Property="TextWrapping" Value="Wrap"/><Setter Property="TextAlignment" Value="Center"/><Setter Property="LineHeight" Value="20"/><Setter Property="LineStackingStrategy" Value="BlockLineHeight"/></Style>
  <!-- Selectable row in a plain list (save history): no system highlight, same states as cards. -->
  <Style x:Key="NdRowListItemStyle" TargetType="ListBoxItem">
   <Setter Property="Padding" Value="12,12"/><Setter Property="Margin" Value="0,0,0,8"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -41,14 +107,14 @@
  <Style x:Key="NdMarginNoteStyle" TargetType="TextBlock"><Setter Property="FontFamily" Value="{DynamicResource NdHandFont}"/><Setter Property="FontSize" Value="21"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Opacity" Value="0.8"/><Setter Property="TextWrapping" Value="Wrap"/><Setter Property="TextAlignment" Value="Center"/><Setter Property="IsHitTestVisible" Value="False"/></Style>
  <FontFamily x:Key="NdHandFont">pack://application:,,,/PokeCorner;component/Assets/Fonts/#Caveat</FontFamily>
  <Style x:Key="NdHeaderButtonStyle" TargetType="Button">
-  <Setter Property="FontFamily" Value="Segoe UI"/><Setter Property="FontSize" Value="14"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="Background" Value="Transparent"/>
-  <Setter Property="MinHeight" Value="32"/><Setter Property="Padding" Value="10,5"/>
+  <Setter Property="FontSize" Value="14"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="Background" Value="Transparent"/>
+  <Setter Property="MinHeight" Value="32"/><Setter Property="Padding" Value="12,5"/><Setter Property="Cursor" Value="Hand"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
-   <Border x:Name="Surface" CornerRadius="6" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="Transparent" Padding="{TemplateBinding Padding}">
+   <Border x:Name="Surface" CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="Transparent" Padding="{TemplateBinding Padding}">
     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
    </Border>
    <ControlTemplate.Triggers>
-    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdRaisedBrush}"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/></Trigger>
+    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdRaisedFaceBrush}"/><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdBorderBrush}"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/></Trigger>
     <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdBorderBrush}"/></Trigger>
     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
     <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
@@ -62,25 +128,35 @@
   <Style.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{StaticResource NdDangerTextBrush}"/></Trigger></Style.Triggers>
  </Style>
  <Style x:Key="NdShellTabStyle" TargetType="TabItem">
-  <Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="13"/>
-  <Setter Property="Margin" Value="8,3"/><Setter Property="HorizontalContentAlignment" Value="Left"/>
+  <Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="12.5"/><Setter Property="FontWeight" Value="SemiBold"/>
+  <Setter Property="Margin" Value="8,3"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Cursor" Value="Hand"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TabItem">
-   <Grid>
-    <Border x:Name="Surface" CornerRadius="7" BorderThickness="1" BorderBrush="Transparent" Padding="9,13" Background="Transparent">
-     <ContentPresenter ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-    </Border>
-    <Border x:Name="ActiveMark" Width="3" CornerRadius="2" Margin="-8,6,0,6" HorizontalAlignment="Left" Background="{StaticResource NdApricotBrush}" Visibility="Collapsed"/>
+   <Grid Background="Transparent">
+    <Border x:Name="Surface" CornerRadius="12" BorderThickness="1" BorderBrush="Transparent" Background="Transparent"/>
+    <Border x:Name="Light" CornerRadius="12" Background="{StaticResource NdRaisedBrush}" Opacity="0"/>
+    <Border x:Name="ActiveMark" Width="4" CornerRadius="2" Margin="-8,10,0,10" HorizontalAlignment="Left" Background="{StaticResource NdApricotBrush}" Effect="{StaticResource NdApricotGlow}" Visibility="Collapsed"/>
+    <ContentPresenter x:Name="Head" ContentSource="Header" Margin="6,11" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5"><ContentPresenter.RenderTransform><ScaleTransform ScaleX="1" ScaleY="1"/></ContentPresenter.RenderTransform></ContentPresenter>
    </Grid>
    <ControlTemplate.Triggers>
-    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdRaisedBrush}"/></Trigger>
-    <Trigger Property="IsSelected" Value="True"><Setter TargetName="ActiveMark" Property="Visibility" Value="Visible"/><Setter TargetName="Surface" Property="Background" Value="#302A4A"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/></Trigger>
+    <Trigger Property="IsMouseOver" Value="True">
+     <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/>
+     <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/></Storyboard></BeginStoryboard></Trigger.EnterActions>
+     <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2"/></Storyboard></BeginStoryboard></Trigger.ExitActions>
+    </Trigger>
+    <Trigger Property="IsSelected" Value="True">
+     <Setter TargetName="ActiveMark" Property="Visibility" Value="Visible"/><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdTabSelectedBrush}"/><Setter TargetName="Surface" Property="BorderBrush" Value="#5A4F8C"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/>
+     <Trigger.EnterActions><BeginStoryboard><Storyboard>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Head" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"><LinearDoubleKeyFrame KeyTime="0:0:0.07" Value="0.92"/><EasingDoubleKeyFrame KeyTime="0:0:0.24" Value="1"><EasingDoubleKeyFrame.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.9"/></EasingDoubleKeyFrame.EasingFunction></EasingDoubleKeyFrame></DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Head" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"><LinearDoubleKeyFrame KeyTime="0:0:0.07" Value="0.92"/><EasingDoubleKeyFrame KeyTime="0:0:0.24" Value="1"><EasingDoubleKeyFrame.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.9"/></EasingDoubleKeyFrame.EasingFunction></EasingDoubleKeyFrame></DoubleAnimationUsingKeyFrames>
+     </Storyboard></BeginStoryboard></Trigger.EnterActions>
+    </Trigger>
     <!-- Settings open beside the rail (Tag="settings"): no section is current, so the last one is not marked. -->
     <MultiDataTrigger>
      <MultiDataTrigger.Conditions>
       <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
       <Condition Binding="{Binding Tag, RelativeSource={RelativeSource AncestorType=TabControl}}" Value="settings"/>
      </MultiDataTrigger.Conditions>
-     <Setter TargetName="ActiveMark" Property="Visibility" Value="Collapsed"/><Setter TargetName="Surface" Property="Background" Value="Transparent"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/>
+     <Setter TargetName="ActiveMark" Property="Visibility" Value="Collapsed"/><Setter TargetName="Surface" Property="Background" Value="Transparent"/><Setter TargetName="Surface" Property="BorderBrush" Value="Transparent"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/>
     </MultiDataTrigger>
     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
     <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
@@ -90,11 +166,11 @@
  <Style x:Key="NdShellTabsStyle" TargetType="TabControl">
   <Setter Property="ItemContainerStyle" Value="{StaticResource NdShellTabStyle}"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TabControl">
-   <Grid Background="{StaticResource NdBackgroundBrush}">
+   <Grid Background="Transparent">
     <Grid.ColumnDefinitions><ColumnDefinition Width="{DynamicResource NdRailWidth}"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-    <Border Background="{StaticResource NdRailBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,0,1,0"/>
-    <StackPanel IsItemsHost="True" Margin="0,18,0,60" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.DirectionalNavigation="Cycle"/>
-    <ContentPresenter Grid.Column="1" ContentSource="SelectedContent"/>
+    <Border Background="{StaticResource NdRailGradientBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,0,1,0"/>
+    <StackPanel IsItemsHost="True" Margin="0,14,0,60" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+    <ContentPresenter x:Name="PART_SelectedContentHost" Grid.Column="1" ContentSource="SelectedContent" RenderTransformOrigin="0.5,0.5"><ContentPresenter.RenderTransform><TranslateTransform Y="0"/></ContentPresenter.RenderTransform></ContentPresenter>
    </Grid>
   </ControlTemplate></Setter.Value></Setter>
  </Style>
@@ -207,29 +283,19 @@
     </Style>
 
  <Style x:Key="NdDialogButtonStyle" TargetType="Button">
-  <Setter Property="FontFamily" Value="Segoe UI"/><Setter Property="FontSize" Value="14"/><Setter Property="MinHeight" Value="42"/><Setter Property="Padding" Value="16,8"/>
-  <Setter Property="Background" Value="{StaticResource NdRaisedBrush}"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/>
-  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
-   <Border x:Name="Surface" CornerRadius="7" BorderThickness="2" BorderBrush="Transparent" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
-    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
-   </Border>
-   <ControlTemplate.Triggers>
-    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
-    <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/></Trigger>
-    <Trigger Property="IsPressed" Value="True"><Setter Property="Opacity" Value="0.8"/></Trigger>
-    <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
-   </ControlTemplate.Triggers>
-  </ControlTemplate></Setter.Value></Setter>
+  <Setter Property="FontSize" Value="14"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="MinHeight" Value="46"/><Setter Property="Padding" Value="16,8"/><Setter Property="Cursor" Value="Hand"/>
+  <Setter Property="Background" Value="{StaticResource NdRaisedFaceBrush}"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/>
+  <Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Template" Value="{StaticResource NdKeycapTemplate}"/>
  </Style>
- <Style x:Key="NdDialogPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource NdDialogButtonStyle}"><Setter Property="Background" Value="{StaticResource NdApricotBrush}"/><Setter Property="Foreground" Value="{StaticResource NdBackgroundBrush}"/></Style>
- <Style x:Key="NdDialogDangerButtonStyle" TargetType="Button" BasedOn="{StaticResource NdDialogButtonStyle}"><Setter Property="Background" Value="#A85060"/></Style>
+ <Style x:Key="NdDialogPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource NdDialogButtonStyle}"><Setter Property="Background" Value="{StaticResource NdApricotFaceBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="FontWeight" Value="Bold"/></Style>
+ <Style x:Key="NdDialogDangerButtonStyle" TargetType="Button" BasedOn="{StaticResource NdDialogButtonStyle}"><Setter Property="Background" Value="{StaticResource NdDangerFaceBrush}"/></Style>
  <!-- COMPONENTS.md §2: an action that loses something (rehome, reset) on a screen. Outline only; the filled
       danger button lives in the confirmation that always follows. -->
  <Style x:Key="NdDangerOutlineButtonStyle" TargetType="Button">
   <Setter Property="MinHeight" Value="36"/><Setter Property="Padding" Value="12,7"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Cursor" Value="Hand"/>
   <Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="{StaticResource NdDangerLineBrush}"/><Setter Property="Foreground" Value="{StaticResource NdDangerTextBrush}"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
-   <Border x:Name="Surface" CornerRadius="7" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+   <Border x:Name="Surface" CornerRadius="11" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
    </Border>
    <ControlTemplate.Triggers>

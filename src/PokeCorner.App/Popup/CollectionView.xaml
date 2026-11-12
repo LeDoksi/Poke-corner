@@ -371,9 +371,9 @@
 
              Names are Detail*-prefixed because several (SpriteImage, ShinyBadge) would collide with
              the home tab's elements in the shared namescope. -->
-        <Border x:Name="DetailOverlay" Panel.ZIndex="10" Visibility="Collapsed" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource CardBorderBrush}" MouseLeftButtonDown="DetailOverlay_MouseLeftButtonDown">
+        <Border x:Name="DetailOverlay" Panel.ZIndex="10" Visibility="Collapsed" Background="{StaticResource NdBackdropBrush}" BorderBrush="{StaticResource CardBorderBrush}" MouseLeftButtonDown="DetailOverlay_MouseLeftButtonDown">
             <Grid x:Name="DetailOverlayArea" Margin="24,14">
-                <Border x:Name="DetailCard" Background="{StaticResource WindowBackgroundBrush}" MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
+                <Border x:Name="DetailCard" Background="Transparent" MouseLeftButtonDown="DetailCard_MouseLeftButtonDown">
                     <DockPanel>
                         <DockPanel x:Name="DetailIdentityHeader" DockPanel.Dock="Top" Margin="0,0,0,12">
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Top" Margin="12,0,0,0">
@@ -499,7 +499,7 @@
             </Grid>
         </Border>
         <!-- D-20: the species page slides in on the right like a pet's page; the species grid narrows beside it. -->
-        <Border x:Name="SpeciesDialog" Panel.ZIndex="15" Visibility="Collapsed" Background="{StaticResource WindowBackgroundBrush}"
+        <Border x:Name="SpeciesDialog" Panel.ZIndex="15" Visibility="Collapsed" Background="{StaticResource NdBackdropBrush}"
                 BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1,0,0,0">
             <DockPanel Margin="24,14,16,14">
                 <DockPanel DockPanel.Dock="Top" Margin="0,0,0,10">

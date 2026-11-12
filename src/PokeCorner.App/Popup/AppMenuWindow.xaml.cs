@@ -43,6 +43,7 @@ public partial class AppMenuWindow : Window
             // Arrow keys on the rail while Settings is open leave Settings for the newly picked section.
             if (SettingsContent.Visibility == Visibility.Visible && _hosted is null) Navigate(SelectedSection());
             UpdateRailSketch();
+            Theme.Motion.Enter(MenuTabControl.Template?.FindName("PART_SelectedContentHost", MenuTabControl) as FrameworkElement);
         };
         MenuTabControl.PreviewMouseLeftButtonDown += RailTab_PreviewMouseLeftButtonDown;
         ShopTab.SizeChanged += (_, _) => UpdateRailSketch();
@@ -182,14 +183,34 @@ public partial class AppMenuWindow : Window
     private void RefreshSnapshot()
     {
         var snapshot = _getSnapshot?.Invoke();
-        WalletText.Text = snapshot?.ShopCoins.ToString(System.Globalization.CultureInfo.CurrentCulture) ?? "—";
+        var wallet = snapshot?.ShopCoins.ToString(System.Globalization.CultureInfo.CurrentCulture) ?? "—";
+        if (WalletText.Text != wallet)
+        {
+            var first = WalletText.Text.Length == 0;
+            WalletText.Text = wallet;
+            if (!first && IsLoaded) Theme.Motion.Pop(WalletText);
+        }
+
         var trip = snapshot?.Expedition;
         ExpeditionReadyBadge.Visibility = trip is not null && (trip.Status == "ready" || trip.Status == "running" && DateTimeOffset.UtcNow >= trip.ReadyAtUtc)
             ? Visibility.Visible : Visibility.Collapsed;
         // D-31: the same "ready" list as the corner strip and the badge over the desktop pet.
         var ready = _readyItems?.Invoke() ?? [];
-        PokedexReadyBadge.Visibility = ready.Any(x => x.Kind == ReadyKind.Evolution) ? Visibility.Visible : Visibility.Collapsed;
+        var evolutions = ready.Count(x => x.Kind == ReadyKind.Evolution);
+        PokedexReadyBadge.Visibility = evolutions > 0 ? Visibility.Visible : Visibility.Collapsed;
+        PokedexReadyBadgeCount.Text = BadgeCount(evolutions);
         NurseryReadyBadge.Visibility = ready.Any(x => x.Kind == ReadyKind.Nursery) ? Visibility.Visible : Visibility.Collapsed;
+        ExpeditionReadyBadgeCount.Text = NurseryReadyBadgeCount.Text = "!";
+        UpdateBadgeMotion();
+    }
+
+    private static string BadgeCount(int count) => count > 9 ? "9+" : Math.Max(1, count).ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+    // Every badge that waits for the player breathes; the catch badge keeps its own, older pulse.
+    private void UpdateBadgeMotion()
+    {
+        foreach (var badge in new[] { PokedexReadyBadge, ExpeditionReadyBadge, NurseryReadyBadge })
+            Theme.Motion.Breathe(badge, IsLoaded && badge.Visibility == Visibility.Visible);
     }
 
     private void StopPresentation()
@@ -198,6 +219,7 @@ public partial class AppMenuWindow : Window
         CatchBadge.BeginAnimation(OpacityProperty, null);
         CatchBadge.Opacity = 1;
         _catchBadgePulsing = false;
+        foreach (var badge in new[] { PokedexReadyBadge, ExpeditionReadyBadge, NurseryReadyBadge }) Theme.Motion.Breathe(badge, false);
     }
 
     /// Drag and double-click-to-maximize for the custom title bar: WindowChrome's CaptionHeight
@@ -215,9 +237,13 @@ public partial class AppMenuWindow : Window
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        var compact = ActualWidth < 920;
+        // D-38: a big window shows the same layout larger. Everything below works in the scaled (logical) size.
+        var scale = Theme.Motion.ShellScale(ActualWidth, ActualHeight);
+        if (ShellRoot.LayoutTransform is not System.Windows.Media.ScaleTransform current || Math.Abs(current.ScaleX - scale) > 0.001)
+            ShellRoot.LayoutTransform = scale > 1.001 ? new System.Windows.Media.ScaleTransform(scale, scale) : System.Windows.Media.Transform.Identity;
+        var compact = ActualWidth / scale < 920;
         Resources["NdRailWidth"] = new GridLength(compact ? 112 : 136);
-        TitleBar.Height = compact ? 40 : 44;
+        TitleBar.Height = compact ? 42 : 48;
         BrandSubtitle.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
         SettingsButton.Width = compact ? 96 : 120;
         SettingsContent.Margin = HostedContent.Margin = new Thickness(compact ? 112 : 136, 0, 0, 0);
@@ -499,6 +525,8 @@ public partial class AppMenuWindow : Window
     {
         EncountersButton.Content = $"Встречи · {Math.Max(0, count)}";
         var ready = count > 0;
+        if (ready && CatchBadgeCount.Text != BadgeCount(count) && IsLoaded) Theme.Motion.Pop(CatchBadge, 1.4);
+        CatchBadgeCount.Text = BadgeCount(count);
         CatchBadge.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
         UpdateCatchBadgeAnimation();
     }
@@ -523,7 +551,7 @@ public partial class AppMenuWindow : Window
         }
 
         // Slow breathing pulse, not a strobe — subtle, plays only while the badge is visible.
-        var pulse = new DoubleAnimation(1.0, 0.35, TimeSpan.FromMilliseconds(900))
+        var pulse = new DoubleAnimation(1.0, 0.55, TimeSpan.FromMilliseconds(900))
         {
             AutoReverse = true,
             RepeatBehavior = RepeatBehavior.Forever,

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PokeCorner.App.Popup"
         Title="PokéCorner" Width="1280" Height="760" MinWidth="1200" MinHeight="660"
-        Style="{StaticResource AppWindowStyle}" Background="{DynamicResource NdBackgroundBrush}"
+        Style="{StaticResource AppWindowStyle}" Background="{DynamicResource NdBackgroundBrush}" UseLayoutRounding="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" SizeChanged="Window_SizeChanged" PreviewKeyDown="Window_PreviewKeyDown" KeyDown="Window_KeyDown">
     <Window.Resources>
@@ -22,8 +22,12 @@
                       CornerRadius="0" GlassFrameThickness="0" UseAeroCaptionButtons="False" />
     </WindowChrome.WindowChrome>
 
-    <Grid>
-    <Grid x:Name="ShellContent" Background="{StaticResource NdBackgroundBrush}">
+    <Grid x:Name="ShellRoot">
+    <!-- Night Diary 2.0 backdrop (D-38): night sky gradient, lavender lamp glow top-left, apricot ember bottom-right. -->
+    <Rectangle Fill="{StaticResource NdBackdropBrush}" IsHitTestVisible="False" />
+    <Rectangle Fill="{StaticResource NdBackdropGlowBrush}" IsHitTestVisible="False" />
+    <Rectangle Fill="{StaticResource NdBackdropEmberBrush}" IsHitTestVisible="False" />
+    <Grid x:Name="ShellContent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -31,7 +35,7 @@
 
         <!-- Brand strip, doubling as the window's title bar (the OS one is gone) — hence the drag
              handler and the three chrome buttons. -->
-        <Border x:Name="TitleBar" Grid.Row="0" Background="{StaticResource NdSurfaceBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,0,0,1" Padding="18,0,6,0" Height="44" TextElement.FontFamily="Segoe UI"
+        <Border x:Name="TitleBar" Grid.Row="0" Background="{StaticResource NdHeaderGradientBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,0,0,1" Padding="16,0,6,0" Height="48"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -40,24 +44,26 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <Grid Width="26" Height="26" Margin="0,0,10,0">
-                    <Ellipse Stroke="{StaticResource NdApricotBrush}" StrokeThickness="2.5" />
+                <Grid Width="26" Height="26" Margin="0,0,10,0" Effect="{StaticResource NdApricotGlow}">
+                    <Ellipse Stroke="{StaticResource NdApricotBrush}" StrokeThickness="2.5" Fill="#1B1E3A" />
                     <Border Height="2.5" Background="{StaticResource NdApricotBrush}" VerticalAlignment="Center" />
-                    <Ellipse Width="9" Height="9" Fill="{StaticResource NdSurfaceBrush}"
+                    <Ellipse Width="9" Height="9" Fill="#1B1E3A"
                              Stroke="{StaticResource NdApricotBrush}" StrokeThickness="2.5"
                              HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
-                <TextBlock VerticalAlignment="Center" FontSize="19" FontWeight="SemiBold">
-                    <Run Text="Poké" Foreground="{StaticResource NdTextBrush}" /><Run Text="Corner" Foreground="{StaticResource NdTextBrush}" />
+                <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource NdDisplayFont}" FontSize="15" FontWeight="Bold">
+                    <Run Text="Poké" Foreground="{StaticResource NdTextBrush}" /><Run Text="Corner" Foreground="{StaticResource NdApricotBrush}" />
                 </TextBlock>
-                <TextBlock x:Name="BrandSubtitle" Text="Ночной дневник тренера" Foreground="{StaticResource NdMutedBrush}" FontSize="13" Margin="14,0,0,0" VerticalAlignment="Center" />
+                <TextBlock x:Name="BrandSubtitle" Text="ночной дневник тренера" FontFamily="{StaticResource NdHandFont}" Foreground="{StaticResource NdLavenderBrush}" Opacity="0.85" FontSize="21" Margin="14,0,0,2" VerticalAlignment="Center" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,18,0" VerticalAlignment="Center">
-                        <Image Source="{StaticResource UiCoinImage}" Width="24" Height="24" Margin="0,0,6,0" />
-                        <TextBlock x:Name="WalletText" Foreground="{StaticResource NdApricotBrush}" FontWeight="Bold" VerticalAlignment="Center" AutomationProperties.Name="Монеты" />
-                    </StackPanel>
+                    <Border x:Name="WalletPill" CornerRadius="15" Height="30" Padding="5,0,12,0" Margin="0,0,8,0" Background="#14172C" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" VerticalAlignment="Center" ToolTip="Монеты">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="{StaticResource UiCoinImage}" Width="22" Height="22" Margin="0,0,6,0" />
+                            <TextBlock x:Name="WalletText" FontFamily="{StaticResource NdDisplayFont}" FontSize="12.5" FontWeight="Bold" Foreground="{StaticResource NdApricotBrush}" VerticalAlignment="Center" AutomationProperties.Name="Монеты" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><ScaleTransform ScaleX="1" ScaleY="1" /></TextBlock.RenderTransform></TextBlock>
+                        </StackPanel>
+                    </Border>
                     <Button x:Name="EncountersButton" Content="Встречи · 0" Click="EncountersButton_Click"
                             Style="{StaticResource NdHeaderButtonStyle}" Margin="0,0,10,0" AutomationProperties.Name="Встречи" />
                     <Button x:Name="MinimizeButton" Style="{StaticResource NdChromeButtonStyle}"
@@ -70,17 +76,16 @@
             </Grid>
         </Border>
 
-        <Grid Grid.Row="1" Background="{StaticResource NdBackgroundBrush}">
+        <Grid Grid.Row="1">
         <TabControl x:Name="MenuTabControl" Style="{StaticResource NdShellTabsStyle}">
             <TabItem x:Name="CornerTab" AutomationProperties.Name="Уголок">
                 <TabItem.Header>
-                    <StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI" VerticalAlignment="Center">
-                        <Grid Width="26" Height="26" Margin="0,0,0,4" HorizontalAlignment="Center">
-                            <Rectangle Width="26" Height="26" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-corner.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle>
-                            <Ellipse x:Name="CatchBadge" Width="8" Height="8" Margin="0,-3,-5,0" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                     Fill="{StaticResource NdApricotBrush}" Stroke="{StaticResource NdRailBrush}" StrokeThickness="1.5" Visibility="Collapsed" />
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <Grid Width="30" Height="30" Margin="0,0,0,5" HorizontalAlignment="Center">
+                            <Rectangle Width="30" Height="30" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-corner.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle>
+                            <Border x:Name="CatchBadge" Style="{StaticResource NdReadyBadgeStyle}" Visibility="Collapsed" Margin="0,-6,-12,0" ToolTip="Покебол готов — есть кого ловить"><TextBlock x:Name="CatchBadgeCount" Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
                         </Grid>
-                        <TextBlock Text="Уголок" VerticalAlignment="Center" />
+                        <TextBlock Text="Уголок" HorizontalAlignment="Center" />
                     </StackPanel>
                 </TabItem.Header>
                 <TabControl x:Name="CornerTabs" Style="{StaticResource UiContentTabsStyle}">
@@ -89,10 +94,50 @@
                     <TabItem x:Name="AlbumTab" Header="Достижения" AutomationProperties.Name="Достижения" Visibility="Collapsed" />
                 </TabControl>
             </TabItem>
-            <TabItem x:Name="CollectionTab" AutomationProperties.Name="Покедекс"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Grid Width="26" Height="26" Margin="0,0,0,4" HorizontalAlignment="Center"><Rectangle Width="26" Height="26" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-pokedex.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle><Border x:Name="PokedexReadyBadge" Visibility="Collapsed" Background="{StaticResource NdApricotBrush}" BorderBrush="{StaticResource NdRailBrush}" BorderThickness="1.5" Width="8" Height="8" CornerRadius="4" Margin="0,-3,-5,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Кто-то готов к эволюции" /></Grid><TextBlock Text="Покедекс" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
-            <TabItem x:Name="ExpeditionsTab" AutomationProperties.Name="Экспедиции"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Grid Width="26" Height="26" Margin="0,0,0,4" HorizontalAlignment="Center"><Rectangle Width="26" Height="26" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-expeditions.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle><Border x:Name="ExpeditionReadyBadge" Visibility="Collapsed" Background="{StaticResource NdApricotBrush}" BorderBrush="{StaticResource NdRailBrush}" BorderThickness="1.5" Width="8" Height="8" CornerRadius="4" Margin="0,-3,-5,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Команда вернулась — заберите находки" /></Grid><TextBlock Text="Экспедиции" FontSize="12" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
-            <TabItem x:Name="NurseryTab" AutomationProperties.Name="Питомник"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Grid Width="26" Height="26" Margin="0,0,0,4" HorizontalAlignment="Center"><Rectangle Width="26" Height="26" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-nursery.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle><Border x:Name="NurseryReadyBadge" Visibility="Collapsed" Background="{StaticResource NdApricotBrush}" BorderBrush="{StaticResource NdRailBrush}" BorderThickness="1.5" Width="8" Height="8" CornerRadius="4" Margin="0,-3,-5,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Малыш готов — можно вылупить" /></Grid><TextBlock Text="Питомник" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
-            <TabItem x:Name="ShopTab" AutomationProperties.Name="Магазин"><TabItem.Header><StackPanel Orientation="Vertical" TextElement.FontFamily="Segoe UI"><Rectangle Width="26" Height="26" Margin="0,0,0,4" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-shop.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle><TextBlock Text="Магазин" VerticalAlignment="Center" /></StackPanel></TabItem.Header></TabItem>
+            <TabItem x:Name="CollectionTab" AutomationProperties.Name="Покедекс">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <Grid Width="30" Height="30" Margin="0,0,0,5" HorizontalAlignment="Center">
+                            <Rectangle Width="30" Height="30" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-pokedex.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle>
+                            <Border x:Name="PokedexReadyBadge" Style="{StaticResource NdReadyBadgeStyle}" Visibility="Collapsed" Margin="0,-6,-12,0" ToolTip="Кто-то готов к эволюции"><TextBlock x:Name="PokedexReadyBadgeCount" Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                        </Grid>
+                        <TextBlock Text="Покедекс" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="ExpeditionsTab" AutomationProperties.Name="Экспедиции">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <Grid Width="30" Height="30" Margin="0,0,0,5" HorizontalAlignment="Center">
+                            <Rectangle Width="30" Height="30" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-expeditions.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle>
+                            <Border x:Name="ExpeditionReadyBadge" Style="{StaticResource NdReadyBadgeStyle}" Visibility="Collapsed" Margin="0,-6,-12,0" ToolTip="Команда вернулась — заберите находки"><TextBlock x:Name="ExpeditionReadyBadgeCount" Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                        </Grid>
+                        <TextBlock Text="Экспедиции" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="NurseryTab" AutomationProperties.Name="Питомник">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <Grid Width="30" Height="30" Margin="0,0,0,5" HorizontalAlignment="Center">
+                            <Rectangle Width="30" Height="30" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-nursery.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle>
+                            <Border x:Name="NurseryReadyBadge" Style="{StaticResource NdReadyBadgeStyle}" Visibility="Collapsed" Margin="0,-6,-12,0" ToolTip="Малыш готов — можно вылупить"><TextBlock x:Name="NurseryReadyBadgeCount" Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                        </Grid>
+                        <TextBlock Text="Питомник" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="ShopTab" AutomationProperties.Name="Магазин">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <Grid Width="30" Height="30" Margin="0,0,0,5" HorizontalAlignment="Center">
+                            <Rectangle Width="30" Height="30" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=TabItem}}"><Rectangle.OpacityMask><ImageBrush ImageSource="/PokeCorner;component/Assets/NightDiary/rail-icon-shop.png" Stretch="Uniform"/></Rectangle.OpacityMask></Rectangle>
+                            
+                        </Grid>
+                        <TextBlock Text="Магазин" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
         </TabControl>
         <ContentControl x:Name="SettingsContent" Margin="136,0,0,0" Visibility="Collapsed" />
         <ContentControl x:Name="HostedContent" Margin="136,0,0,0" Visibility="Collapsed" />

@@ -185,12 +185,15 @@ public class ShellTests
     });
 
     [Fact]
-    public void BundledNunitoResolvesToAnActualTypeface() => WpfTestHost.Run(() =>
+    public void BundledFontsResolveToActualTypefaces() => WpfTestHost.Run(() =>
     {
         var menu = CreateMenu(new AppState());
         var typeface = new Typeface(menu.FontFamily, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
         Assert.True(typeface.TryGetGlyphTypeface(out var glyph));
-        Assert.Contains("nunito.ttf", glyph.FontUri.ToString(), StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("onest", glyph.FontUri.ToString(), StringComparison.OrdinalIgnoreCase);
+        var display = new Typeface(PokeCorner.App.Theme.BundledFont.Display, FontStyles.Normal, FontWeights.Bold, FontStretches.Normal);
+        Assert.True(display.TryGetGlyphTypeface(out var displayGlyph));
+        Assert.Contains("unbounded", displayGlyph.FontUri.ToString(), StringComparison.OrdinalIgnoreCase);
     });
 
     [Fact]
