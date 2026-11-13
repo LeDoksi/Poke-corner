@@ -303,12 +303,26 @@ public partial class RoomView : UserControl
     {
         if (active is null) return "";
         var evolving = active.ChainLength > 1 && (int)active.CurrentStage < active.ChainLength - 1 && CareText.Text.StartsWith("Уход накоплен");
-        if (evolving) return "Что-то в нём меняется. Загляну в карточку.";
-        if (data.PendingCatchCount > 0) return "Покебол ждёт. Кто же там внутри?";
-        if (data.FeedingTreats == 0) return "Лакомства кончились. Косточки — в лавке.";
-        if (active.LooksShiny) return "Другого цвета. Такой спутник — редкая удача.";
-        return (active.Nickname ?? _speciesName(active.CurrentSpeciesId)) + " рядом. Работаем вместе — растём вместе.";
+        if (evolving) return "Ходит важный. Кажется, пора эволюционировать.";
+        if (data.PendingCatchCount > 0) return "Покебол на столе дёргается. Открыть, пока не сбежал.";
+        if (data.FeedingTreats == 0) return "Миска пустая, взгляд тяжёлый. Срочно в лавку.";
+        if (active.LooksShiny) return "Блестит так, что лампу можно не включать.";
+        // An ordinary day: one of several observations, the same all day for the same pet.
+        var name = active.Nickname ?? _speciesName(active.CurrentSpeciesId);
+        var pick = (DateTime.Now.DayOfYear + active.Id.ToByteArray()[0]) % OrdinaryNotes.Length;
+        return string.Format(OrdinaryNotes[pick], name);
     }
+
+    private static readonly string[] OrdinaryNotes =
+    [
+        "{0} делает вид, что помогает. Получается мило.",
+        "{0} сторожит стол. Враг не пройдёт. Друг тоже.",
+        "Работаю я, а устаёт {0}. Загадка.",
+        "{0} смотрит в экран. Понимает больше меня.",
+        "Спросил совета у {0}. Молчит. Мудро.",
+        "{0} зевает. Теперь зеваю и я. Заразно.",
+        "{0} следит, чтобы я не отлынивал. Строго.",
+    ];
 
     private void PositionPet()
     {
@@ -388,6 +402,23 @@ public partial class RoomView : UserControl
         var x = Math.Min(0, Math.Max(width / 2 - 800 * scale, width - 1448 * scale));
         Scene.RenderTransform = new System.Windows.Media.TransformGroup { Children = { new System.Windows.Media.ScaleTransform(scale, scale), new System.Windows.Media.TranslateTransform(x, Math.Min(0, height - gauges - 582 * scale)) } };
         CornerNoteScrap.Visibility = width >= 720 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private static readonly DiaryPiece[] CornerMarginPieces =
+    [
+        new("corner-cup", "Чай остыл. Значит, заработался."), new("corner-yarn", "Клубок под столом. Виновных нет."),
+        new("pokedex-pencil", "Третий карандаш за месяц. Кто их грызёт?"), new("album-star"),
+    ];
+
+    private void CornerRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        double width = CornerRoot.ActualWidth, height = CornerRoot.ActualHeight - CornerActions.ActualHeight - 14;
+        if (width <= 0 || height <= 0) return;
+        var gauges = GaugeRow.ActualHeight > 0 ? GaugeRow.ActualHeight * .62 : 44;
+        var roomy = gauges + 1.3 * width * 582 / 1448; // the room zoomed 1.3 times past its full width
+        var frame = height - roomy >= 120 ? roomy : height;
+        if (double.IsNaN(SceneFrame.Height) || Math.Abs(SceneFrame.Height - frame) > .5) SceneFrame.Height = frame;
+        CornerMargin.Show("corner", CornerMarginPieces);
     }
 
     /// D-31: chips for everything that waits; a click goes straight to the right place.

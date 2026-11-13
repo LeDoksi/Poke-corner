@@ -111,6 +111,10 @@ public partial class ExpeditionView : UserControl
             // The taped note needs a picture big enough to carry it; on a small scene the route name matters more.
             SceneNote.Visibility = e.NewSize.Width >= 430 && e.NewSize.Height >= 230 ? Visibility.Visible : Visibility.Collapsed;
         };
+        StageGrid.SizeChanged += (_, _) => LayoutScene();
+        RouteSelectionPanel.SizeChanged += (_, _) => LayoutScene();
+        RouteSelectionPanel.IsVisibleChanged += (_, _) => LayoutScene();
+        SceneMargin.Show("expedition", SceneMarginPieces);
         DifficultyBox.SelectedIndex = 1;
         DurationBox.SelectedIndex = 1;
         PickerTypeBox.Items.Add(new ComboBoxItem { Content = "Тип: любой", Tag = "" });
@@ -325,6 +329,37 @@ public partial class ExpeditionView : UserControl
     {
         var width = ActualWidth >= 1300 ? 372 : ActualWidth >= 980 ? 340 : ActualWidth >= 760 ? 300 : 248;
         if (Math.Abs(PlanColumn.Width.Value - width) > 0.5) PlanColumn.Width = new GridLength(width);
+        LayoutScene();
+    }
+
+    private static readonly DiaryPiece[] PlanMarginPieces =
+    [
+        new("exp-map", "Маршрут начерчен. Обратно по нему же."), new("exp-lantern", "Без меня там справятся. Наверное."), new("exp-tracks"),
+    ];
+
+    private void ScenarioContent_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        PlanMargin.Margin = new Thickness(0, ScenarioContent.ActualHeight + 18, 0, 0);
+        PlanMargin.Show("expedition-plan", PlanMarginPieces);
+    }
+
+    private static readonly DiaryPiece[] SceneMarginPieces =
+    [
+        new("exp-tent", "Палатка за четыре минуты. Личный рекорд."), new("exp-tracks", "Следы свежие. Чьи, выясним."),
+        new("exp-binoculars", "Сначала бинокль. Потом ноги."), new("exp-lantern", "Фонарь беру всегда. Даже днём."),
+    ];
+
+    // D-54: the scene is as tall as its 3:1 picture allows with a mild crop (about four fifths of it stays in view).
+    // When the window gives much more height than that, the rest of the page goes to the diary margin, not to the crop.
+    private void LayoutScene()
+    {
+        var width = StageGrid.ActualWidth - PlanColumn.Width.Value - 14; var height = StageGrid.ActualHeight;
+        if (width <= 0 || height <= 0) return;
+        var postcards = RouteSelectionPanel.IsVisible ? RouteSelectionPanel.ActualHeight + 10 : 0;
+        var free = Math.Max(96, height - postcards);
+        var panorama = width / 2.4;
+        var scene = free - panorama >= 120 ? panorama : free;
+        if (double.IsNaN(Landscape.Height) || Math.Abs(Landscape.Height - scene) > .5) Landscape.Height = scene;
     }
 
     private static readonly Brush PostcardShade = Shade();
@@ -392,14 +427,14 @@ public partial class ExpeditionView : UserControl
     // Each note names who lives there by type, from the route's own type weights (D-24).
     private static string RouteNote(string route) => route switch
     {
-        "grove" => "Листва шуршит — или кто-то в ней. Жуки тут не спят.",
-        "lake" => "Камыши шуршат без ветра. У берега кто-то плещется.",
-        "coast" => "Ветер с моря. Над волнами кричат не только чайки.",
-        "mountains" => "Щебень сыплется. Говорят, выше живут драконы.",
-        "desert" => "Следы заметает. Под песком кто-то роет.",
-        "volcano" => "Базальт тёплый. Огненным здесь уютно, мне — нет.",
-        "snow" => "Говорить вполголоса. На насте чьи-то ледяные следы.",
-        _ => "Из тёмных проходов смотрят. Призраки любят гостей."
+        "grove" => "В листве шуршит. Жуки делают вид, что это не они.",
+        "lake" => "Вода гладкая. Слишком гладкая. Водные что-то задумали.",
+        "coast" => "Соль на губах, песок в ботинках. Над волной кружат не чайки.",
+        "mountains" => "Воздуха мало, вида много. Выше, говорят, драконы.",
+        "desert" => "Песок везде. Даже в бутерброде. А под ним кто-то роет.",
+        "volcano" => "Подошвы плавятся. Огненным тут курорт.",
+        "snow" => "Нос замёрз, зато следы видно. Ледяные где-то рядом.",
+        _ => "Темно, и кто-то дышит в затылок. Призраки шутят."
     };
 
     private string Difficulty => (DifficultyBox.SelectedItem as ListBoxItem)?.Tag as string ?? "normal";
@@ -694,7 +729,7 @@ public partial class ExpeditionView : UserControl
         TripHeader.HorizontalAlignment = TripTerms.HorizontalAlignment = ready ? HorizontalAlignment.Center : HorizontalAlignment.Left;
         TripTimeRow.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
         SubtitleText.Text = ready ? "Находки готовы и ждут получения." : "Условия похода сохранены. Команда вернётся сама.";
-        TrainerNote.Text = ready ? "Вернулись! Рюкзак тяжелее, чем уходил." : "Ушли по тропе. Ждать у окна не нужно.";
+        TrainerNote.Text = ready ? "Вернулись! Рюкзак трещит, глаза горят." : "Ушли. Обещали писать. Не напишут.";
         var difficulty = DifficultyBox.Items.OfType<ListBoxItem>().FirstOrDefault(item => Equals(item.Tag, trip.Difficulty));
         TripTerms.Text = ready ? (trip.Rewards.HasEncounter ? "Поход завершён. В пути команда кого-то встретила." : "Поход завершён. Находки ждут получения.") : $"{RouteName(trip.LocationId)} · {difficulty?.Content ?? trip.Difficulty} · {trip.DurationMinutes} мин";
         var xpGain = new Dictionary<Guid, long>();

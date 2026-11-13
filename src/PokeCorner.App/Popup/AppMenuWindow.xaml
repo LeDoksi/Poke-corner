@@ -147,7 +147,12 @@
         <StackPanel x:Name="RailSketch" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,0,0,0" IsHitTestVisible="False" Visibility="Collapsed">
             <!-- Section sketch by Astra (margins/*.png, D-25); the code-behind picks the one for the open section. -->
             <Image x:Name="RailSketchImage" Width="104" Height="104" Stretch="Uniform" Opacity="0.85" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" RenderTransformOrigin="0.5,0.5"><Image.RenderTransform><RotateTransform Angle="-7" /></Image.RenderTransform></Image>
-            <TextBlock x:Name="RailSketchNote" Style="{StaticResource NdMarginNoteStyle}" Text="Компас старый, но не врёт." Margin="0,6,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-2" /></TextBlock.RenderTransform></TextBlock>
+            <TextBlock x:Name="RailSketchNote" Style="{StaticResource NdMarginNoteStyle}" Text="Компас врёт редко. Я чаще." Margin="0,6,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-2" /></TextBlock.RenderTransform></TextBlock>
+        </StackPanel>
+        <!-- A tall rail (big window) has room for a second doodle between the tabs and the foot one (Georgy 13.11). -->
+        <StackPanel x:Name="RailSketchMore" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,0,0,0" IsHitTestVisible="False" Visibility="Collapsed">
+            <Image x:Name="RailSketchMoreImage" Width="84" Height="84" Stretch="Uniform" Opacity="0.8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" RenderTransformOrigin="0.5,0.5"><Image.RenderTransform><RotateTransform Angle="8" /></Image.RenderTransform></Image>
+            <TextBlock x:Name="RailSketchMoreNote" Style="{StaticResource NdMarginNoteStyle}" Margin="0,6,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="2.5" /></TextBlock.RenderTransform></TextBlock>
         </StackPanel>
         <Button x:Name="SettingsButton" ContentTemplate="{StaticResource NdSettingsButtonTemplate}" Content="Настройки" ToolTip="Настройки" Click="SettingsButton_Click"
                 Style="{StaticResource NdHeaderButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"

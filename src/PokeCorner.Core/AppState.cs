@@ -30,13 +30,18 @@ public sealed class AppState
     public Guid? RunningExpeditionId => HasRunningExpedition ? _metadata!.Expedition!.Id : null;
     public DateTimeOffset? ExpeditionReadyAtUtc => _metadata?.Expedition?.Status == "running" ? _metadata.Expedition.ReadyAtUtc : null;
     public IReadOnlySet<Guid> BusyIndividualIds => _metadata is null ? new HashSet<Guid>() : ExpeditionService.BusyIndividualIds(_metadata);
-    public IReadOnlySet<int> NormalSpeciesIds => _metadata?.NormalSpeciesIds ?? new HashSet<int>();
+    /// Ordinary forms open in the Pokédex (D-55): stages seen in families whose ordinary look is open.
+    public IReadOnlySet<int> NormalSpeciesIds => _metadata is null ? new HashSet<int>()
+        : FamilyRoots is null || !_metadata.LooksSplit ? _metadata.NormalSpeciesIds
+        : ShinyRules.FamilyNormal(_metadata.NormalSpeciesIds.Concat(_metadata.DiscoveredSpeciesIds), _metadata.NormalFamilyIds, FamilyRoots);
     /// Shiny forms open in the Pokédex. With FamilyRoots set this is family-wide (D-41, ShinyRules.FamilyShiny);
     /// the saved set and the achievements stay on forms actually owned.
     public IReadOnlySet<int> ShinySpeciesIds => _metadata is null ? new HashSet<int>()
         : FamilyRoots is null ? _metadata.ShinySpeciesIds
         : ShinyRules.FamilyShiny(_metadata.ShinySpeciesIds, _metadata.NormalSpeciesIds.Concat(_metadata.DiscoveredSpeciesIds), FamilyRoots, ShinySupported);
     public IReadOnlyDictionary<int, int>? FamilyRoots { get; set; }
+    /// Stages left per species (EvolutionService.Depths); keeps every pet's chain length true to its branch.
+    public IReadOnlyDictionary<int, int>? EvolutionDepths { get; set; }
     public Func<int, bool>? ShinySupported { get; set; }
     public IReadOnlySet<int> DiscoveredSpeciesIds => _metadata?.DiscoveredSpeciesIds ?? new HashSet<int>();
 
@@ -192,7 +197,7 @@ public sealed class AppState
             });
             return;
         }
-        if (!individual.HasShinyLook) return;
+        if (shiny ? !individual.HasShinyLook : !individual.HasNormalLook) return;
         individual.ShowShiny = shiny == individual.IsShiny ? null : shiny;
     }
 
@@ -214,7 +219,7 @@ public sealed class AppState
     /// </summary>
     public void Hydrate(SaveData data)
     {
-        if (data.SchemaVersion == 2) ShinyRules.SyncLooks(data, FamilyRoots);
+        if (data.SchemaVersion == 2) { ShinyRules.SyncLooks(data, FamilyRoots); EvolutionService.SyncChainLengths(data, EvolutionDepths); }
         _metadata = JsonSaveStore.Clone(data);
         foreach (var existing in Collection.Individuals.ToArray()) Collection.Release(existing.Id);
         CareStateByIndividualId.Clear();
@@ -312,7 +317,10 @@ public sealed class AppState
                 data.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             }
             ShinyRules.SyncLooks(data, FamilyRoots);
+            EvolutionService.SyncChainLengths(data, EvolutionDepths);
             _metadata!.ShinyFamilyIds.UnionWith(data.ShinyFamilyIds);
+            _metadata.NormalFamilyIds.UnionWith(data.NormalFamilyIds);
+            _metadata.LooksSplit |= data.LooksSplit;
             _metadata!.DiscoveredSpeciesIds.UnionWith(data.DiscoveredSpeciesIds);
             _metadata.ShinySpeciesIds.UnionWith(data.ShinySpeciesIds);
             _metadata.NormalSpeciesIds.UnionWith(data.NormalSpeciesIds);

@@ -154,6 +154,7 @@ public partial class App : System.Windows.Application
                 {
                     Achievements = new AchievementService(_catalogPackage),
                     FamilyRoots = _catalogPackage.Species.ToDictionary(s => s.Id, s => s.FamilyRootId),
+                    EvolutionDepths = EvolutionService.Depths(_catalogPackage),
                     ShinySupported = id => _catalogPackage.CanObtain(id, true)
                 };
                 _appState.Hydrate(loaded);
@@ -1196,6 +1197,7 @@ public partial class App : System.Windows.Application
                             if (!bought.Success) throw new InvalidOperationException(bought.Message);
                         }
                     }, closeMenu: false));
+                collectionView.PlayVoice = PlayCry; // a click on the Pokémon in the Pokédex plays its voice (Georgy 14.11)
                 var settingsView = new SettingsView(new SettingsViewModel(_appState.Settings), ApplyPetSizeAndPosition, ResetSaveDataAndRestart, RecoverSaveDataAndRestart,
                     confirmAsync: (title, body, caption) => _menuWindow?.ConfirmDestructiveAsync(title, body, caption) ?? Task.FromResult(false),
                     showOnboarding: async () =>

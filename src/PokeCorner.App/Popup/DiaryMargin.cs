@@ -98,7 +98,7 @@ public sealed class DiaryMargin : Canvas
             var aspect = source.PixelHeight / (double)Math.Max(1, source.PixelWidth);
             var h = size; var w = h / Math.Max(.2, aspect);
             if (w > size * 1.6) { w = size * 1.6; h = w * aspect; }
-            var note = height >= 96 ? piece.Note : null;
+            var note = height >= 76 ? piece.Note : null;
             var noteWidth = note is null ? 0 : 200;
             if (x + w + noteWidth > width - 8) break;
             var image = new Image
@@ -120,7 +120,7 @@ public sealed class DiaryMargin : Canvas
                 };
                 if (TryFindResource("NdMarginNoteStyle") is Style style) text.Style = style;
                 text.TextAlignment = TextAlignment.Left;
-                SetLeft(text, x + 8); SetTop(text, Math.Max(4, height * (.2 + random.NextDouble() * .3)));
+                SetLeft(text, x + 8); SetTop(text, Math.Max(4, Math.Min(height * (.2 + random.NextDouble() * .3), height - 62)));
                 Children.Add(text);
                 x += noteWidth;
             }

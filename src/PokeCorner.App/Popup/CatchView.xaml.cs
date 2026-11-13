@@ -41,13 +41,21 @@ public partial class CatchView : System.Windows.Controls.UserControl
 
     private static readonly DiaryPiece[] ActivityMargin =
     [
-        new("catch-leaves", "Тише. Не спугнуть бы."), new("catch-campfire"),
-        new("pokedex-pencil", "Карандаш наготове."), new("pokedex-footprint"),
+        new("catch-leaves", "Не дышать. Не моргать. Бросать."), new("catch-campfire"),
+        new("pokedex-pencil", "Карандаш наготове. Рука тоже."), new("pokedex-footprint"),
+    ];
+    private static readonly DiaryPiece[] ActivityHead =
+    [
+        new("rail-pokedex", "Заработал честно. Открываю торжественно."), new("album-star", "Вдруг блестящий? Вдруг!"),
+    ];
+    private static readonly DiaryPiece[] ExpeditionHead =
+    [
+        new("exp-map", "Отмечу на карте, где встретили."), new("exp-lantern", "Команда клянётся: он сам подошёл."),
     ];
     private static readonly DiaryPiece[] ExpeditionMargin =
     [
-        new("exp-tracks", "Следы совсем свежие."), new("exp-tent"),
-        new("exp-binoculars", "Заметили издалека."), new("exp-lantern"),
+        new("exp-tracks", "Шли по следам полдня. Не зря."), new("exp-tent"),
+        new("exp-binoculars", "Он нас тоже заметил. Вопрос, кто первый."), new("exp-lantern"),
     ];
 
     // The scene card has round corners; the picture and the sparks are clipped to them.
@@ -188,8 +196,9 @@ public partial class CatchView : System.Windows.Controls.UserControl
         var known = encounter is { Source: "expedition", Phase: "resolved", KnownSpeciesId: not null, Individual: not null };
         // A met Pokémon is caught with a throw; a ball earned at the PC or gifted already holds one, so it is opened.
         CatchButton.Content = known ? "Бросить покебол" : "Открыть покебол";
-        CatchNote.Text = known ? "Встретили в походе. Только бы не улизнул." : "Кто-то шуршит внутри…"; // D-25 notes 36-37
+        CatchNote.Text = known ? "Встретили в походе. Сидит в шаре и думает о жизни." : "Шар шуршит. Внутри явно кто-то с характером."; // D-25 notes 36-37
         CatchMargin.Show(known ? "catch-expedition" : "catch", known ? ExpeditionMargin : ActivityMargin);
+        HeadMargin.Show(known ? "catch-head-expedition" : "catch-head", known ? ExpeditionHead : ActivityHead);
         EncounterTitleText.Text = known ? "Встреча с " + SpeciesName(encounter!.KnownSpeciesId!.Value) : "Кто внутри?";
         SubtitleText.Text = known ? "Этот покемон встретился команде в походе." : "Ещё один друг ждёт знакомства.";
         SceneImage.Visibility = Visibility.Visible;
@@ -466,8 +475,8 @@ public partial class CatchView : System.Windows.Controls.UserControl
         CatchButton.Content = _returnAfterResult ? "Вернуться к экспедициям" : "Продолжить";
         CatchButton.IsEnabled = !_busy || _suspended;
         StatusText.Text = "Покемон уже добавлен в коллекцию.";
-        CatchNote.Text = reveal.Result.IsShiny ? "Другого цвета! Глазам не верю."
-            : reveal.Result.WasDuplicateSpecies ? "Знакомое лицо. Вдвоём веселее." : "Новый вид! Запишу, пока помню."; // D-25 notes 38-40
+        CatchNote.Text = reveal.Result.IsShiny ? "Другой цвет! Руки трясутся, пишу криво."
+            : reveal.Result.WasDuplicateSpecies ? "Знакомая мордашка. Компания растёт." : "Новый вид! Страница в покедексе больше не пустая."; // D-25 notes 38-40
         if (!_suspended && !ReferenceEquals(_spriteFetchedFor, reveal)) {
             _spriteFetchedFor = reveal; RevealSpriteImage.Source = null;
             _ = LoadSpriteAsync(reveal.Result.SpeciesId, reveal.Result.IsShiny, reveal, ++_artGeneration);

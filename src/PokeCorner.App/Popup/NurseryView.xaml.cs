@@ -400,8 +400,8 @@ public partial class NurseryView : UserControl
         var ready = nest?.Status == "ready";
         var preparing = !active && !result;
 
-        NurseryNote.Text = ready ? "Трещинка! Пора знакомиться." : active ? "В гнезде тихо. Иногда кажется — шевелится."
-            : result ? "Новая страница — с самого первого дня." : "Двое разных — и в гнезде будет сюрприз.";
+        NurseryNote.Text = ready ? "Треснуло! Всё бросаю, бегу знакомиться." : active ? "Яйцо молчит. Я тоже. Кто кого пересидит."
+            : result ? "Первый день на свете. И сразу в дневник." : "Двое разных в одном гнезде. Что может пойти не так?";
         NurseryMargin.Show(ready || result ? "nursery-hatch" : "nursery", ready || result ? HatchMargin : NestMargin);
         SceneTitleText.Text = ready ? "Малыш готов появиться!" : active ? "В гнезде кто-то растёт" : result ? "Добро пожаловать в семью!" : "Будущие родители";
 
@@ -1130,12 +1130,12 @@ public partial class NurseryView : UserControl
 
     private static readonly DiaryPiece[] NestMargin =
     [
-        new("nursery-scheme", "Схема гнезда: тепло снизу, сухо сверху."), new("nursery-thermometer"),
-        new("nursery-paws", "Двое разных — и в гнезде будет сюрприз."), new("nursery-small-egg"), new("hatch-shell"),
+        new("nursery-scheme", "Тепло снизу, сухо сверху, нервы в стороне."), new("nursery-thermometer"),
+        new("nursery-paws", "Родители делают вид, что не волнуются."), new("nursery-small-egg"), new("hatch-shell"),
     ];
     private static readonly DiaryPiece[] HatchMargin =
     [
-        new("hatch-shell", "Скорлупу оставлю на память."), new("nursery-small-egg"), new("nursery-paws"), new("nursery-scheme"),
+        new("hatch-shell", "Скорлупу не выбрасывать. Это память."), new("nursery-small-egg"), new("nursery-paws"), new("nursery-scheme"),
     ];
 
     // The margin is whatever the left-aligned 968 px column leaves on the right, below the full-width scene.

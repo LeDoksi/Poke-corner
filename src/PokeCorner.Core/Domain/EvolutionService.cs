@@ -138,6 +138,32 @@ public sealed class EvolutionService
         return new(true, $"Эволюция: {available.Single(x => x.SpeciesId == chosen).Name}.", chosen);
     }
 
+    /// How many stages a species still has in front of it, itself included (1 = it never evolves further).
+    public static IReadOnlyDictionary<int, int> Depths(CatalogPackage catalog)
+    {
+        using var rules = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(catalog.DataRoot, "final", "catalog-rules.json")));
+        var next = rules.RootElement.GetProperty("evolutionEdges").EnumerateArray()
+            .GroupBy(x => x.GetProperty("from").GetInt32(), x => x.GetProperty("to").GetInt32())
+            .ToDictionary(g => g.Key, g => g.ToArray());
+        var depths = new Dictionary<int, int>();
+        int Depth(int id, int guard) => depths.TryGetValue(id, out var known) ? known
+            : depths[id] = 1 + (guard > 0 && next.TryGetValue(id, out var to) ? to.Max(child => Depth(child, guard - 1)) : 0);
+        foreach (var species in catalog.Species) Depth(species.Id, 3);
+        return depths;
+    }
+
+    /// A pet's chain is as long as its own branch. Saves from v1 counted every species of the family in a row
+    /// (Meowth, Persian, Perrserker = 3), and a branch can be shorter than its family (Flapple): such a pet looked
+    /// one evolution short for ever, with a care bar that led nowhere (Georgy 14.11, Persian). Only ever shortens.
+    public static void SyncChainLengths(SaveData state, IReadOnlyDictionary<int, int>? depths)
+    {
+        if (depths is null) return;
+        foreach (var pet in state.Individuals)
+            if (pet.CurrentSpeciesId > 0 && depths.TryGetValue(pet.CurrentSpeciesId, out var depth)
+                && (int)pet.CurrentStage + depth is var length and >= 1 && length < pet.ChainLength)
+                pet.ReconcileGiftChainLength(length);
+    }
+
     private int CanonicalLength(int speciesId, HashSet<int> path)
     {
         if (!path.Add(speciesId)) throw new InvalidDataException("Цикл в канонической цепочке эволюции.");

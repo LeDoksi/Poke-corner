@@ -32,6 +32,54 @@ public class SpareAndFamilyShinyTests
     }
 
     [Fact]
+    public void EachLookIsOpenedOnlyByAnArrivalOfItsOwnKind()
+    {
+        PokemonIndividual Pet(int species, int family, bool shiny) => new() { SpeciesId = species, CurrentSpeciesId = species, FamilyRootId = family,
+            EvolutionChainId = family, ChainLength = 3, Nature = Nature.Hardy, IsShiny = shiny, CaughtAtUtc = DateTimeOffset.UnixEpoch, ReachedSpeciesIds = [species] };
+        var roots = new Dictionary<int, int> { [1] = 1, [2] = 1, [4] = 4, [5] = 4, [7] = 7 };
+        var loneShiny = Pet(1, 1, true); var shinyWithKin = Pet(4, 4, true); var kin = Pet(5, 4, false);
+        // A save from before D-55: every arrival, shiny or not, sits in NormalSpeciesIds; family 7 was released long ago.
+        var state = new PokeCorner.Core.Persistence.SaveData { Settings = new(), SchemaVersion = 2, Individuals = [loneShiny, shinyWithKin, kin],
+            NormalSpeciesIds = [1, 4, 5, 7], ShinySpeciesIds = [1, 4] };
+        ShinyRules.SyncLooks(state, roots);
+        Assert.False(loneShiny.HasNormalLook); Assert.True(loneShiny.LooksShiny);
+        loneShiny.ShowShiny = false; Assert.True(loneShiny.LooksShiny); // a closed look cannot be worn
+        Assert.True(shinyWithKin.HasBothLooks); Assert.True(kin.HasBothLooks);
+        Assert.Equal([4, 7], state.NormalFamilyIds.Order());
+        Assert.Equal([4, 5, 7], ShinyRules.FamilyNormal(state.NormalSpeciesIds, state.NormalFamilyIds, roots).Order());
+        // An ordinary arrival opens the ordinary look for the shiny that was there first, and it stays after release.
+        var late = Pet(2, 1, false); state.Individuals.Add(late); ShinyRules.SyncLooks(state, roots);
+        Assert.True(loneShiny.HasBothLooks); Assert.False(loneShiny.LooksShiny);
+        state.Individuals.Remove(late); ShinyRules.SyncLooks(state, roots);
+        Assert.True(loneShiny.HasNormalLook);
+    }
+
+    [Fact]
+    public void AChainIsNeverLongerThanThePetsOwnBranch()
+    {
+        PokemonIndividual Pet(int species, EvolutionStage stage, int length) => new() { SpeciesId = 52, CurrentSpeciesId = species, FamilyRootId = 52,
+            EvolutionChainId = 22, ChainLength = length, CurrentStage = stage, Nature = Nature.Hardy, IsShiny = false, CaughtAtUtc = DateTimeOffset.UnixEpoch, ReachedSpeciesIds = [species] };
+        var depths = new Dictionary<int, int> { [52] = 2, [53] = 1, [863] = 1 };
+        var persian = Pet(53, EvolutionStage.Stage2, 3); var meowth = Pet(52, EvolutionStage.Stage1, 3); var gift = Pet(52, EvolutionStage.Stage1, 1);
+        var state = new PokeCorner.Core.Persistence.SaveData { Settings = new(), SchemaVersion = 2, Individuals = [persian, meowth, gift] };
+        EvolutionService.SyncChainLengths(state, depths);
+        Assert.Equal(2, persian.ChainLength); Assert.Equal(2, meowth.ChainLength); Assert.Equal(1, gift.ChainLength);
+    }
+
+    [Fact]
+    public void AYoungerStageIsSpareNextToAGrownRelativeUnlessItCanStillOpenSomething()
+    {
+        var golem = Copy(76, level: 40) with { Reached = [74, 75, 76] };
+        var geodude = Copy(74); var growing = Copy(74, ahead: 1); var loved = Copy(74, keep: true);
+        Assert.Equal([geodude.Id], SpareRules.Spare([golem, geodude]));
+        Assert.Empty(SpareRules.Spare([golem, growing]));
+        Assert.Empty(SpareRules.Spare([golem, loved]));
+        // A Golem met already grown never was a Geodude, but the catalog knows Geodude grows into it.
+        Assert.Equal([geodude.Id], SpareRules.Spare([Copy(76, level: 40), geodude with { Ahead = [75, 76] }]));
+        Assert.Empty(SpareRules.Spare([Copy(76, level: 40), geodude]));
+    }
+
+    [Fact]
     public void ASingleFullyGrownPokemonIsNeverSpare()
     {
         Assert.Empty(SpareRules.Spare([Copy(6, level: 40), Copy(9, level: 40)]));

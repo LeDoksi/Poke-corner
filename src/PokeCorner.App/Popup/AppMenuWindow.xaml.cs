@@ -481,18 +481,21 @@ public partial class AppMenuWindow : Window
         if (section != _railSection) { _railSection = section; _railVisits[section] = _railVisits.GetValueOrDefault(section) + 1; }
         var pieces = section switch
         {
-            MenuSection.Pokedex => new[] { ("rail-pokedex", "Кто этот покемон? Узнаю — запишу."),
-                ("pokedex-footprint", "Чей это след? Узнаю — запишу."), ("pokedex-pencil", "Карандаш точу: записей всё больше.") },
-            MenuSection.Expeditions => new[] { ("rail-expeditions", "Компас старый, но не врёт.") },
-            MenuSection.Nursery => new[] { ("rail-nursery", "Яйца любят тепло и терпение.") },
-            MenuSection.Shop => new[] { ("rail-shop", "Список: ягоды, косточки, не забыть сдачу.") },
-            MenuSection.Achievements => new[] { ("rail-album", "Значки собираются медленно. Зато навсегда."),
-                ("album-star", "Ещё одна звёздочка в дневник."), ("album-ribbon", "Лучшее — на полку, остальное — в память.") },
-            MenuSection.Catch => new[] { ("catch-leaves", "В траве кто-то шевелится."), ("catch-campfire", "У костра лучше слышно шорохи.") },
-            _ => new[] { ("rail-corner", "Дома всегда кто-то ждёт."), ("corner-cup", "Чай остыл, пока мы гладились."),
-                ("corner-yarn", "Клубок опять укатился под стол.") }
+            MenuSection.Pokedex => new[] { ("rail-pokedex", "Страниц много. Пустых, к счастью, всё меньше."),
+                ("pokedex-footprint", "След свежий. Хозяин неизвестен. Пока."), ("pokedex-pencil", "Карандаш сточен наполовину. Хороший знак.") },
+            MenuSection.Expeditions => new[] { ("rail-expeditions", "Компас врёт редко. Я чаще."), ("exp-map", "Карта мятая. Значит, рабочая.") },
+            MenuSection.Nursery => new[] { ("rail-nursery", "Яйцу нужны тепло и терпение. Тепло есть."), ("nursery-small-egg", "Не трясти. Не трясти. Чуть-чуть потряс.") },
+            MenuSection.Shop => new[] { ("rail-shop", "Шёл за ягодами. Вышел с тремя пакетами."), ("shop-coins", "Монеты звенят. Недолго.") },
+            MenuSection.Achievements => new[] { ("rail-album", "Значки не едят и не убегают. Идеально."),
+                ("album-star", "Ещё звезда. Место в дневнике кончается."), ("album-ribbon", "Лента за старание. Беру.") },
+            MenuSection.Catch => new[] { ("catch-leaves", "Трава шевелится. Ветра нет."), ("catch-campfire", "У костра слышно каждый шорох.") },
+            _ => new[] { ("rail-corner", "Дома ждут. И, кажется, голодные."), ("corner-cup", "Чай остыл, пока чесал за ухом."),
+                ("corner-yarn", "Клубок под столом. Виновных нет.") }
         };
-        var (sketch, note) = pieces[(_railVisits.GetValueOrDefault(section) + pieces.Length - 1) % pieces.Length];
+        var turn = _railVisits.GetValueOrDefault(section) + pieces.Length - 1;
+        var (sketch, note) = pieces[turn % pieces.Length];
+        var (moreSketch, moreNote) = pieces[(turn + 1) % pieces.Length];
+        RailSketchMore.Visibility = Visibility.Collapsed;
         RailSketchImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri($"pack://application:,,,/PokeCorner;component/Assets/NightDiary/sketch-{sketch}.png"));
         RailSketchNote.Text = note;
         // Sits right under the last section (Магазин), where the rail otherwise goes empty.
@@ -517,6 +520,15 @@ public partial class AppMenuWindow : Window
                 RailSketch.Measure(new System.Windows.Size(RailSketch.Width, double.PositiveInfinity));
                 if (RailSketch.DesiredSize.Height > room) RailSketchNote.Visibility = Visibility.Collapsed;
                 if (RailSketchImage.Height > room) RailSketchImage.Visibility = Visibility.Collapsed;
+                // What is left above the foot doodle: enough for a second one only on a tall rail.
+                var gapTop = ShopTab.TransformToAncestor(host).Transform(new System.Windows.Point(0, ShopTab.ActualHeight)).Y + 28;
+                RailSketchMoreImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri($"pack://application:,,,/PokeCorner;component/Assets/NightDiary/sketch-{moreSketch}.png"));
+                RailSketchMoreNote.Text = moreNote;
+                RailSketchMore.Visibility = RailSketch.Visibility;
+                RailSketchMore.Measure(new System.Windows.Size(RailSketchMore.Width, double.PositiveInfinity));
+                var free = top - 40 - gapTop - RailSketchMore.DesiredSize.Height;
+                if (pieces.Length < 2 || free < 0) RailSketchMore.Visibility = Visibility.Collapsed;
+                else RailSketchMore.Margin = new Thickness(8, gapTop + free * .35, 0, 0);
             }
         }
     }

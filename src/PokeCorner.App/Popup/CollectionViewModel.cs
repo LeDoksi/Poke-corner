@@ -37,6 +37,10 @@ public sealed record CollectionEntry(
 {
     /// D-50: the shiny look is open for this pet (IsShiny is the look it wears now).
     public bool HasShinyLook { get; init; }
+    /// Every species this pet has been (D-53: a younger stage next to a grown relative is a spare).
+    public IReadOnlyCollection<int> ReachedSpeciesIds { get; init; } = [];
+    /// Every species this pet could still grow into, by the catalog.
+    public IReadOnlyCollection<int> AheadSpeciesIds { get; init; } = [];
     public int Level { get; init; } = 1;
     public bool IsBusy { get; init; }
     public int CurrentSpeciesId { get; init; }
@@ -133,18 +137,22 @@ public sealed class CollectionViewModel
 
     // Forms still closed below the current one, in the individual's own form. Without the evolution graph
     // (tests, legacy chains) every later stage counts as closed: the filter must err on the side of keeping.
-    private int UnopenedAhead(PokemonIndividual individual, IReadOnlySet<int> open)
+    private int UnopenedAhead(PokemonIndividual individual, IReadOnlySet<int> open) => _presentation is null
+        ? Math.Max(0, individual.ChainLength - 1 - (int)individual.CurrentStage)
+        : AheadOf(individual).Count(id => !open.Contains(id));
+
+    private IReadOnlyCollection<int> AheadOf(PokemonIndividual individual)
     {
-        if (_presentation is null) return Math.Max(0, individual.ChainLength - 1 - (int)individual.CurrentStage);
-        var seen = new HashSet<int>(); var queue = new Queue<int>(); var closed = 0;
+        var seen = new HashSet<int>();
+        if (_presentation is null) return seen;
+        var queue = new Queue<int>();
         foreach (var next in _presentation.Targets.GetValueOrDefault(ResolveCurrentSpeciesId(individual)) ?? []) queue.Enqueue(next);
         while (queue.TryDequeue(out var id))
         {
             if (!seen.Add(id)) continue;
-            if (!open.Contains(id)) closed++;
             foreach (var next in _presentation.Targets.GetValueOrDefault(id) ?? []) queue.Enqueue(next);
         }
-        return closed;
+        return seen;
     }
 
     public CollectionEntry? GetEntry(Guid id, DateTimeOffset nowUtc) =>
@@ -160,7 +168,7 @@ public sealed class CollectionViewModel
     public IReadOnlyList<PokedexSpeciesEntry> GetSpeciesEntries(bool isShiny = false)
     {
         var discovered = (isShiny ? _shinySpeciesIds() : _normalSpeciesIds()).ToHashSet();
-        foreach (var individual in _collection.Individuals.Where(i => !isShiny || i.IsShiny))
+        foreach (var individual in _collection.Individuals.Where(i => isShiny ? i.IsShiny : i.HasNormalLook)) // D-55
         {
             discovered.Add(individual.SpeciesId);
             discovered.UnionWith(individual.ReachedSpeciesIds);
@@ -262,6 +270,8 @@ public sealed class CollectionViewModel
                 SecondTraitId = individual.SecondTraitId,
                 DescriptionRu = CollectionPresentation.Fact(displaySpeciesId),
                 HasShinyLook = individual.HasShinyLook,
+                ReachedSpeciesIds = [.. individual.ReachedSpeciesIds, individual.SpeciesId],
+                AheadSpeciesIds = AheadOf(individual),
                 UnopenedAhead = UnopenedAhead(individual, normalOpen),
                 IsReadyToEvolve = readyToEvolve?.Contains(individual.Id) == true
             };
@@ -431,7 +441,7 @@ public sealed class CollectionViewModel
     public static IReadOnlySet<Guid> SpareIds(IReadOnlyList<CollectionEntry> entries) =>
         Core.Domain.SpareRules.Spare(entries.Select(e => new Core.Domain.SpareRules.Copy(e.IndividualId,
             e.CurrentSpeciesId > 0 ? e.CurrentSpeciesId : e.DisplaySpeciesId, e.IsShiny, e.IsFavorite || e.IsActive || e.IsBusy,
-            e.Level, e.CarePoints, e.CaughtAtUtc, e.UnopenedAhead)));
+            e.Level, e.CarePoints, e.CaughtAtUtc, e.UnopenedAhead) { Reached = e.ReachedSpeciesIds, Ahead = e.AheadSpeciesIds }));
 
     /// Re-orders an already-filtered entry list. Default leaves GetEntries' own banded order
     /// (active -> favorites -> rest, each by dex number) alone. Alphabetical sorts by species

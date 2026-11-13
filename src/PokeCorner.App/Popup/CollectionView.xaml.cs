@@ -421,17 +421,17 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     internal static string TrainerNote(PokedexCard card, DateTimeOffset nowUtc)
     {
-        if (card.IsShiny) return "Другого цвета. Такие встречаются редко.";
-        if (card.ActiveBadgeVisibility == Visibility.Visible) return "Сейчас со мной на столе — не отходит ни на шаг.";
-        if (card.FavoriteBadgeVisibility == Visibility.Visible) return "Любимчик. Только остальным не говорить.";
-        if (card.IsBusy) return "Сейчас в походе или в питомнике — жду обратно.";
-        if (card.EvolutionState == EvolutionProgressState.FinalForm) return "Прошли весь путь вместе — дальше только дружить.";
-        if (card.Level >= 30) return "Опытный. С ним в любой поход не страшно.";
+        if (card.IsShiny) return "Другого цвета. Фотографировать при любом свете.";
+        if (card.ActiveBadgeVisibility == Visibility.Visible) return "Живёт у меня на столе. Аренду платит взглядом.";
+        if (card.FavoriteBadgeVisibility == Visibility.Visible) return "Любимчик. Остальным ни слова.";
+        if (card.IsBusy) return "Ушёл по делам. Вернётся с историями.";
+        if (card.EvolutionState == EvolutionProgressState.FinalForm) return "Дорос до конца. Дальше растём только в характере.";
+        if (card.Level >= 30) return "Бывалый. С таким хоть в вулкан.";
         var days = card.CaughtAtUtc == default ? 0 : (int)Math.Floor((nowUtc - card.CaughtAtUtc).TotalDays);
-        if (days >= 30) return $"Вместе уже {days} {Plural(days, "день", "дня", "дней")}. Понимаем друг друга без слов.";
-        if (card.Level >= 10) return "Пара походов позади — уже совсем свой.";
-        if (days >= 7) return "Привыкаем друг к другу. Уже знаю, что он любит.";
-        return "Ещё узнаём друг друга.";
+        if (days >= 30) return $"Вместе уже {days} {Plural(days, "день", "дня", "дней")}. Спорим уже без слов.";
+        if (card.Level >= 10) return "Пара походов за плечами. Уже свой.";
+        if (days >= 7) return "Притираемся. Я уже знаю, где чесать.";
+        return "Новенький. Присматриваемся друг к другу.";
     }
 
     private static string Plural(long n, string one, string few, string many) =>
@@ -547,7 +547,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
         var shinyTotal = _shinyArtTotal ??= all.Count(e => HasShinyArt(e.SpeciesId));
         SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · обликов: обычных {all.Count(e => normalLooks.Contains(e.SpeciesId))} из {all.Count}, шайни {all.Count(e => shinyLooks.Contains(e.SpeciesId))} из {shinyTotal} · показано: {visible.Count}";
-        PokedexNote.Text = shinyLens ? "Другие цвета — и совсем другая охота." : "Силуэт знакомый, имени нет. Кто же это?"; // D-25 notes 10, 12
+        PokedexNote.Text = shinyLens ? "Тот же зверь, другая краска. Охота заново." : "Силуэт есть, имени нет. Интрига."; // D-25 notes 10, 12
         SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
         SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
         SpeciesNextButton.IsEnabled = _speciesPageIndex < pageCount - 1;
@@ -628,9 +628,9 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesDetailDescription.Text = entry.IsDiscovered ? CollectionPresentation.Fact(entry.SpeciesId) ?? string.Empty : _speciesPaths is null ? entry.RouteHint : "";
         SpeciesDetailTypes.Text = string.Join(" · ", new[] { entry.Number }.Concat(entry.IsDiscovered ? entry.Types.Select(TypeDisplay.GetLabel) : []));
         // D-25 notes 17-18: what the trainer knows about this species, never more than the page shows.
-        SpeciesDetailNote.Text = !entry.IsDiscovered ? "Пока только силуэт. Где искать — ниже."
-            : _appState.NormalSpeciesIds.Contains(entry.SpeciesId) && _appState.ShinySpeciesIds.Contains(entry.SpeciesId) ? "Оба облика открыты. Страница закрыта."
-            : "Записано в покедекс. Можно гордиться.";
+        SpeciesDetailNote.Text = !entry.IsDiscovered ? "Одна тень. Где искать, записал ниже."
+            : _appState.NormalSpeciesIds.Contains(entry.SpeciesId) && _appState.ShinySpeciesIds.Contains(entry.SpeciesId) ? "Оба облика мои. Страницу можно в рамку."
+            : "Записан в покедекс. Одной тайной меньше.";
         RenderSpeciesForms(entry.SpeciesId);
         SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         SpeciesDetailOwnedLabel.Text = entry.OwnedIndividuals.Count == 1 ? "Мой экземпляр" : $"Мои экземпляры · {entry.OwnedIndividuals.Count}";
@@ -771,6 +771,11 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             var known = SpeciesLookup(shiny).GetValueOrDefault(speciesId)?.IsDiscovered == true;
             var panel = new StackPanel { Margin = new Thickness(0, 0, 8, 0) };
             var well = new Border { Style = (Style)FindResource("WellStyle"), Height = 132, Child = SpeciesPicture(speciesId, shiny, 104) };
+            if (known)
+            {
+                well.Cursor = System.Windows.Input.Cursors.Hand; well.ToolTip = "Послушать голос";
+                well.MouseLeftButtonUp += (_, _) => PlayVoice?.Invoke(speciesId);
+            }
             panel.Children.Add(well);
             panel.Children.Add(new TextBlock { Text = (shiny ? "Шайни-форма" : "Обычная форма") + (known ? "" : " · не открыта"),
                 Style = (Style)FindResource("CaptionTextStyle"), HorizontalAlignment = System.Windows.HorizontalAlignment.Center, Margin = new Thickness(0, 4, 0, 0) });
@@ -997,7 +1002,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         PokedexCountText.Text = speciesCount == 1
             ? $"Открыт 1 вид · всего покемонов: {entries.Count}"
             : $"Открыто видов: {speciesCount} · всего покемонов: {entries.Count}";
-        PokedexNote.Text = "Поймать их всех — дело небыстрое."; // D-25 note 8
+        PokedexNote.Text = "Собрать всех. План простой, срок неясный."; // D-25 note 8
 
         // Filters narrow the owned list together before number, type, or catch-date sorting.
         if (IndividualTypeCombo.Items.Count == 1)
@@ -1624,22 +1629,37 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         DetailLookShinyButton.ToolTip = open ? "Показать этого покемона в облике шайни"
             : "Облик откроется, когда встретишь или выведешь шайни из этой семьи";
         ToolTipService.SetShowOnDisabled(DetailLookShinyButton, true);
+        // D-55: the ordinary look is earned the same way, by an ordinary arrival of the family.
+        var normalOpen = individual?.HasNormalLook != false;
+        DetailLookNormalButton.IsEnabled = normalOpen;
+        DetailLookNormalButton.Content = normalOpen ? "Обычный" : "Обычный закрыт";
+        DetailLookNormalButton.ToolTip = normalOpen ? "Показать этого покемона в обычном облике"
+            : "Облик откроется, когда встретишь или выведешь обычного покемона из этой семьи";
+        ToolTipService.SetShowOnDisabled(DetailLookNormalButton, true);
+    }
+
+    /// Plays a species' voice; the app wires it to the same player and volume as the desktop pet.
+    public Action<int>? PlayVoice { get; set; }
+
+    private void DetailSprite_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (_detailCard is not null) PlayVoice?.Invoke(_detailCard.SpeciesId);
     }
 
     private async void DetailLook_Click(object sender, RoutedEventArgs e)
     {
         if (_detailCard is null) return;
         var individual = _appState.Collection.Individuals.FirstOrDefault(i => i.Id == _detailCard.IndividualId);
-        if (individual is null || !individual.HasShinyLook) return;
+        if (individual is null) return;
         var shiny = (string)((FrameworkElement)sender).Tag == "shiny";
-        if (shiny == individual.LooksShiny) return;
+        if (shiny == individual.LooksShiny || (shiny ? !individual.HasShinyLook : !individual.HasNormalLook)) return;
         var generation = _detailGeneration;
         if (_commitState is null) _appState.SetShinyLook(individual, shiny);
         else if (!await CommitMutationAsync(next =>
         {
             var current = next.Individuals.FirstOrDefault(i => i.Id == individual.Id)
                 ?? throw new InvalidOperationException("Этот покемон больше не найден.");
-            if (!current.HasShinyLook) throw new InvalidOperationException("Облик шайни ещё не открыт.");
+            if (shiny ? !current.HasShinyLook : !current.HasNormalLook) throw new InvalidOperationException("Этот облик ещё не открыт.");
             current.ShowShiny = shiny == current.IsShiny ? null : shiny;
         }, individual.Id, generation)) return;
         if (individual.Id == _appState.Collection.ActiveIndividualId) _onStateChanged();

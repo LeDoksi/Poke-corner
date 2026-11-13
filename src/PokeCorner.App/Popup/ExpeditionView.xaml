@@ -162,11 +162,14 @@
     <StackPanel VerticalAlignment="Center"><TextBlock Text="В пути команда кого-то встретила" FontWeight="Bold"/><TextBlock Text="Кто это, узнаете во встрече" Style="{StaticResource CaptionTextStyle}"/></StackPanel>
    </DockPanel></Border>
   </StackPanel>
-  <Grid Grid.Row="2">
+  <Grid x:Name="StageGrid" Grid.Row="2">
    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition x:Name="PlanColumn" Width="340"/></Grid.ColumnDefinitions>
-   <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+   <!-- D-54: the route pictures are 3:1 panoramas. The scene keeps close to that shape instead of growing tall and
+        cropping the picture; the page left under it is the diary margin. LayoutScene sets the height. -->
+   <local:DiaryMargin x:Name="SceneMargin" Grid.Row="2" Margin="0,12,14,0"/>
    <!-- The scene -->
-   <Border x:Name="Landscape" Margin="0,0,14,0" CornerRadius="14" BorderBrush="{StaticResource NdPanelLineBrush}" BorderThickness="1">
+   <Border x:Name="Landscape" Margin="0,0,14,0" VerticalAlignment="Top" CornerRadius="14" BorderBrush="{StaticResource NdPanelLineBrush}" BorderThickness="1">
     <Grid x:Name="SceneFrame" MinHeight="96">
      <Rectangle Fill="#14172B"/>
      <Image x:Name="LandscapeImage" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута"/>
@@ -189,7 +192,7 @@
    <!-- Routes as postcards -->
    <StackPanel x:Name="RouteSelectionPanel" Grid.Row="1" Margin="0,10,14,0"><UniformGrid x:Name="RouteButtons" x:FieldModifier="public" Rows="1" Margin="0,0,-6,0"/></StackPanel>
    <!-- Team picker, in place of the scene: the plan stays in view and follows every click. -->
-   <Border x:Name="PickerPanel" Grid.RowSpan="2" Visibility="Collapsed" Margin="0,0,14,0" Style="{StaticResource NdPanelStyle}" KeyboardNavigation.TabNavigation="Cycle">
+   <Border x:Name="PickerPanel" Grid.RowSpan="3" Visibility="Collapsed" Margin="0,0,14,0" Style="{StaticResource NdPanelStyle}" KeyboardNavigation.TabNavigation="Cycle">
     <Grid>
      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
      <DockPanel Margin="0,0,0,8">
@@ -228,7 +231,7 @@
     </Grid>
    </Border>
    <!-- The plan -->
-   <Border Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource NdPanelStyle}">
+   <Border Grid.Column="1" Grid.RowSpan="3" Style="{StaticResource NdPanelStyle}">
     <DockPanel>
      <StackPanel x:Name="PreparationFooter" DockPanel.Dock="Bottom" Margin="0,10,0,0">
       <Button x:Name="StartButton" Content="Отправить команду" Click="StartButton_Click" MinHeight="54" FontSize="15"/>
@@ -239,8 +242,11 @@
       <Button x:Name="CancelButton" Content="Прервать поход" Click="CancelButton_Click" Style="{StaticResource NdDangerOutlineButtonStyle}" Visibility="Collapsed" HorizontalAlignment="Center"/>
       <Button x:Name="ContinueButton" Content="Продолжить" Click="Continue_Click" Visibility="Collapsed"/>
      </StackPanel>
+     <Grid>
+     <!-- Whatever the plan leaves empty at the bottom of the panel is diary margin too (Georgy 13.11). -->
+     <local:DiaryMargin x:Name="PlanMargin"/>
      <ScrollViewer x:Name="ScenarioScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-      <StackPanel x:Name="ScenarioContent">
+      <StackPanel x:Name="ScenarioContent" SizeChanged="ScenarioContent_SizeChanged">
        <StackPanel x:Name="PreparationDetailsPanel">
         <DockPanel Margin="0,0,0,6">
          <Button x:Name="ChooseTeamButton" Content="Изменить" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource NdLinkButtonStyle}" Padding="6,5" Margin="0,0,-4,0"/>
@@ -275,6 +281,7 @@
        </StackPanel>
       </StackPanel>
      </ScrollViewer>
+     </Grid>
     </DockPanel>
    </Border>
   </Grid>

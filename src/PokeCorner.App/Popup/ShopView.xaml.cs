@@ -358,8 +358,8 @@ public partial class ShopView : UserControl
 
     private static readonly DiaryPiece[] MarginPieces =
     [
-        new("shop-list", "Купить ягод. Много ягод."), new("shop-coins"),
-        new("shop-berries", "Чери, Оран, Печа… Звучит как заклинание."), new("shop-receipt"),
+        new("shop-list", "Список: ягоды. Ниже: ещё ягоды."), new("shop-coins"),
+        new("shop-berries", "Чери, Оран, Печа. Звучит как заклинание."), new("shop-receipt", "Чек потерян. Сдача, видимо, тоже."),
     ];
 
     private void Root_SizeChanged(object sender, SizeChangedEventArgs e)

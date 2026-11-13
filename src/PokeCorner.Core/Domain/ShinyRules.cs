@@ -63,8 +63,8 @@ public static class ShinyRules
         return open;
     }
 
-    /// D-50: one Pokémon, two looks. Every arrival opens the ordinary form of what it has reached; a shiny
-    /// arrival also opens the shiny look for its whole family. Idempotent, runs on every proposed save.
+    /// D-50, D-55: one Pokémon, two looks, both opened by arrivals. A shiny arrival opens the shiny look for its
+    /// whole family, an ordinary arrival opens the ordinary one. NormalSpeciesIds stays the list of species seen. Idempotent, runs on every proposed save.
     public static void SyncLooks(PokeCorner.Core.Persistence.SaveData state, IReadOnlyDictionary<int, int>? familyRoots = null)
     {
         if (familyRoots is not null)
@@ -72,9 +72,29 @@ public static class ShinyRules
                 if (familyRoots.TryGetValue(id, out var root) && root > 0) state.ShinyFamilyIds.Add(root);
         foreach (var pet in state.Individuals)
             if (pet.IsShiny && pet.FamilyRootId > 0) state.ShinyFamilyIds.Add(pet.FamilyRootId);
+        // D-55: the ordinary look is opened by an ordinary arrival only. Saves from before that had every
+        // arrival in NormalSpeciesIds, so the first sync infers the families: everything recorded there, except
+        // families whose present pets all arrived shiny (their ordinary look was never really earned).
+        if (!state.LooksSplit && familyRoots is not null)
+        {
+            var shinyOnly = state.Individuals.Where(pet => pet.FamilyRootId > 0).GroupBy(pet => pet.FamilyRootId)
+                .Where(family => family.All(pet => pet.IsShiny)).Select(family => family.Key).ToHashSet();
+            foreach (var id in state.NormalSpeciesIds)
+                if (familyRoots.TryGetValue(id, out var root) && root > 0 && !shinyOnly.Contains(root)) state.NormalFamilyIds.Add(root);
+            state.LooksSplit = true;
+        }
         foreach (var pet in state.Individuals)
+            if (!pet.IsShiny && pet.FamilyRootId > 0) state.NormalFamilyIds.Add(pet.FamilyRootId);
+        foreach (var pet in state.Individuals)
+        {
             pet.ShinyLookOpen = pet.IsShiny || state.ShinyFamilyIds.Contains(pet.FamilyRootId);
+            pet.NormalLookOpen = !pet.IsShiny || state.NormalFamilyIds.Contains(pet.FamilyRootId);
+        }
     }
+
+    /// D-55: ordinary forms open in the Pokédex: every stage seen in a family whose ordinary look is open.
+    public static IReadOnlySet<int> FamilyNormal(IEnumerable<int> seen, IReadOnlySet<int> normalFamilies, IReadOnlyDictionary<int, int> familyRoots) =>
+        seen.Where(id => normalFamilies.Contains(familyRoots.TryGetValue(id, out var root) && root > 0 ? root : id)).ToHashSet();
 
     public static double NextNurseryLuck(double currentBonus, bool isShiny, bool variantSupported)
     {

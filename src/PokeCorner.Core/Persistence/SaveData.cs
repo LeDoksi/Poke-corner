@@ -15,6 +15,10 @@ public sealed class SaveData
     public HashSet<int> ShinySpeciesIds { get; set; } = [];
     // D-50: families (root ids) whose shiny look is open, including those whose shiny pet was released.
     public HashSet<int> ShinyFamilyIds { get; set; } = [];
+    // D-55: families whose ordinary look is open (an ordinary pet of the family has arrived at some point).
+    public HashSet<int> NormalFamilyIds { get; set; } = [];
+    // False in saves written before D-55: ShinyRules.SyncLooks then infers NormalFamilyIds once.
+    public bool LooksSplit { get; set; }
     // Exact ordinary history. Missing OLD JSON is inferred once at deserialization.
     public HashSet<int> NormalSpeciesIds { get; set; } = [];
     // Transient provenance for the one-time OLD v1 display inference; never a saved gameplay field.

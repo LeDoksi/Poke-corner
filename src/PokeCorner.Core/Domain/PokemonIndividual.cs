@@ -56,8 +56,18 @@ public sealed class PokemonIndividual
     [System.Text.Json.Serialization.JsonIgnore]
     public bool HasShinyLook => IsShiny || ShinyLookOpen;
 
+    /// D-55 (Georgy 14.11): the ordinary look is opened the same way, by an ordinary arrival of the family.
+    /// A shiny whose family never had an ordinary arrival has only the shiny look.
+    public bool NormalLookOpen { get; set; }
+
     [System.Text.Json.Serialization.JsonIgnore]
-    public bool LooksShiny => HasShinyLook && (ShowShiny ?? IsShiny);
+    public bool HasNormalLook => !IsShiny || NormalLookOpen;
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public bool HasBothLooks => HasShinyLook && HasNormalLook;
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public bool LooksShiny => HasShinyLook && (!HasNormalLook || (ShowShiny ?? IsShiny));
     private DateTimeOffset _caughtAtUtc;
     public required DateTimeOffset CaughtAtUtc
     {
