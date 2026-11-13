@@ -46,7 +46,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
     ];
     private static readonly DiaryPiece[] ActivityHead =
     [
-        new("rail-pokedex", "Заработал честно. Открываю торжественно."), new("album-star", "Вдруг блестящий? Вдруг!"),
+        new("rail-pokedex", "Честно заработанный шар."), new("album-star", "Вдруг блестящий? Вдруг!"),
     ];
     private static readonly DiaryPiece[] ExpeditionHead =
     [

@@ -120,7 +120,10 @@ public sealed class DiaryMargin : Canvas
                 };
                 if (TryFindResource("NdMarginNoteStyle") is Style style) text.Style = style;
                 text.TextAlignment = TextAlignment.Left;
-                SetLeft(text, x + 8); SetTop(text, Math.Max(4, Math.Min(height * (.2 + random.NextDouble() * .3), height - 62)));
+                var top = Math.Max(4, Math.Min(height * (.2 + random.NextDouble() * .3), height - 62));
+                // A low band never cuts a note mid-letter: whole lines only, the rest ends in an ellipsis.
+                text.MaxHeight = Math.Max(28, height - top - 4); text.TextTrimming = TextTrimming.CharacterEllipsis;
+                SetLeft(text, x + 8); SetTop(text, top);
                 Children.Add(text);
                 x += noteWidth;
             }
