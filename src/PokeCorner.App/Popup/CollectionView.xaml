@@ -446,7 +446,7 @@
                                             <Image x:Name="DetailSpriteImage" Width="140" Height="140" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                                             <TextBlock x:Name="DetailSpritePlaceholder" Text="Изображение формы&#10;пока недоступно" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}"/>
                                             <!-- D-50: shiny is a look of the same Pokémon. The switch stays visible while the look is closed, so the goal is readable. -->
-                                            <StackPanel x:Name="DetailLookSwitch" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-2">
+                                            <StackPanel x:Name="DetailLookSwitch" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,8,0,0">
                                                 <Button x:Name="DetailLookNormalButton" Content="Обычный" Click="DetailLook_Click" Tag="normal" Padding="10,3" MinHeight="26" FontSize="12" AutomationProperties.Name="Облик обычный"/>
                                                 <Button x:Name="DetailLookShinyButton" Content="✦ Шайни" Click="DetailLook_Click" Tag="shiny" Padding="10,3" MinHeight="26" FontSize="12" Margin="4,0,0,0" AutomationProperties.Name="Облик шайни"/>
                                             </StackPanel>

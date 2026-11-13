@@ -1,8 +1,10 @@
 <UserControl x:Class="PokeCorner.App.Popup.CatchView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PokeCorner.App.Popup">
     <Grid Margin="24,14,24,16">
-        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+        <!-- The free page under the scene is the diary margin (D-43): sketches and a note or two, more as the window grows. -->
+        <local:DiaryMargin x:Name="CatchMargin" Grid.Row="2" Margin="0,14,0,0"/>
         <StackPanel Margin="0,0,0,16">
             <!-- Catch is a page inside «Уголок»; the rail tab is already selected, so the way back must be on the page. -->
             <Button x:Name="BackToCornerButton" Content="← В уголок" Click="BackToCornerButton_Click" HorizontalAlignment="Left" Margin="-10,-6,0,4"

@@ -40,6 +40,7 @@ public sealed class DiaryMargin : Canvas
         double width = ActualWidth, height = ActualHeight;
         if (width < 96 || height < 80 || _pieces.Count == 0) return;
         var random = new Random(StableSeed(_key));
+        if (width >= height * 1.8) { LayAcross(random, width, height); return; }
         var noteRoom = width >= 150;
         var baseSize = Math.Clamp(Math.Min(width * .55, height * .7), 60, 190); // a short band still gets one small sketch
         var y = 8 + random.NextDouble() * 24;
@@ -81,6 +82,49 @@ public sealed class DiaryMargin : Canvas
                 y += noteHeight;
             }
             y += 16 + random.NextDouble() * 40;
+        }
+    }
+
+    // A wide low band (the free space under a scene): the same scatter, but along the page instead of down it.
+    private void LayAcross(Random random, double width, double height)
+    {
+        var baseSize = Math.Clamp(height * .72, 56, 170);
+        var x = 10 + random.NextDouble() * 40;
+        foreach (var piece in _pieces)
+        {
+            var source = Load(piece.Sketch);
+            if (source is null) continue;
+            var size = Math.Min(baseSize * (.8 + random.NextDouble() * .35), height - 10);
+            var aspect = source.PixelHeight / (double)Math.Max(1, source.PixelWidth);
+            var h = size; var w = h / Math.Max(.2, aspect);
+            if (w > size * 1.6) { w = size * 1.6; h = w * aspect; }
+            var note = height >= 96 ? piece.Note : null;
+            var noteWidth = note is null ? 0 : 200;
+            if (x + w + noteWidth > width - 8) break;
+            var image = new Image
+            {
+                Source = source, Width = w, Height = h, Opacity = .85, Stretch = Stretch.Uniform,
+                RenderTransformOrigin = new Point(.5, .5),
+                RenderTransform = new RotateTransform(random.NextDouble() * 24 - 12)
+            };
+            RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
+            SetLeft(image, x); SetTop(image, 4 + random.NextDouble() * Math.Max(0, height - h - 8));
+            Children.Add(image);
+            x += w;
+            if (note is not null)
+            {
+                var text = new TextBlock
+                {
+                    Text = note, MaxWidth = noteWidth - 14, TextAlignment = TextAlignment.Left,
+                    RenderTransformOrigin = new Point(0, .5), RenderTransform = new RotateTransform(random.NextDouble() * 8 - 4)
+                };
+                if (TryFindResource("NdMarginNoteStyle") is Style style) text.Style = style;
+                text.TextAlignment = TextAlignment.Left;
+                SetLeft(text, x + 8); SetTop(text, Math.Max(4, height * (.2 + random.NextDouble() * .3)));
+                Children.Add(text);
+                x += noteWidth;
+            }
+            x += 36 + random.NextDouble() * 70;
         }
     }
 

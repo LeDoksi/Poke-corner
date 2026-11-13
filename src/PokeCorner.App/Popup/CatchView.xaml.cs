@@ -39,6 +39,17 @@ public partial class CatchView : System.Windows.Controls.UserControl
     /// <summary>The page's own way back to the corner; the shell decides where that is.</summary>
     public event Action? BackRequested;
 
+    private static readonly DiaryPiece[] ActivityMargin =
+    [
+        new("catch-leaves", "Тише. Не спугнуть бы."), new("catch-campfire"),
+        new("pokedex-pencil", "Карандаш наготове."), new("pokedex-footprint"),
+    ];
+    private static readonly DiaryPiece[] ExpeditionMargin =
+    [
+        new("exp-tracks", "Следы совсем свежие."), new("exp-tent"),
+        new("exp-binoculars", "Заметили издалека."), new("exp-lantern"),
+    ];
+
     // The scene card has round corners; the picture and the sparks are clipped to them.
     private void CaptureScene_SizeChanged(object sender, SizeChangedEventArgs e) =>
         CaptureScene.Clip = new System.Windows.Media.RectangleGeometry(new Rect(0, 0, CaptureScene.ActualWidth, CaptureScene.ActualHeight), 17, 17);
@@ -178,6 +189,7 @@ public partial class CatchView : System.Windows.Controls.UserControl
         // A met Pokémon is caught with a throw; a ball earned at the PC or gifted already holds one, so it is opened.
         CatchButton.Content = known ? "Бросить покебол" : "Открыть покебол";
         CatchNote.Text = known ? "Встретили в походе. Только бы не улизнул." : "Кто-то шуршит внутри…"; // D-25 notes 36-37
+        CatchMargin.Show(known ? "catch-expedition" : "catch", known ? ExpeditionMargin : ActivityMargin);
         EncounterTitleText.Text = known ? "Встреча с " + SpeciesName(encounter!.KnownSpeciesId!.Value) : "Кто внутри?";
         SubtitleText.Text = known ? "Этот покемон встретился команде в походе." : "Ещё один друг ждёт знакомства.";
         SceneImage.Visibility = Visibility.Visible;
