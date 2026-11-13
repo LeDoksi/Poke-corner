@@ -429,13 +429,17 @@
                                 <Grid x:Name="DetailPersonalGrid">
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
                                     <StackPanel Margin="0,0,18,0">
+                                        <!-- D-48: the pet stands on a lit stage, like a photo glued into the diary. -->
+                                        <Border CornerRadius="14" BorderThickness="1" BorderBrush="{StaticResource NdPanelLineBrush}" Padding="6">
+                                        <Border.Background><RadialGradientBrush Center="0.5,0.62" GradientOrigin="0.5,0.62" RadiusX="0.62" RadiusY="0.85"><GradientStop Color="#3A3468" Offset="0"/><GradientStop Color="#1B1C38" Offset="0.7"/><GradientStop Color="#14172B" Offset="1"/></RadialGradientBrush></Border.Background>
                                         <Grid Height="155">
-                                            <Ellipse Width="160" Height="155" Fill="{StaticResource SpotlightBrush}"/>
+                                            <Ellipse Width="150" Height="22" VerticalAlignment="Bottom" Margin="0,0,0,6" Fill="#33000000"/>
                                             <Image x:Name="DetailSpriteImage" Width="140" Height="140" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                                             <TextBlock x:Name="DetailSpritePlaceholder" Text="Изображение формы&#10;пока недоступно" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}"/>
-                                            <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"><TextBlock Text="Шайни"/></Border>
+                                            <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{StaticResource NdShinyBrush}"><TextBlock Text="✦ Шайни" Foreground="{StaticResource NdShinyBrush}" FontWeight="SemiBold"/></Border>
                                         </Grid>
-                                        <WrapPanel HorizontalAlignment="Center" Margin="0,5">
+                                        </Border>
+                                        <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,5">
                                             <ItemsControl x:Name="DetailTypeBadges" ItemsPanel="{StaticResource TypeBadgePanelTemplate}" ItemTemplate="{StaticResource TypeBadgeTemplate}" Margin="0,0,8,0"/>
                                             <Border x:Name="DetailRarityPill" Style="{StaticResource PillStyle}" BorderThickness="1.4" CornerRadius="5" Padding="6,1.5" Margin="0,0,4,3"><StackPanel Orientation="Horizontal"><Ellipse x:Name="DetailRarityDot" Width="6" Height="6" Margin="0,0,5,0"/><TextBlock x:Name="DetailRarityText" FontSize="9.5" FontWeight="SemiBold"/></StackPanel></Border>
                                         </WrapPanel>
@@ -450,13 +454,15 @@
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock x:Name="DetailLevelText" FontWeight="Bold"/>
-                                        <TextBlock x:Name="DetailXpText" TextWrapping="Wrap" Margin="0,4,0,4"/>
+                                        <Border Style="{StaticResource NdPanelStyle}" Padding="14,12" Margin="0,0,0,10"><StackPanel>
+                                        <TextBlock x:Name="DetailLevelText" FontFamily="{StaticResource NdDisplayFont}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}"/>
+                                        <TextBlock x:Name="DetailXpText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,5"/>
                                         <ProgressBar x:Name="DetailXpBar" Style="{StaticResource UiGreenProgressBarStyle}" Minimum="0" Maximum="1"/>
-                                        <StackPanel Orientation="Horizontal" Margin="0,12,0,2"><Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Уход для эволюции" FontWeight="Bold" VerticalAlignment="Center"/></StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,14,0,2"><Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Уход для эволюции" FontWeight="Bold" VerticalAlignment="Center"/></StackPanel>
                                         <TextBlock x:Name="DetailEvolutionText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,4"/>
-                                        <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource UiGreenProgressBarStyle}" Minimum="0" Maximum="1"/>
-                                        <TextBlock x:Name="DetailTraitsText" TextWrapping="Wrap" Margin="0,14,0,10"/>
+                                        <ProgressBar x:Name="DetailEvolutionBar" Style="{StaticResource UiGreenProgressBarStyle}" Foreground="{StaticResource NdApricotBrush}" Minimum="0" Maximum="1"/>
+                                        </StackPanel></Border>
+                                        <TextBlock x:Name="DetailTraitsText" TextWrapping="Wrap" Margin="2,4,0,10"/>
                                         <Border x:Name="DetailRetrainingSection" Padding="0,0,0,12" Visibility="Collapsed"><StackPanel>
                                             <Button x:Name="DetailRetrainingToggle" Content="Переобучение" Click="DetailRetrainingToggle_Click" Style="{StaticResource SecondaryButtonStyle}" HorizontalAlignment="Left"/>
                                             <StackPanel x:Name="DetailRetrainingEditor" Visibility="Collapsed" Margin="0,8,0,0">
