@@ -436,8 +436,17 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         (n % 100) is >= 11 and <= 14 ? many : (n % 10) switch { 1 => one, >= 2 and <= 4 => few, _ => many };
 
     // With the pet page open at 1200x660 the header is narrow: the note gives way so «Покедекс» is never cut.
-    private void PokedexHeader_SizeChanged(object sender, SizeChangedEventArgs e) =>
-        PokedexNote.Visibility = e.NewSize.Width >= 760 ? Visibility.Visible : Visibility.Collapsed;
+    // Beside an open page the count drops under the title, so «Покедекс» and the switch are never cut.
+    private void PokedexHeader_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (!e.WidthChanged) return;
+        PokedexNote.Visibility = e.NewSize.Width >= 1040 ? Visibility.Visible : Visibility.Collapsed;
+        var narrow = e.NewSize.Width < 760;
+        Grid.SetRow(PokedexCountText, narrow ? 1 : 0);
+        Grid.SetColumn(PokedexCountText, narrow ? 0 : 3);
+        Grid.SetColumnSpan(PokedexCountText, narrow ? 4 : 1);
+        PokedexCountText.Margin = new Thickness(0, narrow ? 6 : 0, 0, 0);
+    }
 
     private void SpeciesMode_Click(object sender, RoutedEventArgs e)
     {

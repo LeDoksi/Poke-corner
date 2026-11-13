@@ -180,13 +180,20 @@
          <TabItem Header="Покедекс">
             <ScrollViewer x:Name="PokedexScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="14">
-                    <DockPanel Margin="0,0,0,10" SizeChanged="PokedexHeader_SizeChanged"><TextBlock x:Name="PokedexNote" DockPanel.Dock="Right" Style="{StaticResource NdMarginNoteStyle}" FontSize="24" MaxWidth="520" VerticalAlignment="Center" Margin="16,0,8,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock><StackPanel><TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PokedexCountText" Style="{StaticResource MetaTextStyle}"/></StackPanel></DockPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Button x:Name="IndividualsModeButton" Content="Мои покемоны" MinWidth="150"
-                                Click="IndividualsMode_Click" Margin="0,0,6,0" Style="{StaticResource NdChoiceSelectedStyle}" />
-                        <Button x:Name="SpeciesModeButton" Content="Все виды" MinWidth="150"
-                                Click="SpeciesMode_Click" Style="{StaticResource NdChoiceStyle}" />
-                    </StackPanel>
+                    <!-- D-47: one header line — title, the view switch, a hand note where there is room, the count on the right. -->
+                    <Grid x:Name="PokedexHeader" Margin="0,0,0,12" SizeChanged="PokedexHeader_SizeChanged">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <TextBlock Text="Покедекс" Style="{StaticResource ScreenTitleTextStyle}" VerticalAlignment="Center" Margin="0,0,18,0"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button x:Name="IndividualsModeButton" Content="Мои покемоны" MinWidth="124"
+                                    Click="IndividualsMode_Click" Margin="0,0,6,0" Style="{StaticResource NdChoiceSelectedStyle}" />
+                            <Button x:Name="SpeciesModeButton" Content="Все виды" MinWidth="104"
+                                    Click="SpeciesMode_Click" Style="{StaticResource NdChoiceStyle}" />
+                        </StackPanel>
+                        <TextBlock x:Name="PokedexNote" Grid.Column="2" Style="{StaticResource NdMarginNoteStyle}" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,0" TextTrimming="CharacterEllipsis" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock>
+                        <TextBlock x:Name="PokedexCountText" Grid.Column="3" Style="{StaticResource MetaTextStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    </Grid>
 
                     <StackPanel x:Name="SpeciesPane" Visibility="Collapsed" PreviewMouseWheel="SpeciesPane_PreviewMouseWheel">
                         <Grid Margin="0,0,0,8">
@@ -313,6 +320,8 @@
                                     <StackPanel>
                                         <Grid>
                                             <Border Style="{StaticResource WellStyle}" Height="76">
+                                                <!-- A soft lamp behind the sprite: the tile reads as a lit page, not a flat cell. -->
+                                                <Border.Background><RadialGradientBrush Center="0.5,0.6" GradientOrigin="0.5,0.6" RadiusX="0.7" RadiusY="0.9"><GradientStop Color="#2E2B52" Offset="0"/><GradientStop Color="#14172B" Offset="1"/></RadialGradientBrush></Border.Background>
                                                 <Grid>
                                                     <Image Width="64" Height="64" Source="{Binding SpriteImage}"
                                                            RenderOptions.BitmapScalingMode="NearestNeighbor"
@@ -336,9 +345,13 @@
                                         </Grid>
                                         <TextBlock Text="{Binding DisplayName}" Foreground="{StaticResource PrimaryTextBrush}" FontWeight="Bold" FontSize="13"
                                                    Margin="0,6,0,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
-                                        <TextBlock Style="{StaticResource CaptionTextStyle}" TextTrimming="CharacterEllipsis">
-                                            <Run Text="{Binding LevelText, Mode=OneWay}" /><Run Text="  " /><Run Text="{Binding DexNumber, Mode=OneWay}" />
-                                        </TextBlock>
+                                        <DockPanel Margin="0,1,0,5">
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding LevelText}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource NdLavenderBrush}" Margin="6,0,0,0"/>
+                                            <TextBlock Text="{Binding DexNumber}" Style="{StaticResource CaptionTextStyle}" TextTrimming="CharacterEllipsis"/>
+                                        </DockPanel>
+                                        <!-- The way to the next form (care for evolution): full means it can evolve now, dimmed means there is nowhere further to grow. -->
+                                        <ProgressBar Style="{StaticResource SlimProgressBarStyle}" Height="4" Minimum="0" Maximum="1" Foreground="{StaticResource NdApricotBrush}" Background="#14172B"
+                                                     Value="{Binding EvolutionBarValue, Mode=OneWay}" Opacity="{Binding EvolutionBarOpacity}" ToolTip="{Binding EvolutionToolTip}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
