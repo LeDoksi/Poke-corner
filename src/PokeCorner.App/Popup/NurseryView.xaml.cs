@@ -96,6 +96,7 @@ public partial class NurseryView : UserControl
             var scale = Math.Max(SceneGrid.ActualWidth / 2048, SceneGrid.ActualHeight / 768);
             GreenhouseImage.Width = 2048 * scale;
             GreenhouseImage.Height = 768 * scale;
+            SceneGrid.Clip = new System.Windows.Media.RectangleGeometry(new Rect(0, 0, SceneGrid.ActualWidth, SceneGrid.ActualHeight), 17, 17);
         };
         PickerScroll.SizeChanged += (_, _) => { if (_pickerOpen && !_suspended) RefreshPicker(); };
         Refresh();
@@ -1152,8 +1153,8 @@ public partial class NurseryView : UserControl
         for (var i = 0; i < ShinyRules.NurseryLuckSteps; i++)
             LuckSegments.Children.Add(new Border
             {
-                Margin = new Thickness(i == 0 ? 0 : 2, 0, 0, 0), CornerRadius = new CornerRadius(2),
-                Background = i < filled ? ThemeBrushes.Get("NdLavenderBrush") : ThemeBrushes.Get("NdSurfaceBrush"),
+                Margin = new Thickness(i == 0 ? 0 : 3, 0, 0, 0), CornerRadius = new CornerRadius(4),
+                Background = i < filled ? ThemeBrushes.Get("NdShinyBrush") : ThemeBrushes.Get("NdSurfaceBrush"),
                 BorderBrush = ThemeBrushes.Get("NdBorderBrush"), BorderThickness = new Thickness(1)
             });
     }

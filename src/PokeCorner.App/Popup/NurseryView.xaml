@@ -12,7 +12,7 @@
    <RowDefinition Height="Auto" />
   </Grid.RowDefinitions>
   <StackPanel x:Name="HeaderPanel" Margin="24,0" MaxWidth="968" HorizontalAlignment="Left">
-   <TextBlock x:Name="ScreenTitle" Text="Питомник" Style="{StaticResource ScreenTitleTextStyle}" Margin="0,0,0,10" />
+   <TextBlock x:Name="ScreenTitle" Text="Питомник" Style="{StaticResource ScreenTitleTextStyle}" FontFamily="{StaticResource NdDisplayFont}" FontSize="26" Margin="0,0,0,10" />
    <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
     <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
    </Border>
@@ -21,7 +21,8 @@
   <local:DiaryMargin x:Name="NurseryMargin" Grid.Row="1" HorizontalAlignment="Right" />
   <ScrollViewer x:Name="ScenePanel" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
    <StackPanel>
-    <Border x:Name="SceneBorder" ClipToBounds="True" Margin="0,0,0,12">
+    <!-- Night Diary 2.0: the greenhouse is a lit card on the page, like the corner and the route scene. -->
+    <Border x:Name="SceneBorder" Margin="24,0,24,14" CornerRadius="18" BorderBrush="{StaticResource NdPanelLineBrush}" BorderThickness="1" Background="{StaticResource NdPanelBrush}" Effect="{StaticResource NdLiftShadow}">
      <Grid x:Name="SceneGrid" Height="236" ClipToBounds="True">
       <!-- Scene art is 2048x768: full width, clipped around its middle band where the nest sits. -->
       <Image x:Name="GreenhouseImage" Source="{StaticResource UiNurseryImage}" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" />
@@ -39,8 +40,8 @@
       <Image x:Name="SceneSecondParent" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Collapsed" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
        <Image.RenderTransform><ScaleTransform ScaleX="-1" /></Image.RenderTransform>
       </Image>
-      <Grid Margin="24,0" MaxWidth="968" HorizontalAlignment="Left">
-       <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,18,40,18" MaxWidth="560">
+      <Grid Margin="22,0" MaxWidth="968" HorizontalAlignment="Left">
+       <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,16,40,18" MaxWidth="560">
         <TextBlock x:Name="SceneTitleText" Text="Будущие родители" Foreground="{StaticResource NdTextBrush}" FontFamily="{DynamicResource NdHandFont}" FontWeight="Bold" FontSize="42" RenderTransformOrigin="0,0.5" TextWrapping="Wrap"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock>
         <Border Height="1" Background="{StaticResource NdMutedBrush}" Opacity="0.7" Margin="0,6,0,0" />
         <TextBlock x:Name="SubtitleText" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
@@ -59,7 +60,8 @@
       <RowDefinition Height="Auto" />
      </Grid.RowDefinitions>
      <StackPanel x:Name="LeftStack">
-      <StackPanel x:Name="PairsSection" Margin="0,0,0,12">
+      <Border x:Name="PairsSection" Style="{StaticResource NdPanelStyle}" Padding="12" Margin="0,0,0,12">
+      <StackPanel>
        <Grid Margin="0,0,0,8">
         <Grid.ColumnDefinitions>
          <ColumnDefinition Width="Auto" />
@@ -84,8 +86,9 @@
         <TextBlock x:Name="PairCountText" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource CaptionTextStyle}" />
        </DockPanel>
       </StackPanel>
+      </Border>
       <StackPanel x:Name="NestPanel" Visibility="Collapsed" Margin="0,0,0,12">
-       <TextBlock x:Name="NestTitle" Style="{StaticResource SectionHeaderTextStyle}" />
+       <TextBlock x:Name="NestTitle" Style="{StaticResource SectionHeaderTextStyle}" FontFamily="{StaticResource NdDisplayFont}" FontSize="16" />
        <WrapPanel x:Name="NestOutcomePanel" Margin="0,8,0,0" />
        <TextBlock x:Name="NestTerms" TextWrapping="Wrap" Margin="0,6,0,0" Style="{StaticResource CaptionTextStyle}" />
        <TextBlock x:Name="NestTime" FontWeight="Bold" TextWrapping="Wrap" Margin="0,8,0,0" />
@@ -94,17 +97,17 @@
       <StackPanel x:Name="NestParentPanel" Visibility="Collapsed" Margin="0,0,0,12">
        <TextBlock x:Name="NestParents" Style="{StaticResource SectionHeaderTextStyle}" TextWrapping="Wrap" />
        <UniformGrid Columns="2" Margin="0,8,0,0">
-        <Border Style="{StaticResource CardStyle}" Padding="8" Margin="0,0,6,0">
+        <Border Style="{StaticResource NdPanelStyle}" Padding="10" Margin="0,0,6,0">
          <StackPanel x:Name="NestFirstSlot" />
         </Border>
-        <Border Style="{StaticResource CardStyle}" Padding="8" Margin="6,0,0,0">
+        <Border Style="{StaticResource NdPanelStyle}" Padding="10" Margin="6,0,0,0">
          <StackPanel x:Name="NestSecondSlot" />
         </Border>
        </UniformGrid>
       </StackPanel>
-      <Border x:Name="ResultPanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
+      <Border x:Name="ResultPanel" Visibility="Collapsed" Style="{StaticResource NdPanelStyle}" Margin="0,0,0,12">
        <StackPanel>
-        <TextBlock x:Name="ResultTitle" Text="Добро пожаловать, малыш!" Style="{StaticResource SectionHeaderTextStyle}" />
+        <TextBlock x:Name="ResultTitle" Text="Добро пожаловать, малыш!" Style="{StaticResource SectionHeaderTextStyle}" FontFamily="{StaticResource NdDisplayFont}" FontSize="16" />
         <TextBlock x:Name="ResultNewText" Text="✦ Новый вид в покедексе!" Foreground="{StaticResource NdApricotBrush}" FontWeight="Bold" Visibility="Collapsed" Margin="0,4,0,0" />
         <TextBlock x:Name="ResultText" TextWrapping="Wrap" Margin="0,6,0,0" />
        </StackPanel>
@@ -112,21 +115,23 @@
       <TextBlock x:Name="NurseryNote" Style="{StaticResource NdMarginNoteStyle}" TextAlignment="Left" HorizontalAlignment="Left" Margin="4,10,0,0" RenderTransformOrigin="0,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5" /></TextBlock.RenderTransform></TextBlock>
      </StackPanel>
      <StackPanel x:Name="RightStack" Grid.Column="1" Margin="16,0,0,0">
-      <Border x:Name="PreviewPanel" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
+      <Border x:Name="PreviewPanel" Style="{StaticResource NdPanelStyle}" Margin="0,0,0,12">
        <StackPanel>
-        <TextBlock Text="Кто может родиться" Style="{StaticResource SectionHeaderTextStyle}" />
+        <TextBlock Text="Кто может родиться" Style="{StaticResource SectionHeaderTextStyle}" FontFamily="{StaticResource NdDisplayFont}" FontSize="15" />
         <TextBlock x:Name="PreviewText" TextWrapping="Wrap" Margin="0,4,0,6" Style="{StaticResource CaptionTextStyle}" />
         <StackPanel x:Name="OutcomePanel" />
         <TextBlock x:Name="TraitsText" TextWrapping="Wrap" Margin="0,6,0,0" Style="{StaticResource CaptionTextStyle}" />
        </StackPanel>
       </Border>
-      <StackPanel x:Name="LuckPanel" Margin="0,0,0,8">
+      <Border x:Name="LuckPanel" Style="{StaticResource NdPanelStyle}" Padding="14,10,14,12" Margin="0,0,0,8">
+      <StackPanel>
        <DockPanel>
-        <TextBlock Text="Удача питомника" FontWeight="Bold" />
+        <TextBlock Text="✦ Удача питомника" FontWeight="Bold" Foreground="{StaticResource NdShinyBrush}" />
         <TextBlock x:Name="LuckText" HorizontalAlignment="Right" Style="{StaticResource CaptionTextStyle}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="12,0,0,0" />
        </DockPanel>
        <UniformGrid x:Name="LuckSegments" Rows="1" Columns="10" Height="8" Margin="0,5,0,0" AutomationProperties.Name="Деления удачи питомника" />
       </StackPanel>
+      </Border>
      </StackPanel>
     </Grid>
    </StackPanel>
