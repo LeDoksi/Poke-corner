@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework><Nullable>enable</Nullable><ImplicitUsings>disable</ImplicitUsings>
+    <OutputType>Library</OutputType><AssemblyName>PokeCorner</AssemblyName><RootNamespace>PokeCorner.App</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems><GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>CA1416;CS8002;NU1701;CS0169;CS0649;CS0414</NoWarn><TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/PokeCorner.App/**/*.cs" Exclude="../../src/PokeCorner.App/obj/**;../../src/PokeCorner.App/bin/**" />
+    <Compile Include="stubs/*.cs" /><Compile Include="usings.cs" />
+    <Reference Include="$(NuGetPackageRoot)microsoft.windowsdesktop.app.ref/8.0.34/ref/net8.0/*.dll" />
+    <ProjectReference Include="../../src/PokeCorner.Core/PokeCorner.Core.csproj" />
+  </ItemGroup>
+</Project>

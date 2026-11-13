@@ -86,14 +86,31 @@ public partial class ExpeditionView : UserControl
         InitializeComponent();
         foreach (var route in Routes)
         {
+            // A postcard: the route's own picture under its short name. The picture arrives after the first frame.
+            var face = new Grid { Height = 58 };
+            face.Children.Add(new Image { Stretch = Stretch.UniformToFill, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
+            face.Children.Add(new System.Windows.Shapes.Rectangle { Fill = PostcardShade, IsHitTestVisible = false });
+            face.Children.Add(new TextBlock
+            {
+                Text = route.Id switch { "grove" => "Роща", "lake" => "Озеро", "coast" => "Море", "mountains" => "Горы", "desert" => "Пустыня", "volcano" => "Вулкан", "snow" => "Снег", _ => "Руины" },
+                FontSize = 12, FontWeight = FontWeights.Bold, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(2, 0, 2, 5), TextTrimming = TextTrimming.CharacterEllipsis
+            });
+            face.SizeChanged += (_, e) => face.Clip = new RectangleGeometry(new Rect(e.NewSize), 10, 10);
             var button = new Button
             {
-                Content = route.Id switch { "grove" => "Роща", "lake" => "Озеро", "coast" => "Море", "mountains" => "Горы", "desert" => "Пустыня", "volcano" => "Вулкан", "snow" => "Снег", _ => "Руины" }, Tag = route.Id, MinWidth = 58, FontSize = 13, Padding = new Thickness(4, 5, 4, 5), Margin = new Thickness(0, 0, 6, 6),
-                Style = (Style)FindResource("SecondaryButtonStyle"), HorizontalContentAlignment = HorizontalAlignment.Center
+                Content = face, Tag = route.Id, Margin = new Thickness(0, 0, 6, 0), Padding = new Thickness(0), ToolTip = route.Name,
+                Style = (Style)FindResource("NdTileButtonStyle"), HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch
             };
             button.Click += (_, _) => { if (_busy) return; _route = route.Id; _routeChosen = true; _pendingStart = null; Refresh(); };
             RouteButtons.Children.Add(button);
         }
+        SceneFrame.SizeChanged += (_, e) =>
+        {
+            SceneFrame.Clip = new RectangleGeometry(new Rect(e.NewSize), 13, 13);
+            // The taped note needs a picture big enough to carry it; on a small scene the route name matters more.
+            SceneNote.Visibility = e.NewSize.Width >= 430 && e.NewSize.Height >= 230 ? Visibility.Visible : Visibility.Collapsed;
+        };
         DifficultyBox.SelectedIndex = 1;
         DurationBox.SelectedIndex = 1;
         PickerTypeBox.Items.Add(new ComboBoxItem { Content = "Тип: любой", Tag = "" });
@@ -113,16 +130,11 @@ public partial class ExpeditionView : UserControl
         };
         _initializing = false;
         SizeChanged += (_, _) => {
-            PlaceMargin();
-            Refresh();
+            LayoutColumns();
             if (_pickerOpen) RefreshPicker();
         };
-        PreparationFooter.SizeChanged += (_, _) => FitScene();
-        Landscape.SizeChanged += (_, _) => Dispatcher.BeginInvoke(PlaceMargin, System.Windows.Threading.DispatcherPriority.Loaded);
-        ActionFooter.SizeChanged += (_, _) => FitScene();
-        ScenarioContent.SizeChanged += (_, _) => FitScene();
         _timer.Tick += (_, _) => Refresh();
-        Loaded += (_, _) => { _suspended = false; _timer.Start(); Refresh(); };
+        Loaded += (_, _) => { _suspended = false; _timer.Start(); Refresh(); LoadPostcards(); };
         Unloaded += (_, _) => {
             _suspended = true; _generation++; _timer.Stop();
             ClosePicker(); CompleteLocalConfirmation(false);
@@ -144,10 +156,10 @@ public partial class ExpeditionView : UserControl
 
     private static string RouteName(string id) => Routes.FirstOrDefault(r => r.Id == id).Name ?? id;
 
-    private ExpeditionRequest Request(DateTimeOffset now) => new(_route,
+    private ExpeditionRequest Request(DateTimeOffset now, IEnumerable<Guid>? team = null) => new(_route,
         (string)((ListBoxItem)DifficultyBox.SelectedItem).Tag,
         int.Parse((string)((ListBoxItem)DurationBox.SelectedItem).Tag, CultureInfo.InvariantCulture),
-        _selected.ToArray(), Guid.NewGuid(), now);
+        (team ?? _selected).ToArray(), Guid.NewGuid(), now);
 
     private void ChoiceChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -212,34 +224,33 @@ public partial class ExpeditionView : UserControl
             finally { _initializing = false; }
             _pendingStart = null;
         }
+        if (active && _pickerOpen) ClosePicker();
         foreach (Button routeButton in RouteButtons.Children) routeButton.IsEnabled = !_busy && !active;
         DifficultyBox.IsEnabled = DurationBox.IsEnabled = !_busy && !active;
         // ponytail: result screen retired (loot is on the ready screen, encounter opens straight from the claim); its panel stays only because receipt tests still read ResultText.
-        var showResult = false;
-        var compact = ActualWidth < 760;
-        Grid.SetColumnSpan(DifficultyGroup, 1);
-        Grid.SetColumnSpan(DurationGroup, 1);
-        Grid.SetColumn(DurationGroup, 1);
-        Grid.SetRow(DurationGroup, 0);
-        PreparationPanel.Visibility = PreparationDetailsPanel.Visibility = RouteSelectionPanel.Visibility = active || showResult ? Visibility.Collapsed : Visibility.Visible;
-        PreparationFooter.Visibility = _pickerOpen || active || showResult ? Visibility.Collapsed : Visibility.Visible;
-        ActionFooter.Visibility = !_pickerOpen && (active || showResult) ? Visibility.Visible : Visibility.Collapsed;
-        ContinueButton.Visibility = showResult ? Visibility.Visible : Visibility.Collapsed;
-        ContinueButton.IsEnabled = !_busy;
+        PreparationPanel.Visibility = PreparationDetailsPanel.Visibility = PreparationFooter.Visibility = active ? Visibility.Collapsed : Visibility.Visible;
+        RouteSelectionPanel.Visibility = active || _pickerOpen ? Visibility.Collapsed : Visibility.Visible;
+        ActionFooter.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
+        ContinueButton.Visibility = Visibility.Collapsed;
         if (!active) ClaimButton.Visibility = CancelButton.Visibility = Visibility.Collapsed;
-        if (showResult) SceneFrame.Height = 82; else FitScene();
         TripPanel.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
-        ResultPanel.Visibility = showResult ? Visibility.Visible : Visibility.Collapsed;
+        ResultPanel.Visibility = Visibility.Collapsed;
         EncounterPanel.Visibility = Visibility.Collapsed; // RefreshResult re-shows it for a claimed trip with an unopened encounter
+        // In preparation the line beside the title says what this team will bring; on a trip it says how the trip is doing.
+        SubtitleText.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
+        ContributionsText.Visibility = active ? Visibility.Collapsed : Visibility.Visible;
         if (!active) {
-            SubtitleText.Text = showResult ? "Поход завершён." : "Выберите маршрут, время и команду.";
             TrainerNote.Text = RouteNote(_route);
             HeaderSketch.Source = (ImageSource)FindResource("NdMapImage");
         }
-        RefreshLandscape(active || showResult ? trip!.LocationId : _route);
-        RouteHintText.Text = _selector.RouteHint(active || showResult ? trip!.LocationId : _route, active || showResult ? trip!.Difficulty : Difficulty);
+        var shownRoute = active ? trip!.LocationId : _route;
+        var shownDifficulty = active ? trip!.Difficulty : Difficulty;
+        RefreshLandscape(shownRoute);
+        RouteHintText.Text = _selector.RouteHint(shownRoute, shownDifficulty);
+        RenderRouteChips(shownRoute, shownDifficulty);
         if (active)
         {
+            _currentPreview = null; // a plan's promise is not this trip's
             RefreshTrip(data, trip!);
             return;
         }
@@ -247,24 +258,35 @@ public partial class ExpeditionView : UserControl
         foreach (Button button in RouteButtons.Children)
         {
             var selected = Equals(button.Tag, _route);
-            button.Style = (Style)FindResource(selected ? "NdRouteSelectedStyle" : "SecondaryButtonStyle");
-            button.MinHeight = 36;
+            button.BorderBrush = (Brush)FindResource(selected ? "NdApricotBrush" : "NdBorderBrush");
+            button.BorderThickness = new Thickness(selected ? 2 : 1);
+            button.Effect = selected ? (System.Windows.Media.Effects.Effect)FindResource("NdApricotGlow") : null;
             System.Windows.Automation.AutomationProperties.SetName(button, RouteName((string)button.Tag) + (selected ? " · выбран" : ""));
         }
         if (!_busy && _selected.RemoveWhere(id => data.Individuals.FirstOrDefault(p => p.Id == id) is not { } member ||
                 _selector.Unavailable(member, data) is not null) > 0) _pendingStart = null;
-        ChooseTeamButton.IsEnabled = !_busy;
-        TeamHeading.Text = $"Команда · {_selected.Count} из 3";
-        StartButton.Content = _busy ? "Отправляем команду…" : _pendingStart is not null ? "Повторить отправку" : "Отправить команду";
-        ChooseTeamButton.Content = _selected.Count == 0 ? "Выбрать команду" : "Изменить команду";
-        RenderSlots(TeamSlots, _selected, data, false);
-        RouteHintText.Text = _selector.RouteHint(_route, Difficulty);
         if (_pickerOpen) {
             var signature = string.Join("|", data.Individuals.Select(p => $"{p.Id}:{p.TotalXp}:{p.Nickname}")) + data.ActiveIndividualId +
                 data.Nest?.Status + string.Join(",", data.Nest?.ParticipantIds ?? []);
-            if (_pickerState != signature) { _pickerState = signature; RefreshPicker(); }
+            if (_pickerState != signature) { _pickerState = signature; RefreshPicker(); } // renders the plan itself
+            else RenderPlan(data);
         }
-        if (_selected.Count == 0)
+        else RenderPlan(data);
+        if (trip?.Status == "claimed") RefreshResult(data, trip);
+    }
+
+    // The team shown in the plan: the draft while the picker is open (it follows every click), the saved team otherwise.
+    private HashSet<Guid> Team => _pickerOpen ? _draft : _selected;
+
+    private void RenderPlan(SaveData data)
+    {
+        var team = Team;
+        ChooseTeamButton.IsEnabled = AutoTeamButton.IsEnabled = !_busy && !_pickerOpen;
+        ChooseTeamButton.Visibility = AutoTeamButton.Visibility = _pickerOpen ? Visibility.Hidden : Visibility.Visible;
+        TeamHeading.Text = $"Команда {team.Count} / 3";
+        StartButton.Content = _busy ? "Отправляем команду…" : _pendingStart is not null ? "Повторить отправку" : "Отправить команду";
+        ChooseTeamButton.Content = team.Count == 0 ? "Выбрать" : "Изменить";
+        if (team.Count == 0)
         {
             PreviewText.Text = "Выберите хотя бы одного участника.";
             ContributionsText.Text = "Выберите команду из 1–3 питомцев. Полная тройка может принести дополнительные находки и встречу.";
@@ -276,15 +298,15 @@ public partial class ExpeditionView : UserControl
         {
             try
             {
-                var preview = _currentPreview = _preview(Request(DateTimeOffset.UtcNow));
-                LootLabel.Text = "Гарантированная добыча:";
+                var preview = _currentPreview = _preview(Request(DateTimeOffset.UtcNow, team));
+                LootLabel.Text = "ГАРАНТИРОВАННАЯ ДОБЫЧА";
                 RenderRewards(PreviewRewardCards, preview.PrimaryBerryId, preview.PrimaryBerries, preview.Coins, $"{preview.XpPerParticipant} XP каждому");
-                PreviewText.Text = "Вернутся через " + ((ListBoxItem)DurationBox.SelectedItem).Content;
+                PreviewText.Text = _pickerOpen ? "Нажмите «Готово», и команду можно отправлять." : "Вернутся через " + ((ListBoxItem)DurationBox.SelectedItem).Content;
                 PreviewText.ToolTip = $"Ожидаемое возвращение: {preview.ReadyAtUtc.ToLocalTime():g}";
-                ContributionsText.Text = _selected.Count < 3
+                ContributionsText.Text = team.Count < 3
                     ? "Добыча и опыт доступны. Для дополнительных находок и встречи нужны трое."
                     : "Полная команда: возможны находки и встреча.";
-                StartButton.IsEnabled = !_busy;
+                StartButton.IsEnabled = !_busy && !_pickerOpen;
             }
             catch (Exception ex)
             {
@@ -294,19 +316,76 @@ public partial class ExpeditionView : UserControl
                 StartButton.IsEnabled = false;
             }
         }
-        if (trip?.Status == "claimed") RefreshResult(data, trip);
+        // After the preview: a slot shows the XP its pet will bring home.
+        RenderSlots(TeamSlots, team, data, _pickerOpen);
     }
 
-    // The scene takes whatever height the preparation footer leaves, so no dead band opens between them.
-    private void FitScene()
+    // Wide windows give the plan more room; a narrow one keeps the scene from collapsing.
+    private void LayoutColumns()
     {
-        if (_pickerOpen || ResultPanel.Visibility == Visibility.Visible || ActualHeight <= 0) return;
-        var footer = PreparationFooter.Visibility == Visibility.Visible ? PreparationFooter : ActionFooter;
-        var others = ScenarioContent.ActualHeight - SceneFrame.ActualHeight;
-        var free = ActualHeight - 32 - footer.ActualHeight - footer.Margin.Top - others;
-        // The scene is the elastic part: it gives way first at the 1200x660 minimum and takes the extra height when maximized.
-        var height = Math.Clamp(Math.Floor(free), 110, 560);
-        if (Math.Abs(SceneFrame.Height - height) >= 1) SceneFrame.Height = height;
+        var width = ActualWidth >= 1300 ? 372 : ActualWidth >= 980 ? 340 : ActualWidth >= 760 ? 300 : 248;
+        if (Math.Abs(PlanColumn.Width.Value - width) > 0.5) PlanColumn.Width = new GridLength(width);
+    }
+
+    private static readonly Brush PostcardShade = Shade();
+    private static Brush Shade()
+    {
+        var brush = new LinearGradientBrush(Color.FromArgb(0, 12, 15, 31), Color.FromArgb(215, 12, 15, 31), 90);
+        brush.Freeze(); return brush;
+    }
+
+    // Type chips and the recommended level, on the picture itself.
+    private string _chipState = "";
+    private void RenderRouteChips(string route, string difficulty)
+    {
+        var state = route + "|" + difficulty;
+        if (_chipState == state) return;
+        _chipState = state;
+        RouteChips.Children.Clear();
+        void Chip(string text, Brush ink, string tip) => RouteChips.Children.Add(new Border
+        {
+            CornerRadius = new CornerRadius(12), Padding = new Thickness(10, 3, 10, 4), Margin = new Thickness(0, 0, 6, 4), BorderThickness = new Thickness(1),
+            BorderBrush = ink, Background = new SolidColorBrush(Color.FromArgb(200, 16, 20, 38)), ToolTip = tip,
+            Child = new TextBlock { Text = text, FontSize = 12, FontWeight = FontWeights.SemiBold, Foreground = ink }
+        });
+        foreach (var type in _selector.RouteTypes(route))
+            Chip(ExpeditionTeamSelector.TypeName(type), TypeDisplay.GetBrush(type), "Питомцы этого типа помогают команде на маршруте.");
+        Chip($"рек. ур. {_selector.Recommended(difficulty)}", (Brush)FindResource("NdApricotBrush"), "Рекомендуемый уровень для выбранной сложности.");
+    }
+
+    // Postcards are decoded small and one at a time after the screen is up, so opening the tab never waits for eight pictures.
+    private bool _postcardsLoaded;
+    private void LoadPostcards()
+    {
+        if (_postcardsLoaded) return;
+        _postcardsLoaded = true;
+        foreach (Button button in RouteButtons.Children)
+            Dispatcher.BeginInvoke(() =>
+            {
+                if (button.Content is Grid face && face.Children[0] is Image image && image.Source is null) image.Source = Postcard((string)button.Tag);
+            }, DispatcherPriority.Background);
+    }
+
+    private ImageSource? Postcard(string routeId)
+    {
+        try
+        {
+            var bitmap = new System.Windows.Media.Imaging.BitmapImage();
+            bitmap.BeginInit();
+            if (routeId == "grove") bitmap.UriSource = new Uri("pack://application:,,,/PokeCorner;component/Assets/NightDiary/grove-environment.png");
+            else
+            {
+                var path = _catalog is null ? null : Path.Combine(_catalog.DataRoot, "expeditions", routeId + ".png");
+                if (path is null || !File.Exists(path)) return null;
+                bitmap.UriSource = new Uri(path);
+            }
+            bitmap.DecodePixelWidth = 260;
+            bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            bitmap.Freeze();
+            return bitmap;
+        }
+        catch (Exception error) when (error is IOException or InvalidOperationException or NotSupportedException or ArgumentException or UriFormatException) { return null; }
     }
 
     // Trainer's field note for the chosen place: flavour drawn from each route's art brief, never a mechanic.
@@ -340,55 +419,99 @@ public partial class ExpeditionView : UserControl
         if (_spriteCache.Count >= 128) _spriteCache.Clear();
         _spriteCache[key] = image; return image;
     }
+    // One row per place in the team: who, level against the route's recommendation, fit, and the XP coming home.
+    // Rebuilt only when something shown changes, so a hover or a click is never cut short by the one-second refresh.
     private void RenderSlots(UniformGrid panel, IEnumerable<Guid> ids, SaveData data, bool editable, IReadOnlyDictionary<Guid, long>? xpGain = null)
     {
-        panel.Children.Clear(); var members = ids.ToArray();
+        var members = ids.ToArray();
+        var route = data.Expedition is { Status: "running" or "ready" } trip ? trip.LocationId : _route;
+        var difficulty = data.Expedition is { Status: "running" or "ready" } current ? current.Difficulty : Difficulty;
+        var recommended = _selector.Recommended(difficulty);
+        long? Xp(Guid id)
+        {
+            if (xpGain is not null) return xpGain.TryGetValue(id, out var gained) ? gained : null;
+            return _currentPreview is { } preview && preview.XpByParticipant.TryGetValue(id, out var promised) ? promised : null;
+        }
+        var state = string.Join("|", members.Select(id => data.Individuals.FirstOrDefault(p => p.Id == id) is { } m
+            ? $"{id}:{m.CurrentSpeciesId}:{m.IsShiny}:{m.Nickname}:{_selector.Level(m)}:{Xp(id)}" : id.ToString()))
+            + $"#{editable}#{_busy}#{route}#{difficulty}#{xpGain is not null}";
+        if (panel.Tag as string == state && panel.Children.Count == 3) return;
+        panel.Tag = state;
+        panel.Children.Clear();
         for (var i = 0; i < 3; i++) {
             var member = i < members.Length ? data.Individuals.FirstOrDefault(p => p.Id == members[i]) : null;
-            var content = new StackPanel { Orientation = Orientation.Horizontal, MinHeight = 52 };
-            content.Children.Add(new Image { Source = member is null ? null : Sprite(member), Width = 48, Height = 48, Margin = new Thickness(0, 0, 8, 0) });
-            var text = new TextBlock { Text = member is null ? $"Место {i + 1}\nдля питомца" : $"{(editable ? DisplayName(member, data) : _selector.Name(member))}\nУр. {_selector.Level(member)}", TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center, MaxWidth = Math.Max(80, (ActualWidth - 160) / 3 - 75) };
-            content.Children.Add(text);
-            if (member is not null) content.ToolTip = $"{DisplayName(member, data)}\nМаршрут: {(_selector.Matches(member, _route) ? "подходящий тип — помогает команде" : "без совпадения типа")}\nОсобенности: {_selector.Traits(member)}" +
-                (_currentPreview?.XpByParticipant.TryGetValue(member.Id, out var amount) == true ? $"\n+{amount} XP" : "");
-            if (editable && member is not null) {
-                var remove = new Button { Content = "×", Tag = member.Id, ToolTip = "Убрать из команды", MinWidth = 22, MinHeight = 22, Height = 22, Width = 22, VerticalAlignment = VerticalAlignment.Top, Padding = new Thickness(0), Style = (Style)FindResource("SecondaryButtonStyle") };
-                remove.Click += (_, _) => { _draft.Remove((Guid)remove.Tag); RefreshPicker(); };
-                content.Children.Add(remove);
-            }
-            System.Windows.Automation.AutomationProperties.SetName(content, member is null ? $"Пустое место {i + 1}" : DisplayName(member, data));
-            if (member is null && !editable && ReferenceEquals(panel, TeamSlots)) {
-                var invite = new Grid { MinHeight = 72 };
-                invite.Children.Add(new System.Windows.Shapes.Rectangle { Stroke = (Brush)FindResource("NdBorderBrush"), StrokeThickness = 1.2, StrokeDashArray = [4, 3], RadiusX = 9, RadiusY = 9 });
-                invite.Children.Add(new TextBlock { Text = "+\nВыбрать покемона", TextAlignment = TextAlignment.Center, Foreground = (Brush)FindResource("NdLavenderBrush"), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
-                var slot = new Button { Content = invite, Style = (Style)FindResource("NdLinkButtonStyle"), Padding = new Thickness(0), Margin = new Thickness(0, 0, 7, 0), HorizontalContentAlignment = HorizontalAlignment.Stretch, IsEnabled = !_busy };
-                System.Windows.Automation.AutomationProperties.SetName(slot, $"Выбрать покемона на место {i + 1}");
-                slot.Click += ChooseTeam_Click;
-                panel.Children.Add(slot);
+            if (member is null) {
+                var invite = new Grid { MinHeight = 44 };
+                invite.Children.Add(new System.Windows.Shapes.Rectangle { Stroke = (Brush)FindResource("NdBorderBrush"), StrokeThickness = 1.2, StrokeDashArray = [4, 3], RadiusX = 11, RadiusY = 11 });
+                invite.Children.Add(new TextBlock { Text = ReferenceEquals(panel, TeamSlots) && !editable ? "+  Выбрать покемона" : $"Место {i + 1} свободно", Foreground = (Brush)FindResource(ReferenceEquals(panel, TeamSlots) ? "NdLavenderBrush" : "NdMutedBrush"), FontSize = 13, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
+                if (ReferenceEquals(panel, TeamSlots) && !editable) {
+                    var slot = new Button { Content = invite, Style = (Style)FindResource("NdLinkButtonStyle"), Padding = new Thickness(0), Margin = new Thickness(0, 0, 0, 6), MinHeight = 44, HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch, IsEnabled = !_busy };
+                    System.Windows.Automation.AutomationProperties.SetName(slot, $"Выбрать покемона на место {i + 1}");
+                    slot.Click += ChooseTeam_Click;
+                    panel.Children.Add(slot);
+                } else {
+                    invite.Margin = new Thickness(0, 0, 0, 6);
+                    System.Windows.Automation.AutomationProperties.SetName(invite, $"Пустое место {i + 1}");
+                    panel.Children.Add(invite);
+                }
                 continue;
             }
-            UIElement child = content;
-            if (member is not null && xpGain?.TryGetValue(member.Id, out var gain) == true) {
-                var dock = new DockPanel();
-                var chip = new TextBlock { Text = $"+{gain} XP", FontSize = 17, FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource("NdApricotBrush"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 0, 4, 0) };
-                DockPanel.SetDock(chip, Dock.Right);
-                dock.Children.Add(chip); dock.Children.Add(content);
-                child = dock;
+            var level = _selector.Level(member);
+            var fits = _selector.Matches(member, route);
+            var row = new DockPanel { LastChildFill = true };
+            var sprite = new Image { Source = Sprite(member), Width = 40, Height = 40, Margin = new Thickness(0, 0, 9, 0), VerticalAlignment = VerticalAlignment.Center };
+            RenderOptions.SetBitmapScalingMode(sprite, BitmapScalingMode.NearestNeighbor);
+            DockPanel.SetDock(sprite, Dock.Left);
+            row.Children.Add(sprite);
+            if (editable) {
+                var remove = new Button { Content = "×", Tag = member.Id, ToolTip = "Убрать из команды", Width = 26, Height = 26, MinHeight = 26, Padding = new Thickness(0), Margin = new Thickness(6, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center, Style = (Style)FindResource("NdTileButtonStyle") };
+                System.Windows.Automation.AutomationProperties.SetName(remove, "Убрать из команды: " + _selector.Name(member));
+                remove.Click += (_, _) => { _draft.Remove((Guid)remove.Tag); RefreshPicker(); };
+                DockPanel.SetDock(remove, Dock.Right);
+                row.Children.Add(remove);
             }
-            panel.Children.Add(new Border { Child = child, Padding = new Thickness(10), Margin = new Thickness(0, 0, 7, 0), CornerRadius = new CornerRadius(9), BorderThickness = new Thickness(1), BorderBrush = (Brush)FindResource("CardBorderBrush"), Background = (Brush)FindResource("CardBackgroundBrush") });
+            var side = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(8, 0, 0, 0) };
+            if (fits) side.Children.Add(new TextBlock { Text = "✓ подходит", FontSize = 11.5, FontWeight = FontWeights.SemiBold, Foreground = (Brush)FindResource("NdSuccessBrush"), HorizontalAlignment = HorizontalAlignment.Right });
+            if (Xp(member.Id) is { } points) side.Children.Add(new TextBlock { Text = $"+{points} XP", FontSize = 12, FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource(xpGain is null ? "NdLavenderBrush" : "NdApricotBrush"), HorizontalAlignment = HorizontalAlignment.Right });
+            DockPanel.SetDock(side, Dock.Right);
+            if (side.Children.Count > 0) row.Children.Add(side);
+            var text = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+            text.Children.Add(new TextBlock { Text = _selector.Name(member) + (member.IsShiny ? " ✦" : ""), FontWeight = FontWeights.Bold, FontSize = 13.5, TextTrimming = TextTrimming.CharacterEllipsis });
+            text.Children.Add(new TextBlock { Text = $"ур. {level}" + (level < recommended ? " · ниже рекомендуемого" : member.Nickname is { Length: > 0 } nick ? " · " + nick : ""), FontSize = 12, Foreground = (Brush)FindResource("NdMutedBrush"), TextTrimming = TextTrimming.CharacterEllipsis });
+            row.Children.Add(text);
+            row.ToolTip = $"{DisplayName(member, data)}\nУровень {level}, рекомендуемый для похода — {recommended}\nМаршрут: {(fits ? "подходящий тип — помогает команде" : "без совпадения типа")}\nОсобенности: {_selector.Traits(member)}";
+            System.Windows.Automation.AutomationProperties.SetName(row, DisplayName(member, data));
+            panel.Children.Add(new Border { Child = row, Padding = new Thickness(8, 4, 10, 4), Margin = new Thickness(0, 0, 0, 6), MinHeight = 44, CornerRadius = new CornerRadius(11), BorderThickness = new Thickness(1), BorderBrush = (Brush)FindResource("NdBorderBrush"), Background = new SolidColorBrush(Color.FromRgb(0x1A, 0x1D, 0x36)) });
         }
     }
     private void ChooseTeam_Click(object sender, RoutedEventArgs e)
     {
-        if (_busy || _suspended || _snapshot().Expedition?.Status is "running" or "ready") return;
+        if (_busy || _suspended || _pickerOpen || _snapshot().Expedition?.Status is "running" or "ready") return;
         _draft.Clear(); _draft.UnionWith(_selected); _pickerOpen = true;
-        PickerPanel.Visibility = Visibility.Visible; ScenarioScroll.Visibility = PreparationFooter.Visibility = Visibility.Collapsed;
+        PickerPanel.Visibility = Visibility.Visible; RouteSelectionPanel.Visibility = Visibility.Collapsed;
         ResetPickerFilters(); RefreshPicker(); PickerSearchBox.Focus();
+        Theme.Motion.Enter(PickerPanel, 10, 180);
     }
     private void ClosePicker()
     {
-        _pickerOpen = false; _draft.Clear(); PickerPanel.Visibility = Visibility.Collapsed; ScenarioScroll.Visibility = PreparationFooter.Visibility = Visibility.Visible;
+        _pickerOpen = false; _draft.Clear(); PickerPanel.Visibility = Visibility.Collapsed; RouteSelectionPanel.Visibility = Visibility.Visible;
         if (!_suspended) ChooseTeamButton.Focus();
+    }
+    // The best free three for this route: type match first, then level against the recommendation, then level.
+    private Guid[] BestTeam(SaveData data) => _selector.Query(data, _route, Difficulty, "", null, null, true, false, 0).Take(3).Select(p => p.Id).ToArray();
+    private void PickerAuto_Click(object sender, RoutedEventArgs e)
+    {
+        if (!_pickerOpen || _busy || _suspended) return;
+        _draft.Clear(); _draft.UnionWith(BestTeam(_snapshot()));
+        RefreshPicker();
+    }
+    private void AutoTeam_Click(object sender, RoutedEventArgs e)
+    {
+        if (_busy || _suspended || _pickerOpen || _snapshot().Expedition?.Status is "running" or "ready") return;
+        var best = BestTeam(_snapshot());
+        if (best.Length == 0) { Show("Свободных питомцев сейчас нет: все заняты или на рабочем столе."); return; }
+        _selected.Clear(); _selected.UnionWith(best); _pendingStart = null;
+        Refresh();
     }
     private void PickerCancel_Click(object sender, RoutedEventArgs e) { ClosePicker(); Refresh(); }
     private void PickerDone_Click(object sender, RoutedEventArgs e)
@@ -430,44 +553,52 @@ public partial class ExpeditionView : UserControl
         var rows = _selector.Query(data, _route, Difficulty, PickerSearchBox.Text,
             (PickerTypeBox.SelectedItem as ComboBoxItem)?.Tag as string, (PickerTraitBox.SelectedItem as ComboBoxItem)?.Tag as string,
             PickerAvailableBox.IsChecked == true, PickerRouteBox.IsChecked == true, PickerSortBox.SelectedIndex);
-        // D-17 tiles, same family as the Pokédex grid: sprite, name, level, plus the two facts a team
-        // pick needs (route fit, trait).
-        // From the space the view was given (picker margins 2x24, room for a scrollbar), not from the scroll
-        // viewer, whose size is still the previous window's while a resize is being laid out.
-        var viewportWidth = _host.Width > 0 ? _host.Width - 66 : PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48);
-        var columns = Math.Max(2, (int)((viewportWidth - 8) / 150));
+        // Tiles of the same family as the Pokédex grid: sprite, name, level, plus the two facts a team pick needs
+        // (route fit, traits). Sized from the space the view was given, not from the scroll viewer, whose size is
+        // still the previous window's while a resize is being laid out.
+        var plan = PlanColumn.Width.Value;
+        var viewportWidth = _host.Width > 0 ? _host.Width - 48 - plan - 14 - 30 - 18 : PickerScroll.ViewportWidth > 0 ? PickerScroll.ViewportWidth - 2 : Math.Max(400, ActualWidth - 48);
+        var columns = Math.Max(2, (int)((viewportWidth - 8) / 138));
         var width = Math.Floor((viewportWidth - 8) / columns) - 8;
-        // As many full rows as the window height holds (three at 1200x660), so FullHD fills its grid instead of a void.
-        var rowsFit = _host.Height > 0 ? Math.Clamp((int)((_host.Height - 430) / 150), 3, 8) : 3; // 430: title, slots, filters, footer
+        // As many full rows as the window height holds, so FullHD fills its grid instead of a void.
+        var rowsFit = _host.Height > 0 ? Math.Clamp((int)((_host.Height - 330) / 150), 2, 8) : 3; // 330: title, filters, footer
         var pageSize = Math.Max(12, columns * rowsFit);
         var pages = Math.Max(1, (rows.Count + pageSize - 1) / pageSize); _pickerPage = Math.Clamp(_pickerPage, 0, pages - 1);
+        var order = _draft.ToList();
         PickerMembers.Children.Clear();
         foreach (var member in rows.Skip(_pickerPage * pageSize).Take(pageSize)) {
             var reason = _selector.Unavailable(member, data); var chosen = _draft.Contains(member.Id);
-            var content = new StackPanel();
-            var well = new Grid { Height = 64 };
-            well.Children.Add(new Image { Source = Sprite(member), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
-            if (chosen) well.Children.Add(new TextBlock { Text = "✓", FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource("NdLavenderBrush"), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top });
-            content.Children.Add(well);
-            content.Children.Add(new TextBlock { Text = DisplayName(member, data).Split('\n')[0], FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
-            content.Children.Add(new TextBlock { Text = $"Ур. {_selector.Level(member)}  #{member.CurrentSpeciesId:D4}", FontSize = 12, Foreground = (Brush)FindResource("NdMutedBrush") });
             var fits = _selector.Matches(member, _route);
-            content.Children.Add(new TextBlock { Text = fits ? "✓ Подходит маршруту" : string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource(fits ? "NdLavenderBrush" : "NdMutedBrush"), Margin = new Thickness(0, 2, 0, 0) });
-            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource("NdMutedBrush") });
-            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 12, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
-            var button = new Button { Content = content, Tag = member.Id, Width = width, MinHeight = 140,
+            var content = new StackPanel();
+            var well = new Grid { Height = 60 };
+            var sprite = new Image { Source = Sprite(member), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center };
+            RenderOptions.SetBitmapScalingMode(sprite, BitmapScalingMode.NearestNeighbor);
+            well.Children.Add(sprite);
+            if (fits) well.Children.Add(new Border { Width = 20, Height = 20, CornerRadius = new CornerRadius(10), Background = new SolidColorBrush(Color.FromRgb(0x24, 0x40, 0x3A)), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top, ToolTip = "Подходит маршруту",
+                Child = new TextBlock { Text = "✓", FontSize = 12, FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource("NdSuccessBrush"), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center } });
+            if (chosen) well.Children.Add(new Border { Width = 22, Height = 22, CornerRadius = new CornerRadius(11), Background = (Brush)FindResource("NdApricotFaceBrush"), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top,
+                Child = new TextBlock { Text = (order.IndexOf(member.Id) + 1).ToString(CultureInfo.InvariantCulture), FontSize = 12, FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource("NdOnApricotBrush"), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center } });
+            content.Children.Add(well);
+            content.Children.Add(new TextBlock { Text = DisplayName(member, data).Split('\n')[0], FontWeight = FontWeights.Bold, FontSize = 13, TextAlignment = TextAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 3, 0, 0) });
+            content.Children.Add(new TextBlock { Text = $"ур. {_selector.Level(member)} · #{member.CurrentSpeciesId:D4}", FontSize = 12, TextAlignment = TextAlignment.Center, Foreground = (Brush)FindResource("NdMutedBrush") });
+            content.Children.Add(new TextBlock { Text = string.Join(" / ", _selector.Types(member).Select(ExpeditionTeamSelector.TypeName)), FontSize = 11.5, TextAlignment = TextAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource(fits ? "NdSuccessBrush" : "NdMutedBrush"), Margin = new Thickness(0, 1, 0, 0) });
+            content.Children.Add(new TextBlock { Text = string.Join(" · ", new[] { member.FirstTraitId, _selector.Level(member) >= _selector.SecondTraitLevel ? member.SecondTraitId : null }.Where(t => !string.IsNullOrWhiteSpace(t)).Select(CollectionView.TraitLabel)), FontSize = 11.5, TextAlignment = TextAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (Brush)FindResource("NdMutedBrush") });
+            if (reason is not null) content.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center, FontSize = 11.5, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 1, 0, 0) });
+            var button = new Button { Content = content, Tag = member.Id, Width = width, MinHeight = 134,
                 HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(4), Padding = new Thickness(8), Style = (Style)FindResource("SecondaryButtonStyle"),
+                Margin = new Thickness(4), Padding = new Thickness(8, 7, 8, 7), Style = (Style)FindResource("NdTileButtonStyle"),
                 IsEnabled = reason is null && (chosen || _draft.Count < 3),
                 ToolTip = (reason ?? (chosen ? "Убрать из команды" : _draft.Count >= 3 ? "В команде уже трое. Уберите участника, чтобы выбрать другого." : "Выбрать питомца")) + "\n" + DisplayName(member, data) + "\n" + _selector.Traits(member),
-                BorderThickness = new Thickness(chosen ? 2 : 1), BorderBrush = (Brush)FindResource(chosen ? "NdLavenderBrush" : "CardBorderBrush") };
+                BorderThickness = new Thickness(chosen ? 2 : 1), BorderBrush = (Brush)FindResource(chosen ? "NdApricotBrush" : "NdBorderBrush") };
+            if (chosen) button.Background = new SolidColorBrush(Color.FromRgb(0x2A, 0x26, 0x40));
             System.Windows.Automation.AutomationProperties.SetName(button, DisplayName(member, data) + " · " + (reason ?? (chosen ? "выбран" : "выбрать")));
             button.Click += (_, _) => { if (!button.IsEnabled || !_pickerOpen) return; if (!_draft.Remove(member.Id) && _draft.Count < 3) _draft.Add(member.Id); RefreshPicker(); };
             PickerMembers.Children.Add(button);
         }
-        RenderSlots(PickerSlots, _draft, data, true);
+        RenderPlan(data);
         PickerRouteHintText.Text = $"{RouteName(_route)} · {((ListBoxItem)DifficultyBox.SelectedItem).Content} · {((ListBoxItem)DurationBox.SelectedItem).Content} · {_selector.RouteHint(_route, Difficulty)}";
         PickerCountText.Text = $"Выбрано {_draft.Count} / 3 · найдено {rows.Count}";
+        PickerAutoButton.IsEnabled = !_busy;
         PickerPageText.Text = $"{_pickerPage + 1} / {pages}";
         PickerPreviousButton.IsEnabled = _pickerPage > 0; PickerNextButton.IsEnabled = _pickerPage + 1 < pages;
         PickerDoneButton.IsEnabled = _draft.Count is >= 1 and <= 3;
@@ -495,14 +626,14 @@ public partial class ExpeditionView : UserControl
         try { if (_catalog is null) throw new InvalidOperationException(); outlook = ExpeditionService.Outlook(_catalog, _route); }
         catch (Exception ex) when (ex is InvalidOperationException or System.IO.IOException or System.Text.Json.JsonException or KeyNotFoundException)
         {
-            LootLabel.Text = "Добыча появится после выбора команды.";
+            LootLabel.Text = "ДОБЫЧА ПОЯВИТСЯ ПОСЛЕ ВЫБОРА КОМАНДЫ";
             return;
         }
         var minutes = DurationBox.SelectedItem is ListBoxItem { Tag: string tag } && int.TryParse(tag, out var m) ? m : 360;
         var berries = minutes * outlook.MinimumPrimaryPerHour / 60;
         // Only the easy trip guarantees the floor (D-29); on harder ones the amount depends on the team's level.
         var easy = Difficulty == "easy";
-        LootLabel.Text = easy ? "Даже с одним питомцем:" : "Маршрут даёт:";
+        LootLabel.Text = easy ? "ДАЖЕ С ОДНИМ ПИТОМЦЕМ" : "МАРШРУТ ДАЁТ";
         var cards = new List<(ImageSource? Image, string Text, string Tip)>
         {
             (ShopArt(outlook.PrimaryBerryId), easy ? $"{BerryName(outlook.PrimaryBerryId)} от {berries}" : $"{BerryName(outlook.PrimaryBerryId)} — основная",
@@ -511,14 +642,17 @@ public partial class ExpeditionView : UserControl
             (ShopArt(outlook.ExtraBerryIds.FirstOrDefault() ?? outlook.PrimaryBerryId),
                 string.Join(", ", outlook.ExtraBerryIds.Select(BerryName)) + " — находки", "Попутные ягоды и монеты находит только полная тройка."),
         };
-        foreach (var (image, text, tip) in cards)
-        {
-            var row = new StackPanel { Orientation = Orientation.Horizontal, ToolTip = tip };
-            if (image is not null) row.Children.Add(new Image { Source = image, Width = 26, Height = 26, Margin = new Thickness(0, 0, 6, 0) });
-            else row.Children.Add(new TextBlock { Text = "XP", FontWeight = FontWeights.ExtraBold, Foreground = (Brush)FindResource("UiForestBrush"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) });
-            row.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.NoWrap, TextTrimming = TextTrimming.CharacterEllipsis, MaxWidth = 145, FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center });
-            PreviewRewardCards.Children.Add(new Border { Child = row, Padding = new Thickness(2), Margin = new Thickness(0, 0, 6, 6), CornerRadius = new CornerRadius(8), Background = System.Windows.Media.Brushes.Transparent });
-        }
+        foreach (var (image, text, tip) in cards) PreviewRewardCards.Children.Add(RewardCard(image, text, tip));
+    }
+
+    // A small card of the plan: the picture on top, the amount under it.
+    private Border RewardCard(ImageSource? image, string text, string? tip)
+    {
+        var column = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+        if (image is not null) column.Children.Add(new Image { Source = image, Width = 28, Height = 28, HorizontalAlignment = HorizontalAlignment.Center, Margin = new Thickness(0, 0, 0, 3) });
+        else column.Children.Add(new TextBlock { Text = "XP", FontFamily = (System.Windows.Media.FontFamily)FindResource("NdDisplayFont"), FontSize = 15, FontWeight = FontWeights.Bold, Foreground = (Brush)FindResource("NdLavenderBrush"), HorizontalAlignment = HorizontalAlignment.Center, Margin = new Thickness(0, 4, 0, 6) });
+        column.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center, FontSize = 12, FontWeight = FontWeights.Bold, MaxHeight = 34, TextTrimming = TextTrimming.CharacterEllipsis });
+        return new Border { Child = column, ToolTip = tip ?? text, Padding = new Thickness(5, 7, 5, 7), Margin = new Thickness(0, 0, 6, 6), MinHeight = 66, CornerRadius = new CornerRadius(11), BorderThickness = new Thickness(1), BorderBrush = (Brush)FindResource("NdBorderBrush"), Background = new SolidColorBrush(Color.FromRgb(0x14, 0x17, 0x2B)) };
     }
 
     private void RenderRewards(UniformGrid panel, string berry, int berries, int coins, string? xp, ExpeditionRewards? extras = null)
@@ -530,15 +664,8 @@ public partial class ExpeditionView : UserControl
         cards.Add(((ImageSource)FindResource("UiCoinImage"), Coins(coins + (extras?.ExtraCoins ?? 0))));
         foreach (var (id, count) in extras?.ExtraItems ?? []) cards.Add((ShopArt(id), $"{ItemName(id)} ×{count}"));
         if (xp is not null) cards.Add((null, xp));
-        var compact = ReferenceEquals(panel, PreviewRewardCards);
-        if (!compact) panel.Columns = Math.Min(cards.Count, 4);
-        foreach (var (image, text) in cards) {
-            var row = new StackPanel { Orientation = Orientation.Horizontal };
-            if (image is not null) row.Children.Add(new Image { Source = image, Width = 26, Height = 26, Margin = new Thickness(0, 0, 6, 0) });
-            else row.Children.Add(new TextBlock { Text = "XP", FontWeight = FontWeights.ExtraBold, Foreground = (Brush)FindResource("UiForestBrush"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) });
-            row.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.NoWrap, TextTrimming = TextTrimming.CharacterEllipsis, MaxWidth = compact ? 145 : 180, TextAlignment = TextAlignment.Left, FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center, ToolTip = text });
-            panel.Children.Add(new Border { Child = row, Padding = new Thickness(compact ? 2 : 8), Margin = new Thickness(0, 0, 6, 6), CornerRadius = new CornerRadius(8), Background = compact ? System.Windows.Media.Brushes.Transparent : (Brush)FindResource("SurfaceBackgroundBrush") });
-        }
+        panel.Columns = 3;
+        foreach (var (image, text) in cards) panel.Children.Add(RewardCard(image, text, null));
     }
 
     private void RefreshLandscape(string routeId)
@@ -562,7 +689,7 @@ public partial class ExpeditionView : UserControl
         HeaderSketch.Source = (ImageSource)FindResource(ready ? "NdBackpackImage" : "NdMapImage");
         TripProgress.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
         TripTitle.Text = ready ? "С возвращением!" : "Команда в походе";
-        TripTitle.FontSize = ready ? 22 : 16;
+        TripTitle.FontSize = ready ? 18 : 15;
         TripGlyph.Visibility = ready ? Visibility.Visible : Visibility.Collapsed;
         TripHeader.HorizontalAlignment = TripTerms.HorizontalAlignment = ready ? HorizontalAlignment.Center : HorizontalAlignment.Left;
         TripTimeRow.Visibility = ready ? Visibility.Collapsed : Visibility.Visible;
@@ -743,24 +870,5 @@ public partial class ExpeditionView : UserControl
         }
         catch (Exception ex) { if (!_suspended && generation == _generation) Show("Не удалось открыть встречу. Она сохранена, повторите попытку.", ex); }
         finally { _busy = false; Refresh(); }
-    }
-
-    private static readonly DiaryPiece[] MarginPieces =
-    [
-        new("exp-tracks", "Следы команды. Кто-то опять убежал вперёд."), new("exp-tent"),
-        new("exp-lantern", "Фонарь — в боковом кармане."), new("exp-binoculars"),
-    ];
-
-    // The margin is whatever the left-aligned 968 px column leaves on the right, under the full-width scene (Georgy 02.11).
-    private void PlaceMargin()
-    {
-        DiaryMargin.KeepColumn(this, 968);
-        var column = Math.Min(Math.Max(0, ActualWidth - 48), 968);
-        ExpeditionMargin.Width = Math.Max(0, ActualWidth - 24 - column - 16);
-        // Under the scene: the scene is opaque and full width, so the margin starts where it ends.
-        var top = Landscape.ActualHeight > 0 && Landscape.IsDescendantOf(this)
-            ? Landscape.TransformToAncestor(this).Transform(new System.Windows.Point(0, Landscape.ActualHeight)).Y + 12 : 120;
-        ExpeditionMargin.Margin = new Thickness(0, Math.Max(0, top), 8, 0);
-        ExpeditionMargin.Show("expeditions", MarginPieces);
     }
 }

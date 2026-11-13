@@ -232,4 +232,33 @@ public class ApprovedExpeditionTests
         });
     }
 
+    [Fact]
+    public void AutoPickTakesTheBestFreeThree() => WpfTestHost.Run(() =>
+    {
+        var data = State(5); data.ActiveIndividualId = data.Individuals[0].Id;
+        data.Individuals[4].TotalXp = new LevelProgression(Catalog.Value.DataRoot).XpForLevel(30);
+        var v = View(data);
+        Click(v, "AutoTeamButton");
+        Assert.True(Find<Button>(v, "StartButton").IsEnabled);
+        Click(v, "StartButton");
+        Assert.Equal(3, data.Expedition!.ParticipantIds.Count());
+        Assert.Contains(data.Individuals[4].Id, data.Expedition.ParticipantIds);
+        Assert.DoesNotContain(data.Individuals[0].Id, data.Expedition.ParticipantIds); // on the desktop, so not free
+    });
+
+    [Fact]
+    public void PlanFollowsTheDraftWhileThePickerIsOpenAndCancelRestoresIt() => WpfTestHost.Run(() =>
+    {
+        var data = State(); var v = View(data);
+        Click(v, "ChooseTeamButton"); Click(v, "PickerAutoButton");
+        Assert.Contains("3 / 3", Find<TextBlock>(v, "PickerCountText").Text);
+        Assert.Contains("3 / 3", Find<TextBlock>(v, "TeamHeading").Text);
+        Assert.False(Find<Button>(v, "StartButton").IsEnabled); // the draft is not the team until «Готово»
+        Click(v, "PickerCancelButton");
+        Assert.Contains("0 / 3", Find<TextBlock>(v, "TeamHeading").Text);
+        Click(v, "ChooseTeamButton"); Click(v, "PickerAutoButton"); Click(v, "PickerDoneButton");
+        Assert.True(Find<Button>(v, "StartButton").IsEnabled);
+        v.RaiseEvent(new RoutedEventArgs(FrameworkElement.UnloadedEvent));
+    });
+
 }

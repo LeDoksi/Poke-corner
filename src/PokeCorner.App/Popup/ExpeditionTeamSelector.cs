@@ -33,6 +33,7 @@ internal sealed class ExpeditionTeamSelector
     internal string[] Types(PokemonIndividual pet) => _species.GetValueOrDefault(pet.CurrentSpeciesId)?.Types.ToArray() ?? [];
     internal int Recommended(string difficulty) => _recommended[difficulty == "hard" ? 2 : difficulty == "normal" ? 1 : 0];
     internal bool Matches(PokemonIndividual pet, string route) => Types(pet).Intersect(_routeTypes.GetValueOrDefault(route) ?? []).Any();
+    internal string[] RouteTypes(string route) => _routeTypes.GetValueOrDefault(route) ?? [];
     internal string RouteHint(string route, string difficulty) => "Подходят типы: " + string.Join(", ", (_routeTypes.GetValueOrDefault(route) ?? []).Select(TypeName)) + $" · рекомендуемый уровень {Recommended(difficulty)}";
     internal string? Unavailable(PokemonIndividual pet, SaveData state)
     {

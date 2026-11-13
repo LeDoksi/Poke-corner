@@ -17,25 +17,72 @@
    <Style x:Key="SectionHeaderTextStyle" TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="FontSize" Value="16"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
    <Style x:Key="CaptionTextStyle" TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="12"/></Style>
    <Style x:Key="CardStyle" TargetType="Border"><Setter Property="Background" Value="{StaticResource NdSurfaceBrush}"/><Setter Property="BorderBrush" Value="{StaticResource NdBorderBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="9"/></Style>
+   <!-- Buttons (D-38): the app's key cap for actions, a flat body for links, tiles and outlines. -->
    <Style x:Key="SecondaryButtonStyle" TargetType="Button">
-    <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="{StaticResource NdSurfaceBrush}"/><Setter Property="BorderBrush" Value="{StaticResource NdBorderBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="12,7"/><Setter Property="MinHeight" Value="36"/>
-    <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Border x:Name="Surface" CornerRadius="7" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/></Border><ControlTemplate.Triggers>
-     <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
-     <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/><Setter TargetName="Surface" Property="BorderThickness" Value="2"/></Trigger>
-     <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.6"/></Trigger>
-    </ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+    <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="{StaticResource NdRaisedFaceBrush}"/>
+    <Setter Property="Padding" Value="12,6"/><Setter Property="MinHeight" Value="38"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Template" Value="{StaticResource NdKeycapTemplate}"/>
    </Style>
-   <Style x:Key="UiPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="{StaticResource NdApricotBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="FontWeight" Value="Bold"/><Setter Property="MinHeight" Value="48"/>
-    <Style.Triggers><Trigger Property="IsEnabled" Value="False"><Setter Property="Background" Value="{StaticResource NdRaisedBrush}"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/></Trigger></Style.Triggers></Style>
+   <Style x:Key="UiPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
+    <Setter Property="Background" Value="{StaticResource NdApricotFaceBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="FontWeight" Value="Bold"/><Setter Property="MinHeight" Value="48"/>
+   </Style>
    <Style TargetType="Button" BasedOn="{StaticResource UiPrimaryButtonStyle}"/>
-   <Style x:Key="NdLinkButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="Transparent"/><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/></Style>
-   <Style x:Key="NdDangerOutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="{StaticResource NdDangerLineBrush}"/><Setter Property="Foreground" Value="{StaticResource NdDangerTextBrush}"/><Setter Property="Padding" Value="18,8"/></Style>
+   <Style x:Key="NdFlatButtonStyle" TargetType="Button">
+    <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="Transparent"/><Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Padding" Value="10,5"/><Setter Property="MinHeight" Value="30"/><Setter Property="Cursor" Value="Hand"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+     <Grid>
+      <Border x:Name="Surface" CornerRadius="11" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+      <Border x:Name="Light" CornerRadius="11" Background="#FFFFFF" Opacity="0" IsHitTestVisible="False"/>
+      <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+      <Border x:Name="FocusRing" CornerRadius="11" BorderThickness="2" BorderBrush="{StaticResource NdTextBrush}" Visibility="Collapsed" IsHitTestVisible="False"/>
+     </Grid>
+     <ControlTemplate.Triggers>
+      <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Light" Property="Opacity" Value="0.07"/></Trigger>
+      <Trigger Property="IsPressed" Value="True"><Setter TargetName="Light" Property="Opacity" Value="0.14"/></Trigger>
+      <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="FocusRing" Property="Visibility" Value="Visible"/></Trigger>
+      <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger>
+     </ControlTemplate.Triggers>
+    </ControlTemplate></Setter.Value></Setter>
+   </Style>
+   <Style x:Key="NdLinkButtonStyle" TargetType="Button" BasedOn="{StaticResource NdFlatButtonStyle}"><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+   <Style x:Key="NdTileButtonStyle" TargetType="Button" BasedOn="{StaticResource NdFlatButtonStyle}"><Setter Property="Background" Value="#1A1D36"/><Setter Property="BorderBrush" Value="{StaticResource NdBorderBrush}"/></Style>
+   <Style x:Key="NdDangerOutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource NdFlatButtonStyle}"><Setter Property="BorderBrush" Value="{StaticResource NdDangerLineBrush}"/><Setter Property="Foreground" Value="{StaticResource NdDangerTextBrush}"/><Setter Property="MinHeight" Value="40"/><Setter Property="Padding" Value="16,6"/></Style>
    <Style x:Key="NdGlyphStyle" TargetType="TextBlock"><Setter Property="FontFamily" Value="Segoe MDL2 Assets"/><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="14"/><Setter Property="VerticalAlignment" Value="Center"/><Setter Property="Margin" Value="0,0,7,0"/></Style>
-   <Style x:Key="NdRouteSelectedStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}"><Setter Property="Background" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="FontWeight" Value="Bold"/></Style>
-   <Style x:Key="UiChoiceListStyle" TargetType="ListBox"><Setter Property="FontSize" Value="12"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Background" Value="Transparent"/><Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/><Setter Property="ItemsPanel"><Setter.Value><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></Setter.Value></Setter><Setter Property="ItemContainerStyle"><Setter.Value><Style TargetType="ListBoxItem"><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="{StaticResource NdSurfaceBrush}"/><Setter Property="Margin" Value="0,0,5,0"/><Setter Property="Padding" Value="2,8"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><Border x:Name="Choice" CornerRadius="6" BorderThickness="1" BorderBrush="{StaticResource NdBorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center"/></Border><ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="FontWeight" Value="Bold"/></Trigger><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Choice" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/><Setter TargetName="Choice" Property="BorderThickness" Value="2"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.6"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style></Setter.Value></Setter></Style>
+   <Style x:Key="NdPlanLabelStyle" TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="11"/><Setter Property="FontWeight" Value="Bold"/><Setter Property="Margin" Value="2,0,0,5"/></Style>
+   <!-- One choice out of a few: a single track, the chosen segment raised in lavender. -->
+   <Style x:Key="UiChoiceListStyle" TargetType="ListBox">
+    <Setter Property="FontSize" Value="13"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Background" Value="Transparent"/>
+    <Setter Property="ItemsPanel"><Setter.Value><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></Setter.Value></Setter>
+    <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBox"><Border CornerRadius="12" Background="#14172B" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" Padding="3"><ItemsPresenter/></Border></ControlTemplate></Setter.Value></Setter>
+    <Setter Property="ItemContainerStyle"><Setter.Value><Style TargetType="ListBoxItem">
+     <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="Transparent"/><Setter Property="Padding" Value="2,7"/><Setter Property="Cursor" Value="Hand"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+     <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
+      <Border x:Name="Choice" CornerRadius="9" BorderThickness="1" BorderBrush="Transparent" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+      <ControlTemplate.Triggers>
+       <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="#262A4A"/></Trigger>
+       <Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="{StaticResource NdLavenderFaceBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/><Setter Property="FontWeight" Value="Bold"/></Trigger>
+       <Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Choice" Property="BorderBrush" Value="{StaticResource NdTextBrush}"/></Trigger>
+       <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.6"/></Trigger>
+      </ControlTemplate.Triggers>
+     </ControlTemplate></Setter.Value></Setter>
+    </Style></Setter.Value></Setter>
+   </Style>
+   <!-- Filter chip: a check box that looks like a pill. -->
+   <Style x:Key="NdChipCheckStyle" TargetType="CheckBox">
+    <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Cursor" Value="Hand"/><Setter Property="FontSize" Value="12.5"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="CheckBox">
+     <Border x:Name="Pill" CornerRadius="15" MinHeight="30" Padding="13,5" Background="{StaticResource NdRaisedFaceBrush}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1"><ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/></Border>
+     <ControlTemplate.Triggers>
+      <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Pill" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/></Trigger>
+      <Trigger Property="IsChecked" Value="True"><Setter TargetName="Pill" Property="Background" Value="{StaticResource NdLavenderFaceBrush}"/><Setter TargetName="Pill" Property="BorderBrush" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Foreground" Value="{StaticResource NdOnApricotBrush}"/></Trigger>
+      <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Pill" Property="BorderBrush" Value="{StaticResource NdTextBrush}"/></Trigger>
+     </ControlTemplate.Triggers>
+    </ControlTemplate></Setter.Value></Setter>
+   </Style>
+   <Style TargetType="ProgressBar"><Setter Property="Foreground" Value="{StaticResource NdLavenderFaceBrush}"/><Setter Property="Background" Value="#14172B"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ProgressBar"><Grid><Border x:Name="PART_Track" CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1"/><Border x:Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="5" Background="{TemplateBinding Foreground}"/></Grid></ControlTemplate></Setter.Value></Setter></Style>
    <Style TargetType="ScrollBar" BasedOn="{StaticResource NdScrollBarStyle}"/>
    <Style TargetType="TextBox"><Setter Property="Background" Value="{StaticResource NdSurfaceBrush}"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="CaretBrush" Value="{StaticResource NdApricotBrush}"/><Setter Property="BorderBrush" Value="{StaticResource NdBorderBrush}"/><Setter Property="Padding" Value="10,7"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TextBox"><Border x:Name="Field" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="7" Padding="{TemplateBinding Padding}"><Grid><ScrollViewer x:Name="PART_ContentHost"/><TextBlock x:Name="Hint" Text="{TemplateBinding Tag}" Foreground="{StaticResource NdMutedBrush}" Visibility="Collapsed" IsHitTestVisible="False"/></Grid></Border><ControlTemplate.Triggers><Trigger Property="Text" Value=""><Setter TargetName="Hint" Property="Visibility" Value="Visible"/></Trigger><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Field" Property="BorderBrush" Value="{StaticResource NdApricotBrush}"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
-   <Style TargetType="ProgressBar"><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="Background" Value="{StaticResource NdRaisedBrush}"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ProgressBar"><Grid><Border x:Name="PART_Track" CornerRadius="4" Background="{TemplateBinding Background}"/><Border x:Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="4" Background="{TemplateBinding Foreground}"/></Grid></ControlTemplate></Setter.Value></Setter></Style>
    <Style TargetType="ComboBox">
         <Setter Property="Foreground" Value="{StaticResource NdTextBrush}" />
         <Setter Property="Padding" Value="10,7" />
@@ -95,111 +142,142 @@
    <Style TargetType="CheckBox" BasedOn="{StaticResource NdCheckBoxStyle}"/> 
   </ResourceDictionary>
  </UserControl.Resources>
- <Grid Margin="0,16,0,16">
-  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
-  <!-- The outer diary margin (Georgy 02.11): the column keeps left, sketches scatter in the free space on the right. -->
-  <local:DiaryMargin x:Name="ExpeditionMargin" Grid.RowSpan="2" HorizontalAlignment="Right" />
-  <ScrollViewer x:Name="ScenarioScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-   <StackPanel x:Name="ScenarioContent" Margin="24,0">
-    <!-- Title keeps at least 240 px; the decorative note shares the rest, so a narrow window
-         never squeezes the subtitle into a one-word column (840x650 pushed «Отправить» off-screen). -->
-    <Grid Margin="0,0,0,10" MaxWidth="968" HorizontalAlignment="Left"><Grid.ColumnDefinitions><ColumnDefinition Width="*" MinWidth="240"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-     <StackPanel Grid.Column="0"><TextBlock Text="Экспедиции" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="SubtitleText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0"/></StackPanel>
-     <Grid Grid.Column="1" Height="64" MaxWidth="560" IsHitTestVisible="False"><TextBlock x:Name="TrainerNote" FontFamily="{DynamicResource NdHandFont}" FontSize="26" Foreground="{StaticResource NdLavenderBrush}" Opacity="0.85" TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Center" Padding="0,4,0,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-2"/></TextBlock.RenderTransform></TextBlock></Grid>
-     <Image x:Name="HeaderSketch" Source="/PokeCorner;component/Assets/NightDiary/sketch-exp-map.png" Opacity="0.85" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="2" Width="110" Height="56" Margin="16,0,0,0" IsHitTestVisible="False" Focusable="False"/>
-    </Grid>
-    <Border x:Name="MessagePanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
-     <DockPanel><TextBlock x:Name="MessageGlyph" Text="&#xE783;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource NdDangerTextBrush}" Margin="0,1,10,0" VerticalAlignment="Top" Visibility="Collapsed"/><StackPanel><TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" /><TextBlock x:Name="MessageDetailText" TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource NdMutedBrush}" Visibility="Collapsed" /></StackPanel></DockPanel>
-    </Border>
-<Border x:Name="EncounterPanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,8"><DockPanel>
-      
-      <Button x:Name="OpenEncounterButton" Content="Открыть встречу" Click="OpenEncounterButton_Click" DockPanel.Dock="Right" Visibility="Collapsed" Style="{StaticResource SecondaryButtonStyle}"/>
-      <StackPanel VerticalAlignment="Center"><TextBlock Text="В пути команда кого-то встретила" FontWeight="Bold"/><TextBlock Text="Кто это, узнаете во встрече" Style="{StaticResource CaptionTextStyle}"/></StackPanel>
-     </DockPanel></Border>
-    <StackPanel x:Name="RouteSelectionPanel" MaxWidth="968" HorizontalAlignment="Left"><UniformGrid x:Name="RouteButtons" x:FieldModifier="public" Rows="1" Margin="0,0,-6,6" /></StackPanel>
-    <Border x:Name="Landscape" ClipToBounds="True" Margin="-24,4,-24,12">
-     <Grid x:Name="SceneFrame" Height="236"><Image x:Name="LandscapeImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута" /><Rectangle IsHitTestVisible="False"><Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="0.75,0.9"><GradientStop Color="#D0101426"/><GradientStop Color="#60101426" Offset="0.45"/><GradientStop Color="#00101426" Offset="1"/></LinearGradientBrush></Rectangle.Fill></Rectangle>
-      <Grid Margin="24,0" MaxWidth="968" HorizontalAlignment="Left"><Border VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,18,40,18" Margin="0" MaxWidth="760"><StackPanel HorizontalAlignment="Left"><TextBlock x:Name="LandscapeName" Foreground="{StaticResource NdTextBrush}" FontFamily="{DynamicResource NdHandFont}" FontWeight="Bold" FontSize="42" RenderTransformOrigin="0,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5"/></TextBlock.RenderTransform></TextBlock><Border Height="1" Background="{StaticResource NdMutedBrush}" Opacity="0.7" Margin="0,6,0,0"/><TextBlock x:Name="RouteHintText" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="0,8,0,0"/></StackPanel></Border></Grid>
-     </Grid>
-    </Border>
-    <StackPanel x:Name="PreparationDetailsPanel"/>
-    <StackPanel x:Name="TripPanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed">
-     <Border Padding="0" Margin="0,0,0,12"><StackPanel>
-      <StackPanel x:Name="TripHeader" Orientation="Horizontal"><TextBlock x:Name="TripGlyph" Text="&#xE930;" Style="{StaticResource NdGlyphStyle}" Foreground="{StaticResource NdLavenderBrush}" FontSize="24" Margin="0,0,10,0" Visibility="Collapsed"/><TextBlock x:Name="TripTitle" Style="{StaticResource SectionHeaderTextStyle}" VerticalAlignment="Center"/></StackPanel>
-      <TextBlock x:Name="TripTerms" TextWrapping="Wrap" Margin="0,5,0,0" Foreground="{StaticResource NdMutedBrush}" />
-      <UniformGrid x:Name="TripSlots" Columns="3" Margin="0,12,0,8" />
-      <TextBlock Visibility="Collapsed" x:Name="TripTeam" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" />
-      <ProgressBar x:Name="TripProgress" Minimum="0" Maximum="1" Height="8" Margin="0,10,0,0" />
-      <DockPanel x:Name="TripTimeRow" Margin="0,8,0,4"><TextBlock x:Name="TripReturnText" DockPanel.Dock="Right" Style="{StaticResource CaptionTextStyle}" VerticalAlignment="Center"/><TextBlock x:Name="TripTime" TextWrapping="Wrap" FontSize="15" /></DockPanel>
-      <UniformGrid Visibility="Collapsed" x:Name="TripRewardCards" Columns="2" Margin="0,4,0,4"/><TextBlock Visibility="Collapsed" x:Name="TripRewards" TextWrapping="Wrap" />
-     </StackPanel></Border>
-
-    </StackPanel>
-    <StackPanel x:Name="ResultPanel" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Margin="0,12,0,0">
-     <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12"><StackPanel>
-      <StackPanel Orientation="Horizontal"><TextBlock Text="&#xE930;" Style="{StaticResource NdGlyphStyle}" Foreground="{StaticResource NdLavenderBrush}" FontSize="22" Margin="0,0,10,0"/><TextBlock Text="Экспедиция завершена" Style="{StaticResource SectionHeaderTextStyle}" FontSize="19" VerticalAlignment="Center"/></StackPanel>
-      <TextBlock Text="Обещанная добыча и опыт уже в запасах." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10" />
-      <UniformGrid Visibility="Collapsed" x:Name="ResultSlots" Columns="3" Margin="0,0,0,12"/><UniformGrid x:Name="ResultRewardCards" Columns="3" Margin="0,0,0,12" Visibility="Collapsed"/><TextBlock x:Name="ResultExtrasText" TextWrapping="Wrap" FontSize="15" /><TextBlock x:Name="ResultText" TextWrapping="Wrap" Visibility="Collapsed" />
-     </StackPanel></Border>
-
-
-    </StackPanel>
+ <!-- D-38: the scene is the page, the plan sits beside it and never scrolls away; the team is picked in place of the scene. -->
+ <Grid Margin="24,14,24,16">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+  <DockPanel Margin="0,0,0,10">
+   <Image x:Name="HeaderSketch" DockPanel.Dock="Right" Source="/PokeCorner;component/Assets/NightDiary/sketch-exp-map.png" Opacity="0.8" RenderOptions.BitmapScalingMode="HighQuality" Width="88" Height="42" Margin="12,0,0,0" IsHitTestVisible="False" Focusable="False"/>
+   <TextBlock Text="Экспедиции" Style="{StaticResource ScreenTitleTextStyle}" FontFamily="{StaticResource NdDisplayFont}" FontSize="26" VerticalAlignment="Center"/>
+   <StackPanel VerticalAlignment="Center" Margin="16,4,0,0">
+    <TextBlock x:Name="SubtitleText" Style="{StaticResource CaptionTextStyle}" FontSize="13" TextWrapping="Wrap"/>
+    <TextBlock x:Name="ContributionsText" Style="{StaticResource CaptionTextStyle}" FontSize="13" TextWrapping="Wrap"/>
    </StackPanel>
-  </ScrollViewer>
-  <StackPanel x:Name="PreparationFooter" Grid.Row="1" Margin="24,0" MaxWidth="968" HorizontalAlignment="Left" VerticalAlignment="Top">
-   <DockPanel Margin="0,0,0,7">
-    <Button x:Name="ChooseTeamButton" Content="Выбрать команду" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource NdLinkButtonStyle}"/>
-    <TextBlock x:Name="TeamHeading" Text="Команда · 0 из 3" Style="{StaticResource SectionHeaderTextStyle}" VerticalAlignment="Center"/>
-   </DockPanel>
-   <UniformGrid x:Name="TeamSlots" Columns="3" Margin="0,0,0,8"/>
-   <TextBlock x:Name="ContributionsText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,8"/>
-   <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="218"/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-    <StackPanel x:Name="PreparationPanel" Margin="0,0,16,0">
-     <Grid x:Name="ChoicesGrid"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-      <StackPanel x:Name="DifficultyGroup" Margin="0,0,8,8"><StackPanel Orientation="Horizontal" Margin="0,0,0,6"><TextBlock Text="&#xE713;" Style="{StaticResource NdGlyphStyle}"/><TextBlock Text="Сложность"/></StackPanel>
-       <ListBox x:Name="DifficultyBox" SelectionChanged="ChoiceChanged" Style="{StaticResource UiChoiceListStyle}" AutomationProperties.Name="Сложность похода"><ListBoxItem Content="Лёгкая" Tag="easy"/><ListBoxItem Content="Обычная" Tag="normal"/><ListBoxItem Content="Сложная" Tag="hard"/></ListBox>
-      </StackPanel>
-      <StackPanel x:Name="DurationGroup" Grid.Column="1" Margin="0,0,0,8"><StackPanel Orientation="Horizontal" Margin="0,0,0,6"><TextBlock Text="&#xE823;" Style="{StaticResource NdGlyphStyle}"/><TextBlock Text="Длительность"/></StackPanel>
-       <ListBox x:Name="DurationBox" SelectionChanged="ChoiceChanged" Style="{StaticResource UiChoiceListStyle}" AutomationProperties.Name="Длительность похода"><ListBoxItem Content="30 мин" Tag="30"/><ListBoxItem Content="1,5 ч" Tag="90"/><ListBoxItem Content="3 ч" Tag="180"/><ListBoxItem Content="6 ч" Tag="360"/></ListBox>
-      </StackPanel>
+  </DockPanel>
+  <StackPanel Grid.Row="1">
+   <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="10" Margin="0,0,0,10">
+    <DockPanel><TextBlock x:Name="MessageGlyph" Text="&#xE783;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource NdDangerTextBrush}" Margin="0,1,10,0" VerticalAlignment="Top" Visibility="Collapsed"/><StackPanel><TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/><TextBlock x:Name="MessageDetailText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,0" Visibility="Collapsed"/></StackPanel></DockPanel>
+   </Border>
+   <Border x:Name="EncounterPanel" Visibility="Collapsed" Style="{StaticResource NdPanelStyle}" Padding="14,10" Margin="0,0,0,10"><DockPanel>
+    <Button x:Name="OpenEncounterButton" Content="Открыть встречу" Click="OpenEncounterButton_Click" DockPanel.Dock="Right" Visibility="Collapsed" MinHeight="40" Padding="18,6"/>
+    <StackPanel VerticalAlignment="Center"><TextBlock Text="В пути команда кого-то встретила" FontWeight="Bold"/><TextBlock Text="Кто это, узнаете во встрече" Style="{StaticResource CaptionTextStyle}"/></StackPanel>
+   </DockPanel></Border>
+  </StackPanel>
+  <Grid Grid.Row="2">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition x:Name="PlanColumn" Width="340"/></Grid.ColumnDefinitions>
+   <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+   <!-- The scene -->
+   <Border x:Name="Landscape" Margin="0,0,14,0" CornerRadius="14" BorderBrush="{StaticResource NdPanelLineBrush}" BorderThickness="1">
+    <Grid x:Name="SceneFrame" MinHeight="96">
+     <Rectangle Fill="#14172B"/>
+     <Image x:Name="LandscapeImage" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" AutomationProperties.Name="Пейзаж выбранного маршрута"/>
+     <Rectangle IsHitTestVisible="False"><Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#330C0F1F" Offset="0"/><GradientStop Color="#000C0F1F" Offset="0.35"/><GradientStop Color="#000C0F1F" Offset="0.55"/><GradientStop Color="#E60C0F1F" Offset="1"/></LinearGradientBrush></Rectangle.Fill></Rectangle>
+     <!-- A note from the margin, taped onto the picture (D-43). -->
+     <Grid x:Name="SceneNote" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,24,22,0" MaxWidth="236" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5">
+      <Grid.RenderTransform><RotateTransform Angle="2"/></Grid.RenderTransform>
+      <Border Background="{StaticResource NdPaperBrush}" CornerRadius="3" Padding="14,13,14,10" Effect="{StaticResource NdLiftShadow}">
+       <StackPanel><TextBlock Text="НА ПОЛЯХ" FontSize="10" FontWeight="Bold" Foreground="#8A7A66" Margin="0,0,0,3"/><TextBlock x:Name="TrainerNote" Style="{StaticResource NdPaperNoteTextStyle}" TextAlignment="Left"/></StackPanel>
+      </Border>
+      <Border Width="58" Height="15" Background="#B8C4ABF0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-7,0,0" RenderTransformOrigin="0.5,0.5"><Border.RenderTransform><RotateTransform Angle="-4"/></Border.RenderTransform></Border>
      </Grid>
-    </StackPanel>
-    <StackPanel Grid.Column="1" VerticalAlignment="Center"><Button x:Name="StartButton" Content="Отправить команду" Click="StartButton_Click" MinHeight="50"/><TextBlock x:Name="PreviewText" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource CaptionTextStyle}" Margin="0,7,0,0" AutomationProperties.LiveSetting="Polite"/></StackPanel>
-    <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="0,1,0,0" Padding="0,8,0,0" Margin="0,4,0,0"><DockPanel><TextBlock x:Name="LootLabel" Text="Гарантированная добыча:" Foreground="{StaticResource NdMutedBrush}" VerticalAlignment="Center" Margin="0,0,16,0"/><UniformGrid x:Name="PreviewRewardCards" Columns="3"/></DockPanel></Border>
-   </Grid>
-  </StackPanel>
-  <StackPanel x:Name="ActionFooter" Grid.Row="1" MaxWidth="968" HorizontalAlignment="Left" Visibility="Collapsed" Margin="24,10,24,0" VerticalAlignment="Top">
-   <Button x:Name="ClaimButton" Content="Забрать находки" Click="ClaimButton_Click" Visibility="Collapsed"/>
-   <Button x:Name="CancelButton" Content="Прервать поход" Click="CancelButton_Click" Style="{StaticResource NdDangerOutlineButtonStyle}" Visibility="Collapsed" HorizontalAlignment="Right"/>
-   <Button x:Name="ContinueButton" Content="Продолжить" Click="Continue_Click" Visibility="Collapsed"/>
-  </StackPanel>
-  <Grid x:Name="PickerPanel" Grid.RowSpan="2" Visibility="Collapsed" Margin="24,0" Background="{StaticResource NdBackdropBrush}" KeyboardNavigation.TabNavigation="Cycle">
-   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
-   <DockPanel><Image Source="{StaticResource NdBackpackImage}" DockPanel.Dock="Right" Width="100" Height="54" Margin="12,0,0,0"/><StackPanel><TextBlock Text="Команда экспедиции" Style="{StaticResource ScreenTitleTextStyle}"/><TextBlock x:Name="PickerRouteHintText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,8"/></StackPanel></DockPanel>
-   <UniformGrid x:Name="PickerSlots" Grid.Row="1" Columns="3" Margin="0,0,0,10"/>
-   <StackPanel Grid.Row="2">
-    <TextBox x:Name="PickerSearchBox" Tag="Имя, кличка или номер" MinHeight="34" TextChanged="PickerFilterChanged" AutomationProperties.Name="Имя, кличка или номер" Margin="0,0,0,6"/>
-    <Grid Margin="0,0,0,6"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
-     <ComboBox x:Name="PickerTypeBox" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Тип" Margin="0,0,8,0"/>
-     <ComboBox x:Name="PickerTraitBox" Grid.Column="1" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Особенность" Margin="0,0,8,0"/>
-     <ComboBox x:Name="PickerSortBox" Grid.Column="2" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Сортировка команды"><ComboBoxItem Content="Рекомендованные"/><ComboBoxItem Content="Высокий уровень"/><ComboBoxItem Content="Номер"/></ComboBox>
+     <StackPanel VerticalAlignment="Bottom" Margin="22,0,22,18">
+      <TextBlock x:Name="LandscapeName" Foreground="{StaticResource NdTextBrush}" FontFamily="{StaticResource NdDisplayFont}" FontSize="28" FontWeight="Bold" TextWrapping="Wrap"/>
+      <WrapPanel x:Name="RouteChips" Margin="0,8,0,0"/>
+      <TextBlock x:Name="RouteHintText" Visibility="Collapsed"/>
+     </StackPanel>
     </Grid>
-    <DockPanel Margin="0,0,0,8"><Button x:Name="PickerResetButton" Content="Сбросить фильтры" DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}" Click="PickerReset_Click" MinHeight="28" Padding="10,4"/>
-     <StackPanel Orientation="Horizontal"><CheckBox x:Name="PickerAvailableBox" Content="Доступные" IsChecked="True" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center" Margin="0,0,14,0"/>
-     <CheckBox x:Name="PickerRouteBox" Content="Подходят маршруту" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" VerticalAlignment="Center"/></StackPanel>
+   </Border>
+   <!-- Routes as postcards -->
+   <StackPanel x:Name="RouteSelectionPanel" Grid.Row="1" Margin="0,10,14,0"><UniformGrid x:Name="RouteButtons" x:FieldModifier="public" Rows="1" Margin="0,0,-6,0"/></StackPanel>
+   <!-- Team picker, in place of the scene: the plan stays in view and follows every click. -->
+   <Border x:Name="PickerPanel" Grid.RowSpan="2" Visibility="Collapsed" Margin="0,0,14,0" Style="{StaticResource NdPanelStyle}" KeyboardNavigation.TabNavigation="Cycle">
+    <Grid>
+     <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <DockPanel Margin="0,0,0,8">
+      <TextBlock Text="Кто пойдёт?" FontFamily="{StaticResource NdDisplayFont}" FontSize="17" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,12,0"/>
+      <Button x:Name="PickerAutoButton" DockPanel.Dock="Right" Content="✦ Подобрать лучших" Click="PickerAuto_Click" Style="{StaticResource SecondaryButtonStyle}" ToolTip="Трое свободных: сначала подходящие маршруту, затем самые опытные" Margin="8,0,0,0"/>
+      <TextBox x:Name="PickerSearchBox" Tag="Имя, кличка или номер" MinHeight="34" TextChanged="PickerFilterChanged" AutomationProperties.Name="Имя, кличка или номер" VerticalAlignment="Center"/>
+     </DockPanel>
+     <WrapPanel Grid.Row="1" Margin="0,0,0,2">
+      <CheckBox x:Name="PickerRouteBox" Content="Подходят маршруту" Style="{StaticResource NdChipCheckStyle}" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" Margin="0,0,6,6"/>
+      <CheckBox x:Name="PickerAvailableBox" Content="Свободны" IsChecked="True" Style="{StaticResource NdChipCheckStyle}" Checked="PickerFilterChanged" Unchecked="PickerFilterChanged" Margin="0,0,10,6"/>
+      <TextBlock x:Name="PickerCountText" Style="{StaticResource CaptionTextStyle}" FontSize="13" VerticalAlignment="Center" Margin="0,0,0,6" AutomationProperties.LiveSetting="Polite"/>
+     </WrapPanel>
+     <StackPanel Grid.Row="2" Margin="0,0,0,8">
+      <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+       <ComboBox x:Name="PickerTypeBox" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Тип" Margin="0,0,6,0"/>
+       <ComboBox x:Name="PickerTraitBox" Grid.Column="1" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Особенность" Margin="0,0,6,0"/>
+       <ComboBox x:Name="PickerSortBox" Grid.Column="2" SelectionChanged="PickerFilterChanged" AutomationProperties.Name="Сортировка команды" Margin="0,0,6,0"><ComboBoxItem Content="Рекомендованные"/><ComboBoxItem Content="Высокий уровень"/><ComboBoxItem Content="Номер"/></ComboBox>
+       <Button x:Name="PickerResetButton" Grid.Column="3" Content="Сбросить" ToolTip="Сбросить фильтры" Style="{StaticResource NdLinkButtonStyle}" Click="PickerReset_Click"/>
+      </Grid>
+      <TextBlock x:Name="PickerRouteHintText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="2,6,0,0"/>
+     </StackPanel>
+     <ScrollViewer x:Name="PickerScroll" Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"><StackPanel>
+      <TextBlock x:Name="PickerEmptyText" Text="Никого не нашли. Измените фильтры." Visibility="Collapsed" Margin="2,12"/>
+      <WrapPanel x:Name="PickerMembers" Margin="-4,0,0,0"/>
+     </StackPanel></ScrollViewer>
+     <Grid Grid.Row="4" Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <TextBlock Text="Клик добавляет и убирает. Команда справа меняется сразу." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="2,0,8,0"/>
+      <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+       <Button x:Name="PickerPreviousButton" Content="‹" ToolTip="Предыдущая страница" AutomationProperties.Name="Предыдущая страница" MinWidth="34" Style="{StaticResource NdTileButtonStyle}" Click="PickerPrevious_Click"/>
+       <TextBlock x:Name="PickerPageText" Margin="8,0" VerticalAlignment="Center" Style="{StaticResource CaptionTextStyle}"/>
+       <Button x:Name="PickerNextButton" Content="›" ToolTip="Следующая страница" AutomationProperties.Name="Следующая страница" MinWidth="34" Style="{StaticResource NdTileButtonStyle}" Click="PickerNext_Click"/>
+      </StackPanel>
+      <Button x:Name="PickerCancelButton" Grid.Column="2" Content="Отмена" ToolTip="Вернуть команду, какой она была" Style="{StaticResource NdLinkButtonStyle}" Click="PickerCancel_Click" Margin="8,0,4,0"/>
+      <Button x:Name="PickerDoneButton" Grid.Column="3" Content="Готово" Click="PickerDone_Click" MinWidth="96" MinHeight="42"/>
+     </Grid>
+    </Grid>
+   </Border>
+   <!-- The plan -->
+   <Border Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource NdPanelStyle}">
+    <DockPanel>
+     <StackPanel x:Name="PreparationFooter" DockPanel.Dock="Bottom" Margin="0,10,0,0">
+      <Button x:Name="StartButton" Content="Отправить команду" Click="StartButton_Click" MinHeight="54" FontSize="15"/>
+      <TextBlock x:Name="PreviewText" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource CaptionTextStyle}" Margin="0,6,0,0" AutomationProperties.LiveSetting="Polite"/>
+     </StackPanel>
+     <StackPanel x:Name="ActionFooter" DockPanel.Dock="Bottom" Visibility="Collapsed" Margin="0,10,0,0">
+      <Button x:Name="ClaimButton" Content="Забрать находки" Click="ClaimButton_Click" Visibility="Collapsed" MinHeight="54" FontSize="15"/>
+      <Button x:Name="CancelButton" Content="Прервать поход" Click="CancelButton_Click" Style="{StaticResource NdDangerOutlineButtonStyle}" Visibility="Collapsed" HorizontalAlignment="Center"/>
+      <Button x:Name="ContinueButton" Content="Продолжить" Click="Continue_Click" Visibility="Collapsed"/>
+     </StackPanel>
+     <ScrollViewer x:Name="ScenarioScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+      <StackPanel x:Name="ScenarioContent">
+       <StackPanel x:Name="PreparationDetailsPanel">
+        <DockPanel Margin="0,0,0,8">
+         <Button x:Name="ChooseTeamButton" Content="Изменить" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource NdLinkButtonStyle}"/>
+         <Button x:Name="AutoTeamButton" Content="✦ Подобрать" DockPanel.Dock="Right" Click="AutoTeam_Click" Style="{StaticResource NdLinkButtonStyle}" ToolTip="Собрать лучшую свободную тройку для этого маршрута"/>
+         <TextBlock x:Name="TeamHeading" Text="Команда 0 / 3" FontFamily="{StaticResource NdDisplayFont}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,0,0"/>
+        </DockPanel>
+        <UniformGrid x:Name="TeamSlots" Columns="1" Margin="0,0,0,6"/>
+       </StackPanel>
+       <StackPanel x:Name="PreparationPanel">
+        <StackPanel x:Name="DifficultyGroup" Margin="0,0,0,10"><TextBlock Text="СЛОЖНОСТЬ" Style="{StaticResource NdPlanLabelStyle}"/>
+         <ListBox x:Name="DifficultyBox" SelectionChanged="ChoiceChanged" Style="{StaticResource UiChoiceListStyle}" AutomationProperties.Name="Сложность похода"><ListBoxItem Content="Лёгкая" Tag="easy"/><ListBoxItem Content="Обычная" Tag="normal"/><ListBoxItem Content="Сложная" Tag="hard"/></ListBox>
+        </StackPanel>
+        <StackPanel x:Name="DurationGroup" Margin="0,0,0,10"><TextBlock Text="ДЛИТЕЛЬНОСТЬ" Style="{StaticResource NdPlanLabelStyle}"/>
+         <ListBox x:Name="DurationBox" SelectionChanged="ChoiceChanged" Style="{StaticResource UiChoiceListStyle}" AutomationProperties.Name="Длительность похода"><ListBoxItem Content="30 мин" Tag="30"/><ListBoxItem Content="1,5 ч" Tag="90"/><ListBoxItem Content="3 ч" Tag="180"/><ListBoxItem Content="6 ч" Tag="360"/></ListBox>
+        </StackPanel>
+        <TextBlock x:Name="LootLabel" Text="Гарантированная добыча:" Style="{StaticResource NdPlanLabelStyle}"/>
+        <UniformGrid x:Name="PreviewRewardCards" Columns="3" Margin="0,0,-6,0"/>
+       </StackPanel>
+       <StackPanel x:Name="TripPanel" Visibility="Collapsed">
+        <StackPanel x:Name="TripHeader" Orientation="Horizontal"><TextBlock x:Name="TripGlyph" Text="&#xE930;" Style="{StaticResource NdGlyphStyle}" Foreground="{StaticResource NdLavenderBrush}" FontSize="22" Margin="0,0,8,0" Visibility="Collapsed"/><TextBlock x:Name="TripTitle" FontFamily="{StaticResource NdDisplayFont}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap"/></StackPanel>
+        <TextBlock x:Name="TripTerms" TextWrapping="Wrap" Margin="0,5,0,0" Foreground="{StaticResource NdMutedBrush}"/>
+        <UniformGrid x:Name="TripSlots" Columns="1" Margin="0,10,0,4"/>
+        <TextBlock Visibility="Collapsed" x:Name="TripTeam" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}"/>
+        <ProgressBar x:Name="TripProgress" Minimum="0" Maximum="1" Height="10" Margin="0,8,0,0"/>
+        <StackPanel x:Name="TripTimeRow" Margin="0,8,0,4"><TextBlock x:Name="TripTime" TextWrapping="Wrap" FontSize="16" FontWeight="Bold"/><TextBlock x:Name="TripReturnText" Style="{StaticResource CaptionTextStyle}" Margin="0,2,0,0"/></StackPanel>
+        <UniformGrid Visibility="Collapsed" x:Name="TripRewardCards" Columns="3" Margin="0,6,-6,0"/><TextBlock Visibility="Collapsed" x:Name="TripRewards" TextWrapping="Wrap"/>
+       </StackPanel>
+       <StackPanel x:Name="ResultPanel" Visibility="Collapsed" Margin="0,12,0,0">
+        <TextBlock Text="Экспедиция завершена" Style="{StaticResource SectionHeaderTextStyle}"/>
+        <TextBlock Text="Обещанная добыча и опыт уже в запасах." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10"/>
+        <UniformGrid Visibility="Collapsed" x:Name="ResultSlots" Columns="1" Margin="0,0,0,12"/><UniformGrid x:Name="ResultRewardCards" Columns="3" Margin="0,0,-6,12" Visibility="Collapsed"/><TextBlock x:Name="ResultExtrasText" TextWrapping="Wrap" FontSize="15"/><TextBlock x:Name="ResultText" TextWrapping="Wrap" Visibility="Collapsed"/>
+       </StackPanel>
+      </StackPanel>
+     </ScrollViewer>
     </DockPanel>
-   </StackPanel>   <ScrollViewer x:Name="PickerScroll" Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"><StackPanel>
-    <TextBlock x:Name="PickerEmptyText" Text="Никого не нашли. Измените фильтры." Visibility="Collapsed" Margin="0,12"/>
-    <WrapPanel x:Name="PickerMembers" />
-   </StackPanel></ScrollViewer>
-   <Grid Grid.Row="4" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-    <StackPanel><TextBlock x:Name="PickerCountText" FontWeight="Bold" AutomationProperties.LiveSetting="Polite"/><StackPanel Orientation="Horizontal">
-     <Button x:Name="PickerPreviousButton" Content="‹" ToolTip="Предыдущая страница" AutomationProperties.Name="Предыдущая страница" MinWidth="40" Style="{StaticResource SecondaryButtonStyle}" Click="PickerPrevious_Click"/><TextBlock x:Name="PickerPageText" Margin="10,0" VerticalAlignment="Center"/><Button x:Name="PickerNextButton" Content="›" ToolTip="Следующая страница" AutomationProperties.Name="Следующая страница" MinWidth="40" Style="{StaticResource SecondaryButtonStyle}" Click="PickerNext_Click"/>
-    </StackPanel></StackPanel>
-    <Button x:Name="PickerCancelButton" Grid.Column="1" Content="Отмена" Style="{StaticResource SecondaryButtonStyle}" Click="PickerCancel_Click" Margin="10,0" MinWidth="90"/>
-    <Button x:Name="PickerDoneButton" Grid.Column="2" Content="Сохранить команду" Click="PickerDone_Click" MinWidth="110"/>
-   </Grid>
+   </Border>
   </Grid>
-  <local:ConfirmationOverlay Grid.RowSpan="2" x:Name="LocalConfirmation" Visibility="Collapsed"/>
+  <local:ConfirmationOverlay Grid.RowSpan="3" x:Name="LocalConfirmation" Visibility="Collapsed"/>
  </Grid>
 </UserControl>
