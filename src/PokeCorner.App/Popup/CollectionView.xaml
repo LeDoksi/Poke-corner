@@ -281,7 +281,7 @@
                         </ComboBox>
                     </Grid>
                     <DockPanel Margin="0,0,0,10">
-                        <Button x:Name="ResetIndividualFiltersButton" Content="Сбросить фильтры" DockPanel.Dock="Right" Click="ResetIndividualFilters_Click" Style="{StaticResource SecondaryButtonStyle}" Padding="10,5"/>
+                        <Button x:Name="ResetIndividualFiltersButton" Content="Сбросить фильтры" DockPanel.Dock="Right" Click="ResetIndividualFilters_Click" Style="{StaticResource NdLinkButtonStyle}" Padding="8,5" VerticalAlignment="Top"/>
                         <WrapPanel VerticalAlignment="Center">
                             <!-- D-42: chips with counters. The counter is of the whole collection, so it shows where there is something to do. -->
                             <CheckBox x:Name="EvolutionFilterToggle" Content="Растут" Style="{StaticResource FilterPillCheckBoxStyle}" Tag="{StaticResource NdLavenderBrush}" ToolTip="Ещё не дошли до последней формы" Checked="EvolutionFilter_Changed" Unchecked="EvolutionFilter_Changed"/>

@@ -283,7 +283,7 @@ public partial class ExpeditionView : UserControl
         var team = Team;
         ChooseTeamButton.IsEnabled = AutoTeamButton.IsEnabled = !_busy && !_pickerOpen;
         ChooseTeamButton.Visibility = AutoTeamButton.Visibility = _pickerOpen ? Visibility.Hidden : Visibility.Visible;
-        TeamHeading.Text = $"Команда {team.Count} / 3";
+        TeamHeading.Text = $"Команда {team.Count}/3";
         StartButton.Content = _busy ? "Отправляем команду…" : _pendingStart is not null ? "Повторить отправку" : "Отправить команду";
         ChooseTeamButton.Content = team.Count == 0 ? "Выбрать" : "Изменить";
         if (team.Count == 0)
@@ -441,16 +441,16 @@ public partial class ExpeditionView : UserControl
         for (var i = 0; i < 3; i++) {
             var member = i < members.Length ? data.Individuals.FirstOrDefault(p => p.Id == members[i]) : null;
             if (member is null) {
-                var invite = new Grid { MinHeight = 44 };
+                var invite = new Grid { MinHeight = 38 };
                 invite.Children.Add(new System.Windows.Shapes.Rectangle { Stroke = (Brush)FindResource("NdBorderBrush"), StrokeThickness = 1.2, StrokeDashArray = [4, 3], RadiusX = 11, RadiusY = 11 });
                 invite.Children.Add(new TextBlock { Text = ReferenceEquals(panel, TeamSlots) && !editable ? "+  Выбрать покемона" : $"Место {i + 1} свободно", Foreground = (Brush)FindResource(ReferenceEquals(panel, TeamSlots) ? "NdLavenderBrush" : "NdMutedBrush"), FontSize = 13, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
                 if (ReferenceEquals(panel, TeamSlots) && !editable) {
-                    var slot = new Button { Content = invite, Style = (Style)FindResource("NdLinkButtonStyle"), Padding = new Thickness(0), Margin = new Thickness(0, 0, 0, 6), MinHeight = 44, HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch, IsEnabled = !_busy };
+                    var slot = new Button { Content = invite, Style = (Style)FindResource("NdLinkButtonStyle"), Padding = new Thickness(0), Margin = new Thickness(0, 0, 0, 5), MinHeight = 38, HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch, IsEnabled = !_busy };
                     System.Windows.Automation.AutomationProperties.SetName(slot, $"Выбрать покемона на место {i + 1}");
                     slot.Click += ChooseTeam_Click;
                     panel.Children.Add(slot);
                 } else {
-                    invite.Margin = new Thickness(0, 0, 0, 6);
+                    invite.Margin = new Thickness(0, 0, 0, 5);
                     System.Windows.Automation.AutomationProperties.SetName(invite, $"Пустое место {i + 1}");
                     panel.Children.Add(invite);
                 }
@@ -459,7 +459,7 @@ public partial class ExpeditionView : UserControl
             var level = _selector.Level(member);
             var fits = _selector.Matches(member, route);
             var row = new DockPanel { LastChildFill = true };
-            var sprite = new Image { Source = Sprite(member), Width = 40, Height = 40, Margin = new Thickness(0, 0, 9, 0), VerticalAlignment = VerticalAlignment.Center };
+            var sprite = new Image { Source = Sprite(member), Width = 32, Height = 32, Margin = new Thickness(0, 0, 9, 0), VerticalAlignment = VerticalAlignment.Center };
             RenderOptions.SetBitmapScalingMode(sprite, BitmapScalingMode.NearestNeighbor);
             DockPanel.SetDock(sprite, Dock.Left);
             row.Children.Add(sprite);
@@ -481,7 +481,7 @@ public partial class ExpeditionView : UserControl
             row.Children.Add(text);
             row.ToolTip = $"{DisplayName(member, data)}\nУровень {level}, рекомендуемый для похода — {recommended}\nМаршрут: {(fits ? "подходящий тип — помогает команде" : "без совпадения типа")}\nОсобенности: {_selector.Traits(member)}";
             System.Windows.Automation.AutomationProperties.SetName(row, DisplayName(member, data));
-            panel.Children.Add(new Border { Child = row, Padding = new Thickness(8, 4, 10, 4), Margin = new Thickness(0, 0, 0, 6), MinHeight = 44, CornerRadius = new CornerRadius(11), BorderThickness = new Thickness(1), BorderBrush = (Brush)FindResource("NdBorderBrush"), Background = new SolidColorBrush(Color.FromRgb(0x1A, 0x1D, 0x36)) });
+            panel.Children.Add(new Border { Child = row, Padding = new Thickness(8, 2, 10, 2), Margin = new Thickness(0, 0, 0, 5), MinHeight = 38, CornerRadius = new CornerRadius(11), BorderThickness = new Thickness(1), BorderBrush = (Brush)FindResource("NdBorderBrush"), Background = new SolidColorBrush(Color.FromRgb(0x1A, 0x1D, 0x36)) });
         }
     }
     private void ChooseTeam_Click(object sender, RoutedEventArgs e)

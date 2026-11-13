@@ -369,7 +369,7 @@ public partial class ShopView : UserControl
         ShopMargin.Show("shop", MarginPieces);
     }
 
-    /// The shelf fills the page: the widest tiles (up to 260 px) whose rows still fit without scrolling;
+    /// The shelf fills the page: the widest tiles (up to 320 px) whose rows still fit without scrolling;
     /// when nothing fits, the smallest readable tile and the shelf scrolls.
     private void LayoutTiles()
     {
@@ -379,7 +379,7 @@ public partial class ShopView : UserControl
         double best = 0;
         for (var columns = 2; columns <= 6; columns++)
         {
-            var w = Math.Min(260, Math.Floor(width / columns));
+            var w = Math.Min(320, Math.Floor(width / columns));
             if (w < 130) break;
             var rows = Math.Ceiling(shown / (double)columns);
             if (rows * Math.Round(w * .92) <= height && w > best) best = w;

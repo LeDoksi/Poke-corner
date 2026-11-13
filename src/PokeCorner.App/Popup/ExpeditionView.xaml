@@ -242,10 +242,10 @@
      <ScrollViewer x:Name="ScenarioScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
       <StackPanel x:Name="ScenarioContent">
        <StackPanel x:Name="PreparationDetailsPanel">
-        <DockPanel Margin="0,0,0,8">
-         <Button x:Name="ChooseTeamButton" Content="Изменить" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource NdLinkButtonStyle}"/>
-         <Button x:Name="AutoTeamButton" Content="✦ Подобрать" DockPanel.Dock="Right" Click="AutoTeam_Click" Style="{StaticResource NdLinkButtonStyle}" ToolTip="Собрать лучшую свободную тройку для этого маршрута"/>
-         <TextBlock x:Name="TeamHeading" Text="Команда 0 / 3" FontFamily="{StaticResource NdDisplayFont}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,0,0"/>
+        <DockPanel Margin="0,0,0,6">
+         <Button x:Name="ChooseTeamButton" Content="Изменить" DockPanel.Dock="Right" Click="ChooseTeam_Click" Style="{StaticResource NdLinkButtonStyle}" Padding="6,5" Margin="0,0,-4,0"/>
+         <Button x:Name="AutoTeamButton" Content="✦ Подобрать" DockPanel.Dock="Right" Click="AutoTeam_Click" Style="{StaticResource NdLinkButtonStyle}" Padding="6,5" ToolTip="Собрать лучшую свободную тройку для этого маршрута"/>
+         <TextBlock x:Name="TeamHeading" Text="Команда 0/3" FontFamily="{StaticResource NdDisplayFont}" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,0,0"/>
         </DockPanel>
         <UniformGrid x:Name="TeamSlots" Columns="1" Margin="0,0,0,6"/>
        </StackPanel>
