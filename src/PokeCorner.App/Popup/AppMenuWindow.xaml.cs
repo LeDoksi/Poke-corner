@@ -222,7 +222,9 @@ public partial class AppMenuWindow : Window
     private void UpdateTodayColumn()
     {
         var scale = Theme.Motion.ShellScale(ActualWidth, ActualHeight);
-        var roomy = ActualWidth / scale >= 1500;
+        // 1280 logical px: just above the 1200 minimum, and below what any maximized screen gives after the big-window
+        // scale (2560 px at x1.75 is 1462), so the column no longer vanishes on a full screen (Georgy 13.11).
+        var roomy = ActualWidth / scale >= 1280;
         var section = SelectedSection();
         var show = roomy && SettingsContent.Visibility != Visibility.Visible && HostedContent.Visibility != Visibility.Visible
             && section is MenuSection.Corner or MenuSection.Expeditions or MenuSection.Nursery or MenuSection.Shop;

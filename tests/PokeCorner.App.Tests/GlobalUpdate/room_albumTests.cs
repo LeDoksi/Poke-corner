@@ -288,8 +288,15 @@ public sealed class RoomAlbumTests
             var upperLeft = transform.Transform(new Point(0, 0));
             var lowerRight = transform.Transform(new Point(1448, 582));
             Assert.Equal(1448d / 582d, (lowerRight.X - upperLeft.X) / (lowerRight.Y - upperLeft.Y), 6);
-            Assert.True(upperLeft.X >= -0.001 && upperLeft.Y >= -0.001);
-            Assert.True(lowerRight.X <= width + 0.001 && lowerRight.Y <= height + 0.001);
+            // D-49: the room covers its frame from edge to edge (cropped, never letterboxed) and keeps the pet's spot in view.
+            var frame = (FrameworkElement)room.FindName("SceneHost");
+            var origin = frame.TransformToAncestor(room).Transform(new Point(0, 0));
+            Assert.True(upperLeft.X <= origin.X + 0.001 && lowerRight.X >= origin.X + frame.ActualWidth - 0.001);
+            Assert.True(upperLeft.Y <= origin.Y + 0.001);
+            var pet = transform.Transform(new Point(800, 520));
+            Assert.InRange(pet.X, origin.X, origin.X + frame.ActualWidth);
+            var gauges = (FrameworkElement)room.FindName("GaugeRow");
+            Assert.True(pet.Y <= gauges.TransformToAncestor(room).Transform(new Point(0, 0)).Y + gauges.ActualHeight * .5, "the gauges must not cover the pet");
             var bitmap = new RenderTargetBitmap((int)(width * scale), (int)(height * scale),
                 96 * scale, 96 * scale, PixelFormats.Pbgra32);
             bitmap.Render(room);

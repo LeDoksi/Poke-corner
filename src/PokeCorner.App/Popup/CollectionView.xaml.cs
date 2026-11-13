@@ -282,6 +282,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void IndividualsMode_Click(object sender, RoutedEventArgs e)
     {
+        // A species page belongs to «Все виды»: left open, it covered the pet page opened next (Georgy 13.11).
+        if (SpeciesDialog.Visibility == Visibility.Visible) CloseSpeciesDialog();
         IndividualsPane.Visibility = Visibility.Visible;
         SpeciesPane.Visibility = Visibility.Collapsed;
         IndividualsModeButton.Style = (Style)FindResource("NdChoiceSelectedStyle");
@@ -450,6 +452,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
 
     private void SpeciesMode_Click(object sender, RoutedEventArgs e)
     {
+        if (DetailOverlay.Visibility == Visibility.Visible) HideDetail();
         IndividualsPane.Visibility = Visibility.Collapsed;
         SpeciesPane.Visibility = Visibility.Visible;
         SpeciesModeButton.Style = (Style)FindResource("NdChoiceSelectedStyle");
@@ -1283,6 +1286,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         ShowDetailSprite(card);
 
         DetailTrainerNote.Text = TrainerNote(card);
+        // One page at a time: a pet page never opens underneath a species page.
+        if (SpeciesDialog.Visibility == Visibility.Visible) { SpeciesDialog.Visibility = Visibility.Collapsed; _selectedSpeciesId = null; SpeciesGrid.SelectedIndex = -1; }
         DetailOverlay.Visibility = Visibility.Visible;
         DetailScroll.ScrollToTop();
         LayoutMasterDetail();

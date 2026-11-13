@@ -375,6 +375,20 @@ public partial class RoomView : UserControl
 
     private void AchievementsButton_Click(object sender, RoutedEventArgs e) => _openAchievements();
 
+    // D-49: the room covers its frame. It keeps its proportions, is cropped at the sides around the pet's spot
+    // (x = 800 of 1448), and its floor ends above the gauges so they never cover the pet's feet.
+    private void SceneFrame_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        double width = SceneHost.ActualWidth, height = SceneHost.ActualHeight;
+        if (width <= 0 || height <= 0) return;
+        SceneHost.Clip = new System.Windows.Media.RectangleGeometry(new Rect(0, 0, width, height), 17, 17);
+        var gauges = GaugeRow.ActualHeight > 0 ? GaugeRow.ActualHeight * .62 : 44;
+        var scale = Math.Max(width / 1448, Math.Max(1, height - gauges) / 582);
+        var x = Math.Clamp(width / 2 - 800 * scale, width - 1448 * scale, 0);
+        Scene.RenderTransform = new System.Windows.Media.TransformGroup { Children = { new System.Windows.Media.ScaleTransform(scale, scale), new System.Windows.Media.TranslateTransform(x, Math.Min(0, height - gauges - 582 * scale)) } };
+        CornerNoteScrap.Visibility = width >= 720 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
     /// D-31: chips for everything that waits; a click goes straight to the right place.
     private void RenderReadyStrip()
     {
@@ -390,7 +404,7 @@ public partial class RoomView : UserControl
             var chip = new System.Windows.Controls.Button
             {
                 Content = "✦  " + item.Text, Style = (Style)FindResource("SecondaryButtonStyle"),
-                Margin = new Thickness(0, 0, 8, 6), Padding = new Thickness(12, 4, 12, 4),
+                Margin = new Thickness(0, 0, 8, 0), Padding = new Thickness(12, 4, 12, 4),
                 IsEnabled = _openReady is not null
             };
             System.Windows.Automation.AutomationProperties.SetName(chip, item.Text);
@@ -403,7 +417,7 @@ public partial class RoomView : UserControl
             var more = new System.Windows.Controls.Button
             {
                 Content = $"ещё {rest.Length}", Style = (Style)FindResource("SecondaryButtonStyle"),
-                Margin = new Thickness(0, 0, 8, 6), Padding = new Thickness(12, 4, 12, 4),
+                Margin = new Thickness(0, 0, 8, 0), Padding = new Thickness(12, 4, 12, 4),
                 ToolTip = string.Join("\n", rest.Select(x => x.Text)), IsEnabled = _openReady is not null
             };
             more.Click += (_, _) => _openReady?.Invoke(rest[0]);

@@ -1,30 +1,22 @@
 <UserControl x:Class="PokeCorner.App.Popup.RoomView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Background="Transparent">
+    <UserControl.Resources>
+        <Style x:Key="CornerGaugeStyle" TargetType="Border">
+            <Setter Property="Background" Value="#E014172B"/><Setter Property="BorderBrush" Value="{StaticResource NdPanelLineBrush}"/><Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="14"/><Setter Property="Padding" Value="12,9,14,10"/><Setter Property="Margin" Value="5,0"/>
+        </Style>
+    </UserControl.Resources>
+    <!-- D-49: the room is the page. It fills a rounded frame edge to edge (cropped around the pet, never letterboxed);
+         the title, the trainer's note and the three gauges lie over it; one row of actions stays under it. -->
+    <Grid Background="Transparent" Margin="24,14,24,16">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <DockPanel Margin="24,16,24,12">
-            <!-- D-31: what is waiting right now, one click each. Docked first so it spans the full width under the title. -->
-            <WrapPanel x:Name="ReadyStrip" DockPanel.Dock="Bottom" Margin="0,10,0,0" Visibility="Collapsed"
-                       AutomationProperties.Name="Готово сейчас" />
-            <Button x:Name="AchievementsButton" Content="☆  Достижения" DockPanel.Dock="Right"
-                    Style="{StaticResource SecondaryButtonStyle}" Click="AchievementsButton_Click"
-                    AutomationProperties.Name="Открыть достижения и мою полку" />
-            <!-- Trainer's note about the companion right now (D-25); the free band between the title and the achievements button. -->
-            <TextBlock x:Name="CornerNote" DockPanel.Dock="Right" Style="{StaticResource NdMarginNoteStyle}" FontSize="24" MaxWidth="520"
-                       VerticalAlignment="Center" Margin="16,0,24,0" RenderTransformOrigin="0.5,0.5"><TextBlock.RenderTransform><RotateTransform Angle="-1.5" /></TextBlock.RenderTransform></TextBlock>
-            <StackPanel Margin="0,0,16,0">
-                <TextBlock Text="Мой уголок" Style="{StaticResource ScreenTitleTextStyle}" />
-                <TextBlock x:Name="PetCaption" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" MaxHeight="44" />
-            </StackPanel>
-        </DockPanel>
-        <Grid Grid.Row="1" Margin="24,0"><Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                 SnapsToDevicePixels="True">
+        <Border x:Name="SceneFrame" CornerRadius="18" BorderThickness="1" BorderBrush="{StaticResource NdPanelLineBrush}" Background="#14172B" SizeChanged="SceneFrame_SizeChanged">
+        <Grid x:Name="SceneHost" ClipToBounds="True">
+            <Canvas x:Name="SceneStage" HorizontalAlignment="Left" VerticalAlignment="Top" SnapsToDevicePixels="True">
             <Canvas x:Name="Scene" Width="1448" Height="582" ClipToBounds="True">
                 <Image x:Name="RoomBackground" Width="1448" Height="582" Stretch="Fill" />
                 <Canvas x:Name="AwardLayer" Width="1448" Height="582" />
@@ -38,33 +30,69 @@
                        Cursor="Hand" ToolTip="Погладить" MouseLeftButtonUp="PetImage_MouseLeftButtonUp" />
                 <Image x:Name="RoomReaction" Stretch="Fill" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5" />
             </Canvas>
-        </Viewbox>
+            </Canvas>
+            <Rectangle IsHitTestVisible="False">
+                <Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#990C0F1F" Offset="0"/><GradientStop Color="#000C0F1F" Offset="0.22"/><GradientStop Color="#000C0F1F" Offset="0.7"/><GradientStop Color="#FF14172B" Offset="0.97"/></LinearGradientBrush></Rectangle.Fill>
+            </Rectangle>
+            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,14,0,0" Background="#D914172B" BorderBrush="{StaticResource NdPanelLineBrush}" BorderThickness="1" CornerRadius="14" Padding="14,8,16,10" MaxWidth="420">
+                <StackPanel>
+                    <TextBlock Text="Мой уголок" FontFamily="{StaticResource NdDisplayFont}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" />
+                    <TextBlock x:Name="PetCaption" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" MaxHeight="44" />
+                </StackPanel>
+            </Border>
+            <!-- Trainer's note about the companion right now (D-25), taped onto the picture (D-43). -->
+            <Grid x:Name="CornerNoteScrap" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,22,22,0" MaxWidth="250" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5">
+                <Grid.RenderTransform><RotateTransform Angle="2"/></Grid.RenderTransform>
+                <Border Background="{StaticResource NdPaperBrush}" CornerRadius="3" Padding="14,13,14,10" Effect="{StaticResource NdLiftShadow}">
+                    <StackPanel><TextBlock Text="НА ПОЛЯХ" FontSize="10" FontWeight="Bold" Foreground="#8A7A66" Margin="0,0,0,3"/><TextBlock x:Name="CornerNote" Style="{StaticResource NdPaperNoteTextStyle}" TextAlignment="Left"/></StackPanel>
+                </Border>
+                <Border Width="58" Height="15" Background="#B8C4ABF0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-7,0,0" RenderTransformOrigin="0.5,0.5"><Border.RenderTransform><RotateTransform Angle="-4"/></Border.RenderTransform></Border>
+            </Grid>
             <TextBlock x:Name="MissingSpriteText" Text="Изображение питомца недоступно" Visibility="Collapsed"
-                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="12"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12"
                        Background="{StaticResource UiPaperBrush}" Padding="10" TextWrapping="Wrap" />
+            <!-- Level lives in the caption above; the middle bar is only the next pokéball for activity (Georgy 29.10). -->
+            <UniformGrid x:Name="GaugeRow" Columns="3" VerticalAlignment="Bottom" Margin="9,0,9,14">
+                    <Border Style="{StaticResource CornerGaugeStyle}">
+                        <DockPanel>
+                            <Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="30" Height="30" Margin="0,0,10,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Уход для эволюции" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock x:Name="CareText" Style="{StaticResource CaptionTextStyle}" FontSize="11.5" TextTrimming="CharacterEllipsis"/>
+                                <ProgressBar x:Name="CareBar" Maximum="1" Height="6" Margin="0,5,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    <Border Style="{StaticResource CornerGaugeStyle}">
+                        <DockPanel>
+                            <Image Source="/PokeCorner;component/Assets/UiSystem/catch-ball.png" Width="30" Height="30" Margin="0,0,10,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Следующий покебол" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock x:Name="CatchText" Style="{StaticResource CaptionTextStyle}" FontSize="11.5" TextTrimming="CharacterEllipsis"/>
+                                <ProgressBar x:Name="CatchBar" Maximum="1" Height="6" Margin="0,5,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    <Border Style="{StaticResource CornerGaugeStyle}">
+                        <DockPanel>
+                            <Image Source="/PokeCorner;component/Assets/UiSystem/treat.png" Width="30" Height="30" Margin="0,0,10,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Лакомства" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock x:Name="TreatText" Style="{StaticResource CaptionTextStyle}" FontSize="11.5" TextTrimming="CharacterEllipsis"/>
+                                <ProgressBar x:Name="TreatBar" Maximum="1" Height="6" Margin="0,5,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+            </UniformGrid>
         </Grid>
-        <!-- Level lives in the caption above; the middle bar is only the next pokéball for activity (Georgy 29.10). -->
-        <UniformGrid Grid.Row="2" Columns="3" Margin="24,14,24,8">
-            <StackPanel Margin="0,0,16,0">
-                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Уход для эволюции" FontWeight="Bold" VerticalAlignment="Center" /></StackPanel>
-                <TextBlock x:Name="CareText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
-                <ProgressBar x:Name="CareBar" Maximum="1" Height="7" Margin="0,6,0,0" />
-            </StackPanel>
-            <StackPanel Margin="0,0,16,0">
-                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/catch-ball.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Следующий покебол" FontWeight="Bold" VerticalAlignment="Center"/></StackPanel>
-                <TextBlock x:Name="CatchText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
-                <ProgressBar x:Name="CatchBar" Maximum="1" Height="7" Margin="0,6,0,0" />
-            </StackPanel>
-            <StackPanel>
-                <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/treat.png" Width="18" Height="18" Margin="0,0,6,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Лакомства" FontWeight="Bold" VerticalAlignment="Center" /></StackPanel>
-                <TextBlock x:Name="TreatText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
-                <ProgressBar x:Name="TreatBar" Maximum="1" Height="7" Margin="0,6,0,0" />
-            </StackPanel>
-        </UniformGrid>
-        <DockPanel Grid.Row="3" Margin="24,8,24,18" LastChildFill="False">
+        </Border>
+        <DockPanel Grid.Row="1" Margin="0,14,0,0">
             <Button x:Name="DetailButton" Content="Карточка питомца" DockPanel.Dock="Left" Click="DetailButton_Click"
                     Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0" />
-            <Button x:Name="FeedButton" DockPanel.Dock="Right" Click="FeedButton_Click"
+            <Button x:Name="AchievementsButton" Content="☆  Достижения" DockPanel.Dock="Left"
+                    Style="{StaticResource SecondaryButtonStyle}" Click="AchievementsButton_Click" Margin="0,0,12,0"
+                    AutomationProperties.Name="Открыть достижения и мою полку" />
+            <Button x:Name="FeedButton" DockPanel.Dock="Right" Click="FeedButton_Click" MinHeight="48" Padding="20,8"
                     Style="{StaticResource UiPrimaryButtonStyle}" Margin="8,0,0,0" AutomationProperties.Name="Покормить">
                 <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/treat.png" Width="20" Height="20" Margin="0,0,8,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Покормить" VerticalAlignment="Center"/></StackPanel>
             </Button>
@@ -72,6 +100,9 @@
                     Style="{StaticResource SecondaryButtonStyle}" AutomationProperties.Name="Погладить">
                 <StackPanel Orientation="Horizontal"><Image Source="/PokeCorner;component/Assets/UiSystem/care.png" Width="20" Height="20" Margin="0,0,8,0" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/><TextBlock Text="Погладить" VerticalAlignment="Center"/></StackPanel>
             </Button>
+            <!-- D-31: what is waiting right now, one click each, between the page links and the care buttons. -->
+            <WrapPanel x:Name="ReadyStrip" VerticalAlignment="Center" Visibility="Collapsed" MaxHeight="40" ClipToBounds="True"
+                       AutomationProperties.Name="Готово сейчас" />
         </DockPanel>
     </Grid>
 </UserControl>

@@ -141,8 +141,15 @@
    <ControlTemplate.Triggers>
     <Trigger Property="IsMouseOver" Value="True">
      <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/>
-     <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/></Storyboard></BeginStoryboard></Trigger.EnterActions>
-     <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2"/></Storyboard></BeginStoryboard></Trigger.ExitActions>
+     <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+      <!-- The icon leans toward the pointer: grows with a small overshoot, settles back when the pointer leaves. -->
+      <DoubleAnimation Storyboard.TargetName="Head" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1.14" Duration="0:0:0.22"><DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="1.6"/></DoubleAnimation.EasingFunction></DoubleAnimation>
+      <DoubleAnimation Storyboard.TargetName="Head" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1.14" Duration="0:0:0.22"><DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="1.6"/></DoubleAnimation.EasingFunction></DoubleAnimation>
+     </Storyboard></BeginStoryboard></Trigger.EnterActions>
+     <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Light" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2"/>
+      <DoubleAnimation Storyboard.TargetName="Head" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.18"><DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction></DoubleAnimation>
+      <DoubleAnimation Storyboard.TargetName="Head" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.18"><DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction></DoubleAnimation>
+     </Storyboard></BeginStoryboard></Trigger.ExitActions>
     </Trigger>
     <Trigger Property="IsSelected" Value="True">
      <Setter TargetName="ActiveMark" Property="Visibility" Value="Visible"/><Setter TargetName="Surface" Property="Background" Value="{StaticResource NdTabSelectedBrush}"/><Setter TargetName="Surface" Property="BorderBrush" Value="#5A4F8C"/><Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/>
