@@ -39,6 +39,10 @@ public partial class CatchView : System.Windows.Controls.UserControl
     /// <summary>The page's own way back to the corner; the shell decides where that is.</summary>
     public event Action? BackRequested;
 
+    // The scene card has round corners; the picture and the sparks are clipped to them.
+    private void CaptureScene_SizeChanged(object sender, SizeChangedEventArgs e) =>
+        CaptureScene.Clip = new System.Windows.Media.RectangleGeometry(new Rect(0, 0, CaptureScene.ActualWidth, CaptureScene.ActualHeight), 17, 17);
+
     private void BackToCornerButton_Click(object sender, RoutedEventArgs e) => BackRequested?.Invoke();
 
     public CatchView(AppState appState, Func<CatchReveal?>? tryPerformCatch, Func<int, Task<byte[]?>> fetchSprite,
