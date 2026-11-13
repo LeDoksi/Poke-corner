@@ -60,13 +60,13 @@ public sealed class RussianFactsTests
         var view = new CollectionView(vm, state, new SpriteCache(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())),
             () => {}, () => {}, () => {}, () => null, () => false, () => false);
         ((Button)view.FindName("SpeciesModeButton")).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        if (ownedShiny) ((CheckBox)view.FindName("SpeciesShinyToggle")).IsChecked = true;
         var grid = (ListBox)view.FindName("SpeciesGrid"); grid.SelectedIndex = 0;
         var fact = CollectionPresentation.Fact(1); Assert.NotNull(fact);
         Assert.Equal(fact, vm.GetSpeciesEntries(ownedShiny).Single().DescriptionRu);
-        // D-50: a shiny arrival opens the ordinary look too; an ordinary one leaves the shiny look closed.
+        // D-55: each look is opened only by its own arrival, so the other page stays closed either way.
         var other1 = vm.GetSpeciesEntries(!ownedShiny).Single();
-        if (ownedShiny) Assert.Equal(fact, other1.DescriptionRu);
-        else { Assert.Null(other1.DescriptionRu); Assert.False(CollectionViewModel.MatchesSpeciesSearch(other1, fact)); }
+        Assert.Null(other1.DescriptionRu); Assert.False(CollectionViewModel.MatchesSpeciesSearch(other1, fact));
         Assert.Equal(fact, ((TextBlock)view.FindName("SpeciesDetailDescription")).Text);
         Assert.True(view.OpenIndividual(pet.Id));
         Assert.Equal(fact, ((TextBlock)view.FindName("DetailDescriptionText")).Text);
