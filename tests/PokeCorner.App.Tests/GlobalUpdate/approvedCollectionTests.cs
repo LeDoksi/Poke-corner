@@ -42,13 +42,14 @@ public sealed class ApprovedCollectionTests
     });
 
     [Fact]
-    public void NewShinyOnlyDoesNotOpenOrdinaryMode()
+    public void NewShinyOnlyOpensOrdinaryModeToo()
     {
-        var state = new AppState(); state.Collection.Add(Pet(1, true));
+        // D-50: shiny is a look, so a shiny-only pet opens the ordinary look of its species and is listed there.
+        var state = new AppState(); var pet = Pet(1, true); state.Collection.Add(pet);
         var normal = Vm(state).GetSpeciesEntries().Single();
-        Assert.False(normal.IsDiscovered);
-        Assert.Null(normal.DisplayName);
-        Assert.Empty(normal.OwnedIndividuals);
+        Assert.True(normal.IsDiscovered);
+        Assert.NotNull(normal.DisplayName);
+        Assert.Equal(pet.Id, normal.OwnedIndividuals.Single().IndividualId);
     }
 
     [Theory]
