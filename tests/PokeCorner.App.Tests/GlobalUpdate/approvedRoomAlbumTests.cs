@@ -73,7 +73,8 @@ public class ApprovedRoomAlbumTests
         Assert.Same(source, image.Source);
         WpfTestHost.Layout(view, 1000, 650);
         var visibleWidth = image.TransformToAncestor(view).TransformBounds(new Rect(0, 0, image.Width, image.Height)).Width;
-        Assert.InRange(visibleWidth, 145, 160);
+        // D-49: the room covers its frame, so at 1000x650 it is scaled by height and the pet is drawn larger than in the old letterboxed room.
+        Assert.InRange(visibleWidth, 190, 215);
         Assert.Equal(384, data.Settings.PetSizePixels);
     });
 
