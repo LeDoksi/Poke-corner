@@ -13,6 +13,8 @@ public sealed class SaveData
     public HashSet<int> DiscoveredSpeciesIds { get; set; } = [];
     public HashSet<string> EvolutionTransitions { get; set; } = [];
     public HashSet<int> ShinySpeciesIds { get; set; } = [];
+    // D-50: families (root ids) whose shiny look is open, including those whose shiny pet was released.
+    public HashSet<int> ShinyFamilyIds { get; set; } = [];
     // Exact ordinary history. Missing OLD JSON is inferred once at deserialization.
     public HashSet<int> NormalSpeciesIds { get; set; } = [];
     // Transient provenance for the one-time OLD v1 display inference; never a saved gameplay field.

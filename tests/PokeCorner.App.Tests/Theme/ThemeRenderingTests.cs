@@ -463,7 +463,8 @@ public class ThemeRenderingTests
 
             // Every badge really is on show — otherwise this would be measuring a short card
             // and proving nothing about the reported one.
-            foreach (var badge in new[] { "DetailShinyBadge", "DetailFavoriteBadge", "DetailActiveBadge" })
+            Assert.Equal(Visibility.Visible, ((StackPanel)view.FindName("DetailLookSwitch")!).Visibility);
+            foreach (var badge in new[] { "DetailFavoriteBadge", "DetailActiveBadge" })
             {
                 Assert.Equal(Visibility.Visible, ((Border)view.FindName(badge)!).Visibility);
             }

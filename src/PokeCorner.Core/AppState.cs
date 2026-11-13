@@ -179,6 +179,23 @@ public sealed class AppState
         individual.DisplayStageOverride = index == (int)individual.CurrentStage ? null : index;
     }
 
+    /// D-50: picks the look of a pet whose shiny look is open. Cosmetic only, like <see cref="SetDisplayStage"/>.
+    public void SetShinyLook(PokemonIndividual individual, bool shiny)
+    {
+        if (IsCommitting)
+        {
+            var id = individual.Id;
+            RunWhenReady(() =>
+            {
+                var current = Collection.Individuals.FirstOrDefault(i => i.Id == id);
+                if (current is not null) SetShinyLook(current, shiny);
+            });
+            return;
+        }
+        if (!individual.HasShinyLook) return;
+        individual.ShowShiny = shiny == individual.IsShiny ? null : shiny;
+    }
+
     public CareState GetOrCreateCareState(Guid individualId)
     {
         if (!CareStateByIndividualId.TryGetValue(individualId, out var state))
@@ -197,6 +214,7 @@ public sealed class AppState
     /// </summary>
     public void Hydrate(SaveData data)
     {
+        if (data.SchemaVersion == 2) ShinyRules.SyncLooks(data, FamilyRoots);
         _metadata = JsonSaveStore.Clone(data);
         foreach (var existing in Collection.Individuals.ToArray()) Collection.Release(existing.Id);
         CareStateByIndividualId.Clear();
@@ -291,8 +309,10 @@ public sealed class AppState
             {
                 data.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
                 if (individual.IsShiny) data.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
-                else data.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
+                data.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
             }
+            ShinyRules.SyncLooks(data, FamilyRoots);
+            _metadata!.ShinyFamilyIds.UnionWith(data.ShinyFamilyIds);
             _metadata!.DiscoveredSpeciesIds.UnionWith(data.DiscoveredSpeciesIds);
             _metadata.ShinySpeciesIds.UnionWith(data.ShinySpeciesIds);
             _metadata.NormalSpeciesIds.UnionWith(data.NormalSpeciesIds);

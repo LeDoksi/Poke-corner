@@ -94,7 +94,8 @@ public sealed class ApprovedCollectionTests
             species: [new CatalogSpecies { Id = 1, DisplayName = "Открытый", Types = ["grass"], NormalAvailable = true, ShinyAvailable = false },
                 new CatalogSpecies { Id = 2, DisplayName = "Секретный", Types = ["fire"], Rarity = "Rare" }],
             normalSpeciesIds: () => normalHistory, shinySpeciesIds: () => shinyHistory);
-        Assert.Equal(normal.Id, vm.GetSpeciesEntries().First().OwnedIndividuals.Single().IndividualId);
+        // D-50: shiny is a look, so the ordinary page lists every pet of the species and the shiny page those whose look is open.
+        Assert.Equal(new[] { normal.Id, shiny.Id }.Order(), vm.GetSpeciesEntries().First().OwnedIndividuals.Select(i => i.IndividualId).Order());
         Assert.Equal(shiny.Id, vm.GetSpeciesEntries(true).First().OwnedIndividuals.Single().IndividualId);
         Assert.False(vm.GetSpeciesEntries(true).First().HasSilhouette); // Unsupported shiny stays represented.
         var closed = vm.GetSpeciesEntries(true).Last();
@@ -105,15 +106,16 @@ public sealed class ApprovedCollectionTests
     }
 
     [Fact]
-    public void SpareDuplicatesAreSameSpeciesSameFormAndNeverTheBestCopy() => WpfTestHost.Run(() =>
+    public void SpareDuplicatesAreSameSpeciesAndNeverTheBestCopy() => WpfTestHost.Run(() =>
     {
         var state = new AppState();
         var strong = Pet(7, false); strong.AccumulatedCarePoints = 30; var weak = Pet(7, false); var shiny = Pet(7, true); var loved = Pet(7, false); loved.IsFavorite = true;
         foreach (var pet in new[] { strong, weak, shiny, loved }) state.Collection.Add(pet);
         var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], levelFor: p => p.AccumulatedCarePoints + 1);
         var spare = CollectionViewModel.FilterIndividuals(vm.GetEntries(DateTimeOffset.UtcNow), "", null, null, false, true, false, false);
-        Assert.DoesNotContain(spare, e => e.IsShiny || e.IsFavorite || e.IsActive);
+        Assert.DoesNotContain(spare, e => e.IsFavorite || e.IsActive);
         Assert.Contains(spare, e => e.IndividualId == weak.Id);
+        Assert.Contains(spare, e => e.IndividualId == shiny.Id); // D-50: shiny is a look, the shiny copy is a duplicate too
     });
 
     [Fact]
@@ -124,8 +126,9 @@ public sealed class ApprovedCollectionTests
         var vm = new CollectionViewModel(state.Collection, state.CareStateByIndividualId, new CareModeService(), [], [], levelFor: p => p.AccumulatedCarePoints % 40 + 1);
         var entries = vm.GetEntries(DateTimeOffset.UtcNow);
         Assert.Equal(2, CollectionViewModel.FilterIndividuals(entries, "#0001", null, null, false, false, false, false).Count);
-        // D-42: a shiny and a normal one of the same species are not duplicates, so nobody here is spare.
-        Assert.Empty(CollectionViewModel.FilterIndividuals(entries, "", null, null, false, true, false, false));
+        // D-50: a shiny and a normal one of the same species are duplicates now; a favourite is still never offered.
+        var spares = CollectionViewModel.FilterIndividuals(entries, "", null, null, false, true, false, false);
+        Assert.NotEmpty(spares); Assert.DoesNotContain(spares, e => e.IsFavorite);
         var filtered = CollectionViewModel.FilterIndividuals(entries, "", null, null, false, false, true, true, PokedexSortOrder.Level);
         Assert.All(filtered, e => { Assert.True(e.IsFavorite); Assert.True(e.IsShiny); });
         Assert.Equal(133, filtered.Count);

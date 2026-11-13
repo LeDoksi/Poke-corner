@@ -74,8 +74,8 @@ public sealed class RehomingService
         var individual = state.Individuals.Single(x => x.Id == individualId);
         state.DiscoveredSpeciesIds.UnionWith(individual.ReachedSpeciesIds);
         state.DiscoveredSpeciesIds.Add(individual.SpeciesId);
-        if (individual.IsShiny) state.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds);
-        else { state.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds); state.NormalSpeciesIds.Add(individual.SpeciesId); }
+        if (individual.IsShiny) { state.ShinySpeciesIds.UnionWith(individual.ReachedSpeciesIds); if (individual.FamilyRootId > 0) state.ShinyFamilyIds.Add(individual.FamilyRootId); }
+        state.NormalSpeciesIds.UnionWith(individual.ReachedSpeciesIds); state.NormalSpeciesIds.Add(individual.SpeciesId);
         state.Individuals.Remove(individual);
         state.CareStates.Remove(individualId);
         if (state.ActiveIndividualId == individualId) state.ActiveIndividualId = replacementId;

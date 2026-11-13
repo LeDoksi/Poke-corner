@@ -403,17 +403,17 @@ public partial class ExpeditionView : UserControl
     };
 
     private string Difficulty => (DifficultyBox.SelectedItem as ListBoxItem)?.Tag as string ?? "normal";
-    private string DisplayName(PokemonIndividual pet, SaveData data) => _selector.Name(pet) + (pet.Nickname is null ? "" : $" · {pet.Nickname}") + (pet.IsShiny ? " · шайни" : "")
+    private string DisplayName(PokemonIndividual pet, SaveData data) => _selector.Name(pet) + (pet.Nickname is null ? "" : $" · {pet.Nickname}") + (pet.LooksShiny ? " · шайни" : "")
         + (IndividualDisplay.Discriminator(data.Individuals, pet.Id) is { Length: > 0 } label ? "\n" + label : "");
     public static string Coins(long n) => n + (n % 10 == 1 && n % 100 != 11 ? " монета" : n % 10 is >= 2 and <= 4 && n % 100 is < 12 or > 14 ? " монеты" : " монет");
     internal static string BerryName(string id) => id switch { "rawst" => "Равст", "oran" => "Оран", "pecha" => "Печа", "cheri" => "Чери", "chesto" => "Често", "aspear" => "Аспир", _ => "ягоды" };
     private static string ItemName(string id) => id switch { "evolution-stone" => "Камень эволюции", "offspring-charm" => "Талисман потомства", "lucky-charm" => "Талисман удачи", _ => "Предмет" };
     private ImageSource? Sprite(PokemonIndividual pet)
     {
-        var key = (pet.CurrentSpeciesId, pet.IsShiny);
+        var key = (pet.CurrentSpeciesId, IsShiny: pet.LooksShiny);
         if (_spriteCache.TryGetValue(key, out var cached)) return cached;
         ImageSource? image = null;
-        try { var path = _catalog?.GetAssetPath(key.CurrentSpeciesId, key.IsShiny);
+        try { var path = _catalog?.GetAssetPath(key.CurrentSpeciesId, key.IsShiny) ?? (key.IsShiny ? _catalog?.GetAssetPath(key.CurrentSpeciesId, false) : null);
             if (path is not null && File.Exists(path)) image = SpriteImages.Decode(File.ReadAllBytes(path)); }
         catch (Exception error) when (error is IOException or InvalidOperationException or NotSupportedException or ArgumentException) { }
         if (_spriteCache.Count >= 128) _spriteCache.Clear();
@@ -433,7 +433,7 @@ public partial class ExpeditionView : UserControl
             return _currentPreview is { } preview && preview.XpByParticipant.TryGetValue(id, out var promised) ? promised : null;
         }
         var state = string.Join("|", members.Select(id => data.Individuals.FirstOrDefault(p => p.Id == id) is { } m
-            ? $"{id}:{m.CurrentSpeciesId}:{m.IsShiny}:{m.Nickname}:{_selector.Level(m)}:{Xp(id)}" : id.ToString()))
+            ? $"{id}:{m.CurrentSpeciesId}:{m.LooksShiny}:{m.Nickname}:{_selector.Level(m)}:{Xp(id)}" : id.ToString()))
             + $"#{editable}#{_busy}#{route}#{difficulty}#{xpGain is not null}";
         if (panel.Tag as string == state && panel.Children.Count == 3) return;
         panel.Tag = state;
@@ -476,7 +476,7 @@ public partial class ExpeditionView : UserControl
             DockPanel.SetDock(side, Dock.Right);
             if (side.Children.Count > 0) row.Children.Add(side);
             var text = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
-            text.Children.Add(new TextBlock { Text = _selector.Name(member) + (member.IsShiny ? " ✦" : ""), FontWeight = FontWeights.Bold, FontSize = 13.5, TextTrimming = TextTrimming.CharacterEllipsis });
+            text.Children.Add(new TextBlock { Text = _selector.Name(member) + (member.LooksShiny ? " ✦" : ""), FontWeight = FontWeights.Bold, FontSize = 13.5, TextTrimming = TextTrimming.CharacterEllipsis });
             text.Children.Add(new TextBlock { Text = $"ур. {level}" + (level < recommended ? " · ниже рекомендуемого" : member.Nickname is { Length: > 0 } nick ? " · " + nick : ""), FontSize = 12, Foreground = (Brush)FindResource("NdMutedBrush"), TextTrimming = TextTrimming.CharacterEllipsis });
             row.Children.Add(text);
             row.ToolTip = $"{DisplayName(member, data)}\nУровень {level}, рекомендуемый для похода — {recommended}\nМаршрут: {(fits ? "подходящий тип — помогает команде" : "без совпадения типа")}\nОсобенности: {_selector.Traits(member)}";

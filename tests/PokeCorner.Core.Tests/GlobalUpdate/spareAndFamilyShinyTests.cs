@@ -11,9 +11,24 @@ public class SpareAndFamilyShinyTests
         new(Guid.NewGuid(), species, shiny, keep, level, 0, Day.AddDays(day), ahead);
 
     [Fact]
-    public void ShinyAndNormalOfOneSpeciesAreNotDuplicates()
+    public void ShinyAndNormalOfOneSpeciesAreDuplicatesBecauseShinyIsALook()
     {
-        Assert.Empty(SpareRules.Spare([Copy(4), Copy(4, shiny: true)]));
+        Assert.Single(SpareRules.Spare([Copy(4), Copy(4, shiny: true)]));
+    }
+
+    [Fact]
+    public void AShinyArrivalOpensTheLookForTheWholeFamilyAndItSurvivesRelease()
+    {
+        PokemonIndividual Pet(int species, bool shiny) => new() { SpeciesId = species, CurrentSpeciesId = species, FamilyRootId = 1,
+            EvolutionChainId = 1, ChainLength = 3, Nature = Nature.Hardy, IsShiny = shiny, CaughtAtUtc = DateTimeOffset.UnixEpoch, ReachedSpeciesIds = [species] };
+        var normal = Pet(2, false); var shiny = Pet(1, true); var stranger = Pet(4, false); stranger.FamilyRootId = 4;
+        var state = new PokeCorner.Core.Persistence.SaveData { Settings = new(), SchemaVersion = 2, Individuals = [normal, shiny, stranger] };
+        ShinyRules.SyncLooks(state);
+        Assert.True(normal.HasShinyLook); Assert.False(normal.LooksShiny); Assert.True(shiny.LooksShiny); Assert.False(stranger.HasShinyLook);
+        normal.ShowShiny = true; shiny.ShowShiny = false; stranger.ShowShiny = true;
+        Assert.True(normal.LooksShiny); Assert.False(shiny.LooksShiny); Assert.False(stranger.LooksShiny);
+        state.Individuals.Remove(shiny); ShinyRules.SyncLooks(state);
+        Assert.True(normal.LooksShiny);
     }
 
     [Fact]

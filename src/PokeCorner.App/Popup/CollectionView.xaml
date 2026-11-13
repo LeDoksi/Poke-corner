@@ -225,6 +225,8 @@
                                       ToolTip="Показать, какие виды пойманы в шайни-форме"/>
                             <CheckBox x:Name="SpeciesUnopenedToggle" Content="Ещё не открыты" Margin="16,0,0,0" Checked="SpeciesFilters_Changed" Unchecked="SpeciesFilters_Changed"
                                       ToolTip="Оставить только тех, кого ещё нет в выбранной форме"/>
+                            <CheckBox x:Name="SpeciesMissingLookToggle" Content="Не хватает облика" Margin="16,0,0,0" Checked="SpeciesFilters_Changed" Unchecked="SpeciesFilters_Changed"
+                                      ToolTip="Виды, у которых ещё не открыт обычный или шайни-облик: на кого охотиться"/>
                         </WrapPanel>
                         <TextBlock x:Name="SpeciesCountText" Style="{StaticResource MetaTextStyle}" Margin="0,0,0,7"/>
                         <ListBox x:Name="SpeciesGrid" SelectionChanged="SpeciesGrid_SelectionChanged" Background="Transparent" BorderThickness="0" Padding="0" ItemContainerStyle="{StaticResource UiCardListItemStyle}"
@@ -238,7 +240,14 @@
                                     <Border Style="{StaticResource CardStyle}" Width="158" Margin="3" Padding="9"
                                             AutomationProperties.Name="{Binding AccessibleName}">
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Number}" Style="{StaticResource MetaTextStyle}"/>
+                                            <Grid>
+                                                <TextBlock Text="{Binding Number}" Style="{StaticResource MetaTextStyle}"/>
+                                                <!-- D-50: which looks of the species are open — the hunting map. -->
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" ToolTip="{Binding LooksToolTip}">
+                                                    <Ellipse Width="8" Height="8" VerticalAlignment="Center" Fill="{StaticResource NdLavenderBrush}" Opacity="{Binding NormalMarkOpacity}"/>
+                                                    <TextBlock Text="✦" FontSize="12" Margin="5,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource NdShinyBrush}" Opacity="{Binding ShinyMarkOpacity}" Visibility="{Binding ShinyMarkVisibility}"/>
+                                                </StackPanel>
+                                            </Grid>
                                             <Grid Height="76" Margin="0,3">
                                                 <Image Source="{Binding SpriteImage}" Width="72" Height="72"
                                                        RenderOptions.BitmapScalingMode="NearestNeighbor"
@@ -338,7 +347,7 @@
                                                 <Path Width="11" Height="11" Stretch="Uniform" Margin="0,0,3,0"
                                                       Visibility="{Binding FavoriteBadgeVisibility}" Fill="{StaticResource AccentGoldBrush}"
                                                       Data="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21.02 L12,17.77 L5.82,21.02 L7,14.14 L2,9.27 L8.91,8.26 Z" />
-                                                <TextBlock Text="✨" FontSize="10" Visibility="{Binding ShinyVisibility}" />
+                                                <TextBlock Text="✦" FontSize="11" Foreground="{StaticResource NdShinyBrush}" Opacity="{Binding ShinyMarkOpacity}" ToolTip="{Binding ShinyMarkToolTip}" Visibility="{Binding ShinyVisibility}" />
                                             </StackPanel>
                                             <Ellipse Width="8" Height="8" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"
                                                      Fill="{Binding RarityBrush}" ToolTip="{Binding RarityName}" />
@@ -436,7 +445,11 @@
                                             <Ellipse Width="150" Height="22" VerticalAlignment="Bottom" Margin="0,0,0,6" Fill="#33000000"/>
                                             <Image x:Name="DetailSpriteImage" Width="140" Height="140" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                                             <TextBlock x:Name="DetailSpritePlaceholder" Text="Изображение формы&#10;пока недоступно" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}"/>
-                                            <Border x:Name="DetailShinyBadge" Style="{StaticResource PillStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{StaticResource NdShinyBrush}"><TextBlock Text="✦ Шайни" Foreground="{StaticResource NdShinyBrush}" FontWeight="SemiBold"/></Border>
+                                            <!-- D-50: shiny is a look of the same Pokémon. The switch stays visible while the look is closed, so the goal is readable. -->
+                                            <StackPanel x:Name="DetailLookSwitch" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-2">
+                                                <Button x:Name="DetailLookNormalButton" Content="Обычный" Click="DetailLook_Click" Tag="normal" Padding="10,3" MinHeight="26" FontSize="12" AutomationProperties.Name="Облик обычный"/>
+                                                <Button x:Name="DetailLookShinyButton" Content="✦ Шайни" Click="DetailLook_Click" Tag="shiny" Padding="10,3" MinHeight="26" FontSize="12" Margin="4,0,0,0" AutomationProperties.Name="Облик шайни"/>
+                                            </StackPanel>
                                         </Grid>
                                         </Border>
                                         <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,5">

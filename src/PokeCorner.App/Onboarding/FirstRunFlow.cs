@@ -39,6 +39,7 @@ public static class FirstRunFlow
         next.ActiveIndividualId = starter.Id;
         next.DiscoveredSpeciesIds.Add(starter.CurrentSpeciesId);
         if (starter.IsShiny) next.ShinySpeciesIds.Add(starter.CurrentSpeciesId);
+        next.NormalSpeciesIds.Add(starter.CurrentSpeciesId);
         next.StarterSelectionPending = false;
         if (newGame) { next.ShopCoins = 20; next.FeedingTreats = 5; }
         SaveMigration.EnsureGift(next, starter.CurrentSpeciesId, catalog);

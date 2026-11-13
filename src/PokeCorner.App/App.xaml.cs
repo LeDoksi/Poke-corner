@@ -564,7 +564,9 @@ public partial class App : System.Windows.Application
 
         var displaySpeciesId = ResolveDisplaySpeciesId(active);
 
-        var pngFrames = await GetAnimatedFramesAsync(displaySpeciesId, active.IsShiny);
+        // D-50: the desktop shows the look the player picked; a stage without shiny art shows the ordinary one.
+        var shinyLook = active.LooksShiny && (_catalogPackage?.CanObtain(displaySpeciesId, true) ?? true);
+        var pngFrames = await GetAnimatedFramesAsync(displaySpeciesId, shinyLook);
 
         if (generation != _overlayRefreshGeneration)
         {
@@ -588,7 +590,7 @@ public partial class App : System.Windows.Application
         // the static PNG path below.
 
         byte[]? spriteBytes = null;
-        if (active.IsShiny)
+        if (shinyLook)
         {
             _activeSpriteFrames = null;
             _overlayWindow.SetSpriteFrames([]);

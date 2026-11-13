@@ -94,7 +94,11 @@ public sealed class PokedexCard
     public IReadOnlyList<ImageSource>? SpriteFrames { get; init; }
 
     public Visibility PlaceholderVisibility => SpriteImage is null ? Visibility.Visible : Visibility.Collapsed;
-    public Visibility ShinyVisibility => IsShiny ? Visibility.Visible : Visibility.Collapsed;
+    /// D-50: IsShiny is the look worn now; HasShinyLook says the shiny look is open (the ✦ mark on the tile).
+    public bool HasShinyLook { get; init; }
+    public Visibility ShinyVisibility => IsShiny || HasShinyLook ? Visibility.Visible : Visibility.Collapsed;
+    public double ShinyMarkOpacity => IsShiny ? 1 : .55;
+    public string ShinyMarkToolTip => IsShiny ? "Облик шайни" : "Облик шайни открыт";
     public Visibility ActiveBadgeVisibility => IsActive ? Visibility.Visible : Visibility.Collapsed;
 
     /// Marks an individual as a favorite in its card and details.

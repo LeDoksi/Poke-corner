@@ -232,7 +232,7 @@ public partial class RoomView : UserControl
         PetCaption.Text = active is null ? "Выберите спутника в Покедексе." :
             (active.Nickname is null ? _speciesName(active.CurrentSpeciesId) :
                 active.Nickname + " · " + _speciesName(active.CurrentSpeciesId)) +
-            $" · №{active.CurrentSpeciesId:D4}" + (active.IsShiny ? " · шайни" : "");
+            $" · №{active.CurrentSpeciesId:D4}" + (active.LooksShiny ? " · шайни" : "");
         var species = active is null ? null : _catalog?.Species.FirstOrDefault(s => s.Id == active.CurrentSpeciesId);
         if (active is not null)
         {
@@ -267,7 +267,7 @@ public partial class RoomView : UserControl
         MissingSpriteText.Visibility = active is not null && (frames is null || frames.Count == 0)
             ? Visibility.Visible : Visibility.Collapsed;
         var spriteSignature = active is null || frames is null || frames.Count == 0 ? "" :
-            $"{active.Id}:{active.CurrentSpeciesId}:{active.IsShiny}:{frames.Count}:{System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(frames)}";
+            $"{active.Id}:{active.CurrentSpeciesId}:{active.LooksShiny}:{frames.Count}:{System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(frames)}";
         if (spriteSignature != _spriteSignature)
         {
             _spriteSignature = spriteSignature;
@@ -306,7 +306,7 @@ public partial class RoomView : UserControl
         if (evolving) return "Что-то в нём меняется. Загляну в карточку.";
         if (data.PendingCatchCount > 0) return "Покебол ждёт. Кто же там внутри?";
         if (data.FeedingTreats == 0) return "Лакомства кончились. Косточки — в лавке.";
-        if (active.IsShiny) return "Другого цвета. Такой спутник — редкая удача.";
+        if (active.LooksShiny) return "Другого цвета. Такой спутник — редкая удача.";
         return (active.Nickname ?? _speciesName(active.CurrentSpeciesId)) + " рядом. Работаем вместе — растём вместе.";
     }
 

@@ -13,6 +13,7 @@ public sealed class AchievementService
     private readonly LevelProgression levels;
     private readonly int[] reachable;
     private readonly int[] legends;
+    private Dictionary<int, int>? familyRoots;
 
     public IReadOnlyList<int> ReachableSpeciesIds => reachable;
     public IReadOnlyList<int> ReachableLegendaryIds => legends;
@@ -106,7 +107,9 @@ public sealed class AchievementService
             or "distinct-cared-individuals" or "distinct-hatched-root-species" => AchievementMetrics.Get(state, condition),
         "individuals-at-required-level" => state.Individuals.Count(i => levels.LevelForXp(i.TotalXp) >= goal.GetProperty("minimumLevel").GetInt32()),
         "distinct-species-transitions" => state.EvolutionTransitions.Count,
-        "distinct-shiny-species" => state.ShinySpeciesIds.Count,
+        // D-50: shiny is a look of the family, so the goal counts the shiny looks the Pokédex shows as open.
+        "distinct-shiny-species" => ShinyRules.FamilyShiny(state.ShinySpeciesIds, state.NormalSpeciesIds.Concat(state.DiscoveredSpeciesIds),
+            familyRoots ??= catalog.Species.ToDictionary(s => s.Id, s => s.FamilyRootId), id => catalog.CanObtain(id, true)).Count,
         _ => throw new InvalidDataException("Unknown achievement condition: " + condition)
     };
 

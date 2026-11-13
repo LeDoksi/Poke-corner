@@ -110,7 +110,7 @@ public partial class NurseryView : UserControl
     private string ParentName(SaveData data, Guid id)
     {
         var p = data.Individuals.FirstOrDefault(p => p.Id == id);
-        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.IsShiny ? " · шайни" : "") + "\n" + IndividualDisplay.Discriminator(data.Individuals, p.Id, always: true);
+        return p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · №{p.CurrentSpeciesId:D4}" + (p.LooksShiny ? " · шайни" : "") + "\n" + IndividualDisplay.Discriminator(data.Individuals, p.Id, always: true);
     }
     private static string RarityName(string rarity) => rarity.ToLowerInvariant() switch
     {
@@ -139,7 +139,7 @@ public partial class NurseryView : UserControl
     private ImageSource? Sprite(int id, bool shiny)
     {
         var key = (id, shiny); if (_spriteCache.TryGetValue(key, out var image)) return image;
-        try { var path = _catalog.GetAssetPath(id, shiny); if (path is not null && File.Exists(path)) image = SpriteImages.Decode(File.ReadAllBytes(path)); }
+        try { var path = _catalog.GetAssetPath(id, shiny) ?? (shiny ? _catalog.GetAssetPath(id, false) : null); if (path is not null && File.Exists(path)) image = SpriteImages.Decode(File.ReadAllBytes(path)); }
         catch (Exception ex) when (ex is IOException or InvalidOperationException or NotSupportedException or ArgumentException) { image = null; }
         if (_spriteCache.Count >= 128) _spriteCache.Clear(); _spriteCache[key] = image; return image;
     }
@@ -152,8 +152,8 @@ public partial class NurseryView : UserControl
     {
         panel.Children.Clear(); var p = data.Individuals.FirstOrDefault(p => p.Id == id);
         var row = new StackPanel { Orientation = Orientation.Horizontal };
-        row.Children.Add(new Image { Source = p is null ? null : Sprite(p.CurrentSpeciesId, p.IsShiny), Width = 40, Height = 40, Margin = new Thickness(0, 0, 6, 0) });
-        var text = p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · ур. {_levels.LevelForXp(p.TotalXp)}" + (p.IsShiny ? " · шайни" : "");
+        row.Children.Add(new Image { Source = p is null ? null : Sprite(p.CurrentSpeciesId, p.LooksShiny), Width = 40, Height = 40, Margin = new Thickness(0, 0, 6, 0) });
+        var text = p is null ? "Пустое место" : $"{p.Nickname ?? SpeciesName(p.CurrentSpeciesId)} · ур. {_levels.LevelForXp(p.TotalXp)}" + (p.LooksShiny ? " · шайни" : "");
         row.Children.Add(new TextBlock { Text = text, TextTrimming = TextTrimming.CharacterEllipsis, VerticalAlignment = VerticalAlignment.Center,
             ToolTip = p is null ? null : ParentName(data, id) + "\n" + CollectionView.TraitLabel(p.FirstTraitId) + " — " + CollectionView.TraitEffect(p.FirstTraitId),
             MaxWidth = Math.Max(65, (ActualWidth > 0 ? Math.Min(ActualWidth, 968) : 800) * .5 - 190) });
@@ -340,9 +340,9 @@ public partial class NurseryView : UserControl
                 var reason = Unavailable(data, p);
                 var row = new StackPanel();
 
-                row.Children.Add(new Image { Source = Sprite(p.CurrentSpeciesId, p.IsShiny), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
+                row.Children.Add(new Image { Source = Sprite(p.CurrentSpeciesId, p.LooksShiny), Width = 56, Height = 56, HorizontalAlignment = HorizontalAlignment.Center });
                 row.Children.Add(new TextBlock { Text = p.Nickname ?? SpeciesName(p.CurrentSpeciesId), FontWeight = FontWeights.Bold, FontSize = 13, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new Thickness(0, 4, 0, 0) });
-                row.Children.Add(new TextBlock { Text = $"Ур. {_levels.LevelForXp(p.TotalXp)}" + (p.IsShiny ? " · шайни" : ""), FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
+                row.Children.Add(new TextBlock { Text = $"Ур. {_levels.LevelForXp(p.TotalXp)}" + (p.LooksShiny ? " · шайни" : ""), FontSize = 12, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush") });
                 row.Children.Add(new TextBlock { Text = CollectionView.TraitLabel(p.FirstTraitId), FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, Foreground = (System.Windows.Media.Brush)FindResource("MutedTextBrush"), Margin = new Thickness(0, 2, 0, 0) });
 
                 if (reason is not null) row.Children.Add(new TextBlock { Text = reason, TextWrapping = TextWrapping.Wrap, FontSize = 12, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 2, 0, 0) });
@@ -699,7 +699,7 @@ public partial class NurseryView : UserControl
         {
             var pet = data.Individuals.FirstOrDefault(p => p.Id == id);
             // The pet that will really sit in the nest, at its own stage (D-32), not the family's first form.
-            return new Image { Source = Sprite(pet?.CurrentSpeciesId ?? species, pet?.IsShiny ?? false), Width = 36, Height = 36, Margin = new Thickness(0, 0, 2, 0), VerticalAlignment = VerticalAlignment.Center };
+            return new Image { Source = Sprite(pet?.CurrentSpeciesId ?? species, pet?.LooksShiny ?? false), Width = 36, Height = 36, Margin = new Thickness(0, 0, 2, 0), VerticalAlignment = VerticalAlignment.Center };
         }
         Left(Parent(pair.FirstId, pair.FirstSpeciesId));
         Left(Parent(pair.SecondId, pair.SecondSpeciesId));
@@ -759,8 +759,8 @@ public partial class NurseryView : UserControl
         var fresh = pair?.NewCount ?? 0;
         SubtitleText.Text = (fresh == 0 ? "Все малыши этой пары уже есть в покедексе" : $"Может родиться {fresh} {NewSpeciesWord(fresh)}") +
             (pair?.Recipe.Hours is { } hours ? $" · ожидание {hours} ч" : "");
-        SceneFirstParent.Source = Sprite(a.CurrentSpeciesId, a.IsShiny);
-        SceneSecondParent.Source = Sprite(b.CurrentSpeciesId, b.IsShiny);
+        SceneFirstParent.Source = Sprite(a.CurrentSpeciesId, a.LooksShiny);
+        SceneSecondParent.Source = Sprite(b.CurrentSpeciesId, b.LooksShiny);
         SceneFirstParent.Visibility = SceneSecondParent.Visibility = Visibility.Visible;
         PlaceSceneParents(SceneGrid.Height);
     }

@@ -129,7 +129,7 @@ public sealed class EvolutionService
         individual.ReachedSpeciesIds.Add(chosen);
         state.DiscoveredSpeciesIds.Add(chosen);
         if (individual.IsShiny) state.ShinySpeciesIds.Add(chosen);
-        else state.NormalSpeciesIds.Add(chosen);
+        state.NormalSpeciesIds.Add(chosen);
         state.EvolutionTransitions.Add($"{from}->{chosen}");
         AchievementMetrics.Record(state, "special:trophy-special-berry-evolution");
         if (choseBranch) AchievementMetrics.Record(state, "special:trophy-special-branch-choice");

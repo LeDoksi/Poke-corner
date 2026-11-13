@@ -72,14 +72,15 @@ public sealed class FormDiscoveryTests
         state.Encounters.Add(new EncounterState { Id = Guid.NewGuid(), Source = "activity", Phase = "resolved", Individual = shiny, Rarity = RarityTier.Uncommon });
         var catchService = new EncounterService(catalog);
         catchService.Open(state, state.Encounters.Single().Id);
-        Assert.Contains(1, state.ShinySpeciesIds); Assert.Empty(state.NormalSpeciesIds);
+        // D-50: shiny is a look, so a shiny arrival opens the ordinary form too.
+        Assert.Contains(1, state.ShinySpeciesIds); Assert.Contains(1, state.NormalSpeciesIds);
         // Normal hatch uses canonical same-species recipe and frozen child; no ordinary capture history is fabricated.
         var a = Individual(catalog, 1); var b = Individual(catalog, 1); state.Individuals.AddRange([a, b]);
         var nursery = new NurseryService(catalog, state); var now = DateTimeOffset.UtcNow; var request = new NurseryRequest([a.Id, b.Id], null, Guid.NewGuid(), now);
         Assert.True(nursery.Start(request).Success);
         var hatched = nursery.Hatch(request.OperationId, Guid.NewGuid(), now.AddDays(1)); Assert.True(hatched.Success, hatched.Message);
         // Ш-А: base shiny is 15%, so the frozen child may be either; it lands in exactly its own history.
-        Assert.Contains(1, hatched.Child!.IsShiny ? state.ShinySpeciesIds : state.NormalSpeciesIds);
+        Assert.Contains(1, state.NormalSpeciesIds); if (hatched.Child!.IsShiny) Assert.Contains(1, state.ShinySpeciesIds);
         var grown = state.Individuals.Single(p => p.Id == a.Id); grown.AccumulatedCarePoints = 196000;
         var evolved = new EvolutionService(catalog, state).Evolve(grown.Id, null, Guid.NewGuid()); Assert.True(evolved.Success, evolved.Message);
         Assert.Contains(2, state.NormalSpeciesIds); Assert.DoesNotContain(2, state.ShinySpeciesIds);
@@ -106,7 +107,8 @@ public sealed class FormDiscoveryTests
         var lookup = new LegacyLookup([new SpeciesEvolutionChain(1, 1, 45, 2, [1, 2], ["Bulbasaur", "Ivysaur"])], "[]"u8.ToArray());
         var migrated = SaveMigration.Migrate(loaded, lookup, catalog);
         Assert.Contains(25, migrated.DiscoveredSpeciesIds); Assert.Contains(133, migrated.ShinySpeciesIds);
-        Assert.Equal(exactFieldPresent ? Array.Empty<int>() : new[] { 1, 2, 25 }, migrated.NormalSpeciesIds.Order());
+        // D-50: the owned shiny pet opens the ordinary form of what it reached (1, 2); 25 stays inferred-only.
+        Assert.Equal(exactFieldPresent ? new[] { 1, 2 } : new[] { 1, 2, 25 }, migrated.NormalSpeciesIds.Order());
         Assert.Contains(1, migrated.ShinySpeciesIds); Assert.Contains(2, migrated.ShinySpeciesIds);
         var retained = Assert.Single(migrated.Individuals); Assert.Equal(pet.Id, retained.Id); Assert.True(retained.IsShiny);
         Assert.Equal(EvolutionStage.Stage2, retained.CurrentStage); Assert.Equal(2, retained.CurrentSpeciesId); Assert.Equal("История", retained.Nickname);

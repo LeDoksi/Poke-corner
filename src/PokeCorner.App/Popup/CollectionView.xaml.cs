@@ -508,6 +508,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (down) SpeciesNext_Click(button, e); else SpeciesPrev_Click(button, e);
     }
 
+    private int? _shinyArtTotal;
+
     private void RefreshSpecies()
     {
         if (!_isReady) return;
@@ -535,10 +537,16 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         var visible = CollectionViewModel.FilterSpecies(all, SpeciesSearchBox.Text, type, rarity,
             false, sort);
         if (SpeciesUnopenedToggle.IsChecked == true) visible = visible.Where(e => !FormOpen(e)).ToList();
+        // D-50: the goal is every Pokémon in every look, so the grid names what is still missing.
+        var normalLooks = _appState.NormalSpeciesIds; var shinyLooks = _appState.ShinySpeciesIds;
+        bool HasShinyArt(int id) => _getSpeciesAssetPath?.Invoke(id, true) is not null;
+        bool MissingLook(PokedexSpeciesEntry e) => !normalLooks.Contains(e.SpeciesId) || HasShinyArt(e.SpeciesId) && !shinyLooks.Contains(e.SpeciesId);
+        if (SpeciesMissingLookToggle.IsChecked == true) visible = visible.Where(MissingLook).ToList();
         _speciesPageSize = FitSpeciesPage();
         var pageCount = Math.Max(1, (int)Math.Ceiling(visible.Count / (double)_speciesPageSize));
         _speciesPageIndex = Math.Clamp(_speciesPageIndex, 0, pageCount - 1);
-        SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · показано: {visible.Count}";
+        var shinyTotal = _shinyArtTotal ??= all.Count(e => HasShinyArt(e.SpeciesId));
+        SpeciesCountText.Text = $"{(shinyLens ? "Открыто в шайни-форме" : "Открыто видов")}: {all.Count(FormOpen)} из {all.Count} · обликов: обычных {all.Count(e => normalLooks.Contains(e.SpeciesId))} из {all.Count}, шайни {all.Count(e => shinyLooks.Contains(e.SpeciesId))} из {shinyTotal} · показано: {visible.Count}";
         PokedexNote.Text = shinyLens ? "Другие цвета — и совсем другая охота." : "Силуэт знакомый, имени нет. Кто же это?"; // D-25 notes 10, 12
         SpeciesPageText.Text = $"{_speciesPageIndex + 1} / {pageCount}";
         SpeciesPrevButton.IsEnabled = _speciesPageIndex > 0;
@@ -546,11 +554,12 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesPagination.Visibility = pageCount > 1 ? Visibility.Visible : Visibility.Collapsed;
         var page = visible.Skip(_speciesPageIndex * _speciesPageSize).Take(_speciesPageSize).ToList();
         var signature = $"{_speciesPageIndex}|{type}|{rarity}|{SpeciesSearchBox.Text}|{sort}|{shinyLens}|" +
-            string.Join("|", page.Select(e => $"{e.SpeciesId}:{FormOpen(e)}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
+            string.Join("|", page.Select(e => $"{e.SpeciesId}:{FormOpen(e)}:{normalLooks.Contains(e.SpeciesId)}:{shinyLooks.Contains(e.SpeciesId)}:{string.Join(',', e.OwnedIndividuals.Select(i => $"{i.IndividualId}:{i.Nickname}:{i.IsBusy}:{i.Level}"))}"));
         if (signature != _speciesSignature)
         {
             _speciesSignature = signature;
-            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId, shinyLens || _shinyOnlySpecies.Contains(e.SpeciesId)), FormOpen(e))).ToList();
+            SpeciesGrid.ItemsSource = page.Select(e => new SpeciesCard(e, GetPackageSprite(e.SpeciesId, shinyLens || _shinyOnlySpecies.Contains(e.SpeciesId)), FormOpen(e))
+                { NormalLookOpen = normalLooks.Contains(e.SpeciesId), ShinyLookOpen = shinyLooks.Contains(e.SpeciesId), HasShinyArt = HasShinyArt(e.SpeciesId) }).ToList();
         }
         if (_selectedSpeciesId is { } id) ShowSpeciesDetail(all.FirstOrDefault(e => e.SpeciesId == id));
     }
@@ -568,7 +577,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             var other = shiny[i];
             var useShiny = !normal.IsDiscovered && other.IsDiscovered;
             if (useShiny) shinyOnly.Add(normal.SpeciesId);
-            return (useShiny ? other : normal) with { OwnedIndividuals = [.. normal.OwnedIndividuals, .. other.OwnedIndividuals] };
+            return (useShiny ? other : normal) with { OwnedIndividuals = normal.OwnedIndividuals };
         }).ToList();
         _shinyOnlySpecies = shinyOnly;
         return merged;
@@ -579,7 +588,8 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         if (_packageSprites.TryGetValue((speciesId, isShiny), out var cached)) return cached;
         if (_missingPackageSprites.Contains((speciesId, isShiny))) return null;
         var path = _getSpeciesAssetPath?.Invoke(speciesId, isShiny);
-        if (path is null) return null;
+        // D-50: a pet may wear the shiny look at a stage that has no shiny art; it then shows the ordinary one.
+        if (path is null) return isShiny ? GetPackageSprite(speciesId) : null;
         try
         {
             // A failed URI decode can retain WPF's file cache handle. Scope the stream even on failure.
@@ -619,7 +629,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         SpeciesDetailTypes.Text = string.Join(" · ", new[] { entry.Number }.Concat(entry.IsDiscovered ? entry.Types.Select(TypeDisplay.GetLabel) : []));
         // D-25 notes 17-18: what the trainer knows about this species, never more than the page shows.
         SpeciesDetailNote.Text = !entry.IsDiscovered ? "Пока только силуэт. Где искать — ниже."
-            : entry.OwnedIndividuals.Any(i => i.IsShiny) && entry.OwnedIndividuals.Any(i => !i.IsShiny) ? "И обычный, и шайни. Страница закрыта."
+            : _appState.NormalSpeciesIds.Contains(entry.SpeciesId) && _appState.ShinySpeciesIds.Contains(entry.SpeciesId) ? "Оба облика открыты. Страница закрыта."
             : "Записано в покедекс. Можно гордиться.";
         RenderSpeciesForms(entry.SpeciesId);
         SpeciesDetailOwnedLabel.Visibility = entry.OwnedIndividuals.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -779,6 +789,14 @@ public partial class CollectionView : System.Windows.Controls.UserControl
             ? $"{string.Join(" · ", Entry.Types.Select(TypeDisplay.GetLabel))} · {RarityName}"
             : Entry.HasSilhouette ? Entry.RouteHint.StartsWith("Эволюция") ? "Открывается эволюцией" : "Можно встретить" : "Ещё не встречался";
         public Visibility WhereVisibility => Visibility.Visible;
+        public bool NormalLookOpen { get; init; }
+        public bool ShinyLookOpen { get; init; }
+        public bool HasShinyArt { get; init; }
+        public double NormalMarkOpacity => NormalLookOpen ? 1 : .22;
+        public double ShinyMarkOpacity => ShinyLookOpen ? 1 : .22;
+        public Visibility ShinyMarkVisibility => HasShinyArt ? Visibility.Visible : Visibility.Collapsed;
+        public string LooksToolTip => "Обычный облик: " + (NormalLookOpen ? "открыт" : "не открыт")
+            + (HasShinyArt ? "\nШайни-облик: " + (ShinyLookOpen ? "открыт" : "не открыт") : "\nШайни-облика у вида нет");
         private string RarityName => Enum.TryParse<RarityTier>(Entry.Rarity, true, out var tier)
             ? RarityDisplay.GetName(tier) : Entry.Rarity ?? string.Empty;
         public Visibility RevealedVisibility => FormOpen && SpriteImage is not null ? Visibility.Visible : Visibility.Collapsed;
@@ -996,7 +1014,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         ReadyEvolveFilterToggle.Content = $"Готовы к эволюции · {entries.Count(e => e.IsReadyToEvolve)}";
         FreeFilterToggle.Content = $"Свободны · {entries.Count(e => !e.IsBusy && !e.IsActive)}";
         FavoritesFilterToggle.Content = $"Избранные · {entries.Count(e => e.IsFavorite)}";
-        ShinyFilterToggle.Content = $"Шайни · {entries.Count(e => e.IsShiny)}";
+        ShinyFilterToggle.Content = $"Шайни · {entries.Count(e => e.HasShinyLook)}";
         DuplicatesFilterToggle.Content = $"Лишние дубли · {spareCount}";
 
         // Clamped rather than reset: releasing a Pokémon (or narrowing a filter) can shrink the
@@ -1030,7 +1048,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // until some unrelated field changes. The nickname is in there for the same reason:
         // renaming from the detail overlay must repaint the card behind it.
         var signature = $"{_rarityFilter}|{_searchQuery}|{_hideFullyEvolved}|{_sortOrder}|{_pageIndex}|" + string.Join("|", page.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{IndividualDisplay.Discriminator(_appState.Collection.Individuals, e.IndividualId)}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId, e.IsShiny) is not null}:{_animatedFrames.ContainsKey((e.DisplaySpeciesId, e.IsShiny))}"));
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{IndividualDisplay.Discriminator(_appState.Collection.Individuals, e.IndividualId)}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.IsShiny}:{e.HasShinyLook}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId, e.IsShiny) is not null}:{_animatedFrames.ContainsKey((e.DisplaySpeciesId, e.IsShiny))}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
@@ -1060,6 +1078,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         NatureText = NatureDisplay.Name(entry.Nature),
         CanSelect = !entry.IsActive && !entry.IsBusy,
         IsShiny = entry.IsShiny,
+        HasShinyLook = entry.HasShinyLook,
         IsActive = entry.IsActive,
         IsFavorite = entry.IsFavorite,
         TypeBadges = TypeDisplay.ToBadges(entry.Types),
@@ -1274,7 +1293,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         RefreshDetailRetraining();
         RefreshDetailItems();
 
-        DetailShinyBadge.Visibility = card.ShinyVisibility;
+        RefreshDetailLook(card);
         DetailActiveBadge.Visibility = card.ActiveBadgeVisibility;
 
         // An already-active pet can't be selected again.
@@ -1589,11 +1608,49 @@ public partial class CollectionView : System.Windows.Controls.UserControl
     // else) it shows the new species at once instead of the previous form's animation until reopened, and it
     // picks up the animated frames once they arrive. Generation and status line are kept, so an evolve
     // still in flight reports its result here.
+    // D-50: one Pokémon, two looks. The closed look stays on the page as a disabled button with the way to open it.
+    private void RefreshDetailLook(PokedexCard card)
+    {
+        var individual = _appState.Collection.Individuals.FirstOrDefault(i => i.Id == card.IndividualId);
+        var open = individual?.HasShinyLook == true;
+        var supported = _getSpeciesAssetPath is null || _getSpeciesAssetPath(card.SpeciesId, true) is not null;
+        DetailLookSwitch.Visibility = individual is not null && (supported || open) ? Visibility.Visible : Visibility.Collapsed;
+        var shiny = individual?.LooksShiny == true;
+        DetailLookNormalButton.Style = (Style)FindResource(shiny ? "NdChoiceStyle" : "NdChoiceSelectedStyle");
+        DetailLookShinyButton.Style = (Style)FindResource(shiny ? "NdChoiceSelectedStyle" : "NdChoiceStyle");
+        DetailLookShinyButton.IsEnabled = open;
+        DetailLookShinyButton.Content = open ? "✦ Шайни" : "✦ Шайни закрыт";
+        DetailLookShinyButton.ToolTip = open ? "Показать этого покемона в облике шайни"
+            : "Облик откроется, когда встретишь или выведешь шайни из этой семьи";
+        ToolTipService.SetShowOnDisabled(DetailLookShinyButton, true);
+    }
+
+    private async void DetailLook_Click(object sender, RoutedEventArgs e)
+    {
+        if (_detailCard is null) return;
+        var individual = _appState.Collection.Individuals.FirstOrDefault(i => i.Id == _detailCard.IndividualId);
+        if (individual is null || !individual.HasShinyLook) return;
+        var shiny = (string)((FrameworkElement)sender).Tag == "shiny";
+        if (shiny == individual.LooksShiny) return;
+        var generation = _detailGeneration;
+        if (_commitState is null) _appState.SetShinyLook(individual, shiny);
+        else if (!await CommitMutationAsync(next =>
+        {
+            var current = next.Individuals.FirstOrDefault(i => i.Id == individual.Id)
+                ?? throw new InvalidOperationException("Этот покемон больше не найден.");
+            if (!current.HasShinyLook) throw new InvalidOperationException("Облик шайни ещё не открыт.");
+            current.ShowShiny = shiny == current.IsShiny ? null : shiny;
+        }, individual.Id, generation)) return;
+        if (individual.Id == _appState.Collection.ActiveIndividualId) _onStateChanged();
+        if (IsCurrentDetail(individual.Id, generation)) SyncDetailForm();
+        Refresh();
+    }
+
     private void SyncDetailForm()
     {
         var entry = _viewModel.GetEntry(_detailCard!.IndividualId, DateTimeOffset.UtcNow);
         if (entry is null) return;
-        if (entry.DisplaySpeciesId != _detailCard.SpeciesId || entry.IsShiny != _detailCard.IsShiny)
+        if (entry.DisplaySpeciesId != _detailCard.SpeciesId || entry.IsShiny != _detailCard.IsShiny || entry.HasShinyLook != _detailCard.HasShinyLook)
         {
             var generation = _detailGeneration; var status = DetailErrorText.Text;
             ShowDetail(BuildCard(entry));

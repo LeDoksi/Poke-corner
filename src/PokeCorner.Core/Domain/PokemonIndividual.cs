@@ -43,7 +43,21 @@ public sealed class PokemonIndividual
     // canonical evolution. The original gift and encounter records remain historical snapshots.
     internal void ReconcileGiftChainLength(int canonicalLength) => _chainLength = canonicalLength;
     public required Nature Nature { get; init; }
+    /// Arrived shiny. Since D-50 this is the origin only: what is drawn is <see cref="LooksShiny"/>.
     public required bool IsShiny { get; init; }
+
+    /// D-50 (Georgy 13.11): shiny is a look, not a separate Pokémon. The look is open for every pet of a
+    /// family once any shiny of that family has arrived; kept in step by <see cref="ShinyRules.SyncLooks"/>.
+    public bool ShinyLookOpen { get; set; }
+
+    /// The look the player picked. null means "as it arrived".
+    public bool? ShowShiny { get; set; }
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public bool HasShinyLook => IsShiny || ShinyLookOpen;
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public bool LooksShiny => HasShinyLook && (ShowShiny ?? IsShiny);
     private DateTimeOffset _caughtAtUtc;
     public required DateTimeOffset CaughtAtUtc
     {

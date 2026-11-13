@@ -63,6 +63,19 @@ public static class ShinyRules
         return open;
     }
 
+    /// D-50: one Pokémon, two looks. Every arrival opens the ordinary form of what it has reached; a shiny
+    /// arrival also opens the shiny look for its whole family. Idempotent, runs on every proposed save.
+    public static void SyncLooks(PokeCorner.Core.Persistence.SaveData state, IReadOnlyDictionary<int, int>? familyRoots = null)
+    {
+        if (familyRoots is not null)
+            foreach (var id in state.ShinySpeciesIds)
+                if (familyRoots.TryGetValue(id, out var root) && root > 0) state.ShinyFamilyIds.Add(root);
+        foreach (var pet in state.Individuals)
+            if (pet.IsShiny && pet.FamilyRootId > 0) state.ShinyFamilyIds.Add(pet.FamilyRootId);
+        foreach (var pet in state.Individuals)
+            pet.ShinyLookOpen = pet.IsShiny || state.ShinyFamilyIds.Contains(pet.FamilyRootId);
+    }
+
     public static double NextNurseryLuck(double currentBonus, bool isShiny, bool variantSupported)
     {
         if (!double.IsFinite(currentBonus) || currentBonus < 0) throw new ArgumentOutOfRangeException(nameof(currentBonus));

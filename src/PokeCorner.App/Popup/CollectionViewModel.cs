@@ -35,6 +35,8 @@ public sealed record CollectionEntry(
     /// already at its final stage, so it never matches.
     bool HasEvolutionsRemaining)
 {
+    /// D-50: the shiny look is open for this pet (IsShiny is the look it wears now).
+    public bool HasShinyLook { get; init; }
     public int Level { get; init; } = 1;
     public bool IsBusy { get; init; }
     public int CurrentSpeciesId { get; init; }
@@ -158,21 +160,22 @@ public sealed class CollectionViewModel
     public IReadOnlyList<PokedexSpeciesEntry> GetSpeciesEntries(bool isShiny = false)
     {
         var discovered = (isShiny ? _shinySpeciesIds() : _normalSpeciesIds()).ToHashSet();
-        foreach (var individual in _collection.Individuals.Where(i => i.IsShiny == isShiny))
+        foreach (var individual in _collection.Individuals.Where(i => !isShiny || i.IsShiny))
         {
             discovered.Add(individual.SpeciesId);
             discovered.UnionWith(individual.ReachedSpeciesIds);
             discovered.Add(ResolveCurrentSpeciesId(individual));
         }
         var busy = _busyIndividualIds();
-        var ownedBySpecies = _collection.Individuals.Where(i => i.IsShiny == isShiny).GroupBy(ResolveCurrentSpeciesId)
+        // D-50: shiny is a look, so a pet stands on the ordinary page and, once the look is open, on the shiny one too.
+        var ownedBySpecies = _collection.Individuals.Where(i => !isShiny || i.HasShinyLook).GroupBy(ResolveCurrentSpeciesId)
             .ToDictionary(group => group.Key, group => group.ToArray());
         return _species.OrderBy(species => species.Id).Select(species =>
         {
             var open = discovered.Contains(species.Id);
             var current = ownedBySpecies.GetValueOrDefault(species.Id) ?? [];
             var owned = current
-                .Select(i => new OwnedIndividualEntry(i.Id, i.Nickname, _levelFor(i), i.IsShiny,
+                .Select(i => new OwnedIndividualEntry(i.Id, i.Nickname, _levelFor(i), i.LooksShiny,
                     busy.Contains(i.Id), i.Id == _collection.ActiveIndividualId, i.CaughtAtUtc)).ToList();
             return new PokedexSpeciesEntry(species.Id,
                 open ? species.DisplayName : null,
@@ -223,7 +226,7 @@ public sealed class CollectionViewModel
     /// Charmander sorts where Charmeleon does. Filtering only narrows this list; it never reorders it.
     public IReadOnlyList<CollectionEntry> GetEntries(DateTimeOffset nowUtc)
     {
-        var normalOpen = _normalSpeciesIds(); var shinyOpen = _shinySpeciesIds();
+        var normalOpen = _normalSpeciesIds();
         var readyToEvolve = ReadyToEvolveIds?.Invoke();
         return _collection.Individuals
             .OrderByDescending(i => i.Id == _collection.ActiveIndividualId)
@@ -239,7 +242,7 @@ public sealed class CollectionViewModel
                 displaySpeciesId,
                 _speciesById.GetValueOrDefault(displaySpeciesId)?.DisplayName ?? _chains.ResolveSpeciesName(displaySpeciesId),
                 individual.Nickname,
-                individual.IsShiny,
+                individual.LooksShiny,
                 IsActive: individual.Id == _collection.ActiveIndividualId,
                 Rarity: RarityForSpecies(displaySpeciesId, individual.EvolutionChainId),
                 EvolutionFraction: progress.EvolutionFraction,
@@ -258,7 +261,8 @@ public sealed class CollectionViewModel
                 FirstTraitId = individual.FirstTraitId,
                 SecondTraitId = individual.SecondTraitId,
                 DescriptionRu = CollectionPresentation.Fact(displaySpeciesId),
-                UnopenedAhead = UnopenedAhead(individual, individual.IsShiny ? shinyOpen : normalOpen),
+                HasShinyLook = individual.HasShinyLook,
+                UnopenedAhead = UnopenedAhead(individual, normalOpen),
                 IsReadyToEvolve = readyToEvolve?.Contains(individual.Id) == true
             };
         }).ToList();
@@ -419,10 +423,10 @@ public sealed class CollectionViewModel
             .Where(e => !growth || e.HasEvolutionsRemaining)
             .Where(e => spare is null || spare.Contains(e.IndividualId))
             .Where(e => !free || !e.IsBusy && !e.IsActive).Where(e => !readyToEvolve || e.IsReadyToEvolve)
-            .Where(e => !favorite || e.IsFavorite).Where(e => !shiny || e.IsShiny).ToList(), sort);
+            .Where(e => !favorite || e.IsFavorite).Where(e => !shiny || e.HasShinyLook).ToList(), sort);
     }
 
-    /// «Лишние дубли» (D-42): see SpareRules. Same species AND same form; the best copy and every copy that
+    /// «Лишние дубли» (D-42): see SpareRules. Same species (shiny is a look since D-50); the best copy and every copy that
     /// can still open a form always stay; a favourite, the active pet or a busy one is never offered.
     public static IReadOnlySet<Guid> SpareIds(IReadOnlyList<CollectionEntry> entries) =>
         Core.Domain.SpareRules.Spare(entries.Select(e => new Core.Domain.SpareRules.Copy(e.IndividualId,
