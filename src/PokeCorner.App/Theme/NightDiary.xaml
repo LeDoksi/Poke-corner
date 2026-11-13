@@ -129,7 +129,8 @@
  </Style>
  <Style x:Key="NdShellTabStyle" TargetType="TabItem">
   <Setter Property="Foreground" Value="{StaticResource NdMutedBrush}"/><Setter Property="FontSize" Value="12.5"/><Setter Property="FontWeight" Value="SemiBold"/>
-  <Setter Property="Margin" Value="8,3"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Cursor" Value="Hand"/>
+  <!-- Stretch: TabControl copies this onto PART_SelectedContentHost; anything else sizes the page to its content and the Pokedex grid then shrinks itself in a layout loop. -->
+  <Setter Property="Margin" Value="8,3"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="Cursor" Value="Hand"/>
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TabItem">
    <Grid Background="Transparent">
     <Border x:Name="Surface" CornerRadius="12" BorderThickness="1" BorderBrush="Transparent" Background="Transparent"/>
