@@ -26,19 +26,7 @@
    </ScrollViewer>
    <Border Grid.Column="1" Style="{StaticResource NdPanelStyle}">
     <DockPanel>
-     <StackPanel DockPanel.Dock="Top">
-      <Border Height="104" CornerRadius="12" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1">
-       <Border.Background><RadialGradientBrush Center="0.5,0.55" GradientOrigin="0.5,0.55" RadiusX="0.6" RadiusY="0.9"><GradientStop Color="#55FFB574" Offset="0"/><GradientStop Color="#14172B" Offset="1"/></RadialGradientBrush></Border.Background>
-       <Image x:Name="DetailArt" Width="84" Height="84" RenderOptions.BitmapScalingMode="HighQuality"/>
-      </Border>
-      <TextBlock x:Name="DetailNameText" FontFamily="{StaticResource NdDisplayFont}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="2,12,0,0"/>
-      <TextBlock x:Name="DetailEffectText" Style="{StaticResource CaptionTextStyle}" FontSize="13" TextWrapping="Wrap" Margin="2,6,0,10"/>
-      <UniformGrid Columns="2" Margin="0,0,-6,0">
-       <Border CornerRadius="10" Background="#14172B" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" Padding="10,6" Margin="0,0,6,0"><StackPanel><TextBlock Text="В запасе" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="StockText" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap"/></StackPanel></Border>
-       <Border CornerRadius="10" Background="#14172B" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" Padding="10,6" Margin="0,0,6,0"><StackPanel><TextBlock Text="Цена" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="PriceText" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap"/></StackPanel></Border>
-      </UniformGrid>
-      <Button x:Name="UseButton" Visibility="Collapsed" Click="UseButton_Click" Style="{StaticResource NdLinkButtonStyle}" HorizontalAlignment="Left" Margin="-8,6,0,0"/>
-     </StackPanel>
+     <!-- Docked first: on a short page the description gives way, never the buy button. -->
      <StackPanel DockPanel.Dock="Bottom">
       <DockPanel Margin="0,0,0,8">
        <TextBlock Text="ПОКУПАТЬ ПО" Style="{StaticResource CaptionTextStyle}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,8,0"/>
@@ -53,6 +41,19 @@
       </Grid>
       <TextBlock x:Name="TotalText" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,8" AutomationProperties.LiveSetting="Polite"/>
       <Button x:Name="BuyButton" Content="Купить" Click="BuyButton_Click" MinHeight="54" FontSize="15"/>
+     </StackPanel>
+     <StackPanel DockPanel.Dock="Top">
+      <Border Height="104" CornerRadius="12" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1">
+       <Border.Background><RadialGradientBrush Center="0.5,0.55" GradientOrigin="0.5,0.55" RadiusX="0.6" RadiusY="0.9"><GradientStop Color="#55FFB574" Offset="0"/><GradientStop Color="#14172B" Offset="1"/></RadialGradientBrush></Border.Background>
+       <Image x:Name="DetailArt" Width="84" Height="84" RenderOptions.BitmapScalingMode="HighQuality"/>
+      </Border>
+      <TextBlock x:Name="DetailNameText" FontFamily="{StaticResource NdDisplayFont}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="2,12,0,0"/>
+      <TextBlock x:Name="DetailEffectText" Style="{StaticResource CaptionTextStyle}" FontSize="13" TextWrapping="Wrap" Margin="2,6,0,10"/>
+      <UniformGrid Columns="2" Margin="0,0,-6,0">
+       <Border CornerRadius="10" Background="#14172B" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" Padding="10,6" Margin="0,0,6,0"><StackPanel><TextBlock Text="В запасе" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="StockText" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap"/></StackPanel></Border>
+       <Border CornerRadius="10" Background="#14172B" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" Padding="10,6" Margin="0,0,6,0"><StackPanel><TextBlock Text="Цена" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="PriceText" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap"/></StackPanel></Border>
+      </UniformGrid>
+      <Button x:Name="UseButton" Visibility="Collapsed" Click="UseButton_Click" Style="{StaticResource NdLinkButtonStyle}" HorizontalAlignment="Left" Margin="-8,6,0,0"/>
      </StackPanel>
      <!-- What is left of the panel is the diary margin: a sketch and a note, when there is room for them. -->
      <local:DiaryMargin x:Name="ShopMargin" Margin="0,8,0,8"/>
