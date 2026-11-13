@@ -384,7 +384,8 @@ public partial class RoomView : UserControl
         SceneHost.Clip = new System.Windows.Media.RectangleGeometry(new Rect(0, 0, width, height), 17, 17);
         var gauges = GaugeRow.ActualHeight > 0 ? GaugeRow.ActualHeight * .62 : 44;
         var scale = Math.Max(width / 1448, Math.Max(1, height - gauges) / 582);
-        var x = Math.Clamp(width / 2 - 800 * scale, width - 1448 * scale, 0);
+        // Not Math.Clamp: when the width sets the scale, width - 1448 * scale can round to a hair above 0 and Clamp throws.
+        var x = Math.Min(0, Math.Max(width / 2 - 800 * scale, width - 1448 * scale));
         Scene.RenderTransform = new System.Windows.Media.TransformGroup { Children = { new System.Windows.Media.ScaleTransform(scale, scale), new System.Windows.Media.TranslateTransform(x, Math.Min(0, height - gauges - 582 * scale)) } };
         CornerNoteScrap.Visibility = width >= 720 ? Visibility.Visible : Visibility.Collapsed;
     }
