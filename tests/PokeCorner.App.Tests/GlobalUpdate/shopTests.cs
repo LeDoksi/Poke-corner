@@ -264,11 +264,8 @@ public sealed class ShopTests : IDisposable
         var commits = 0;
         var view = new ShopView(live, shop, _ => { commits++; return Task.CompletedTask; }, () => { });
         view.SelectBerryShortage("cheri", 5);
-        var berries = (StackPanel)view.FindName("BerriesPanel");
-        var cheri = (Border)berries.Children[0];
-        var grid = (Grid)cheri.Child;
-        var action = (Grid)grid.Children[2];
-        Assert.Equal("3", ((TextBox)((StackPanel)action.Children[0]).Children[1]).Text);
+        Assert.Equal("3", Named<TextBox>(view, "QuantityBox").Text);
+        Assert.StartsWith("Чери", Named<TextBlock>(view, "DetailNameText").Text);
         Assert.Equal(0, commits);
         Assert.Equal(100, live.Shop.Coins);
     });
@@ -296,13 +293,10 @@ public sealed class ShopTests : IDisposable
         var live = new AppState();
         live.Hydrate(State());
         var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
-        var items = (StackPanel)view.FindName("ItemsPanel");
-        var berries = (StackPanel)view.FindName("BerriesPanel");
-        var treatsDetail = (StackPanel)((Grid)((Border)items.Children[0]).Child).Children[1];
-        var berryDetail = (StackPanel)((Grid)((Border)berries.Children[0]).Child).Children[1];
-
-        Assert.Contains("30 монет/пачка", ((TextBlock)treatsDetail.Children[2]).Text);
-        Assert.Contains("20 монет/шт.", ((TextBlock)berryDetail.Children[2]).Text);
+        Pick(view, "treats");
+        Assert.Equal("30 монет/пачка", Named<TextBlock>(view, "PriceText").Text);
+        Pick(view, shop.Goods.First(g => g.IsBerry).Id);
+        Assert.Equal("20 монет/шт.", Named<TextBlock>(view, "PriceText").Text);
     });
 
     [Fact]
@@ -313,9 +307,8 @@ public sealed class ShopTests : IDisposable
         var pending = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var calls = 0;
         var view = new ShopView(live, shop, _ => { calls++; return pending.Task; }, () => { }, confirmAsync: (_, _, _) => Task.FromResult(true));
-        var berries = (StackPanel)view.FindName("BerriesPanel");
-        var grid = (Grid)((Border)berries.Children[0]).Child;
-        var buy = (Button)((Grid)grid.Children[2]).Children[1];
+        Pick(view, shop.Goods.First(g => g.IsBerry).Id);
+        var buy = Named<Button>(view, "BuyButton");
         buy.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
         buy.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
         Assert.Equal(1, calls);
@@ -416,19 +409,53 @@ public sealed class ShopTests : IDisposable
         var live = new AppState(); live.Hydrate(State(1000));
         var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
         WpfTestHost.Layout(view, width - 40, height - 140);
-        foreach (var panel in new[] { (StackPanel)view.FindName("ItemsPanel"), (StackPanel)view.FindName("BerriesPanel") })
+        var shelf = Named<WrapPanel>(view, "GoodsPanel");
+        Assert.Equal(12, shelf.Children.Count);
+        var buy = Named<Button>(view, "BuyButton");
+        foreach (Button tile in shelf.Children)
         {
-            Assert.Equal(6, panel.Children.Count);
-            foreach (Border card in panel.Children)
-            {
-                var grid = (Grid)card.Child;
-                Assert.NotNull(((System.Windows.Controls.Image)grid.Children[0]).Source);
-                var actions = (Grid)grid.Children[2];
-                Assert.True(actions.ActualWidth <= grid.ActualWidth + 1);
-                Assert.True(((TextBox)((StackPanel)actions.Children[0]).Children[1]).IsEnabled);
-                Assert.True(((Button)actions.Children[1]).IsEnabled);
-            }
+            Assert.True(tile.ActualWidth >= 120 && tile.ActualHeight >= 100, $"{tile.Tag}: {tile.ActualWidth}x{tile.ActualHeight}");
+            tile.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            view.UpdateLayout();
+            Assert.NotNull(Named<System.Windows.Controls.Image>(view, "DetailArt").Source);
+            Assert.True(Named<TextBox>(view, "QuantityBox").IsEnabled);
+            Assert.True(buy.IsEnabled);
+            // The buy button stays on the page whatever the good's description length.
+            var bottom = buy.TranslatePoint(new System.Windows.Point(0, buy.ActualHeight), view).Y;
+            Assert.True(buy.ActualHeight >= 40 && bottom <= view.ActualHeight + 1, $"{tile.Tag}: buy bottom {bottom} of {view.ActualHeight}");
         }
+    });
+
+    private static T Named<T>(ShopView view, string name) => (T)view.FindName(name);
+    private static void Pick(ShopView view, string id) => Named<WrapPanel>(view, "GoodsPanel").Children.OfType<Button>()
+        .Single(tile => (string)tile.Tag == id).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+    [Fact]
+    public void ShelfFiltersByCategoryStepsByFiveAndKeepsEachGoodsQuantity() => WpfTestHost.Run(() =>
+    {
+        var live = new AppState(); live.Hydrate(State(1000));
+        var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
+        var shelf = Named<WrapPanel>(view, "GoodsPanel"); var quantity = Named<TextBox>(view, "QuantityBox");
+        var plus = Named<Button>(view, "IncreaseButton"); var minus = Named<Button>(view, "DecreaseButton");
+        var berry = shop.Goods.First(g => g.IsBerry).Id;
+        Pick(view, berry);
+        Named<ListBox>(view, "StepBox").SelectedIndex = 1;
+        plus.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); Assert.Equal("5", quantity.Text);
+        plus.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); Assert.Equal("10", quantity.Text);
+        minus.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); Assert.Equal("5", quantity.Text);
+        minus.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); Assert.Equal("1", quantity.Text);
+        quantity.Text = "7";
+        Pick(view, "treats"); Assert.Equal("1", quantity.Text);
+        Pick(view, berry); Assert.Equal("7", quantity.Text);
+
+        Named<ListBox>(view, "CategoryBox").SelectedIndex = 3;
+        var shown = shelf.Children.OfType<Button>().Where(tile => tile.Visibility == Visibility.Visible).Select(tile => (string)tile.Tag).ToArray();
+        Assert.Equal(new[] { "lucky-charm", "offspring-charm" }, shown.Order().ToArray());
+        Assert.Contains(shop.Goods.Single(g => g.Name == Named<TextBlock>(view, "DetailNameText").Text).Id, shown);
+        // A shortage link from another screen always finds its good, whatever shelf was open.
+        view.SelectBerryShortage(berry, 3);
+        Assert.Equal(12, shelf.Children.OfType<Button>().Count(tile => tile.Visibility == Visibility.Visible));
+        Assert.Equal("3", quantity.Text);
     });
 
     private Task InvokeBuy(ShopView view, string id) => (Task)typeof(ShopView).GetMethod("Buy",
@@ -512,11 +539,11 @@ public sealed class ShopTests : IDisposable
     {
         var live = new AppState(); live.Hydrate(State());
         var view = new ShopView(live, shop, _ => Task.CompletedTask, () => { });
-        var items = (StackPanel)view.FindName("ItemsPanel");
-        foreach (Border card in items.Children)
+        foreach (var good in shop.Goods.Where(g => !g.IsBerry))
         {
-            var detail = (StackPanel)((Grid)card.Child).Children[1];
-            var effect = ((TextBlock)detail.Children[1]).Text;
+            Pick(view, good.Id);
+            var effect = Named<TextBlock>(view, "DetailEffectText").Text;
+            Assert.False(string.IsNullOrWhiteSpace(effect));
             Assert.DoesNotContain("шанс", effect, StringComparison.OrdinalIgnoreCase);
             Assert.DoesNotContain("раза", effect, StringComparison.OrdinalIgnoreCase);
             Assert.DoesNotContain("%", effect);
@@ -552,11 +579,9 @@ public sealed class ShopTests : IDisposable
         var live = new AppState(); live.Hydrate(State());
         var commits = 0;
         var view = new ShopView(live, shop, _ => { commits++; return Task.CompletedTask; }, () => { });
-        var card = (Grid)((Border)((StackPanel)view.FindName("BerriesPanel")).Children[0]).Child;
-        var actions = (Grid)card.Children[2];
-        var stepper = (StackPanel)actions.Children[0];
-        var minus = (Button)stepper.Children[0]; var quantity = (TextBox)stepper.Children[1]; var plus = (Button)stepper.Children[2];
-        var buy = (Button)actions.Children[1]; var total = (TextBlock)actions.Children[2];
+        Pick(view, shop.Goods.First(g => g.IsBerry).Id);
+        var minus = Named<Button>(view, "DecreaseButton"); var quantity = Named<TextBox>(view, "QuantityBox"); var plus = Named<Button>(view, "IncreaseButton");
+        var buy = Named<Button>(view, "BuyButton"); var total = Named<TextBlock>(view, "TotalText");
         Assert.False(minus.IsEnabled);
         plus.RaiseEvent(new System.Windows.RoutedEventArgs(Button.ClickEvent));
         Assert.Equal("2", quantity.Text); Assert.Contains("40 монет", total.Text);

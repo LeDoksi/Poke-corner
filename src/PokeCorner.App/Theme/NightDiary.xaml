@@ -309,4 +309,25 @@
   <Grid><TextBlock x:Name="SettingsLabel" Text="Настройки"/><TextBlock x:Name="BackLabel" Text="Назад" Visibility="Collapsed"/></Grid>
   <DataTemplate.Triggers><DataTrigger Binding="{Binding}" Value="К разделам"><Setter TargetName="SettingsLabel" Property="Visibility" Value="Collapsed"/><Setter TargetName="BackLabel" Property="Visibility" Value="Visible"/></DataTrigger></DataTemplate.Triggers>
  </DataTemplate>
+ <!-- Flat button body (D-38): links, tiles and outlines. Actions that change something use the key cap instead. -->
+ <Style x:Key="NdFlatButtonStyle" TargetType="Button">
+  <Setter Property="Foreground" Value="{StaticResource NdTextBrush}"/><Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="Transparent"/><Setter Property="BorderThickness" Value="1"/>
+  <Setter Property="Padding" Value="10,5"/><Setter Property="MinHeight" Value="30"/><Setter Property="Cursor" Value="Hand"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="VerticalContentAlignment" Value="Center"/>
+  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+   <Grid>
+    <Border x:Name="Surface" CornerRadius="12" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+    <Border x:Name="Light" CornerRadius="12" Background="#FFFFFF" Opacity="0" IsHitTestVisible="False"/>
+    <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+    <Border x:Name="FocusRing" CornerRadius="12" BorderThickness="2" BorderBrush="{StaticResource NdTextBrush}" Visibility="Collapsed" IsHitTestVisible="False"/>
+   </Grid>
+   <ControlTemplate.Triggers>
+    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Light" Property="Opacity" Value="0.07"/></Trigger>
+    <Trigger Property="IsPressed" Value="True"><Setter TargetName="Light" Property="Opacity" Value="0.14"/></Trigger>
+    <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="FocusRing" Property="Visibility" Value="Visible"/></Trigger>
+    <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger>
+   </ControlTemplate.Triggers>
+  </ControlTemplate></Setter.Value></Setter>
+ </Style>
+ <Style x:Key="NdLinkButtonStyle" TargetType="Button" BasedOn="{StaticResource NdFlatButtonStyle}"><Setter Property="Foreground" Value="{StaticResource NdLavenderBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+ <Style x:Key="NdTileButtonStyle" TargetType="Button" BasedOn="{StaticResource NdFlatButtonStyle}"><Setter Property="Background" Value="{StaticResource NdPanelBrush}"/><Setter Property="BorderBrush" Value="{StaticResource NdPanelLineBrush}"/></Style>
 </ResourceDictionary>

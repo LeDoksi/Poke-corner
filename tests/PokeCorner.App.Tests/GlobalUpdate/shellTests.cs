@@ -151,8 +151,7 @@ public class ShellTests
         menu.Navigate(MenuSection.Shop);
         WpfTestHost.Layout((FrameworkElement)menu.Content, 820, 660);
         var shop = (ShopView)((TabItem)tabs.SelectedItem).Content;
-        Assert.Equal(6, ((StackPanel)shop.FindName("ItemsPanel")).Children.Count);
-        Assert.Equal(6, ((StackPanel)shop.FindName("BerriesPanel")).Children.Count);
+        Assert.Equal(12, ((WrapPanel)shop.FindName("GoodsPanel")).Children.Count);
 
         menu.Navigate(MenuSection.Settings);
         Assert.Equal(Visibility.Visible, tabs.Visibility); // the section rail stays beside Settings

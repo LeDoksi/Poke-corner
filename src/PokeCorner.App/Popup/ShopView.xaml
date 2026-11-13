@@ -1,33 +1,64 @@
 <UserControl x:Class="PokeCorner.App.Popup.ShopView"
  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PokeCorner.App.Popup">
- <Grid SizeChanged="Root_SizeChanged">
-  <!-- The outer diary margin (Georgy 02.11): the column keeps left, sketches scatter in the free space on the right. -->
-  <local:DiaryMargin x:Name="ShopMargin" HorizontalAlignment="Right" Margin="0,24,8,0" />
-  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-   <StackPanel Margin="24,18" MaxWidth="968" HorizontalAlignment="Left">
-    <Grid Margin="0,0,0,20">
-     <StackPanel><TextBlock Text="Маленькие радости" Style="{StaticResource ScreenTitleTextStyle}"/>
-      <TextBlock Text="Всё нужное для новых историй." Style="{StaticResource CaptionTextStyle}"/></StackPanel>
-     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-      <Image Source="{StaticResource UiCoinImage}" Width="26" Height="26" Margin="0,0,7,0"/>
-      <TextBlock x:Name="CoinsText" FontWeight="Bold" VerticalAlignment="Center"/>
+ <!-- D-46: a showcase. Every good is a tile; the chosen one opens beside the grid with its stock, price and the one buy button. -->
+ <Grid Margin="24,14,24,16" SizeChanged="Root_SizeChanged">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+  <DockPanel Margin="0,0,0,10">
+   <TextBlock Text="Лавка" Style="{StaticResource ScreenTitleTextStyle}" FontSize="26" VerticalAlignment="Center" Margin="0,0,16,0"/>
+   <!-- Shown only when a shortage elsewhere (nursery, evolution, retraining) sent the player here: the way back. -->
+   <Button x:Name="ReturnButton" DockPanel.Dock="Right" Visibility="Collapsed" Click="ReturnButton_Click" VerticalAlignment="Center" Style="{StaticResource NdLinkButtonStyle}"/>
+   <ListBox x:Name="CategoryBox" Style="{StaticResource UiChoiceListStyle}" SelectionChanged="CategoryBox_SelectionChanged" VerticalAlignment="Center" AutomationProperties.Name="Раздел лавки">
+    <ListBoxItem Content="Всё" Tag="all"/><ListBoxItem Content="Питомцу" Tag="pet"/><ListBoxItem Content="Ягоды" Tag="berries"/><ListBoxItem Content="Талисманы" Tag="charms"/>
+   </ListBox>
+  </DockPanel>
+  <StackPanel Grid.Row="1">
+   <TextBlock x:Name="CoinsText" Visibility="Collapsed"/>
+   <ProgressBar x:Name="CoinProgressBar" Visibility="Collapsed" Minimum="0" Maximum="1"/>
+   <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,10">
+    <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>
+   </Border>
+  </StackPanel>
+  <Grid Grid.Row="2">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition x:Name="DetailColumn" Width="320"/></Grid.ColumnDefinitions>
+   <ScrollViewer x:Name="GoodsScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,8,0">
+    <WrapPanel x:Name="GoodsPanel" Margin="-5,-5,0,0"/>
+   </ScrollViewer>
+   <Border Grid.Column="1" Style="{StaticResource NdPanelStyle}">
+    <DockPanel>
+     <StackPanel DockPanel.Dock="Top">
+      <Border Height="104" CornerRadius="12" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1">
+       <Border.Background><RadialGradientBrush Center="0.5,0.55" GradientOrigin="0.5,0.55" RadiusX="0.6" RadiusY="0.9"><GradientStop Color="#55FFB574" Offset="0"/><GradientStop Color="#14172B" Offset="1"/></RadialGradientBrush></Border.Background>
+       <Image x:Name="DetailArt" Width="84" Height="84" RenderOptions.BitmapScalingMode="HighQuality"/>
+      </Border>
+      <TextBlock x:Name="DetailNameText" FontFamily="{StaticResource NdDisplayFont}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap" Margin="2,12,0,0"/>
+      <TextBlock x:Name="DetailEffectText" Style="{StaticResource CaptionTextStyle}" FontSize="13" TextWrapping="Wrap" Margin="2,6,0,10"/>
+      <UniformGrid Columns="2" Margin="0,0,-6,0">
+       <Border CornerRadius="10" Background="#14172B" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" Padding="10,6" Margin="0,0,6,0"><StackPanel><TextBlock Text="В запасе" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="StockText" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap"/></StackPanel></Border>
+       <Border CornerRadius="10" Background="#14172B" BorderBrush="{StaticResource NdBorderBrush}" BorderThickness="1" Padding="10,6" Margin="0,0,6,0"><StackPanel><TextBlock Text="Цена" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="PriceText" FontWeight="Bold" Foreground="{StaticResource NdTextBrush}" TextWrapping="Wrap"/></StackPanel></Border>
+      </UniformGrid>
+      <Button x:Name="UseButton" Visibility="Collapsed" Click="UseButton_Click" Style="{StaticResource NdLinkButtonStyle}" HorizontalAlignment="Left" Margin="-8,6,0,0"/>
      </StackPanel>
-    </Grid>
-    <!-- Shown only when a shortage elsewhere (nursery, evolution, retraining) sent the player here: the way back. -->
-    <Button x:Name="ReturnButton" Visibility="Collapsed" Click="ReturnButton_Click" HorizontalAlignment="Left" Margin="-12,-12,0,8"
-            Style="{StaticResource SecondaryButtonStyle}" Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource NdLavenderBrush}"/>
-    <ProgressBar x:Name="CoinProgressBar" Visibility="Collapsed" Minimum="0" Maximum="1"/>
-    <Border x:Name="MessagePanel" Visibility="Collapsed" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
-     <TextBlock x:Name="MessageText" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>
-    </Border>
-    <Grid>
-     <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-     <StackPanel><TextBlock Text="Для питомца" Style="{StaticResource SectionHeaderTextStyle}"/><StackPanel x:Name="ItemsPanel"/></StackPanel>
-     <StackPanel Grid.Column="1"><TextBlock Text="Шесть ягод" Style="{StaticResource SectionHeaderTextStyle}"/><StackPanel x:Name="BerriesPanel"/></StackPanel>
-    </Grid>
-   </StackPanel>
-  </ScrollViewer>
-  <local:ConfirmationOverlay x:Name="LocalConfirmationHost" Visibility="Collapsed"/>
+     <StackPanel DockPanel.Dock="Bottom">
+      <DockPanel Margin="0,0,0,8">
+       <TextBlock Text="ПОКУПАТЬ ПО" Style="{StaticResource CaptionTextStyle}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,8,0"/>
+       <ListBox x:Name="StepBox" Style="{StaticResource UiChoiceListStyle}" SelectionChanged="StepBox_SelectionChanged" HorizontalAlignment="Right" AutomationProperties.Name="Шаг количества">
+        <ListBoxItem Content="×1" Tag="1"/><ListBoxItem Content="×5" Tag="5"/><ListBoxItem Content="×10" Tag="10"/>
+       </ListBox>
+      </DockPanel>
+      <Grid Margin="0,0,0,6"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+       <Button x:Name="DecreaseButton" Content="−" Width="44" MinHeight="42" Padding="4" Click="DecreaseButton_Click" Style="{StaticResource SecondaryButtonStyle}" AutomationProperties.Name="Уменьшить количество"/>
+       <TextBox x:Name="QuantityBox" Grid.Column="1" Text="1" Height="40" MinHeight="40" Margin="8,0" Padding="4" TextAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="15" TextChanged="QuantityBox_TextChanged" AutomationProperties.Name="Количество"/>
+       <Button x:Name="IncreaseButton" Grid.Column="2" Content="+" Width="44" MinHeight="42" Padding="4" Click="IncreaseButton_Click" Style="{StaticResource SecondaryButtonStyle}" AutomationProperties.Name="Увеличить количество"/>
+      </Grid>
+      <TextBlock x:Name="TotalText" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,8" AutomationProperties.LiveSetting="Polite"/>
+      <Button x:Name="BuyButton" Content="Купить" Click="BuyButton_Click" MinHeight="54" FontSize="15"/>
+     </StackPanel>
+     <!-- What is left of the panel is the diary margin: a sketch and a note, when there is room for them. -->
+     <local:DiaryMargin x:Name="ShopMargin" Margin="0,8,0,8"/>
+    </DockPanel>
+   </Border>
+  </Grid>
+  <local:ConfirmationOverlay x:Name="LocalConfirmationHost" Grid.RowSpan="3" Visibility="Collapsed"/>
  </Grid>
 </UserControl>

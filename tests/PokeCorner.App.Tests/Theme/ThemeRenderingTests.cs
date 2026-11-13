@@ -1486,8 +1486,7 @@ public class ThemeRenderingTests
             var view = new ShopView(appState, new ShopService(), _ => Task.CompletedTask, () => { });
             WpfTestHost.Layout(view);
 
-            Assert.Equal(6, ((StackPanel)view.FindName("ItemsPanel")).Children.Count);
-            Assert.Equal(6, ((StackPanel)view.FindName("BerriesPanel")).Children.Count);
+            Assert.Equal(12, ((WrapPanel)view.FindName("GoodsPanel")).Children.Count);
             Assert.Equal(Visibility.Collapsed, ((Border)view.FindName("MessagePanel")).Visibility);
         });
 
@@ -1510,7 +1509,8 @@ public class ThemeRenderingTests
             var view = new ShopView(appState, new ShopService(), _ => Task.CompletedTask, () => { });
             WpfTestHost.Layout(view);
 
-            Assert.Equal(6, ((StackPanel)view.FindName("ItemsPanel")).Children.Count);
+            view.SelectItemShortage("lucky-charm", 1);
+            Assert.Contains("· активен", ((TextBlock)view.FindName("StockText")).Text);
         });
 
     [Fact]
