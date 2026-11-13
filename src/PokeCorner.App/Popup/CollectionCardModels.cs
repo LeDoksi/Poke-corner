@@ -75,6 +75,23 @@ public sealed class PokedexCard
     public string EvolutionToolTip => EvolutionProgressDisplay.ToolTip(EvolutionState);
     public double EvolutionBarOpacity => EvolutionProgressDisplay.BarOpacity(EvolutionState);
 
+    /// The tile's line under the name (Georgy 13.11): four states that must not look alike.
+    /// Growing: apricot fill on a dark track. Ready to evolve: a full green line. Final form: a quiet lavender
+    /// line without a track, so it is not read as "full, send it to evolve". Never evolves: no line at all.
+    public bool IsReadyToEvolve { get; init; }
+    public double TileEvolutionValue => EvolutionState == EvolutionProgressState.InProgress ? EvolutionBarValue : 1;
+    public double TileEvolutionOpacity => EvolutionState switch
+    {
+        EvolutionProgressState.NeverEvolves => 0,
+        EvolutionProgressState.InProgress => 1,
+        _ => .4
+    };
+    public Brush TileEvolutionBrush => ThemeBrushes.Get(EvolutionState != EvolutionProgressState.InProgress ? "NdLavenderBrush"
+        : IsReadyToEvolve ? "NdSuccessBrush" : "NdApricotBrush");
+    public Brush TileEvolutionTrack => EvolutionState == EvolutionProgressState.InProgress ? ThemeBrushes.Get("NdSurfaceBrush") : System.Windows.Media.Brushes.Transparent;
+    public string TileEvolutionToolTip => IsReadyToEvolve && EvolutionState == EvolutionProgressState.InProgress
+        ? "Готов к эволюции" : EvolutionToolTip;
+
     /// Detail-overlay-only fields.
     public required string CaughtAtText { get; init; }
     /// When this individual joined the collection; the trainer's note counts days together from it.

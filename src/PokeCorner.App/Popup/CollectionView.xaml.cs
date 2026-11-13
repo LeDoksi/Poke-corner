@@ -1048,7 +1048,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         // until some unrelated field changes. The nickname is in there for the same reason:
         // renaming from the detail overlay must repaint the card behind it.
         var signature = $"{_rarityFilter}|{_searchQuery}|{_hideFullyEvolved}|{_sortOrder}|{_pageIndex}|" + string.Join("|", page.Select(e =>
-            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{IndividualDisplay.Discriminator(_appState.Collection.Individuals, e.IndividualId)}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.IsShiny}:{e.HasShinyLook}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId, e.IsShiny) is not null}:{_animatedFrames.ContainsKey((e.DisplaySpeciesId, e.IsShiny))}"));
+            $"{e.IndividualId}:{e.DisplaySpeciesId}:{e.Nickname}:{IndividualDisplay.Discriminator(_appState.Collection.Individuals, e.IndividualId)}:{e.IsActive}:{e.IsFavorite}:{e.IsBusy}:{e.IsShiny}:{e.HasShinyLook}:{e.IsReadyToEvolve}:{e.Level}:{e.FirstTraitId}:{e.SecondTraitId}:{e.DescriptionRu}:{e.EvolutionState}:{Math.Round(e.EvolutionFraction ?? -1, 3)}:{TryGetThumbnail(e.DisplaySpeciesId, e.IsShiny) is not null}:{_animatedFrames.ContainsKey((e.DisplaySpeciesId, e.IsShiny))}"));
         if (signature == _pokedexSignature) return;
         _pokedexSignature = signature;
 
@@ -1079,6 +1079,7 @@ public partial class CollectionView : System.Windows.Controls.UserControl
         CanSelect = !entry.IsActive && !entry.IsBusy,
         IsShiny = entry.IsShiny,
         HasShinyLook = entry.HasShinyLook,
+        IsReadyToEvolve = entry.IsReadyToEvolve,
         IsActive = entry.IsActive,
         IsFavorite = entry.IsFavorite,
         TypeBadges = TypeDisplay.ToBadges(entry.Types),

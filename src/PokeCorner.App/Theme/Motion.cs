@@ -74,12 +74,14 @@ public static class Motion
         });
     }
 
-    /// Whole-window scale for big windows (D-38): a maximized FullHD window shows the same layout 1.25 times larger
-    /// instead of the same small controls lost in empty space.
+    /// Whole-window scale for big windows (D-38, softened by D-51): a big window is shared between larger controls
+    /// and more content. FullHD maximized gives x1.15 and about 1670x904 logical px (was x1.25 and 1536x832),
+    /// 2560x1400 gives x1.4 and 1829x1000, so the Pokédex shows more tiles and the scenes are not cropped.
     public static double ShellScale(double width, double height)
     {
         if (double.IsNaN(width) || double.IsNaN(height)) return 1;
         var raw = Math.Min(width / 1440.0, height / 800.0);
-        return Math.Clamp(Math.Floor(raw * 4) / 4, 1.0, 1.75);
+        if (raw <= 1) return 1;
+        return Math.Clamp(Math.Floor(Math.Pow(raw, .6) * 20 + 1e-9) / 20, 1.0, 1.75);
     }
 }

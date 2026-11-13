@@ -358,9 +358,9 @@
                                             <TextBlock DockPanel.Dock="Right" Text="{Binding LevelText}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource NdLavenderBrush}" Margin="6,0,0,0"/>
                                             <TextBlock Text="{Binding DexNumber}" Style="{StaticResource CaptionTextStyle}" TextTrimming="CharacterEllipsis"/>
                                         </DockPanel>
-                                        <!-- The way to the next form (care for evolution): full means it can evolve now, dimmed means there is nowhere further to grow. -->
-                                        <ProgressBar Style="{StaticResource SlimProgressBarStyle}" Height="4" Minimum="0" Maximum="1" Foreground="{StaticResource NdApricotBrush}" Background="#14172B"
-                                                     Value="{Binding EvolutionBarValue, Mode=OneWay}" Opacity="{Binding EvolutionBarOpacity}" ToolTip="{Binding EvolutionToolTip}"/>
+                                        <!-- The way to the next form: apricot = growing, green full = can evolve now, quiet lavender = final form, nothing = never evolves. -->
+                                        <ProgressBar Style="{StaticResource SlimProgressBarStyle}" Height="4" Minimum="0" Maximum="1" Foreground="{Binding TileEvolutionBrush}" Background="{Binding TileEvolutionTrack}"
+                                                     Value="{Binding TileEvolutionValue, Mode=OneWay}" Opacity="{Binding TileEvolutionOpacity}" ToolTip="{Binding TileEvolutionToolTip}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
